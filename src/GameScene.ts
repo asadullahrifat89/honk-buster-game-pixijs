@@ -27,7 +27,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const treeContainer: GameObjectContainer = new GameObjectContainer();
+			const treeContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
 			treeContainer.x = -1500;
 			treeContainer.y = -1500;
 			treeContainer.width = this.roadTreeSizeWidth * 5;
@@ -38,7 +38,7 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_TREE);
 				const texture = Texture.from(uri);
-				const tree: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_TREE);
+				const tree: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_TREE, this.defaultSpeed);
 
 				tree.x = this.roadTreeSizeWidth * i - (this.roadTreeXyAdjustment * i);
 				tree.y = (this.roadTreeSizeHeight / 2) * i - ((this.roadTreeXyAdjustment / 2) * i);
@@ -57,7 +57,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const treeContainer: GameObjectContainer = new GameObjectContainer();
+			const treeContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
 			treeContainer.x = -1500;
 			treeContainer.y = -1500;
 			treeContainer.width = this.roadTreeSizeWidth * 5;
@@ -68,7 +68,7 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_TREE);
 				const texture = Texture.from(uri);
-				const tree: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_TREE);
+				const tree: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_TREE, this.defaultSpeed);
 
 				tree.x = this.roadTreeSizeWidth * i - (this.roadTreeXyAdjustment * i);
 				tree.y = (this.roadTreeSizeHeight / 2) * i - ((this.roadTreeXyAdjustment / 2) * i);
@@ -128,8 +128,8 @@ export class GameScene extends Container implements IScene {
 		if (animatingTrees) {
 
 			animatingTrees.forEach(container => {
-				container.x += this.defaultSpeed;
-				container.y += this.defaultSpeed / 2;
+				container.x += container.speed;
+				container.y += container.speed / 2;
 
 				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.x = -1500;
@@ -147,8 +147,8 @@ export class GameScene extends Container implements IScene {
 		if (animatingTrees) {
 
 			animatingTrees.forEach(container => {
-				container.x += this.defaultSpeed;
-				container.y += this.defaultSpeed / 2;
+				container.x += container.speed;
+				container.y += container.speed / 2;
 
 				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.x = -1500;
@@ -179,7 +179,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const hedgeContainer: GameObjectContainer = new GameObjectContainer();
+			const hedgeContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
 			hedgeContainer.x = -1500;
 			hedgeContainer.y = -1500;
 			hedgeContainer.width = this.roadHedgeSizeWidth * 5;
@@ -190,7 +190,7 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_HEDGE);
 				const texture = Texture.from(uri);
-				const hedge: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_HEDGE);
+				const hedge: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_HEDGE, this.defaultSpeed);
 
 				hedge.x = this.roadHedgeSizeWidth * i - (this.roadHedgeXyAdjustment * i);
 				hedge.y = (this.roadHedgeSizeHeight / 2) * i - ((this.roadHedgeXyAdjustment / 2) * i);
@@ -209,7 +209,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const hedgeContainer: GameObjectContainer = new GameObjectContainer();
+			const hedgeContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
 			hedgeContainer.x = -1500;
 			hedgeContainer.y = -1500;
 			hedgeContainer.width = this.roadHedgeSizeWidth * 5;
@@ -220,7 +220,7 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_HEDGE);
 				const texture = Texture.from(uri);
-				const hedge: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_HEDGE);
+				const hedge: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_HEDGE, this.defaultSpeed);
 
 				hedge.x = this.roadHedgeSizeWidth * i - (this.roadHedgeXyAdjustment * i);
 				hedge.y = (this.roadHedgeSizeHeight / 2) * i - ((this.roadHedgeXyAdjustment / 2) * i);
@@ -280,8 +280,8 @@ export class GameScene extends Container implements IScene {
 		if (animatingHedges) {
 
 			animatingHedges.forEach(container => {
-				container.x += this.defaultSpeed;
-				container.y += this.defaultSpeed / 2;
+				container.x += container.speed;
+				container.y += container.speed / 2;
 
 				if (container.x - this.roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.x = -1500;
@@ -299,8 +299,8 @@ export class GameScene extends Container implements IScene {
 		if (animatingHedges) {
 
 			animatingHedges.forEach(container => {
-				container.x += this.defaultSpeed;
-				container.y += this.defaultSpeed / 2;
+				container.x += container.speed;
+				container.y += container.speed / 2;
 
 				if (container.x - this.roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.x = -1500;
@@ -331,7 +331,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const sideWalkContainer: GameObjectContainer = new GameObjectContainer();
+			const sideWalkContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
 			sideWalkContainer.x = -1500;
 			sideWalkContainer.y = -1500;
 			sideWalkContainer.width = this.roadSideWalkWidth * 5;
@@ -342,7 +342,7 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_WALK);
 				const texture = Texture.from(uri);
-				const sideWalk: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_WALK);
+				const sideWalk: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_WALK, this.defaultSpeed);
 
 				sideWalk.x = this.roadSideWalkWidth * i - (this.roadSideWalkXyAdjustment * i);
 				sideWalk.y = (this.roadSideWalkHeight / 2) * i - ((this.roadSideWalkXyAdjustment / 2) * i);
@@ -366,7 +366,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const sideWalkContainer: GameObjectContainer = new GameObjectContainer();
+			const sideWalkContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
 			sideWalkContainer.x = -1500;
 			sideWalkContainer.y = -1500;
 			sideWalkContainer.width = this.roadSideWalkWidth * 5;
@@ -377,7 +377,7 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_WALK);
 				const texture = Texture.from(uri);
-				const sideWalk: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_WALK);
+				const sideWalk: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_WALK, this.defaultSpeed);
 
 				sideWalk.x = this.roadSideWalkWidth * i - (this.roadSideWalkXyAdjustment * i);
 				sideWalk.y = (this.roadSideWalkHeight / 2) * i - ((this.roadSideWalkXyAdjustment / 2) * i);
@@ -438,8 +438,8 @@ export class GameScene extends Container implements IScene {
 		if (animatingSideWalks) {
 
 			animatingSideWalks.forEach(container => {
-				container.x += this.defaultSpeed;
-				container.y += this.defaultSpeed / 2;
+				container.x += container.speed;
+				container.y += container.speed / 2;
 
 				if (container.x - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.x = -1500;
@@ -457,10 +457,87 @@ export class GameScene extends Container implements IScene {
 		if (animatingSideWalks) {
 
 			animatingSideWalks.forEach(container => {
-				container.x += this.defaultSpeed;
-				container.y += this.defaultSpeed / 2;
+				container.x += container.speed;
+				container.y += container.speed / 2;
 
 				if (container.x - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					container.x = -1500;
+					container.y = -1500;
+					container.isAnimating = false;
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region Clouds	
+
+	private roadCloudSizeWidth: number = 512;
+	private roadCloudSizeHeight: number = 350;
+
+	private roadCloudContainers: Array<GameObjectContainer> = [];
+
+	private roadCloudPopDelayDefault: number = 70;
+	private roadCloudPopDelay: number = 0;
+
+	private SpawnClouds() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const cloudContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			cloudContainer.x = -1500;
+			cloudContainer.y = -1500;
+			cloudContainer.width = this.roadCloudSizeWidth;
+			cloudContainer.height = this.roadCloudSizeHeight;
+
+			const uri = Constants.GetRandomUri(ConstructType.CLOUD);
+			const texture = Texture.from(uri);
+			const cloud: GameObject = new GameObject(texture, ConstructType.CLOUD, this.defaultSpeed);
+
+			cloud.x = 0;
+			cloud.y = 0;
+			cloud.width = this.roadCloudSizeWidth;
+			cloud.height = this.roadCloudSizeHeight;
+
+			cloudContainer.addChild(cloud);
+
+			this.roadCloudContainers.push(cloudContainer);
+			this.addChild(cloudContainer);
+		}
+	}
+
+	private GenerateClouds() {
+
+		this.roadCloudPopDelay -= 0.1;
+
+		if (this.roadCloudPopDelay < 0) {
+
+			var container = this.roadCloudContainers.find(x => x.isAnimating == false);
+
+			if (container) {
+
+				//TODO: switch lane
+
+				container.isAnimating = true;
+				this.roadCloudPopDelay = this.roadCloudPopDelayDefault;
+
+				// console.log("Cloud bottom container popped.");
+			}
+		}
+	}
+
+	private AnimateClouds() {
+
+		var animatingClouds = this.roadCloudContainers.filter(x => x.isAnimating == true);
+
+		if (animatingClouds) {
+
+			animatingClouds.forEach(container => {
+				container.x += container.speed;
+				container.y += container.speed / 2;
+
+				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.x = -1500;
 					container.y = -1500;
 					container.isAnimating = false;
@@ -482,6 +559,8 @@ export class GameScene extends Container implements IScene {
 		this.SpawnSideWalksBottom();
 		this.SpawnHedgesBottom();
 		this.SpawnTreesBottom();
+
+		this.SpawnClouds();
 	}
 
 	public update(_framesPassed: number): void {
@@ -489,6 +568,8 @@ export class GameScene extends Container implements IScene {
 		this.GenerateSideWalksTop();
 		this.GenerateHedgesTop();
 		this.GenerateTreesTop();
+
+		this.GenerateClouds();
 
 		this.GenerateSideWalksBottom();
 		this.GenerateHedgesBottom();
@@ -501,9 +582,11 @@ export class GameScene extends Container implements IScene {
 		this.AnimateSideWalksBottom();
 		this.AnimateHedgesBottom();
 		this.AnimateTreesBottom();
+
+		this.AnimateClouds();
 	}
 
-	public resize(scale: number): void {		
+	public resize(scale: number): void {
 		this.scale.set(scale);
 		console.log("Scale: " + scale);
 	}

@@ -4,12 +4,14 @@ import { ConstructType } from './Constants';
 export class GameObject extends Sprite {
 
 	public isAnimating: boolean = false;
-	public ConstructType: ConstructType = 0;	
+	public speed: number = 3;
+	public ConstructType: ConstructType = 0;
 
-	constructor(texture: Texture, constructType: ConstructType) {
+	constructor(texture: Texture, constructType: ConstructType, speed: number) {
 		super();
 		this.texture = texture;
 		this.ConstructType = constructType;
+		this.speed = speed;
 	}
 
 	setContent(texture: Texture) {
