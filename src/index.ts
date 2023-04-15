@@ -250,7 +250,7 @@ function GenerateHedgesTop() {
 		var container = roadHedgeTopContainers.find(x => x.isAnimating == false);
 
 		if (container) {
-			container.x = -1150;
+			container.x = -1430;
 			container.y = container.height * -1;
 			container.isAnimating = true;
 			roadHedgePopDelayTop = roadHedgePopDelayDefault;
@@ -270,7 +270,7 @@ function GenerateHedgesBottom() {
 
 		if (container) {
 			container.x = container.width * -1;
-			container.y = -650;
+			container.y = -710;
 			container.isAnimating = true;
 			roadHedgePopDelayBottom = roadHedgePopDelayDefault;
 
@@ -289,7 +289,7 @@ function AnimateHedgesTop() {
 			container.x += defaultSpeed;
 			container.y += defaultSpeed / 2;
 
-			if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+			if (container.x - roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 				container.x = -1500;
 				container.y = -1500;
 				container.isAnimating = false;
@@ -308,7 +308,7 @@ function AnimateHedgesBottom() {
 			container.x += defaultSpeed;
 			container.y += defaultSpeed / 2;
 
-			if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+			if (container.x - roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 				container.x = -1500;
 				container.y = -1500;
 				container.isAnimating = false;
