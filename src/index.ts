@@ -330,7 +330,7 @@ SpawnTreesTop();
 SpawnSideWalksBottom();
 SpawnTreesBottom();
 
-// the ticker 
+// add function to the ticker 
 app.ticker.add(() => {
 	GenerateSideWalksTop();
 	GenerateTreesTop();
