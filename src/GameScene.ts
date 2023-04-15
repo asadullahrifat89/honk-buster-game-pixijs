@@ -1,5 +1,5 @@
 import { Container, Texture } from "pixi.js";
-import { IScene } from "./Manager";
+import { IScene } from "./IScene";
 import { GameObject } from './GameObject';
 import { GameObjectContainer } from './GameObjectContainer';
 import { Constants, ConstructType } from './Constants';
