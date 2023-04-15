@@ -15,7 +15,7 @@ const app = new Application({
 });
 
 const defaultSpeed: number = 2;
-const roadSideTreeSize: number = 256;
+const roadSideTreeSize: number = 450;
 const xyAdjustment: number = 31.5;
 
 const treeBottomContainers: Array<GameObjectContainer> = [];
@@ -23,7 +23,7 @@ const treeTopContainers: Array<GameObjectContainer> = [];
 
 let treePopDelayTop: number = 0;
 let treePopDelayBottom: number = 0;
-let treePopDelayDefault: number = 55;
+let treePopDelayDefault: number = 100;
 
 
 //#region Trees 
@@ -70,7 +70,7 @@ function GenerateTreesTop() {
 		var container = treeTopContainers.find(x => x.isAnimating == false);
 
 		if (container) {
-			container.x = -250;
+			container.x = -1150;
 			container.y = container.height * -1;
 			container.isAnimating = true;
 			treePopDelayTop = treePopDelayDefault;
@@ -143,7 +143,7 @@ function GenerateTreesBottom() {
 
 		if (container) {
 			container.x = container.width * -1;
-			container.y = -150;
+			container.y = -650;
 			container.isAnimating = true;
 			treePopDelayBottom = treePopDelayDefault;
 
