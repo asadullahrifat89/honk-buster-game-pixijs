@@ -97,6 +97,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_1.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_2.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK, "road_side_walk_1.png"),
+		//new ConstructTemplate(ConstructType.ROAD_SIDE_WALK, "road_side_walk_2.png"),
 	];
 
 	static degreesToRadians(degrees: number): number {

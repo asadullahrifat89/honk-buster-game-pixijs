@@ -13,14 +13,14 @@ const app = new Application({
 	resizeTo: window
 });
 
-const defaultSpeed: number = 2;
+const defaultSpeed: number = 3;
 const roadTreeSizeWidth: number = 450;
 const roadTreeSizeHeight: number = 450;
 
 const roadSideWalkWidth: number = 450;
 const roadSideWalkHeight: number = 450;
 
-const roadTreeXyAdjustment: number = 31.5;
+const roadTreeXyAdjustment: number = 30.5;
 const roadSideWalkXyAdjustment: number = 111.5;
 
 const roadTreeBottomContainers: Array<GameObjectContainer> = [];
@@ -29,11 +29,11 @@ const roadTreeTopContainers: Array<GameObjectContainer> = [];
 const roadSideWalkTopContainers: Array<GameObjectContainer> = [];
 const roadSideWalkBottomContainers: Array<GameObjectContainer> = [];
 
-let roadTreePopDelayDefault: number = 100;
+let roadTreePopDelayDefault: number = 70;
 let roadTreePopDelayTop: number = 0;
 let roadTreePopDelayBottom: number = 0;
 
-let roadSideWalkPopDelayDefault: number = 90;
+let roadSideWalkPopDelayDefault: number = 50;
 let roadSideWalkPopDelayTop: number = 0;
 let roadSideWalkPopDelayBottom: number = 0;
 
@@ -54,7 +54,7 @@ function SpawnTreesTop() {
 
 			const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_TREE);
 			const texture = Texture.from(uri);
-			const tree: GameObject = new GameObject(texture);
+			const tree: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_TREE);
 
 			tree.x = roadTreeSizeWidth * i - (roadTreeXyAdjustment * i);
 			tree.y = (roadTreeSizeHeight / 2) * i - ((roadTreeXyAdjustment / 2) * i);
@@ -65,6 +65,36 @@ function SpawnTreesTop() {
 		}
 
 		roadTreeTopContainers.push(treeContainer);
+		app.stage.addChild(treeContainer);
+	}
+}
+
+function SpawnTreesBottom() {
+
+	for (let j = 0; j < 5; j++) {
+
+		const treeContainer: GameObjectContainer = new GameObjectContainer();
+		treeContainer.x = -1500;
+		treeContainer.y = -1500;
+		treeContainer.width = roadTreeSizeWidth * 5;
+		treeContainer.height = roadTreeSizeHeight / 2 * 5;
+
+		// add trees to the tree bottom container
+		for (let i = 0; i < 5; i++) {
+
+			const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_TREE);
+			const texture = Texture.from(uri);
+			const tree: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_TREE);
+
+			tree.x = roadTreeSizeWidth * i - (roadTreeXyAdjustment * i);
+			tree.y = (roadTreeSizeHeight / 2) * i - ((roadTreeXyAdjustment / 2) * i);
+			tree.width = roadTreeSizeWidth;
+			tree.height = roadTreeSizeHeight;
+
+			treeContainer.addChild(tree);
+		}
+
+		roadTreeBottomContainers.push(treeContainer);
 		app.stage.addChild(treeContainer);
 	}
 }
@@ -88,55 +118,6 @@ function GenerateTreesTop() {
 	}
 }
 
-function AnimateTreesTop() {
-
-	var animatingTrees = roadTreeTopContainers.filter(x => x.isAnimating == true);
-
-	if (animatingTrees) {
-
-		animatingTrees.forEach(container => {
-			container.x += defaultSpeed;
-			container.y += defaultSpeed / 2;
-
-			if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-				container.x = -1500;
-				container.y = -1500;
-				container.isAnimating = false;
-			}
-		});
-	}
-}
-
-function SpawnTreesBottom() {
-
-	for (let j = 0; j < 5; j++) {
-
-		const treeContainer: GameObjectContainer = new GameObjectContainer();
-		treeContainer.x = -1500;
-		treeContainer.y = -1500;
-		treeContainer.width = roadTreeSizeWidth * 5;
-		treeContainer.height = roadTreeSizeHeight / 2 * 5;
-
-		// add trees to the tree bottom container
-		for (let i = 0; i < 5; i++) {
-
-			const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_TREE);
-			const texture = Texture.from(uri);
-			const tree: GameObject = new GameObject(texture);
-
-			tree.x = roadTreeSizeWidth * i - (roadTreeXyAdjustment * i);
-			tree.y = (roadTreeSizeHeight / 2) * i - ((roadTreeXyAdjustment / 2) * i);
-			tree.width = roadTreeSizeWidth;
-			tree.height = roadTreeSizeHeight;
-
-			treeContainer.addChild(tree);
-		}
-
-		roadTreeBottomContainers.push(treeContainer);
-		app.stage.addChild(treeContainer);
-	}
-}
-
 function GenerateTreesBottom() {
 
 	roadTreePopDelayBottom -= 0.1;
@@ -153,6 +134,25 @@ function GenerateTreesBottom() {
 
 			// console.log("Tree bottom container popped.");
 		}
+	}
+}
+
+function AnimateTreesTop() {
+
+	var animatingTrees = roadTreeTopContainers.filter(x => x.isAnimating == true);
+
+	if (animatingTrees) {
+
+		animatingTrees.forEach(container => {
+			container.x += defaultSpeed;
+			container.y += defaultSpeed / 2;
+
+			if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				container.x = -1500;
+				container.y = -1500;
+				container.isAnimating = false;
+			}
+		});
 	}
 }
 
@@ -194,7 +194,7 @@ function SpawnSideWalksTop() {
 
 			const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_WALK);
 			const texture = Texture.from(uri);
-			const sideWalk: GameObject = new GameObject(texture);
+			const sideWalk: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_WALK);
 
 			sideWalk.x = roadSideWalkWidth * i - (roadSideWalkXyAdjustment * i);
 			sideWalk.y = (roadSideWalkHeight / 2) * i - ((roadSideWalkXyAdjustment / 2) * i);
@@ -214,6 +214,41 @@ function SpawnSideWalksTop() {
 	}
 }
 
+function SpawnSideWalksBottom() {
+
+	for (let j = 0; j < 5; j++) {
+
+		const sideWalkContainer: GameObjectContainer = new GameObjectContainer();
+		sideWalkContainer.x = -1500;
+		sideWalkContainer.y = -1500;
+		sideWalkContainer.width = roadSideWalkWidth * 5;
+		sideWalkContainer.height = roadSideWalkHeight / 2 * 5;
+
+		// add sideWalks to the sideWalk top container
+		for (let i = 0; i < 5; i++) {
+
+			const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_WALK);
+			const texture = Texture.from(uri);
+			const sideWalk: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_WALK);
+
+			sideWalk.x = roadSideWalkWidth * i - (roadSideWalkXyAdjustment * i);
+			sideWalk.y = (roadSideWalkHeight / 2) * i - ((roadSideWalkXyAdjustment / 2) * i);
+
+			sideWalk.width = roadSideWalkWidth;
+			sideWalk.height = roadSideWalkHeight;
+
+			//sideWalk.anchor.set(0.5, 0.5);
+			//sideWalk.rotation = Constants.degreesToRadians(-63.5);
+			//sideWalk.skew.set(0, Constants.degreesToRadians(37));
+
+			sideWalkContainer.addChild(sideWalk);
+		}
+
+		roadSideWalkBottomContainers.push(sideWalkContainer);
+		app.stage.addChild(sideWalkContainer);
+	}
+}
+
 function GenerateSideWalksTop() {
 
 	roadSideWalkPopDelayTop -= 0.1;
@@ -227,8 +262,23 @@ function GenerateSideWalksTop() {
 			container.y = container.height * -1;
 			container.isAnimating = true;
 			roadSideWalkPopDelayTop = roadSideWalkPopDelayDefault;
+		}
+	}
+}
 
-			// console.log("SideWalk bottom container popped.");
+function GenerateSideWalksBottom() {
+
+	roadSideWalkPopDelayBottom -= 0.1;
+
+	if (roadSideWalkPopDelayBottom < 0) {
+
+		var container = roadSideWalkBottomContainers.find(x => x.isAnimating == false);
+
+		if (container) {
+			container.x = container.width * -1;
+			container.y = -435;
+			container.isAnimating = true;
+			roadSideWalkPopDelayBottom = roadSideWalkPopDelayDefault;
 		}
 	}
 }
@@ -249,60 +299,6 @@ function AnimateSideWalksTop() {
 				container.isAnimating = false;
 			}
 		});
-	}
-}
-
-function SpawnSideWalksBottom() {
-
-	for (let j = 0; j < 5; j++) {
-
-		const sideWalkContainer: GameObjectContainer = new GameObjectContainer();
-		sideWalkContainer.x = -1500;
-		sideWalkContainer.y = -1500;
-		sideWalkContainer.width = roadSideWalkWidth * 5;
-		sideWalkContainer.height = roadSideWalkHeight / 2 * 5;
-
-		// add sideWalks to the sideWalk top container
-		for (let i = 0; i < 5; i++) {
-
-			const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_WALK);
-			const texture = Texture.from(uri);
-			const sideWalk: GameObject = new GameObject(texture);
-
-			sideWalk.x = roadSideWalkWidth * i - (roadSideWalkXyAdjustment * i);
-			sideWalk.y = (roadSideWalkHeight / 2) * i - ((roadSideWalkXyAdjustment / 2) * i);
-
-			sideWalk.width = roadSideWalkWidth;
-			sideWalk.height = roadSideWalkHeight;
-
-			//sideWalk.anchor.set(0.5, 0.5);
-			//sideWalk.rotation = Constants.degreesToRadians(-63.5);
-			//sideWalk.skew.set(0, Constants.degreesToRadians(37));
-
-			sideWalkContainer.addChild(sideWalk);
-		}
-
-		roadSideWalkBottomContainers.push(sideWalkContainer);
-		app.stage.addChild(sideWalkContainer);
-	}
-}
-
-function GenerateSideWalksBottom() {
-
-	roadSideWalkPopDelayBottom -= 0.1;
-
-	if (roadSideWalkPopDelayBottom < 0) {
-
-		var container = roadSideWalkBottomContainers.find(x => x.isAnimating == false);
-
-		if (container) {
-			container.x = container.width * -1;
-			container.y = -435;
-			container.isAnimating = true;
-			roadSideWalkPopDelayBottom = roadSideWalkPopDelayDefault;
-
-			// console.log("SideWalk bottom container popped.");
-		}
 	}
 }
 
