@@ -167,6 +167,158 @@ function AnimateTreesBottom() {
 
 //#endregion
 
+//#region Hedges
+
+const roadHedgeXyAdjustment: number = 30.5;
+
+const roadHedgeSizeWidth: number = 450;
+const roadHedgeSizeHeight: number = 450;
+
+const roadHedgeBottomContainers: Array<GameObjectContainer> = [];
+const roadHedgeTopContainers: Array<GameObjectContainer> = [];
+
+const roadHedgePopDelayDefault: number = 70;
+let roadHedgePopDelayTop: number = 0;
+let roadHedgePopDelayBottom: number = 0;
+
+function SpawnHedgesTop() {
+
+	for (let j = 0; j < 5; j++) {
+
+		const hedgeContainer: GameObjectContainer = new GameObjectContainer();
+		hedgeContainer.x = -1500;
+		hedgeContainer.y = -1500;
+		hedgeContainer.width = roadHedgeSizeWidth * 5;
+		hedgeContainer.height = roadHedgeSizeHeight / 2 * 5;
+
+		// add hedges to the hedge top container
+		for (let i = 0; i < 5; i++) {
+
+			const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_HEDGE);
+			const texture = Texture.from(uri);
+			const hedge: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_HEDGE);
+
+			hedge.x = roadHedgeSizeWidth * i - (roadHedgeXyAdjustment * i);
+			hedge.y = (roadHedgeSizeHeight / 2) * i - ((roadHedgeXyAdjustment / 2) * i);
+			hedge.width = roadHedgeSizeWidth;
+			hedge.height = roadHedgeSizeHeight;
+
+			hedgeContainer.addChild(hedge);
+		}
+
+		roadHedgeTopContainers.push(hedgeContainer);
+		app.stage.addChild(hedgeContainer);
+	}
+}
+
+function SpawnHedgesBottom() {
+
+	for (let j = 0; j < 5; j++) {
+
+		const hedgeContainer: GameObjectContainer = new GameObjectContainer();
+		hedgeContainer.x = -1500;
+		hedgeContainer.y = -1500;
+		hedgeContainer.width = roadHedgeSizeWidth * 5;
+		hedgeContainer.height = roadHedgeSizeHeight / 2 * 5;
+
+		// add hedges to the hedge bottom container
+		for (let i = 0; i < 5; i++) {
+
+			const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_HEDGE);
+			const texture = Texture.from(uri);
+			const hedge: GameObject = new GameObject(texture, ConstructType.ROAD_SIDE_HEDGE);
+
+			hedge.x = roadHedgeSizeWidth * i - (roadHedgeXyAdjustment * i);
+			hedge.y = (roadHedgeSizeHeight / 2) * i - ((roadHedgeXyAdjustment / 2) * i);
+			hedge.width = roadHedgeSizeWidth;
+			hedge.height = roadHedgeSizeHeight;
+
+			hedgeContainer.addChild(hedge);
+		}
+
+		roadHedgeBottomContainers.push(hedgeContainer);
+		app.stage.addChild(hedgeContainer);
+	}
+}
+
+function GenerateHedgesTop() {
+
+	roadHedgePopDelayTop -= 0.1;
+
+	if (roadHedgePopDelayTop < 0) {
+
+		var container = roadHedgeTopContainers.find(x => x.isAnimating == false);
+
+		if (container) {
+			container.x = -1150;
+			container.y = container.height * -1;
+			container.isAnimating = true;
+			roadHedgePopDelayTop = roadHedgePopDelayDefault;
+
+			// console.log("Hedge bottom container popped.");
+		}
+	}
+}
+
+function GenerateHedgesBottom() {
+
+	roadHedgePopDelayBottom -= 0.1;
+
+	if (roadHedgePopDelayBottom < 0) {
+
+		var container = roadHedgeBottomContainers.find(x => x.isAnimating == false);
+
+		if (container) {
+			container.x = container.width * -1;
+			container.y = -650;
+			container.isAnimating = true;
+			roadHedgePopDelayBottom = roadHedgePopDelayDefault;
+
+			// console.log("Hedge bottom container popped.");
+		}
+	}
+}
+
+function AnimateHedgesTop() {
+
+	var animatingHedges = roadHedgeTopContainers.filter(x => x.isAnimating == true);
+
+	if (animatingHedges) {
+
+		animatingHedges.forEach(container => {
+			container.x += defaultSpeed;
+			container.y += defaultSpeed / 2;
+
+			if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				container.x = -1500;
+				container.y = -1500;
+				container.isAnimating = false;
+			}
+		});
+	}
+}
+
+function AnimateHedgesBottom() {
+
+	var animatingHedges = roadHedgeBottomContainers.filter(x => x.isAnimating == true);
+
+	if (animatingHedges) {
+
+		animatingHedges.forEach(container => {
+			container.x += defaultSpeed;
+			container.y += defaultSpeed / 2;
+
+			if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				container.x = -1500;
+				container.y = -1500;
+				container.isAnimating = false;
+			}
+		});
+	}
+}
+
+//#endregion
+
 //#region SideWalks
 
 const roadSideWalkXyAdjustment: number = 111.5;
@@ -327,22 +479,28 @@ function AnimateSideWalksBottom() {
 
 // spawn game objects
 SpawnSideWalksTop();
+SpawnHedgesTop();
 SpawnTreesTop();
 
 SpawnSideWalksBottom();
+SpawnHedgesBottom();
 SpawnTreesBottom();
 
 // add function to the ticker 
 app.ticker.add(() => {
 	GenerateSideWalksTop();
+	GenerateHedgesTop();
 	GenerateTreesTop();
 
 	GenerateSideWalksBottom();
+	GenerateHedgesBottom();
 	GenerateTreesBottom();
 
 	AnimateSideWalksTop();
+	AnimateHedgesTop();
 	AnimateTreesTop();
 
 	AnimateSideWalksBottom();
+	AnimateHedgesBottom();
 	AnimateTreesBottom();
 });
