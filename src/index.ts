@@ -14,30 +14,20 @@ const app = new Application({
 });
 
 const defaultSpeed: number = 3;
-const roadTreeSizeWidth: number = 450;
-const roadTreeSizeHeight: number = 450;
 
-const roadSideWalkWidth: number = 450;
-const roadSideWalkHeight: number = 450;
+//#region Trees
 
 const roadTreeXyAdjustment: number = 30.5;
-const roadSideWalkXyAdjustment: number = 111.5;
+
+const roadTreeSizeWidth: number = 450;
+const roadTreeSizeHeight: number = 450;
 
 const roadTreeBottomContainers: Array<GameObjectContainer> = [];
 const roadTreeTopContainers: Array<GameObjectContainer> = [];
 
-const roadSideWalkTopContainers: Array<GameObjectContainer> = [];
-const roadSideWalkBottomContainers: Array<GameObjectContainer> = [];
-
-let roadTreePopDelayDefault: number = 70;
+const roadTreePopDelayDefault: number = 70;
 let roadTreePopDelayTop: number = 0;
 let roadTreePopDelayBottom: number = 0;
-
-let roadSideWalkPopDelayDefault: number = 50;
-let roadSideWalkPopDelayTop: number = 0;
-let roadSideWalkPopDelayBottom: number = 0;
-
-//#region Trees 
 
 function SpawnTreesTop() {
 
@@ -177,7 +167,19 @@ function AnimateTreesBottom() {
 
 //#endregion
 
-//#region Side Walks
+//#region SideWalks
+
+const roadSideWalkXyAdjustment: number = 111.5;
+
+const roadSideWalkWidth: number = 450;
+const roadSideWalkHeight: number = 450;
+
+const roadSideWalkTopContainers: Array<GameObjectContainer> = [];
+const roadSideWalkBottomContainers: Array<GameObjectContainer> = [];
+
+const roadSideWalkPopDelayDefault: number = 50;
+let roadSideWalkPopDelayTop: number = 0;
+let roadSideWalkPopDelayBottom: number = 0;
 
 function SpawnSideWalksTop() {
 
