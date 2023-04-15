@@ -1,4 +1,6 @@
-import { Application, Sprite, Container, Texture } from 'pixi.js'
+import { Application, Texture } from 'pixi.js'
+import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -6,32 +8,9 @@ const app = new Application({
 	autoDensity: true,
 	backgroundColor: 0x6495ed,
 	width: 1900,
-	height: 940
+	height: 940,	
+	// resizeTo: window
 });
-
-class GameObjectContainer extends Container {
-
-	public isAnimating: boolean = false;
-
-	constructor() {
-		super();
-	}
-}
-
-class GameObject extends Sprite {
-
-	public isAnimating: boolean = false;
-
-	constructor(texture: Texture) {
-		super();
-		this.texture = texture;
-
-	}
-
-	setContent(texture: Texture) {
-		this.texture = texture;
-	}
-}
 
 const defaultSpeed: number = 2;
 const roadSideTreeSize: number = 256;
@@ -59,7 +38,7 @@ function SpawnTreesBottom() {
 		// add trees to the tree bottom container
 		for (let i = 0; i < 5; i++) {
 
-			const texture = Texture.from("tree_1.png");
+			const texture = Texture.from("tree_2.png");
 			const tree: GameObject = new GameObject(texture);
 
 			tree.x = roadSideTreeSize * i - (xyAdjustment * i);
