@@ -99,6 +99,10 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK, "road_side_walk_1.png"),
 	];
 
+	static degreesToRadians(degrees: number): number {
+		return degrees * (Math.PI / 180);
+	}
+
 	static randomNumberBetween(min: number, max: number): number {
 		// return Math.floor(Math.random() * (max - min) + min);
 		return Math.floor(Math.random() * (max - min + 1)) + min;

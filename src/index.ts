@@ -16,7 +16,9 @@ const app = new Application({
 const defaultSpeed: number = 2;
 const roadTreeSize: number = 450;
 const roadSideWalkSize: number = 450;
-const xyAdjustment: number = 31.5;
+
+const roadTreeXyAdjustment: number = 31.5;
+const roadSideWalkXyAdjustment: number = 48;
 
 const roadTreeBottomContainers: Array<GameObjectContainer> = [];
 const roadTreeTopContainers: Array<GameObjectContainer> = [];
@@ -42,7 +44,7 @@ function SpawnTreesTop() {
 		treeContainer.x = -1500;
 		treeContainer.y = -1500;
 		treeContainer.width = roadTreeSize * 5;
-		treeContainer.height = roadTreeSize / 2 * 5;		
+		treeContainer.height = roadTreeSize / 2 * 5;
 
 		// add trees to the tree top container
 		for (let i = 0; i < 5; i++) {
@@ -51,8 +53,8 @@ function SpawnTreesTop() {
 			const texture = Texture.from(uri);
 			const tree: GameObject = new GameObject(texture);
 
-			tree.x = roadTreeSize * i - (xyAdjustment * i);
-			tree.y = (roadTreeSize / 2) * i - ((xyAdjustment / 2) * i);
+			tree.x = roadTreeSize * i - (roadTreeXyAdjustment * i);
+			tree.y = (roadTreeSize / 2) * i - ((roadTreeXyAdjustment / 2) * i);
 			tree.width = roadTreeSize;
 			tree.height = roadTreeSize;
 
@@ -110,7 +112,7 @@ function SpawnTreesBottom() {
 		treeContainer.x = -1500;
 		treeContainer.y = -1500;
 		treeContainer.width = roadTreeSize * 5;
-		treeContainer.height = roadTreeSize / 2 * 5;		
+		treeContainer.height = roadTreeSize / 2 * 5;
 
 		// add trees to the tree bottom container
 		for (let i = 0; i < 5; i++) {
@@ -119,8 +121,8 @@ function SpawnTreesBottom() {
 			const texture = Texture.from(uri);
 			const tree: GameObject = new GameObject(texture);
 
-			tree.x = roadTreeSize * i - (xyAdjustment * i);
-			tree.y = (roadTreeSize / 2) * i - ((xyAdjustment / 2) * i);
+			tree.x = roadTreeSize * i - (roadTreeXyAdjustment * i);
+			tree.y = (roadTreeSize / 2) * i - ((roadTreeXyAdjustment / 2) * i);
 			tree.width = roadTreeSize;
 			tree.height = roadTreeSize;
 
@@ -191,10 +193,14 @@ function SpawnSideWalksTop() {
 			const texture = Texture.from(uri);
 			const sideWalk: GameObject = new GameObject(texture);
 
-			sideWalk.x = roadSideWalkSize * i - (xyAdjustment * i);
-			sideWalk.y = (roadSideWalkSize / 2) * i - ((xyAdjustment / 2) * i);
+			sideWalk.x = roadSideWalkSize * i - (roadSideWalkXyAdjustment * i);
+			sideWalk.y = (roadSideWalkSize / 2) * i - ((roadSideWalkXyAdjustment / 2) * i);
 			sideWalk.width = roadSideWalkSize;
 			sideWalk.height = roadSideWalkSize;
+
+			sideWalk.anchor.set(0.5, 0.5);
+			sideWalk.rotation = Constants.degreesToRadians(-63.5);
+			sideWalk.skew.set(0, Constants.degreesToRadians(36));
 
 			sideWalkContainer.addChild(sideWalk);
 		}
@@ -233,7 +239,7 @@ function AnimateSideWalksTop() {
 			container.x += defaultSpeed;
 			container.y += defaultSpeed / 2;
 
-			if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+			if (container.x - (roadSideWalkSize + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 				container.x = -1500;
 				container.y = -1500;
 				container.isAnimating = false;
