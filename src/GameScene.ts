@@ -503,9 +503,8 @@ export class GameScene extends Container implements IScene {
 		this.AnimateTreesBottom();
 	}
 
-	public resize(scale: number): void {
+	public resize(scale: number): void {		
 		this.scale.set(scale);
-
 		console.log("Scale: " + scale);
 	}
 
