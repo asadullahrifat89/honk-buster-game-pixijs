@@ -23,7 +23,7 @@ conty.addChild(clampy);
 
 app.ticker.add(() => {
 
-	clampy.x += 0.5;
+	clampy.x += 1;
 	// clampy.y += 0.5;
 	// clampy.rotation += 0.01;
 
