@@ -9,8 +9,8 @@ const app = new Application({
 	resolution: window.devicePixelRatio || 1,
 	autoDensity: true,
 	backgroundColor: 0x6495ed,
-	width: 1900,
-	height: 940,
+	width: Constants.DEFAULT_GAME_VIEW_WIDTH,
+	height: Constants.DEFAULT_GAME_VIEW_HEIGHT,
 	resizeTo: window
 });
 
@@ -46,8 +46,7 @@ function SpawnTreesTop() {
 		for (let i = 0; i < 5; i++) {
 
 			const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_TREE);
-
-			const texture = Texture.from(uri); //Texture.from("tree_1.png");
+			const texture = Texture.from(uri);
 			const tree: GameObject = new GameObject(texture);
 
 			tree.x = roadSideTreeSize * i - (xyAdjustment * i);
@@ -90,7 +89,7 @@ function AnimateTreesTop() {
 			container.x += defaultSpeed;
 			container.y += defaultSpeed / 2;
 
-			if (container.x > app.screen.width || container.y > app.screen.height) {
+			if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 				container.x = -1500;
 				container.y = -1500;
 				container.isAnimating = false;
@@ -118,7 +117,8 @@ function SpawnTreesBottom() {
 		// add trees to the tree bottom container
 		for (let i = 0; i < 5; i++) {
 
-			const texture = Texture.from("tree_2.png");
+			const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_TREE);
+			const texture = Texture.from(uri);
 			const tree: GameObject = new GameObject(texture);
 
 			tree.x = roadSideTreeSize * i - (xyAdjustment * i);
@@ -161,7 +161,7 @@ function AnimateTreesBottom() {
 			container.x += defaultSpeed;
 			container.y += defaultSpeed / 2;
 
-			if (container.x > app.screen.width || container.y > app.screen.height) {
+			if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 				container.x = -1500;
 				container.y = -1500;
 				container.isAnimating = false;
