@@ -95,7 +95,8 @@ export abstract class Constants {
 
 	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
 		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_2.png")
+		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_2.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK, "road_side_walk_1.png"),
 	];
 
 	static randomNumberBetween(min: number, max: number): number {
