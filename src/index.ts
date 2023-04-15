@@ -1,19 +1,35 @@
-import { Application, Sprite } from 'pixi.js'
+import { Application, Sprite, Container } from 'pixi.js'
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
 	resolution: window.devicePixelRatio || 1,
 	autoDensity: true,
 	backgroundColor: 0x6495ed,
-	width: 640,
-	height: 480
+	width: 1900,
+	height: 940
 });
 
+const conty: Container = new Container();
+conty.x = 0;
+conty.y = 0;
+app.stage.addChild(conty);
+
 const clampy: Sprite = Sprite.from("clampy.png");
+clampy.x = 0;
+clampy.y = 0;
+clampy.width = 100;
+clampy.height = 100;
+conty.addChild(clampy);
 
-clampy.anchor.set(0.5);
+app.ticker.add(() => {
 
-clampy.x = app.screen.width / 2;
-clampy.y = app.screen.height / 2;
+	clampy.x += 0.5;
+	// clampy.y += 0.5;
+	// clampy.rotation += 0.01;
 
-app.stage.addChild(clampy);
+	if (clampy.x > app.screen.width) {
+		clampy.x = 0;
+	}
+
+
+});

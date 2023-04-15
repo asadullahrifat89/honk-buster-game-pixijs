@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\static"
   ],
-  "SelectedNode": "\\H:\\Work\\Personal\\Code\\honk-buster-game-pixijs",
+  "SelectedNode": "\\src\\index.ts",
   "PreviewInSolutionExplorer": false
 }
