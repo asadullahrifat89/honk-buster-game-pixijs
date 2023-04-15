@@ -1,35 +1,109 @@
-import { Application, Sprite, Container } from 'pixi.js'
+import { Application, Sprite, Container, Texture } from 'pixi.js'
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
 	resolution: window.devicePixelRatio || 1,
 	autoDensity: true,
-	backgroundColor: 0x6495ed,
+	// backgroundColor: 0x6495ed,
 	width: 1900,
 	height: 940
 });
 
-const conty: Container = new Container();
-conty.x = 0;
-conty.y = 0;
-app.stage.addChild(conty);
+class GameObjectContainer extends Container {
 
-const clampy: Sprite = Sprite.from("clampy.png");
-clampy.x = 0;
-clampy.y = 0;
-clampy.width = 100;
-clampy.height = 100;
-conty.addChild(clampy);
+	public isAnimating: boolean = false;
+
+	constructor() {
+		super();
+		this.isAnimating = false;
+
+	}
+}
+
+class GameObject extends Sprite {
+
+	public isAnimating: boolean = false;
+
+	constructor(texture: Texture) {
+		super();
+
+		this.isAnimating = false;
+		this.texture = texture;
+
+	}
+
+	setContent(texture: Texture) {
+		this.texture = texture;
+	}
+}
+
+const defaultSpeed: number = 2;
+const roadSideTreeSize: number = 256;
+const xyAdjustment: number = 31.5;
+
+const treeBottomContainers: Array<GameObjectContainer> = [];
+
+let treePopDelay: number = 36;
+
+// add tree bottom containers
+for (let j = 0; j < 5; j++) {
+
+	const treeBottomContainer: GameObjectContainer = new GameObjectContainer();
+	treeBottomContainer.x = -1500;
+	treeBottomContainer.y = -1500;
+	treeBottomContainer.width = roadSideTreeSize * 5;
+	treeBottomContainer.height = roadSideTreeSize / 2 * 5;
+	app.stage.addChild(treeBottomContainer);
+
+	// add trees to the tree bottom container
+	for (let i = 0; i < 5; i++) {
+
+		const texture = Texture.from("tree_1.png");
+		const tree: GameObject = new GameObject(texture);
+
+		tree.x = roadSideTreeSize * i - (xyAdjustment * i);
+		tree.y = (roadSideTreeSize / 2) * i - ((xyAdjustment / 2) * i);
+		tree.width = roadSideTreeSize;
+		tree.height = roadSideTreeSize;
+
+		treeBottomContainer.addChild(tree);
+	}
+
+	treeBottomContainers.push(treeBottomContainer);
+}
 
 app.ticker.add(() => {
 
-	clampy.x += 1;
-	// clampy.y += 0.5;
-	// clampy.rotation += 0.01;
+	treePopDelay -= 0.1;
 
-	if (clampy.x > app.screen.width) {
-		clampy.x = 0;
+	if (treePopDelay < 0) {
+
+		var treeBottomContainer = treeBottomContainers.find(x => x.isAnimating == false);
+
+		if (treeBottomContainer) {
+			treeBottomContainer.x = treeBottomContainer.width * -1.1;
+			treeBottomContainer.y = (app.screen.height * -1);
+			treeBottomContainer.isAnimating = true;
+			treePopDelay = 36;
+
+			console.log("Tree bottom container popped.");
+		}
 	}
 
+	var animatingTrees = treeBottomContainers.filter(x => x.isAnimating == true);
+
+	if (animatingTrees) {
+
+		animatingTrees.forEach(container => {
+			container.x += defaultSpeed;
+			container.y += defaultSpeed / 2;
+
+			if (container.x > app.screen.width || container.y > app.screen.height) {
+				container.x = -1500;
+				container.y = -1500;
+				container.isAnimating = false;
+			}
+		});
+	}
 
 });
