@@ -7,7 +7,7 @@ const app = new Application({
 	view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
 	resolution: window.devicePixelRatio || 1,
 	autoDensity: true,
-	backgroundColor: 0x6495ed,
+	backgroundColor: 0x464646,
 	width: Constants.DEFAULT_GAME_VIEW_WIDTH,
 	height: Constants.DEFAULT_GAME_VIEW_HEIGHT,
 	resizeTo: window
@@ -16,11 +16,12 @@ const app = new Application({
 const defaultSpeed: number = 2;
 const roadTreeSizeWidth: number = 450;
 const roadTreeSizeHeight: number = 450;
-const roadSideWalkWidth: number = 256;
-const roadSideWalkHeight: number = 152;
+
+const roadSideWalkWidth: number = 450;
+const roadSideWalkHeight: number = 450;
 
 const roadTreeXyAdjustment: number = 31.5;
-const roadSideWalkXyAdjustment: number = 101.5;
+const roadSideWalkXyAdjustment: number = 111.5;
 
 const roadTreeBottomContainers: Array<GameObjectContainer> = [];
 const roadTreeTopContainers: Array<GameObjectContainer> = [];
@@ -28,13 +29,13 @@ const roadTreeTopContainers: Array<GameObjectContainer> = [];
 const roadSideWalkTopContainers: Array<GameObjectContainer> = [];
 const roadSideWalkBottomContainers: Array<GameObjectContainer> = [];
 
+let roadTreePopDelayDefault: number = 100;
 let roadTreePopDelayTop: number = 0;
 let roadTreePopDelayBottom: number = 0;
-let roadTreePopDelayDefault: number = 100;
 
+let roadSideWalkPopDelayDefault: number = 90;
 let roadSideWalkPopDelayTop: number = 0;
 let roadSideWalkPopDelayBottom: number = 0;
-let roadSideWalkPopDelayDefault: number = 30;
 
 //#region Trees 
 
@@ -195,8 +196,8 @@ function SpawnSideWalksTop() {
 			const texture = Texture.from(uri);
 			const sideWalk: GameObject = new GameObject(texture);
 
-			sideWalk.x = roadSideWalkWidth * i - (roadSideWalkXyAdjustment * 1.3 * i);
-			sideWalk.y = (roadSideWalkHeight) * i - ((roadSideWalkXyAdjustment / 1.13) * i);
+			sideWalk.x = roadSideWalkWidth * i - (roadSideWalkXyAdjustment * i);
+			sideWalk.y = (roadSideWalkHeight / 2) * i - ((roadSideWalkXyAdjustment / 2) * i);
 
 			sideWalk.width = roadSideWalkWidth;
 			sideWalk.height = roadSideWalkHeight;
@@ -222,7 +223,7 @@ function GenerateSideWalksTop() {
 		var container = roadSideWalkTopContainers.find(x => x.isAnimating == false);
 
 		if (container) {
-			container.x = 350;
+			container.x = -945;
 			container.y = container.height * -1;
 			container.isAnimating = true;
 			roadSideWalkPopDelayTop = roadSideWalkPopDelayDefault;
@@ -268,8 +269,8 @@ function SpawnSideWalksBottom() {
 			const texture = Texture.from(uri);
 			const sideWalk: GameObject = new GameObject(texture);
 
-			sideWalk.x = roadSideWalkWidth * i - (roadSideWalkXyAdjustment * 1.3 * i);
-			sideWalk.y = (roadSideWalkHeight) * i - ((roadSideWalkXyAdjustment / 1.13) * i);
+			sideWalk.x = roadSideWalkWidth * i - (roadSideWalkXyAdjustment * i);
+			sideWalk.y = (roadSideWalkHeight / 2) * i - ((roadSideWalkXyAdjustment / 2) * i);
 
 			sideWalk.width = roadSideWalkWidth;
 			sideWalk.height = roadSideWalkHeight;
@@ -296,7 +297,7 @@ function GenerateSideWalksBottom() {
 
 		if (container) {
 			container.x = container.width * -1;
-			container.y = 250;
+			container.y = -435;
 			container.isAnimating = true;
 			roadSideWalkPopDelayBottom = roadSideWalkPopDelayDefault;
 
