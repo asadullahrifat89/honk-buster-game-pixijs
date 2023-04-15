@@ -1,7 +1,6 @@
 import { Application, Texture } from 'pixi.js'
 import { GameObject } from './GameObject';
 import { GameObjectContainer } from './GameObjectContainer';
-// import { ConstructTemplate } from './ConstructTemplate';
 import { Constants, ConstructType } from './Constants';
 
 const app = new Application({
@@ -28,8 +27,6 @@ let treePopDelayDefault: number = 100;
 
 //#region Trees 
 
-//#region Top
-
 function SpawnTreesTop() {
 
 	for (let j = 0; j < 5; j++) {
@@ -38,11 +35,9 @@ function SpawnTreesTop() {
 		treeContainer.x = -1500;
 		treeContainer.y = -1500;
 		treeContainer.width = roadSideTreeSize * 5;
-		treeContainer.height = roadSideTreeSize / 2 * 5;
+		treeContainer.height = roadSideTreeSize / 2 * 5;		
 
-		app.stage.addChild(treeContainer);
-
-		// add trees to the tree bottom container
+		// add trees to the tree top container
 		for (let i = 0; i < 5; i++) {
 
 			const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_TREE);
@@ -58,6 +53,7 @@ function SpawnTreesTop() {
 		}
 
 		treeTopContainers.push(treeContainer);
+		app.stage.addChild(treeContainer);
 	}
 }
 
@@ -81,6 +77,7 @@ function GenerateTreesTop() {
 }
 
 function AnimateTreesTop() {
+
 	var animatingTrees = treeTopContainers.filter(x => x.isAnimating == true);
 
 	if (animatingTrees) {
@@ -98,10 +95,6 @@ function AnimateTreesTop() {
 	}
 }
 
-//#endregion
-
-//#region Bottom
-
 function SpawnTreesBottom() {
 
 	for (let j = 0; j < 5; j++) {
@@ -110,9 +103,7 @@ function SpawnTreesBottom() {
 		treeContainer.x = -1500;
 		treeContainer.y = -1500;
 		treeContainer.width = roadSideTreeSize * 5;
-		treeContainer.height = roadSideTreeSize / 2 * 5;
-
-		app.stage.addChild(treeContainer);
+		treeContainer.height = roadSideTreeSize / 2 * 5;		
 
 		// add trees to the tree bottom container
 		for (let i = 0; i < 5; i++) {
@@ -130,6 +121,7 @@ function SpawnTreesBottom() {
 		}
 
 		treeBottomContainers.push(treeContainer);
+		app.stage.addChild(treeContainer);
 	}
 }
 
@@ -153,6 +145,7 @@ function GenerateTreesBottom() {
 }
 
 function AnimateTreesBottom() {
+
 	var animatingTrees = treeBottomContainers.filter(x => x.isAnimating == true);
 
 	if (animatingTrees) {
@@ -172,15 +165,12 @@ function AnimateTreesBottom() {
 
 //#endregion
 
-//#endregion
-
 // spawn game objects
 SpawnTreesTop();
 SpawnTreesBottom();
 
 // the ticker 
 app.ticker.add(() => {
-
 	GenerateTreesTop();
 	GenerateTreesBottom();
 
