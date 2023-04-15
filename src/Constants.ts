@@ -107,8 +107,7 @@ export abstract class Constants {
 		return degrees * (Math.PI / 180);
 	}
 
-	static randomNumberBetween(min: number, max: number): number {
-		// return Math.floor(Math.random() * (max - min) + min);
+	static randomNumberBetween(min: number, max: number): number {		
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 

@@ -473,8 +473,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region Clouds	
 
-	private roadCloudSizeWidth: number = 512;
-	private roadCloudSizeHeight: number = 350;
+	private roadCloudSizeWidth: number = 512 / 2;
+	private roadCloudSizeHeight: number = 350 / 2;
 
 	private roadCloudContainers: Array<GameObjectContainer> = [];
 
@@ -485,7 +485,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const cloudContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			const cloudContainer: GameObjectContainer = new GameObjectContainer(Constants.randomNumberBetween(1, this.defaultSpeed + 2));
 			cloudContainer.x = -1500;
 			cloudContainer.y = -1500;
 			cloudContainer.width = this.roadCloudSizeWidth;
@@ -499,8 +499,10 @@ export class GameScene extends Container implements IScene {
 			cloud.y = 0;
 			cloud.width = this.roadCloudSizeWidth;
 			cloud.height = this.roadCloudSizeHeight;
-
+			//cloud.filters = [new BlurFilter(4, 10)];
 			cloudContainer.addChild(cloud);
+
+			//cloudContainer.filters = [new BlurFilter(2, 10)];
 
 			this.roadCloudContainers.push(cloudContainer);
 			this.addChild(cloudContainer);
@@ -513,16 +515,36 @@ export class GameScene extends Container implements IScene {
 
 		if (this.roadCloudPopDelay < 0) {
 
-			var container = this.roadCloudContainers.find(x => x.isAnimating == false);
+			var cloud = this.roadCloudContainers.find(x => x.isAnimating == false);
 
-			if (container) {
+			if (cloud) {
 
-				//TODO: switch lane
+				cloud.speed = Constants.randomNumberBetween(1, this.defaultSpeed + 2);
+				var topOrLeft = Constants.randomNumberBetween(0, 2);
 
-				container.isAnimating = true;
+				switch (topOrLeft) {
+					case 0: {
+						var xLaneWidth = Constants.DEFAULT_GAME_VIEW_WIDTH / 4;
+
+						cloud.x = Constants.randomNumberBetween(0, xLaneWidth - cloud.width);
+						cloud.y = cloud.height * -1;
+
+						break;
+					}
+					case 1: {
+						var yLaneWidth = (Constants.DEFAULT_GAME_VIEW_HEIGHT / 2) / 2;
+
+						cloud.x = cloud.width * -1;
+						cloud.y = Constants.randomNumberBetween(0, yLaneWidth);
+
+						break;
+					}
+					default:
+						break;
+				}
+
+				cloud.isAnimating = true;
 				this.roadCloudPopDelay = this.roadCloudPopDelayDefault;
-
-				// console.log("Cloud bottom container popped.");
 			}
 		}
 	}
@@ -537,7 +559,7 @@ export class GameScene extends Container implements IScene {
 				container.x += container.speed;
 				container.y += container.speed / 2;
 
-				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.x = -1500;
 					container.y = -1500;
 					container.isAnimating = false;
@@ -590,5 +612,4 @@ export class GameScene extends Container implements IScene {
 		this.scale.set(scale);
 		console.log("Scale: " + scale);
 	}
-
 }
