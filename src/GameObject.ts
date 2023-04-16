@@ -1,21 +1,14 @@
-import { Sprite, Texture } from 'pixi.js';
-import { ConstructType } from './Constants';
+import { Container } from 'pixi.js';
+import { GameObjectSprite } from './GameObjectSprite';
 
-export class GameObjectSprite extends Sprite {
+export class GameObject extends Container {
 
 	public isAnimating: boolean = false;
 	public speed: number = 3;
-	public ConstructType: ConstructType = 0;
 
-	constructor(texture: Texture, constructType: ConstructType, speed: number) {
+	constructor(speed: number) {
 		super();
-		this.texture = texture;
-		this.ConstructType = constructType;
 		this.speed = speed;
-	}
-
-	setTexture(texture: Texture) {
-		this.texture = texture;
 	}
 
 	moveOutOfSight() {
@@ -26,5 +19,45 @@ export class GameObjectSprite extends Sprite {
 	setPosition(x: number, y: number) {
 		this.x = x;
 		this.y = y;
+	}
+
+	moveUp() {
+		this.y -= this.speed;
+	}
+
+	moveDown() {
+		this.y += this.speed;
+	}
+
+	moveLeft() {
+		this.x -= this.speed;
+	}
+
+	moveRight() {
+		this.x += this.speed;
+	}
+
+	moveUpRight() {
+		this.x += this.speed;
+		this.y -= this.speed / 2;
+	}
+
+	moveUpLeft() {
+		this.x -= this.speed;
+		this.y -= this.speed / 2;
+	}
+
+	moveDownLeft() {
+		this.x -= this.speed;
+		this.y += this.speed / 2;
+	}
+
+	moveDownRight() {
+		this.x += this.speed;
+		this.y += this.speed / 2;
+	}
+
+	getFirstChild(): GameObjectSprite {
+		return this.children[0] as GameObjectSprite;
 	}
 }

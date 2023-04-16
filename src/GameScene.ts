@@ -1,9 +1,8 @@
 import { Container, Texture } from "pixi.js";
 import { IScene } from "./IScene";
-import { GameObjectSprite } from './GameObject';
-import { GameObjectContainer } from './GameObjectContainer';
+import { GameObjectSprite } from './GameObjectSprite';
+import { GameObject } from './GameObject';
 import { Constants, ConstructType } from './Constants';
-
 
 export class GameScene extends Container implements IScene {
 
@@ -22,8 +21,8 @@ export class GameScene extends Container implements IScene {
 	private roadTreeSizeWidth: number = 450;
 	private roadTreeSizeHeight: number = 450;
 
-	private roadTreeBottomContainers: Array<GameObjectContainer> = [];
-	private roadTreeTopContainers: Array<GameObjectContainer> = [];
+	private roadTreeBottomContainers: Array<GameObject> = [];
+	private roadTreeTopContainers: Array<GameObject> = [];
 
 	private roadTreePopDelayDefault: number = 70;
 	private roadTreePopDelayTop: number = 0;
@@ -33,7 +32,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const container: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			const container: GameObject = new GameObject(this.defaultSpeed);
 			container.moveOutOfSight();
 			container.width = this.roadTreeSizeWidth * 5;
 			container.height = this.roadTreeSizeHeight / 2 * 5;
@@ -62,7 +61,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const container: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			const container: GameObject = new GameObject(this.defaultSpeed);
 			container.moveOutOfSight();
 			container.width = this.roadTreeSizeWidth * 5;
 			container.height = this.roadTreeSizeHeight / 2 * 5;
@@ -164,8 +163,8 @@ export class GameScene extends Container implements IScene {
 	private roadHedgeSizeWidth: number = 450;
 	private roadHedgeSizeHeight: number = 450;
 
-	private roadHedgeBottomContainers: Array<GameObjectContainer> = [];
-	private roadHedgeTopContainers: Array<GameObjectContainer> = [];
+	private roadHedgeBottomContainers: Array<GameObject> = [];
+	private roadHedgeTopContainers: Array<GameObject> = [];
 
 	private roadHedgePopDelayDefault: number = 70;
 	private roadHedgePopDelayTop: number = 0;
@@ -175,7 +174,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const container: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			const container: GameObject = new GameObject(this.defaultSpeed);
 			container.moveOutOfSight();
 			container.width = this.roadHedgeSizeWidth * 5;
 			container.height = this.roadHedgeSizeHeight / 2 * 5;
@@ -204,7 +203,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const container: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			const container: GameObject = new GameObject(this.defaultSpeed);
 			container.moveOutOfSight();
 			container.width = this.roadHedgeSizeWidth * 5;
 			container.height = this.roadHedgeSizeHeight / 2 * 5;
@@ -310,8 +309,8 @@ export class GameScene extends Container implements IScene {
 	private roadSideWalkWidth: number = 450;
 	private roadSideWalkHeight: number = 450;
 
-	private roadSideWalkTopContainers: Array<GameObjectContainer> = [];
-	private roadSideWalkBottomContainers: Array<GameObjectContainer> = [];
+	private roadSideWalkTopContainers: Array<GameObject> = [];
+	private roadSideWalkBottomContainers: Array<GameObject> = [];
 
 	private roadSideWalkPopDelayDefault: number = 50;
 	private roadSideWalkPopDelayTop: number = 0;
@@ -321,7 +320,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const container: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			const container: GameObject = new GameObject(this.defaultSpeed);
 			container.moveOutOfSight();
 			container.width = this.roadSideWalkWidth * 5;
 			container.height = this.roadSideWalkHeight / 2 * 5;
@@ -355,7 +354,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const container: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			const container: GameObject = new GameObject(this.defaultSpeed);
 			container.moveOutOfSight();
 			container.width = this.roadSideWalkWidth * 5;
 			container.height = this.roadSideWalkHeight / 2 * 5;
@@ -460,7 +459,7 @@ export class GameScene extends Container implements IScene {
 	private roadCloudSizeWidth: number = 512 / 2;
 	private roadCloudSizeHeight: number = 350 / 2;
 
-	private roadCloudContainers: Array<GameObjectContainer> = [];
+	private roadCloudContainers: Array<GameObject> = [];
 
 	private roadCloudPopDelayDefault: number = 70;
 	private roadCloudPopDelay: number = 0;
@@ -469,7 +468,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const container: GameObjectContainer = new GameObjectContainer(Constants.randomNumberBetween(1, this.defaultSpeed + 2));
+			const container: GameObject = new GameObject(Constants.randomNumberBetween(1, this.defaultSpeed + 2));
 			container.moveOutOfSight();
 			container.width = this.roadCloudSizeWidth;
 			container.height = this.roadCloudSizeHeight;
