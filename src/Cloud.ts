@@ -9,13 +9,13 @@ export class Cloud extends GameObject {
     }
 
     reposition() {
-        var topOrLeft = Constants.randomNumberBetween(0, 2);
+        var topOrLeft = Constants.getRandomNumber(0, 2);
 
         switch (topOrLeft) {
             case 0: {
                 var xLaneWidth = Constants.DEFAULT_GAME_VIEW_WIDTH / 4;
 
-                this.x = Constants.randomNumberBetween(0, xLaneWidth - this.width);
+                this.x = Constants.getRandomNumber(0, xLaneWidth - this.width);
                 this.y = this.height * -1;
 
                 break;
@@ -24,7 +24,7 @@ export class Cloud extends GameObject {
                 var yLaneWidth = (Constants.DEFAULT_GAME_VIEW_HEIGHT / 2) / 2;
 
                 this.x = this.width * -1;
-                this.y = Constants.randomNumberBetween(0, yLaneWidth);
+                this.y = Constants.getRandomNumber(0, yLaneWidth);
 
                 break;
             }

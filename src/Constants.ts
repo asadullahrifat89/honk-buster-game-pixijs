@@ -94,6 +94,7 @@ export abstract class Constants {
 
 	public static DEFAULT_GAME_VIEW_WIDTH: number = 1900;
 	public static DEFAULT_GAME_VIEW_HEIGHT: number = 940;
+	public static DEFAULT_CONSTRUCT_SPEED: number = 3;
 
 	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
 		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_1.png"),
@@ -103,20 +104,40 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_1.png"),
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_2.png"),
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_3.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_1.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_2.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_3.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_4.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_5.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_6.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_7.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_8.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_9.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_10.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_11.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_12.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_13.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_14.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_15.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_1.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_2.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_3.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_4.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_5.png"),
 	];
 
 	static degreesToRadians(degrees: number): number {
 		return degrees * (Math.PI / 180);
 	}
 
-	static randomNumberBetween(min: number, max: number): number {
+	static getRandomNumber(min: number, max: number): number {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
 	static getRandomUri(constructType: ConstructType): string {
 
 		const treeTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.ConstructType == constructType);
-		const uri = treeTemplates[this.randomNumberBetween(0, treeTemplates.length - 1)].Uri;
+		const uri = treeTemplates[this.getRandomNumber(0, treeTemplates.length - 1)].Uri;
 
 		return uri;
 	}

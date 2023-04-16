@@ -5,10 +5,17 @@ export class GameObject extends Container {
 
 	public isAnimating: boolean = false;
 	public speed: number = 3;
+	public health: number = 100;
+	public hitPoint: number = 5;
 
 	constructor(speed: number) {
 		super();
 		this.speed = speed;
+	}
+
+	isDead(): boolean {
+
+		return this.health <= 0;
 	}
 
 	moveOutOfSight() {
@@ -66,14 +73,3 @@ export class GameObject extends Container {
 	}
 }
 
-export class VehickeBase extends GameObject {
-	public willHonk: boolean = false;
-
-	constructor(speed: number) {
-		super(speed);
-	}
-
-	reposition() {
-
-	}
-}
