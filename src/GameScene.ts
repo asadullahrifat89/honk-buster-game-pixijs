@@ -394,6 +394,153 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region LightBillboards
+
+	private roadLightBillboardXyAdjustment: number = 31.5;
+	private roadLightBillboardXyDistance = 250;
+
+	private roadLightBillboardSizeWidth: number = 128;
+	private roadLightBillboardSizeHeight: number = 128;
+
+	private roadLightBillboardBottomContainers: Array<GameObject> = [];
+	private roadLightBillboardTopContainers: Array<GameObject> = [];
+
+	private roadLightBillboardPopDelayDefault: number = 70;
+	private roadLightBillboardPopDelayTop: number = 0;
+	private roadLightBillboardPopDelayBottom: number = 0;
+
+	private SpawnLightBillboardsTop() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			container.moveOutOfSight();
+			container.width = this.roadLightBillboardSizeWidth * 5;
+			container.height = this.roadLightBillboardSizeHeight / 2 * 5;
+
+			// container.filters = [new DropShadowFilter()];
+
+			// add trees to the tree top container
+			for (let i = 0; i < 5; i++) {
+
+				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD);
+				const texture = Texture.from(uri);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture);
+
+				sprite.x = (this.roadLightBillboardSizeWidth * i - (this.roadLightBillboardXyAdjustment * i)) + (this.roadLightBillboardXyDistance * i);
+				sprite.y = ((this.roadLightBillboardSizeHeight / 2) * i - ((this.roadLightBillboardXyAdjustment / 2) * i)) + (this.roadLightBillboardXyDistance / 2 * i);
+				sprite.width = this.roadLightBillboardSizeWidth;
+				sprite.height = this.roadLightBillboardSizeHeight;
+
+				container.addChild(sprite);
+			}
+
+			this.roadLightBillboardTopContainers.push(container);
+			this.addChild(container);
+		}
+	}
+
+	private SpawnLightBillboardsBottom() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			container.moveOutOfSight();
+			container.width = this.roadLightBillboardSizeWidth * 5;
+			container.height = this.roadLightBillboardSizeHeight / 2 * 5;
+
+			// container.filters = [new DropShadowFilter()];
+
+			// add trees to the tree bottom container
+			for (let i = 0; i < 5; i++) {
+
+				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD);
+				const texture = Texture.from(uri);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture);
+
+				sprite.x = (this.roadLightBillboardSizeWidth * i - (this.roadLightBillboardXyAdjustment * i)) + (this.roadLightBillboardXyDistance * i);
+				sprite.y = ((this.roadLightBillboardSizeHeight / 2) * i - ((this.roadLightBillboardXyAdjustment / 2) * i)) + (this.roadLightBillboardXyDistance / 2 * i);
+				sprite.width = this.roadLightBillboardSizeWidth;
+				sprite.height = this.roadLightBillboardSizeHeight;
+
+				container.addChild(sprite);
+			}
+
+			this.roadLightBillboardBottomContainers.push(container);
+			this.addChild(container);
+		}
+	}
+
+	private GenerateLightBillboardsTop() {
+
+		this.roadLightBillboardPopDelayTop -= 0.1;
+
+		if (this.roadLightBillboardPopDelayTop < 0) {
+
+			var container = this.roadLightBillboardTopContainers.find(x => x.isAnimating == false);
+
+			if (container) {
+				container.x = -1150;
+				container.y = container.height * -1;
+				container.isAnimating = true;
+				this.roadLightBillboardPopDelayTop = this.roadLightBillboardPopDelayDefault;
+			}
+		}
+	}
+
+	private GenerateLightBillboardsBottom() {
+
+		this.roadLightBillboardPopDelayBottom -= 0.1;
+
+		if (this.roadLightBillboardPopDelayBottom < 0) {
+
+			var container = this.roadLightBillboardBottomContainers.find(x => x.isAnimating == false);
+
+			if (container) {
+				container.x = container.width * -1;
+				container.y = -650;
+				container.isAnimating = true;
+				this.roadLightBillboardPopDelayBottom = this.roadLightBillboardPopDelayDefault;
+			}
+		}
+	}
+
+	private AnimateLightBillboardsTop() {
+
+		var animatingLightBillboards = this.roadLightBillboardTopContainers.filter(x => x.isAnimating == true);
+
+		if (animatingLightBillboards) {
+
+			animatingLightBillboards.forEach(container => {
+				container.moveDownRight();
+
+				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					container.moveOutOfSight();
+					container.isAnimating = false;
+				}
+			});
+		}
+	}
+
+	private AnimateLightBillboardsBottom() {
+
+		var animatingLightBillboards = this.roadLightBillboardBottomContainers.filter(x => x.isAnimating == true);
+
+		if (animatingLightBillboards) {
+
+			animatingLightBillboards.forEach(container => {
+				container.moveDownRight();
+
+				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					container.moveOutOfSight();
+					container.isAnimating = false;
+				}
+			});
+		}
+	}
+
+	//#endregion
+
 	//#region SideWalks
 
 	private roadSideWalkXyAdjustment: number = 111.5;
@@ -713,7 +860,7 @@ export class GameScene extends Container implements IScene {
 
 			animatingVehicleEnemys.forEach(container => {
 
-				container.pop();				
+				container.pop();
 				container.moveDownRight();
 
 				// prevent overlapping
@@ -834,6 +981,7 @@ export class GameScene extends Container implements IScene {
 		this.SpawnRoadMarks();
 
 		this.SpawnSideWalksTop();
+		this.SpawnLightBillboardsTop();
 		this.SpawnHedgesTop();
 		this.SpawnTreesTop();
 
@@ -842,6 +990,7 @@ export class GameScene extends Container implements IScene {
 
 		this.SpawnSideWalksBottom();
 		this.SpawnHedgesBottom();
+		this.SpawnLightBillboardsBottom();
 		this.SpawnTreesBottom();
 
 		this.SpawnClouds();
@@ -855,6 +1004,7 @@ export class GameScene extends Container implements IScene {
 
 		this.GenerateRoadMarks();
 		this.GenerateSideWalksTop();
+		this.GenerateLightBillboardsTop();
 		this.GenerateHedgesTop();
 		this.GenerateTreesTop();
 
@@ -864,6 +1014,7 @@ export class GameScene extends Container implements IScene {
 
 		this.GenerateSideWalksBottom();
 		this.GenerateHedgesBottom();
+		this.GenerateLightBillboardsBottom();
 		this.GenerateTreesBottom();
 
 		this.AnimateRoadMarks();
@@ -871,6 +1022,7 @@ export class GameScene extends Container implements IScene {
 		this.AnimateSideWalksTop();
 		this.AnimateHedgesTop();
 		this.AnimateTreesTop();
+		this.AnimateLightBillboardsTop();
 
 		this.AnimateVehicleEnemys();
 		this.AnimateHonks();
@@ -878,6 +1030,7 @@ export class GameScene extends Container implements IScene {
 		this.AnimateSideWalksBottom();
 		this.AnimateHedgesBottom();
 		this.AnimateTreesBottom();
+		this.AnimateLightBillboardsBottom();
 
 		this.AnimateClouds();
 	}
