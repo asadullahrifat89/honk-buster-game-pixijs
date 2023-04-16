@@ -541,12 +541,12 @@ export class GameScene extends Container implements IScene {
 
 	private roadVehicleEnemyContainers: Array<GameObject> = [];
 
-	private roadVehicleEnemyPopDelayDefault: number = 50;
+	private roadVehicleEnemyPopDelayDefault: number = 40;
 	private roadVehicleEnemyPopDelay: number = 0;
 
 	private SpawnVehicleEnemys() {
 
-		for (let j = 0; j < 5; j++) {
+		for (let j = 0; j < 10; j++) {
 
 			const container: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
 			container.moveOutOfSight();
@@ -571,15 +571,15 @@ export class GameScene extends Container implements IScene {
 				}
 				default: break;
 			}
-			
+
 			const texture = Texture.from(uri);
 			const sprite: GameObjectSprite = new GameObjectSprite(texture, Constants.DEFAULT_CONSTRUCT_SPEED);
 
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.roadVehicleEnemySizeWidth;
-			sprite.height = this.roadVehicleEnemySizeHeight;			
-			container.addChild(sprite);			
+			sprite.height = this.roadVehicleEnemySizeHeight;
+			container.addChild(sprite);
 
 			this.roadVehicleEnemyContainers.push(container);
 			this.addChild(container);
@@ -594,7 +594,7 @@ export class GameScene extends Container implements IScene {
 
 			var container = this.roadVehicleEnemyContainers.find(x => x.isAnimating == false);
 
-			if (container) {				
+			if (container) {
 
 				var vehicleEnemey = container as VehicleEnemy;
 				vehicleEnemey.reposition();
@@ -615,6 +615,22 @@ export class GameScene extends Container implements IScene {
 			animatingVehicleEnemys.forEach(container => {
 				container.moveDownRight();
 
+				//TODO: prevent overlapping
+
+				var collidingVehicleEnemy = this.roadVehicleEnemyContainers.find(x => x.isAnimating == true && x.getBounds().intersects(container.getBounds()));
+
+				if (collidingVehicleEnemy) {
+
+					if (collidingVehicleEnemy.speed > container.speed) // colliding vehicleEnemy is faster
+					{
+						container.speed = collidingVehicleEnemy.speed;
+					}
+					else if (container.speed > collidingVehicleEnemy.speed) // vehicleEnemy is faster
+					{
+						collidingVehicleEnemy.speed = container.speed;
+					}
+				}
+
 				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.moveOutOfSight();
 					container.isAnimating = false;
@@ -632,7 +648,7 @@ export class GameScene extends Container implements IScene {
 	constructor() {
 		super();
 
-		
+
 		this.SpawnSideWalksTop();
 		this.SpawnHedgesTop();
 		this.SpawnTreesTop();
