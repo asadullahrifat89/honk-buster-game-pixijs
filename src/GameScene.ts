@@ -130,8 +130,7 @@ export class GameScene extends Container implements IScene {
 				container.y += container.speed / 2;
 
 				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.x = -1500;
-					container.y = -1500;
+					container.moveOutOfSight();
 					container.isAnimating = false;
 				}
 			});
@@ -149,8 +148,7 @@ export class GameScene extends Container implements IScene {
 				container.y += container.speed / 2;
 
 				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.x = -1500;
-					container.y = -1500;
+					container.moveOutOfSight();
 					container.isAnimating = false;
 				}
 			});
@@ -280,8 +278,7 @@ export class GameScene extends Container implements IScene {
 				container.y += container.speed / 2;
 
 				if (container.x - this.roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.x = -1500;
-					container.y = -1500;
+					container.moveOutOfSight();
 					container.isAnimating = false;
 				}
 			});
@@ -299,8 +296,7 @@ export class GameScene extends Container implements IScene {
 				container.y += container.speed / 2;
 
 				if (container.x - this.roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.x = -1500;
-					container.y = -1500;
+					container.moveOutOfSight();
 					container.isAnimating = false;
 				}
 			});
@@ -436,8 +432,7 @@ export class GameScene extends Container implements IScene {
 				container.y += container.speed / 2;
 
 				if (container.x - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.x = -1500;
-					container.y = -1500;
+					container.moveOutOfSight();
 					container.isAnimating = false;
 				}
 			});
@@ -455,8 +450,7 @@ export class GameScene extends Container implements IScene {
 				container.y += container.speed / 2;
 
 				if (container.x - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.x = -1500;
-					container.y = -1500;
+					container.moveOutOfSight();
 					container.isAnimating = false;
 				}
 			});
@@ -553,8 +547,7 @@ export class GameScene extends Container implements IScene {
 				container.y += container.speed / 2;
 
 				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.x = -1500;
-					container.y = -1500;
+					container.moveOutOfSight();
 					container.isAnimating = false;
 				}
 			});
