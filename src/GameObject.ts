@@ -6,7 +6,7 @@ export class GameObject extends Container {
 	public isAnimating: boolean = false;
 	public speed: number = 3;
 	public health: number = 100;
-	public hitPoint: number = 5;
+	public hitPoint: number = 5;	
 
 	constructor(speed: number) {
 		super();
