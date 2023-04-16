@@ -65,3 +65,15 @@ export class GameObject extends Container {
 		this.getFirstChild().setTexture(texture);
 	}
 }
+
+export class VehickeBase extends GameObject {
+	public willHonk: boolean = false;
+
+	constructor(speed: number) {
+		super(speed);
+	}
+
+	reposition() {
+
+	}
+}

@@ -2,6 +2,7 @@ import { Container, Texture } from "pixi.js";
 import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
+import { Cloud } from "./Cloud";
 import { Constants, ConstructType } from './Constants';
 
 export class GameScene extends Container implements IScene {
@@ -42,14 +43,14 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_TREE);
 				const texture = Texture.from(uri);
-				const tree: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_TREE, this.defaultSpeed);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_TREE, this.defaultSpeed);
 
-				tree.x = this.roadTreeSizeWidth * i - (this.roadTreeXyAdjustment * i);
-				tree.y = (this.roadTreeSizeHeight / 2) * i - ((this.roadTreeXyAdjustment / 2) * i);
-				tree.width = this.roadTreeSizeWidth;
-				tree.height = this.roadTreeSizeHeight;
+				sprite.x = this.roadTreeSizeWidth * i - (this.roadTreeXyAdjustment * i);
+				sprite.y = (this.roadTreeSizeHeight / 2) * i - ((this.roadTreeXyAdjustment / 2) * i);
+				sprite.width = this.roadTreeSizeWidth;
+				sprite.height = this.roadTreeSizeHeight;
 
-				container.addChild(tree);
+				container.addChild(sprite);
 			}
 
 			this.roadTreeTopContainers.push(container);
@@ -71,14 +72,14 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_TREE);
 				const texture = Texture.from(uri);
-				const tree: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_TREE, this.defaultSpeed);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_TREE, this.defaultSpeed);
 
-				tree.x = this.roadTreeSizeWidth * i - (this.roadTreeXyAdjustment * i);
-				tree.y = (this.roadTreeSizeHeight / 2) * i - ((this.roadTreeXyAdjustment / 2) * i);
-				tree.width = this.roadTreeSizeWidth;
-				tree.height = this.roadTreeSizeHeight;
+				sprite.x = this.roadTreeSizeWidth * i - (this.roadTreeXyAdjustment * i);
+				sprite.y = (this.roadTreeSizeHeight / 2) * i - ((this.roadTreeXyAdjustment / 2) * i);
+				sprite.width = this.roadTreeSizeWidth;
+				sprite.height = this.roadTreeSizeHeight;
 
-				container.addChild(tree);
+				container.addChild(sprite);
 			}
 
 			this.roadTreeBottomContainers.push(container);
@@ -184,14 +185,14 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_HEDGE);
 				const texture = Texture.from(uri);
-				const hedge: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_HEDGE, this.defaultSpeed);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_HEDGE, this.defaultSpeed);
 
-				hedge.x = this.roadHedgeSizeWidth * i - (this.roadHedgeXyAdjustment * i);
-				hedge.y = (this.roadHedgeSizeHeight / 2) * i - ((this.roadHedgeXyAdjustment / 2) * i);
-				hedge.width = this.roadHedgeSizeWidth;
-				hedge.height = this.roadHedgeSizeHeight;
+				sprite.x = this.roadHedgeSizeWidth * i - (this.roadHedgeXyAdjustment * i);
+				sprite.y = (this.roadHedgeSizeHeight / 2) * i - ((this.roadHedgeXyAdjustment / 2) * i);
+				sprite.width = this.roadHedgeSizeWidth;
+				sprite.height = this.roadHedgeSizeHeight;
 
-				container.addChild(hedge);
+				container.addChild(sprite);
 			}
 
 			this.roadHedgeTopContainers.push(container);
@@ -213,14 +214,14 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_HEDGE);
 				const texture = Texture.from(uri);
-				const hedge: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_HEDGE, this.defaultSpeed);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_HEDGE, this.defaultSpeed);
 
-				hedge.x = this.roadHedgeSizeWidth * i - (this.roadHedgeXyAdjustment * i);
-				hedge.y = (this.roadHedgeSizeHeight / 2) * i - ((this.roadHedgeXyAdjustment / 2) * i);
-				hedge.width = this.roadHedgeSizeWidth;
-				hedge.height = this.roadHedgeSizeHeight;
+				sprite.x = this.roadHedgeSizeWidth * i - (this.roadHedgeXyAdjustment * i);
+				sprite.y = (this.roadHedgeSizeHeight / 2) * i - ((this.roadHedgeXyAdjustment / 2) * i);
+				sprite.width = this.roadHedgeSizeWidth;
+				sprite.height = this.roadHedgeSizeHeight;
 
-				container.addChild(hedge);
+				container.addChild(sprite);
 			}
 
 			this.roadHedgeBottomContainers.push(container);
@@ -330,19 +331,19 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_WALK);
 				const texture = Texture.from(uri);
-				const sideWalk: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_WALK, this.defaultSpeed);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_WALK, this.defaultSpeed);
 
-				sideWalk.x = this.roadSideWalkWidth * i - (this.roadSideWalkXyAdjustment * i);
-				sideWalk.y = (this.roadSideWalkHeight / 2) * i - ((this.roadSideWalkXyAdjustment / 2) * i);
+				sprite.x = this.roadSideWalkWidth * i - (this.roadSideWalkXyAdjustment * i);
+				sprite.y = (this.roadSideWalkHeight / 2) * i - ((this.roadSideWalkXyAdjustment / 2) * i);
 
-				sideWalk.width = this.roadSideWalkWidth;
-				sideWalk.height = this.roadSideWalkHeight;
+				sprite.width = this.roadSideWalkWidth;
+				sprite.height = this.roadSideWalkHeight;
 
 				//sideWalk.anchor.set(0.5, 0.5);
 				//sideWalk.rotation = Constants.degreesToRadians(-63.5);
 				//sideWalk.skew.set(0, Constants.degreesToRadians(37));
 
-				container.addChild(sideWalk);
+				container.addChild(sprite);
 			}
 
 			this.roadSideWalkTopContainers.push(container);
@@ -364,19 +365,19 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_WALK);
 				const texture = Texture.from(uri);
-				const sideWalk: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_WALK, this.defaultSpeed);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_WALK, this.defaultSpeed);
 
-				sideWalk.x = this.roadSideWalkWidth * i - (this.roadSideWalkXyAdjustment * i);
-				sideWalk.y = (this.roadSideWalkHeight / 2) * i - ((this.roadSideWalkXyAdjustment / 2) * i);
+				sprite.x = this.roadSideWalkWidth * i - (this.roadSideWalkXyAdjustment * i);
+				sprite.y = (this.roadSideWalkHeight / 2) * i - ((this.roadSideWalkXyAdjustment / 2) * i);
 
-				sideWalk.width = this.roadSideWalkWidth;
-				sideWalk.height = this.roadSideWalkHeight;
+				sprite.width = this.roadSideWalkWidth;
+				sprite.height = this.roadSideWalkHeight;
 
 				//sideWalk.anchor.set(0.5, 0.5);
 				//sideWalk.rotation = Constants.degreesToRadians(-63.5);
 				//sideWalk.skew.set(0, Constants.degreesToRadians(37));
 
-				container.addChild(sideWalk);
+				container.addChild(sprite);
 			}
 
 			this.roadSideWalkBottomContainers.push(container);
@@ -468,21 +469,21 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const container: GameObject = new GameObject(Constants.randomNumberBetween(1, this.defaultSpeed + 2));
+			const container: Cloud = new Cloud(Constants.randomNumberBetween(1, this.defaultSpeed + 2));
 			container.moveOutOfSight();
 			container.width = this.roadCloudSizeWidth;
 			container.height = this.roadCloudSizeHeight;
 
 			const uri = Constants.getRandomUri(ConstructType.CLOUD);
 			const texture = Texture.from(uri);
-			const cloud: GameObjectSprite = new GameObjectSprite(texture, ConstructType.CLOUD, this.defaultSpeed);
+			const sprite: GameObjectSprite = new GameObjectSprite(texture, ConstructType.CLOUD, this.defaultSpeed);
 
-			cloud.x = 0;
-			cloud.y = 0;
-			cloud.width = this.roadCloudSizeWidth;
-			cloud.height = this.roadCloudSizeHeight;
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.roadCloudSizeWidth;
+			sprite.height = this.roadCloudSizeHeight;
 			//cloud.filters = [new BlurFilter(4, 10)];
-			container.addChild(cloud);
+			container.addChild(sprite);
 
 			//cloudContainer.filters = [new BlurFilter(2, 10)];
 
@@ -502,30 +503,10 @@ export class GameScene extends Container implements IScene {
 			if (cloud) {
 
 				cloud.changeTexture(Constants.getRandomTexture(ConstructType.CLOUD));
-
 				cloud.speed = Constants.randomNumberBetween(1, this.defaultSpeed + 2);
-				var topOrLeft = Constants.randomNumberBetween(0, 2);
 
-				switch (topOrLeft) {
-					case 0: {
-						var xLaneWidth = Constants.DEFAULT_GAME_VIEW_WIDTH / 4;
-
-						cloud.x = Constants.randomNumberBetween(0, xLaneWidth - cloud.width);
-						cloud.y = cloud.height * -1;
-
-						break;
-					}
-					case 1: {
-						var yLaneWidth = (Constants.DEFAULT_GAME_VIEW_HEIGHT / 2) / 2;
-
-						cloud.x = cloud.width * -1;
-						cloud.y = Constants.randomNumberBetween(0, yLaneWidth);
-
-						break;
-					}
-					default:
-						break;
-				}
+				var cloud1 = cloud as Cloud;
+				cloud1.reposition();
 
 				cloud.isAnimating = true;
 				this.roadCloudPopDelay = this.roadCloudPopDelayDefault;
