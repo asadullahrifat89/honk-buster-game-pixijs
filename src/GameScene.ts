@@ -405,7 +405,7 @@ export class GameScene extends Container implements IScene {
 	private roadLightBillboardBottomContainers: Array<GameObject> = [];
 	private roadLightBillboardTopContainers: Array<GameObject> = [];
 
-	private roadLightBillboardPopDelayDefault: number = 70;
+	private roadLightBillboardPopDelayDefault: number = 57;
 	private roadLightBillboardPopDelayTop: number = 0;
 	private roadLightBillboardPopDelayBottom: number = 0;
 
@@ -480,7 +480,7 @@ export class GameScene extends Container implements IScene {
 			var container = this.roadLightBillboardTopContainers.find(x => x.isAnimating == false);
 
 			if (container) {
-				container.x = -1150;
+				container.x = -480;
 				container.y = container.height * -1;
 				container.isAnimating = true;
 				this.roadLightBillboardPopDelayTop = this.roadLightBillboardPopDelayDefault;
@@ -498,7 +498,7 @@ export class GameScene extends Container implements IScene {
 
 			if (container) {
 				container.x = container.width * -1;
-				container.y = -650;
+				container.y = -330;
 				container.isAnimating = true;
 				this.roadLightBillboardPopDelayBottom = this.roadLightBillboardPopDelayDefault;
 			}
@@ -514,7 +514,7 @@ export class GameScene extends Container implements IScene {
 			animatingLightBillboards.forEach(container => {
 				container.moveDownRight();
 
-				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (container.x - this.roadLightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.moveOutOfSight();
 					container.isAnimating = false;
 				}
@@ -531,7 +531,7 @@ export class GameScene extends Container implements IScene {
 			animatingLightBillboards.forEach(container => {
 				container.moveDownRight();
 
-				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (container.x - this.roadLightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.moveOutOfSight();
 					container.isAnimating = false;
 				}
@@ -981,9 +981,9 @@ export class GameScene extends Container implements IScene {
 		this.SpawnRoadMarks();
 
 		this.SpawnSideWalksTop();
-		this.SpawnLightBillboardsTop();
 		this.SpawnHedgesTop();
 		this.SpawnTreesTop();
+		this.SpawnLightBillboardsTop();
 
 		this.SpawnVehicleEnemys();
 		this.SpawnHonks();
