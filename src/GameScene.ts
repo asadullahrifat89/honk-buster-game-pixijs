@@ -5,6 +5,7 @@ import { GameObject } from './GameObject';
 import { Cloud } from "./Cloud";
 import { Constants, ConstructType } from './Constants';
 import { VehicleEnemy } from "./VehicleEnemy";
+import { Honk } from "./Honk";
 
 export class GameScene extends Container implements IScene {
 
@@ -541,7 +542,7 @@ export class GameScene extends Container implements IScene {
 
 	private roadVehicleEnemyContainers: Array<GameObject> = [];
 
-	private roadVehicleEnemyPopDelayDefault: number = 30;
+	private roadVehicleEnemyPopDelayDefault: number = 25;
 	private roadVehicleEnemyPopDelay: number = 0;
 
 	private SpawnVehicleEnemys() {
@@ -631,7 +632,82 @@ export class GameScene extends Container implements IScene {
 					}
 				}
 
+				//TODO: generate honk
+
+				let vehicleEnemy = container as VehicleEnemy;
+
+				if (vehicleEnemy) {
+
+					if (vehicleEnemy.honk()) {
+						this.GenerateHonk(container);
+					}
+				}
+
 				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					container.moveOutOfSight();
+					container.isAnimating = false;
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region Honks	
+
+	private roadHonkSizeWidth: number = 128;
+	private roadHonkSizeHeight: number = 128;
+
+	private roadHonkContainers: Array<GameObject> = [];
+
+	private SpawnHonks() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const container: Honk = new Honk(0);
+			container.moveOutOfSight();
+			container.width = this.roadHonkSizeWidth;
+			container.height = this.roadHonkSizeHeight;
+
+			const uri = Constants.getRandomUri(ConstructType.HONK);
+			const texture = Texture.from(uri);
+			const sprite: GameObjectSprite = new GameObjectSprite(texture, Constants.DEFAULT_CONSTRUCT_SPEED);
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.roadHonkSizeWidth;
+			sprite.height = this.roadHonkSizeHeight;
+			container.addChild(sprite);
+
+			this.roadHonkContainers.push(container);
+			this.addChild(container);
+		}
+	}
+
+	private GenerateHonk(source: GameObject) {
+
+		var container = this.roadHonkContainers.find(x => x.isAnimating == false);
+
+		if (container) {
+
+			var honk = container as Honk;
+			honk.reset();
+			honk.reposition(source);
+
+			container.isAnimating = true;
+		}
+	}
+
+	private AnimateHonks() {
+
+		var animatingHonks = this.roadHonkContainers.filter(x => x.isAnimating == true);
+
+		if (animatingHonks) {
+
+			animatingHonks.forEach(container => {
+				container.alpha -= 0.01;
+
+				if (container.alpha <= 0.0) {
 					container.moveOutOfSight();
 					container.isAnimating = false;
 				}
@@ -654,6 +730,7 @@ export class GameScene extends Container implements IScene {
 		this.SpawnTreesTop();
 
 		this.SpawnVehicleEnemys();
+		this.SpawnHonks();
 
 		this.SpawnSideWalksBottom();
 		this.SpawnHedgesBottom();
@@ -685,6 +762,7 @@ export class GameScene extends Container implements IScene {
 		this.AnimateTreesTop();
 
 		this.AnimateVehicleEnemys();
+		this.AnimateHonks();
 
 		this.AnimateSideWalksBottom();
 		this.AnimateHedgesBottom();

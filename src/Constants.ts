@@ -124,6 +124,9 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_3.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_4.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_5.png"),
+		new ConstructTemplate(ConstructType.HONK, "honk_1.png"),
+		new ConstructTemplate(ConstructType.HONK, "honk_2.png"),
+		new ConstructTemplate(ConstructType.HONK, "honk_3.png"),
 	];
 
 	static degreesToRadians(degrees: number): number {

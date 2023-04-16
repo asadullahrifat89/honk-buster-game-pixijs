@@ -2,11 +2,10 @@
 import { Constants, ConstructType } from './Constants';
 import { VehicleBase } from './VehicleBase';
 
-
 export class VehicleEnemy extends VehicleBase {
 
 	constructor(speed: number) {
-		super(speed);		
+		super(speed);
 	}
 
 	reset() {
@@ -19,15 +18,11 @@ export class VehicleEnemy extends VehicleBase {
 		let uri: string = "";
 		switch (vehicleType) {
 			case 0: {
-
 				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
-
 				break;
 			}
 			case 1: {
-
 				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
-
 				break;
 			}
 			default: break;
@@ -42,3 +37,4 @@ export class VehicleEnemy extends VehicleBase {
 		}
 	}
 }
+
