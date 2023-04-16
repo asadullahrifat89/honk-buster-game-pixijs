@@ -1,11 +1,29 @@
-﻿import { Constants } from './Constants';
+﻿import { Constants, ConstructType } from './Constants';
 import { VehicleBase } from './VehicleBase';
 
 
 export class VehicleEnemy extends VehicleBase {
 
 	constructor(speed: number) {
-		super(speed);		
+		super(speed);
+
+		var vehicleType = Constants.getRandomNumber(0, 2);
+
+		switch (vehicleType) {
+			case 0: {
+
+				this.changeTexture(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_SMALL));
+
+				break;
+			}
+			case 1: {
+
+				this.changeTexture(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE));
+
+				break;
+			}
+			default: break;
+		}
 	}
 
 	reset() {
