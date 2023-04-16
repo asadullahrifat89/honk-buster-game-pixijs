@@ -580,6 +580,9 @@ export class GameScene extends Container implements IScene {
 			sprite.y = 0;
 			sprite.width = this.roadVehicleEnemySizeWidth;
 			sprite.height = this.roadVehicleEnemySizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+
 			container.addChild(sprite);
 
 			this.roadVehicleEnemyContainers.push(container);
@@ -614,6 +617,8 @@ export class GameScene extends Container implements IScene {
 		if (animatingVehicleEnemys) {
 
 			animatingVehicleEnemys.forEach(container => {
+
+				container.pop();
 				container.moveDownRight();
 
 				//TODO: prevent overlapping
@@ -667,7 +672,7 @@ export class GameScene extends Container implements IScene {
 			const container: Honk = new Honk(0);
 			container.moveOutOfSight();
 			container.width = this.roadHonkSizeWidth;
-			container.height = this.roadHonkSizeHeight;
+			container.height = this.roadHonkSizeHeight;			
 
 			const uri = Constants.getRandomUri(ConstructType.HONK);
 			const texture = Texture.from(uri);
@@ -677,7 +682,10 @@ export class GameScene extends Container implements IScene {
 			sprite.y = 0;
 			sprite.width = this.roadHonkSizeWidth;
 			sprite.height = this.roadHonkSizeHeight;
-			container.addChild(sprite);
+
+			sprite.anchor.set(0.5, 0.5);
+
+			container.addChild(sprite);			
 
 			this.roadHonkContainers.push(container);
 			this.addChild(container);
@@ -693,6 +701,9 @@ export class GameScene extends Container implements IScene {
 			var honk = container as Honk;
 			honk.reset();
 			honk.reposition(source);
+			honk.setPopping();
+
+			source.setPopping();
 
 			container.isAnimating = true;
 		}
@@ -705,7 +716,8 @@ export class GameScene extends Container implements IScene {
 		if (animatingHonks) {
 
 			animatingHonks.forEach(container => {
-				container.alpha -= 0.01;
+				container.pop();
+				container.alpha -= 0.009;
 
 				if (container.alpha <= 0.0) {
 					container.moveOutOfSight();
