@@ -541,7 +541,7 @@ export class GameScene extends Container implements IScene {
 
 	private roadVehicleEnemyContainers: Array<GameObject> = [];
 
-	private roadVehicleEnemyPopDelayDefault: number = 40;
+	private roadVehicleEnemyPopDelayDefault: number = 30;
 	private roadVehicleEnemyPopDelay: number = 0;
 
 	private SpawnVehicleEnemys() {
