@@ -27,11 +27,10 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const treeContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
-			treeContainer.x = -1500;
-			treeContainer.y = -1500;
-			treeContainer.width = this.roadTreeSizeWidth * 5;
-			treeContainer.height = this.roadTreeSizeHeight / 2 * 5;
+			const container: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			container.moveOutOfSight();
+			container.width = this.roadTreeSizeWidth * 5;
+			container.height = this.roadTreeSizeHeight / 2 * 5;
 
 			// add trees to the tree top container
 			for (let i = 0; i < 5; i++) {
@@ -45,11 +44,11 @@ export class GameScene extends Container implements IScene {
 				tree.width = this.roadTreeSizeWidth;
 				tree.height = this.roadTreeSizeHeight;
 
-				treeContainer.addChild(tree);
+				container.addChild(tree);
 			}
 
-			this.roadTreeTopContainers.push(treeContainer);
-			this.addChild(treeContainer);
+			this.roadTreeTopContainers.push(container);
+			this.addChild(container);
 		}
 	}
 
@@ -57,11 +56,10 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const treeContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
-			treeContainer.x = -1500;
-			treeContainer.y = -1500;
-			treeContainer.width = this.roadTreeSizeWidth * 5;
-			treeContainer.height = this.roadTreeSizeHeight / 2 * 5;
+			const container: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			container.moveOutOfSight();
+			container.width = this.roadTreeSizeWidth * 5;
+			container.height = this.roadTreeSizeHeight / 2 * 5;
 
 			// add trees to the tree bottom container
 			for (let i = 0; i < 5; i++) {
@@ -75,11 +73,11 @@ export class GameScene extends Container implements IScene {
 				tree.width = this.roadTreeSizeWidth;
 				tree.height = this.roadTreeSizeHeight;
 
-				treeContainer.addChild(tree);
+				container.addChild(tree);
 			}
 
-			this.roadTreeBottomContainers.push(treeContainer);
-			this.addChild(treeContainer);
+			this.roadTreeBottomContainers.push(container);
+			this.addChild(container);
 		}
 	}
 
@@ -179,11 +177,10 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const hedgeContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
-			hedgeContainer.x = -1500;
-			hedgeContainer.y = -1500;
-			hedgeContainer.width = this.roadHedgeSizeWidth * 5;
-			hedgeContainer.height = this.roadHedgeSizeHeight / 2 * 5;
+			const container: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			container.moveOutOfSight();
+			container.width = this.roadHedgeSizeWidth * 5;
+			container.height = this.roadHedgeSizeHeight / 2 * 5;
 
 			// add hedges to the hedge top container
 			for (let i = 0; i < 5; i++) {
@@ -197,11 +194,11 @@ export class GameScene extends Container implements IScene {
 				hedge.width = this.roadHedgeSizeWidth;
 				hedge.height = this.roadHedgeSizeHeight;
 
-				hedgeContainer.addChild(hedge);
+				container.addChild(hedge);
 			}
 
-			this.roadHedgeTopContainers.push(hedgeContainer);
-			this.addChild(hedgeContainer);
+			this.roadHedgeTopContainers.push(container);
+			this.addChild(container);
 		}
 	}
 
@@ -209,11 +206,10 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const hedgeContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
-			hedgeContainer.x = -1500;
-			hedgeContainer.y = -1500;
-			hedgeContainer.width = this.roadHedgeSizeWidth * 5;
-			hedgeContainer.height = this.roadHedgeSizeHeight / 2 * 5;
+			const container: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			container.moveOutOfSight();
+			container.width = this.roadHedgeSizeWidth * 5;
+			container.height = this.roadHedgeSizeHeight / 2 * 5;
 
 			// add hedges to the hedge bottom container
 			for (let i = 0; i < 5; i++) {
@@ -227,11 +223,11 @@ export class GameScene extends Container implements IScene {
 				hedge.width = this.roadHedgeSizeWidth;
 				hedge.height = this.roadHedgeSizeHeight;
 
-				hedgeContainer.addChild(hedge);
+				container.addChild(hedge);
 			}
 
-			this.roadHedgeBottomContainers.push(hedgeContainer);
-			this.addChild(hedgeContainer);
+			this.roadHedgeBottomContainers.push(container);
+			this.addChild(container);
 		}
 	}
 
@@ -331,11 +327,10 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const sideWalkContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
-			sideWalkContainer.x = -1500;
-			sideWalkContainer.y = -1500;
-			sideWalkContainer.width = this.roadSideWalkWidth * 5;
-			sideWalkContainer.height = this.roadSideWalkHeight / 2 * 5;
+			const container: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			container.moveOutOfSight();
+			container.width = this.roadSideWalkWidth * 5;
+			container.height = this.roadSideWalkHeight / 2 * 5;
 
 			// add sideWalks to the sideWalk top container
 			for (let i = 0; i < 5; i++) {
@@ -354,11 +349,11 @@ export class GameScene extends Container implements IScene {
 				//sideWalk.rotation = Constants.degreesToRadians(-63.5);
 				//sideWalk.skew.set(0, Constants.degreesToRadians(37));
 
-				sideWalkContainer.addChild(sideWalk);
+				container.addChild(sideWalk);
 			}
 
-			this.roadSideWalkTopContainers.push(sideWalkContainer);
-			this.addChild(sideWalkContainer);
+			this.roadSideWalkTopContainers.push(container);
+			this.addChild(container);
 		}
 	}
 
@@ -366,11 +361,10 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const sideWalkContainer: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
-			sideWalkContainer.x = -1500;
-			sideWalkContainer.y = -1500;
-			sideWalkContainer.width = this.roadSideWalkWidth * 5;
-			sideWalkContainer.height = this.roadSideWalkHeight / 2 * 5;
+			const container: GameObjectContainer = new GameObjectContainer(this.defaultSpeed);
+			container.moveOutOfSight();
+			container.width = this.roadSideWalkWidth * 5;
+			container.height = this.roadSideWalkHeight / 2 * 5;
 
 			// add sideWalks to the sideWalk top container
 			for (let i = 0; i < 5; i++) {
@@ -389,11 +383,11 @@ export class GameScene extends Container implements IScene {
 				//sideWalk.rotation = Constants.degreesToRadians(-63.5);
 				//sideWalk.skew.set(0, Constants.degreesToRadians(37));
 
-				sideWalkContainer.addChild(sideWalk);
+				container.addChild(sideWalk);
 			}
 
-			this.roadSideWalkBottomContainers.push(sideWalkContainer);
-			this.addChild(sideWalkContainer);
+			this.roadSideWalkBottomContainers.push(container);
+			this.addChild(container);
 		}
 	}
 
@@ -485,11 +479,10 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const cloudContainer: GameObjectContainer = new GameObjectContainer(Constants.randomNumberBetween(1, this.defaultSpeed + 2));
-			cloudContainer.x = -1500;
-			cloudContainer.y = -1500;
-			cloudContainer.width = this.roadCloudSizeWidth;
-			cloudContainer.height = this.roadCloudSizeHeight;
+			const container: GameObjectContainer = new GameObjectContainer(Constants.randomNumberBetween(1, this.defaultSpeed + 2));
+			container.moveOutOfSight();
+			container.width = this.roadCloudSizeWidth;
+			container.height = this.roadCloudSizeHeight;
 
 			const uri = Constants.GetRandomUri(ConstructType.CLOUD);
 			const texture = Texture.from(uri);
@@ -500,12 +493,12 @@ export class GameScene extends Container implements IScene {
 			cloud.width = this.roadCloudSizeWidth;
 			cloud.height = this.roadCloudSizeHeight;
 			//cloud.filters = [new BlurFilter(4, 10)];
-			cloudContainer.addChild(cloud);
+			container.addChild(cloud);
 
 			//cloudContainer.filters = [new BlurFilter(2, 10)];
 
-			this.roadCloudContainers.push(cloudContainer);
-			this.addChild(cloudContainer);
+			this.roadCloudContainers.push(container);
+			this.addChild(container);
 		}
 	}
 

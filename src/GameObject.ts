@@ -17,4 +17,14 @@ export class GameObject extends Sprite {
 	setContent(texture: Texture) {
 		this.texture = texture;
 	}
+
+	moveOutOfSight() {
+		this.x = -1500;
+		this.y = -1500;
+	}
+
+	setPosition(x: number, y: number) {
+		this.x = x;
+		this.y = y;
+	}
 }
