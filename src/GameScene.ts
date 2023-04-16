@@ -40,7 +40,7 @@ export class GameScene extends Container implements IScene {
 			// add trees to the tree top container
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_TREE);
+				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_TREE);
 				const texture = Texture.from(uri);
 				const tree: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_TREE, this.defaultSpeed);
 
@@ -69,7 +69,7 @@ export class GameScene extends Container implements IScene {
 			// add trees to the tree bottom container
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_TREE);
+				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_TREE);
 				const texture = Texture.from(uri);
 				const tree: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_TREE, this.defaultSpeed);
 
@@ -182,7 +182,7 @@ export class GameScene extends Container implements IScene {
 			// add hedges to the hedge top container
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_HEDGE);
+				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_HEDGE);
 				const texture = Texture.from(uri);
 				const hedge: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_HEDGE, this.defaultSpeed);
 
@@ -211,7 +211,7 @@ export class GameScene extends Container implements IScene {
 			// add hedges to the hedge bottom container
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_HEDGE);
+				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_HEDGE);
 				const texture = Texture.from(uri);
 				const hedge: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_HEDGE, this.defaultSpeed);
 
@@ -328,7 +328,7 @@ export class GameScene extends Container implements IScene {
 			// add sideWalks to the sideWalk top container
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_WALK);
+				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_WALK);
 				const texture = Texture.from(uri);
 				const sideWalk: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_WALK, this.defaultSpeed);
 
@@ -362,7 +362,7 @@ export class GameScene extends Container implements IScene {
 			// add sideWalks to the sideWalk top container
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.GetRandomUri(ConstructType.ROAD_SIDE_WALK);
+				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_WALK);
 				const texture = Texture.from(uri);
 				const sideWalk: GameObjectSprite = new GameObjectSprite(texture, ConstructType.ROAD_SIDE_WALK, this.defaultSpeed);
 
@@ -473,7 +473,7 @@ export class GameScene extends Container implements IScene {
 			container.width = this.roadCloudSizeWidth;
 			container.height = this.roadCloudSizeHeight;
 
-			const uri = Constants.GetRandomUri(ConstructType.CLOUD);
+			const uri = Constants.getRandomUri(ConstructType.CLOUD);
 			const texture = Texture.from(uri);
 			const cloud: GameObjectSprite = new GameObjectSprite(texture, ConstructType.CLOUD, this.defaultSpeed);
 
@@ -501,10 +501,7 @@ export class GameScene extends Container implements IScene {
 
 			if (cloud) {
 
-				const uri = Constants.GetRandomUri(ConstructType.CLOUD);
-				const texture = Texture.from(uri);
-
-				cloud.getFirstChild().setTexture(texture);
+				cloud.changeTexture(Constants.getRandomTexture(ConstructType.CLOUD));
 
 				cloud.speed = Constants.randomNumberBetween(1, this.defaultSpeed + 2);
 				var topOrLeft = Constants.randomNumberBetween(0, 2);

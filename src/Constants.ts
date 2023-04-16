@@ -1,3 +1,5 @@
+import { Texture } from "pixi.js";
+
 export enum ConstructType {
 	NONE,
 	GAME_COVER_IMAGE,
@@ -107,15 +109,22 @@ export abstract class Constants {
 		return degrees * (Math.PI / 180);
 	}
 
-	static randomNumberBetween(min: number, max: number): number {		
+	static randomNumberBetween(min: number, max: number): number {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
-	static GetRandomUri(constructType: ConstructType): string {
+	static getRandomUri(constructType: ConstructType): string {
 
 		const treeTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.ConstructType == constructType);
 		const uri = treeTemplates[this.randomNumberBetween(0, treeTemplates.length - 1)].Uri;
 
 		return uri;
+	}
+
+	static getRandomTexture(constructType: ConstructType): Texture {
+
+		const uri = Constants.getRandomUri(constructType);
+		const texture = Texture.from(uri);
+		return texture;
 	}
 }

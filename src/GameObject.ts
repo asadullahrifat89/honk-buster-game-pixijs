@@ -1,4 +1,4 @@
-import { Container } from 'pixi.js';
+import { Container, Texture } from 'pixi.js';
 import { GameObjectSprite } from './GameObjectSprite';
 
 export class GameObject extends Container {
@@ -59,5 +59,9 @@ export class GameObject extends Container {
 
 	getFirstChild(): GameObjectSprite {
 		return this.children[0] as GameObjectSprite;
+	}
+
+	changeTexture(texture: Texture) {
+		this.getFirstChild().setTexture(texture);
 	}
 }
