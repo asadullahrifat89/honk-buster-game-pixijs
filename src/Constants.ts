@@ -119,6 +119,3 @@ export abstract class Constants {
 		return uri;
 	}
 }
-
-
-
