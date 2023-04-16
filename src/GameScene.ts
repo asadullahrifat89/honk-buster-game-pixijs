@@ -7,6 +7,7 @@ import { Constants, ConstructType } from './Constants';
 import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
 
+
 export class GameScene extends Container implements IScene {
 
 	//#region Fields
@@ -40,6 +41,8 @@ export class GameScene extends Container implements IScene {
 			container.width = this.roadTreeSizeWidth * 5;
 			container.height = this.roadTreeSizeHeight / 2 * 5;
 
+			// container.filters = [new DropShadowFilter()];
+
 			// add trees to the tree top container
 			for (let i = 0; i < 5; i++) {
 
@@ -68,6 +71,8 @@ export class GameScene extends Container implements IScene {
 			container.moveOutOfSight();
 			container.width = this.roadTreeSizeWidth * 5;
 			container.height = this.roadTreeSizeHeight / 2 * 5;
+
+			// container.filters = [new DropShadowFilter()];
 
 			// add trees to the tree bottom container
 			for (let i = 0; i < 5; i++) {
@@ -182,6 +187,8 @@ export class GameScene extends Container implements IScene {
 			container.width = this.roadHedgeSizeWidth * 5;
 			container.height = this.roadHedgeSizeHeight / 2 * 5;
 
+			// container.filters = [new DropShadowFilter()];
+
 			// add hedges to the hedge top container
 			for (let i = 0; i < 5; i++) {
 
@@ -210,6 +217,8 @@ export class GameScene extends Container implements IScene {
 			container.moveOutOfSight();
 			container.width = this.roadHedgeSizeWidth * 5;
 			container.height = this.roadHedgeSizeHeight / 2 * 5;
+
+			// container.filters = [new DropShadowFilter()];
 
 			// add hedges to the hedge bottom container
 			for (let i = 0; i < 5; i++) {
@@ -328,6 +337,8 @@ export class GameScene extends Container implements IScene {
 			container.width = this.roadSideWalkWidth * 5;
 			container.height = this.roadSideWalkHeight / 2 * 5;
 
+			// container.filters = [new DropShadowFilter()];
+
 			// add sideWalks to the sideWalk top container
 			for (let i = 0; i < 5; i++) {
 
@@ -361,6 +372,8 @@ export class GameScene extends Container implements IScene {
 			container.moveOutOfSight();
 			container.width = this.roadSideWalkWidth * 5;
 			container.height = this.roadSideWalkHeight / 2 * 5;
+
+			// container.filters = [new DropShadowFilter()];
 
 			// add sideWalks to the sideWalk top container
 			for (let i = 0; i < 5; i++) {
@@ -672,7 +685,7 @@ export class GameScene extends Container implements IScene {
 			const container: Honk = new Honk(0);
 			container.moveOutOfSight();
 			container.width = this.roadHonkSizeWidth;
-			container.height = this.roadHonkSizeHeight;			
+			container.height = this.roadHonkSizeHeight;
 
 			const uri = Constants.getRandomUri(ConstructType.HONK);
 			const texture = Texture.from(uri);
@@ -685,7 +698,7 @@ export class GameScene extends Container implements IScene {
 
 			sprite.anchor.set(0.5, 0.5);
 
-			container.addChild(sprite);			
+			container.addChild(sprite);
 
 			this.roadHonkContainers.push(container);
 			this.addChild(container);

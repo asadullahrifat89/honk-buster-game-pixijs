@@ -1,11 +1,14 @@
 ﻿import { Texture } from 'pixi.js';
 import { Constants, ConstructType } from './Constants';
 import { VehicleBase } from './VehicleBase';
+/*import { DropShadowFilter } from '@pixi/filter-drop-shadow';*/
 
 export class VehicleEnemy extends VehicleBase {
 
 	constructor(speed: number) {
 		super(speed);
+
+		//this.filters = [new DropShadowFilter()];
 	}
 
 	reset() {
