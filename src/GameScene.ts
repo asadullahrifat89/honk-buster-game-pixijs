@@ -4,6 +4,7 @@ import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
 import { Cloud } from "./Cloud";
 import { Constants, ConstructType } from './Constants';
+import { VehicleEnemy } from "./VehicleEnemy";
 
 export class GameScene extends Container implements IScene {
 
@@ -498,17 +499,17 @@ export class GameScene extends Container implements IScene {
 
 		if (this.roadCloudPopDelay < 0) {
 
-			var cloud = this.roadCloudContainers.find(x => x.isAnimating == false);
+			var container = this.roadCloudContainers.find(x => x.isAnimating == false);
 
-			if (cloud) {
+			if (container) {
 
-				cloud.changeTexture(Constants.getRandomTexture(ConstructType.CLOUD));
-				cloud.speed = Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2);
+				container.changeTexture(Constants.getRandomTexture(ConstructType.CLOUD));
+				container.speed = Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2);
 
-				var cloud1 = cloud as Cloud;
-				cloud1.reposition();
+				var cloud = container as Cloud;
+				cloud.reposition();
 
-				cloud.isAnimating = true;
+				container.isAnimating = true;
 				this.roadCloudPopDelay = this.roadCloudPopDelayDefault;
 			}
 		}
@@ -533,7 +534,96 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region VehicleEnemys	
 
+	private roadVehicleEnemySizeWidth: number = 245;
+	private roadVehicleEnemySizeHeight: number = 245;
+
+	private roadVehicleEnemyContainers: Array<GameObject> = [];
+
+	private roadVehicleEnemyPopDelayDefault: number = 50;
+	private roadVehicleEnemyPopDelay: number = 0;
+
+	private SpawnVehicleEnemys() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const container: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
+			container.moveOutOfSight();
+			container.width = this.roadVehicleEnemySizeWidth;
+			container.height = this.roadVehicleEnemySizeHeight;
+
+			var vehicleType = Constants.getRandomNumber(0, 1);
+
+			let uri: string = "";
+			switch (vehicleType) {
+				case 0: {
+
+					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
+
+					break;
+				}
+				case 1: {
+
+					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
+
+					break;
+				}
+				default: break;
+			}
+			
+			const texture = Texture.from(uri);
+			const sprite: GameObjectSprite = new GameObjectSprite(texture, Constants.DEFAULT_CONSTRUCT_SPEED);
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.roadVehicleEnemySizeWidth;
+			sprite.height = this.roadVehicleEnemySizeHeight;			
+			container.addChild(sprite);			
+
+			this.roadVehicleEnemyContainers.push(container);
+			this.addChild(container);
+		}
+	}
+
+	private GenerateVehicleEnemys() {
+
+		this.roadVehicleEnemyPopDelay -= 0.1;
+
+		if (this.roadVehicleEnemyPopDelay < 0) {
+
+			var container = this.roadVehicleEnemyContainers.find(x => x.isAnimating == false);
+
+			if (container) {				
+
+				var vehicleEnemey = container as VehicleEnemy;
+				vehicleEnemey.reposition();
+				vehicleEnemey.reset();
+
+				container.isAnimating = true;
+				this.roadVehicleEnemyPopDelay = this.roadVehicleEnemyPopDelayDefault;
+			}
+		}
+	}
+
+	private AnimateVehicleEnemys() {
+
+		var animatingVehicleEnemys = this.roadVehicleEnemyContainers.filter(x => x.isAnimating == true);
+
+		if (animatingVehicleEnemys) {
+
+			animatingVehicleEnemys.forEach(container => {
+				container.moveDownRight();
+
+				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					container.moveOutOfSight();
+					container.isAnimating = false;
+				}
+			});
+		}
+	}
+
+	//#endregion
 
 	//#endregion
 
@@ -542,10 +632,12 @@ export class GameScene extends Container implements IScene {
 	constructor() {
 		super();
 
-		// spawn game objects
+		
 		this.SpawnSideWalksTop();
 		this.SpawnHedgesTop();
 		this.SpawnTreesTop();
+
+		this.SpawnVehicleEnemys();
 
 		this.SpawnSideWalksBottom();
 		this.SpawnHedgesBottom();
@@ -564,6 +656,8 @@ export class GameScene extends Container implements IScene {
 		this.GenerateHedgesTop();
 		this.GenerateTreesTop();
 
+		this.GenerateVehicleEnemys();
+
 		this.GenerateClouds();
 
 		this.GenerateSideWalksBottom();
@@ -573,6 +667,8 @@ export class GameScene extends Container implements IScene {
 		this.AnimateSideWalksTop();
 		this.AnimateHedgesTop();
 		this.AnimateTreesTop();
+
+		this.AnimateVehicleEnemys();
 
 		this.AnimateSideWalksBottom();
 		this.AnimateHedgesBottom();
