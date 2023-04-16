@@ -100,8 +100,6 @@ export class GameScene extends Container implements IScene {
 				container.y = container.height * -1;
 				container.isAnimating = true;
 				this.roadTreePopDelayTop = this.roadTreePopDelayDefault;
-
-				// console.log("Tree bottom container popped.");
 			}
 		}
 	}
@@ -119,8 +117,6 @@ export class GameScene extends Container implements IScene {
 				container.y = -650;
 				container.isAnimating = true;
 				this.roadTreePopDelayBottom = this.roadTreePopDelayDefault;
-
-				// console.log("Tree bottom container popped.");
 			}
 		}
 	}
