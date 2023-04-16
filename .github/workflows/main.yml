@@ -22,13 +22,8 @@ jobs:
     - name: Install and Build
       run: |
         npm ci
-        npm run build
-    
-    - name: Publish Artifacts
-      uses: actions/upload-artifact@v2      
-      with:
-        name: pages
-        path: artifacts/dist
+        npm run build    
+   
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
