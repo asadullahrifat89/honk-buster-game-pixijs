@@ -127,6 +127,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.HONK, "honk_1.png"),
 		new ConstructTemplate(ConstructType.HONK, "honk_2.png"),
 		new ConstructTemplate(ConstructType.HONK, "honk_3.png"),
+		new ConstructTemplate(ConstructType.ROAD_MARK, "road_marks.png"),
 	];
 
 	static degreesToRadians(degrees: number): number {

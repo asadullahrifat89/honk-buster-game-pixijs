@@ -96,7 +96,6 @@ export class GameObject extends Container {
 	}
 
 	pop() {
-
 		if (this.isAwaitingPop) {
 			if (!this.isPoppingComplete && this.scale.x < this.popUpScalingLimit)
 				this.expand();

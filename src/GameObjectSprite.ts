@@ -2,13 +2,11 @@ import { Sprite, Texture } from 'pixi.js';
 
 export class GameObjectSprite extends Sprite {
 
-	public isAnimating: boolean = false;
-	public speed: number = 3;
+	public isAnimating: boolean = false;	
 
-	constructor(texture: Texture, speed: number) {
+	constructor(texture: Texture) {
 		super();
-		this.texture = texture;
-		this.speed = speed;
+		this.texture = texture;		
 	}
 
 	setTexture(texture: Texture) {

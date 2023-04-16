@@ -18,6 +18,86 @@ export class GameScene extends Container implements IScene {
 
 	//#region GameObjectContainers
 
+	//#region RoadMarks
+
+	private roadRoadMarkXyAdjustment: number = 19;
+
+	private roadRoadMarkSizeWidth: number = 256;
+	private roadRoadMarkSizeHeight: number = 256;
+
+	private roadRoadMarkContainers: Array<GameObject> = [];
+
+	private roadRoadMarkPopDelayDefault: number = 39;
+	private roadRoadMarkPopDelay: number = 0;
+
+	private SpawnRoadMarks() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			container.moveOutOfSight();
+			container.width = this.roadRoadMarkSizeWidth * 5;
+			container.height = this.roadRoadMarkSizeHeight / 2 * 5;
+
+			// container.filters = [new DropShadowFilter()];
+
+			// add trees to the tree top container
+			for (let i = 0; i < 5; i++) {
+
+				const uri = Constants.getRandomUri(ConstructType.ROAD_MARK);
+				const texture = Texture.from(uri);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture);
+
+				sprite.x = this.roadRoadMarkSizeWidth * i - (this.roadRoadMarkXyAdjustment * i);
+				sprite.y = (this.roadRoadMarkSizeHeight / 2) * i - ((this.roadRoadMarkXyAdjustment / 2) * i);
+				sprite.width = this.roadRoadMarkSizeWidth;
+				sprite.height = this.roadRoadMarkSizeHeight;
+
+				container.addChild(sprite);
+			}
+
+			this.roadRoadMarkContainers.push(container);
+			this.addChild(container);
+		}
+	}
+
+	private GenerateRoadMarks() {
+
+		this.roadRoadMarkPopDelay -= 0.1;
+
+		if (this.roadRoadMarkPopDelay < 0) {
+
+			var container = this.roadRoadMarkContainers.find(x => x.isAnimating == false);
+
+			if (container) {
+
+				container.x = container.width * - 1.1;
+				container.y = container.height * -1;
+				container.isAnimating = true;
+				this.roadRoadMarkPopDelay = this.roadRoadMarkPopDelayDefault;
+			}
+		}
+	}
+
+	private AnimateRoadMarks() {
+
+		var animatingRoadMarks = this.roadRoadMarkContainers.filter(x => x.isAnimating == true);
+
+		if (animatingRoadMarks) {
+
+			animatingRoadMarks.forEach(container => {
+				container.moveDownRight();
+
+				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					container.moveOutOfSight();
+					container.isAnimating = false;
+				}
+			});
+		}
+	}
+
+	//#endregion
+
 	//#region Trees
 
 	private roadTreeXyAdjustment: number = 30.5;
@@ -48,7 +128,7 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_TREE);
 				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture, Constants.DEFAULT_CONSTRUCT_SPEED);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture);
 
 				sprite.x = this.roadTreeSizeWidth * i - (this.roadTreeXyAdjustment * i);
 				sprite.y = (this.roadTreeSizeHeight / 2) * i - ((this.roadTreeXyAdjustment / 2) * i);
@@ -79,7 +159,7 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_TREE);
 				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture, Constants.DEFAULT_CONSTRUCT_SPEED);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture);
 
 				sprite.x = this.roadTreeSizeWidth * i - (this.roadTreeXyAdjustment * i);
 				sprite.y = (this.roadTreeSizeHeight / 2) * i - ((this.roadTreeXyAdjustment / 2) * i);
@@ -194,7 +274,7 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_HEDGE);
 				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture, Constants.DEFAULT_CONSTRUCT_SPEED);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture);
 
 				sprite.x = this.roadHedgeSizeWidth * i - (this.roadHedgeXyAdjustment * i);
 				sprite.y = (this.roadHedgeSizeHeight / 2) * i - ((this.roadHedgeXyAdjustment / 2) * i);
@@ -225,7 +305,7 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_HEDGE);
 				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture, Constants.DEFAULT_CONSTRUCT_SPEED);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture);
 
 				sprite.x = this.roadHedgeSizeWidth * i - (this.roadHedgeXyAdjustment * i);
 				sprite.y = (this.roadHedgeSizeHeight / 2) * i - ((this.roadHedgeXyAdjustment / 2) * i);
@@ -344,7 +424,7 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_WALK);
 				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture, Constants.DEFAULT_CONSTRUCT_SPEED);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture);
 
 				sprite.x = this.roadSideWalkWidth * i - (this.roadSideWalkXyAdjustment * i);
 				sprite.y = (this.roadSideWalkHeight / 2) * i - ((this.roadSideWalkXyAdjustment / 2) * i);
@@ -380,7 +460,7 @@ export class GameScene extends Container implements IScene {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_WALK);
 				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture, Constants.DEFAULT_CONSTRUCT_SPEED);
+				const sprite: GameObjectSprite = new GameObjectSprite(texture);
 
 				sprite.x = this.roadSideWalkWidth * i - (this.roadSideWalkXyAdjustment * i);
 				sprite.y = (this.roadSideWalkHeight / 2) * i - ((this.roadSideWalkXyAdjustment / 2) * i);
@@ -491,7 +571,7 @@ export class GameScene extends Container implements IScene {
 
 			const uri = Constants.getRandomUri(ConstructType.CLOUD);
 			const texture = Texture.from(uri);
-			const sprite: GameObjectSprite = new GameObjectSprite(texture, Constants.DEFAULT_CONSTRUCT_SPEED);
+			const sprite: GameObjectSprite = new GameObjectSprite(texture);
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -587,7 +667,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			const texture = Texture.from(uri);
-			const sprite: GameObjectSprite = new GameObjectSprite(texture, Constants.DEFAULT_CONSTRUCT_SPEED);
+			const sprite: GameObjectSprite = new GameObjectSprite(texture);
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -689,7 +769,7 @@ export class GameScene extends Container implements IScene {
 
 			const uri = Constants.getRandomUri(ConstructType.HONK);
 			const texture = Texture.from(uri);
-			const sprite: GameObjectSprite = new GameObjectSprite(texture, Constants.DEFAULT_CONSTRUCT_SPEED);
+			const sprite: GameObjectSprite = new GameObjectSprite(texture);
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -749,6 +829,7 @@ export class GameScene extends Container implements IScene {
 	constructor() {
 		super();
 
+		this.SpawnRoadMarks();
 
 		this.SpawnSideWalksTop();
 		this.SpawnHedgesTop();
@@ -770,6 +851,7 @@ export class GameScene extends Container implements IScene {
 
 	public update(_framesPassed: number): void {
 
+		this.GenerateRoadMarks();
 		this.GenerateSideWalksTop();
 		this.GenerateHedgesTop();
 		this.GenerateTreesTop();
@@ -781,6 +863,8 @@ export class GameScene extends Container implements IScene {
 		this.GenerateSideWalksBottom();
 		this.GenerateHedgesBottom();
 		this.GenerateTreesBottom();
+
+		this.AnimateRoadMarks();
 
 		this.AnimateSideWalksTop();
 		this.AnimateHedgesTop();
