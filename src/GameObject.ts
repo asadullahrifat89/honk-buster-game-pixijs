@@ -3,18 +3,23 @@ import { GameObjectSprite } from './GameObjectSprite';
 
 export class GameObject extends Container {
 
+	private isPoppingComplete: boolean = false;
+	private readonly popUpScalingLimit: number = 1.5;
+
+	private hoverDelay: number = 0;
+	private readonly hoverDelayDefault: number = 35;
+	private readonly hoverSpeed: number = 0.2;
+
 	public isAnimating: boolean = false;
 	public speed: number = 3;
 	public health: number = 100;
 	public hitPoint: number = 5;
 
 	public isAwaitingPop: boolean = false;
-	private isPoppingComplete: boolean = false;
-	private readonly popUpScalingLimit: number = 1.5;
 
 	constructor(speed: number) {
 		super();
-		this.speed = speed;		
+		this.speed = speed;
 	}
 
 	isDead(): boolean {
@@ -111,6 +116,20 @@ export class GameObject extends Container {
 					this.isAwaitingPop = false; // stop popping effect                        
 				}
 			}
+		}
+	}
+
+	hover() {
+		this.hoverDelay--;
+
+		if (this.hoverDelay >= 0) {
+			this.y += this.hoverSpeed;
+		}
+		else {
+			this.y -= this.hoverSpeed;
+
+			if (this.hoverDelay <= this.hoverDelayDefault * -1)
+				this.hoverDelay = this.hoverDelayDefault;
 		}
 	}
 }
