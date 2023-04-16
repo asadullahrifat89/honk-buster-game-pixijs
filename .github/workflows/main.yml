@@ -28,7 +28,7 @@ jobs:
       uses: actions/upload-artifact@v2      
       with:
         name: pages
-        path: dist
+        path: artifacts/dist
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
