@@ -41,7 +41,7 @@ export class GameScene extends Container implements IScene {
 
 			// container.filters = [new DropShadowFilter()];
 
-			// add trees to the tree top container
+			
 			for (let i = 0; i < 5; i++) {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_MARK);
@@ -100,7 +100,7 @@ export class GameScene extends Container implements IScene {
 
 	//#region Trees
 
-	private roadTreeXyAdjustment: number = 30.5;
+	private roadTreeXyAdjustment: number = 85.5;
 
 	private roadTreeSizeWidth: number = 450;
 	private roadTreeSizeHeight: number = 450;
@@ -123,7 +123,7 @@ export class GameScene extends Container implements IScene {
 
 			// container.filters = [new DropShadowFilter()];
 
-			// add trees to the tree top container
+			
 			for (let i = 0; i < 5; i++) {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_TREE);
@@ -183,7 +183,7 @@ export class GameScene extends Container implements IScene {
 			var container = this.roadTreeTopContainers.find(x => x.isAnimating == false);
 
 			if (container) {
-				container.x = -1150;
+				container.x = -850;
 				container.y = container.height * -1;
 				container.isAnimating = true;
 				this.roadTreePopDelayTop = this.roadTreePopDelayDefault;
@@ -201,7 +201,7 @@ export class GameScene extends Container implements IScene {
 
 			if (container) {
 				container.x = container.width * -1;
-				container.y = -650;
+				container.y = -570;
 				container.isAnimating = true;
 				this.roadTreePopDelayBottom = this.roadTreePopDelayDefault;
 			}
@@ -419,8 +419,7 @@ export class GameScene extends Container implements IScene {
 			container.height = this.roadLightBillboardSizeHeight / 2 * 5;
 
 			// container.filters = [new DropShadowFilter()];
-
-			// add trees to the tree top container
+			
 			for (let i = 0; i < 5; i++) {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD);
@@ -538,6 +537,153 @@ export class GameScene extends Container implements IScene {
 			});
 		}
 	}
+
+	//#endregion
+
+	//#region HeavyBillboards
+
+	//private roadHeavyBillboardXyAdjustment: number = 31.5;
+	//private roadHeavyBillboardXyDistance = 250;
+
+	//private roadHeavyBillboardSizeWidth: number = 256;
+	//private roadHeavyBillboardSizeHeight: number = 256;
+
+	////private roadHeavyBillboardBottomContainers: Array<GameObject> = [];
+	//private roadHeavyBillboardTopContainers: Array<GameObject> = [];
+
+	//private roadHeavyBillboardPopDelayDefault: number = 78;
+	//private roadHeavyBillboardPopDelayTop: number = 0;
+	////private roadHeavyBillboardPopDelayBottom: number = 0;
+
+	//private SpawnHeavyBillboardsTop() {
+
+	//	for (let j = 0; j < 5; j++) {
+
+	//		const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		container.moveOutOfSight();
+	//		container.width = this.roadHeavyBillboardSizeWidth * 5;
+	//		container.height = this.roadHeavyBillboardSizeHeight / 2 * 5;
+
+	//		// container.filters = [new DropShadowFilter()];
+
+			
+	//		for (let i = 0; i < 5; i++) {
+
+	//			const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_BILLBOARD);
+	//			const texture = Texture.from(uri);
+	//			const sprite: GameObjectSprite = new GameObjectSprite(texture);
+
+	//			sprite.x = (this.roadHeavyBillboardSizeWidth * i - (this.roadHeavyBillboardXyAdjustment * i)) + (this.roadHeavyBillboardXyDistance * i);
+	//			sprite.y = ((this.roadHeavyBillboardSizeHeight / 2) * i - ((this.roadHeavyBillboardXyAdjustment / 2) * i)) + (this.roadHeavyBillboardXyDistance / 2 * i);
+	//			sprite.width = this.roadHeavyBillboardSizeWidth;
+	//			sprite.height = this.roadHeavyBillboardSizeHeight;
+
+	//			container.addChild(sprite);
+	//		}
+
+	//		this.roadHeavyBillboardTopContainers.push(container);
+	//		this.addChild(container);
+	//	}
+	//}
+
+	////private SpawnHeavyBillboardsBottom() {
+
+	////	for (let j = 0; j < 5; j++) {
+
+	////		const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	////		container.moveOutOfSight();
+	////		container.width = this.roadHeavyBillboardSizeWidth * 5;
+	////		container.height = this.roadHeavyBillboardSizeHeight / 2 * 5;
+
+	////		// container.filters = [new DropShadowFilter()];
+
+	////		// add trees to the tree bottom container
+	////		for (let i = 0; i < 5; i++) {
+
+	////			const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD);
+	////			const texture = Texture.from(uri);
+	////			const sprite: GameObjectSprite = new GameObjectSprite(texture);
+
+	////			sprite.x = (this.roadHeavyBillboardSizeWidth * i - (this.roadHeavyBillboardXyAdjustment * i)) + (this.roadHeavyBillboardXyDistance * i);
+	////			sprite.y = ((this.roadHeavyBillboardSizeHeight / 2) * i - ((this.roadHeavyBillboardXyAdjustment / 2) * i)) + (this.roadHeavyBillboardXyDistance / 2 * i);
+	////			sprite.width = this.roadHeavyBillboardSizeWidth;
+	////			sprite.height = this.roadHeavyBillboardSizeHeight;
+
+	////			container.addChild(sprite);
+	////		}
+
+	////		this.roadHeavyBillboardBottomContainers.push(container);
+	////		this.addChild(container);
+	////	}
+	////}
+
+	//private GenerateHeavyBillboardsTop() {
+
+	//	this.roadHeavyBillboardPopDelayTop -= 0.1;
+
+	//	if (this.roadHeavyBillboardPopDelayTop < 0) {
+
+	//		var container = this.roadHeavyBillboardTopContainers.find(x => x.isAnimating == false);
+
+	//		if (container) {
+	//			container.x = -980;
+	//			container.y = container.height * -1;
+	//			container.isAnimating = true;
+	//			this.roadHeavyBillboardPopDelayTop = this.roadHeavyBillboardPopDelayDefault;
+	//		}
+	//	}
+	//}
+
+	////private GenerateHeavyBillboardsBottom() {
+
+	////	this.roadHeavyBillboardPopDelayBottom -= 0.1;
+
+	////	if (this.roadHeavyBillboardPopDelayBottom < 0) {
+
+	////		var container = this.roadHeavyBillboardBottomContainers.find(x => x.isAnimating == false);
+
+	////		if (container) {
+	////			container.x = container.width * -1;
+	////			container.y = -330;
+	////			container.isAnimating = true;
+	////			this.roadHeavyBillboardPopDelayBottom = this.roadHeavyBillboardPopDelayDefault;
+	////		}
+	////	}
+	////}
+
+	//private AnimateHeavyBillboardsTop() {
+
+	//	var animatingHeavyBillboards = this.roadHeavyBillboardTopContainers.filter(x => x.isAnimating == true);
+
+	//	if (animatingHeavyBillboards) {
+
+	//		animatingHeavyBillboards.forEach(container => {
+	//			container.moveDownRight();
+
+	//			if (container.x - this.roadHeavyBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				container.moveOutOfSight();
+	//				container.isAnimating = false;
+	//			}
+	//		});
+	//	}
+	//}
+
+	////private AnimateHeavyBillboardsBottom() {
+
+	////	var animatingHeavyBillboards = this.roadHeavyBillboardBottomContainers.filter(x => x.isAnimating == true);
+
+	////	if (animatingHeavyBillboards) {
+
+	////		animatingHeavyBillboards.forEach(container => {
+	////			container.moveDownRight();
+
+	////			if (container.x - this.roadHeavyBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	////				container.moveOutOfSight();
+	////				container.isAnimating = false;
+	////			}
+	////		});
+	////	}
+	////}
 
 	//#endregion
 
@@ -983,6 +1129,7 @@ export class GameScene extends Container implements IScene {
 		this.SpawnSideWalksTop();
 		this.SpawnHedgesTop();
 		this.SpawnTreesTop();
+		//this.SpawnHeavyBillboardsTop();
 		this.SpawnLightBillboardsTop();
 
 		this.SpawnVehicleEnemys();
@@ -1004,6 +1151,7 @@ export class GameScene extends Container implements IScene {
 
 		this.GenerateRoadMarks();
 		this.GenerateSideWalksTop();
+		//this.GenerateHeavyBillboardsTop();
 		this.GenerateLightBillboardsTop();
 		this.GenerateHedgesTop();
 		this.GenerateTreesTop();
@@ -1022,6 +1170,7 @@ export class GameScene extends Container implements IScene {
 		this.AnimateSideWalksTop();
 		this.AnimateHedgesTop();
 		this.AnimateTreesTop();
+		//this.AnimateHeavyBillboardsTop();
 		this.AnimateLightBillboardsTop();
 
 		this.AnimateVehicleEnemys();
