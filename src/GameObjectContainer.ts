@@ -1,4 +1,5 @@
 import { Container } from 'pixi.js';
+import { GameObjectSprite } from './GameObject';
 
 export class GameObjectContainer extends Container {
 
@@ -54,5 +55,9 @@ export class GameObjectContainer extends Container {
 	moveDownRight() {
 		this.x += this.speed;
 		this.y += this.speed / 2;
+	}
+
+	getFirstChild(): GameObjectSprite {
+		return this.children[0] as GameObjectSprite;
 	}
 }

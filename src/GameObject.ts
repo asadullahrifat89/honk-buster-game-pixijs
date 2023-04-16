@@ -1,7 +1,7 @@
 import { Sprite, Texture } from 'pixi.js';
 import { ConstructType } from './Constants';
 
-export class GameObject extends Sprite {
+export class GameObjectSprite extends Sprite {
 
 	public isAnimating: boolean = false;
 	public speed: number = 3;
@@ -14,7 +14,7 @@ export class GameObject extends Sprite {
 		this.speed = speed;
 	}
 
-	setContent(texture: Texture) {
+	setTexture(texture: Texture) {
 		this.texture = texture;
 	}
 
