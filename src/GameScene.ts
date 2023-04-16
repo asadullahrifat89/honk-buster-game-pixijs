@@ -7,7 +7,13 @@ import { Constants, ConstructType } from './Constants';
 
 export class GameScene extends Container implements IScene {
 
+	//#region Fields
+
 	private defaultSpeed: number = 3;
+
+	//#endregion
+
+	//#region GameObjectContainers
 
 	//#region Trees
 
@@ -549,6 +555,10 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#endregion
+
+	//#region Ctor
+
 	constructor() {
 		super();
 
@@ -563,6 +573,10 @@ export class GameScene extends Container implements IScene {
 
 		this.SpawnClouds();
 	}
+
+	//#endregion
+
+	//#region Methods
 
 	public update(_framesPassed: number): void {
 
@@ -591,4 +605,6 @@ export class GameScene extends Container implements IScene {
 		this.scale.set(scale);
 		console.log("Scale: " + scale);
 	}
+
+	//#endregion
 }
