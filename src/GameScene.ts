@@ -126,8 +126,7 @@ export class GameScene extends Container implements IScene {
 		if (animatingTrees) {
 
 			animatingTrees.forEach(container => {
-				container.x += container.speed;
-				container.y += container.speed / 2;
+				container.moveDownRight();
 
 				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.moveOutOfSight();
@@ -144,8 +143,7 @@ export class GameScene extends Container implements IScene {
 		if (animatingTrees) {
 
 			animatingTrees.forEach(container => {
-				container.x += container.speed;
-				container.y += container.speed / 2;
+				container.moveDownRight();
 
 				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.moveOutOfSight();
@@ -274,8 +272,7 @@ export class GameScene extends Container implements IScene {
 		if (animatingHedges) {
 
 			animatingHedges.forEach(container => {
-				container.x += container.speed;
-				container.y += container.speed / 2;
+				container.moveDownRight();
 
 				if (container.x - this.roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.moveOutOfSight();
@@ -292,8 +289,7 @@ export class GameScene extends Container implements IScene {
 		if (animatingHedges) {
 
 			animatingHedges.forEach(container => {
-				container.x += container.speed;
-				container.y += container.speed / 2;
+				container.moveDownRight();
 
 				if (container.x - this.roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.moveOutOfSight();
@@ -428,8 +424,7 @@ export class GameScene extends Container implements IScene {
 		if (animatingSideWalks) {
 
 			animatingSideWalks.forEach(container => {
-				container.x += container.speed;
-				container.y += container.speed / 2;
+				container.moveDownRight();
 
 				if (container.x - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.moveOutOfSight();
@@ -446,8 +441,7 @@ export class GameScene extends Container implements IScene {
 		if (animatingSideWalks) {
 
 			animatingSideWalks.forEach(container => {
-				container.x += container.speed;
-				container.y += container.speed / 2;
+				container.moveDownRight();
 
 				if (container.x - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.moveOutOfSight();
@@ -543,8 +537,7 @@ export class GameScene extends Container implements IScene {
 		if (animatingClouds) {
 
 			animatingClouds.forEach(container => {
-				container.x += container.speed;
-				container.y += container.speed / 2;
+				container.moveDownRight();
 
 				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.moveOutOfSight();
