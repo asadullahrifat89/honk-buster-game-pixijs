@@ -19,4 +19,40 @@ export class GameObjectContainer extends Container {
 		this.x = x;
 		this.y = y;
 	}
+
+	moveUp() {
+		this.y -= this.speed;
+	}
+
+	moveDown() {
+		this.y += this.speed;
+	}
+
+	moveLeft() {
+		this.x -= this.speed;
+	}
+
+	moveRight() {
+		this.x += this.speed;
+	}
+
+	moveUpRight() {
+		this.x += this.speed;
+		this.y -= this.speed / 2;
+	}
+
+	moveUpLeft() {
+		this.x -= this.speed;
+		this.y -= this.speed / 2;
+	}
+
+	moveDownLeft() {
+		this.x -= this.speed;
+		this.y += this.speed / 2;
+	}
+
+	moveDownRight() {
+		this.x += this.speed;
+		this.y += this.speed / 2;
+	}
 }
