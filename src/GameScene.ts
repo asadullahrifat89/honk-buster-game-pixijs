@@ -27,7 +27,7 @@ export class GameScene extends Container implements IScene {
 
 	private roadRoadMarkContainers: Array<GameObject> = [];
 
-	private roadRoadMarkPopDelayDefault: number = 39;
+	private roadRoadMarkPopDelayDefault: number = 39.5;
 	private roadRoadMarkPopDelay: number = 0;
 
 	private SpawnRoadMarks() {
