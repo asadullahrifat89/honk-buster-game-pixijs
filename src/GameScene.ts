@@ -713,10 +713,10 @@ export class GameScene extends Container implements IScene {
 
 			animatingVehicleEnemys.forEach(container => {
 
-				container.pop();
+				container.pop();				
 				container.moveDownRight();
 
-				//TODO: prevent overlapping
+				// prevent overlapping
 
 				var collidingVehicleEnemy = this.roadVehicleEnemyContainers.find(x => x.isAnimating == true && x.getBounds().intersects(container.getBounds()));
 
@@ -732,7 +732,7 @@ export class GameScene extends Container implements IScene {
 					}
 				}
 
-				//TODO: generate honk
+				// generate honk
 
 				let vehicleEnemy = container as VehicleEnemy;
 

@@ -10,6 +10,10 @@ export class GameObject extends Container {
 	private readonly hoverDelayDefault: number = 35;
 	private readonly hoverSpeed: number = 0.2;
 
+	private vibrateDelay: number = 0;
+	private readonly vibrateDelayDefault: number = 8;
+	private readonly vibrateSpeed: number = 0.3;
+
 	public isAnimating: boolean = false;
 	public speed: number = 3;
 	public health: number = 100;
@@ -130,6 +134,20 @@ export class GameObject extends Container {
 
 			if (this.hoverDelay <= this.hoverDelayDefault * -1)
 				this.hoverDelay = this.hoverDelayDefault;
+		}
+	}
+
+	vibrate() {
+		this.vibrateDelay--;
+
+		if (this.vibrateDelay >= 0) {
+			this.y += this.vibrateSpeed;
+		}
+		else {
+			this.y -= this.vibrateSpeed;
+
+			if (this.vibrateDelay <= this.vibrateDelayDefault * -1)
+				this.vibrateDelay = this.vibrateDelayDefault;
 		}
 	}
 }
