@@ -27,7 +27,7 @@ export class GameScene extends Container implements IScene {
 
 	private roadRoadMarkContainers: Array<GameObject> = [];
 
-	private roadRoadMarkPopDelayDefault: number = 39.5 / 2;
+	private roadRoadMarkPopDelayDefault: number = 39.5 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadRoadMarkPopDelay: number = 0;
 
 	private SpawnRoadMarks() {
@@ -109,7 +109,7 @@ export class GameScene extends Container implements IScene {
 	private roadTreeBottomContainers: Array<GameObject> = [];
 	private roadTreeTopContainers: Array<GameObject> = [];
 
-	private roadTreePopDelayDefault: number = 70 / 2;
+	private roadTreePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadTreePopDelayTop: number = 0;
 	private roadTreePopDelayBottom: number = 0;
 
@@ -255,7 +255,7 @@ export class GameScene extends Container implements IScene {
 	private roadHedgeBottomContainers: Array<GameObject> = [];
 	private roadHedgeTopContainers: Array<GameObject> = [];
 
-	private roadHedgePopDelayDefault: number = 70 / 2;
+	private roadHedgePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadHedgePopDelayTop: number = 0;
 	private roadHedgePopDelayBottom: number = 0;
 
@@ -406,7 +406,7 @@ export class GameScene extends Container implements IScene {
 	private roadLightBillboardBottomContainers: Array<GameObject> = [];
 	private roadLightBillboardTopContainers: Array<GameObject> = [];
 
-	private roadLightBillboardPopDelayDefault: number = 57 / 2;
+	private roadLightBillboardPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadLightBillboardPopDelayTop: number = 0;
 	private roadLightBillboardPopDelayBottom: number = 0;
 
@@ -698,7 +698,7 @@ export class GameScene extends Container implements IScene {
 	private roadSideWalkTopContainers: Array<GameObject> = [];
 	private roadSideWalkBottomContainers: Array<GameObject> = [];
 
-	private roadSideWalkPopDelayDefault: number = 50 / 2;
+	private roadSideWalkPopDelayDefault: number = 50 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadSideWalkPopDelayTop: number = 0;
 	private roadSideWalkPopDelayBottom: number = 0;
 
@@ -851,7 +851,7 @@ export class GameScene extends Container implements IScene {
 
 	private roadCloudContainers: Array<GameObject> = [];
 
-	private roadCloudPopDelayDefault: number = 70 / 2;
+	private roadCloudPopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadCloudPopDelay: number = 0;
 
 	private SpawnClouds() {
@@ -932,7 +932,7 @@ export class GameScene extends Container implements IScene {
 
 	private roadVehicleEnemyContainers: Array<GameObject> = [];
 
-	private roadVehicleEnemyPopDelayDefault: number = 25 / 2;
+	private roadVehicleEnemyPopDelayDefault: number = 25 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadVehicleEnemyPopDelay: number = 0;
 
 	private SpawnVehicleEnemys() {

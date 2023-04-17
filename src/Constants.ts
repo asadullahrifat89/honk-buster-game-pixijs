@@ -94,7 +94,9 @@ export abstract class Constants {
 
 	public static DEFAULT_GAME_VIEW_WIDTH: number = 1900;
 	public static DEFAULT_GAME_VIEW_HEIGHT: number = 940;
-	public static DEFAULT_CONSTRUCT_SPEED: number = 6;
+
+	public static DEFAULT_CONSTRUCT_DELTA: number = 3;
+	public static DEFAULT_CONSTRUCT_SPEED: number = 3 * Constants.DEFAULT_CONSTRUCT_DELTA;
 
 	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
 		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_1.png"),
