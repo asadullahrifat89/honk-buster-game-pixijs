@@ -39,14 +39,18 @@ export class Manager {
 			autoDensity: true,
 			backgroundColor: background,
 			width: width,
-			height: height
+			height: height,
+			sharedTicker: true,
 		});
 
 		// Add the ticker
+		Manager.app.ticker.minFPS = 50;
+		Manager.app.ticker.maxFPS = 60;
+
 		Manager.app.ticker.add(Manager.update)
 
 		// listen for the browser telling us that the screen size changed
-		window.addEventListener("resize", Manager.resize);		
+		window.addEventListener("resize", Manager.resize);
 	}
 
 
@@ -98,6 +102,9 @@ export class Manager {
 
 	// This update will be called by a pixi ticker and tell the scene that a tick happened
 	private static update(framesPassed: number): void {
+
+		// console.log("FPS: " + Manager.app.ticker.FPS);
+
 		// Let the current scene know that we updated it...
 		// Just for funzies, sanity check that it exists first.
 		if (Manager.currentScene) {
