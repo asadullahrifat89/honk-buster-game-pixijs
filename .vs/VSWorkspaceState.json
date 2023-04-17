@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src",
-    "\\static"
+    "\\src"
   ],
-  "SelectedNode": "\\src\\GameScene.ts",
+  "SelectedNode": "\\src",
   "PreviewInSolutionExplorer": false
 }
