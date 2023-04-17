@@ -7,6 +7,8 @@ export class Manager {
 		/*this class is purely static. No constructor to see here*/
 	}
 
+	//#region Properties
+
 	// Safely store variables for our game
 	private static app: Application;
 	private static currentScene: IScene;
@@ -14,6 +16,10 @@ export class Manager {
 	// Width and Height are read-only after creation (for now)
 	private static _width: number;
 	private static _height: number;
+
+	//#endregion
+
+	//#region Methods
 
 	// With getters but not setters, these variables become read-only
 	public static get width(): number {
@@ -53,8 +59,8 @@ export class Manager {
 		window.addEventListener("resize", Manager.resize);
 	}
 
-
-	public static resize(): void {		
+	// With this fucntion scaling factor is decided and passed on the the scene
+	public static resize(): void {
 
 		const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
@@ -80,6 +86,8 @@ export class Manager {
 			scaling = 0.90;
 		else if (screenWidth <= 1900)
 			scaling = 0.95;
+
+		scaling -= 0.06;
 
 		// if we have a scene, we let it know that a resize happened!
 		if (Manager.currentScene) {
@@ -118,5 +126,7 @@ export class Manager {
 
 		// as I said before, I HATE the "frame passed" approach. I would rather use `Manager.app.ticker.deltaMS`
 	}
+
+	//#endregion
 }
 

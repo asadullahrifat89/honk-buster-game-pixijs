@@ -3,6 +3,8 @@ import { GameObjectSprite } from './GameObjectSprite';
 
 export class GameObject extends Container {
 
+	//#region Properties
+
 	private isPoppingComplete: boolean = false;
 	private readonly popUpScalingLimit: number = 1.5;
 
@@ -23,10 +25,18 @@ export class GameObject extends Container {
 
 	public isAwaitingPop: boolean = false;
 
+	//#endregion
+
+	//#region Ctor
+
 	constructor(speed: number) {
 		super();
 		this.speed = speed;
 	}
+
+	//#endregion
+
+	//#region Methods
 
 	isDead(): boolean {
 
@@ -167,5 +177,7 @@ export class GameObject extends Container {
 	hasFaded(): boolean {
 		return this.alpha <= 0.0;
 	}
+
+	//#endregion
 }
 
