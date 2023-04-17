@@ -54,7 +54,7 @@ export class Manager {
 	}
 
 
-	public static resize(): void {
+	public static resize(): void {		
 
 		const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
@@ -84,6 +84,11 @@ export class Manager {
 		// if we have a scene, we let it know that a resize happened!
 		if (Manager.currentScene) {
 			Manager.currentScene.resize(scaling);
+		}
+
+		// if the screen supports fullscreen, toggle it
+		if (document.documentElement.requestFullscreen) {
+			document.documentElement.requestFullscreen();
 		}
 	}
 
