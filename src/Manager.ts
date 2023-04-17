@@ -86,7 +86,7 @@ export class Manager {
 			Manager.currentScene.resize(scaling);
 		}
 
-		// if the screen suports fullscreen, toggle it
+		// if the screen supports fullscreen, toggle it
 		if (document.documentElement.requestFullscreen) {
 			document.documentElement.requestFullscreen();
 		}
