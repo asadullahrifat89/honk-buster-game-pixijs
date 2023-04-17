@@ -33,9 +33,16 @@ export class GameObject extends Container {
 		return this.health <= 0;
 	}
 
-	moveOutOfSight() {
+	disableRendering() {
 		this.x = -1500;
 		this.y = -1500;
+		this.renderable = false;
+		this.isAnimating = false;
+	}
+
+	enableRendering() {
+		this.isAnimating = true;
+		this.renderable = true;
 	}
 
 	setPosition(x: number, y: number) {

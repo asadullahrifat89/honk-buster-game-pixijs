@@ -35,7 +35,7 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 5; j++) {
 
 			const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			container.moveOutOfSight();
+			container.disableRendering();
 			container.width = this.roadRoadMarkSizeWidth * 5;
 			container.height = this.roadRoadMarkSizeHeight / 2 * 5;
 
@@ -73,7 +73,8 @@ export class GameScene extends Container implements IScene {
 
 				container.x = container.width * - 1.1;
 				container.y = container.height * -1;
-				container.isAnimating = true;
+				container.enableRendering();
+				
 				this.roadRoadMarkPopDelay = this.roadRoadMarkPopDelayDefault;
 			}
 		}
@@ -89,8 +90,8 @@ export class GameScene extends Container implements IScene {
 				container.moveDownRight();
 
 				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.moveOutOfSight();
-					container.isAnimating = false;
+					container.disableRendering();
+					
 				}
 			});
 		}
@@ -117,7 +118,7 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 5; j++) {
 
 			const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			container.moveOutOfSight();
+			container.disableRendering();
 			container.width = this.roadTreeSizeWidth * 5;
 			container.height = this.roadTreeSizeHeight / 2 * 5;
 
@@ -148,7 +149,7 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 5; j++) {
 
 			const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			container.moveOutOfSight();
+			container.disableRendering();
 			container.width = this.roadTreeSizeWidth * 5;
 			container.height = this.roadTreeSizeHeight / 2 * 5;
 
@@ -185,7 +186,7 @@ export class GameScene extends Container implements IScene {
 			if (container) {
 				container.x = -850;
 				container.y = container.height * -1;
-				container.isAnimating = true;
+				container.enableRendering();
 				this.roadTreePopDelayTop = this.roadTreePopDelayDefault;
 			}
 		}
@@ -202,7 +203,7 @@ export class GameScene extends Container implements IScene {
 			if (container) {
 				container.x = container.width * -1;
 				container.y = -570;
-				container.isAnimating = true;
+				container.enableRendering();
 				this.roadTreePopDelayBottom = this.roadTreePopDelayDefault;
 			}
 		}
@@ -218,8 +219,8 @@ export class GameScene extends Container implements IScene {
 				container.moveDownRight();
 
 				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.moveOutOfSight();
-					container.isAnimating = false;
+					container.disableRendering();
+					
 				}
 			});
 		}
@@ -235,8 +236,8 @@ export class GameScene extends Container implements IScene {
 				container.moveDownRight();
 
 				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.moveOutOfSight();
-					container.isAnimating = false;
+					container.disableRendering();
+					
 				}
 			});
 		}
@@ -263,7 +264,7 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 5; j++) {
 
 			const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			container.moveOutOfSight();
+			container.disableRendering();
 			container.width = this.roadHedgeSizeWidth * 5;
 			container.height = this.roadHedgeSizeHeight / 2 * 5;
 
@@ -294,7 +295,7 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 5; j++) {
 
 			const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			container.moveOutOfSight();
+			container.disableRendering();
 			container.width = this.roadHedgeSizeWidth * 5;
 			container.height = this.roadHedgeSizeHeight / 2 * 5;
 
@@ -331,7 +332,7 @@ export class GameScene extends Container implements IScene {
 			if (container) {
 				container.x = -1430;
 				container.y = container.height * -1;
-				container.isAnimating = true;
+				container.enableRendering();
 				this.roadHedgePopDelayTop = this.roadHedgePopDelayDefault;
 
 				// console.log("Hedge bottom container popped.");
@@ -350,7 +351,7 @@ export class GameScene extends Container implements IScene {
 			if (container) {
 				container.x = container.width * -1;
 				container.y = -710;
-				container.isAnimating = true;
+				container.enableRendering();
 				this.roadHedgePopDelayBottom = this.roadHedgePopDelayDefault;
 
 				// console.log("Hedge bottom container popped.");
@@ -368,8 +369,8 @@ export class GameScene extends Container implements IScene {
 				container.moveDownRight();
 
 				if (container.x - this.roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.moveOutOfSight();
-					container.isAnimating = false;
+					container.disableRendering();
+					
 				}
 			});
 		}
@@ -385,8 +386,8 @@ export class GameScene extends Container implements IScene {
 				container.moveDownRight();
 
 				if (container.x - this.roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.moveOutOfSight();
-					container.isAnimating = false;
+					container.disableRendering();
+					
 				}
 			});
 		}
@@ -414,7 +415,7 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 5; j++) {
 
 			const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			container.moveOutOfSight();
+			container.disableRendering();
 			container.width = this.roadLightBillboardSizeWidth * 5;
 			container.height = this.roadLightBillboardSizeHeight / 2 * 5;
 
@@ -444,7 +445,7 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 5; j++) {
 
 			const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			container.moveOutOfSight();
+			container.disableRendering();
 			container.width = this.roadLightBillboardSizeWidth * 5;
 			container.height = this.roadLightBillboardSizeHeight / 2 * 5;
 
@@ -481,7 +482,7 @@ export class GameScene extends Container implements IScene {
 			if (container) {
 				container.x = -480;
 				container.y = container.height * -1;
-				container.isAnimating = true;
+				container.enableRendering();
 				this.roadLightBillboardPopDelayTop = this.roadLightBillboardPopDelayDefault;
 			}
 		}
@@ -498,7 +499,7 @@ export class GameScene extends Container implements IScene {
 			if (container) {
 				container.x = container.width * -1;
 				container.y = -330;
-				container.isAnimating = true;
+				container.enableRendering();
 				this.roadLightBillboardPopDelayBottom = this.roadLightBillboardPopDelayDefault;
 			}
 		}
@@ -514,8 +515,8 @@ export class GameScene extends Container implements IScene {
 				container.moveDownRight();
 
 				if (container.x - this.roadLightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.moveOutOfSight();
-					container.isAnimating = false;
+					container.disableRendering();
+					
 				}
 			});
 		}
@@ -531,8 +532,8 @@ export class GameScene extends Container implements IScene {
 				container.moveDownRight();
 
 				if (container.x - this.roadLightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.moveOutOfSight();
-					container.isAnimating = false;
+					container.disableRendering();
+					
 				}
 			});
 		}
@@ -662,7 +663,7 @@ export class GameScene extends Container implements IScene {
 
 	//			if (container.x - this.roadHeavyBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 	//				container.moveOutOfSight();
-	//				container.isAnimating = false;
+	//				
 	//			}
 	//		});
 	//	}
@@ -679,7 +680,7 @@ export class GameScene extends Container implements IScene {
 
 	////			if (container.x - this.roadHeavyBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 	////				container.moveOutOfSight();
-	////				container.isAnimating = false;
+	////				
 	////			}
 	////		});
 	////	}
@@ -706,7 +707,7 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 5; j++) {
 
 			const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			container.moveOutOfSight();
+			container.disableRendering();
 			container.width = this.roadSideWalkWidth * 5;
 			container.height = this.roadSideWalkHeight / 2 * 5;
 
@@ -742,7 +743,7 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 5; j++) {
 
 			const container: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			container.moveOutOfSight();
+			container.disableRendering();
 			container.width = this.roadSideWalkWidth * 5;
 			container.height = this.roadSideWalkHeight / 2 * 5;
 
@@ -784,7 +785,7 @@ export class GameScene extends Container implements IScene {
 			if (container) {
 				container.x = -945;
 				container.y = container.height * -1;
-				container.isAnimating = true;
+				container.enableRendering();
 				this.roadSideWalkPopDelayTop = this.roadSideWalkPopDelayDefault;
 			}
 		}
@@ -801,7 +802,7 @@ export class GameScene extends Container implements IScene {
 			if (container) {
 				container.x = container.width * -1;
 				container.y = -435;
-				container.isAnimating = true;
+				container.enableRendering();
 				this.roadSideWalkPopDelayBottom = this.roadSideWalkPopDelayDefault;
 			}
 		}
@@ -817,8 +818,8 @@ export class GameScene extends Container implements IScene {
 				container.moveDownRight();
 
 				if (container.x - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.moveOutOfSight();
-					container.isAnimating = false;
+					container.disableRendering();
+					
 				}
 			});
 		}
@@ -834,8 +835,8 @@ export class GameScene extends Container implements IScene {
 				container.moveDownRight();
 
 				if (container.x - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.moveOutOfSight();
-					container.isAnimating = false;
+					container.disableRendering();
+					
 				}
 			});
 		}
@@ -858,7 +859,7 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 5; j++) {
 
 			const container: Cloud = new Cloud(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2));
-			container.moveOutOfSight();
+			container.disableRendering();
 			container.width = this.roadCloudSizeWidth;
 			container.height = this.roadCloudSizeHeight;
 
@@ -896,7 +897,8 @@ export class GameScene extends Container implements IScene {
 				var cloud = container as Cloud;
 				cloud.reposition();
 
-				container.isAnimating = true;
+				container.enableRendering();
+
 				this.roadCloudPopDelay = this.roadCloudPopDelayDefault;
 			}
 		}
@@ -914,8 +916,8 @@ export class GameScene extends Container implements IScene {
 				container.moveDownRight();
 
 				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.moveOutOfSight();
-					container.isAnimating = false;
+					container.disableRendering();
+					
 				}
 			});
 		}
@@ -938,7 +940,7 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 10; j++) {
 
 			const container: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
-			container.moveOutOfSight();
+			container.disableRendering();
 			container.width = this.roadVehicleEnemySizeWidth;
 			container.height = this.roadVehicleEnemySizeHeight;
 
@@ -992,7 +994,8 @@ export class GameScene extends Container implements IScene {
 				vehicleEnemey.reposition();
 				vehicleEnemey.reset();
 
-				container.isAnimating = true;
+				container.enableRendering();
+
 				this.roadVehicleEnemyPopDelay = this.roadVehicleEnemyPopDelayDefault;
 			}
 		}
@@ -1037,8 +1040,8 @@ export class GameScene extends Container implements IScene {
 				}
 
 				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					container.moveOutOfSight();
-					container.isAnimating = false;
+					container.disableRendering();
+					
 				}
 			});
 		}
@@ -1058,7 +1061,7 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 5; j++) {
 
 			const container: Honk = new Honk(0);
-			container.moveOutOfSight();
+			container.disableRendering();
 			container.width = this.roadHonkSizeWidth;
 			container.height = this.roadHonkSizeHeight;
 
@@ -1093,7 +1096,7 @@ export class GameScene extends Container implements IScene {
 
 			source.setPopping();
 
-			container.isAnimating = true;
+			container.enableRendering();
 		}
 	}
 
@@ -1108,8 +1111,7 @@ export class GameScene extends Container implements IScene {
 				container.fade();
 
 				if (container.hasFaded()) {
-					container.moveOutOfSight();
-					container.isAnimating = false;
+					container.disableRendering();					
 				}
 			});
 		}
