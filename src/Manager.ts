@@ -39,12 +39,14 @@ export class Manager {
 			autoDensity: true,
 			backgroundColor: background,
 			width: width,
-			height: height
+			height: height,
+			sharedTicker: true,
 		});
 
 		// Add the ticker
-		Manager.app.ticker.minFPS = 30;
-		Manager.app.ticker.maxFPS = 59.99;
+		Manager.app.ticker.minFPS = 50;
+		Manager.app.ticker.maxFPS = 60;
+
 		Manager.app.ticker.add(Manager.update)
 
 		// listen for the browser telling us that the screen size changed

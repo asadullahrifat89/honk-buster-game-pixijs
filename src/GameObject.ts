@@ -7,12 +7,14 @@ export class GameObject extends Container {
 	private readonly popUpScalingLimit: number = 1.5;
 
 	private hoverDelay: number = 0;
-	private readonly hoverDelayDefault: number = 35;
-	private readonly hoverSpeed: number = 0.2;
+	private readonly hoverDelayDefault: number = 25;
+	private readonly hoverSpeed: number = 0.7;
 
 	private vibrateDelay: number = 0;
 	private readonly vibrateDelayDefault: number = 8;
 	private readonly vibrateSpeed: number = 0.3;
+
+	private readonly expandSpeed: number = 0.06;
 
 	public isAnimating: boolean = false;
 	public speed: number = 3;
@@ -95,13 +97,13 @@ export class GameObject extends Container {
 	}
 
 	expand() {
-		this.scale.x += 0.03;
-		this.scale.y += 0.03;
+		this.scale.x += this.expandSpeed;
+		this.scale.y += this.expandSpeed;
 	}
 
 	shrink() {
-		this.scale.x -= 0.03;
-		this.scale.y -= 0.03;
+		this.scale.x -= this.expandSpeed;
+		this.scale.y -= this.expandSpeed;
 	}
 
 	pop() {
@@ -149,6 +151,14 @@ export class GameObject extends Container {
 			if (this.vibrateDelay <= this.vibrateDelayDefault * -1)
 				this.vibrateDelay = this.vibrateDelayDefault;
 		}
+	}
+
+	fade() {
+		this.alpha -= 0.02;
+	}
+
+	hasFaded(): boolean {
+		return this.alpha <= 0.0;
 	}
 }
 
