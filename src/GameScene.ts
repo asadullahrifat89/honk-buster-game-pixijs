@@ -71,10 +71,9 @@ export class GameScene extends Container implements IScene {
 
 			if (container) {
 
-				container.x = container.width * - 1.1;
-				container.y = container.height * -1;
+				container.setPosition(container.width * - 1.1, container.height * -1);
 				container.enableRendering();
-				
+
 				this.roadRoadMarkPopDelay = this.roadRoadMarkPopDelayDefault;
 			}
 		}
@@ -91,7 +90,7 @@ export class GameScene extends Container implements IScene {
 
 				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.disableRendering();
-					
+
 				}
 			});
 		}
@@ -184,8 +183,7 @@ export class GameScene extends Container implements IScene {
 			var container = this.roadTreeTopContainers.find(x => x.isAnimating == false);
 
 			if (container) {
-				container.x = -850;
-				container.y = container.height * -1;
+				container.setPosition(-850, container.height * -1);
 				container.enableRendering();
 				this.roadTreePopDelayTop = this.roadTreePopDelayDefault;
 			}
@@ -201,8 +199,7 @@ export class GameScene extends Container implements IScene {
 			var container = this.roadTreeBottomContainers.find(x => x.isAnimating == false);
 
 			if (container) {
-				container.x = container.width * -1;
-				container.y = -570;
+				container.setPosition(container.width * -1, -570);
 				container.enableRendering();
 				this.roadTreePopDelayBottom = this.roadTreePopDelayDefault;
 			}
@@ -220,7 +217,7 @@ export class GameScene extends Container implements IScene {
 
 				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.disableRendering();
-					
+
 				}
 			});
 		}
@@ -237,7 +234,7 @@ export class GameScene extends Container implements IScene {
 
 				if (container.x > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.disableRendering();
-					
+
 				}
 			});
 		}
@@ -330,12 +327,9 @@ export class GameScene extends Container implements IScene {
 			var container = this.roadHedgeTopContainers.find(x => x.isAnimating == false);
 
 			if (container) {
-				container.x = -1430;
-				container.y = container.height * -1;
+				container.setPosition(-1430, container.height * -1);
 				container.enableRendering();
 				this.roadHedgePopDelayTop = this.roadHedgePopDelayDefault;
-
-				// console.log("Hedge bottom container popped.");
 			}
 		}
 	}
@@ -349,8 +343,7 @@ export class GameScene extends Container implements IScene {
 			var container = this.roadHedgeBottomContainers.find(x => x.isAnimating == false);
 
 			if (container) {
-				container.x = container.width * -1;
-				container.y = -710;
+				container.setPosition(container.width * -1, -710);
 				container.enableRendering();
 				this.roadHedgePopDelayBottom = this.roadHedgePopDelayDefault;
 
@@ -370,7 +363,7 @@ export class GameScene extends Container implements IScene {
 
 				if (container.x - this.roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.disableRendering();
-					
+
 				}
 			});
 		}
@@ -387,7 +380,7 @@ export class GameScene extends Container implements IScene {
 
 				if (container.x - this.roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.disableRendering();
-					
+
 				}
 			});
 		}
@@ -480,8 +473,7 @@ export class GameScene extends Container implements IScene {
 			var container = this.roadLightBillboardTopContainers.find(x => x.isAnimating == false);
 
 			if (container) {
-				container.x = -480;
-				container.y = container.height * -1;
+				container.setPosition(-480, container.height * -1);
 				container.enableRendering();
 				this.roadLightBillboardPopDelayTop = this.roadLightBillboardPopDelayDefault;
 			}
@@ -516,7 +508,7 @@ export class GameScene extends Container implements IScene {
 
 				if (container.x - this.roadLightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.disableRendering();
-					
+
 				}
 			});
 		}
@@ -533,7 +525,7 @@ export class GameScene extends Container implements IScene {
 
 				if (container.x - this.roadLightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.disableRendering();
-					
+
 				}
 			});
 		}
@@ -819,7 +811,7 @@ export class GameScene extends Container implements IScene {
 
 				if (container.x - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.disableRendering();
-					
+
 				}
 			});
 		}
@@ -836,7 +828,7 @@ export class GameScene extends Container implements IScene {
 
 				if (container.x - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.disableRendering();
-					
+
 				}
 			});
 		}
@@ -917,7 +909,7 @@ export class GameScene extends Container implements IScene {
 
 				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.disableRendering();
-					
+
 				}
 			});
 		}
@@ -1041,7 +1033,7 @@ export class GameScene extends Container implements IScene {
 
 				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.disableRendering();
-					
+
 				}
 			});
 		}
@@ -1111,7 +1103,7 @@ export class GameScene extends Container implements IScene {
 				container.fade();
 
 				if (container.hasFaded()) {
-					container.disableRendering();					
+					container.disableRendering();
 				}
 			});
 		}
