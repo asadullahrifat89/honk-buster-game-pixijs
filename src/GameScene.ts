@@ -3,9 +3,10 @@ import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
 import { Cloud } from "./Cloud";
-import { Constants, ConstructType } from './Constants';
+import { Constants, ConstructType, PlayerBalloonTemplate } from './Constants';
 import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
+import { PlayerBalloon } from "./PlayerBalloon";
 
 
 export class GameScene extends Container implements IScene {
@@ -21,23 +22,23 @@ export class GameScene extends Container implements IScene {
 	constructor() {
 		super();
 
-		this.SpawnRoadMarks();
+		this.spawnRoadMarks();
 
-		this.SpawnSideWalksTop();
-		this.SpawnHedgesTop();
-		this.SpawnTreesTop();
-		//this.SpawnHeavyBillboardsTop();
-		this.SpawnLightBillboardsTop();
+		this.spawnSideWalksTop();
+		this.spawnHedgesTop();
+		this.spawnTreesTop();
+		//this.spawnHeavyBillboardsTop();
+		this.spawnLightBillboardsTop();
 
-		this.SpawnVehicleEnemys();
-		this.SpawnHonks();
+		this.spawnVehicleEnemys();
+		this.spawnHonks();
 
-		this.SpawnSideWalksBottom();
-		this.SpawnHedgesBottom();
-		this.SpawnLightBillboardsBottom();
-		this.SpawnTreesBottom();
+		this.spawnSideWalksBottom();
+		this.spawnHedgesBottom();
+		this.spawnLightBillboardsBottom();
+		this.spawnTreesBottom();
 
-		this.SpawnClouds();
+		this.spawnClouds();
 	}
 
 	//#endregion
@@ -48,39 +49,39 @@ export class GameScene extends Container implements IScene {
 
 	public update(_framesPassed: number): void {
 
-		this.GenerateRoadMarks();
-		this.GenerateSideWalksTop();
-		//this.GenerateHeavyBillboardsTop();
-		this.GenerateLightBillboardsTop();
-		this.GenerateHedgesTop();
-		this.GenerateTreesTop();
+		this.generateRoadMarks();
+		this.generateSideWalksTop();
+		//this.generateHeavyBillboardsTop();
+		this.generateLightBillboardsTop();
+		this.generateHedgesTop();
+		this.generateTreesTop();
 
-		this.GenerateVehicleEnemys();
+		this.generateVehicleEnemys();
 
-		this.GenerateClouds();
+		this.generateClouds();
 
-		this.GenerateSideWalksBottom();
-		this.GenerateHedgesBottom();
-		this.GenerateLightBillboardsBottom();
-		this.GenerateTreesBottom();
+		this.generateSideWalksBottom();
+		this.generateHedgesBottom();
+		this.generateLightBillboardsBottom();
+		this.generateTreesBottom();
 
-		this.AnimateRoadMarks();
+		this.animateRoadMarks();
 
-		this.AnimateSideWalksTop();
-		this.AnimateHedgesTop();
-		this.AnimateTreesTop();
-		//this.AnimateHeavyBillboardsTop();
-		this.AnimateLightBillboardsTop();
+		this.animateSideWalksTop();
+		this.animateHedgesTop();
+		this.animateTreesTop();
+		//this.animateHeavyBillboardsTop();
+		this.animateLightBillboardsTop();
 
-		this.AnimateVehicleEnemys();
-		this.AnimateHonks();
+		this.animateVehicleEnemys();
+		this.animateHonks();
 
-		this.AnimateSideWalksBottom();
-		this.AnimateHedgesBottom();
-		this.AnimateTreesBottom();
-		this.AnimateLightBillboardsBottom();
+		this.animateSideWalksBottom();
+		this.animateHedgesBottom();
+		this.animateTreesBottom();
+		this.animateLightBillboardsBottom();
 
-		this.AnimateClouds();
+		this.animateClouds();
 	}
 
 	public resize(scale: number): void {
@@ -102,7 +103,7 @@ export class GameScene extends Container implements IScene {
 	private roadRoadMarkPopDelayDefault: number = 39.5 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadRoadMarkPopDelay: number = 0;
 
-	private SpawnRoadMarks() {
+	private spawnRoadMarks() {
 
 		for (let j = 0; j < 5; j++) {
 
@@ -133,7 +134,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private GenerateRoadMarks() {
+	private generateRoadMarks() {
 
 		this.roadRoadMarkPopDelay -= 0.1;
 
@@ -151,7 +152,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private AnimateRoadMarks() {
+	private animateRoadMarks() {
 
 		var animatingRoadMarks = this.roadRoadMarkContainers.filter(x => x.isAnimating == true);
 
@@ -184,7 +185,7 @@ export class GameScene extends Container implements IScene {
 	private roadTreePopDelayTop: number = 0;
 	private roadTreePopDelayBottom: number = 0;
 
-	private SpawnTreesTop() {
+	private spawnTreesTop() {
 
 		for (let j = 0; j < 5; j++) {
 
@@ -214,7 +215,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private SpawnTreesBottom() {
+	private spawnTreesBottom() {
 
 		for (let j = 0; j < 5; j++) {
 
@@ -245,7 +246,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private GenerateTreesTop() {
+	private generateTreesTop() {
 
 		this.roadTreePopDelayTop -= 0.1;
 
@@ -261,7 +262,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private GenerateTreesBottom() {
+	private generateTreesBottom() {
 
 		this.roadTreePopDelayBottom -= 0.1;
 
@@ -277,7 +278,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private AnimateTreesTop() {
+	private animateTreesTop() {
 
 		var animatingTrees = this.roadTreeTopContainers.filter(x => x.isAnimating == true);
 
@@ -294,7 +295,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private AnimateTreesBottom() {
+	private animateTreesBottom() {
 
 		var animatingTrees = this.roadTreeBottomContainers.filter(x => x.isAnimating == true);
 
@@ -327,7 +328,7 @@ export class GameScene extends Container implements IScene {
 	private roadHedgePopDelayTop: number = 0;
 	private roadHedgePopDelayBottom: number = 0;
 
-	private SpawnHedgesTop() {
+	private spawnHedgesTop() {
 
 		for (let j = 0; j < 5; j++) {
 
@@ -358,7 +359,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private SpawnHedgesBottom() {
+	private spawnHedgesBottom() {
 
 		for (let j = 0; j < 5; j++) {
 
@@ -389,7 +390,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private GenerateHedgesTop() {
+	private generateHedgesTop() {
 
 		this.roadHedgePopDelayTop -= 0.1;
 
@@ -405,7 +406,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private GenerateHedgesBottom() {
+	private generateHedgesBottom() {
 
 		this.roadHedgePopDelayBottom -= 0.1;
 
@@ -423,7 +424,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private AnimateHedgesTop() {
+	private animateHedgesTop() {
 
 		var animatingHedges = this.roadHedgeTopContainers.filter(x => x.isAnimating == true);
 
@@ -440,7 +441,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private AnimateHedgesBottom() {
+	private animateHedgesBottom() {
 
 		var animatingHedges = this.roadHedgeBottomContainers.filter(x => x.isAnimating == true);
 
@@ -474,7 +475,7 @@ export class GameScene extends Container implements IScene {
 	private roadLightBillboardPopDelayTop: number = 0;
 	private roadLightBillboardPopDelayBottom: number = 0;
 
-	private SpawnLightBillboardsTop() {
+	private spawnLightBillboardsTop() {
 
 		for (let j = 0; j < 5; j++) {
 
@@ -504,7 +505,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private SpawnLightBillboardsBottom() {
+	private spawnLightBillboardsBottom() {
 
 		for (let j = 0; j < 5; j++) {
 
@@ -535,7 +536,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private GenerateLightBillboardsTop() {
+	private generateLightBillboardsTop() {
 
 		this.roadLightBillboardPopDelayTop -= 0.1;
 
@@ -551,7 +552,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private GenerateLightBillboardsBottom() {
+	private generateLightBillboardsBottom() {
 
 		this.roadLightBillboardPopDelayBottom -= 0.1;
 
@@ -568,7 +569,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private AnimateLightBillboardsTop() {
+	private animateLightBillboardsTop() {
 
 		var animatingLightBillboards = this.roadLightBillboardTopContainers.filter(x => x.isAnimating == true);
 
@@ -585,7 +586,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private AnimateLightBillboardsBottom() {
+	private animateLightBillboardsBottom() {
 
 		var animatingLightBillboards = this.roadLightBillboardBottomContainers.filter(x => x.isAnimating == true);
 
@@ -619,7 +620,7 @@ export class GameScene extends Container implements IScene {
 	//private roadHeavyBillboardPopDelayTop: number = 0;
 	////private roadHeavyBillboardPopDelayBottom: number = 0;
 
-	//private SpawnHeavyBillboardsTop() {
+	//private spawnHeavyBillboardsTop() {
 
 	//	for (let j = 0; j < 5; j++) {
 
@@ -650,7 +651,7 @@ export class GameScene extends Container implements IScene {
 	//	}
 	//}
 
-	////private SpawnHeavyBillboardsBottom() {
+	////private spawnHeavyBillboardsBottom() {
 
 	////	for (let j = 0; j < 5; j++) {
 
@@ -681,7 +682,7 @@ export class GameScene extends Container implements IScene {
 	////	}
 	////}
 
-	//private GenerateHeavyBillboardsTop() {
+	//private generateHeavyBillboardsTop() {
 
 	//	this.roadHeavyBillboardPopDelayTop -= 0.1;
 
@@ -698,7 +699,7 @@ export class GameScene extends Container implements IScene {
 	//	}
 	//}
 
-	////private GenerateHeavyBillboardsBottom() {
+	////private generateHeavyBillboardsBottom() {
 
 	////	this.roadHeavyBillboardPopDelayBottom -= 0.1;
 
@@ -715,7 +716,7 @@ export class GameScene extends Container implements IScene {
 	////	}
 	////}
 
-	//private AnimateHeavyBillboardsTop() {
+	//private animateHeavyBillboardsTop() {
 
 	//	var animatingHeavyBillboards = this.roadHeavyBillboardTopContainers.filter(x => x.isAnimating == true);
 
@@ -732,7 +733,7 @@ export class GameScene extends Container implements IScene {
 	//	}
 	//}
 
-	////private AnimateHeavyBillboardsBottom() {
+	////private animateHeavyBillboardsBottom() {
 
 	////	var animatingHeavyBillboards = this.roadHeavyBillboardBottomContainers.filter(x => x.isAnimating == true);
 
@@ -765,7 +766,7 @@ export class GameScene extends Container implements IScene {
 	private roadSideWalkPopDelayTop: number = 0;
 	private roadSideWalkPopDelayBottom: number = 0;
 
-	private SpawnSideWalksTop() {
+	private spawnSideWalksTop() {
 
 		for (let j = 0; j < 5; j++) {
 
@@ -801,7 +802,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private SpawnSideWalksBottom() {
+	private spawnSideWalksBottom() {
 
 		for (let j = 0; j < 5; j++) {
 
@@ -837,7 +838,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private GenerateSideWalksTop() {
+	private generateSideWalksTop() {
 
 		this.roadSideWalkPopDelayTop -= 0.1;
 
@@ -854,7 +855,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private GenerateSideWalksBottom() {
+	private generateSideWalksBottom() {
 
 		this.roadSideWalkPopDelayBottom -= 0.1;
 
@@ -871,7 +872,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private AnimateSideWalksTop() {
+	private animateSideWalksTop() {
 
 		var animatingSideWalks = this.roadSideWalkTopContainers.filter(x => x.isAnimating == true);
 
@@ -888,7 +889,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private AnimateSideWalksBottom() {
+	private animateSideWalksBottom() {
 
 		var animatingSideWalks = this.roadSideWalkBottomContainers.filter(x => x.isAnimating == true);
 
@@ -917,7 +918,7 @@ export class GameScene extends Container implements IScene {
 	private roadCloudPopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadCloudPopDelay: number = 0;
 
-	private SpawnClouds() {
+	private spawnClouds() {
 
 		for (let j = 0; j < 5; j++) {
 
@@ -943,7 +944,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private GenerateClouds() {
+	private generateClouds() {
 
 		this.roadCloudPopDelay -= 0.1;
 
@@ -966,7 +967,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private AnimateClouds() {
+	private animateClouds() {
 
 		var animatingClouds = this.roadCloudContainers.filter(x => x.isAnimating == true);
 
@@ -997,7 +998,7 @@ export class GameScene extends Container implements IScene {
 	private roadVehicleEnemyPopDelayDefault: number = 25 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadVehicleEnemyPopDelay: number = 0;
 
-	private SpawnVehicleEnemys() {
+	private spawnVehicleEnemys() {
 
 		for (let j = 0; j < 10; j++) {
 
@@ -1042,7 +1043,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private GenerateVehicleEnemys() {
+	private generateVehicleEnemys() {
 
 		this.roadVehicleEnemyPopDelay -= 0.1;
 
@@ -1063,7 +1064,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private AnimateVehicleEnemys() {
+	private animateVehicleEnemys() {
 
 		var animatingVehicleEnemys = this.roadVehicleEnemyContainers.filter(x => x.isAnimating == true);
 
@@ -1097,7 +1098,7 @@ export class GameScene extends Container implements IScene {
 				if (vehicleEnemy) {
 
 					if (vehicleEnemy.honk()) {
-						this.GenerateHonk(container);
+						this.generateHonk(container);
 					}
 				}
 
@@ -1118,7 +1119,7 @@ export class GameScene extends Container implements IScene {
 
 	private roadHonkContainers: Array<GameObject> = [];
 
-	private SpawnHonks() {
+	private spawnHonks() {
 
 		for (let j = 0; j < 5; j++) {
 
@@ -1145,7 +1146,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private GenerateHonk(source: GameObject) {
+	private generateHonk(source: GameObject) {
 
 		var container = this.roadHonkContainers.find(x => x.isAnimating == false);
 
@@ -1162,7 +1163,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private AnimateHonks() {
+	private animateHonks() {
 
 		var animatingHonks = this.roadHonkContainers.filter(x => x.isAnimating == true);
 
@@ -1183,6 +1184,41 @@ export class GameScene extends Container implements IScene {
 
 	//#region Player
 
+	private playerBalloonSizeWidth: number = 128;
+	private playerBalloonSizeHeight: number = 128;
+
+	private player: PlayerBalloon = new PlayerBalloon(Constants.DEFAULT_CONSTRUCT_SPEED);
+
+	spawnPlayerBalloon() {
+
+		let playerTemplate = Constants.getRandomNumber(0, 1);
+		this.player.disableRendering();
+
+		this.player.width = this.playerBalloonSizeWidth;
+		this.player.height = this.playerBalloonSizeHeight;
+		this.player.setPlayerTemplate(<PlayerBalloonTemplate>playerTemplate);
+
+		this.addChild(this.player);
+	}
+
+	generatePlayerBalloon() {
+
+		this.player.reset();
+		this.player.reposition();
+		this.player.enableRendering();
+
+	}
+
+	animatePlayerBalloon() {
+
+		this.player.pop();
+		this.player.hover();
+		this.player.depleteAttackStance();
+		this.player.depleteWinStance();
+		this.player.depleteHitStance();
+		this.player.recoverFromHealthLoss();
+
+	}
 
 	//#endregion
 
