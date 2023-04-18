@@ -970,7 +970,7 @@ export class GameScene extends Container implements IScene {
 
 			var vehicleType = Constants.getRandomNumber(0, 1);
 
-			let uri: string = "";
+			var uri: string = "";
 			switch (vehicleType) {
 				case 0: {
 
@@ -1167,7 +1167,7 @@ export class GameScene extends Container implements IScene {
 		sprite.y = 0;
 		sprite.width = this.playerBalloonSizeWidth;
 		sprite.height = this.playerBalloonSizeWidth;
-		
+
 		this.playerBalloonContainer.addChild(sprite);
 		this.playerBalloonContainer.setPlayerTemplate(playerTemplate);
 
@@ -1187,7 +1187,11 @@ export class GameScene extends Container implements IScene {
 		this.playerBalloonContainer.depleteWinStance();
 		this.playerBalloonContainer.depleteHitStance();
 		this.playerBalloonContainer.recoverFromHealthLoss();
-		this.playerBalloonContainer.move(Manager.width, Manager.height, this.gameController);
+
+		this.playerBalloonContainer.move(
+			Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling,
+			Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling,
+			this.gameController);
 	}
 
 	//#endregion
@@ -1243,12 +1247,11 @@ export class GameScene extends Container implements IScene {
 		this.animateClouds();
 
 		this.gameController.update();
-		this.animatePlayerBalloon();		
+		this.animatePlayerBalloon();
 	}
 
 	public resize(scale: number): void {
-		this.scale.set(scale);
-		console.log("Scale: " + scale);
+		this.scale.set(scale);		
 	}
 
 	//#endregion

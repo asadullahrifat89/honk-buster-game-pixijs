@@ -14,6 +14,8 @@ export class Manager {
 	private static app: Application;
 	private static currentScene: IScene;
 
+	public static scaling: number = 1;
+
 	//#endregion
 
 	//#region Methods
@@ -53,9 +55,22 @@ export class Manager {
 	// With this fucntion scaling factor is decided and passed on the the scene
 	public static resize(): void {
 
-		const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+		// Set the scaling on resize
+		this.scaling = Manager.getScaling();
 
-		console.log("ScreenWidth: " + screenWidth);
+		// if we have a scene, we let it know that a resize happened!
+		if (Manager.currentScene) {
+			Manager.currentScene.resize(this.scaling);
+		}
+
+		// if the screen supports fullscreen, toggle it
+		if (document.documentElement.requestFullscreen) {
+			document.documentElement.requestFullscreen();
+		}
+	}
+
+	private static getScaling() {
+		const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);		
 
 		var scaling: number = 1;
 
@@ -77,18 +92,12 @@ export class Manager {
 			scaling = 0.90;
 		else if (screenWidth <= 1900)
 			scaling = 0.95;
+		else scaling = 1;
 
-		scaling -= 0.06;
+		console.log("ScreenWidth: " + screenWidth);
+		console.log("Scaling: " + scaling);
 
-		// if we have a scene, we let it know that a resize happened!
-		if (Manager.currentScene) {
-			Manager.currentScene.resize(scaling);
-		}
-
-		// if the screen supports fullscreen, toggle it
-		if (document.documentElement.requestFullscreen) {
-			document.documentElement.requestFullscreen();
-		}
+		return scaling;
 	}
 
 	// Call this function when you want to go to a new scene
