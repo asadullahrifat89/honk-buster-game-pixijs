@@ -16,7 +16,7 @@ export class VehicleEnemy extends VehicleBase {
 
 	reset() {
 
-		this.speed = Constants.getRandomNumber(1, 2);
+		this.speed = Constants.getRandomNumber(1, 3);
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
 		this.filters = null;
 
