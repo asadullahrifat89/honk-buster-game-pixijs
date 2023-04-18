@@ -1,4 +1,7 @@
 import { Texture } from "pixi.js";
+import { ConstructTemplate } from "./ConstructTemplate";
+
+//#region Enums
 
 export enum ConstructType {
 	NONE,
@@ -79,16 +82,34 @@ export enum ConstructType {
 	TITLE_SCREEN
 }
 
-class ConstructTemplate {
+export enum MovementDirection {
+	None,
 
-	public ConstructType: ConstructType = 0;
-	public Uri: string = "";
+	Up,
+	UpLeft,
+	UpRight,
 
-	constructor(constructType: ConstructType, uri: string) {
-		this.ConstructType = constructType;
-		this.Uri = uri;
-	}
+	Down,
+	DownLeft,
+	DownRight,
+
+	Right,
+	Left,
 }
+
+export enum PlayerBalloonStance {
+	Idle,
+	Attack,
+	Hit,
+	Win,
+}
+
+export enum PlayerBalloonTemplate {
+	Blue,
+	Red,
+}
+
+//#endregion
 
 //class ConstructSize {
 
@@ -98,6 +119,8 @@ class ConstructTemplate {
 //}
 
 export abstract class Constants {
+
+	//#region Properties
 
 	public static DEFAULT_GAME_VIEW_WIDTH: number = 1900;
 	public static DEFAULT_GAME_VIEW_HEIGHT: number = 940;
@@ -156,6 +179,10 @@ export abstract class Constants {
 
 	];
 
+	//#endregion
+
+	//#region Methods
+
 	static degreesToRadians(degrees: number): number {
 		return degrees * (Math.PI / 180);
 	}
@@ -178,4 +205,6 @@ export abstract class Constants {
 		const texture = Texture.from(uri);
 		return texture;
 	}
+
+	//#endregion
 }
