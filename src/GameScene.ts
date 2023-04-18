@@ -1320,8 +1320,8 @@ export class GameScene extends Container implements IScene {
 	}
 
     private repositionGameScoreBar() {
-        this.gameScoreBar.x = (Manager.width - this.gameScoreBar.width) / 2;
-        this.gameScoreBar.y = 50;
+        this.gameScoreBar.x = ((Manager.width - this.gameScoreBar.width) / 2);
+        this.gameScoreBar.y = 10;
     }
 
 	//#endregion
