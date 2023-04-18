@@ -47,6 +47,7 @@ export class VehicleEnemy extends VehicleBase {
 	setBlast() {
 		this.willHonk = false;
 		this.speed = this.speed - 0.5;
+		
 	}
 }
 
