@@ -135,13 +135,19 @@ export abstract class Constants {
 	public static DEFAULT_BLAST_SHRINK_SCALE: number = 0.8;
 
 	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
+
+		new ConstructTemplate(ConstructType.ROAD_MARK, "road_marks.png"),
+
 		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_1.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_2.png"),
+
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK, "road_side_walk_1.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_HEDGE, "road_side_hedge_1.png"),
+
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_1.png"),
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_2.png"),
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_3.png"),
+
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_1.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_2.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_3.png"),
@@ -157,21 +163,25 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_13.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_14.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_15.png"),
+
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_1.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_2.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_3.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_4.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_5.png"),
+
 		new ConstructTemplate(ConstructType.HONK, "honk_1.png"),
 		new ConstructTemplate(ConstructType.HONK, "honk_2.png"),
-		new ConstructTemplate(ConstructType.HONK, "honk_3.png"),
-		new ConstructTemplate(ConstructType.ROAD_MARK, "road_marks.png"),
+		new ConstructTemplate(ConstructType.HONK, "honk_3.png"),		
+
 		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_1.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_2.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_3.png"),
+
 		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_1.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_2.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_3.png"),
+
 		new ConstructTemplate(ConstructType.PLAYER_BALLOON, "player_1_character.png"),
 		new ConstructTemplate(ConstructType.PLAYER_BALLOON_IDLE, "player_balloon_1_idle.png"),
 		new ConstructTemplate(ConstructType.PLAYER_BALLOON_ATTACK, "player_balloon_1_attack.png"),
@@ -182,6 +192,14 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_BALLOON_ATTACK, "player_balloon_2_attack.png"),
 		new ConstructTemplate(ConstructType.PLAYER_BALLOON_WIN, "player_balloon_2_win.png"),
 		new ConstructTemplate(ConstructType.PLAYER_BALLOON_HIT, "player_balloon_2_hit.png"),
+
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "cracker_1.png"),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "cracker_2.png"),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "cracker_3.png"),
+
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "trash_1.png"),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "trash_2.png"),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "trash_3.png"),
 
 	];
 
