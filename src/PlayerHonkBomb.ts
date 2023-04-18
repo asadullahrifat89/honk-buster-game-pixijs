@@ -16,7 +16,6 @@ export class PlayerHonkBomb extends GameObject {
 
 	//#endregion
 	reset() {
-
 		this.isBlasting = false;
 		this.setTexture(Constants.getRandomTextureFromUris(this.honkBombUris));
 		this.alpha = 1;
