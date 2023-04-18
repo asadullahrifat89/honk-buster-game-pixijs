@@ -42,6 +42,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnTreesBottom();
 
 		this.spawnClouds();
+		this.spawnPlayerHonkBombs();
 		this.spawnPlayerBalloon();
 
 		this.generatePlayerBalloon();
@@ -1147,10 +1148,9 @@ export class GameScene extends Container implements IScene {
 			sprite.height = this.honkBombSizeHeight;
 
 			sprite.anchor.set(0.5, 0.5);
+			container.addChild(sprite);
 
 			container.setHonkBombTemplate(playerHonkBombTemplate);
-
-			container.addChild(sprite);
 
 			this.honkBombContainers.push(container);
 			this.addChild(container);
