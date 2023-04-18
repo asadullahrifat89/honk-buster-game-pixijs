@@ -1,20 +1,23 @@
 ﻿import { Texture } from 'pixi.js';
 import { Constants, ConstructType, MovementDirection, PlayerBalloonStance, PlayerBalloonTemplate } from './Constants';
+import { GameController } from './GameController';
 import { GameObject } from './GameObject';
 
 
 export class PlayerBalloon extends GameObject {
 
+	//#region Properties
+
 	public playerBalloonStance: PlayerBalloonStance = PlayerBalloonStance.Idle;
 
 	private _movementStopDelay: number = 0;
 	private readonly _movementStopSpeedLoss: number = 0.5;
-	private readonly _movementStopDelayDefault: number = 6;	
+	private readonly _movementStopDelayDefault: number = 6;
 
 	private _lastSpeed: number = 0;
-	private readonly _rotationThreadhold: number = 9;
-	private readonly _unrotationSpeed: number = 1.1;
-	private readonly _rotationSpeed: number = 0.5;
+	//private readonly _rotationThreadhold: number = 9;
+	//private readonly _unrotationSpeed: number = 1.1;
+	//private readonly _rotationSpeed: number = 0.5;
 
 	private _attackStanceDelay: number = 0;
 	private readonly _attackStanceDelayDefault: number = 1.5;
@@ -35,9 +38,17 @@ export class PlayerBalloon extends GameObject {
 	private _playerHitTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_BALLOON_HIT);
 	private _playerAttackTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_BALLOON_ATTACK);
 
+	//#endregion
+
+	//#region Ctor
+
 	constructor(speed: number) {
 		super(speed);
 	}
+
+	//#endregion
+
+	//#region Methods
 
 	reset() {
 
@@ -230,4 +241,97 @@ export class PlayerBalloon extends GameObject {
 		if (this._healthLossRecoveryDelay <= 0 && this.alpha != 1)
 			this.alpha = 1;
 	}
+
+	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
+
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
+
+		let halfHeight = this.height / 2;
+		let halfWidth = this.width / 2;
+
+		if (controller.isMoveUp && controller.isMoveLeft) {
+			if (this.y + halfHeight > 0 && this.x + halfWidth > 0)
+				this.moveUpLeft();
+		}
+		else if (controller.isMoveUp && controller.isMoveRight) {
+			if (this.x - halfWidth < sceneWidth && this.y + halfHeight > 0)
+				this.moveUpRight();
+		}
+		else if (controller.isMoveUp) {
+			if (this.y + halfHeight > 0)
+				this.moveUp();
+		}
+		else if (controller.isMoveDown && controller.isMoveRight) {
+			if (this.y + this.height - halfHeight < sceneHeight && this.x - halfWidth < sceneWidth)
+				this.moveDownRight();
+		}
+		else if (controller.isMoveDown && controller.isMoveLeft) {
+			if (this.x + halfWidth > 0 && this.y + this.height - halfHeight < sceneHeight)
+				this.moveDownLeft();
+		}
+		else if (controller.isMoveDown) {
+			if (this.y + this.height - halfHeight < sceneHeight)
+				this.moveDown();
+		}
+		else if (controller.isMoveRight) {
+			if (this.x - halfWidth < sceneWidth)
+				this.moveRight();
+		}
+		else if (controller.isMoveLeft) {
+			if (this.x + halfWidth > 0)
+				this.moveLeft();
+		}
+		else {
+			this.stopMovement();
+		}
+	}
+
+	stopMovement() {
+		if (this._movementStopDelay > 0) {
+			this._movementStopDelay--;
+
+			let movementSpeedLoss = this._movementStopSpeedLoss;
+			this.speed = this._lastSpeed - movementSpeedLoss;
+
+			if (this._lastSpeed > 0) {
+				switch (this._movementDirection) {
+					case MovementDirection.None:
+						break;
+					case MovementDirection.Up:						
+						this.moveUp();
+						break;
+					case MovementDirection.UpLeft:
+						this.moveUpLeft();
+						break;
+					case MovementDirection.UpRight:
+						this.moveUpRight();
+						break;
+					case MovementDirection.Down:
+						this.moveDown();
+						break;
+					case MovementDirection.DownLeft:
+						this.moveDownLeft();
+						break;
+					case MovementDirection.DownRight:
+						this.moveDownRight();
+						break;
+					case MovementDirection.Right:
+						this.moveRight();
+						break;
+					case MovementDirection.Left:
+						this.moveLeft();
+						break;
+					default:
+						break;
+				}
+			}		
+
+			//UnRotate(rotationSpeed: _unrotationSpeed);
+		}
+		else {
+			this._movementDirection = MovementDirection.None;
+		}
+	}
+
+	//#endregion
 }

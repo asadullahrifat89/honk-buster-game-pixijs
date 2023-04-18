@@ -1,6 +1,7 @@
 import { Application } from "pixi.js";
 import { IScene } from "./IScene";
 
+
 export class Manager {
 
 	private constructor() {
@@ -13,29 +14,12 @@ export class Manager {
 	private static app: Application;
 	private static currentScene: IScene;
 
-	// Width and Height are read-only after creation (for now)
-	private static _width: number;
-	private static _height: number;
-
 	//#endregion
 
 	//#region Methods
 
-	// With getters but not setters, these variables become read-only
-	public static get width(): number {
-		return Manager._width;
-	}
-
-	public static get height(): number {
-		return Manager._height;
-	}
-
 	// Use this function ONCE to start the entire machinery
 	public static initialize(width: number, height: number, background: number): void {
-
-		// store our width and height
-		Manager._width = width;
-		Manager._height = height;
 
 		// Create our pixi app
 		Manager.app = new Application({
@@ -57,6 +41,13 @@ export class Manager {
 
 		// listen for the browser telling us that the screen size changed
 		window.addEventListener("resize", Manager.resize);
+	}
+
+	public static get width(): number {
+		return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+	}
+	public static get height(): number {
+		return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 	}
 
 	// With this fucntion scaling factor is decided and passed on the the scene
