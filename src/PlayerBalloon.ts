@@ -93,30 +93,30 @@ export class PlayerBalloon extends GameObject {
 			default: break;
 		}
 
-		this.changeTexture(this._playerIdleTexture);
+		this.setTexture(this._playerIdleTexture);
 	}
 
 	setIdleStance() {
 		this.playerBalloonStance = PlayerBalloonStance.Idle;
-		this.changeTexture(this._playerIdleTexture);
+		this.setTexture(this._playerIdleTexture);
 	}
 
 	setAttackStance() {
 		this.playerBalloonStance = PlayerBalloonStance.Attack;
-		this.changeTexture(this._playerAttackTexture);
+		this.setTexture(this._playerAttackTexture);
 		this._attackStanceDelay = this._attackStanceDelayDefault;
 	}
 
 	setWinStance() {
 		this.playerBalloonStance = PlayerBalloonStance.Win;
-		this.changeTexture(this._playerWinTexture);
+		this.setTexture(this._playerWinTexture);
 		this._winStanceDelay = this._winStanceDelayDefault;
 	}
 
 	setHitStance() {
 		if (this.playerBalloonStance != PlayerBalloonStance.Win) {
 			this.playerBalloonStance = PlayerBalloonStance.Hit;
-			this.changeTexture(this._playerHitTexture);
+			this.setTexture(this._playerHitTexture);
 			this._hitStanceDelay = this._hitStanceDelayDefault;
 		}
 	}
@@ -297,7 +297,7 @@ export class PlayerBalloon extends GameObject {
 				switch (this._movementDirection) {
 					case MovementDirection.None:
 						break;
-					case MovementDirection.Up:						
+					case MovementDirection.Up:
 						this.moveUp();
 						break;
 					case MovementDirection.UpLeft:
@@ -324,7 +324,7 @@ export class PlayerBalloon extends GameObject {
 					default:
 						break;
 				}
-			}		
+			}
 
 			//UnRotate(rotationSpeed: _unrotationSpeed);
 		}
@@ -335,3 +335,4 @@ export class PlayerBalloon extends GameObject {
 
 	//#endregion
 }
+

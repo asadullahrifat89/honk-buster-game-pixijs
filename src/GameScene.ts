@@ -915,7 +915,7 @@ export class GameScene extends Container implements IScene {
 
 			if (container) {
 
-				container.changeTexture(Constants.getRandomTexture(ConstructType.CLOUD));
+				container.setTexture(Constants.getRandomTexture(ConstructType.CLOUD));
 				container.speed = Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2);
 
 				var cloud = container as Cloud;

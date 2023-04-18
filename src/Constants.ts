@@ -109,6 +109,11 @@ export enum PlayerBalloonTemplate {
 	Red,
 }
 
+export enum PlayerHonkBombTemplate {
+	Cracker,
+	TrashCan,
+}
+
 //#endregion
 
 //class ConstructSize {
@@ -127,6 +132,7 @@ export abstract class Constants {
 
 	public static DEFAULT_CONSTRUCT_DELTA: number = 3;
 	public static DEFAULT_CONSTRUCT_SPEED: number = 3 * Constants.DEFAULT_CONSTRUCT_DELTA;
+	public static DEFAULT_BLAST_SHRINK_SCALE: number = 0.8;
 
 	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
 		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_1.png"),
@@ -205,6 +211,21 @@ export abstract class Constants {
 		const texture = Texture.from(uri);
 		return texture;
 	}
+
+	static getRandomUriFromUris(uris: string[]): string {
+
+		const treeTemplates = uris;
+		const uri = treeTemplates[this.getRandomNumber(0, treeTemplates.length - 1)];
+
+		return uri;
+	}
+
+	static getRandomTextureFromUris(uris: string[]): Texture {
+
+		const uri = this.getRandomUriFromUris(uris);
+		const texture = Texture.from(uri);
+		return texture;
+	}	
 
 	//#endregion
 }

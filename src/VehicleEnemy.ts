@@ -32,7 +32,7 @@ export class VehicleEnemy extends VehicleBase {
 		}
 
 		const texture = Texture.from(uri);
-		this.changeTexture(texture);
+		this.setTexture(texture);
 
 		if (this.willHonk) {
 			this.health = this.hitPoint * Constants.getRandomNumber(0, 3);
