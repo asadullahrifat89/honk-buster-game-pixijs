@@ -1121,14 +1121,14 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region HonkBomb
+	//#region PlayerHonkBomb
 
 	private honkBombSizeWidth: number = 60;
 	private honkBombSizeHeight: number = 60;
 
 	private honkBombContainers: Array<GameObject> = [];
 
-	spawnHonkBombs() {
+	spawnPlayerHonkBombs() {
 
 		let playerHonkBombTemplate = Constants.getRandomNumber(0, 1);
 
@@ -1154,6 +1154,63 @@ export class GameScene extends Container implements IScene {
 
 			this.honkBombContainers.push(container);
 			this.addChild(container);
+		}
+	}
+
+	generatePlayerHonkBomb() {
+
+		var container = this.honkBombContainers.find(x => x.isAnimating == false);
+
+		if (container) {
+
+			var playerHonkBomb = container as PlayerHonkBomb;
+			playerHonkBomb.reset();
+			playerHonkBomb.reposition(this.playerBalloonContainer);
+			playerHonkBomb.setPopping();
+
+			container.enableRendering();
+
+			this.playerBalloonContainer.setAttackStance();
+		}
+	}
+
+	animatePlayerHonkBomb() {
+
+		var animatingHonkBombs = this.honkBombContainers.filter(x => x.isAnimating == true);
+
+		if (animatingHonkBombs) {
+
+			animatingHonkBombs.forEach(container => {
+
+				container.pop();
+
+				var playerHonkBomb = container as PlayerHonkBomb;
+
+				if (playerHonkBomb) {
+
+					if (playerHonkBomb.isBlasting) {
+
+						playerHonkBomb.expand();
+						playerHonkBomb.fade();
+						playerHonkBomb.moveDownRight();
+
+					}
+					else {
+
+						playerHonkBomb.setPosition(
+							playerHonkBomb.x + playerHonkBomb.speed,
+							playerHonkBomb.y + playerHonkBomb.speed * 1.2
+						);
+
+						playerHonkBomb.depleteBlastDelay();
+
+					}
+				}
+
+				if (container.hasFaded()) {
+					container.disableRendering();
+				}
+			});
 		}
 	}
 

@@ -8,6 +8,8 @@ export class PlayerHonkBomb extends GameObject {
 
 	private honkBombTemplate: PlayerHonkBombTemplate = PlayerHonkBombTemplate.Cracker;
 	private honkBombUris: string[] = [];
+	private blastDelay: number = 0;
+	private readonly blastDelayDefault: number = 40;
 
 	//#region Ctor
 	constructor(speed: number) {
@@ -21,6 +23,7 @@ export class PlayerHonkBomb extends GameObject {
 		this.alpha = 1;
 		this.scale.set(1);
 		this.angle = 0;
+		this.blastDelay = this.blastDelayDefault;
 	}
 
 	reposition(source: GameObject) {
@@ -45,10 +48,21 @@ export class PlayerHonkBomb extends GameObject {
 		this.setTexture(Constants.getRandomTextureFromUris(this.honkBombUris));
 	}
 
+	depleteBlastDelay() {
+
+		this.blastDelay--;
+
+		if (this.blastDelay <= 0) {
+
+			this.setBlast();
+		}
+
+	}
+
 	setBlast() {
 		this.isBlasting = true;
 		this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
-		
+
 		switch (this.honkBombTemplate) {
 			case PlayerHonkBombTemplate.Cracker: {
 				this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
