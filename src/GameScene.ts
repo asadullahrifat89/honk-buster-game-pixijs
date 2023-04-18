@@ -19,6 +19,7 @@ export class GameScene extends Container implements IScene {
 
 	private gameController: GameController = new GameController();
 	private gameScoreBar: ScoreBar = new ScoreBar();
+	//private sceneContainer: Container = new Container();
 
 	//#endregion
 
@@ -1319,10 +1320,10 @@ export class GameScene extends Container implements IScene {
 		this.addChild(this.gameScoreBar);
 	}
 
-    private repositionGameScoreBar() {
-        this.gameScoreBar.x = ((Manager.width - this.gameScoreBar.width) / 2);
-        this.gameScoreBar.y = 10;
-    }
+	private repositionGameScoreBar() {
+		this.gameScoreBar.x = (Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling - this.gameScoreBar.width); //((Manager.width - this.gameScoreBar.width) / 2);
+		this.gameScoreBar.y = 10;
+	}
 
 	//#endregion
 

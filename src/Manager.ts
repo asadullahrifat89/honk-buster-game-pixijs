@@ -55,7 +55,7 @@ export class Manager {
 	// With this fucntion scaling factor is decided and passed on the the scene
 	public static resize(): void {
 
-		// Set the scaling on resize
+		// set the scaling on resize
 		this.scaling = Manager.getScaling();
 
 		// if we have a scene, we let it know that a resize happened!
