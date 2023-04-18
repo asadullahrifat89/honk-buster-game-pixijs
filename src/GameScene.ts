@@ -20,6 +20,7 @@ export class GameScene extends Container implements IScene {
 	private gameController: GameController = new GameController();
 	private gameScoreBar: ScoreBar = new ScoreBar();
 	//private sceneContainer: Container = new Container();
+	//TODO: create a new container and add every game object in that container and leave the UI controls in the main scene
 
 	//#endregion
 
