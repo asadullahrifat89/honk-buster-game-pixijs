@@ -1,35 +1,27 @@
 import { Application } from "pixi.js";
 import { IScene } from "./IScene";
 
+
 export class Manager {
 
 	private constructor() {
 		/*this class is purely static. No constructor to see here*/
 	}
 
+	//#region Properties
+
 	// Safely store variables for our game
 	private static app: Application;
 	private static currentScene: IScene;
 
-	// Width and Height are read-only after creation (for now)
-	private static _width: number;
-	private static _height: number;
+	public static scaling: number = 1;
 
-	// With getters but not setters, these variables become read-only
-	public static get width(): number {
-		return Manager._width;
-	}
+	//#endregion
 
-	public static get height(): number {
-		return Manager._height;
-	}
+	//#region Methods
 
 	// Use this function ONCE to start the entire machinery
 	public static initialize(width: number, height: number, background: number): void {
-
-		// store our width and height
-		Manager._width = width;
-		Manager._height = height;
 
 		// Create our pixi app
 		Manager.app = new Application({
@@ -53,12 +45,32 @@ export class Manager {
 		window.addEventListener("resize", Manager.resize);
 	}
 
+	public static get width(): number {
+		return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+	}
+	public static get height(): number {
+		return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+	}
 
-	public static resize(): void {		
+	// With this fucntion scaling factor is decided and passed on the the scene
+	public static resize(): void {
 
-		const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+		// Set the scaling on resize
+		this.scaling = Manager.getScaling();
 
-		console.log("ScreenWidth: " + screenWidth);
+		// if we have a scene, we let it know that a resize happened!
+		if (Manager.currentScene) {
+			Manager.currentScene.resize(this.scaling);
+		}
+
+		// if the screen supports fullscreen, toggle it
+		if (document.documentElement.requestFullscreen) {
+			document.documentElement.requestFullscreen();
+		}
+	}
+
+	private static getScaling() {
+		const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);		
 
 		var scaling: number = 1;
 
@@ -80,16 +92,12 @@ export class Manager {
 			scaling = 0.90;
 		else if (screenWidth <= 1900)
 			scaling = 0.95;
+		else scaling = 1;
 
-		// if we have a scene, we let it know that a resize happened!
-		if (Manager.currentScene) {
-			Manager.currentScene.resize(scaling);
-		}
+		console.log("ScreenWidth: " + screenWidth);
+		console.log("Scaling: " + scaling);
 
-		// if the screen supports fullscreen, toggle it
-		if (document.documentElement.requestFullscreen) {
-			document.documentElement.requestFullscreen();
-		}
+		return scaling;
 	}
 
 	// Call this function when you want to go to a new scene
@@ -118,5 +126,7 @@ export class Manager {
 
 		// as I said before, I HATE the "frame passed" approach. I would rather use `Manager.app.ticker.deltaMS`
 	}
+
+	//#endregion
 }
 

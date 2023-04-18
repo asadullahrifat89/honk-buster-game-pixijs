@@ -1,4 +1,7 @@
 import { Texture } from "pixi.js";
+import { ConstructTemplate } from "./ConstructTemplate";
+
+//#region Enums
 
 export enum ConstructType {
 	NONE,
@@ -79,22 +82,51 @@ export enum ConstructType {
 	TITLE_SCREEN
 }
 
-class ConstructTemplate {
+export enum MovementDirection {
+	None,
 
-	public ConstructType: ConstructType = 0;
-	public Uri: string = "";
+	Up,
+	UpLeft,
+	UpRight,
 
-	constructor(constructType: ConstructType, uri: string) {
-		this.ConstructType = constructType;
-		this.Uri = uri;
-	}
+	Down,
+	DownLeft,
+	DownRight,
+
+	Right,
+	Left,
 }
+
+export enum PlayerBalloonStance {
+	Idle,
+	Attack,
+	Hit,
+	Win,
+}
+
+export enum PlayerBalloonTemplate {
+	Blue,
+	Red,
+}
+
+//#endregion
+
+//class ConstructSize {
+
+//	public ConstructType: ConstructType = 0;
+//	public Height: number = 0;
+//	public Width: number = 0;
+//}
 
 export abstract class Constants {
 
+	//#region Properties
+
 	public static DEFAULT_GAME_VIEW_WIDTH: number = 1900;
 	public static DEFAULT_GAME_VIEW_HEIGHT: number = 940;
-	public static DEFAULT_CONSTRUCT_SPEED: number = 6;
+
+	public static DEFAULT_CONSTRUCT_DELTA: number = 3;
+	public static DEFAULT_CONSTRUCT_SPEED: number = 3 * Constants.DEFAULT_CONSTRUCT_DELTA;
 
 	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
 		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_1.png"),
@@ -134,7 +166,22 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_1.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_2.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_3.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON, "player_1_character.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_IDLE, "player_balloon_1_idle.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_ATTACK, "player_balloon_1_attack.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_WIN, "player_balloon_1_win.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_HIT, "player_balloon_1_hit.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON, "player_2_character.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_IDLE, "player_balloon_2_idle.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_ATTACK, "player_balloon_2_attack.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_WIN, "player_balloon_2_win.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_HIT, "player_balloon_2_hit.png"),
+
 	];
+
+	//#endregion
+
+	//#region Methods
 
 	static degreesToRadians(degrees: number): number {
 		return degrees * (Math.PI / 180);
@@ -158,4 +205,6 @@ export abstract class Constants {
 		const texture = Texture.from(uri);
 		return texture;
 	}
+
+	//#endregion
 }
