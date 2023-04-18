@@ -80,7 +80,7 @@ export class VehicleBase extends GameObject {
 	}
 
 	setHonkDelay() {
-		this.honkDelay = Constants.getRandomNumber(30, 80);
+		this.honkDelay = Constants.getRandomNumber(25, 70);
 	}
 }
 

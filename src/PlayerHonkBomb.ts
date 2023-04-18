@@ -4,10 +4,16 @@ import { GameObject } from './GameObject';
 
 export class PlayerHonkBomb extends GameObject {
 
+	// #region Properties
+
 	public isBlasting: boolean = false;
 
 	private honkBombTemplate: PlayerHonkBombTemplate = PlayerHonkBombTemplate.Cracker;
 	private honkBombUris: string[] = [];
+	private blastDelay: number = 0;
+	private readonly blastDelayDefault: number = 20;
+
+	//#endregion
 
 	//#region Ctor
 	constructor(speed: number) {
@@ -15,20 +21,25 @@ export class PlayerHonkBomb extends GameObject {
 	}
 
 	//#endregion
+
+	//#region Methods
+
 	reset() {
 		this.isBlasting = false;
 		this.setTexture(Constants.getRandomTextureFromUris(this.honkBombUris));
 		this.alpha = 1;
 		this.scale.set(1);
 		this.angle = 0;
+		this.blastDelay = this.blastDelayDefault;
 	}
 
 	reposition(source: GameObject) {
-		this.setPosition(source.x + source.width / 2 - this.width / 2, source.y + source.height - 35);
+		this.setPosition(source.x + source.width / 2 - this.width / 2, source.y + source.height);
 	}
 
 	setHonkBombTemplate(honkBombTemplate: PlayerHonkBombTemplate) {
 		this.honkBombTemplate = honkBombTemplate;
+
 		switch (this.honkBombTemplate) {
 			case PlayerHonkBombTemplate.Cracker: {
 				this.honkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.ConstructType == ConstructType.PLAYER_HONK_BOMB && x.Uri.includes("cracker")).map(x => x.Uri);
@@ -44,10 +55,24 @@ export class PlayerHonkBomb extends GameObject {
 		this.setTexture(Constants.getRandomTextureFromUris(this.honkBombUris));
 	}
 
+	depleteBlastDelay(): boolean {
+
+		this.blastDelay--;
+
+		if (this.blastDelay <= 0) {
+
+			this.setBlast();
+
+			return true;
+		}
+
+		return false;
+	}
+
 	setBlast() {
 		this.isBlasting = true;
 		this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
-		
+
 		switch (this.honkBombTemplate) {
 			case PlayerHonkBombTemplate.Cracker: {
 				this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
@@ -60,4 +85,6 @@ export class PlayerHonkBomb extends GameObject {
 			default: break;
 		}
 	}
+
+	//#endregion
 }

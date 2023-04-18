@@ -106,7 +106,8 @@ export class GameObject extends Container {
 
 		if (child)
 			child.setTexture(texture);
-		else this.addChild(new GameObjectSprite(texture));
+		else
+			this.addChild(new GameObjectSprite(texture));
 	}
 
 	setPopping() {

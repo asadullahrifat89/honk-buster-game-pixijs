@@ -9,9 +9,17 @@ export class GameController extends Container {
 	public isMoveDown: boolean = false;
 	public isMoveLeft: boolean = false;
 	public isMoveRight: boolean = false;
+	public isAttacking: boolean = false;
 
 	constructor() {
 		super();
+
+		this.keyboard.events.on('pressed', null, () => {
+
+			if (this.keyboard.isKeyPressed('Space')) {
+				this.isAttacking = true;
+			}
+		});
 	}
 
 	update() {
@@ -45,20 +53,8 @@ export class GameController extends Container {
 			this.isMoveDown = false;
 		}
 
-		//if (this.keyboard.isKeyReleased('ArrowLeft', 'KeyA')) {
-		//	this.isMoveLeft = false;
-		//}
-
-		//if (this.keyboard.isKeyReleased('ArrowRight', 'KeyD')) {
-		//	this.isMoveRight = false;
-		//}
-
-		//if (this.keyboard.isKeyReleased('ArrowUp', 'KeyW')) {
-		//	this.isMoveUp = false;
-		//}
-
-		//if (this.keyboard.isKeyReleased('ArrowDown', 'KeyS')) {
-		//	this.isMoveDown = false;
+		//if (this.keyboard.isKeyPressed('Space')) {
+		//	this.isAttacking = true;
 		//}
 	}
 }

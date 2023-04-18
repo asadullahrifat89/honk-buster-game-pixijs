@@ -1,5 +1,6 @@
 import { Texture } from "pixi.js";
 import { ConstructTemplate } from "./ConstructTemplate";
+import { GameObject } from "./GameObject";
 
 //#region Enums
 
@@ -172,7 +173,7 @@ export abstract class Constants {
 
 		new ConstructTemplate(ConstructType.HONK, "honk_1.png"),
 		new ConstructTemplate(ConstructType.HONK, "honk_2.png"),
-		new ConstructTemplate(ConstructType.HONK, "honk_3.png"),		
+		new ConstructTemplate(ConstructType.HONK, "honk_3.png"),
 
 		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_1.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_2.png"),
@@ -200,6 +201,12 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "trash_1.png"),
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "trash_2.png"),
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "trash_3.png"),
+
+		new ConstructTemplate(ConstructType.BANG, "bang_1.png"),
+		new ConstructTemplate(ConstructType.BANG, "bang_2.png"),
+
+		new ConstructTemplate(ConstructType.BLAST, "blast_1.png"),
+		new ConstructTemplate(ConstructType.BLAST, "blast_2.png"),
 
 	];
 
@@ -243,7 +250,54 @@ export abstract class Constants {
 		const uri = this.getRandomUriFromUris(uris);
 		const texture = Texture.from(uri);
 		return texture;
-	}	
+	}
+
+	static checkCollision(objA: GameObject, objB: GameObject): boolean {
+		const a = objA.getBounds();
+		const b = objB.getBounds();
+
+		const rightmostLeft = a.left < b.left ? b.left : a.left;
+		const leftmostRight = a.right > b.right ? b.right : a.right;
+
+		if (leftmostRight <= rightmostLeft) {
+			return false;
+		}
+
+		const bottommostTop = a.top < b.top ? b.top : a.top;
+		const topmostBottom = a.bottom > b.bottom ? b.bottom : a.bottom;
+
+		return topmostBottom > bottommostTop;
+	}
+
+	static checkCloseCollision(objA: GameObject, objB: GameObject): boolean {
+
+		const a = objA.getBounds();
+		const b = objB.getBounds();
+
+		const aLeft = a.left + a.width / 4;
+		const bLeft = b.left + b.width / 4;
+
+		const aRight = a.right - a.width / 4;
+		const bRight = b.right - b.width / 4;
+
+		const rightmostLeft = aLeft < bLeft ? bLeft : aLeft;
+		const leftmostRight = aRight > bRight ? bRight : aRight;
+
+		if (leftmostRight <= rightmostLeft) {
+			return false;
+		}
+
+		const aTop = a.top + a.height / 4;
+		const bTop = b.top + b.height / 4;
+
+		const aBottom = a.bottom - a.height / 4;
+		const bBottom = b.bottom - b.height / 4;
+
+		const bottommostTop = aTop < bTop ? bTop : aTop;
+		const topmostBottom = aBottom > bBottom ? bBottom : aBottom;
+
+		return topmostBottom > bottommostTop;
+	}
 
 	//#endregion
 }
