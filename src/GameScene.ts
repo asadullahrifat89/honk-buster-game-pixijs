@@ -16,7 +16,79 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region GameObjectContainers
+	//#region Ctor
+
+	constructor() {
+		super();
+
+		this.SpawnRoadMarks();
+
+		this.SpawnSideWalksTop();
+		this.SpawnHedgesTop();
+		this.SpawnTreesTop();
+		//this.SpawnHeavyBillboardsTop();
+		this.SpawnLightBillboardsTop();
+
+		this.SpawnVehicleEnemys();
+		this.SpawnHonks();
+
+		this.SpawnSideWalksBottom();
+		this.SpawnHedgesBottom();
+		this.SpawnLightBillboardsBottom();
+		this.SpawnTreesBottom();
+
+		this.SpawnClouds();
+	}
+
+	//#endregion
+
+	//#region Methods
+
+	//#region Scene
+
+	public update(_framesPassed: number): void {
+
+		this.GenerateRoadMarks();
+		this.GenerateSideWalksTop();
+		//this.GenerateHeavyBillboardsTop();
+		this.GenerateLightBillboardsTop();
+		this.GenerateHedgesTop();
+		this.GenerateTreesTop();
+
+		this.GenerateVehicleEnemys();
+
+		this.GenerateClouds();
+
+		this.GenerateSideWalksBottom();
+		this.GenerateHedgesBottom();
+		this.GenerateLightBillboardsBottom();
+		this.GenerateTreesBottom();
+
+		this.AnimateRoadMarks();
+
+		this.AnimateSideWalksTop();
+		this.AnimateHedgesTop();
+		this.AnimateTreesTop();
+		//this.AnimateHeavyBillboardsTop();
+		this.AnimateLightBillboardsTop();
+
+		this.AnimateVehicleEnemys();
+		this.AnimateHonks();
+
+		this.AnimateSideWalksBottom();
+		this.AnimateHedgesBottom();
+		this.AnimateTreesBottom();
+		this.AnimateLightBillboardsBottom();
+
+		this.AnimateClouds();
+	}
+
+	public resize(scale: number): void {
+		this.scale.set(scale);
+		console.log("Scale: " + scale);
+	}
+
+	//#endregion
 
 	//#region RoadMarks
 
@@ -1110,78 +1182,6 @@ export class GameScene extends Container implements IScene {
 	}
 
 	//#endregion
-
-	//#endregion
-
-	//#region Ctor
-
-	constructor() {
-		super();
-
-		this.SpawnRoadMarks();
-
-		this.SpawnSideWalksTop();
-		this.SpawnHedgesTop();
-		this.SpawnTreesTop();
-		//this.SpawnHeavyBillboardsTop();
-		this.SpawnLightBillboardsTop();
-
-		this.SpawnVehicleEnemys();
-		this.SpawnHonks();
-
-		this.SpawnSideWalksBottom();
-		this.SpawnHedgesBottom();
-		this.SpawnLightBillboardsBottom();
-		this.SpawnTreesBottom();
-
-		this.SpawnClouds();
-	}
-
-	//#endregion
-
-	//#region Methods
-
-	public update(_framesPassed: number): void {
-
-		this.GenerateRoadMarks();
-		this.GenerateSideWalksTop();
-		//this.GenerateHeavyBillboardsTop();
-		this.GenerateLightBillboardsTop();
-		this.GenerateHedgesTop();
-		this.GenerateTreesTop();
-
-		this.GenerateVehicleEnemys();
-
-		this.GenerateClouds();
-
-		this.GenerateSideWalksBottom();
-		this.GenerateHedgesBottom();
-		this.GenerateLightBillboardsBottom();
-		this.GenerateTreesBottom();
-
-		this.AnimateRoadMarks();
-
-		this.AnimateSideWalksTop();
-		this.AnimateHedgesTop();
-		this.AnimateTreesTop();
-		//this.AnimateHeavyBillboardsTop();
-		this.AnimateLightBillboardsTop();
-
-		this.AnimateVehicleEnemys();
-		this.AnimateHonks();
-
-		this.AnimateSideWalksBottom();
-		this.AnimateHedgesBottom();
-		this.AnimateTreesBottom();
-		this.AnimateLightBillboardsBottom();
-
-		this.AnimateClouds();
-	}
-
-	public resize(scale: number): void {
-		this.scale.set(scale);
-		console.log("Scale: " + scale);
-	}
 
 	//#endregion
 }

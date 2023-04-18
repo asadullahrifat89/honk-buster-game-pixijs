@@ -14,7 +14,7 @@ export class Honk extends GameObject {
 
 	reposition(source: GameObject) {
 
-		this.x = (source.x /*+ source.width / 2*/);
-		this.y = source.y + source.height / 3;
+		this.x = (source.x - this.width / 2);
+		this.y = source.y + source.height / 5;
 	}
 }

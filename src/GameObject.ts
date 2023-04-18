@@ -16,7 +16,7 @@ export class GameObject extends Container {
 	private readonly vibrateDelayDefault: number = 8;
 	private readonly vibrateSpeed: number = 0.3;
 
-	private readonly expandSpeed: number = 0.06;
+	private readonly expandSpeed: number = 0.07;
 
 	public isAnimating: boolean = false;
 	public speed: number = 3;
