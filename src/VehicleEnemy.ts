@@ -39,5 +39,14 @@ export class VehicleEnemy extends VehicleBase {
 			this.setHonkDelay();
 		}
 	}
+
+	looseHealth() {
+		this.health -= this.hitPoint;
+	}
+
+	setBlast() {
+		this.willHonk = false;
+		this.speed = this.speed - 0.5;
+	}
 }
 

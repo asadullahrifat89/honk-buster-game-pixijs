@@ -1052,6 +1052,19 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
+	private looseVehicleEnemyhealth(vehicleEnemy: VehicleEnemy) {
+
+		vehicleEnemy.setPopping();
+		vehicleEnemy.looseHealth();
+
+		if (vehicleEnemy.willHonk) {
+
+			if (vehicleEnemy.isDead()) {
+				vehicleEnemy.setBlast();
+			}
+		}
+	}
+
 	//#endregion
 
 	//#region Honks	
@@ -1127,7 +1140,7 @@ export class GameScene extends Container implements IScene {
 	private honkBombSizeWidth: number = 45;
 	private honkBombSizeHeight: number = 45;
 
-	private honkBombContainers: Array<GameObject> = [];	
+	private honkBombContainers: Array<GameObject> = [];
 
 	spawnPlayerHonkBombs() {
 
@@ -1202,7 +1215,14 @@ export class GameScene extends Container implements IScene {
 							playerHonkBomb.y + playerHonkBomb.speed * 1.2
 						);
 
-						playerHonkBomb.depleteBlastDelay();
+						if (playerHonkBomb.depleteBlastDelay()) {
+
+							let vehicleEnemy = this.roadVehicleEnemyContainers.find(x => x.isAnimating == true && x.getBounds().intersects(playerHonkBomb.getBounds()));
+
+							if (vehicleEnemy) {
+								this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
+							}
+						}
 
 					}
 				}

@@ -55,15 +55,18 @@ export class PlayerHonkBomb extends GameObject {
 		this.setTexture(Constants.getRandomTextureFromUris(this.honkBombUris));
 	}
 
-	depleteBlastDelay() {
+	depleteBlastDelay(): boolean {
 
 		this.blastDelay--;
 
 		if (this.blastDelay <= 0) {
 
 			this.setBlast();
+
+			return true;
 		}
 
+		return false;
 	}
 
 	setBlast() {
