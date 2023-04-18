@@ -90,6 +90,13 @@ class ConstructTemplate {
 	}
 }
 
+//class ConstructSize {
+
+//	public ConstructType: ConstructType = 0;
+//	public Height: number = 0;
+//	public Width: number = 0;
+//}
+
 export abstract class Constants {
 
 	public static DEFAULT_GAME_VIEW_WIDTH: number = 1900;
@@ -136,6 +143,17 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_1.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_2.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_3.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON, "player_1_character.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_IDLE, "player_balloon_1_idle.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_ATTACK, "player_balloon_1_attack.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_WIN, "player_balloon_1_win.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_HIT, "player_balloon_1_hit.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON, "player_2_character.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_IDLE, "player_balloon_2_idle.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_ATTACK, "player_balloon_2_attack.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_WIN, "player_balloon_2_win.png"),
+		new ConstructTemplate(ConstructType.PLAYER_BALLOON_HIT, "player_balloon_2_hit.png"),
+
 	];
 
 	static degreesToRadians(degrees: number): number {
