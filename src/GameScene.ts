@@ -1181,5 +1181,10 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region Player
+
+
+	//#endregion
+
 	//#endregion
 }

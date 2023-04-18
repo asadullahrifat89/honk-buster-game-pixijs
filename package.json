@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@pixi/filter-drop-shadow": "^5.2.0",
-    "pixi.js": "^7.1.2"
+    "pixi-controller": "^2.0.3",
+    "pixi.js": "^7.2.4"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^11.0.0",
