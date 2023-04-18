@@ -937,7 +937,7 @@ export class GameScene extends Container implements IScene {
 
 	private roadVehicleEnemyContainers: Array<GameObject> = [];
 
-	private roadVehicleEnemyPopDelayDefault: number = 25 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private roadVehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadVehicleEnemyPopDelay: number = 0;
 
 	private spawnVehicleEnemys() {
@@ -1019,7 +1019,7 @@ export class GameScene extends Container implements IScene {
 
 				// prevent overlapping
 
-				var collidingVehicleEnemy = this.roadVehicleEnemyContainers.find(x => x.isAnimating == true && x.getBounds().intersects(container.getBounds()));
+				var collidingVehicleEnemy = this.roadVehicleEnemyContainers.find(x => x.isAnimating == true && Constants.checkCollision(x, container));
 
 				if (collidingVehicleEnemy) {
 
@@ -1217,7 +1217,7 @@ export class GameScene extends Container implements IScene {
 
 						if (playerHonkBomb.depleteBlastDelay()) {
 
-							let vehicleEnemy = this.roadVehicleEnemyContainers.find(x => x.isAnimating == true && x.getBounds().intersects(playerHonkBomb.getBounds()));
+							let vehicleEnemy = this.roadVehicleEnemyContainers.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
 
 							if (vehicleEnemy) {
 								this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);

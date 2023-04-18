@@ -6,6 +6,8 @@ import { GrayscaleFilter } from '@pixi/filter-grayscale';
 
 export class VehicleEnemy extends VehicleBase {
 
+	private grayScaleFilter: GrayscaleFilter = new GrayscaleFilter();
+
 	constructor(speed: number) {
 		super(speed);
 
@@ -49,7 +51,7 @@ export class VehicleEnemy extends VehicleBase {
 	setBlast() {
 		this.willHonk = false;
 		this.speed = this.speed - 0.5;
-		this.filters = [new GrayscaleFilter()];
+		this.filters = [this.grayScaleFilter];
 	}
 }
 
