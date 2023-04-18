@@ -10,6 +10,7 @@ import { PlayerBalloon } from "./PlayerBalloon";
 import { GameController } from "./GameController";
 import { Manager } from "./Manager";
 import { PlayerHonkBomb } from "./PlayerHonkBomb";
+import { ScoreBar } from "./ScoreBar";
 
 
 export class GameScene extends Container implements IScene {
@@ -17,6 +18,7 @@ export class GameScene extends Container implements IScene {
 	//#region Propperties
 
 	private gameController: GameController = new GameController();
+	private gameScoreBar: ScoreBar = new ScoreBar();
 
 	//#endregion
 
@@ -47,12 +49,13 @@ export class GameScene extends Container implements IScene {
 
 		this.generatePlayerBalloon();
 
+		this.setGameScoreBar();
 		this.setGameController();
 	}
 
 	//#endregion
 
-	//#region Methods	
+	//#region Methods
 
 	//#region RoadMarks
 
@@ -1061,6 +1064,7 @@ export class GameScene extends Container implements IScene {
 
 			if (vehicleEnemy.isDead()) {
 				vehicleEnemy.setBlast();
+				this.gameScoreBar.gainScore(2);
 			}
 		}
 	}
@@ -1303,6 +1307,25 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region GameScoreBar
+
+	setGameScoreBar() {
+
+		this.gameScoreBar.height = 40;
+		this.gameScoreBar.width = 85;
+
+		this.repositionGameScoreBar();
+
+		this.addChild(this.gameScoreBar);
+	}
+
+    private repositionGameScoreBar() {
+        this.gameScoreBar.x = (Manager.width - this.gameScoreBar.width) / 2;
+        this.gameScoreBar.y = 50;
+    }
+
+	//#endregion
+
 	//#region Scene
 
 	public update(_framesPassed: number): void {
@@ -1348,6 +1371,7 @@ export class GameScene extends Container implements IScene {
 
 	public resize(scale: number): void {
 		this.scale.set(scale);
+		this.repositionGameScoreBar();
 	}
 
 	//#endregion
