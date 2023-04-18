@@ -195,7 +195,6 @@ export class GameScene extends Container implements IScene {
 
 			// container.filters = [new DropShadowFilter()];
 
-
 			for (let i = 0; i < 5; i++) {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_TREE);
@@ -935,10 +934,9 @@ export class GameScene extends Container implements IScene {
 			sprite.y = 0;
 			sprite.width = this.roadCloudSizeWidth;
 			sprite.height = this.roadCloudSizeHeight;
-			//cloud.filters = [new BlurFilter(4, 10)];
-			container.addChild(sprite);
-
+			//sprite.filters = [new BlurFilter(4, 10)];
 			//cloudContainer.filters = [new BlurFilter(2, 10)];
+			container.addChild(sprite);
 
 			this.roadCloudContainers.push(container);
 			this.addChild(container);
