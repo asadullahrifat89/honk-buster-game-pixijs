@@ -1,6 +1,7 @@
 ﻿import { Texture } from 'pixi.js';
 import { Constants, ConstructType } from './Constants';
 import { VehicleBase } from './VehicleBase';
+import { GrayscaleFilter } from '@pixi/filter-grayscale';
 /*import { DropShadowFilter } from '@pixi/filter-drop-shadow';*/
 
 export class VehicleEnemy extends VehicleBase {
@@ -15,6 +16,7 @@ export class VehicleEnemy extends VehicleBase {
 
 		this.speed = Constants.getRandomNumber(1, 2);
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
+		this.filters = null;
 
 		var vehicleType = Constants.getRandomNumber(0, 1);
 
@@ -47,7 +49,7 @@ export class VehicleEnemy extends VehicleBase {
 	setBlast() {
 		this.willHonk = false;
 		this.speed = this.speed - 0.5;
-		
+		this.filters = [new GrayscaleFilter()];
 	}
 }
 
