@@ -1124,10 +1124,10 @@ export class GameScene extends Container implements IScene {
 
 	//#region PlayerHonkBomb
 
-	private honkBombSizeWidth: number = 60;
-	private honkBombSizeHeight: number = 60;
+	private honkBombSizeWidth: number = 45;
+	private honkBombSizeHeight: number = 45;
 
-	private honkBombContainers: Array<GameObject> = [];
+	private honkBombContainers: Array<GameObject> = [];	
 
 	spawnPlayerHonkBombs() {
 
@@ -1135,7 +1135,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 3; j++) {
 
-			const container: PlayerHonkBomb = new PlayerHonkBomb(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const container: PlayerHonkBomb = new PlayerHonkBomb(4);
 			container.disableRendering();
 			container.width = this.honkBombSizeWidth;
 			container.height = this.honkBombSizeHeight;
@@ -1262,6 +1262,11 @@ export class GameScene extends Container implements IScene {
 			Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling,
 			Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling,
 			this.gameController);
+
+		if (this.gameController.isAttacking) {
+			this.generatePlayerHonkBomb();
+			this.gameController.isAttacking = false;
+		}
 	}
 
 	//#endregion
@@ -1315,6 +1320,7 @@ export class GameScene extends Container implements IScene {
 		this.animateLightBillboardsBottom();
 
 		this.animateClouds();
+		this.animatePlayerHonkBomb();
 
 		this.gameController.update();
 		this.animatePlayerBalloon();

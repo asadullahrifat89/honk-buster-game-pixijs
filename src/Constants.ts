@@ -201,6 +201,12 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "trash_2.png"),
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "trash_3.png"),
 
+		new ConstructTemplate(ConstructType.BANG, "bang_1.png"),
+		new ConstructTemplate(ConstructType.BANG, "bang_2.png"),
+
+		new ConstructTemplate(ConstructType.BLAST, "blast_1.png"),
+		new ConstructTemplate(ConstructType.BLAST, "blast_2.png"),
+
 	];
 
 	//#endregion

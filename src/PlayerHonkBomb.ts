@@ -4,12 +4,16 @@ import { GameObject } from './GameObject';
 
 export class PlayerHonkBomb extends GameObject {
 
+	// #region Properties
+
 	public isBlasting: boolean = false;
 
 	private honkBombTemplate: PlayerHonkBombTemplate = PlayerHonkBombTemplate.Cracker;
 	private honkBombUris: string[] = [];
 	private blastDelay: number = 0;
-	private readonly blastDelayDefault: number = 40;
+	private readonly blastDelayDefault: number = 20;
+
+	//#endregion
 
 	//#region Ctor
 	constructor(speed: number) {
@@ -17,6 +21,9 @@ export class PlayerHonkBomb extends GameObject {
 	}
 
 	//#endregion
+
+	//#region Methods
+
 	reset() {
 		this.isBlasting = false;
 		this.setTexture(Constants.getRandomTextureFromUris(this.honkBombUris));
@@ -27,7 +34,7 @@ export class PlayerHonkBomb extends GameObject {
 	}
 
 	reposition(source: GameObject) {
-		this.setPosition(source.x + source.width / 2 - this.width / 2, source.y + source.height - 35);
+		this.setPosition(source.x + source.width / 2 - this.width / 2, source.y + source.height);
 	}
 
 	setHonkBombTemplate(honkBombTemplate: PlayerHonkBombTemplate) {
@@ -75,4 +82,6 @@ export class PlayerHonkBomb extends GameObject {
 			default: break;
 		}
 	}
+
+	//#endregion
 }
