@@ -9,6 +9,7 @@ import { Honk } from "./Honk";
 import { PlayerBalloon } from "./PlayerBalloon";
 import { GameController } from "./GameController";
 import { Manager } from "./Manager";
+import { PlayerHonkBomb } from "./PlayerHonkBomb";
 
 
 export class GameScene extends Container implements IScene {
@@ -73,14 +74,9 @@ export class GameScene extends Container implements IScene {
 			container.width = this.roadRoadMarkSizeWidth * 5;
 			container.height = this.roadRoadMarkSizeHeight / 2 * 5;
 
-			// container.filters = [new DropShadowFilter()];
-
-
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.getRandomUri(ConstructType.ROAD_MARK);
-				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture);
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_MARK));
 
 				sprite.x = this.roadRoadMarkSizeWidth * i - (this.roadRoadMarkXyAdjustment * i);
 				sprite.y = (this.roadRoadMarkSizeHeight / 2) * i - ((this.roadRoadMarkXyAdjustment / 2) * i);
@@ -159,9 +155,7 @@ export class GameScene extends Container implements IScene {
 
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_TREE);
-				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture);
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
 
 				sprite.x = this.roadTreeSizeWidth * i - (this.roadTreeXyAdjustment * i);
 				sprite.y = (this.roadTreeSizeHeight / 2) * i - ((this.roadTreeXyAdjustment / 2) * i);
@@ -303,9 +297,7 @@ export class GameScene extends Container implements IScene {
 			// add hedges to the hedge top container
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_HEDGE);
-				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture);
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
 
 				sprite.x = this.roadHedgeSizeWidth * i - (this.roadHedgeXyAdjustment * i);
 				sprite.y = (this.roadHedgeSizeHeight / 2) * i - ((this.roadHedgeXyAdjustment / 2) * i);
@@ -334,9 +326,7 @@ export class GameScene extends Container implements IScene {
 			// add hedges to the hedge bottom container
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_HEDGE);
-				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture);
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
 
 				sprite.x = this.roadHedgeSizeWidth * i - (this.roadHedgeXyAdjustment * i);
 				sprite.y = (this.roadHedgeSizeHeight / 2) * i - ((this.roadHedgeXyAdjustment / 2) * i);
@@ -449,9 +439,7 @@ export class GameScene extends Container implements IScene {
 
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD);
-				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture);
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
 
 				sprite.x = (this.roadLightBillboardSizeWidth * i - (this.roadLightBillboardXyAdjustment * i)) + (this.roadLightBillboardXyDistance * i);
 				sprite.y = ((this.roadLightBillboardSizeHeight / 2) * i - ((this.roadLightBillboardXyAdjustment / 2) * i)) + (this.roadLightBillboardXyDistance / 2 * i);
@@ -480,9 +468,7 @@ export class GameScene extends Container implements IScene {
 			// add trees to the tree bottom container
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD);
-				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture);
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
 
 				sprite.x = (this.roadLightBillboardSizeWidth * i - (this.roadLightBillboardXyAdjustment * i)) + (this.roadLightBillboardXyDistance * i);
 				sprite.y = ((this.roadLightBillboardSizeHeight / 2) * i - ((this.roadLightBillboardXyAdjustment / 2) * i)) + (this.roadLightBillboardXyDistance / 2 * i);
@@ -741,9 +727,7 @@ export class GameScene extends Container implements IScene {
 			// add sideWalks to the sideWalk top container
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_WALK);
-				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture);
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK));
 
 				sprite.x = this.roadSideWalkWidth * i - (this.roadSideWalkXyAdjustment * i);
 				sprite.y = (this.roadSideWalkHeight / 2) * i - ((this.roadSideWalkXyAdjustment / 2) * i);
@@ -777,9 +761,7 @@ export class GameScene extends Container implements IScene {
 			// add sideWalks to the sideWalk top container
 			for (let i = 0; i < 5; i++) {
 
-				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_WALK);
-				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture);
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK));
 
 				sprite.x = this.roadSideWalkWidth * i - (this.roadSideWalkXyAdjustment * i);
 				sprite.y = (this.roadSideWalkHeight / 2) * i - ((this.roadSideWalkXyAdjustment / 2) * i);
@@ -888,9 +870,7 @@ export class GameScene extends Container implements IScene {
 			container.width = this.roadCloudSizeWidth;
 			container.height = this.roadCloudSizeHeight;
 
-			const uri = Constants.getRandomUri(ConstructType.CLOUD);
-			const texture = Texture.from(uri);
-			const sprite: GameObjectSprite = new GameObjectSprite(texture);
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.CLOUD));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -1089,9 +1069,7 @@ export class GameScene extends Container implements IScene {
 			container.width = this.roadHonkSizeWidth;
 			container.height = this.roadHonkSizeHeight;
 
-			const uri = Constants.getRandomUri(ConstructType.HONK);
-			const texture = Texture.from(uri);
-			const sprite: GameObjectSprite = new GameObjectSprite(texture);
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HONK));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -1143,6 +1121,44 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region HonkBomb
+
+	private honkBombSizeWidth: number = 60;
+	private honkBombSizeHeight: number = 60;
+
+	private honkBombContainers: Array<GameObject> = [];
+
+	spawnHonkBombs() {
+
+		let playerHonkBombTemplate = Constants.getRandomNumber(0, 1);
+
+		for (let j = 0; j < 3; j++) {
+
+			const container: PlayerHonkBomb = new PlayerHonkBomb(Constants.DEFAULT_CONSTRUCT_SPEED);
+			container.disableRendering();
+			container.width = this.honkBombSizeWidth;
+			container.height = this.honkBombSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_HONK_BOMB));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.honkBombSizeWidth;
+			sprite.height = this.honkBombSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+
+			container.setHonkBombTemplate(playerHonkBombTemplate);
+
+			container.addChild(sprite);
+
+			this.honkBombContainers.push(container);
+			this.addChild(container);
+		}
+	}
+
+	//#endregion
+
 	//#region Player
 
 	private playerBalloonSizeWidth: number = 150;
@@ -1158,10 +1174,7 @@ export class GameScene extends Container implements IScene {
 		this.playerBalloonContainer.width = this.playerBalloonSizeWidth;
 		this.playerBalloonContainer.height = this.playerBalloonSizeHeight;
 
-		// add the player sprite
-		const uri = Constants.getRandomUri(ConstructType.PLAYER_BALLOON_IDLE);
-		const texture = Texture.from(uri);
-		const sprite: GameObjectSprite = new GameObjectSprite(texture);
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_BALLOON_IDLE));
 
 		sprite.x = 0;
 		sprite.y = 0;
@@ -1251,7 +1264,7 @@ export class GameScene extends Container implements IScene {
 	}
 
 	public resize(scale: number): void {
-		this.scale.set(scale);		
+		this.scale.set(scale);
 	}
 
 	//#endregion

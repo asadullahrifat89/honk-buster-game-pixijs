@@ -29,6 +29,7 @@ export class PlayerHonkBomb extends GameObject {
 
 	setHonkBombTemplate(honkBombTemplate: PlayerHonkBombTemplate) {
 		this.honkBombTemplate = honkBombTemplate;
+
 		switch (this.honkBombTemplate) {
 			case PlayerHonkBombTemplate.Cracker: {
 				this.honkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.ConstructType == ConstructType.PLAYER_HONK_BOMB && x.Uri.includes("cracker")).map(x => x.Uri);
