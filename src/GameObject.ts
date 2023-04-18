@@ -100,8 +100,13 @@ export class GameObject extends Container {
 		return this.children[0] as GameObjectSprite;
 	}
 
-	changeTexture(texture: Texture) {
-		this.getFirstChild().setTexture(texture);
+	setTexture(texture: Texture) {
+
+		let child = this.getFirstChild();
+
+		if (child)
+			child.setTexture(texture);
+		else this.addChild(new GameObjectSprite(texture));
 	}
 
 	setPopping() {

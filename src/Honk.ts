@@ -9,7 +9,7 @@ export class Honk extends GameObject {
 
 	reset() {
 		this.alpha = 1.0;
-		this.changeTexture(Constants.getRandomTexture(ConstructType.HONK));
+		this.setTexture(Constants.getRandomTexture(ConstructType.HONK));
 	}
 
 	reposition(source: GameObject) {
