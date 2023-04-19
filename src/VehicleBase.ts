@@ -68,7 +68,7 @@ export class VehicleBase extends GameObject {
 	honk(): boolean {
 
 		if (this.willHonk) {
-			this.honkDelay -= 0.1;
+			this.honkDelay--;
 
 			if (this.honkDelay < 0) {
 				this.setHonkDelay();
@@ -80,7 +80,7 @@ export class VehicleBase extends GameObject {
 	}
 
 	setHonkDelay() {
-		this.honkDelay = Constants.getRandomNumber(25, 70);
+		this.honkDelay = Constants.getRandomNumber(40, 80);
 	}
 }
 
