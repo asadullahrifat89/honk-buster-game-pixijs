@@ -945,7 +945,7 @@ export class GameScene extends Container implements IScene {
 
 	private roadVehicleEnemyContainers: Array<GameObject> = [];
 
-	private roadVehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private roadVehicleEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadVehicleEnemyPopDelay: number = 0;
 
 	private spawnVehicleEnemys() {
@@ -1317,10 +1317,8 @@ export class GameScene extends Container implements IScene {
 	setGameScoreBar() {
 
 		this.gameScoreBar.height = 40;
-		this.gameScoreBar.width = 85;
-
+		this.gameScoreBar.width = 80;
 		this.repositionGameScoreBar();
-
 		this.addChild(this.gameScoreBar);
 	}
 
