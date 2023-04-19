@@ -12,12 +12,12 @@ export class ScoreBar extends Container {
 		BitmapFont.from("gameplay", {
 			fill: "#ffffff", // White, will be colored later
 			fontFamily: "gameplay",
-			fontSize: 32
+			fontSize: 28
 		});
 
 		this._textBlock = new BitmapText("000", {
 			fontName: "gameplay",
-			fontSize: 32, // Making it too big or too small will look bad
+			fontSize: 28, // Making it too big or too small will look bad
 			tint: 0xffffff
 		});
 
@@ -40,6 +40,7 @@ export class ScoreBar extends Container {
 			this._textBlock.text = this._score.toString();
 		}
 	}
+
 	getScore(): number {
 		return this._score;
 	}

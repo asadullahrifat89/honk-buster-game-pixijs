@@ -19,7 +19,7 @@ export class GameScene extends Container implements IScene {
 
 	private gameController: GameController = new GameController();
 	private gameScoreBar: ScoreBar = new ScoreBar();
-	//private sceneContainer: Container = new Container();
+	private sceneContainer: Container = new Container();
 	//TODO: create a new container and add every game object in that container and leave the UI controls in the main scene
 
 	//#endregion
@@ -51,6 +51,10 @@ export class GameScene extends Container implements IScene {
 
 		this.generatePlayerBalloon();
 
+		this.sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
+		this.sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
+
+		this.addChild(this.sceneContainer);
 		this.setGameScoreBar();
 		this.setGameController();
 	}
@@ -93,7 +97,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.roadRoadMarkContainers.push(container);
-			this.addChild(container);
+			this.sceneContainer.addChild(container);
 		}
 	}
 
@@ -172,7 +176,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.roadTreeTopContainers.push(container);
-			this.addChild(container);
+			this.sceneContainer.addChild(container);
 		}
 	}
 
@@ -187,7 +191,6 @@ export class GameScene extends Container implements IScene {
 
 			// container.filters = [new DropShadowFilter()];
 
-			// add trees to the tree bottom container
 			for (let i = 0; i < 5; i++) {
 
 				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_TREE);
@@ -203,7 +206,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.roadTreeBottomContainers.push(container);
-			this.addChild(container);
+			this.sceneContainer.addChild(container);
 		}
 	}
 
@@ -314,7 +317,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.roadHedgeTopContainers.push(container);
-			this.addChild(container);
+			this.sceneContainer.addChild(container);
 		}
 	}
 
@@ -343,7 +346,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.roadHedgeBottomContainers.push(container);
-			this.addChild(container);
+			this.sceneContainer.addChild(container);
 		}
 	}
 
@@ -456,7 +459,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.roadLightBillboardTopContainers.push(container);
-			this.addChild(container);
+			this.sceneContainer.addChild(container);
 		}
 	}
 
@@ -485,7 +488,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.roadLightBillboardBottomContainers.push(container);
-			this.addChild(container);
+			this.sceneContainer.addChild(container);
 		}
 	}
 
@@ -749,7 +752,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.roadSideWalkTopContainers.push(container);
-			this.addChild(container);
+			this.sceneContainer.addChild(container);
 		}
 	}
 
@@ -783,7 +786,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.roadSideWalkBottomContainers.push(container);
-			this.addChild(container);
+			this.sceneContainer.addChild(container);
 		}
 	}
 
@@ -887,7 +890,7 @@ export class GameScene extends Container implements IScene {
 			container.addChild(sprite);
 
 			this.roadCloudContainers.push(container);
-			this.addChild(container);
+			this.sceneContainer.addChild(container);
 		}
 	}
 
@@ -986,7 +989,7 @@ export class GameScene extends Container implements IScene {
 			container.addChild(sprite);
 
 			this.roadVehicleEnemyContainers.push(container);
-			this.addChild(container);
+			this.sceneContainer.addChild(container);
 		}
 	}
 
@@ -1101,7 +1104,7 @@ export class GameScene extends Container implements IScene {
 			container.addChild(sprite);
 
 			this.roadHonkContainers.push(container);
-			this.addChild(container);
+			this.sceneContainer.addChild(container);
 		}
 	}
 
@@ -1172,7 +1175,7 @@ export class GameScene extends Container implements IScene {
 			container.setHonkBombTemplate(playerHonkBombTemplate);
 
 			this.honkBombContainers.push(container);
-			this.addChild(container);
+			this.sceneContainer.addChild(container);
 		}
 	}
 
@@ -1267,7 +1270,7 @@ export class GameScene extends Container implements IScene {
 		this.playerBalloonContainer.addChild(sprite);
 		this.playerBalloonContainer.setPlayerTemplate(playerTemplate);
 
-		this.addChild(this.playerBalloonContainer);
+		this.sceneContainer.addChild(this.playerBalloonContainer);
 	}
 
 	generatePlayerBalloon() {
@@ -1322,7 +1325,7 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private repositionGameScoreBar() {
-		this.gameScoreBar.x = (Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling - this.gameScoreBar.width); //((Manager.width - this.gameScoreBar.width) / 2);
+		this.gameScoreBar.x = ((Manager.width - this.gameScoreBar.width) / 2);
 		this.gameScoreBar.y = 10;
 	}
 
@@ -1372,7 +1375,7 @@ export class GameScene extends Container implements IScene {
 	}
 
 	public resize(scale: number): void {
-		this.scale.set(scale);
+		this.sceneContainer.scale.set(scale);
 		this.repositionGameScoreBar();
 	}
 
