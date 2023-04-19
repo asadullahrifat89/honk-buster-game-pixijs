@@ -48,8 +48,8 @@ export class LoaderScene extends Container implements IScene {
 		// To be a scene we must have the update method even if we don't use it.
 	}
 
-	resize(scale: number): void {
-		this.scale.set(scale);
+	resize(_scale: number): void {
+		//this.scale.set(scale);
 	}
 
 	private async initializeLoader(): Promise<void> {
@@ -71,10 +71,6 @@ export class LoaderScene extends Container implements IScene {
 
 		// Let's remove our loading bar
 		this.removeChild(this.loaderBar);
-
-		// all your assets are ready! I would probably change to another scene
-		// ...but you could build your entire game here if you want
-		// (pls don't)
 
 		// Change scene to the game scene!
 		Manager.changeScene(new GameScene());

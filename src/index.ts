@@ -7,6 +7,3 @@ Manager.initialize(Constants.DEFAULT_GAME_VIEW_WIDTH, Constants.DEFAULT_GAME_VIE
 // Set the game scene
 const loaderScene: LoaderScene = new LoaderScene();
 Manager.changeScene(loaderScene);
-
-// Resize the scene
-Manager.resize();

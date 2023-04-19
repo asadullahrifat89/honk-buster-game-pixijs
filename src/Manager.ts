@@ -55,7 +55,7 @@ export class Manager {
 	// With this fucntion scaling factor is decided and passed on the the scene
 	public static resize(): void {
 
-		// Set the scaling on resize
+		// set the scaling on resize
 		this.scaling = Manager.getScaling();
 
 		// if we have a scene, we let it know that a resize happened!
@@ -111,6 +111,7 @@ export class Manager {
 		// Add the new one
 		Manager.currentScene = newScene;
 		Manager.app.stage.addChild(Manager.currentScene);
+		Manager.resize();
 	}
 
 	// This update will be called by a pixi ticker and tell the scene that a tick happened
