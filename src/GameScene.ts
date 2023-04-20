@@ -1232,8 +1232,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region VehicleBossRockets
 
-	private vehicleBossRocketSizeWidth: number = 100;
-	private vehicleBossRocketSizeHeight: number = 100;
+	private vehicleBossRocketSizeWidth: number = 90;
+	private vehicleBossRocketSizeHeight: number = 90;
 
 	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
 
@@ -1519,6 +1519,7 @@ export class GameScene extends Container implements IScene {
 		sprite.y = 0;
 		sprite.width = this.playerBalloonSizeWidth;
 		sprite.height = this.playerBalloonSizeWidth;
+		sprite.anchor.set(0.5, 0.5);
 
 		this._player.addChild(sprite);
 		this._player.setPlayerTemplate(playerTemplate);
