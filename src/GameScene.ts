@@ -80,7 +80,7 @@ export class GameScene extends Container implements IScene {
 		this._gameScoreBar = new GameScoreBar(this);
 		this.repositionGameScoreBar();
 
-		this._playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this);		
+		this._playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this);
 		this._playerHealthBar.setMaximumValue(100);
 		this._playerHealthBar.setValue(100);
 		this.repositionPlayerHealthBar();
@@ -1398,9 +1398,80 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
+	//#endregion	
+
+	//#region PlayerBalloon
+
+	private playerBalloonSizeWidth: number = 150;
+	private playerBalloonSizeHeight: number = 150;
+
+	private _player: PlayerBalloon = new PlayerBalloon(Constants.DEFAULT_CONSTRUCT_SPEED);
+
+	spawnPlayerBalloon() {
+
+		let playerTemplate = Constants.getRandomNumber(0, 1);
+		this._player.disableRendering();
+
+		this._player.width = this.playerBalloonSizeWidth;
+		this._player.height = this.playerBalloonSizeHeight;
+
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_BALLOON_IDLE));
+
+		sprite.x = 0;
+		sprite.y = 0;
+		sprite.width = this.playerBalloonSizeWidth;
+		sprite.height = this.playerBalloonSizeWidth;
+		sprite.anchor.set(0.5, 0.5);
+
+		this._player.addChild(sprite);
+		this._player.setPlayerTemplate(playerTemplate);
+
+		this._sceneContainer.addChild(this._player);
+	}
+
+	generatePlayerBalloon() {
+		this._player.reset();
+		this._player.reposition();
+		this._player.enableRendering();
+	}
+
+	animatePlayerBalloon() {
+		this._player.pop();
+		this._player.hover();
+		this._player.depleteAttackStance();
+		this._player.depleteWinStance();
+		this._player.depleteHitStance();
+		this._player.recoverFromHealthLoss();
+
+		this._player.move(
+			Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling,
+			Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling,
+			this._gameController);
+
+		if (this._gameController.isAttacking) {
+			this.generatePlayerHonkBomb();
+			this._gameController.isAttacking = false;
+		}
+	}
+
+	loosePlayerHealth() {
+		this._player.setPopping();
+
+		this._player.looseHealth();
+		this._player.setHitStance();
+
+		this._playerHealthBar.setValue(this._player.health);
+
+		if (this.anyBossExists()) {
+			//let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+			//if (vehicleBoss)
+		}
+	}
+
 	//#endregion
 
-	//#region PlayerHonkBomb
+	//#region PlayerHonkBombs
 
 	private playerHonkBombSizeWidth: number = 45;
 	private playerHonkBombSizeHeight: number = 45;
@@ -1506,75 +1577,6 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region PlayerBalloon
-
-	private playerBalloonSizeWidth: number = 150;
-	private playerBalloonSizeHeight: number = 150;
-
-	private _player: PlayerBalloon = new PlayerBalloon(Constants.DEFAULT_CONSTRUCT_SPEED);
-
-	spawnPlayerBalloon() {
-
-		let playerTemplate = Constants.getRandomNumber(0, 1);
-		this._player.disableRendering();
-
-		this._player.width = this.playerBalloonSizeWidth;
-		this._player.height = this.playerBalloonSizeHeight;
-
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_BALLOON_IDLE));
-
-		sprite.x = 0;
-		sprite.y = 0;
-		sprite.width = this.playerBalloonSizeWidth;
-		sprite.height = this.playerBalloonSizeWidth;
-		sprite.anchor.set(0.5, 0.5);
-
-		this._player.addChild(sprite);
-		this._player.setPlayerTemplate(playerTemplate);
-
-		this._sceneContainer.addChild(this._player);
-	}
-
-	generatePlayerBalloon() {
-		this._player.reset();
-		this._player.reposition();
-		this._player.enableRendering();
-	}
-
-	animatePlayerBalloon() {
-		this._player.pop();
-		this._player.hover();
-		this._player.depleteAttackStance();
-		this._player.depleteWinStance();
-		this._player.depleteHitStance();
-		this._player.recoverFromHealthLoss();
-
-		this._player.move(
-			Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling,
-			Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling,
-			this._gameController);
-
-		if (this._gameController.isAttacking) {
-			this.generatePlayerHonkBomb();
-			this._gameController.isAttacking = false;
-		}
-	}
-
-	loosePlayerHealth() {
-		this._player.setPopping();
-
-		this._player.looseHealth();
-		this._player.setHitStance();
-
-		if (this.anyBossExists()) {
-			//let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
-			//if (vehicleBoss)
-		}
-	}
-
-	//#endregion
-
 	//#region GameController
 
 	setGameController() {
@@ -1595,9 +1597,13 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region HealthBars
+
 	private repositionPlayerHealthBar() {
 		this._playerHealthBar.reposition((Manager.width) - 105, 10);
 	}
+
+	//#endregion
 
 	//#region InterimScreen
 
