@@ -14,6 +14,7 @@ import { GameScoreBar } from "./GameScoreBar";
 import { GameCheckpoint } from "./GameCheckpoint";
 import { VehicleBoss } from "./VehicleBoss";
 import { InterimScreen } from "./InterimScreen";
+import { VehicleBossRocket } from "./VehicleBossRocket";
 
 
 export class GameScene extends Container implements IScene {
@@ -84,15 +85,15 @@ export class GameScene extends Container implements IScene {
 
 	//#region RoadMarks
 
-	private roadRoadMarkXyAdjustment: number = 19;
+	private roadMarkXyAdjustment: number = 19;
 
-	private roadRoadMarkSizeWidth: number = 256;
-	private roadRoadMarkSizeHeight: number = 256;
+	private roadMarkSizeWidth: number = 256;
+	private roadMarkSizeHeight: number = 256;
 
-	private roadRoadMarkGameObjects: Array<GameObject> = [];
+	private roadMarkGameObjects: Array<GameObject> = [];
 
-	private roadRoadMarkPopDelayDefault: number = 39.5 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private roadRoadMarkPopDelay: number = 0;
+	private roadMarkPopDelayDefault: number = 39.5 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private roadMarkPopDelay: number = 0;
 
 	private spawnRoadMarks() {
 
@@ -100,47 +101,47 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.roadRoadMarkSizeWidth * 5;
-			gameObject.height = this.roadRoadMarkSizeHeight / 2 * 5;
+			gameObject.width = this.roadMarkSizeWidth * 5;
+			gameObject.height = this.roadMarkSizeHeight / 2 * 5;
 
 			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_MARK));
 
-				sprite.x = this.roadRoadMarkSizeWidth * i - (this.roadRoadMarkXyAdjustment * i);
-				sprite.y = (this.roadRoadMarkSizeHeight / 2) * i - ((this.roadRoadMarkXyAdjustment / 2) * i);
-				sprite.width = this.roadRoadMarkSizeWidth;
-				sprite.height = this.roadRoadMarkSizeHeight;
+				sprite.x = this.roadMarkSizeWidth * i - (this.roadMarkXyAdjustment * i);
+				sprite.y = (this.roadMarkSizeHeight / 2) * i - ((this.roadMarkXyAdjustment / 2) * i);
+				sprite.width = this.roadMarkSizeWidth;
+				sprite.height = this.roadMarkSizeHeight;
 
 				gameObject.addChild(sprite);
 			}
 
-			this.roadRoadMarkGameObjects.push(gameObject);
+			this.roadMarkGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
 	private generateRoadMarks() {
 
-		this.roadRoadMarkPopDelay -= 0.1;
+		this.roadMarkPopDelay -= 0.1;
 
-		if (this.roadRoadMarkPopDelay < 0) {
+		if (this.roadMarkPopDelay < 0) {
 
-			var gameObject = this.roadRoadMarkGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.roadMarkGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 
 				gameObject.setPosition(gameObject.width * - 1.1, gameObject.height * -1);
 				gameObject.enableRendering();
 
-				this.roadRoadMarkPopDelay = this.roadRoadMarkPopDelayDefault;
+				this.roadMarkPopDelay = this.roadMarkPopDelayDefault;
 			}
 		}
 	}
 
 	private animateRoadMarks() {
 
-		var animatingRoadMarks = this.roadRoadMarkGameObjects.filter(x => x.isAnimating == true);
+		var animatingRoadMarks = this.roadMarkGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingRoadMarks) {
 
@@ -159,17 +160,17 @@ export class GameScene extends Container implements IScene {
 
 	//#region Trees
 
-	private roadTreeXyAdjustment: number = 85.5;
+	private treeXyAdjustment: number = 85.5;
 
-	private roadTreeSizeWidth: number = 450;
-	private roadTreeSizeHeight: number = 450;
+	private treeSizeWidth: number = 450;
+	private treeSizeHeight: number = 450;
 
-	private roadTreeBottomGameObjects: Array<GameObject> = [];
-	private roadTreeTopGameObjects: Array<GameObject> = [];
+	private treeBottomGameObjects: Array<GameObject> = [];
+	private treeTopGameObjects: Array<GameObject> = [];
 
-	private roadTreePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private roadTreePopDelayTop: number = 0;
-	private roadTreePopDelayBottom: number = 0;
+	private treePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private treePopDelayTop: number = 0;
+	private treePopDelayBottom: number = 0;
 
 	private spawnTreesTop() {
 
@@ -177,8 +178,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.roadTreeSizeWidth * 5;
-			gameObject.height = this.roadTreeSizeHeight / 2 * 5;
+			gameObject.width = this.treeSizeWidth * 5;
+			gameObject.height = this.treeSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -186,15 +187,15 @@ export class GameScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
 
-				sprite.x = this.roadTreeSizeWidth * i - (this.roadTreeXyAdjustment * i);
-				sprite.y = (this.roadTreeSizeHeight / 2) * i - ((this.roadTreeXyAdjustment / 2) * i);
-				sprite.width = this.roadTreeSizeWidth;
-				sprite.height = this.roadTreeSizeHeight;
+				sprite.x = this.treeSizeWidth * i - (this.treeXyAdjustment * i);
+				sprite.y = (this.treeSizeHeight / 2) * i - ((this.treeXyAdjustment / 2) * i);
+				sprite.width = this.treeSizeWidth;
+				sprite.height = this.treeSizeHeight;
 
 				gameObject.addChild(sprite);
 			}
 
-			this.roadTreeTopGameObjects.push(gameObject);
+			this.treeTopGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
@@ -205,8 +206,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.roadTreeSizeWidth * 5;
-			gameObject.height = this.roadTreeSizeHeight / 2 * 5;
+			gameObject.width = this.treeSizeWidth * 5;
+			gameObject.height = this.treeSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -216,54 +217,54 @@ export class GameScene extends Container implements IScene {
 				const texture = Texture.from(uri);
 				const sprite: GameObjectSprite = new GameObjectSprite(texture);
 
-				sprite.x = this.roadTreeSizeWidth * i - (this.roadTreeXyAdjustment * i);
-				sprite.y = (this.roadTreeSizeHeight / 2) * i - ((this.roadTreeXyAdjustment / 2) * i);
-				sprite.width = this.roadTreeSizeWidth;
-				sprite.height = this.roadTreeSizeHeight;
+				sprite.x = this.treeSizeWidth * i - (this.treeXyAdjustment * i);
+				sprite.y = (this.treeSizeHeight / 2) * i - ((this.treeXyAdjustment / 2) * i);
+				sprite.width = this.treeSizeWidth;
+				sprite.height = this.treeSizeHeight;
 
 				gameObject.addChild(sprite);
 			}
 
-			this.roadTreeBottomGameObjects.push(gameObject);
+			this.treeBottomGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
 	private generateTreesTop() {
 
-		this.roadTreePopDelayTop -= 0.1;
+		this.treePopDelayTop -= 0.1;
 
-		if (this.roadTreePopDelayTop < 0) {
+		if (this.treePopDelayTop < 0) {
 
-			var gameObject = this.roadTreeTopGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.treeTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 				gameObject.setPosition(-850, gameObject.height * -1);
 				gameObject.enableRendering();
-				this.roadTreePopDelayTop = this.roadTreePopDelayDefault;
+				this.treePopDelayTop = this.treePopDelayDefault;
 			}
 		}
 	}
 
 	private generateTreesBottom() {
 
-		this.roadTreePopDelayBottom -= 0.1;
+		this.treePopDelayBottom -= 0.1;
 
-		if (this.roadTreePopDelayBottom < 0) {
+		if (this.treePopDelayBottom < 0) {
 
-			var gameObject = this.roadTreeBottomGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 				gameObject.setPosition(gameObject.width * -1, -570);
 				gameObject.enableRendering();
-				this.roadTreePopDelayBottom = this.roadTreePopDelayDefault;
+				this.treePopDelayBottom = this.treePopDelayDefault;
 			}
 		}
 	}
 
 	private animateTreesTop() {
 
-		var animatingTrees = this.roadTreeTopGameObjects.filter(x => x.isAnimating == true);
+		var animatingTrees = this.treeTopGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingTrees) {
 
@@ -280,7 +281,7 @@ export class GameScene extends Container implements IScene {
 
 	private animateTreesBottom() {
 
-		var animatingTrees = this.roadTreeBottomGameObjects.filter(x => x.isAnimating == true);
+		var animatingTrees = this.treeBottomGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingTrees) {
 
@@ -299,17 +300,17 @@ export class GameScene extends Container implements IScene {
 
 	//#region Hedges
 
-	private roadHedgeXyAdjustment: number = 30.5;
+	private hedgeXyAdjustment: number = 30.5;
 
-	private roadHedgeSizeWidth: number = 450;
-	private roadHedgeSizeHeight: number = 450;
+	private hedgeSizeWidth: number = 450;
+	private hedgeSizeHeight: number = 450;
 
-	private roadHedgeBottomGameObjects: Array<GameObject> = [];
-	private roadHedgeTopGameObjects: Array<GameObject> = [];
+	private hedgeBottomGameObjects: Array<GameObject> = [];
+	private hedgeTopGameObjects: Array<GameObject> = [];
 
-	private roadHedgePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private roadHedgePopDelayTop: number = 0;
-	private roadHedgePopDelayBottom: number = 0;
+	private hedgePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private hedgePopDelayTop: number = 0;
+	private hedgePopDelayBottom: number = 0;
 
 	private spawnHedgesTop() {
 
@@ -317,8 +318,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.roadHedgeSizeWidth * 5;
-			gameObject.height = this.roadHedgeSizeHeight / 2 * 5;
+			gameObject.width = this.hedgeSizeWidth * 5;
+			gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -327,15 +328,15 @@ export class GameScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
 
-				sprite.x = this.roadHedgeSizeWidth * i - (this.roadHedgeXyAdjustment * i);
-				sprite.y = (this.roadHedgeSizeHeight / 2) * i - ((this.roadHedgeXyAdjustment / 2) * i);
-				sprite.width = this.roadHedgeSizeWidth;
-				sprite.height = this.roadHedgeSizeHeight;
+				sprite.x = this.hedgeSizeWidth * i - (this.hedgeXyAdjustment * i);
+				sprite.y = (this.hedgeSizeHeight / 2) * i - ((this.hedgeXyAdjustment / 2) * i);
+				sprite.width = this.hedgeSizeWidth;
+				sprite.height = this.hedgeSizeHeight;
 
 				gameObject.addChild(sprite);
 			}
 
-			this.roadHedgeTopGameObjects.push(gameObject);
+			this.hedgeTopGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
@@ -346,8 +347,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.roadHedgeSizeWidth * 5;
-			gameObject.height = this.roadHedgeSizeHeight / 2 * 5;
+			gameObject.width = this.hedgeSizeWidth * 5;
+			gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -356,47 +357,47 @@ export class GameScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
 
-				sprite.x = this.roadHedgeSizeWidth * i - (this.roadHedgeXyAdjustment * i);
-				sprite.y = (this.roadHedgeSizeHeight / 2) * i - ((this.roadHedgeXyAdjustment / 2) * i);
-				sprite.width = this.roadHedgeSizeWidth;
-				sprite.height = this.roadHedgeSizeHeight;
+				sprite.x = this.hedgeSizeWidth * i - (this.hedgeXyAdjustment * i);
+				sprite.y = (this.hedgeSizeHeight / 2) * i - ((this.hedgeXyAdjustment / 2) * i);
+				sprite.width = this.hedgeSizeWidth;
+				sprite.height = this.hedgeSizeHeight;
 
 				gameObject.addChild(sprite);
 			}
 
-			this.roadHedgeBottomGameObjects.push(gameObject);
+			this.hedgeBottomGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
 	private generateHedgesTop() {
 
-		this.roadHedgePopDelayTop -= 0.1;
+		this.hedgePopDelayTop -= 0.1;
 
-		if (this.roadHedgePopDelayTop < 0) {
+		if (this.hedgePopDelayTop < 0) {
 
-			var gameObject = this.roadHedgeTopGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.hedgeTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 				gameObject.setPosition(-1430, gameObject.height * -1);
 				gameObject.enableRendering();
-				this.roadHedgePopDelayTop = this.roadHedgePopDelayDefault;
+				this.hedgePopDelayTop = this.hedgePopDelayDefault;
 			}
 		}
 	}
 
 	private generateHedgesBottom() {
 
-		this.roadHedgePopDelayBottom -= 0.1;
+		this.hedgePopDelayBottom -= 0.1;
 
-		if (this.roadHedgePopDelayBottom < 0) {
+		if (this.hedgePopDelayBottom < 0) {
 
-			var gameObject = this.roadHedgeBottomGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.hedgeBottomGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 				gameObject.setPosition(gameObject.width * -1, -710);
 				gameObject.enableRendering();
-				this.roadHedgePopDelayBottom = this.roadHedgePopDelayDefault;
+				this.hedgePopDelayBottom = this.hedgePopDelayDefault;
 
 				// console.log("Hedge bottom gameObject popped.");
 			}
@@ -405,14 +406,14 @@ export class GameScene extends Container implements IScene {
 
 	private animateHedgesTop() {
 
-		var animatingHedges = this.roadHedgeTopGameObjects.filter(x => x.isAnimating == true);
+		var animatingHedges = this.hedgeTopGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingHedges) {
 
 			animatingHedges.forEach(gameObject => {
 				gameObject.moveDownRight();
 
-				if (gameObject.x - this.roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.x - this.hedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 
 				}
@@ -422,14 +423,14 @@ export class GameScene extends Container implements IScene {
 
 	private animateHedgesBottom() {
 
-		var animatingHedges = this.roadHedgeBottomGameObjects.filter(x => x.isAnimating == true);
+		var animatingHedges = this.hedgeBottomGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingHedges) {
 
 			animatingHedges.forEach(gameObject => {
 				gameObject.moveDownRight();
 
-				if (gameObject.x - this.roadHedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.x - this.hedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 
 				}
@@ -441,18 +442,18 @@ export class GameScene extends Container implements IScene {
 
 	//#region LightBillboards
 
-	private roadLightBillboardXyAdjustment: number = 31.5;
-	private roadLightBillboardXyDistance = 250;
+	private lightBillboardXyAdjustment: number = 31.5;
+	private lightBillboardXyDistance = 250;
 
-	private roadLightBillboardSizeWidth: number = 128;
-	private roadLightBillboardSizeHeight: number = 128;
+	private lightBillboardSizeWidth: number = 128;
+	private lightBillboardSizeHeight: number = 128;
 
-	private roadLightBillboardBottomGameObjects: Array<GameObject> = [];
-	private roadLightBillboardTopGameObjects: Array<GameObject> = [];
+	private lightBillboardBottomGameObjects: Array<GameObject> = [];
+	private lightBillboardTopGameObjects: Array<GameObject> = [];
 
-	private roadLightBillboardPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private roadLightBillboardPopDelayTop: number = 0;
-	private roadLightBillboardPopDelayBottom: number = 0;
+	private lightBillboardPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private lightBillboardPopDelayTop: number = 0;
+	private lightBillboardPopDelayBottom: number = 0;
 
 	private spawnLightBillboardsTop() {
 
@@ -460,8 +461,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.roadLightBillboardSizeWidth * 5;
-			gameObject.height = this.roadLightBillboardSizeHeight / 2 * 5;
+			gameObject.width = this.lightBillboardSizeWidth * 5;
+			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -469,15 +470,15 @@ export class GameScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
 
-				sprite.x = (this.roadLightBillboardSizeWidth * i - (this.roadLightBillboardXyAdjustment * i)) + (this.roadLightBillboardXyDistance * i);
-				sprite.y = ((this.roadLightBillboardSizeHeight / 2) * i - ((this.roadLightBillboardXyAdjustment / 2) * i)) + (this.roadLightBillboardXyDistance / 2 * i);
-				sprite.width = this.roadLightBillboardSizeWidth;
-				sprite.height = this.roadLightBillboardSizeHeight;
+				sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
+				sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
+				sprite.width = this.lightBillboardSizeWidth;
+				sprite.height = this.lightBillboardSizeHeight;
 
 				gameObject.addChild(sprite);
 			}
 
-			this.roadLightBillboardTopGameObjects.push(gameObject);
+			this.lightBillboardTopGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
@@ -488,8 +489,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.roadLightBillboardSizeWidth * 5;
-			gameObject.height = this.roadLightBillboardSizeHeight / 2 * 5;
+			gameObject.width = this.lightBillboardSizeWidth * 5;
+			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -498,62 +499,62 @@ export class GameScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
 
-				sprite.x = (this.roadLightBillboardSizeWidth * i - (this.roadLightBillboardXyAdjustment * i)) + (this.roadLightBillboardXyDistance * i);
-				sprite.y = ((this.roadLightBillboardSizeHeight / 2) * i - ((this.roadLightBillboardXyAdjustment / 2) * i)) + (this.roadLightBillboardXyDistance / 2 * i);
-				sprite.width = this.roadLightBillboardSizeWidth;
-				sprite.height = this.roadLightBillboardSizeHeight;
+				sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
+				sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
+				sprite.width = this.lightBillboardSizeWidth;
+				sprite.height = this.lightBillboardSizeHeight;
 
 				gameObject.addChild(sprite);
 			}
 
-			this.roadLightBillboardBottomGameObjects.push(gameObject);
+			this.lightBillboardBottomGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
 	private generateLightBillboardsTop() {
 
-		this.roadLightBillboardPopDelayTop -= 0.1;
+		this.lightBillboardPopDelayTop -= 0.1;
 
-		if (this.roadLightBillboardPopDelayTop < 0) {
+		if (this.lightBillboardPopDelayTop < 0) {
 
-			var gameObject = this.roadLightBillboardTopGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.lightBillboardTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 				gameObject.setPosition(-480, gameObject.height * -1);
 				gameObject.enableRendering();
-				this.roadLightBillboardPopDelayTop = this.roadLightBillboardPopDelayDefault;
+				this.lightBillboardPopDelayTop = this.lightBillboardPopDelayDefault;
 			}
 		}
 	}
 
 	private generateLightBillboardsBottom() {
 
-		this.roadLightBillboardPopDelayBottom -= 0.1;
+		this.lightBillboardPopDelayBottom -= 0.1;
 
-		if (this.roadLightBillboardPopDelayBottom < 0) {
+		if (this.lightBillboardPopDelayBottom < 0) {
 
-			var gameObject = this.roadLightBillboardBottomGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.lightBillboardBottomGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 				gameObject.x = gameObject.width * -1;
 				gameObject.y = -330;
 				gameObject.enableRendering();
-				this.roadLightBillboardPopDelayBottom = this.roadLightBillboardPopDelayDefault;
+				this.lightBillboardPopDelayBottom = this.lightBillboardPopDelayDefault;
 			}
 		}
 	}
 
 	private animateLightBillboardsTop() {
 
-		var animatingLightBillboards = this.roadLightBillboardTopGameObjects.filter(x => x.isAnimating == true);
+		var animatingLightBillboards = this.lightBillboardTopGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingLightBillboards) {
 
 			animatingLightBillboards.forEach(gameObject => {
 				gameObject.moveDownRight();
 
-				if (gameObject.x - this.roadLightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 
 				}
@@ -563,14 +564,14 @@ export class GameScene extends Container implements IScene {
 
 	private animateLightBillboardsBottom() {
 
-		var animatingLightBillboards = this.roadLightBillboardBottomGameObjects.filter(x => x.isAnimating == true);
+		var animatingLightBillboards = this.lightBillboardBottomGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingLightBillboards) {
 
 			animatingLightBillboards.forEach(gameObject => {
 				gameObject.moveDownRight();
 
-				if (gameObject.x - this.roadLightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 
 				}
@@ -729,17 +730,17 @@ export class GameScene extends Container implements IScene {
 
 	//#region SideWalks
 
-	private roadSideWalkXyAdjustment: number = 111.5;
+	private sideWalkXyAdjustment: number = 111.5;
 
-	private roadSideWalkWidth: number = 450;
-	private roadSideWalkHeight: number = 450;
+	private sideWalkWidth: number = 450;
+	private sideWalkHeight: number = 450;
 
-	private roadSideWalkTopGameObjects: Array<GameObject> = [];
-	private roadSideWalkBottomGameObjects: Array<GameObject> = [];
+	private sideWalkTopGameObjects: Array<GameObject> = [];
+	private sideWalkBottomGameObjects: Array<GameObject> = [];
 
-	private roadSideWalkPopDelayDefault: number = 50 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private roadSideWalkPopDelayTop: number = 0;
-	private roadSideWalkPopDelayBottom: number = 0;
+	private sideWalkPopDelayDefault: number = 50 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private sideWalkPopDelayTop: number = 0;
+	private sideWalkPopDelayBottom: number = 0;
 
 	private spawnSideWalksTop() {
 
@@ -747,8 +748,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.roadSideWalkWidth * 5;
-			gameObject.height = this.roadSideWalkHeight / 2 * 5;
+			gameObject.width = this.sideWalkWidth * 5;
+			gameObject.height = this.sideWalkHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -757,11 +758,11 @@ export class GameScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK));
 
-				sprite.x = this.roadSideWalkWidth * i - (this.roadSideWalkXyAdjustment * i);
-				sprite.y = (this.roadSideWalkHeight / 2) * i - ((this.roadSideWalkXyAdjustment / 2) * i);
+				sprite.x = this.sideWalkWidth * i - (this.sideWalkXyAdjustment * i);
+				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
 
-				sprite.width = this.roadSideWalkWidth;
-				sprite.height = this.roadSideWalkHeight;
+				sprite.width = this.sideWalkWidth;
+				sprite.height = this.sideWalkHeight;
 
 				//sideWalk.anchor.set(0.5, 0.5);
 				//sideWalk.rotation = Constants.degreesToRadians(-63.5);
@@ -770,7 +771,7 @@ export class GameScene extends Container implements IScene {
 				gameObject.addChild(sprite);
 			}
 
-			this.roadSideWalkTopGameObjects.push(gameObject);
+			this.sideWalkTopGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
@@ -781,8 +782,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.roadSideWalkWidth * 5;
-			gameObject.height = this.roadSideWalkHeight / 2 * 5;
+			gameObject.width = this.sideWalkWidth * 5;
+			gameObject.height = this.sideWalkHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -791,11 +792,11 @@ export class GameScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK));
 
-				sprite.x = this.roadSideWalkWidth * i - (this.roadSideWalkXyAdjustment * i);
-				sprite.y = (this.roadSideWalkHeight / 2) * i - ((this.roadSideWalkXyAdjustment / 2) * i);
+				sprite.x = this.sideWalkWidth * i - (this.sideWalkXyAdjustment * i);
+				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
 
-				sprite.width = this.roadSideWalkWidth;
-				sprite.height = this.roadSideWalkHeight;
+				sprite.width = this.sideWalkWidth;
+				sprite.height = this.sideWalkHeight;
 
 				//sideWalk.anchor.set(0.5, 0.5);
 				//sideWalk.rotation = Constants.degreesToRadians(-63.5);
@@ -804,55 +805,55 @@ export class GameScene extends Container implements IScene {
 				gameObject.addChild(sprite);
 			}
 
-			this.roadSideWalkBottomGameObjects.push(gameObject);
+			this.sideWalkBottomGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
 	private generateSideWalksTop() {
 
-		this.roadSideWalkPopDelayTop -= 0.1;
+		this.sideWalkPopDelayTop -= 0.1;
 
-		if (this.roadSideWalkPopDelayTop < 0) {
+		if (this.sideWalkPopDelayTop < 0) {
 
-			var gameObject = this.roadSideWalkTopGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.sideWalkTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 				gameObject.x = -945;
 				gameObject.y = gameObject.height * -1;
 				gameObject.enableRendering();
-				this.roadSideWalkPopDelayTop = this.roadSideWalkPopDelayDefault;
+				this.sideWalkPopDelayTop = this.sideWalkPopDelayDefault;
 			}
 		}
 	}
 
 	private generateSideWalksBottom() {
 
-		this.roadSideWalkPopDelayBottom -= 0.1;
+		this.sideWalkPopDelayBottom -= 0.1;
 
-		if (this.roadSideWalkPopDelayBottom < 0) {
+		if (this.sideWalkPopDelayBottom < 0) {
 
-			var gameObject = this.roadSideWalkBottomGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.sideWalkBottomGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 				gameObject.x = gameObject.width * -1;
 				gameObject.y = -435;
 				gameObject.enableRendering();
-				this.roadSideWalkPopDelayBottom = this.roadSideWalkPopDelayDefault;
+				this.sideWalkPopDelayBottom = this.sideWalkPopDelayDefault;
 			}
 		}
 	}
 
 	private animateSideWalksTop() {
 
-		var animatingSideWalks = this.roadSideWalkTopGameObjects.filter(x => x.isAnimating == true);
+		var animatingSideWalks = this.sideWalkTopGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingSideWalks) {
 
 			animatingSideWalks.forEach(gameObject => {
 				gameObject.moveDownRight();
 
-				if (gameObject.x - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.x - (this.sideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 
 				}
@@ -862,14 +863,14 @@ export class GameScene extends Container implements IScene {
 
 	private animateSideWalksBottom() {
 
-		var animatingSideWalks = this.roadSideWalkBottomGameObjects.filter(x => x.isAnimating == true);
+		var animatingSideWalks = this.sideWalkBottomGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingSideWalks) {
 
 			animatingSideWalks.forEach(gameObject => {
 				gameObject.moveDownRight();
 
-				if (gameObject.x - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - (this.roadSideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.x - (this.sideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - (this.sideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 
 				}
@@ -881,13 +882,13 @@ export class GameScene extends Container implements IScene {
 
 	//#region Clouds	
 
-	private roadCloudSizeWidth: number = 512 / 2;
-	private roadCloudSizeHeight: number = 350 / 2;
+	private cloudSizeWidth: number = 512 / 2;
+	private cloudSizeHeight: number = 350 / 2;
 
-	private roadCloudGameObjects: Array<GameObject> = [];
+	private cloudGameObjects: Array<GameObject> = [];
 
-	private roadCloudPopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private roadCloudPopDelay: number = 0;
+	private cloudPopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private cloudPopDelay: number = 0;
 
 	private spawnClouds() {
 
@@ -895,31 +896,31 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: Cloud = new Cloud(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2));
 			gameObject.disableRendering();
-			gameObject.width = this.roadCloudSizeWidth;
-			gameObject.height = this.roadCloudSizeHeight;
+			gameObject.width = this.cloudSizeWidth;
+			gameObject.height = this.cloudSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.CLOUD));
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.roadCloudSizeWidth;
-			sprite.height = this.roadCloudSizeHeight;
+			sprite.width = this.cloudSizeWidth;
+			sprite.height = this.cloudSizeHeight;
 			//sprite.filters = [new BlurFilter(4, 10)];
 			//cloudContainer.filters = [new BlurFilter(2, 10)];
 			gameObject.addChild(sprite);
 
-			this.roadCloudGameObjects.push(gameObject);
+			this.cloudGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
 	private generateClouds() {
 
-		this.roadCloudPopDelay -= 0.1;
+		this.cloudPopDelay -= 0.1;
 
-		if (this.roadCloudPopDelay < 0) {
+		if (this.cloudPopDelay < 0) {
 
-			var gameObject = this.roadCloudGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.cloudGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 
@@ -931,14 +932,14 @@ export class GameScene extends Container implements IScene {
 
 				gameObject.enableRendering();
 
-				this.roadCloudPopDelay = this.roadCloudPopDelayDefault;
+				this.cloudPopDelay = this.cloudPopDelayDefault;
 			}
 		}
 	}
 
 	private animateClouds() {
 
-		var animatingClouds = this.roadCloudGameObjects.filter(x => x.isAnimating == true);
+		var animatingClouds = this.cloudGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingClouds) {
 
@@ -959,13 +960,13 @@ export class GameScene extends Container implements IScene {
 
 	//#region VehicleEnemys	
 
-	private roadVehicleEnemySizeWidth: number = 245;
-	private roadVehicleEnemySizeHeight: number = 245;
+	private vehicleEnemySizeWidth: number = 245;
+	private vehicleEnemySizeHeight: number = 245;
 
-	private roadVehicleEnemyGameObjects: Array<GameObject> = [];
+	private vehicleEnemyGameObjects: Array<GameObject> = [];
 
-	private roadVehicleEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private roadVehicleEnemyPopDelay: number = 0;
+	private vehicleEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private vehicleEnemyPopDelay: number = 0;
 
 	private spawnVehicleEnemys() {
 
@@ -973,8 +974,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.roadVehicleEnemySizeWidth;
-			gameObject.height = this.roadVehicleEnemySizeHeight;
+			gameObject.width = this.vehicleEnemySizeWidth;
+			gameObject.height = this.vehicleEnemySizeHeight;
 
 			var vehicleType = Constants.getRandomNumber(0, 1);
 
@@ -1000,14 +1001,14 @@ export class GameScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.roadVehicleEnemySizeWidth;
-			sprite.height = this.roadVehicleEnemySizeHeight;
+			sprite.width = this.vehicleEnemySizeWidth;
+			sprite.height = this.vehicleEnemySizeHeight;
 
 			sprite.anchor.set(0.5, 0.5);
 
 			gameObject.addChild(sprite);
 
-			this.roadVehicleEnemyGameObjects.push(gameObject);
+			this.vehicleEnemyGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
@@ -1015,11 +1016,11 @@ export class GameScene extends Container implements IScene {
 	private generateVehicleEnemys() {
 
 		if (!this.anyBossExists()) {
-			this.roadVehicleEnemyPopDelay -= 0.1;
+			this.vehicleEnemyPopDelay -= 0.1;
 
-			if (this.roadVehicleEnemyPopDelay < 0) {
+			if (this.vehicleEnemyPopDelay < 0) {
 
-				var gameObject = this.roadVehicleEnemyGameObjects.find(x => x.isAnimating == false);
+				var gameObject = this.vehicleEnemyGameObjects.find(x => x.isAnimating == false);
 
 				if (gameObject) {
 
@@ -1029,7 +1030,7 @@ export class GameScene extends Container implements IScene {
 
 					gameObject.enableRendering();
 
-					this.roadVehicleEnemyPopDelay = this.roadVehicleEnemyPopDelayDefault;
+					this.vehicleEnemyPopDelay = this.vehicleEnemyPopDelayDefault;
 				}
 			}
 		}
@@ -1037,7 +1038,7 @@ export class GameScene extends Container implements IScene {
 
 	private animateVehicleEnemys() {
 
-		var animatingVehicleEnemys = this.roadVehicleEnemyGameObjects.filter(x => x.isAnimating == true);
+		var animatingVehicleEnemys = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingVehicleEnemys) {
 
@@ -1048,7 +1049,7 @@ export class GameScene extends Container implements IScene {
 
 				// prevent overlapping
 
-				var collidingVehicleEnemy = this.roadVehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCollision(x, gameObject));
+				var collidingVehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCollision(x, gameObject));
 
 				if (collidingVehicleEnemy) {
 
@@ -1098,16 +1099,16 @@ export class GameScene extends Container implements IScene {
 
 	//#region VehicleBosss	
 
-	private roadVehicleBossSizeWidth: number = 245;
-	private roadVehicleBossSizeHeight: number = 245;
+	private vehicleBossSizeWidth: number = 245;
+	private vehicleBossSizeHeight: number = 245;
 
-	private roadVehicleBossGameObjects: Array<VehicleBoss> = [];
+	private vehicleBossGameObjects: Array<VehicleBoss> = [];
 
 	private spawnVehicleBosss() {
 		const gameObject: VehicleBoss = new VehicleBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
 		gameObject.disableRendering();
-		gameObject.width = this.roadVehicleBossSizeWidth;
-		gameObject.height = this.roadVehicleBossSizeHeight;
+		gameObject.width = this.vehicleBossSizeWidth;
+		gameObject.height = this.vehicleBossSizeHeight;
 
 		var vehicleType = Constants.getRandomNumber(0, 1);
 
@@ -1133,14 +1134,14 @@ export class GameScene extends Container implements IScene {
 
 		sprite.x = 0;
 		sprite.y = 0;
-		sprite.width = this.roadVehicleBossSizeWidth;
-		sprite.height = this.roadVehicleBossSizeHeight;
+		sprite.width = this.vehicleBossSizeWidth;
+		sprite.height = this.vehicleBossSizeHeight;
 
 		sprite.anchor.set(0.5, 0.5);
 
 		gameObject.addChild(sprite);
 
-		this.roadVehicleBossGameObjects.push(gameObject);
+		this.vehicleBossGameObjects.push(gameObject);
 		this.sceneContainer.addChild(gameObject);
 	}
 
@@ -1148,7 +1149,7 @@ export class GameScene extends Container implements IScene {
 
 		if (this._vehicleBossCheckpoint.shouldRelease(this._gameScoreBar.getScore()) && !this.vehicleBossExists()) {
 
-			var gameObject = this.roadVehicleBossGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 
@@ -1170,7 +1171,7 @@ export class GameScene extends Container implements IScene {
 
 	private animateVehicleBosss() {
 
-		var gameObject = this.roadVehicleBossGameObjects.find(x => x.isAnimating == true);
+		var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
 		let vehicleBoss: VehicleBoss = gameObject as VehicleBoss;
 
 		if (gameObject) {
@@ -1192,7 +1193,7 @@ export class GameScene extends Container implements IScene {
 				}
 				else {
 
-					if (this.roadVehicleEnemyGameObjects.every(x => x.isAnimating == false || this.roadVehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling / 2))) {
+					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false || this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling / 2))) {
 						vehicleBoss.isAttacking = true;
 					}
 				}
@@ -1218,12 +1219,98 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private vehicleBossExists(): boolean {
-		var gameObject = this.roadVehicleBossGameObjects.find(x => x.isAnimating == true);
+		var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
 
 		if (gameObject)
 			return true;
 		else
 			return false;
+	}
+
+	//#endregion
+
+	//#region VehicleBossRockets
+
+	private vehicleBossRocketSizeWidth: number = 45;
+	private vehicleBossRocketSizeHeight: number = 45;
+
+	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
+
+	spawnVehicleBossRockets() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			gameObject.disableRendering();
+			gameObject.width = this.vehicleBossRocketSizeWidth;
+			gameObject.height = this.vehicleBossRocketSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.vehicleBossRocketSizeWidth;
+			sprite.height = this.vehicleBossRocketSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.vehicleBossRocketGameObjects.push(gameObject);
+			this.sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generateVehicleBossRocket() {
+
+		let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (vehicleBoss) {
+
+			let vehicleBossRocket = this.vehicleBossRocketGameObjects.find(x => x.isAnimating);
+
+			if (vehicleBossRocket) {
+				vehicleBossRocket.reset();
+				vehicleBossRocket.reposition(vehicleBoss);
+				vehicleBossRocket.setPopping();
+				vehicleBossRocket.enableRendering();
+
+			}
+
+		}
+	}
+
+	animateVehicleBossRocket() {
+
+		let animatingVehicleBossRockets = this.vehicleBossRocketGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingVehicleBossRockets) {
+
+			animatingVehicleBossRockets.forEach(gameObject => {
+				gameObject.moveUpRight();
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.dillyDally();
+
+					if (Constants.checkCloseCollision(gameObject, this._player)) {
+						gameObject.setBlast();
+						this.loosePlayerHealth();
+					}
+
+					if (gameObject.autoBlast())
+						gameObject.setBlast();
+				}
+
+				if (gameObject.hasFaded()) {
+					gameObject.disableRendering();
+				}
+			});
+		}
 	}
 
 	//#endregion
@@ -1298,10 +1385,10 @@ export class GameScene extends Container implements IScene {
 
 	//#region PlayerHonkBomb
 
-	private honkBombSizeWidth: number = 45;
-	private honkBombSizeHeight: number = 45;
+	private playerHonkBombSizeWidth: number = 45;
+	private playerHonkBombSizeHeight: number = 45;
 
-	private honkBombGameObjects: Array<GameObject> = [];
+	private playerHonkBombGameObjects: Array<GameObject> = [];
 
 	spawnPlayerHonkBombs() {
 
@@ -1311,29 +1398,29 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: PlayerHonkBomb = new PlayerHonkBomb(4);
 			gameObject.disableRendering();
-			gameObject.width = this.honkBombSizeWidth;
-			gameObject.height = this.honkBombSizeHeight;
+			gameObject.width = this.playerHonkBombSizeWidth;
+			gameObject.height = this.playerHonkBombSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_HONK_BOMB));
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.honkBombSizeWidth;
-			sprite.height = this.honkBombSizeHeight;
+			sprite.width = this.playerHonkBombSizeWidth;
+			sprite.height = this.playerHonkBombSizeHeight;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
 			gameObject.setHonkBombTemplate(playerHonkBombTemplate);
 
-			this.honkBombGameObjects.push(gameObject);
+			this.playerHonkBombGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
 	generatePlayerHonkBomb() {
 
-		var gameObject = this.honkBombGameObjects.find(x => x.isAnimating == false);
+		var gameObject = this.playerHonkBombGameObjects.find(x => x.isAnimating == false);
 
 		if (gameObject) {
 
@@ -1350,7 +1437,7 @@ export class GameScene extends Container implements IScene {
 
 	animatePlayerHonkBomb() {
 
-		var animatingHonkBombs = this.honkBombGameObjects.filter(x => x.isAnimating == true);
+		var animatingHonkBombs = this.playerHonkBombGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingHonkBombs) {
 
@@ -1378,13 +1465,13 @@ export class GameScene extends Container implements IScene {
 
 						if (playerHonkBomb.depleteBlastDelay()) {
 
-							let vehicleEnemy = this.roadVehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
+							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
 
 							if (vehicleEnemy) {
 								this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
 							}
 
-							let vehicleBoss = this.roadVehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
+							let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
 
 							if (vehicleBoss) {
 								this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
@@ -1452,6 +1539,19 @@ export class GameScene extends Container implements IScene {
 		if (this.gameController.isAttacking) {
 			this.generatePlayerHonkBomb();
 			this.gameController.isAttacking = false;
+		}
+	}
+
+	loosePlayerHealth() {
+		this._player.setPopping();
+
+		this._player.looseHealth();
+		this._player.setHitStance();
+
+		if (this.anyBossExists()) {
+			//let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+			//if (vehicleBoss)
 		}
 	}
 

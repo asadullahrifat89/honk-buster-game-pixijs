@@ -1,6 +1,5 @@
 ﻿import { ConstructType } from "./Constants";
 
-//#endregion
 export class ConstructTemplate {
 
     public ConstructType: ConstructType = 0;
