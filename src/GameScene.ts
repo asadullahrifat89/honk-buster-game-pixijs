@@ -37,6 +37,8 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region Methods
+
 	//#region Ctor
 
 	constructor() {
@@ -81,8 +83,6 @@ export class GameScene extends Container implements IScene {
 	}
 
 	//#endregion
-
-	//#region Methods
 
 	//#region RoadMarks
 
