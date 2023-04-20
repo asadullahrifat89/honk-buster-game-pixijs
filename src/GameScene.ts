@@ -1612,10 +1612,6 @@ export class GameScene extends Container implements IScene {
 
 	//#region Scene
 
-	private anyBossExists(): boolean {
-		return (/*UfoBossExists() ||*/ this.vehicleBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
-	}
-
 	public update(_framesPassed: number): void {
 
 		this.generateRoadMarks();
@@ -1671,6 +1667,10 @@ export class GameScene extends Container implements IScene {
 	private levelUp() {
 		this._gameLevel++;
 		this.generateInterimScreen("LEVEL " + this._gameLevel.toString() + " COMPLETE");
+	}
+
+	private anyBossExists(): boolean {
+		return (/*UfoBossExists() ||*/ this.vehicleBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
 	}
 
 	//#endregion
