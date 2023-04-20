@@ -2,7 +2,6 @@
 import { Constants, ConstructType } from './Constants';
 import { VehicleBase } from './VehicleBase';
 import { GrayscaleFilter } from '@pixi/filter-grayscale';
-/*import { DropShadowFilter } from '@pixi/filter-drop-shadow';*/
 
 export class VehicleEnemy extends VehicleBase {
 
@@ -10,12 +9,9 @@ export class VehicleEnemy extends VehicleBase {
 
 	constructor(speed: number) {
 		super(speed);
-
-		//this.filters = [new DropShadowFilter()];
 	}
 
 	reset() {
-
 		this.speed = Constants.getRandomNumber(1, 3);
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
 		this.filters = null;

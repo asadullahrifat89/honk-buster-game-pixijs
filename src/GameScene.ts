@@ -11,16 +11,28 @@ import { GameController } from "./GameController";
 import { Manager } from "./Manager";
 import { PlayerHonkBomb } from "./PlayerHonkBomb";
 import { GameScoreBar } from "./GameScoreBar";
+import { GameCheckpoint } from "./GameCheckpoint";
+import { VehicleBoss } from "./VehicleBoss";
+import { InterimScreen } from "./InterimScreen";
 
 
 export class GameScene extends Container implements IScene {
 
-	//#region Propperties
+	//#region Properties
 
 	private gameController: GameController = new GameController();
-	private gameScoreBar: GameScoreBar;
+	private _gameScoreBar: GameScoreBar;
+	private _interimScreen: InterimScreen;
 	private sceneContainer: Container = new Container();
-	//TODO: create a new gameObject and add every game object in that gameObject and leave the UI controls in the main scene
+
+
+	//TODO: set defaults _vehicleReleasePoint = 25
+	private readonly _vehicleBossReleasePoint: number = 25; // first appearance
+	private readonly _vehicleBossReleasePoint_increase: number = 15;
+
+	private readonly _vehicleBossCheckpoint: GameCheckpoint;
+
+	private _gameLevel: number = 0;
 
 	//#endregion
 
@@ -28,6 +40,8 @@ export class GameScene extends Container implements IScene {
 
 	constructor() {
 		super();
+
+		this._vehicleBossCheckpoint = new GameCheckpoint(this._vehicleBossReleasePoint);
 
 		this.spawnRoadMarks();
 
@@ -38,6 +52,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnLightBillboardsTop();
 
 		this.spawnVehicleEnemys();
+		this.spawnVehicleBosss();
 		this.spawnHonks();
 
 		this.spawnSideWalksBottom();
@@ -56,7 +71,8 @@ export class GameScene extends Container implements IScene {
 
 		this.addChild(this.sceneContainer);
 
-		this.gameScoreBar = new GameScoreBar(this);
+		this._gameScoreBar = new GameScoreBar(this);
+		this._interimScreen = new InterimScreen(this);
 		this.repositionGameScoreBar();
 
 		this.setGameController();
@@ -998,21 +1014,23 @@ export class GameScene extends Container implements IScene {
 
 	private generateVehicleEnemys() {
 
-		this.roadVehicleEnemyPopDelay -= 0.1;
+		if (!this.anyBossExists()) {
+			this.roadVehicleEnemyPopDelay -= 0.1;
 
-		if (this.roadVehicleEnemyPopDelay < 0) {
+			if (this.roadVehicleEnemyPopDelay < 0) {
 
-			var gameObject = this.roadVehicleEnemyGameObjects.find(x => x.isAnimating == false);
+				var gameObject = this.roadVehicleEnemyGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
+				if (gameObject) {
 
-				var vehicleEnemey = gameObject as VehicleEnemy;
-				vehicleEnemey.reposition();
-				vehicleEnemey.reset();
+					var vehicleEnemy = gameObject as VehicleEnemy;
+					vehicleEnemy.reposition();
+					vehicleEnemy.reset();
 
-				gameObject.enableRendering();
+					gameObject.enableRendering();
 
-				this.roadVehicleEnemyPopDelay = this.roadVehicleEnemyPopDelayDefault;
+					this.roadVehicleEnemyPopDelay = this.roadVehicleEnemyPopDelayDefault;
+				}
 			}
 		}
 	}
@@ -1071,9 +1089,141 @@ export class GameScene extends Container implements IScene {
 
 			if (vehicleEnemy.isDead()) {
 				vehicleEnemy.setBlast();
-				this.gameScoreBar.gainScore(2);
+				this._gameScoreBar.gainScore(2);
 			}
 		}
+	}
+
+	//#endregion
+
+	//#region VehicleBosss	
+
+	private roadVehicleBossSizeWidth: number = 245;
+	private roadVehicleBossSizeHeight: number = 245;
+
+	private roadVehicleBossGameObjects: Array<VehicleBoss> = [];
+
+	private spawnVehicleBosss() {
+		const gameObject: VehicleBoss = new VehicleBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
+		gameObject.disableRendering();
+		gameObject.width = this.roadVehicleBossSizeWidth;
+		gameObject.height = this.roadVehicleBossSizeHeight;
+
+		var vehicleType = Constants.getRandomNumber(0, 1);
+
+		var uri: string = "";
+		switch (vehicleType) {
+			case 0: {
+
+				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
+
+				break;
+			}
+			case 1: {
+
+				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
+
+				break;
+			}
+			default: break;
+		}
+
+		const texture = Texture.from(uri);
+		const sprite: GameObjectSprite = new GameObjectSprite(texture);
+
+		sprite.x = 0;
+		sprite.y = 0;
+		sprite.width = this.roadVehicleBossSizeWidth;
+		sprite.height = this.roadVehicleBossSizeHeight;
+
+		sprite.anchor.set(0.5, 0.5);
+
+		gameObject.addChild(sprite);
+
+		this.roadVehicleBossGameObjects.push(gameObject);
+		this.sceneContainer.addChild(gameObject);
+	}
+
+	private generateVehicleBosss() {
+
+		if (this._vehicleBossCheckpoint.shouldRelease(this._gameScoreBar.getScore()) && !this.vehicleBossExists()) {
+
+			var gameObject = this.roadVehicleBossGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				var vehicleBoss = gameObject as VehicleBoss;
+				vehicleBoss.reposition();
+				vehicleBoss.reset();
+				vehicleBoss.health = this._vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
+
+				gameObject.enableRendering();
+
+				this._vehicleBossCheckpoint.increaseThreasholdLimit(this._vehicleBossReleasePoint_increase, this._gameScoreBar.getScore());
+
+				//TODO: set vehicle boss health bar
+
+				this.generateInterimScreen("Crazy Honker Arrived");
+			}
+		}
+	}
+
+	private animateVehicleBosss() {
+
+		var gameObject = this.roadVehicleBossGameObjects.find(x => x.isAnimating == true);
+		let vehicleBoss: VehicleBoss = gameObject as VehicleBoss;
+
+		if (gameObject) {
+
+			if (vehicleBoss.isDead()) {
+				vehicleBoss.moveDownRight();
+			}
+			else {
+				gameObject.pop();
+
+				if (vehicleBoss.isAttacking) {
+
+					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling);
+
+					if (vehicleBoss.honk()) {
+						this.generateHonk(gameObject);
+					}
+
+				}
+				else {
+
+					if (this.roadVehicleEnemyGameObjects.every(x => x.isAnimating == false || this.roadVehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling / 2))) {
+						vehicleBoss.isAttacking = true;
+					}
+				}
+			}
+
+			if (vehicleBoss.isDead() && gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				gameObject.disableRendering();
+			}
+		}
+	}
+
+	private looseVehicleBosshealth(vehicleBoss: VehicleBoss) {
+
+		vehicleBoss.setPopping();
+		vehicleBoss.looseHealth();
+
+		if (vehicleBoss.isDead()) {
+
+			this._player.setWinStance();
+			this._gameScoreBar.gainScore(3);
+			this.levelUp();
+		}
+	}
+
+	private vehicleBossExists(): boolean {
+		var gameObject = this.roadVehicleBossGameObjects.find(x => x.isAnimating == true);
+
+		if (gameObject)
+			return true;
+		else
+			return false;
 	}
 
 	//#endregion
@@ -1189,12 +1339,12 @@ export class GameScene extends Container implements IScene {
 
 			var playerHonkBomb = gameObject as PlayerHonkBomb;
 			playerHonkBomb.reset();
-			playerHonkBomb.reposition(this.playerBalloonContainer);
+			playerHonkBomb.reposition(this._player);
 			playerHonkBomb.setPopping();
 
 			gameObject.enableRendering();
 
-			this.playerBalloonContainer.setAttackStance();
+			this._player.setAttackStance();
 		}
 	}
 
@@ -1233,8 +1383,13 @@ export class GameScene extends Container implements IScene {
 							if (vehicleEnemy) {
 								this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
 							}
-						}
 
+							let vehicleBoss = this.roadVehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
+
+							if (vehicleBoss) {
+								this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
+							}
+						}
 					}
 				}
 
@@ -1247,20 +1402,20 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region Player
+	//#region PlayerBalloon
 
 	private playerBalloonSizeWidth: number = 150;
 	private playerBalloonSizeHeight: number = 150;
 
-	private playerBalloonContainer: PlayerBalloon = new PlayerBalloon(Constants.DEFAULT_CONSTRUCT_SPEED);
+	private _player: PlayerBalloon = new PlayerBalloon(Constants.DEFAULT_CONSTRUCT_SPEED);
 
 	spawnPlayerBalloon() {
 
 		let playerTemplate = Constants.getRandomNumber(0, 1);
-		this.playerBalloonContainer.disableRendering();
+		this._player.disableRendering();
 
-		this.playerBalloonContainer.width = this.playerBalloonSizeWidth;
-		this.playerBalloonContainer.height = this.playerBalloonSizeHeight;
+		this._player.width = this.playerBalloonSizeWidth;
+		this._player.height = this.playerBalloonSizeHeight;
 
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_BALLOON_IDLE));
 
@@ -1269,27 +1424,27 @@ export class GameScene extends Container implements IScene {
 		sprite.width = this.playerBalloonSizeWidth;
 		sprite.height = this.playerBalloonSizeWidth;
 
-		this.playerBalloonContainer.addChild(sprite);
-		this.playerBalloonContainer.setPlayerTemplate(playerTemplate);
+		this._player.addChild(sprite);
+		this._player.setPlayerTemplate(playerTemplate);
 
-		this.sceneContainer.addChild(this.playerBalloonContainer);
+		this.sceneContainer.addChild(this._player);
 	}
 
 	generatePlayerBalloon() {
-		this.playerBalloonContainer.reset();
-		this.playerBalloonContainer.reposition();
-		this.playerBalloonContainer.enableRendering();
+		this._player.reset();
+		this._player.reposition();
+		this._player.enableRendering();
 	}
 
 	animatePlayerBalloon() {
-		this.playerBalloonContainer.pop();
-		this.playerBalloonContainer.hover();
-		this.playerBalloonContainer.depleteAttackStance();
-		this.playerBalloonContainer.depleteWinStance();
-		this.playerBalloonContainer.depleteHitStance();
-		this.playerBalloonContainer.recoverFromHealthLoss();
+		this._player.pop();
+		this._player.hover();
+		this._player.depleteAttackStance();
+		this._player.depleteWinStance();
+		this._player.depleteHitStance();
+		this._player.recoverFromHealthLoss();
 
-		this.playerBalloonContainer.move(
+		this._player.move(
 			Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling,
 			Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling,
 			this.gameController);
@@ -1317,12 +1472,39 @@ export class GameScene extends Container implements IScene {
 	//#region GameScoreBar
 
 	private repositionGameScoreBar() {
-		this.gameScoreBar.reposition((Manager.width) / 2, 10);
+		this._gameScoreBar.reposition((Manager.width) / 2, 10);
+	}
+
+	//#endregion
+
+	//#region InterimScreen
+
+	private generateInterimScreen(title: string) {
+		if (this._interimScreen.isAnimating == false) {
+			this._interimScreen.setTitle(title);
+			this._interimScreen.reset();
+			this._interimScreen.reposition(Manager.width / 2, Manager.height / 2);
+			this._interimScreen.enableRendering();
+		}
+	}
+
+	private animateInterimScreen() {
+		if (this._interimScreen.isAnimating == true) {
+			this._interimScreen.depleteOnScreenDelay();
+
+			if (this._interimScreen.isDepleted()) {
+				this._interimScreen.disableRendering();
+			}
+		}
 	}
 
 	//#endregion
 
 	//#region Scene
+
+	private anyBossExists(): boolean {
+		return (/*UfoBossExists() ||*/ this.vehicleBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
+	}
 
 	public update(_framesPassed: number): void {
 
@@ -1334,6 +1516,7 @@ export class GameScene extends Container implements IScene {
 		this.generateTreesTop();
 
 		this.generateVehicleEnemys();
+		this.generateVehicleBosss();
 
 		this.generateClouds();
 
@@ -1351,6 +1534,7 @@ export class GameScene extends Container implements IScene {
 		this.animateLightBillboardsTop();
 
 		this.animateVehicleEnemys();
+		this.animateVehicleBosss();
 		this.animateHonks();
 
 		this.animateSideWalksBottom();
@@ -1361,6 +1545,8 @@ export class GameScene extends Container implements IScene {
 		this.animateClouds();
 		this.animatePlayerHonkBomb();
 
+		this.animateInterimScreen();
+
 		this.gameController.update();
 		this.animatePlayerBalloon();
 	}
@@ -1368,6 +1554,11 @@ export class GameScene extends Container implements IScene {
 	public resize(scale: number): void {
 		this.sceneContainer.scale.set(scale);
 		this.repositionGameScoreBar();
+	}
+
+	private levelUp() {
+		this._gameLevel++;
+		this.generateInterimScreen("LEVEL " + this._gameLevel.toString() + " COMPLETE");
 	}
 
 	//#endregion

@@ -38,6 +38,22 @@ export class GameObject extends Container {
 
 	//#region Methods
 
+	public getTop(): number {
+		return this.y;
+	}
+
+	public getBottom(): number {
+		return this.y + this.height;
+	}
+
+	public getLeft(): number {
+		return this.x;
+	}
+
+	public getRight(): number {
+		return this.x + this.width;
+	}
+
 	isDead(): boolean {
 
 		return this.health <= 0;
