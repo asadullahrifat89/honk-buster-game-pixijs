@@ -33,7 +33,9 @@ export class GameScene extends Container implements IScene {
 	private readonly _vehicleBossReleasePoint_increase: number = 15;
 
 	private readonly _vehicleBossCheckpoint: GameCheckpoint;
+
 	private _playerHealthBar: HealthBar;
+	private _vehicleBossHealthBar: HealthBar;
 
 	private _gameLevel: number = 0;
 
@@ -84,6 +86,11 @@ export class GameScene extends Container implements IScene {
 		this._playerHealthBar.setMaximumValue(100);
 		this._playerHealthBar.setValue(100);
 		this.repositionPlayerHealthBar();
+
+		this._vehicleBossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
+		this._vehicleBossHealthBar.setMaximumValue(100);
+		this._vehicleBossHealthBar.setValue(0);
+		this.repositionVehicleBossHealthBar();
 
 		this._interimScreen = new InterimScreen(this);
 
@@ -1173,6 +1180,10 @@ export class GameScene extends Container implements IScene {
 
 				//TODO: set vehicle boss health bar
 
+				this._vehicleBossHealthBar.setMaximumValue(vehicleBoss.health);
+				this._vehicleBossHealthBar.setValue(vehicleBoss.health);
+				this._vehicleBossHealthBar.setIcon(vehicleBoss.getGameObjectSprite().getTexture());
+
 				this.generateInterimScreen("Crazy Honker Arrived");
 			}
 		}
@@ -1218,6 +1229,8 @@ export class GameScene extends Container implements IScene {
 
 		vehicleBoss.setPopping();
 		vehicleBoss.looseHealth();
+
+		this._vehicleBossHealthBar.setValue(vehicleBoss.health);
 
 		if (vehicleBoss.isDead()) {
 
@@ -1603,6 +1616,10 @@ export class GameScene extends Container implements IScene {
 		this._playerHealthBar.reposition((Manager.width) - 105, 10);
 	}
 
+	private repositionVehicleBossHealthBar() {
+		this._vehicleBossHealthBar.reposition((Manager.width) - 205, 10);
+	}
+
 	//#endregion
 
 	//#region InterimScreen
@@ -1680,6 +1697,7 @@ export class GameScene extends Container implements IScene {
 	public resize(scale: number): void {
 		this._sceneContainer.scale.set(scale);
 		this.repositionGameScoreBar();
+		this.repositionPlayerHealthBar();
 	}
 
 	private levelUp() {
