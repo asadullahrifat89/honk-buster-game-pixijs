@@ -12,6 +12,10 @@ export class GameObject extends Container {
 	private readonly hoverDelayDefault: number = 25;
 	private readonly hoverSpeed: number = 0.7;
 
+	private dillyDallyDelay: number = 0;
+	private readonly dillyDallyDelayDefault: number = 25;
+	private readonly dillyDallySpeed: number = 0.9;
+
 	private vibrateDelay: number = 0;
 	private readonly vibrateDelayDefault: number = 8;
 	private readonly vibrateSpeed: number = 0.3;
@@ -24,6 +28,16 @@ export class GameObject extends Container {
 	public hitPoint: number = 5;
 
 	public isAwaitingPop: boolean = false;
+	public isBlasting: boolean = false;
+
+	public awaitMoveUp: boolean = false;
+	public awaitMoveDown: boolean = false;
+	public awaitMoveLeft: boolean = false;
+	public awaitMoveRight: boolean = false;
+	public awaitMoveUpRight: boolean = false;
+	public awaitMoveDownLeft: boolean = false;
+	public awaitMoveUpLeft: boolean = false;
+	public awaitMoveDownRight: boolean = false;
 
 	//#endregion
 
@@ -174,6 +188,20 @@ export class GameObject extends Container {
 
 			if (this.hoverDelay <= this.hoverDelayDefault * -1)
 				this.hoverDelay = this.hoverDelayDefault;
+		}
+	}
+
+	dillyDally() {
+		this.dillyDallyDelay--;
+
+		if (this.dillyDallyDelay >= 0) {
+			this.x = (this.getLeft() + this.dillyDallySpeed);
+		}
+		else {
+			this.x = (this.getLeft() - this.dillyDallySpeed);
+
+			if (this.dillyDallyDelay <= this.dillyDallyDelayDefault * -1)
+				this.dillyDallyDelay = this.dillyDallyDelayDefault;
 		}
 	}
 

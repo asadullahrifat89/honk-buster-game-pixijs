@@ -12,7 +12,7 @@ export class VehicleEnemy extends VehicleBase {
 	}
 
 	reset() {
-		this.speed = Constants.getRandomNumber(1, 3);
+		this.speed = Constants.getRandomNumber(2, 4);
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
 		this.filters = null;
 
@@ -46,7 +46,7 @@ export class VehicleEnemy extends VehicleBase {
 
 	setBlast() {
 		this.willHonk = false;
-		this.speed = this.speed - 0.5;
+		this.speed = this.speed / 2;
 		this.filters = [this.grayScaleFilter];
 	}
 }
