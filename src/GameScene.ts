@@ -13,14 +13,16 @@ import { PlayerHonkBomb } from "./PlayerHonkBomb";
 import { GameScoreBar } from "./GameScoreBar";
 import { GameCheckpoint } from "./GameCheckpoint";
 import { VehicleBoss } from "./VehicleBoss";
+import { InterimScreen } from "./InterimScreen";
 
 
 export class GameScene extends Container implements IScene {
 
-	//#region Propperties
+	//#region Properties
 
 	private gameController: GameController = new GameController();
 	private _gameScoreBar: GameScoreBar;
+	private _interimScreen: InterimScreen;
 	private sceneContainer: Container = new Container();
 
 
@@ -70,6 +72,7 @@ export class GameScene extends Container implements IScene {
 		this.addChild(this.sceneContainer);
 
 		this._gameScoreBar = new GameScoreBar(this);
+		this._interimScreen = new InterimScreen(this);
 		this.repositionGameScoreBar();
 
 		this.setGameController();
@@ -1011,21 +1014,23 @@ export class GameScene extends Container implements IScene {
 
 	private generateVehicleEnemys() {
 
-		this.roadVehicleEnemyPopDelay -= 0.1;
+		if (!this.anyBossExists()) {
+			this.roadVehicleEnemyPopDelay -= 0.1;
 
-		if (this.roadVehicleEnemyPopDelay < 0) {
+			if (this.roadVehicleEnemyPopDelay < 0) {
 
-			var gameObject = this.roadVehicleEnemyGameObjects.find(x => x.isAnimating == false);
+				var gameObject = this.roadVehicleEnemyGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
+				if (gameObject) {
 
-				var vehicleEnemy = gameObject as VehicleEnemy;
-				vehicleEnemy.reposition();
-				vehicleEnemy.reset();
+					var vehicleEnemy = gameObject as VehicleEnemy;
+					vehicleEnemy.reposition();
+					vehicleEnemy.reset();
 
-				gameObject.enableRendering();
+					gameObject.enableRendering();
 
-				this.roadVehicleEnemyPopDelay = this.roadVehicleEnemyPopDelayDefault;
+					this.roadVehicleEnemyPopDelay = this.roadVehicleEnemyPopDelayDefault;
+				}
 			}
 		}
 	}
@@ -1155,6 +1160,10 @@ export class GameScene extends Container implements IScene {
 				gameObject.enableRendering();
 
 				this._vehicleBossCheckpoint.increaseThreasholdLimit(this._vehicleBossReleasePoint_increase, this._gameScoreBar.getScore());
+
+				//TODO: set vehicle boss health bar
+
+				this.generateInterimScreen("Crazy Honker Arrived");
 			}
 		}
 	}
@@ -1209,7 +1218,7 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private vehicleBossExists(): boolean {
-		var gameObject = this.roadVehicleBossGameObjects.find(x => x.isAnimating == false);
+		var gameObject = this.roadVehicleBossGameObjects.find(x => x.isAnimating == true);
 
 		if (gameObject)
 			return true;
@@ -1468,7 +1477,34 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region InterimScreen
+
+	private generateInterimScreen(title: string) {
+		if (this._interimScreen.isAnimating == false) {
+			this._interimScreen.setTitle(title);
+			this._interimScreen.reset();
+			this._interimScreen.reposition(Manager.width / 2, Manager.height / 2);
+			this._interimScreen.enableRendering();
+		}
+	}
+
+	private animateInterimScreen() {
+		if (this._interimScreen.isAnimating == true) {
+			this._interimScreen.depleteOnScreenDelay();
+
+			if (this._interimScreen.isDepleted()) {
+				this._interimScreen.disableRendering();
+			}
+		}
+	}
+
+	//#endregion
+
 	//#region Scene
+
+	private anyBossExists(): boolean {
+		return (/*UfoBossExists() ||*/ this.vehicleBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
+	}
 
 	public update(_framesPassed: number): void {
 
@@ -1509,6 +1545,8 @@ export class GameScene extends Container implements IScene {
 		this.animateClouds();
 		this.animatePlayerHonkBomb();
 
+		this.animateInterimScreen();
+
 		this.gameController.update();
 		this.animatePlayerBalloon();
 	}
@@ -1520,6 +1558,7 @@ export class GameScene extends Container implements IScene {
 
 	private levelUp() {
 		this._gameLevel++;
+		this.generateInterimScreen("LEVEL " + this._gameLevel.toString() + " COMPLETE");
 	}
 
 	//#endregion
