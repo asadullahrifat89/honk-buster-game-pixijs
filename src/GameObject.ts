@@ -41,16 +41,12 @@ export class GameObject extends Container {
 
 	//#endregion
 
-	//#region Ctor
+	//#region Methods
 
 	constructor(speed: number) {
 		super();
 		this.speed = speed;
 	}
-
-	//#endregion
-
-	//#region Methods
 
 	public getTop(): number {
 		return this.y;

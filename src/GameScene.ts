@@ -39,7 +39,7 @@ export class GameScene extends Container implements IScene {
 
 	//#region Methods
 
-	//#region Ctor
+	//#region Constructor
 
 	constructor() {
 		super();
