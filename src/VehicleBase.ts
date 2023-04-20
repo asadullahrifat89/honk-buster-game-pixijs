@@ -66,7 +66,6 @@ export class VehicleBase extends GameObject {
 	}
 
 	honk(): boolean {
-
 		if (this.willHonk) {
 			this.honkDelay--;
 

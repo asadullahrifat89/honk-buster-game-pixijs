@@ -1054,7 +1054,6 @@ export class GameScene extends Container implements IScene {
 
 				if (container.x - container.width > Constants.DEFAULT_GAME_VIEW_WIDTH || container.y - container.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					container.disableRendering();
-
 				}
 			});
 		}
