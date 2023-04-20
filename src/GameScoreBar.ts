@@ -12,7 +12,6 @@ export class GameScoreBar {
 	//#region Ctor
 
 	constructor(scene: Container) {
-		//super();
 
 		// If you need to know, this is the expensive part. This creates the font atlas
 		BitmapFont.from("gameplay", {

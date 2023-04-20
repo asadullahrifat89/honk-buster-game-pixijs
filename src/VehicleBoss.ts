@@ -9,7 +9,11 @@ export class VehicleBoss extends VehicleBossBase {
     private _changeMovementPatternDelay: number = 0;
 
     constructor(speed: number) {
-        super(speed);
+        super(speed);        
+    }
+
+    override reset() {
+        super.reset();
 
         var vehicleType = Constants.getRandomNumber(0, 1);
 
@@ -28,10 +32,6 @@ export class VehicleBoss extends VehicleBossBase {
 
         const texture = Texture.from(uri);
         this.setTexture(texture);
-    }
-
-    override reset() {
-        super.reset();
 
         this.setHonkDelay();
         this.scale.set(1);
