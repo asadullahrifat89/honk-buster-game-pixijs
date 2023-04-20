@@ -55,6 +55,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnVehicleEnemys();
 		this.spawnVehicleBosss();
 		this.spawnHonks();
+		this.spawnVehicleBossRockets();
 
 		this.spawnSideWalksBottom();
 		this.spawnHedgesBottom();
@@ -1231,10 +1232,13 @@ export class GameScene extends Container implements IScene {
 
 	//#region VehicleBossRockets
 
-	private vehicleBossRocketSizeWidth: number = 45;
-	private vehicleBossRocketSizeHeight: number = 45;
+	private vehicleBossRocketSizeWidth: number = 100;
+	private vehicleBossRocketSizeHeight: number = 100;
 
 	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
+
+	private vehicleBossRocketPopDelayDefault: number = 20 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private vehicleBossRocketPopDelay: number = 0;
 
 	spawnVehicleBossRockets() {
 
@@ -1260,26 +1264,31 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	generateVehicleBossRocket() {
+	generateVehicleBossRockets() {
 
 		let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
 		if (vehicleBoss) {
 
-			let vehicleBossRocket = this.vehicleBossRocketGameObjects.find(x => x.isAnimating);
+			this.vehicleBossRocketPopDelay -= 0.1;
 
-			if (vehicleBossRocket) {
-				vehicleBossRocket.reset();
-				vehicleBossRocket.reposition(vehicleBoss);
-				vehicleBossRocket.setPopping();
-				vehicleBossRocket.enableRendering();
+			if (this.vehicleBossRocketPopDelay < 0) {
 
+				let vehicleBossRocket = this.vehicleBossRocketGameObjects.find(x => x.isAnimating == false);
+
+				if (vehicleBossRocket) {
+					vehicleBossRocket.reset();
+					vehicleBossRocket.reposition(vehicleBoss);
+					vehicleBossRocket.setPopping();
+					vehicleBossRocket.enableRendering();
+				}
+
+				this.vehicleBossRocketPopDelay = this.vehicleBossRocketPopDelayDefault;
 			}
-
 		}
 	}
 
-	animateVehicleBossRocket() {
+	animateVehicleBossRockets() {
 
 		let animatingVehicleBossRockets = this.vehicleBossRocketGameObjects.filter(x => x.isAnimating == true);
 
@@ -1617,6 +1626,7 @@ export class GameScene extends Container implements IScene {
 
 		this.generateVehicleEnemys();
 		this.generateVehicleBosss();
+		this.generateVehicleBossRockets();
 
 		this.generateClouds();
 
@@ -1635,6 +1645,7 @@ export class GameScene extends Container implements IScene {
 
 		this.animateVehicleEnemys();
 		this.animateVehicleBosss();
+		this.animateVehicleBossRockets();
 		this.animateHonks();
 
 		this.animateSideWalksBottom();

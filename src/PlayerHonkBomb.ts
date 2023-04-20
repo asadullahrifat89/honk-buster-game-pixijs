@@ -6,8 +6,6 @@ export class PlayerHonkBomb extends GameObject {
 
 	// #region Properties
 
-	public isBlasting: boolean = false;
-
 	private honkBombTemplate: PlayerHonkBombTemplate = PlayerHonkBombTemplate.Cracker;
 	private honkBombUris: string[] = [];
 	private blastDelay: number = 0;
