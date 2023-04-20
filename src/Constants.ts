@@ -210,6 +210,8 @@ export abstract class Constants {
 
 		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, "vehicle_boss_rocket.png"),
 
+		new ConstructTemplate(ConstructType.HEALTH_PICKUP,"health_pickup.png"),
+
 	];
 
 	//#endregion
