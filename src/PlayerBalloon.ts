@@ -262,15 +262,15 @@ export class PlayerBalloon extends GameObject {
 				this.moveUp();
 		}
 		else if (controller.isMoveDown && controller.isMoveRight) {
-			if (this.y + this.height - halfHeight < sceneHeight && this.x - halfWidth < sceneWidth)
+			if (this.getBottom() - halfHeight < sceneHeight && this.x - halfWidth < sceneWidth)
 				this.moveDownRight();
 		}
 		else if (controller.isMoveDown && controller.isMoveLeft) {
-			if (this.x + halfWidth > 0 && this.y + this.height - halfHeight < sceneHeight)
+			if (this.x + halfWidth > 0 && this.getBottom() - halfHeight < sceneHeight)
 				this.moveDownLeft();
 		}
 		else if (controller.isMoveDown) {
-			if (this.y + this.height - halfHeight < sceneHeight)
+			if (this.getBottom() - halfHeight < sceneHeight)
 				this.moveDown();
 		}
 		else if (controller.isMoveRight) {

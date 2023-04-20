@@ -11,6 +11,7 @@ import { GameController } from "./GameController";
 import { Manager } from "./Manager";
 import { PlayerHonkBomb } from "./PlayerHonkBomb";
 import { GameScoreBar } from "./GameScoreBar";
+import { GameCheckpoint } from "./GameCheckpoint";
 
 
 export class GameScene extends Container implements IScene {
@@ -20,6 +21,13 @@ export class GameScene extends Container implements IScene {
 	private gameController: GameController = new GameController();
 	private gameScoreBar: GameScoreBar;
 	private sceneContainer: Container = new Container();
+
+
+	//TODO: set defaults _vehicleReleasePoint = 25
+	private readonly _vehicleBossReleasePoint: number = 25; // first appearance
+	private readonly _vehicleBossReleasePoint_increase: number = 15;
+
+	private readonly _vehicleBossCheckpoint: GameCheckpoint;
 	//TODO: create a new gameObject and add every game object in that gameObject and leave the UI controls in the main scene
 
 	//#endregion
@@ -28,6 +36,8 @@ export class GameScene extends Container implements IScene {
 
 	constructor() {
 		super();
+
+		this._vehicleBossCheckpoint = new GameCheckpoint(this._vehicleBossReleasePoint);
 
 		this.spawnRoadMarks();
 
@@ -1247,7 +1257,7 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region Player
+	//#region PlayerBalloon
 
 	private playerBalloonSizeWidth: number = 150;
 	private playerBalloonSizeHeight: number = 150;
