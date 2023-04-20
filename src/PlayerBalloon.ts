@@ -40,15 +40,11 @@ export class PlayerBalloon extends GameObject {
 
 	//#endregion
 
-	//#region Ctor
+	//#region Methods
 
 	constructor(speed: number) {
 		super(speed);
 	}
-
-	//#endregion
-
-	//#region Methods
 
 	reset() {
 

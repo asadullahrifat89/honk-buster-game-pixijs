@@ -9,7 +9,7 @@ export class GameScoreBar {
 
 	//#endregion
 
-	//#region Ctor
+	//#region Methods
 
 	constructor(scene: Container) {
 
@@ -30,10 +30,6 @@ export class GameScoreBar {
 
 		scene.addChild(this._textBlock);
 	}
-
-	//#endregion
-
-	//#region Methods
 
 	reposition(x: number, y: number) {
 		this._textBlock.x = x - this._textBlock.width / 2;

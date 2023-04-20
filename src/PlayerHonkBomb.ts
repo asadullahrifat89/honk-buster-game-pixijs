@@ -13,14 +13,11 @@ export class PlayerHonkBomb extends GameObject {
 
 	//#endregion
 
-	//#region Ctor
+	//#region Methods
+
 	constructor(speed: number) {
 		super(speed);
 	}
-
-	//#endregion
-
-	//#region Methods
 
 	reset() {
 		this.isBlasting = false;
@@ -32,7 +29,8 @@ export class PlayerHonkBomb extends GameObject {
 	}
 
 	reposition(source: GameObject) {
-		this.setPosition(source.x + source.width / 2 - this.width / 2, source.y + source.height);
+		/*this.setPosition(source.x + source.width / 2 - this.width / 2, source.y + source.height);*/
+		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 15);
 	}
 
 	setHonkBombTemplate(honkBombTemplate: PlayerHonkBombTemplate) {

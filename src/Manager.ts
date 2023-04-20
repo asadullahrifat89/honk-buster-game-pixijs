@@ -4,10 +4,6 @@ import { IScene } from "./IScene";
 
 export class Manager {
 
-	private constructor() {
-		/*this class is purely static. No constructor to see here*/
-	}
-
 	//#region Properties
 
 	// Safely store variables for our game
@@ -19,6 +15,10 @@ export class Manager {
 	//#endregion
 
 	//#region Methods
+
+	private constructor() {
+		/*this class is purely static. No constructor to see here*/
+	}
 
 	// Use this function ONCE to start the entire machinery
 	public static initialize(width: number, height: number, background: number): void {
@@ -70,7 +70,7 @@ export class Manager {
 	}
 
 	private static getScaling() {
-		const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);		
+		const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
 		var scaling: number = 1;
 

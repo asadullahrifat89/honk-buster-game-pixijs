@@ -16,9 +16,10 @@ export class LoaderScene extends Container implements IScene {
 
 		// lets make a loader graphic:
 		const loaderBarWidth = Manager.width * 0.8; // just an auxiliar variable
+
 		// the fill of the bar.
 		this.loaderBarFill = new Graphics();
-		this.loaderBarFill.beginFill(0x008800, 1)
+		this.loaderBarFill.beginFill(0x008800, 1);
 		this.loaderBarFill.drawRect(0, 0, loaderBarWidth, 50);
 		this.loaderBarFill.endFill();
 		this.loaderBarFill.scale.x = 0; // we draw the filled bar and with scale we set the %
@@ -32,6 +33,7 @@ export class LoaderScene extends Container implements IScene {
 		this.loaderBar = new Container();
 		this.loaderBar.addChild(this.loaderBarFill);
 		this.loaderBar.addChild(this.loaderBarBoder);
+
 		//Looks complex but this just centers the bar on screen.
 		this.loaderBar.position.x = (Manager.width - this.loaderBar.width) / 2;
 		this.loaderBar.position.y = (Manager.height - this.loaderBar.height) / 2;
