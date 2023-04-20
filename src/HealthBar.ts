@@ -20,11 +20,32 @@ export class HealthBar extends Container {
 		this._progressBar.width = 60;
 		this._progressBar.height = 10;
 
-		//this._progressBar.setFill('healthBar.png');
+		let progressBarBackgroundContainer = new Container();
+		progressBarBackgroundContainer.width = 60;
+		progressBarBackgroundContainer.height = 10;
+
+		let healthBar_bg_sprite = new GameObjectSprite(Texture.from('healthBar_bg.png'));
+		healthBar_bg_sprite.width = 60;
+		healthBar_bg_sprite.height = 10;
+		progressBarBackgroundContainer.addChild(healthBar_bg_sprite);
+
+		this._progressBar.setBackground(progressBarBackgroundContainer);
+
+		let progressBarForegroundContainer = new Container();
+		progressBarForegroundContainer.width = 60;
+		progressBarForegroundContainer.height = 10;
+
+		let healthBar_sprite = new GameObjectSprite(Texture.from('healthBar.png'));
+		healthBar_sprite.width = 60;
+		healthBar_sprite.height = 10;
+		progressBarForegroundContainer.addChild(healthBar_sprite);
+
+		this._progressBar.setFill(progressBarForegroundContainer);
+
 		this._progressBar.progress = 0;
 
-		this._progressBar.x = 10;
-		this._progressBar.y = 0;
+		this._progressBar.x = 35;
+		this._progressBar.y = 10;
 
 		this.addChild(this._progressBar);
 
@@ -51,7 +72,7 @@ export class HealthBar extends Container {
 		return this._progressBar.progress > 0;
 	}
 
-	setMaximumHealth(health: number) {
+	setMaximumValue(health: number) {
 		this._maximumHealth = health;
 	}
 
@@ -60,13 +81,17 @@ export class HealthBar extends Container {
 	}
 
 	setValue(value: number) {
+
+		if (this._maximumHealth == 0)
+			this._maximumHealth = 100;
+
 		if (this._maximumHealth > 0)
 			this._progressBar.progress = value / this._maximumHealth * 100;
 		else
 			this._progressBar.progress = value;
 
 		if (this._progressBar.progress > 0)
-			this.alpha = 0;
+			this.alpha = 1;
 		else
 			this.alpha = 0;
 	}

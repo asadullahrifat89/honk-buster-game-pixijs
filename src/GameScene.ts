@@ -80,11 +80,12 @@ export class GameScene extends Container implements IScene {
 		this._gameScoreBar = new GameScoreBar(this);
 		this.repositionGameScoreBar();
 
-		this._playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this);
+		this._playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this);		
+		this._playerHealthBar.setMaximumValue(100);
+		this._playerHealthBar.setValue(100);
 		this.repositionPlayerHealthBar();
 
 		this._interimScreen = new InterimScreen(this);
-
 
 		this.setGameController();
 	}
