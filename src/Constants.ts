@@ -210,8 +210,26 @@ export abstract class Constants {
 
 		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, "vehicle_boss_rocket.png"),
 
-		new ConstructTemplate(ConstructType.HEALTH_PICKUP,"health_pickup.png"),
+		new ConstructTemplate(ConstructType.HEALTH_PICKUP, "health_pickup.png"),
 
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_1.png"),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_2.png"),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_3.png"),
+
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET_BULLS_EYE, "player_rocket_bulls_eye_1.png"),
+
+		//new ConstructTemplate(ConstructType.PLAYER_ROCKET_SEEKING, "player_rocket_seeking_1.png"),
+		//new ConstructTemplate(ConstructType.PLAYER_ROCKET_SEEKING, "player_rocket_seeking_2.png"),
+
+		new ConstructTemplate(ConstructType.UFO_BOSS_HIT, "ufo_boss_1_hit.png"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_IDLE, "ufo_boss_1_idle.png"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_WIN, "ufo_boss_1_win.png"),
+
+		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_1.png"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_2.png"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_3.png"),
+
+		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET_SEEKING, "ufo_boss_rocket_seeking.png"),
 	];
 
 	//#endregion
