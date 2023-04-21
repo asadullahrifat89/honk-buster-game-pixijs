@@ -35,7 +35,7 @@ export class GameScene extends Container implements IScene {
 	private readonly _vehicleBossCheckpoint: GameCheckpoint;
 
 	private _playerHealthBar: HealthBar;
-	private _vehicleBossHealthBar: HealthBar;
+	private _bossHealthBar: HealthBar;
 
 	private _gameLevel: number = 0;
 
@@ -87,9 +87,9 @@ export class GameScene extends Container implements IScene {
 		this._playerHealthBar.setValue(100);
 		this.repositionPlayerHealthBar();
 
-		this._vehicleBossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
-		this._vehicleBossHealthBar.setMaximumValue(100);
-		this._vehicleBossHealthBar.setValue(0);
+		this._bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
+		this._bossHealthBar.setMaximumValue(100);
+		this._bossHealthBar.setValue(0);
 		this.repositionVehicleBossHealthBar();
 
 		this._interimScreen = new InterimScreen(this);
@@ -1178,11 +1178,9 @@ export class GameScene extends Container implements IScene {
 
 				this._vehicleBossCheckpoint.increaseThreasholdLimit(this._vehicleBossReleasePoint_increase, this._gameScoreBar.getScore());
 
-				//TODO: set vehicle boss health bar
-
-				this._vehicleBossHealthBar.setMaximumValue(vehicleBoss.health);
-				this._vehicleBossHealthBar.setValue(vehicleBoss.health);
-				this._vehicleBossHealthBar.setIcon(vehicleBoss.getGameObjectSprite().getTexture());
+				this._bossHealthBar.setMaximumValue(vehicleBoss.health);
+				this._bossHealthBar.setValue(vehicleBoss.health);
+				this._bossHealthBar.setIcon(vehicleBoss.getGameObjectSprite().getTexture());
 
 				this.generateInterimScreen("Crazy Honker Arrived");
 			}
@@ -1230,7 +1228,7 @@ export class GameScene extends Container implements IScene {
 		vehicleBoss.setPopping();
 		vehicleBoss.looseHealth();
 
-		this._vehicleBossHealthBar.setValue(vehicleBoss.health);
+		this._bossHealthBar.setValue(vehicleBoss.health);
 
 		if (vehicleBoss.isDead()) {
 
@@ -1617,7 +1615,7 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private repositionVehicleBossHealthBar() {
-		this._vehicleBossHealthBar.reposition((Manager.width) - 205, 10);
+		this._bossHealthBar.reposition((Manager.width) - 205, 10);
 	}
 
 	//#endregion
