@@ -1359,8 +1359,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region UfoBosss	
 
-	private ufoBossSizeWidth: number = 245;
-	private ufoBossSizeHeight: number = 245;
+	private ufoBossSizeWidth: number = 200;
+	private ufoBossSizeHeight: number = 200;
 
 	private ufoBossGameObjects: Array<UfoBoss> = [];
 
@@ -1486,7 +1486,7 @@ export class GameScene extends Container implements IScene {
 
 	private ufoBossRocketGameObjects: Array<UfoBossRocket> = [];
 
-	private ufoBossRocketPopDelayDefault: number = 20 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private ufoBossRocketPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private ufoBossRocketPopDelay: number = 0;
 
 	spawnUfoBossRockets() {
@@ -1967,10 +1967,10 @@ export class GameScene extends Container implements IScene {
 							playerRocket.setBlast();
 							this.looseUfoBosshealth(ufoBoss as UfoBoss);
 						}
-					}
 
-					if (playerRocket.autoBlast())
-						playerRocket.setBlast();
+						if (playerRocket.autoBlast())
+							playerRocket.setBlast();
+					}
 				}
 
 				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {

@@ -46,7 +46,7 @@ export class VehicleEnemy extends VehicleBase {
 
 	setBlast() {
 		this.willHonk = false;
-		this.speed = this.speed / 2;
+		this.speed = this.speed * 2;
 		this.filters = [this.grayScaleFilter];
 	}
 }
