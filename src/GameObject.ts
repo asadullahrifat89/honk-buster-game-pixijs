@@ -235,6 +235,10 @@ export class GameObject extends Container {
 		return this.scale.x <= 0 || this.scale.y <= 0;
 	}
 
+	setRotation(angle: number) {
+		this.angle = angle;
+	}
+
 	//#endregion
 }
 
