@@ -1,8 +1,7 @@
-﻿import { Constants } from './Constants';
-import { VehicleBase } from './VehicleBase';
+﻿import { GameObject } from './GameObject';
 
 
-export class VehicleBossBase extends VehicleBase {
+export class UfoBossBase extends GameObject {
 
 	public isAttacking: boolean = false;
 
@@ -10,15 +9,14 @@ export class VehicleBossBase extends VehicleBase {
 		this.alpha = 1;
 		this.health = 100;
 		this.isAttacking = false;
-		this.willHonk = true;
 	}
 
 	looseHealth() {
 		this.health -= this.hitPoint;
 
 		if (this.isDead()) {
-			this.speed = Constants.DEFAULT_CONSTRUCT_SPEED - 1;
 			this.isAttacking = false;
 		}
 	}
 }
+

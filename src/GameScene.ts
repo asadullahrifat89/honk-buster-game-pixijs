@@ -16,6 +16,9 @@ import { VehicleBoss } from "./VehicleBoss";
 import { InterimScreen } from "./InterimScreen";
 import { VehicleBossRocket } from "./VehicleBossRocket";
 import { HealthBar } from "./HealthBar";
+import { UfoBoss } from "./UfoBoss";
+import { PlayerRocket } from "./PlayerRocket";
+import { UfoBossRocket } from "./UfoBossRocket";
 
 
 export class GameScene extends Container implements IScene {
@@ -28,14 +31,19 @@ export class GameScene extends Container implements IScene {
 	private _sceneContainer: Container = new Container();
 
 
-	//TODO: set defaults _vehicleReleasePoint = 25
+	//TODO: set defaults _vehicleBossReleasePoint = 25
 	private readonly _vehicleBossReleasePoint: number = 25; // first appearance
 	private readonly _vehicleBossReleasePoint_increase: number = 15;
 
+	//TODO: set defaults _ufoBossReleasePoint = 50
+	private readonly _ufoBossReleasePoint: number = 50; // first appearance
+	private readonly _ufoBossReleasePoint_increase: number = 15;
+
 	private readonly _vehicleBossCheckpoint: GameCheckpoint;
+	private readonly _ufoBossCheckpoint: GameCheckpoint;
 
 	private _playerHealthBar: HealthBar;
-	private _vehicleBossHealthBar: HealthBar;
+	private _bossHealthBar: HealthBar;
 
 	private _gameLevel: number = 0;
 
@@ -48,7 +56,13 @@ export class GameScene extends Container implements IScene {
 	constructor() {
 		super();
 
+		this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
+		this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
+
+		this.addChild(this._sceneContainer);
+
 		this._vehicleBossCheckpoint = new GameCheckpoint(this._vehicleBossReleasePoint);
+		this._ufoBossCheckpoint = new GameCheckpoint(this._ufoBossReleasePoint);
 
 		this.spawnRoadMarks();
 
@@ -69,15 +83,15 @@ export class GameScene extends Container implements IScene {
 		this.spawnTreesBottom();
 
 		this.spawnPlayerHonkBombs();
+		this.spawnPlayerRockets();
 		this.spawnPlayerBalloon();
-		this.generatePlayerBalloon();
+
+		this.spawnUfoBossRockets();
+		this.spawnUfoBosss();
 
 		this.spawnClouds();
 
-		this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
-		this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
-
-		this.addChild(this._sceneContainer);
+		this.generatePlayerBalloon();
 
 		this._gameScoreBar = new GameScoreBar(this);
 		this.repositionGameScoreBar();
@@ -87,9 +101,9 @@ export class GameScene extends Container implements IScene {
 		this._playerHealthBar.setValue(100);
 		this.repositionPlayerHealthBar();
 
-		this._vehicleBossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
-		this._vehicleBossHealthBar.setMaximumValue(100);
-		this._vehicleBossHealthBar.setValue(0);
+		this._bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
+		this._bossHealthBar.setMaximumValue(100);
+		this._bossHealthBar.setValue(0);
 		this.repositionVehicleBossHealthBar();
 
 		this._interimScreen = new InterimScreen(this);
@@ -1161,7 +1175,7 @@ export class GameScene extends Container implements IScene {
 		this._sceneContainer.addChild(gameObject);
 	}
 
-	private generateVehicleBosss() {
+	private generateVehicleBoss() {
 
 		if (this._vehicleBossCheckpoint.shouldRelease(this._gameScoreBar.getScore()) && !this.vehicleBossExists()) {
 
@@ -1178,18 +1192,16 @@ export class GameScene extends Container implements IScene {
 
 				this._vehicleBossCheckpoint.increaseThreasholdLimit(this._vehicleBossReleasePoint_increase, this._gameScoreBar.getScore());
 
-				//TODO: set vehicle boss health bar
-
-				this._vehicleBossHealthBar.setMaximumValue(vehicleBoss.health);
-				this._vehicleBossHealthBar.setValue(vehicleBoss.health);
-				this._vehicleBossHealthBar.setIcon(vehicleBoss.getGameObjectSprite().getTexture());
+				this._bossHealthBar.setMaximumValue(vehicleBoss.health);
+				this._bossHealthBar.setValue(vehicleBoss.health);
+				this._bossHealthBar.setIcon(vehicleBoss.getGameObjectSprite().getTexture());
 
 				this.generateInterimScreen("Crazy Honker Arrived");
 			}
 		}
 	}
 
-	private animateVehicleBosss() {
+	private animateVehicleBoss() {
 
 		var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
 		let vehicleBoss: VehicleBoss = gameObject as VehicleBoss;
@@ -1230,7 +1242,7 @@ export class GameScene extends Container implements IScene {
 		vehicleBoss.setPopping();
 		vehicleBoss.looseHealth();
 
-		this._vehicleBossHealthBar.setValue(vehicleBoss.health);
+		this._bossHealthBar.setValue(vehicleBoss.health);
 
 		if (vehicleBoss.isDead()) {
 
@@ -1340,6 +1352,266 @@ export class GameScene extends Container implements IScene {
 					gameObject.disableRendering();
 				}
 			});
+		}
+	}
+
+	//#endregion
+
+	//#region UfoBosss	
+
+	private ufoBossSizeWidth: number = 200;
+	private ufoBossSizeHeight: number = 200;
+
+	private ufoBossGameObjects: Array<UfoBoss> = [];
+
+	private spawnUfoBosss() {
+		const gameObject: UfoBoss = new UfoBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
+		gameObject.disableRendering();
+		gameObject.width = this.ufoBossSizeWidth;
+		gameObject.height = this.ufoBossSizeHeight;
+
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_IDLE));
+
+		sprite.x = 0;
+		sprite.y = 0;
+		sprite.width = this.ufoBossSizeWidth;
+		sprite.height = this.ufoBossSizeHeight;
+
+		sprite.anchor.set(0.5, 0.5);
+
+		gameObject.addChild(sprite);
+
+		this.ufoBossGameObjects.push(gameObject);
+		this._sceneContainer.addChild(gameObject);
+	}
+
+	private generateUfoBoss() {
+
+		if (this._ufoBossCheckpoint.shouldRelease(this._gameScoreBar.getScore()) && !this.ufoBossExists()) {
+
+			var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				var ufoBoss = gameObject as UfoBoss;
+				ufoBoss.setPosition(0, ufoBoss.height * -1);
+				ufoBoss.reset();
+				ufoBoss.health = this._ufoBossCheckpoint.getReleasePointDifference() * 1.5;
+
+				gameObject.enableRendering();
+
+				this._ufoBossCheckpoint.increaseThreasholdLimit(this._ufoBossReleasePoint_increase, this._gameScoreBar.getScore());
+
+				this._bossHealthBar.setMaximumValue(ufoBoss.health);
+				this._bossHealthBar.setValue(ufoBoss.health);
+				this._bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
+
+				this.generateInterimScreen("Beat the Scarlet Saucer");
+			}
+		}
+	}
+
+	private animateUfoBoss() {
+
+		var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == true);
+		let ufoBoss: UfoBoss = gameObject as UfoBoss;
+
+		if (gameObject) {
+
+			if (ufoBoss.isDead()) {
+				ufoBoss.shrink();
+			}
+			else {
+				gameObject.pop();
+				gameObject.hover();
+				ufoBoss.depleteHitStance();
+				ufoBoss.depleteWinStance();
+
+				if (ufoBoss.isAttacking) {
+
+					ufoBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling, this._player.getBounds());
+
+					if (Constants.checkCloseCollision(this._player, ufoBoss)) {
+						this.loosePlayerHealth();
+					}
+				}
+				else {
+
+					ufoBoss.moveDownRight();
+
+					if (ufoBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling / 3)) // bring UfoBoss to a suitable distance from player and then start attacking
+					{
+						ufoBoss.isAttacking = true;
+					}
+				}
+			}
+
+			if (ufoBoss.isShrinkingComplete()) {
+				gameObject.disableRendering();
+			}
+		}
+	}
+
+	private looseUfoBosshealth(ufoBoss: UfoBoss) {
+
+		ufoBoss.setPopping();
+		ufoBoss.looseHealth();
+		ufoBoss.setHitStance();
+
+		this._bossHealthBar.setValue(ufoBoss.health);
+
+		if (ufoBoss.isDead()) {
+
+			this._player.setWinStance();
+			this._gameScoreBar.gainScore(3);
+			this.levelUp();
+		}
+	}
+
+	private ufoBossExists(): boolean {
+		var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == true);
+
+		if (gameObject)
+			return true;
+		else
+			return false;
+	}
+
+	//#endregion
+
+	//#region UfoBossRockets
+
+	private ufoBossRocketSizeWidth: number = 90;
+	private ufoBossRocketSizeHeight: number = 90;
+
+	private ufoBossRocketGameObjects: Array<UfoBossRocket> = [];
+
+	private ufoBossRocketPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private ufoBossRocketPopDelay: number = 0;
+
+	spawnUfoBossRockets() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: UfoBossRocket = new UfoBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			gameObject.disableRendering();
+			gameObject.width = this.ufoBossRocketSizeWidth;
+			gameObject.height = this.ufoBossRocketSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.ufoBossRocketSizeWidth;
+			sprite.height = this.ufoBossRocketSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.ufoBossRocketGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generateUfoBossRockets() {
+
+		let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (ufoBoss) {
+
+			this.ufoBossRocketPopDelay -= 0.1;
+
+			if (this.ufoBossRocketPopDelay < 0) {
+
+				let ufoBossRocket = this.ufoBossRocketGameObjects.find(x => x.isAnimating == false);
+
+				if (ufoBossRocket) {
+					ufoBossRocket.reset();
+					ufoBossRocket.reposition(ufoBoss);
+					ufoBossRocket.setPopping();
+					ufoBossRocket.enableRendering();
+
+					this.setBossRocketDirection(ufoBoss, ufoBossRocket, this._player);
+				}
+
+				this.ufoBossRocketPopDelay = this.ufoBossRocketPopDelayDefault;
+			}
+		}
+	}
+
+	animateUfoBossRockets() {
+
+		let animatingUfoBossRockets = this.ufoBossRocketGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingUfoBossRockets) {
+
+			animatingUfoBossRockets.forEach(gameObject => {
+
+				let ufoBossRocket = gameObject as UfoBossRocket;
+
+				if (ufoBossRocket.awaitMoveDownLeft) {
+					ufoBossRocket.moveDownLeft();
+				}
+				else if (ufoBossRocket.awaitMoveUpRight) {
+					ufoBossRocket.moveUpRight();
+				}
+				else if (ufoBossRocket.awaitMoveUpLeft) {
+					ufoBossRocket.moveUpLeft();
+				}
+				else if (ufoBossRocket.awaitMoveDownRight) {
+					ufoBossRocket.moveDownRight();
+				}
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.hover();
+
+					if (Constants.checkCloseCollision(gameObject, this._player)) {
+						gameObject.setBlast();
+						this.loosePlayerHealth();
+					}
+
+					if (gameObject.autoBlast())
+						gameObject.setBlast();
+				}
+
+				if (gameObject.hasFaded()) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	setBossRocketDirection(source: GameObject, rocket: GameObject, rocketTarget: GameObject) {
+
+		// rocket target is on the bottom right side of the UfoBoss
+		if (rocketTarget.getTop() > source.getTop() && rocketTarget.getLeft() > source.getLeft()) {
+			rocket.awaitMoveDownRight = true;
+			rocket.setRotation(33);
+		}
+		// rocket target is on the bottom left side of the UfoBoss
+		else if (rocketTarget.getTop() > source.getTop() && rocketTarget.getLeft() < source.getLeft()) {
+			rocket.awaitMoveDownLeft = true;
+			rocket.setRotation(-213);
+		}
+		// if rocket target is on the top left side of the UfoBoss
+		else if (rocketTarget.getTop() < source.getTop() && rocketTarget.getLeft() < source.getLeft()) {
+			rocket.awaitMoveUpLeft = true;
+			rocket.setRotation(213);
+		}
+		// if rocket target is on the top right side of the UfoBoss
+		else if (rocketTarget.getTop() < source.getTop() && rocketTarget.getLeft() > source.getLeft()) {
+			rocket.awaitMoveUpRight = true;
+			rocket.setRotation(-33);
+		}
+		else {
+			rocket.awaitMoveDownRight = true;
+			rocket.setRotation(33);
 		}
 	}
 
@@ -1462,7 +1734,14 @@ export class GameScene extends Container implements IScene {
 			this._gameController);
 
 		if (this._gameController.isAttacking) {
-			this.generatePlayerHonkBomb();
+
+			if (this.anyInAirBossExists()) {
+				this.generatePlayerRocket();
+			}
+			else {
+				this.generatePlayerHonkBomb();
+			}
+
 			this._gameController.isAttacking = false;
 		}
 	}
@@ -1590,6 +1869,147 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region PlayerRockets
+
+	private playerRocketSizeWidth: number = 90;
+	private playerRocketSizeHeight: number = 90;
+
+	private playerRocketGameObjects: Array<GameObject> = [];
+
+	spawnPlayerRockets() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: PlayerRocket = new PlayerRocket(4);
+			gameObject.disableRendering();
+			gameObject.width = this.playerRocketSizeWidth;
+			gameObject.height = this.playerRocketSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.playerRocketSizeWidth;
+			sprite.height = this.playerRocketSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.playerRocketGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generatePlayerRocket() {
+
+		var gameObject = this.playerRocketGameObjects.find(x => x.isAnimating == false);
+
+		if (gameObject) {
+
+			var playerRocket = gameObject as PlayerRocket;
+			playerRocket.reset();
+			playerRocket.reposition(this._player);
+			playerRocket.setPopping();
+
+			gameObject.enableRendering();
+
+			this._player.setAttackStance();
+
+			//TODO: check more enemy types to set direction
+			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+			if (ufoBoss) {
+				this.setPlayerRocketDirection(this._player, playerRocket, ufoBoss);
+			}
+		}
+	}
+
+	animatePlayerRocket() {
+
+		var animatingHonkBombs = this.playerRocketGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingHonkBombs) {
+
+			animatingHonkBombs.forEach(gameObject => {
+
+				gameObject.pop();
+
+				var playerRocket = gameObject as PlayerRocket;
+
+				if (playerRocket) {
+
+					if (playerRocket.awaitMoveDownLeft) {
+						playerRocket.moveDownLeft();
+					}
+					else if (playerRocket.awaitMoveUpRight) {
+						playerRocket.moveUpRight();
+					}
+					else if (playerRocket.awaitMoveUpLeft) {
+						playerRocket.moveUpLeft();
+					}
+					else if (playerRocket.awaitMoveDownRight) {
+						playerRocket.moveDownRight();
+					}
+
+					if (playerRocket.isBlasting) {
+						playerRocket.expand();
+						playerRocket.fade();
+					}
+					else {
+
+						playerRocket.hover();
+
+						//TODO: check collision for more enemy types
+
+						let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
+
+						if (ufoBoss) {
+							playerRocket.setBlast();
+							this.looseUfoBosshealth(ufoBoss as UfoBoss);
+						}
+
+						if (playerRocket.autoBlast())
+							playerRocket.setBlast();
+					}
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	setPlayerRocketDirection(source: GameObject, rocket: GameObject, rocketTarget: GameObject) {
+
+		// rocket target is on the bottom right side of the UfoBoss
+		if (rocketTarget.getTop() > source.getTop() && rocketTarget.getLeft() > source.getLeft()) {
+			rocket.awaitMoveDownRight = true;
+			rocket.setRotation(33);
+		}
+		// rocket target is on the bottom left side of the UfoBoss
+		else if (rocketTarget.getTop() > source.getTop() && rocketTarget.getLeft() < source.getLeft()) {
+			rocket.awaitMoveDownLeft = true;
+			rocket.setRotation(-213);
+		}
+		// if rocket target is on the top left side of the UfoBoss
+		else if (rocketTarget.getTop() < source.getTop() && rocketTarget.getLeft() < source.getLeft()) {
+			rocket.awaitMoveUpLeft = true;
+			rocket.setRotation(213);
+		}
+		// if rocket target is on the top right side of the UfoBoss
+		else if (rocketTarget.getTop() < source.getTop() && rocketTarget.getLeft() > source.getLeft()) {
+			rocket.awaitMoveUpRight = true;
+			rocket.setRotation(-33);
+		}
+		else {
+			rocket.awaitMoveUpLeft = true;
+			rocket.setRotation(213);
+		}
+	}
+
+	//#endregion
+
 	//#region GameController
 
 	setGameController() {
@@ -1617,7 +2037,7 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private repositionVehicleBossHealthBar() {
-		this._vehicleBossHealthBar.reposition((Manager.width) - 205, 10);
+		this._bossHealthBar.reposition((Manager.width) - 205, 10);
 	}
 
 	//#endregion
@@ -1647,25 +2067,16 @@ export class GameScene extends Container implements IScene {
 
 	//#region Scene
 
-	public update(_framesPassed: number): void {
+	public update(_framesPassed: number) {
 
-		this.generateRoadMarks();
-		this.generateSideWalksTop();
-		//this.generateHeavyBillboardsTop();
-		this.generateLightBillboardsTop();
-		this.generateHedgesTop();
-		this.generateTreesTop();
+		this.generateGameObjects();
+		this.animateGameObjects();
 
-		this.generateVehicleEnemys();
-		this.generateVehicleBosss();
-		this.generateVehicleBossRockets();
+		this._gameController.update();
+		this.animatePlayerBalloon();
+	}
 
-		this.generateClouds();
-
-		this.generateSideWalksBottom();
-		this.generateHedgesBottom();
-		this.generateLightBillboardsBottom();
-		this.generateTreesBottom();
+	private animateGameObjects() {
 
 		this.animateRoadMarks();
 
@@ -1676,8 +2087,9 @@ export class GameScene extends Container implements IScene {
 		this.animateLightBillboardsTop();
 
 		this.animateVehicleEnemys();
-		this.animateVehicleBosss();
+		this.animateVehicleBoss();
 		this.animateVehicleBossRockets();
+
 		this.animateHonks();
 
 		this.animateSideWalksBottom();
@@ -1685,13 +2097,39 @@ export class GameScene extends Container implements IScene {
 		this.animateTreesBottom();
 		this.animateLightBillboardsBottom();
 
-		this.animateClouds();
 		this.animatePlayerHonkBomb();
+		this.animatePlayerRocket();
+
+		this.animateUfoBoss();
+		this.animateUfoBossRockets();
+
+		this.animateClouds();
 
 		this.animateInterimScreen();
+	}
 
-		this._gameController.update();
-		this.animatePlayerBalloon();
+	private generateGameObjects() {
+
+		this.generateRoadMarks();
+		this.generateSideWalksTop();
+		//this.generateHeavyBillboardsTop();
+		this.generateLightBillboardsTop();
+		this.generateHedgesTop();
+		this.generateTreesTop();
+
+		this.generateVehicleEnemys();
+		this.generateVehicleBoss();
+		this.generateVehicleBossRockets();
+
+		this.generateUfoBoss();
+		this.generateUfoBossRockets();
+
+		this.generateClouds();
+
+		this.generateSideWalksBottom();
+		this.generateHedgesBottom();
+		this.generateLightBillboardsBottom();
+		this.generateTreesBottom();
 	}
 
 	public resize(scale: number): void {
@@ -1706,7 +2144,11 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private anyBossExists(): boolean {
-		return (/*UfoBossExists() ||*/ this.vehicleBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
+		return (this.ufoBossExists() || this.vehicleBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
+	}
+
+	private anyInAirBossExists(): boolean {
+		return (this.ufoBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
 	}
 
 	//#endregion
