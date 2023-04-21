@@ -189,4 +189,175 @@ export class UfoBoss extends UfoBossBase {
 
 		return false;
 	}
+
+	moveUpRightDownLeft(sceneWidth: number, sceneHeight: number) {
+		this._changeMovementPatternDelay -= 0.1;
+
+		if (this._changeMovementPatternDelay < 0) {
+			this.randomizeMovementPattern();
+			return true;
+		}
+
+		if (this.isAttacking && this._movementDirection == MovementDirection.None) {
+			this._movementDirection = MovementDirection.UpRight;
+		}
+		else {
+			this.isAttacking = true;
+		}
+
+		if (this.isAttacking) {
+			if (this._movementDirection == MovementDirection.UpRight) {
+				this.moveUpRight();
+
+				if (this.getTop() < 0 || this.getLeft() > sceneWidth) {
+					this._movementDirection = MovementDirection.DownLeft;
+				}
+			}
+			else {
+				if (this._movementDirection == MovementDirection.DownLeft) {
+					this.moveDownLeft();
+
+					if (this.getLeft() < 0 || this.getBottom() > sceneHeight) {
+						this._movementDirection = MovementDirection.UpRight;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	moveUpLeftDownRight(sceneWidth: number, sceneHeight: number) {
+		this._changeMovementPatternDelay -= 0.1;
+
+		if (this._changeMovementPatternDelay < 0) {
+			this.randomizeMovementPattern();
+			return true;
+		}
+
+		if (this.isAttacking && this._movementDirection == MovementDirection.None) {
+			this._movementDirection = MovementDirection.UpLeft;
+		}
+		else {
+			this.isAttacking = true;
+		}
+
+		if (this.isAttacking) {
+			if (this._movementDirection == MovementDirection.UpLeft) {
+				this.moveUpLeft();
+
+				if (this.getTop() < 0 || this.getLeft() < 0) {
+					this._movementDirection = MovementDirection.DownRight;
+				}
+			}
+			else {
+				if (this._movementDirection == MovementDirection.DownRight) {
+					this.moveDownRight();
+
+					if (this.getRight() > sceneWidth || this.getBottom() > sceneHeight) {
+						this._movementDirection = MovementDirection.UpLeft;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	moveRightLeft(sceneWidth: number) {
+		this._changeMovementPatternDelay -= 0.1;
+
+		if (this._changeMovementPatternDelay < 0) {
+			this.randomizeMovementPattern();
+			return true;
+		}
+
+		if (this.isAttacking && this._movementDirection == MovementDirection.None) {
+			this._movementDirection = MovementDirection.Right;
+		}
+		else {
+			this.isAttacking = true;
+		}
+
+		if (this.isAttacking) {
+			if (this._movementDirection == MovementDirection.Right) {
+				this.moveRight();
+
+				if (this.getRight() > sceneWidth) {
+					this._movementDirection = MovementDirection.Left;
+				}
+			}
+			else {
+				if (this._movementDirection == MovementDirection.Left) {
+					this.moveLeft();
+
+					if (this.getLeft() < 0) {
+						this._movementDirection = MovementDirection.Right;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	moveUpDown(sceneHeight: number) {
+		this._changeMovementPatternDelay -= 0.1;
+
+		if (this._changeMovementPatternDelay < 0) {
+			this.randomizeMovementPattern();
+			return true;
+		}
+
+		if (this.isAttacking && this._movementDirection == MovementDirection.None) {
+			this._movementDirection = MovementDirection.Up;
+		}
+		else {
+			this.isAttacking = true;
+		}
+
+		if (this.isAttacking) {
+			if (this._movementDirection == MovementDirection.Up) {
+				this.moveUp();
+
+				if (this.getTop() - this.height / 2 < 0) {
+					this._movementDirection = MovementDirection.Down;
+				}
+			}
+			else {
+				if (this._movementDirection == MovementDirection.Down) {
+					this.moveDown();
+
+					if (this.getBottom() > sceneHeight) {
+						this._movementDirection = MovementDirection.Up;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	move(sceneWidth: number, sceneHeight: number, playerPoint: Rectangle) {
+		switch (this.movementPattern) {
+			case UfoBossMovementPattern.PLAYER_SEEKING:
+				this.seekPlayer(playerPoint);
+				break;
+			case UfoBossMovementPattern.ISOMETRIC_SQUARE:
+				this.moveInIsometricSquares(sceneWidth, sceneHeight);
+				break;
+			case UfoBossMovementPattern.UPRIGHT_DOWNLEFT:
+				this.moveUpRightDownLeft(sceneWidth, sceneHeight);
+				break;
+			case UfoBossMovementPattern.UPLEFT_DOWNRIGHT:
+				this.moveUpLeftDownRight(sceneWidth, sceneHeight);
+				break;
+			case UfoBossMovementPattern.RIGHT_LEFT:
+				this.moveRightLeft(sceneWidth);
+				break;
+			case UfoBossMovementPattern.UP_DOWN:
+				this.moveUpDown(sceneHeight);
+				break;
+		}
+	}
 }
