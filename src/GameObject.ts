@@ -129,10 +129,18 @@ export class GameObject extends Container {
 	setTexture(texture: Texture) {
 		let child = this.getGameObjectSprite();
 
-		if (child)
+		if (child) {
 			child.setTexture(texture);
-		else
-			this.addChild(new GameObjectSprite(texture));
+		}
+		else {
+			let sprite = new GameObjectSprite(texture);
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.height = this.height;
+			sprite.width = this.width;
+			sprite.anchor.set(0.5, 0.5);
+			this.addChild(sprite);
+		}
 	}
 
 	setPopping() {

@@ -361,3 +361,4 @@ export class UfoBoss extends UfoBossBase {
 		}
 	}
 }
+
