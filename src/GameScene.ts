@@ -28,11 +28,16 @@ export class GameScene extends Container implements IScene {
 	private _sceneContainer: Container = new Container();
 
 
-	//TODO: set defaults _vehicleReleasePoint = 25
+	//TODO: set defaults _vehicleBossReleasePoint = 25
 	private readonly _vehicleBossReleasePoint: number = 25; // first appearance
 	private readonly _vehicleBossReleasePoint_increase: number = 15;
 
+	//TODO: set defaults _ufoBossReleasePoint = 25
+	private readonly _ufoBossReleasePoint: number = 50; // first appearance
+	private readonly _ufoBossReleasePoint_increase: number = 15;
+
 	private readonly _vehicleBossCheckpoint: GameCheckpoint;
+	private readonly _ufoBossCheckpoint: GameCheckpoint;
 
 	private _playerHealthBar: HealthBar;
 	private _bossHealthBar: HealthBar;
@@ -49,6 +54,7 @@ export class GameScene extends Container implements IScene {
 		super();
 
 		this._vehicleBossCheckpoint = new GameCheckpoint(this._vehicleBossReleasePoint);
+		this._ufoBossCheckpoint = new GameCheckpoint(this._ufoBossReleasePoint);
 
 		this.spawnRoadMarks();
 
