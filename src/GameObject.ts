@@ -231,6 +231,10 @@ export class GameObject extends Container {
 		return this.alpha <= 0.0;
 	}
 
+	isShrinkingComplete(): boolean {
+		return this.scale.x <= 0 || this.scale.y <= 0;
+	}
+
 	//#endregion
 }
 

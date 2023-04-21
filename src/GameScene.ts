@@ -16,6 +16,7 @@ import { VehicleBoss } from "./VehicleBoss";
 import { InterimScreen } from "./InterimScreen";
 import { VehicleBossRocket } from "./VehicleBossRocket";
 import { HealthBar } from "./HealthBar";
+import { UfoBoss } from "./UfoBoss";
 
 
 export class GameScene extends Container implements IScene {
@@ -1246,6 +1247,128 @@ export class GameScene extends Container implements IScene {
 
 	private vehicleBossExists(): boolean {
 		var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
+
+		if (gameObject)
+			return true;
+		else
+			return false;
+	}
+
+	//#endregion
+
+	//#region UfoBosss	
+
+	private ufoBossSizeWidth: number = 245;
+	private ufoBossSizeHeight: number = 245;
+
+	private ufoBossGameObjects: Array<UfoBoss> = [];
+
+	private spawnUfoBosss() {
+		const gameObject: UfoBoss = new UfoBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
+		gameObject.disableRendering();
+		gameObject.width = this.ufoBossSizeWidth;
+		gameObject.height = this.ufoBossSizeHeight;
+
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_IDLE));
+
+		sprite.x = 0;
+		sprite.y = 0;
+		sprite.width = this.ufoBossSizeWidth;
+		sprite.height = this.ufoBossSizeHeight;
+
+		sprite.anchor.set(0.5, 0.5);
+
+		gameObject.addChild(sprite);
+
+		this.ufoBossGameObjects.push(gameObject);
+		this._sceneContainer.addChild(gameObject);
+	}
+
+	private generateUfoBosss() {
+
+		if (this._ufoBossCheckpoint.shouldRelease(this._gameScoreBar.getScore()) && !this.ufoBossExists()) {
+
+			var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				var ufoBoss = gameObject as UfoBoss;
+				ufoBoss.setPosition(0, ufoBoss.height * -1);
+				ufoBoss.reset();
+				ufoBoss.health = this._ufoBossCheckpoint.getReleasePointDifference() * 1.5;
+
+				gameObject.enableRendering();
+
+				this._ufoBossCheckpoint.increaseThreasholdLimit(this._ufoBossReleasePoint_increase, this._gameScoreBar.getScore());
+
+				this._bossHealthBar.setMaximumValue(ufoBoss.health);
+				this._bossHealthBar.setValue(ufoBoss.health);
+				this._bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
+
+				this.generateInterimScreen("Beat the Scarlet Saucer");
+			}
+		}
+	}
+
+	private animateUfoBosss() {
+
+		var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == true);
+		let ufoBoss: UfoBoss = gameObject as UfoBoss;
+
+		if (gameObject) {
+
+			if (ufoBoss.isDead()) {
+				ufoBoss.shrink();
+			}
+			else {
+				gameObject.pop();
+				gameObject.hover();
+				ufoBoss.depleteHitStance();
+				ufoBoss.depleteWinStance();
+
+				if (ufoBoss.isAttacking) {
+
+					ufoBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling, this._player.getBounds());
+
+					if (Constants.checkCloseCollision(this._player, ufoBoss)) {
+						this.loosePlayerHealth();
+					}
+				}
+				else {
+
+					ufoBoss.moveDownRight();
+
+					if (ufoBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling / 3)) // bring UfoBoss to a suitable distance from player and then start attacking
+					{
+						ufoBoss.isAttacking = true;
+					}
+				}
+			}
+
+			if (ufoBoss.isShrinkingComplete()) {
+				gameObject.disableRendering();
+			}
+		}
+	}
+
+	private looseUfoBosshealth(ufoBoss: UfoBoss) {
+
+		ufoBoss.setPopping();
+		ufoBoss.looseHealth();
+		ufoBoss.setHitStance();
+
+		this._bossHealthBar.setValue(ufoBoss.health);
+
+		if (ufoBoss.isDead()) {
+
+			this._player.setWinStance();
+			this._gameScoreBar.gainScore(3);
+			this.levelUp();
+		}
+	}
+
+	private ufoBossExists(): boolean {
+		var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == true);
 
 		if (gameObject)
 			return true;
