@@ -1,11 +1,12 @@
 ﻿import { Constants, ConstructType } from './Constants';
 import { GameObject } from './GameObject';
+import { PlayerBalloon } from './PlayerBalloon';
 
 
-export class UfoBossRocket extends GameObject {
+export class PlayerRocket extends GameObject {
 
 	private _autoBlastDelay: number = 0;
-	private readonly _autoBlastDelayDefault: number = 9;
+	private readonly _autoBlastDelayDefault: number = 8;
 
 	constructor(speed: number) {
 		super(speed);
@@ -13,10 +14,11 @@ export class UfoBossRocket extends GameObject {
 
 	reset() {
 		this.alpha = 1;
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 2;
+		this.setTexture(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET));
 		this.scale.set(1);
+
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 2;
 		this.isBlasting = false;
-		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET));
 
 		this.awaitMoveDownLeft = false;
 		this.awaitMoveUpRight = false;
@@ -27,17 +29,18 @@ export class UfoBossRocket extends GameObject {
 		this._autoBlastDelay = this._autoBlastDelayDefault;
 	}
 
-	reposition(ufoBoss: GameObject) {
+	reposition(player: PlayerBalloon) {
 		this.setPosition(
-			(ufoBoss.getLeft() + ufoBoss.width / 2) - this.width / 2,
-			ufoBoss.getBottom() - (75));
+			(player.getLeft() + player.width / 2) - this.width / 2,
+			player.getBottom() - (30));
 	}
 
 	setBlast() {
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED - 1;
 
 		this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
 		this.angle = 0;
+
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED - 1;
 
 		this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
 
@@ -53,4 +56,3 @@ export class UfoBossRocket extends GameObject {
 		return false;
 	}
 }
-
