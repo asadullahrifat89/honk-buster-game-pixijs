@@ -1734,7 +1734,14 @@ export class GameScene extends Container implements IScene {
 			this._gameController);
 
 		if (this._gameController.isAttacking) {
-			this.generatePlayerHonkBomb();
+
+			if (this.anyInAirBossExists()) {
+				this.generatePlayerRocket();
+			}
+			else {
+				this.generatePlayerHonkBomb();
+			}
+
 			this._gameController.isAttacking = false;
 		}
 	}
@@ -1908,6 +1915,7 @@ export class GameScene extends Container implements IScene {
 
 			this._player.setAttackStance();
 
+			//TODO: check more enemy types to set direction
 			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
 			if (ufoBoss) {
@@ -1951,13 +1959,14 @@ export class GameScene extends Container implements IScene {
 
 						playerRocket.hover();
 
+						//TODO: check collision for more enemy types
+
 						let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
 
 						if (ufoBoss) {
 							playerRocket.setBlast();
 							this.looseUfoBosshealth(ufoBoss as UfoBoss);
 						}
-
 					}
 
 					if (playerRocket.autoBlast())
@@ -2058,7 +2067,48 @@ export class GameScene extends Container implements IScene {
 
 	//#region Scene
 
-	public update(_framesPassed: number): void {
+	public update(_framesPassed: number) {
+
+		this.generateGameObjects();
+		this.animateGameObjects();
+
+		this._gameController.update();
+		this.animatePlayerBalloon();
+	}
+
+	private animateGameObjects() {
+
+		this.animateRoadMarks();
+
+		this.animateSideWalksTop();
+		this.animateHedgesTop();
+		this.animateTreesTop();
+		//this.animateHeavyBillboardsTop();
+		this.animateLightBillboardsTop();
+
+		this.animateVehicleEnemys();
+		this.animateVehicleBoss();
+		this.animateVehicleBossRockets();
+
+		this.animateHonks();
+
+		this.animateSideWalksBottom();
+		this.animateHedgesBottom();
+		this.animateTreesBottom();
+		this.animateLightBillboardsBottom();
+
+		this.animatePlayerHonkBomb();
+		this.animatePlayerRocket();
+
+		this.animateUfoBoss();
+		this.animateUfoBossRockets();
+
+		this.animateClouds();
+
+		this.animateInterimScreen();
+	}
+
+	private generateGameObjects() {
 
 		this.generateRoadMarks();
 		this.generateSideWalksTop();
@@ -2080,38 +2130,6 @@ export class GameScene extends Container implements IScene {
 		this.generateHedgesBottom();
 		this.generateLightBillboardsBottom();
 		this.generateTreesBottom();
-
-		this.animateRoadMarks();
-
-		this.animateSideWalksTop();
-		this.animateHedgesTop();
-		this.animateTreesTop();
-		//this.animateHeavyBillboardsTop();
-		this.animateLightBillboardsTop();
-
-		this.animateVehicleEnemys();
-		this.animateVehicleBoss();
-		this.animateVehicleBossRockets();
-
-		this.animateHonks();		
-
-		this.animateSideWalksBottom();
-		this.animateHedgesBottom();
-		this.animateTreesBottom();
-		this.animateLightBillboardsBottom();
-
-		this.animatePlayerHonkBomb();
-		this.animatePlayerRocket();
-
-		this.animateUfoBoss();
-		this.animateUfoBossRockets();
-
-		this.animateClouds();	
-
-		this.animateInterimScreen();
-
-		this._gameController.update();
-		this.animatePlayerBalloon();
 	}
 
 	public resize(scale: number): void {
@@ -2126,7 +2144,11 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private anyBossExists(): boolean {
-		return (/*UfoBossExists() ||*/ this.vehicleBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
+		return (this.ufoBossExists() || this.vehicleBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
+	}
+
+	private anyInAirBossExists(): boolean {
+		return (this.ufoBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
 	}
 
 	//#endregion
