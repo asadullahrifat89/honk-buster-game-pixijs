@@ -19,3 +19,4 @@ export class UfoBossBase extends GameObject {
 		}
 	}
 }
+

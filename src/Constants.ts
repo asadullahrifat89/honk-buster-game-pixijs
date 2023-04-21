@@ -4,6 +4,53 @@ import { GameObject } from "./GameObject";
 
 //#region Enums
 
+export enum UfoBossMovementPattern {
+	PLAYER_SEEKING,
+	ISOMETRIC_SQUARE,
+	UPRIGHT_DOWNLEFT,
+	UPLEFT_DOWNRIGHT,
+	RIGHT_LEFT,
+	UP_DOWN,
+}
+
+export enum BossStance {
+	Idle,
+	Hit,
+	Win,
+}
+
+export enum MovementDirection {
+	None,
+
+	Up,
+	UpLeft,
+	UpRight,
+
+	Down,
+	DownLeft,
+	DownRight,
+
+	Right,
+	Left,
+}
+
+export enum PlayerBalloonStance {
+	Idle,
+	Attack,
+	Hit,
+	Win,
+}
+
+export enum PlayerBalloonTemplate {
+	Blue,
+	Red,
+}
+
+export enum PlayerHonkBombTemplate {
+	Cracker,
+	TrashCan,
+}
+
 export enum ConstructType {
 	NONE,
 	GAME_COVER_IMAGE,
@@ -81,38 +128,6 @@ export enum ConstructType {
 	FLOATING_NUMBER,
 
 	TITLE_SCREEN
-}
-
-export enum MovementDirection {
-	None,
-
-	Up,
-	UpLeft,
-	UpRight,
-
-	Down,
-	DownLeft,
-	DownRight,
-
-	Right,
-	Left,
-}
-
-export enum PlayerBalloonStance {
-	Idle,
-	Attack,
-	Hit,
-	Win,
-}
-
-export enum PlayerBalloonTemplate {
-	Blue,
-	Red,
-}
-
-export enum PlayerHonkBombTemplate {
-	Cracker,
-	TrashCan,
 }
 
 //#endregion
