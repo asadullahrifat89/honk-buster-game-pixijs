@@ -29,10 +29,11 @@ export class PlayerRocket extends GameObject {
 		this._autoBlastDelay = this._autoBlastDelayDefault;
 	}
 
-	reposition(player: PlayerBalloon) {
-		this.setPosition(
-			(player.getLeft() + player.width / 2) - this.width / 2,
-			player.getBottom() - (30));
+	reposition(source: PlayerBalloon) {
+		//this.setPosition(
+		//	(player.getLeft() + player.width / 2) - this.width / 2,
+		//	player.getBottom() - (30));
+		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 15);
 	}
 
 	setBlast() {

@@ -27,10 +27,11 @@ export class UfoBossRocket extends GameObject {
 		this._autoBlastDelay = this._autoBlastDelayDefault;
 	}
 
-	reposition(ufoBoss: GameObject) {
-		this.setPosition(
-			(ufoBoss.getLeft() + ufoBoss.width / 2) - this.width / 2,
-			ufoBoss.getBottom() - (75));
+	reposition(source: GameObject) {
+		//this.setPosition(
+		//	(ufoBoss.getLeft() + ufoBoss.width / 2) - this.width / 2,
+		//	ufoBoss.getBottom() - (75));
+		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 15);
 	}
 
 	setBlast() {
