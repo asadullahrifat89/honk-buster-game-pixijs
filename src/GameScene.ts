@@ -18,6 +18,7 @@ import { VehicleBossRocket } from "./VehicleBossRocket";
 import { HealthBar } from "./HealthBar";
 import { UfoBoss } from "./UfoBoss";
 import { PlayerRocket } from "./PlayerRocket";
+import { UfoBossRocket } from "./UfoBossRocket";
 
 
 export class GameScene extends Container implements IScene {
@@ -82,7 +83,10 @@ export class GameScene extends Container implements IScene {
 		this.spawnTreesBottom();
 
 		this.spawnPlayerHonkBombs();
+		this.spawnPlayerRockets();
 		this.spawnPlayerBalloon();
+
+		this.spawnUfoBossRockets();
 		this.spawnUfoBosss();
 
 		this.spawnClouds();
@@ -1259,6 +1263,100 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region VehicleBossRockets
+
+	private vehicleBossRocketSizeWidth: number = 90;
+	private vehicleBossRocketSizeHeight: number = 90;
+
+	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
+
+	private vehicleBossRocketPopDelayDefault: number = 20 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private vehicleBossRocketPopDelay: number = 0;
+
+	spawnVehicleBossRockets() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			gameObject.disableRendering();
+			gameObject.width = this.vehicleBossRocketSizeWidth;
+			gameObject.height = this.vehicleBossRocketSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.vehicleBossRocketSizeWidth;
+			sprite.height = this.vehicleBossRocketSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.vehicleBossRocketGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generateVehicleBossRockets() {
+
+		let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (vehicleBoss) {
+
+			this.vehicleBossRocketPopDelay -= 0.1;
+
+			if (this.vehicleBossRocketPopDelay < 0) {
+
+				let vehicleBossRocket = this.vehicleBossRocketGameObjects.find(x => x.isAnimating == false);
+
+				if (vehicleBossRocket) {
+					vehicleBossRocket.reset();
+					vehicleBossRocket.reposition(vehicleBoss);
+					vehicleBossRocket.setPopping();
+					vehicleBossRocket.enableRendering();
+				}
+
+				this.vehicleBossRocketPopDelay = this.vehicleBossRocketPopDelayDefault;
+			}
+		}
+	}
+
+	animateVehicleBossRockets() {
+
+		let animatingVehicleBossRockets = this.vehicleBossRocketGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingVehicleBossRockets) {
+
+			animatingVehicleBossRockets.forEach(gameObject => {
+				gameObject.moveUpRight();
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.dillyDally();
+
+					if (Constants.checkCloseCollision(gameObject, this._player)) {
+						gameObject.setBlast();
+						this.loosePlayerHealth();
+					}
+
+					if (gameObject.autoBlast())
+						gameObject.setBlast();
+				}
+
+				if (gameObject.hasFaded()) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
 	//#region UfoBosss	
 
 	private ufoBossSizeWidth: number = 245;
@@ -1381,72 +1479,88 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region VehicleBossRockets
+	//#region UfoBossRockets
 
-	private vehicleBossRocketSizeWidth: number = 90;
-	private vehicleBossRocketSizeHeight: number = 90;
+	private ufoBossRocketSizeWidth: number = 90;
+	private ufoBossRocketSizeHeight: number = 90;
 
-	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
+	private ufoBossRocketGameObjects: Array<UfoBossRocket> = [];
 
-	private vehicleBossRocketPopDelayDefault: number = 20 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private vehicleBossRocketPopDelay: number = 0;
+	private ufoBossRocketPopDelayDefault: number = 20 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private ufoBossRocketPopDelay: number = 0;
 
-	spawnVehicleBossRockets() {
+	spawnUfoBossRockets() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			const gameObject: UfoBossRocket = new UfoBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
-			gameObject.width = this.vehicleBossRocketSizeWidth;
-			gameObject.height = this.vehicleBossRocketSizeHeight;
+			gameObject.width = this.ufoBossRocketSizeWidth;
+			gameObject.height = this.ufoBossRocketSizeHeight;
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET));
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.vehicleBossRocketSizeWidth;
-			sprite.height = this.vehicleBossRocketSizeHeight;
+			sprite.width = this.ufoBossRocketSizeWidth;
+			sprite.height = this.ufoBossRocketSizeHeight;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
-			this.vehicleBossRocketGameObjects.push(gameObject);
+			this.ufoBossRocketGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
 		}
 	}
 
-	generateVehicleBossRockets() {
+	generateUfoBossRockets() {
 
-		let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+		let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
-		if (vehicleBoss) {
+		if (ufoBoss) {
 
-			this.vehicleBossRocketPopDelay -= 0.1;
+			this.ufoBossRocketPopDelay -= 0.1;
 
-			if (this.vehicleBossRocketPopDelay < 0) {
+			if (this.ufoBossRocketPopDelay < 0) {
 
-				let vehicleBossRocket = this.vehicleBossRocketGameObjects.find(x => x.isAnimating == false);
+				let ufoBossRocket = this.ufoBossRocketGameObjects.find(x => x.isAnimating == false);
 
-				if (vehicleBossRocket) {
-					vehicleBossRocket.reset();
-					vehicleBossRocket.reposition(vehicleBoss);
-					vehicleBossRocket.setPopping();
-					vehicleBossRocket.enableRendering();
+				if (ufoBossRocket) {
+					ufoBossRocket.reset();
+					ufoBossRocket.reposition(ufoBoss);
+					ufoBossRocket.setPopping();
+					ufoBossRocket.enableRendering();
+
+					this.setBossRocketDirection(ufoBoss, ufoBossRocket, this._player);
 				}
 
-				this.vehicleBossRocketPopDelay = this.vehicleBossRocketPopDelayDefault;
+				this.ufoBossRocketPopDelay = this.ufoBossRocketPopDelayDefault;
 			}
 		}
 	}
 
-	animateVehicleBossRockets() {
+	animateUfoBossRockets() {
 
-		let animatingVehicleBossRockets = this.vehicleBossRocketGameObjects.filter(x => x.isAnimating == true);
+		let animatingUfoBossRockets = this.ufoBossRocketGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingVehicleBossRockets) {
+		if (animatingUfoBossRockets) {
 
-			animatingVehicleBossRockets.forEach(gameObject => {
-				gameObject.moveUpRight();
+			animatingUfoBossRockets.forEach(gameObject => {
+
+				let ufoBossRocket = gameObject as UfoBossRocket;
+
+				if (ufoBossRocket.awaitMoveDownLeft) {
+					ufoBossRocket.moveDownLeft();
+				}
+				else if (ufoBossRocket.awaitMoveUpRight) {
+					ufoBossRocket.moveUpRight();
+				}
+				else if (ufoBossRocket.awaitMoveUpLeft) {
+					ufoBossRocket.moveUpLeft();
+				}
+				else if (ufoBossRocket.awaitMoveDownRight) {
+					ufoBossRocket.moveDownRight();
+				}
 
 				if (gameObject.isBlasting) {
 					gameObject.expand();
@@ -1455,7 +1569,7 @@ export class GameScene extends Container implements IScene {
 				else {
 
 					gameObject.pop();
-					gameObject.dillyDally();
+					gameObject.hover();
 
 					if (Constants.checkCloseCollision(gameObject, this._player)) {
 						gameObject.setBlast();
@@ -1470,6 +1584,34 @@ export class GameScene extends Container implements IScene {
 					gameObject.disableRendering();
 				}
 			});
+		}
+	}
+
+	setBossRocketDirection(source: GameObject, rocket: GameObject, rocketTarget: GameObject) {
+
+		// rocket target is on the bottom right side of the UfoBoss
+		if (rocketTarget.getTop() > source.getTop() && rocketTarget.getLeft() > source.getLeft()) {
+			rocket.awaitMoveDownRight = true;
+			rocket.setRotation(33);
+		}
+		// rocket target is on the bottom left side of the UfoBoss
+		else if (rocketTarget.getTop() > source.getTop() && rocketTarget.getLeft() < source.getLeft()) {
+			rocket.awaitMoveDownLeft = true;
+			rocket.setRotation(-213);
+		}
+		// if rocket target is on the top left side of the UfoBoss
+		else if (rocketTarget.getTop() < source.getTop() && rocketTarget.getLeft() < source.getLeft()) {
+			rocket.awaitMoveUpLeft = true;
+			rocket.setRotation(213);
+		}
+		// if rocket target is on the top right side of the UfoBoss
+		else if (rocketTarget.getTop() < source.getTop() && rocketTarget.getLeft() > source.getLeft()) {
+			rocket.awaitMoveUpRight = true;
+			rocket.setRotation(-33);
+		}
+		else {
+			rocket.awaitMoveDownRight = true;
+			rocket.setRotation(33);
 		}
 	}
 
@@ -1930,6 +2072,7 @@ export class GameScene extends Container implements IScene {
 		this.generateVehicleBossRockets();
 
 		this.generateUfoBoss();
+		this.generateUfoBossRockets();
 
 		this.generateClouds();
 
@@ -1949,17 +2092,21 @@ export class GameScene extends Container implements IScene {
 		this.animateVehicleEnemys();
 		this.animateVehicleBoss();
 		this.animateVehicleBossRockets();
-		this.animateHonks();
 
-		this.animateUfoBoss();
+		this.animateHonks();		
 
 		this.animateSideWalksBottom();
 		this.animateHedgesBottom();
 		this.animateTreesBottom();
 		this.animateLightBillboardsBottom();
 
-		this.animateClouds();
 		this.animatePlayerHonkBomb();
+		this.animatePlayerRocket();
+
+		this.animateUfoBoss();
+		this.animateUfoBossRockets();
+
+		this.animateClouds();	
 
 		this.animateInterimScreen();
 
