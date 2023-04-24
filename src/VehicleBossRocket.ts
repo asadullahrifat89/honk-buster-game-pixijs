@@ -13,7 +13,6 @@ export class VehicleBossRocket extends GameObject {
 	}
 
 	reset() {
-
 		this.alpha = 1;
 		this.scale.set(1);
 

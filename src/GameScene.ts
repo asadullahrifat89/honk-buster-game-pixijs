@@ -2135,7 +2135,6 @@ export class GameScene extends Container implements IScene {
 			honk.reset();
 			honk.reposition(source);
 			honk.setPopping();
-
 			//source.setPopping();
 
 			gameObject.enableRendering();

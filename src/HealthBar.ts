@@ -81,7 +81,6 @@ export class HealthBar extends Container {
 	}
 
 	setValue(value: number) {
-
 		if (this._maximumHealth == 0)
 			this._maximumHealth = 100;
 
