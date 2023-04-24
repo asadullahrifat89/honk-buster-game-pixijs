@@ -143,13 +143,6 @@ export enum ConstructType {
 
 //#endregion
 
-//class ConstructSize {
-
-//	public ConstructType: ConstructType = 0;
-//	public Height: number = 0;
-//	public Width: number = 0;
-//}
-
 export abstract class Constants {
 
 	//#region Properties
