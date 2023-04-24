@@ -29,10 +29,10 @@ export class GameScene extends Container implements IScene {
 	//#region Properties
 
 	private _gameController: GameController = new GameController();
-	private _gameScoreBar: GameScoreBar;
-	private _interimScreen: InterimScreen;
 	private _sceneContainer: Container = new Container();
+	private _gameScoreBar: GameScoreBar;
 
+	private _interimScreen: InterimScreen;
 
 	//TODO: set defaults _vehicleBossReleasePoint = 25
 	private readonly _vehicleBossReleasePoint: number = 25; // first appearance
@@ -1418,14 +1418,14 @@ export class GameScene extends Container implements IScene {
 
 	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
 
-	private vehicleBossRocketPopDelayDefault: number = 20 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private vehicleBossRocketPopDelayDefault: number = 15 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private vehicleBossRocketPopDelay: number = 0;
 
 	spawnVehicleBossRockets() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 1.7);
 			gameObject.disableRendering();
 			gameObject.width = this.vehicleBossRocketSizeWidth;
 			gameObject.height = this.vehicleBossRocketSizeHeight;
