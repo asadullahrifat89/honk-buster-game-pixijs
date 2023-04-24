@@ -338,14 +338,14 @@ export abstract class Constants {
 
 	static checkCloseCollision(objA: GameObject, objB: GameObject): boolean {
 
-		const a = objA.getBounds();
-		const b = objB.getBounds();
+		const a = objA.getBounds(true);
+		const b = objB.getBounds(true);
 
-		const aLeft = a.left + a.width / 4;
-		const bLeft = b.left + b.width / 4;
+		const aLeft = a.left + a.width / 3;
+		const bLeft = b.left + b.width / 3;
 
-		const aRight = a.right - a.width / 4;
-		const bRight = b.right - b.width / 4;
+		const aRight = a.right - a.width / 3;
+		const bRight = b.right - b.width / 3;
 
 		const rightmostLeft = aLeft < bLeft ? bLeft : aLeft;
 		const leftmostRight = aRight > bRight ? bRight : aRight;
@@ -354,11 +354,11 @@ export abstract class Constants {
 			return false;
 		}
 
-		const aTop = a.top + a.height / 4;
-		const bTop = b.top + b.height / 4;
+		const aTop = a.top + a.height / 3;
+		const bTop = b.top + b.height / 3;
 
-		const aBottom = a.bottom - a.height / 4;
-		const bBottom = b.bottom - b.height / 4;
+		const aBottom = a.bottom - a.height / 3;
+		const bBottom = b.bottom - b.height / 3;
 
 		const bottommostTop = aTop < bTop ? bTop : aTop;
 		const topmostBottom = aBottom > bBottom ? bBottom : aBottom;

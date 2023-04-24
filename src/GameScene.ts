@@ -1590,7 +1590,7 @@ export class GameScene extends Container implements IScene {
 
 				if (ufoBoss.isAttacking) {
 
-					ufoBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling, this._player.getBounds());
+					ufoBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling, this._player.getCloseBounds());
 
 					if (Constants.checkCloseCollision(this._player, ufoBoss)) {
 						this.loosePlayerHealth();
@@ -1864,7 +1864,7 @@ export class GameScene extends Container implements IScene {
 					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
 					if (ufoBoss) {
-						ufoBossRocketSeeking.seek(this._player.getBounds());
+						ufoBossRocketSeeking.seek(this._player.getCloseBounds());
 
 						if (Constants.checkCloseCollision(gameObject, this._player)) {
 							gameObject.setBlast();
@@ -2178,7 +2178,7 @@ export class GameScene extends Container implements IScene {
 
 				if (mafiaBoss.isAttacking) {
 
-					mafiaBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling, this._player.getBounds());
+					mafiaBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling, this._player.getCloseBounds());
 
 					if (Constants.checkCloseCollision(this._player, mafiaBoss)) {
 						this.loosePlayerHealth();
@@ -2391,7 +2391,7 @@ export class GameScene extends Container implements IScene {
 					mafiaBossRocketBullsEye.reset();
 					mafiaBossRocketBullsEye.reposition(mafiaBoss);
 					mafiaBossRocketBullsEye.setPopping();
-					mafiaBossRocketBullsEye.setTarget(this._player.getBounds());
+					mafiaBossRocketBullsEye.setTarget(this._player.getCloseBounds());
 					mafiaBossRocketBullsEye.enableRendering();
 				}
 

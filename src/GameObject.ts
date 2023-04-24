@@ -1,4 +1,4 @@
-import { Container, Texture } from 'pixi.js';
+import { Container, Rectangle, Texture } from 'pixi.js';
 import { RotationDirection } from './Constants';
 import { GameObjectSprite } from './GameObjectSprite';
 
@@ -281,6 +281,11 @@ export class GameObject extends Container {
 				this.angle -= rotationSpeed;
 			}
 		}
+	}
+
+	getCloseBounds(): Rectangle {
+		let bounds = this.getBounds(true);
+		return new Rectangle(bounds.left + this.width / 3, bounds.top + this.height / 3, bounds.right - this.width / 3, bounds.bottom - this.height / 3);
 	}
 
 	//#endregion
