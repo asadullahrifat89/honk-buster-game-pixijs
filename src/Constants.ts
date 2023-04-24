@@ -250,8 +250,15 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_1.png"),
 		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_2.png"),
 		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_3.png"),
-
 		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET_SEEKING, "ufo_boss_rocket_seeking.png"),
+
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_HIT, "zombie_boss_1_hit.png"),
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_IDLE, "zombie_boss_1_idle.png"),
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_WIN, "zombie_boss_1_win.png"),
+
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_1.png"),
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_2.png"),
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_3.png"),
 	];
 
 	//#endregion

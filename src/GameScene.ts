@@ -1624,7 +1624,7 @@ export class GameScene extends Container implements IScene {
 
 	private ufoBossRocketGameObjects: Array<UfoBossRocket> = [];
 
-	private ufoBossRocketPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private ufoBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private ufoBossRocketPopDelay: number = 0;
 
 	spawnUfoBossRockets() {
