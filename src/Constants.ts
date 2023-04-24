@@ -8,6 +8,13 @@ export enum RotationDirection {
 	Backward,
 }
 
+export enum MafiaBossMovementPattern {
+	PLAYER_SEEKING,
+	RECTANGULAR_SQUARE,
+	RIGHT_LEFT,
+	UP_DOWN,
+}
+
 export enum UfoBossMovementPattern {
 	PLAYER_SEEKING,
 	ISOMETRIC_SQUARE,
@@ -259,6 +266,15 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_1.png"),
 		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_2.png"),
 		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_3.png"),
+
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_HIT, "mafia_boss_1_hit.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_IDLE, "mafia_boss_1_idle.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_WIN, "mafia_boss_1_win.png"),
+
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_1.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_2.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_3.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE, "mafia_boss_rocket_bulls_eye.png"),
 	];
 
 	//#endregion

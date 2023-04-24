@@ -117,3 +117,4 @@ export class ZombieBoss extends UfoBossBase {
 		return false;
 	}
 }
+
