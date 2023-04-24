@@ -3,7 +3,7 @@ import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
 import { Cloud } from "./Cloud";
-import { Constants, ConstructType } from './Constants';
+import { Constants, ConstructType, RotationDirection } from './Constants';
 import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
 import { PlayerBalloon } from "./PlayerBalloon";
@@ -24,6 +24,7 @@ import { ZombieBoss } from "./ZombieBoss";
 import { ZombieBossRocketBlock } from "./ZombieBossRocketBlock";
 import { MafiaBoss } from "./MafiaBoss";
 import { MafiaBossRocket } from "./MafiaBossRocket";
+import { MafiaBossRocketBullsEye } from "./MafiaBossRocketBullsEye";
 
 
 export class GameScene extends Container implements IScene {
@@ -114,6 +115,7 @@ export class GameScene extends Container implements IScene {
 
 		this.spawnMafiaBosss();
 		this.spawnMafiaBossRockets();
+		this.spawnMafiaBossRocketBullsEyes();
 
 		this.spawnClouds();
 
@@ -2339,6 +2341,114 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region MafiaBossRocketBullsEyes
+
+	private mafiaBossRocketBullsEyeSizeWidth: number = 90;
+	private mafiaBossRocketBullsEyeSizeHeight: number = 90;
+
+	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossRocketBullsEye> = [];
+
+	private mafiaBossRocketBullsEyePopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private mafiaBossRocketBullsEyePopDelay: number = 0;
+
+	spawnMafiaBossRocketBullsEyes() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: MafiaBossRocketBullsEye = new MafiaBossRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+			gameObject.width = this.mafiaBossRocketBullsEyeSizeWidth;
+			gameObject.height = this.mafiaBossRocketBullsEyeSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.mafiaBossRocketBullsEyeSizeWidth;
+			sprite.height = this.mafiaBossRocketBullsEyeSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.mafiaBossRocketBullsEyeGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generateMafiaBossRocketBullsEyes() {
+
+		let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (mafiaBoss) {
+
+			this.mafiaBossRocketBullsEyePopDelay -= 0.1;
+
+			if (this.mafiaBossRocketBullsEyePopDelay < 0) {
+
+				let mafiaBossRocketBullsEye = this.mafiaBossRocketBullsEyeGameObjects.find(x => x.isAnimating == false);
+
+				if (mafiaBossRocketBullsEye) {
+					mafiaBossRocketBullsEye.reset();
+					mafiaBossRocketBullsEye.reposition(mafiaBoss);
+					mafiaBossRocketBullsEye.setPopping();
+					mafiaBossRocketBullsEye.setTarget(this._player.getBounds());
+					mafiaBossRocketBullsEye.enableRendering();
+				}
+
+				this.mafiaBossRocketBullsEyePopDelay = this.mafiaBossRocketBullsEyePopDelayDefault;
+			}
+		}
+	}
+
+	animateMafiaBossRocketBullsEyes() {
+
+		let animatingMafiaBossRocketBullsEyes = this.mafiaBossRocketBullsEyeGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingMafiaBossRocketBullsEyes) {
+
+			animatingMafiaBossRocketBullsEyes.forEach(gameObject => {
+
+				let mafiaBossRocketBullsEye = gameObject as MafiaBossRocketBullsEye;
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+					gameObject.moveDownRight();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.rotate(RotationDirection.Forward, 0, 2.5);
+
+					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+					if (mafiaBoss) {
+						mafiaBossRocketBullsEye.move();
+
+						if (Constants.checkCloseCollision(gameObject, this._player)) {
+							gameObject.setBlast();
+							this.loosePlayerHealth();
+							mafiaBoss.setWinStance();
+						}
+						else {
+							if (gameObject.autoBlast())
+								gameObject.setBlast();
+						}
+					}
+					else {
+						gameObject.setBlast();
+					}
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
 	//#region Honks	
 
 	private roadHonkSizeWidth: number = 125;
@@ -2866,6 +2976,7 @@ export class GameScene extends Container implements IScene {
 
 		this.generateMafiaBoss();
 		this.generateMafiaBossRockets();
+		this.generateMafiaBossRocketBullsEyes();
 
 		this.generateClouds();
 
@@ -2911,9 +3022,9 @@ export class GameScene extends Container implements IScene {
 
 		this.animateMafiaBoss();
 		this.animateMafiaBossRockets();
+		this.animateMafiaBossRocketBullsEyes();
 
 		this.animateClouds();
-
 		this.animateInterimScreen();
 	}
 
