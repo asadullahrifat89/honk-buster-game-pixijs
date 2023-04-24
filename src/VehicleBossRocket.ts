@@ -42,3 +42,4 @@ export class VehicleBossRocket extends GameObject {
 		return false;
 	}
 }
+

@@ -66,7 +66,6 @@ export class GameObject extends Container {
 	}
 
 	isDead(): boolean {
-
 		return this.health <= 0;
 	}
 
