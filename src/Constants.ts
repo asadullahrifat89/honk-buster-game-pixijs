@@ -160,6 +160,17 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK, "road_side_walk_1.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_HEDGE, "road_side_hedge_1.png"),
 
+		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_2.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_3.png"),
+
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_2.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_3.png"),
+
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LAMP, "road_side_lamp_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LAMP, "road_side_lamp_2.png"), 
+
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_1.png"),
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_2.png"),
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_3.png"),
@@ -189,14 +200,6 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.HONK, "honk_1.png"),
 		new ConstructTemplate(ConstructType.HONK, "honk_2.png"),
 		new ConstructTemplate(ConstructType.HONK, "honk_3.png"),
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_2.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_3.png"),
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_2.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_3.png"),
 
 		new ConstructTemplate(ConstructType.PLAYER_BALLOON, "player_1_character.png"),
 		new ConstructTemplate(ConstructType.PLAYER_BALLOON_IDLE, "player_balloon_1_idle.png"),
