@@ -68,10 +68,10 @@ export class GameScene extends Container implements IScene {
 		this.spawnRoadMarks();
 
 		this.spawnSideWalksTop();
-		this.spawnHedgesTop();
-		this.spawnTreesTop();
+		this.spawnHedgesTop();		
 		//this.spawnHeavyBillboardsTop();
 		this.spawnLightBillboardsTop();
+		this.spawnTreesTop();
 		this.spawnLampsTop();
 
 		this.spawnVehicleEnemys();
@@ -79,11 +79,11 @@ export class GameScene extends Container implements IScene {
 		this.spawnHonks();
 		this.spawnVehicleBossRockets();
 
-		this.spawnSideWalksBottom();
-		this.spawnLampsBottom();
+		this.spawnSideWalksBottom();		
 		this.spawnHedgesBottom();
-		this.spawnLightBillboardsBottom();
+		this.spawnLampsBottom();
 		this.spawnTreesBottom();
+		this.spawnLightBillboardsBottom();
 
 		this.spawnPlayerHonkBombs();
 		this.spawnPlayerRockets();
@@ -474,147 +474,6 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region LightBillboards
-
-	private lightBillboardXyAdjustment: number = 31.5;
-	private lightBillboardXyDistance = 250;
-
-	private lightBillboardSizeWidth: number = 128;
-	private lightBillboardSizeHeight: number = 128;
-
-	private lightBillboardBottomGameObjects: Array<GameObject> = [];
-	private lightBillboardTopGameObjects: Array<GameObject> = [];
-
-	private lightBillboardPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private lightBillboardPopDelayTop: number = 0;
-	private lightBillboardPopDelayBottom: number = 0;
-
-	private spawnLightBillboardsTop() {
-
-		for (let j = 0; j < 5; j++) {
-
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
-			gameObject.width = this.lightBillboardSizeWidth * 5;
-			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
-
-			// gameObject.filters = [new DropShadowFilter()];
-
-			for (let i = 0; i < 5; i++) {
-
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
-
-				sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
-				sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
-				sprite.width = this.lightBillboardSizeWidth;
-				sprite.height = this.lightBillboardSizeHeight;
-
-				gameObject.addChild(sprite);
-			}
-
-			this.lightBillboardTopGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
-		}
-	}
-
-	private spawnLightBillboardsBottom() {
-
-		for (let j = 0; j < 5; j++) {
-
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
-			gameObject.width = this.lightBillboardSizeWidth * 5;
-			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
-
-			// gameObject.filters = [new DropShadowFilter()];
-
-			// add trees to the tree bottom gameObject
-			for (let i = 0; i < 5; i++) {
-
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
-
-				sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
-				sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
-				sprite.width = this.lightBillboardSizeWidth;
-				sprite.height = this.lightBillboardSizeHeight;
-
-				gameObject.addChild(sprite);
-			}
-
-			this.lightBillboardBottomGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
-		}
-	}
-
-	private generateLightBillboardsTop() {
-
-		this.lightBillboardPopDelayTop -= 0.1;
-
-		if (this.lightBillboardPopDelayTop < 0) {
-
-			var gameObject = this.lightBillboardTopGameObjects.find(x => x.isAnimating == false);
-
-			if (gameObject) {
-				gameObject.setPosition(-480, gameObject.height * -1);
-				gameObject.enableRendering();
-				this.lightBillboardPopDelayTop = this.lightBillboardPopDelayDefault;
-			}
-		}
-	}
-
-	private generateLightBillboardsBottom() {
-
-		this.lightBillboardPopDelayBottom -= 0.1;
-
-		if (this.lightBillboardPopDelayBottom < 0) {
-
-			var gameObject = this.lightBillboardBottomGameObjects.find(x => x.isAnimating == false);
-
-			if (gameObject) {
-				gameObject.x = gameObject.width * -1;
-				gameObject.y = -330;
-				gameObject.enableRendering();
-				this.lightBillboardPopDelayBottom = this.lightBillboardPopDelayDefault;
-			}
-		}
-	}
-
-	private animateLightBillboardsTop() {
-
-		var animatingLightBillboards = this.lightBillboardTopGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingLightBillboards) {
-
-			animatingLightBillboards.forEach(gameObject => {
-				gameObject.moveDownRight();
-
-				if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-
-				}
-			});
-		}
-	}
-
-	private animateLightBillboardsBottom() {
-
-		var animatingLightBillboards = this.lightBillboardBottomGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingLightBillboards) {
-
-			animatingLightBillboards.forEach(gameObject => {
-				gameObject.moveDownRight();
-
-				if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-
-				}
-			});
-		}
-	}
-
-	//#endregion
-
 	//#region HeavyBillboards
 
 	//private roadHeavyBillboardXyAdjustment: number = 31.5;
@@ -672,7 +531,7 @@ export class GameScene extends Container implements IScene {
 
 	////		// gameObject.filters = [new DropShadowFilter()];
 
-	////		// add trees to the tree bottom gameObject
+	////		
 	////		for (let i = 0; i < 5; i++) {
 
 	////			const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD);
@@ -791,7 +650,7 @@ export class GameScene extends Container implements IScene {
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
 
 				sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i)) + (this.lampXyDistance * i);
-				sprite.y = ((this.lampSizeHeight / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
+				sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
 				sprite.width = this.lampSizeWidth;
 				sprite.height = this.lampSizeHeight;
 
@@ -812,15 +671,12 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.lampSizeWidth * 5;
 			gameObject.height = this.lampSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
-
-			// add trees to the tree bottom gameObject
 			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
 
 				sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i)) + (this.lampXyDistance * i);
-				sprite.y = ((this.lampSizeHeight / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
+				sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
 				sprite.width = this.lampSizeWidth;
 				sprite.height = this.lampSizeHeight;
 
@@ -841,7 +697,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.lampTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition(-480, gameObject.height * -1);
+				gameObject.setPosition(-510, gameObject.height * -1);
 				gameObject.enableRendering();
 				this.lampPopDelayTop = this.lampPopDelayDefault;
 			}
@@ -892,6 +748,144 @@ export class GameScene extends Container implements IScene {
 				gameObject.moveDownRight();
 
 				if (gameObject.x - this.lampSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region LightBillboards
+
+	private lightBillboardXyAdjustment: number = 31.5;
+	private lightBillboardXyDistance = 250;
+
+	private lightBillboardSizeWidth: number = 128;
+	private lightBillboardSizeHeight: number = 128;
+
+	private lightBillboardBottomGameObjects: Array<GameObject> = [];
+	private lightBillboardTopGameObjects: Array<GameObject> = [];
+
+	private lightBillboardPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private lightBillboardPopDelayTop: number = 0;
+	private lightBillboardPopDelayBottom: number = 0;
+
+	private spawnLightBillboardsTop() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+			gameObject.width = this.lightBillboardSizeWidth * 5;
+			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
+
+			for (let i = 0; i < 5; i++) {
+
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
+
+				sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
+				sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
+				sprite.width = this.lightBillboardSizeWidth;
+				sprite.height = this.lightBillboardSizeHeight;
+
+				gameObject.addChild(sprite);
+			}
+
+			this.lightBillboardTopGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private spawnLightBillboardsBottom() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+			gameObject.width = this.lightBillboardSizeWidth * 5;
+			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
+
+			// gameObject.filters = [new DropShadowFilter()];
+
+
+			for (let i = 0; i < 5; i++) {
+
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
+
+				sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
+				sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
+				sprite.width = this.lightBillboardSizeWidth;
+				sprite.height = this.lightBillboardSizeHeight;
+
+				gameObject.addChild(sprite);
+			}
+
+			this.lightBillboardBottomGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private generateLightBillboardsTop() {
+
+		this.lightBillboardPopDelayTop -= 0.1;
+
+		if (this.lightBillboardPopDelayTop < 0) {
+
+			var gameObject = this.lightBillboardTopGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+				gameObject.setPosition(-380, gameObject.height * -1.1);
+				gameObject.enableRendering();
+				this.lightBillboardPopDelayTop = this.lightBillboardPopDelayDefault;
+			}
+		}
+	}
+
+	private generateLightBillboardsBottom() {
+
+		this.lightBillboardPopDelayBottom -= 0.1;
+
+		if (this.lightBillboardPopDelayBottom < 0) {
+
+			var gameObject = this.lightBillboardBottomGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+				gameObject.setPosition(gameObject.width * -1, -180);
+				gameObject.enableRendering();
+				this.lightBillboardPopDelayBottom = this.lightBillboardPopDelayDefault;
+			}
+		}
+	}
+
+	private animateLightBillboardsTop() {
+
+		var animatingLightBillboards = this.lightBillboardTopGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingLightBillboards) {
+
+			animatingLightBillboards.forEach(gameObject => {
+				gameObject.moveDownRight();
+
+				if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+
+				}
+			});
+		}
+	}
+
+	private animateLightBillboardsBottom() {
+
+		var animatingLightBillboards = this.lightBillboardBottomGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingLightBillboards) {
+
+			animatingLightBillboards.forEach(gameObject => {
+				gameObject.moveDownRight();
+
+				if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 
 				}
