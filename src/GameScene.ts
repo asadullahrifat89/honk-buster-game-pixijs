@@ -22,6 +22,7 @@ import { UfoBossRocket } from "./UfoBossRocket";
 import { UfoBossRocketSeeking } from "./UfoBossRocketSeeking";
 import { ZombieBoss } from "./ZombieBoss";
 import { ZombieBossRocketBlock } from "./ZombieBossRocketBlock";
+import { MafiaBoss } from "./MafiaBoss";
 
 
 export class GameScene extends Container implements IScene {
@@ -49,6 +50,11 @@ export class GameScene extends Container implements IScene {
 	private readonly _zombieBossReleasePoint_increase: number = 15;
 	private readonly _zombieBossCheckpoint: GameCheckpoint;
 
+	//TODO: set defaults _mafiaBossReleasePoint = 100
+	private readonly _mafiaBossReleasePoint: number = 100; // first appearance
+	private readonly _mafiaBossReleasePoint_increase: number = 15;
+	private readonly _mafiaBossCheckpoint: GameCheckpoint;
+
 	private _playerHealthBar: HealthBar;
 	private _bossHealthBar: HealthBar;
 
@@ -72,6 +78,7 @@ export class GameScene extends Container implements IScene {
 		this._vehicleBossCheckpoint = new GameCheckpoint(this._vehicleBossReleasePoint);
 		this._ufoBossCheckpoint = new GameCheckpoint(this._ufoBossReleasePoint);
 		this._zombieBossCheckpoint = new GameCheckpoint(this._zombieBossReleasePoint);
+		this._mafiaBossCheckpoint = new GameCheckpoint(this._mafiaBossReleasePoint);
 
 		this.spawnRoadMarks();
 
@@ -103,6 +110,8 @@ export class GameScene extends Container implements IScene {
 
 		this.spawnZombieBosss();
 		this.spawnZombieBossRocketBlocks();
+
+		this.spawnMafiaBosss();
 
 		this.spawnClouds();
 
@@ -2093,6 +2102,128 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region MafiaBosss	
+
+	private mafiaBossSizeWidth: number = 200;
+	private mafiaBossSizeHeight: number = 200;
+
+	private mafiaBossGameObjects: Array<MafiaBoss> = [];
+
+	private spawnMafiaBosss() {
+		const gameObject: MafiaBoss = new MafiaBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
+		gameObject.disableRendering();
+		gameObject.width = this.mafiaBossSizeWidth;
+		gameObject.height = this.mafiaBossSizeHeight;
+
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_IDLE));
+
+		sprite.x = 0;
+		sprite.y = 0;
+		sprite.width = this.mafiaBossSizeWidth;
+		sprite.height = this.mafiaBossSizeHeight;
+
+		sprite.anchor.set(0.5, 0.5);
+
+		gameObject.addChild(sprite);
+
+		this.mafiaBossGameObjects.push(gameObject);
+		this._sceneContainer.addChild(gameObject);
+	}
+
+	private generateMafiaBoss() {
+
+		if (this._mafiaBossCheckpoint.shouldRelease(this._gameScoreBar.getScore()) && !this.mafiaBossExists()) {
+
+			var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				var mafiaBoss = gameObject as MafiaBoss;
+				mafiaBoss.setPosition(0, mafiaBoss.height * -1);
+				mafiaBoss.reset();
+				mafiaBoss.health = this._mafiaBossCheckpoint.getReleasePointDifference() * 1.5;
+
+				gameObject.enableRendering();
+
+				this._mafiaBossCheckpoint.increaseThreasholdLimit(this._mafiaBossReleasePoint_increase, this._gameScoreBar.getScore());
+
+				this._bossHealthBar.setMaximumValue(mafiaBoss.health);
+				this._bossHealthBar.setValue(mafiaBoss.health);
+				this._bossHealthBar.setIcon(mafiaBoss.getGameObjectSprite().getTexture());
+
+				this.generateInterimScreen("Beware of Crimson Mafia");
+			}
+		}
+	}
+
+	private animateMafiaBoss() {
+
+		var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
+		let mafiaBoss: MafiaBoss = gameObject as MafiaBoss;
+
+		if (gameObject) {
+
+			if (mafiaBoss.isDead()) {
+				mafiaBoss.shrink();
+			}
+			else {
+				gameObject.pop();
+				gameObject.hover();
+				mafiaBoss.depleteHitStance();
+				mafiaBoss.depleteWinStance();
+
+				if (mafiaBoss.isAttacking) {
+
+					mafiaBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling, this._player.getBounds());
+
+					if (Constants.checkCloseCollision(this._player, mafiaBoss)) {
+						this.loosePlayerHealth();
+					}
+				}
+				else {
+
+					mafiaBoss.moveDownRight();
+
+					if (mafiaBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling / 3)) // bring MafiaBoss to a suitable distance from player and then start attacking
+					{
+						mafiaBoss.isAttacking = true;
+					}
+				}
+			}
+
+			if (mafiaBoss.isShrinkingComplete()) {
+				gameObject.disableRendering();
+			}
+		}
+	}
+
+	private looseMafiaBosshealth(mafiaBoss: MafiaBoss) {
+
+		mafiaBoss.setPopping();
+		mafiaBoss.looseHealth();
+		mafiaBoss.setHitStance();
+
+		this._bossHealthBar.setValue(mafiaBoss.health);
+
+		if (mafiaBoss.isDead()) {
+
+			this._player.setWinStance();
+			this._gameScoreBar.gainScore(3);
+			this.levelUp();
+		}
+	}
+
+	private mafiaBossExists(): boolean {
+		var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
+
+		if (gameObject)
+			return true;
+		else
+			return false;
+	}
+
+	//#endregion
+
 	//#region Honks	
 
 	private roadHonkSizeWidth: number = 125;
@@ -2393,6 +2524,7 @@ export class GameScene extends Container implements IScene {
 			//TODO: check more enemy types to set direction
 			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 			let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+			let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
 			let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
 
@@ -2404,6 +2536,9 @@ export class GameScene extends Container implements IScene {
 			}
 			else if (zombieBoss) {
 				this.setPlayerRocketDirection(this._player, playerRocket, zombieBoss);
+			}
+			else if (mafiaBoss) {
+				this.setPlayerRocketDirection(this._player, playerRocket, mafiaBoss);
 			}
 		}
 	}
@@ -2451,6 +2586,8 @@ export class GameScene extends Container implements IScene {
 						let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
 						let zombieBossRocketBlock = this.zombieBossRocketBlockGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
 
+						let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
+
 						if (ufoBossRocketSeeking) {
 							playerRocket.setBlast();
 							ufoBossRocketSeeking.setBlast();
@@ -2466,6 +2603,10 @@ export class GameScene extends Container implements IScene {
 						else if (zombieBoss) {
 							playerRocket.setBlast();
 							this.looseZombieBosshealth(zombieBoss as ZombieBoss);
+						}
+						else if (mafiaBoss) {
+							playerRocket.setBlast();
+							this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
 						}
 
 						if (playerRocket.autoBlast())
@@ -2620,6 +2761,8 @@ export class GameScene extends Container implements IScene {
 		this.animateZombieBoss();
 		this.animateZombieBossRocketBlocks();
 
+		this.animateMafiaBoss();
+
 		this.animateClouds();
 
 		this.animateInterimScreen();
@@ -2646,6 +2789,8 @@ export class GameScene extends Container implements IScene {
 		this.generateZombieBoss();
 		this.generateZombieBossRocketBlocks();
 
+		this.generateMafiaBoss();
+
 		this.generateClouds();
 
 		this.generateSideWalksBottom();
@@ -2656,11 +2801,11 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private anyBossExists(): boolean {
-		return (this.ufoBossExists() || this.vehicleBossExists() || this.zombieBossExists() /*|| MafiaBossExists()*/);
+		return (this.ufoBossExists() || this.vehicleBossExists() || this.zombieBossExists() || this.mafiaBossExists());
 	}
 
 	private anyInAirBossExists(): boolean {
-		return (this.ufoBossExists() || this.zombieBossExists() /*|| MafiaBossExists()*/);
+		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
 	}
 
 	//#endregion
