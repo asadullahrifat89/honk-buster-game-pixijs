@@ -1485,7 +1485,7 @@ export class GameScene extends Container implements IScene {
 				else {
 
 					gameObject.pop();
-					gameObject.dillyDally();
+					//gameObject.dillyDally();
 
 					if (Constants.checkCloseCollision(gameObject, this._player)) {
 						gameObject.setBlast();
@@ -2001,8 +2001,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region ZombieBossRocketBlocks
 
-	private zombieBossRocketBlockSizeWidth: number = 90;
-	private zombieBossRocketBlockSizeHeight: number = 90;
+	private zombieBossRocketBlockSizeWidth: number = 130 * 1.1;
+	private zombieBossRocketBlockSizeHeight: number = 150 * 1.1;
 
 	private zombieBossRocketBlockGameObjects: Array<ZombieBossRocketBlock> = [];
 
