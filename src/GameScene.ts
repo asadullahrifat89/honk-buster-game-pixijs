@@ -68,7 +68,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnRoadMarks();
 
 		this.spawnSideWalksTop();
-		this.spawnHedgesTop();		
+		this.spawnHedgesTop();
 		//this.spawnHeavyBillboardsTop();
 		this.spawnLightBillboardsTop();
 		this.spawnTreesTop();
@@ -79,7 +79,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnHonks();
 		this.spawnVehicleBossRockets();
 
-		this.spawnSideWalksBottom();		
+		this.spawnSideWalksBottom();
 		this.spawnHedgesBottom();
 		this.spawnLampsBottom();
 		this.spawnTreesBottom();
@@ -202,7 +202,7 @@ export class GameScene extends Container implements IScene {
 	private treeBottomGameObjects: Array<GameObject> = [];
 	private treeTopGameObjects: Array<GameObject> = [];
 
-	private treePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private treePopDelayDefault: number = 62 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private treePopDelayTop: number = 0;
 	private treePopDelayBottom: number = 0;
 
@@ -1127,8 +1127,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region VehicleEnemys	
 
-	private vehicleEnemySizeWidth: number = 245;
-	private vehicleEnemySizeHeight: number = 245;
+	private vehicleEnemySizeWidth: number = 242;
+	private vehicleEnemySizeHeight: number = 242;
 
 	private vehicleEnemyGameObjects: Array<GameObject> = [];
 
@@ -1266,8 +1266,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region VehicleBosss	
 
-	private vehicleBossSizeWidth: number = 245;
-	private vehicleBossSizeHeight: number = 245;
+	private vehicleBossSizeWidth: number = 242;
+	private vehicleBossSizeHeight: number = 242;
 
 	private vehicleBossGameObjects: Array<VehicleBoss> = [];
 
