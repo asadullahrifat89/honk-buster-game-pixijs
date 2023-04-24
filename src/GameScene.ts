@@ -21,6 +21,7 @@ import { PlayerRocket } from "./PlayerRocket";
 import { UfoBossRocket } from "./UfoBossRocket";
 import { UfoBossRocketSeeking } from "./UfoBossRocketSeeking";
 import { ZombieBoss } from "./ZombieBoss";
+import { ZombieBossRocketBlock } from "./ZombieBossRocketBlock";
 
 
 export class GameScene extends Container implements IScene {
@@ -101,6 +102,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnUfoBosss();
 
 		this.spawnZombieBosss();
+		this.spawnZombieBossRocketBlocks();
 
 		this.spawnClouds();
 
@@ -1729,7 +1731,7 @@ export class GameScene extends Container implements IScene {
 						gameObject.setBlast();
 				}
 
-				if (gameObject.hasFaded()) {
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
@@ -1993,6 +1995,100 @@ export class GameScene extends Container implements IScene {
 			return true;
 		else
 			return false;
+	}
+
+	//#endregion
+
+	//#region ZombieBossRocketBlocks
+
+	private zombieBossRocketBlockSizeWidth: number = 90;
+	private zombieBossRocketBlockSizeHeight: number = 90;
+
+	private zombieBossRocketBlockGameObjects: Array<ZombieBossRocketBlock> = [];
+
+	private zombieBossRocketBlockPopDelayDefault: number = 8 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private zombieBossRocketBlockPopDelay: number = 0;
+
+	spawnZombieBossRocketBlocks() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: ZombieBossRocketBlock = new ZombieBossRocketBlock(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+			gameObject.width = this.zombieBossRocketBlockSizeWidth;
+			gameObject.height = this.zombieBossRocketBlockSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.zombieBossRocketBlockSizeWidth;
+			sprite.height = this.zombieBossRocketBlockSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.zombieBossRocketBlockGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generateZombieBossRocketBlocks() {
+
+		let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (zombieBoss) {
+
+			this.zombieBossRocketBlockPopDelay -= 0.1;
+
+			if (this.zombieBossRocketBlockPopDelay < 0) {
+
+				let zombieBossRocketBlock = this.zombieBossRocketBlockGameObjects.find(x => x.isAnimating == false);
+
+				if (zombieBossRocketBlock) {
+					zombieBossRocketBlock.reset();
+					zombieBossRocketBlock.reposition();
+					zombieBossRocketBlock.setPopping();
+					zombieBossRocketBlock.enableRendering();
+				}
+
+				this.zombieBossRocketBlockPopDelay = this.zombieBossRocketBlockPopDelayDefault;
+			}
+		}
+	}
+
+	animateZombieBossRocketBlocks() {
+
+		let animatingZombieBossRocketBlocks = this.zombieBossRocketBlockGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingZombieBossRocketBlocks) {
+
+			animatingZombieBossRocketBlocks.forEach(gameObject => {
+				gameObject.moveDownRight();
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.hover();
+
+					if (Constants.checkCloseCollision(gameObject, this._player)) {
+						gameObject.setBlast();
+						this.loosePlayerHealth();
+					}
+
+					if (gameObject.autoBlast())
+						gameObject.setBlast();
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
 	}
 
 	//#endregion
@@ -2297,9 +2393,18 @@ export class GameScene extends Container implements IScene {
 
 			//TODO: check more enemy types to set direction
 			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+			let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
-			if (ufoBoss) {
+			let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
+
+			if (ufoBossRocketSeeking) {
+				this.setPlayerRocketDirection(this._player, playerRocket, ufoBossRocketSeeking);
+			}
+			else if (ufoBoss) {
 				this.setPlayerRocketDirection(this._player, playerRocket, ufoBoss);
+			}
+			else if (zombieBoss) {
+				this.setPlayerRocketDirection(this._player, playerRocket, zombieBoss);
 			}
 		}
 	}
@@ -2345,6 +2450,7 @@ export class GameScene extends Container implements IScene {
 						let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
 
 						let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
+						let zombieBossRocketBlock = this.zombieBossRocketBlockGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
 
 						if (ufoBossRocketSeeking) {
 							playerRocket.setBlast();
@@ -2353,6 +2459,10 @@ export class GameScene extends Container implements IScene {
 						else if (ufoBoss) {
 							playerRocket.setBlast();
 							this.looseUfoBosshealth(ufoBoss as UfoBoss);
+						}
+						else if (zombieBossRocketBlock) {
+							playerRocket.setBlast();
+							zombieBossRocketBlock.looseHealth();
 						}
 						else if (zombieBoss) {
 							playerRocket.setBlast();
@@ -2509,6 +2619,7 @@ export class GameScene extends Container implements IScene {
 		this.animateUfoBossRocketSeekings();
 
 		this.animateZombieBoss();
+		this.animateZombieBossRocketBlocks();
 
 		this.animateClouds();
 
@@ -2534,6 +2645,7 @@ export class GameScene extends Container implements IScene {
 		this.generateUfoBossRocketSeekings();
 
 		this.generateZombieBoss();
+		this.generateZombieBossRocketBlocks();
 
 		this.generateClouds();
 
