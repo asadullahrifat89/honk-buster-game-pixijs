@@ -3,7 +3,7 @@ import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
 import { Cloud } from "./Cloud";
-import { Constants, ConstructType } from './Constants';
+import { Constants, ConstructType, RotationDirection } from './Constants';
 import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
 import { PlayerBalloon } from "./PlayerBalloon";
@@ -20,6 +20,11 @@ import { UfoBoss } from "./UfoBoss";
 import { PlayerRocket } from "./PlayerRocket";
 import { UfoBossRocket } from "./UfoBossRocket";
 import { UfoBossRocketSeeking } from "./UfoBossRocketSeeking";
+import { ZombieBoss } from "./ZombieBoss";
+import { ZombieBossRocketBlock } from "./ZombieBossRocketBlock";
+import { MafiaBoss } from "./MafiaBoss";
+import { MafiaBossRocket } from "./MafiaBossRocket";
+import { MafiaBossRocketBullsEye } from "./MafiaBossRocketBullsEye";
 
 
 export class GameScene extends Container implements IScene {
@@ -27,21 +32,30 @@ export class GameScene extends Container implements IScene {
 	//#region Properties
 
 	private _gameController: GameController = new GameController();
-	private _gameScoreBar: GameScoreBar;
-	private _interimScreen: InterimScreen;
 	private _sceneContainer: Container = new Container();
+	private _gameScoreBar: GameScoreBar;
 
+	private _interimScreen: InterimScreen;
 
 	//TODO: set defaults _vehicleBossReleasePoint = 25
 	private readonly _vehicleBossReleasePoint: number = 25; // first appearance
 	private readonly _vehicleBossReleasePoint_increase: number = 15;
+	private readonly _vehicleBossCheckpoint: GameCheckpoint;
 
 	//TODO: set defaults _ufoBossReleasePoint = 50
 	private readonly _ufoBossReleasePoint: number = 50; // first appearance
 	private readonly _ufoBossReleasePoint_increase: number = 15;
-
-	private readonly _vehicleBossCheckpoint: GameCheckpoint;
 	private readonly _ufoBossCheckpoint: GameCheckpoint;
+
+	//TODO: set defaults _zombieBossReleasePoint = 75
+	private readonly _zombieBossReleasePoint: number = 75; // first appearance
+	private readonly _zombieBossReleasePoint_increase: number = 15;
+	private readonly _zombieBossCheckpoint: GameCheckpoint;
+
+	//TODO: set defaults _mafiaBossReleasePoint = 100
+	private readonly _mafiaBossReleasePoint: number = 15; // first appearance
+	private readonly _mafiaBossReleasePoint_increase: number = 15;
+	private readonly _mafiaBossCheckpoint: GameCheckpoint;
 
 	private _playerHealthBar: HealthBar;
 	private _bossHealthBar: HealthBar;
@@ -59,19 +73,23 @@ export class GameScene extends Container implements IScene {
 
 		this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
 		this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
+		//this._sceneContainer.filters = [new DropShadowFilter()];
 
 		this.addChild(this._sceneContainer);
 
 		this._vehicleBossCheckpoint = new GameCheckpoint(this._vehicleBossReleasePoint);
 		this._ufoBossCheckpoint = new GameCheckpoint(this._ufoBossReleasePoint);
+		this._zombieBossCheckpoint = new GameCheckpoint(this._zombieBossReleasePoint);
+		this._mafiaBossCheckpoint = new GameCheckpoint(this._mafiaBossReleasePoint);
 
 		this.spawnRoadMarks();
 
 		this.spawnSideWalksTop();
 		this.spawnHedgesTop();
-		this.spawnTreesTop();
 		//this.spawnHeavyBillboardsTop();
 		this.spawnLightBillboardsTop();
+		this.spawnTreesTop();
+		this.spawnLampsTop();
 
 		this.spawnVehicleEnemys();
 		this.spawnVehicleBosss();
@@ -80,8 +98,9 @@ export class GameScene extends Container implements IScene {
 
 		this.spawnSideWalksBottom();
 		this.spawnHedgesBottom();
-		this.spawnLightBillboardsBottom();
+		this.spawnLampsBottom();
 		this.spawnTreesBottom();
+		this.spawnLightBillboardsBottom();
 
 		this.spawnPlayerHonkBombs();
 		this.spawnPlayerRockets();
@@ -90,6 +109,13 @@ export class GameScene extends Container implements IScene {
 		this.spawnUfoBossRockets();
 		this.spawnUfoBossRocketSeekings();
 		this.spawnUfoBosss();
+
+		this.spawnZombieBosss();
+		this.spawnZombieBossRocketBlocks();
+
+		this.spawnMafiaBosss();
+		this.spawnMafiaBossRockets();
+		this.spawnMafiaBossRocketBullsEyes();
 
 		this.spawnClouds();
 
@@ -200,7 +226,7 @@ export class GameScene extends Container implements IScene {
 	private treeBottomGameObjects: Array<GameObject> = [];
 	private treeTopGameObjects: Array<GameObject> = [];
 
-	private treePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private treePopDelayDefault: number = 62 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private treePopDelayTop: number = 0;
 	private treePopDelayBottom: number = 0;
 
@@ -472,147 +498,6 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region LightBillboards
-
-	private lightBillboardXyAdjustment: number = 31.5;
-	private lightBillboardXyDistance = 250;
-
-	private lightBillboardSizeWidth: number = 128;
-	private lightBillboardSizeHeight: number = 128;
-
-	private lightBillboardBottomGameObjects: Array<GameObject> = [];
-	private lightBillboardTopGameObjects: Array<GameObject> = [];
-
-	private lightBillboardPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private lightBillboardPopDelayTop: number = 0;
-	private lightBillboardPopDelayBottom: number = 0;
-
-	private spawnLightBillboardsTop() {
-
-		for (let j = 0; j < 5; j++) {
-
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
-			gameObject.width = this.lightBillboardSizeWidth * 5;
-			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
-
-			// gameObject.filters = [new DropShadowFilter()];
-
-			for (let i = 0; i < 5; i++) {
-
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
-
-				sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
-				sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
-				sprite.width = this.lightBillboardSizeWidth;
-				sprite.height = this.lightBillboardSizeHeight;
-
-				gameObject.addChild(sprite);
-			}
-
-			this.lightBillboardTopGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
-		}
-	}
-
-	private spawnLightBillboardsBottom() {
-
-		for (let j = 0; j < 5; j++) {
-
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
-			gameObject.width = this.lightBillboardSizeWidth * 5;
-			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
-
-			// gameObject.filters = [new DropShadowFilter()];
-
-			// add trees to the tree bottom gameObject
-			for (let i = 0; i < 5; i++) {
-
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
-
-				sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
-				sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
-				sprite.width = this.lightBillboardSizeWidth;
-				sprite.height = this.lightBillboardSizeHeight;
-
-				gameObject.addChild(sprite);
-			}
-
-			this.lightBillboardBottomGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
-		}
-	}
-
-	private generateLightBillboardsTop() {
-
-		this.lightBillboardPopDelayTop -= 0.1;
-
-		if (this.lightBillboardPopDelayTop < 0) {
-
-			var gameObject = this.lightBillboardTopGameObjects.find(x => x.isAnimating == false);
-
-			if (gameObject) {
-				gameObject.setPosition(-480, gameObject.height * -1);
-				gameObject.enableRendering();
-				this.lightBillboardPopDelayTop = this.lightBillboardPopDelayDefault;
-			}
-		}
-	}
-
-	private generateLightBillboardsBottom() {
-
-		this.lightBillboardPopDelayBottom -= 0.1;
-
-		if (this.lightBillboardPopDelayBottom < 0) {
-
-			var gameObject = this.lightBillboardBottomGameObjects.find(x => x.isAnimating == false);
-
-			if (gameObject) {
-				gameObject.x = gameObject.width * -1;
-				gameObject.y = -330;
-				gameObject.enableRendering();
-				this.lightBillboardPopDelayBottom = this.lightBillboardPopDelayDefault;
-			}
-		}
-	}
-
-	private animateLightBillboardsTop() {
-
-		var animatingLightBillboards = this.lightBillboardTopGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingLightBillboards) {
-
-			animatingLightBillboards.forEach(gameObject => {
-				gameObject.moveDownRight();
-
-				if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-
-				}
-			});
-		}
-	}
-
-	private animateLightBillboardsBottom() {
-
-		var animatingLightBillboards = this.lightBillboardBottomGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingLightBillboards) {
-
-			animatingLightBillboards.forEach(gameObject => {
-				gameObject.moveDownRight();
-
-				if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-
-				}
-			});
-		}
-	}
-
-	//#endregion
-
 	//#region HeavyBillboards
 
 	//private roadHeavyBillboardXyAdjustment: number = 31.5;
@@ -670,7 +555,7 @@ export class GameScene extends Container implements IScene {
 
 	////		// gameObject.filters = [new DropShadowFilter()];
 
-	////		// add trees to the tree bottom gameObject
+	////		
 	////		for (let i = 0; i < 5; i++) {
 
 	////			const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD);
@@ -735,7 +620,7 @@ export class GameScene extends Container implements IScene {
 
 	//			if (gameObject.x - this.roadHeavyBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 	//				gameObject.moveOutOfSight();
-	//				
+	//
 	//			}
 	//		});
 	//	}
@@ -752,11 +637,285 @@ export class GameScene extends Container implements IScene {
 
 	////			if (gameObject.x - this.roadHeavyBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 	////				gameObject.moveOutOfSight();
-	////				
+	////
 	////			}
 	////		});
 	////	}
 	////}
+
+	//#endregion
+
+	//#region Lamps
+
+	private lampXyAdjustment: number = 31.5;
+	private lampXyDistance = 250;
+
+	private lampSizeWidth: number = 268 / 2;
+	private lampSizeHeight: number = 234 / 2;
+
+	private lampBottomGameObjects: Array<GameObject> = [];
+	private lampTopGameObjects: Array<GameObject> = [];
+
+	private lampPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private lampPopDelayTop: number = 0;
+	private lampPopDelayBottom: number = 0;
+
+	private spawnLampsTop() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+			gameObject.width = this.lampSizeWidth * 5;
+			gameObject.height = this.lampSizeHeight / 2 * 5;
+
+			for (let i = 0; i < 5; i++) {
+
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
+
+				sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i)) + (this.lampXyDistance * i);
+				sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
+				sprite.width = this.lampSizeWidth;
+				sprite.height = this.lampSizeHeight;
+
+				gameObject.addChild(sprite);
+			}
+
+			this.lampTopGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private spawnLampsBottom() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+			gameObject.width = this.lampSizeWidth * 5;
+			gameObject.height = this.lampSizeHeight / 2 * 5;
+
+			for (let i = 0; i < 5; i++) {
+
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
+
+				sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i)) + (this.lampXyDistance * i);
+				sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
+				sprite.width = this.lampSizeWidth;
+				sprite.height = this.lampSizeHeight;
+
+				gameObject.addChild(sprite);
+			}
+
+			this.lampBottomGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private generateLampsTop() {
+
+		this.lampPopDelayTop -= 0.1;
+
+		if (this.lampPopDelayTop < 0) {
+
+			var gameObject = this.lampTopGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+				gameObject.setPosition(-510, gameObject.height * -1);
+				gameObject.enableRendering();
+				this.lampPopDelayTop = this.lampPopDelayDefault;
+			}
+		}
+	}
+
+	private generateLampsBottom() {
+
+		this.lampPopDelayBottom -= 0.1;
+
+		if (this.lampPopDelayBottom < 0) {
+
+			var gameObject = this.lampBottomGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+				gameObject.x = gameObject.width * -1;
+				gameObject.y = -330;
+				gameObject.enableRendering();
+				this.lampPopDelayBottom = this.lampPopDelayDefault;
+			}
+		}
+	}
+
+	private animateLampsTop() {
+
+		var animatingLamps = this.lampTopGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingLamps) {
+
+			animatingLamps.forEach(gameObject => {
+				gameObject.moveDownRight();
+
+				if (gameObject.x - this.lampSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+
+				}
+			});
+		}
+	}
+
+	private animateLampsBottom() {
+
+		var animatingLamps = this.lampBottomGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingLamps) {
+
+			animatingLamps.forEach(gameObject => {
+				gameObject.moveDownRight();
+
+				if (gameObject.x - this.lampSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region LightBillboards
+
+	private lightBillboardXyAdjustment: number = 31.5;
+	private lightBillboardXyDistance = 250;
+
+	private lightBillboardSizeWidth: number = 128;
+	private lightBillboardSizeHeight: number = 128;
+
+	private lightBillboardBottomGameObjects: Array<GameObject> = [];
+	private lightBillboardTopGameObjects: Array<GameObject> = [];
+
+	private lightBillboardPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private lightBillboardPopDelayTop: number = 0;
+	private lightBillboardPopDelayBottom: number = 0;
+
+	private spawnLightBillboardsTop() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+			gameObject.width = this.lightBillboardSizeWidth * 5;
+			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
+
+			for (let i = 0; i < 5; i++) {
+
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
+
+				sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
+				sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
+				sprite.width = this.lightBillboardSizeWidth;
+				sprite.height = this.lightBillboardSizeHeight;
+
+				gameObject.addChild(sprite);
+			}
+
+			this.lightBillboardTopGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private spawnLightBillboardsBottom() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+			gameObject.width = this.lightBillboardSizeWidth * 5;
+			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
+
+			// gameObject.filters = [new DropShadowFilter()];
+
+
+			for (let i = 0; i < 5; i++) {
+
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
+
+				sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
+				sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
+				sprite.width = this.lightBillboardSizeWidth;
+				sprite.height = this.lightBillboardSizeHeight;
+
+				gameObject.addChild(sprite);
+			}
+
+			this.lightBillboardBottomGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private generateLightBillboardsTop() {
+
+		this.lightBillboardPopDelayTop -= 0.1;
+
+		if (this.lightBillboardPopDelayTop < 0) {
+
+			var gameObject = this.lightBillboardTopGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+				gameObject.setPosition(-380, gameObject.height * -1.1);
+				gameObject.enableRendering();
+				this.lightBillboardPopDelayTop = this.lightBillboardPopDelayDefault;
+			}
+		}
+	}
+
+	private generateLightBillboardsBottom() {
+
+		this.lightBillboardPopDelayBottom -= 0.1;
+
+		if (this.lightBillboardPopDelayBottom < 0) {
+
+			var gameObject = this.lightBillboardBottomGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+				gameObject.setPosition(gameObject.width * -1, -180);
+				gameObject.enableRendering();
+				this.lightBillboardPopDelayBottom = this.lightBillboardPopDelayDefault;
+			}
+		}
+	}
+
+	private animateLightBillboardsTop() {
+
+		var animatingLightBillboards = this.lightBillboardTopGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingLightBillboards) {
+
+			animatingLightBillboards.forEach(gameObject => {
+				gameObject.moveDownRight();
+
+				if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+
+				}
+			});
+		}
+	}
+
+	private animateLightBillboardsBottom() {
+
+		var animatingLightBillboards = this.lightBillboardBottomGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingLightBillboards) {
+
+			animatingLightBillboards.forEach(gameObject => {
+				gameObject.moveDownRight();
+
+				if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+
+				}
+			});
+		}
+	}
 
 	//#endregion
 
@@ -992,8 +1151,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region VehicleEnemys	
 
-	private vehicleEnemySizeWidth: number = 245;
-	private vehicleEnemySizeHeight: number = 245;
+	private vehicleEnemySizeWidth: number = 242;
+	private vehicleEnemySizeHeight: number = 242;
 
 	private vehicleEnemyGameObjects: Array<GameObject> = [];
 
@@ -1131,8 +1290,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region VehicleBosss	
 
-	private vehicleBossSizeWidth: number = 245;
-	private vehicleBossSizeHeight: number = 245;
+	private vehicleBossSizeWidth: number = 242;
+	private vehicleBossSizeHeight: number = 242;
 
 	private vehicleBossGameObjects: Array<VehicleBoss> = [];
 
@@ -1272,14 +1431,14 @@ export class GameScene extends Container implements IScene {
 
 	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
 
-	private vehicleBossRocketPopDelayDefault: number = 20 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private vehicleBossRocketPopDelayDefault: number = 15 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private vehicleBossRocketPopDelay: number = 0;
 
 	spawnVehicleBossRockets() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 1.7);
 			gameObject.disableRendering();
 			gameObject.width = this.vehicleBossRocketSizeWidth;
 			gameObject.height = this.vehicleBossRocketSizeHeight;
@@ -1339,7 +1498,7 @@ export class GameScene extends Container implements IScene {
 				else {
 
 					gameObject.pop();
-					gameObject.dillyDally();
+					//gameObject.dillyDally();
 
 					if (Constants.checkCloseCollision(gameObject, this._player)) {
 						gameObject.setBlast();
@@ -1408,7 +1567,7 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setValue(ufoBoss.health);
 				this._bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
 
-				this.generateInterimScreen("Beat the Scarlet Saucer");
+				this.generateInterimScreen("Scarlet Saucer Arrived");
 			}
 		}
 	}
@@ -1431,7 +1590,7 @@ export class GameScene extends Container implements IScene {
 
 				if (ufoBoss.isAttacking) {
 
-					ufoBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling, this._player.getBounds());
+					ufoBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling, this._player.getCloseBounds());
 
 					if (Constants.checkCloseCollision(this._player, ufoBoss)) {
 						this.loosePlayerHealth();
@@ -1488,7 +1647,7 @@ export class GameScene extends Container implements IScene {
 
 	private ufoBossRocketGameObjects: Array<UfoBossRocket> = [];
 
-	private ufoBossRocketPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private ufoBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private ufoBossRocketPopDelay: number = 0;
 
 	spawnUfoBossRockets() {
@@ -1585,7 +1744,7 @@ export class GameScene extends Container implements IScene {
 						gameObject.setBlast();
 				}
 
-				if (gameObject.hasFaded()) {
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
@@ -1705,7 +1864,7 @@ export class GameScene extends Container implements IScene {
 					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
 					if (ufoBoss) {
-						ufoBossRocketSeeking.seek(this._player.getBounds());
+						ufoBossRocketSeeking.seek(this._player.getCloseBounds());
 
 						if (Constants.checkCloseCollision(gameObject, this._player)) {
 							gameObject.setBlast();
@@ -1731,10 +1890,569 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region ZombieBosss	
+
+	private zombieBossSizeWidth: number = 200;
+	private zombieBossSizeHeight: number = 200;
+
+	private zombieBossGameObjects: Array<ZombieBoss> = [];
+
+	private spawnZombieBosss() {
+		const gameObject: ZombieBoss = new ZombieBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
+		gameObject.disableRendering();
+		gameObject.width = this.zombieBossSizeWidth;
+		gameObject.height = this.zombieBossSizeHeight;
+
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_IDLE));
+
+		sprite.x = 0;
+		sprite.y = 0;
+		sprite.width = this.zombieBossSizeWidth;
+		sprite.height = this.zombieBossSizeHeight;
+
+		sprite.anchor.set(0.5, 0.5);
+
+		gameObject.addChild(sprite);
+
+		this.zombieBossGameObjects.push(gameObject);
+		this._sceneContainer.addChild(gameObject);
+	}
+
+	private generateZombieBoss() {
+
+		if (this._zombieBossCheckpoint.shouldRelease(this._gameScoreBar.getScore()) && !this.zombieBossExists()) {
+
+			var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				var zombieBoss = gameObject as ZombieBoss;
+				zombieBoss.setPosition(0, zombieBoss.height * -1);
+				zombieBoss.reset();
+				zombieBoss.health = this._zombieBossCheckpoint.getReleasePointDifference() * 1.5;
+
+				gameObject.enableRendering();
+
+				this._zombieBossCheckpoint.increaseThreasholdLimit(this._zombieBossReleasePoint_increase, this._gameScoreBar.getScore());
+
+				this._bossHealthBar.setMaximumValue(zombieBoss.health);
+				this._bossHealthBar.setValue(zombieBoss.health);
+				this._bossHealthBar.setIcon(zombieBoss.getGameObjectSprite().getTexture());
+
+				this.generateInterimScreen("Zombie Blocks Arrived");
+			}
+		}
+	}
+
+	private animateZombieBoss() {
+
+		var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == true);
+		let zombieBoss: ZombieBoss = gameObject as ZombieBoss;
+
+		if (gameObject) {
+
+			if (zombieBoss.isDead()) {
+				zombieBoss.shrink();
+			}
+			else {
+				gameObject.pop();
+				gameObject.hover();
+				zombieBoss.depleteHitStance();
+				zombieBoss.depleteWinStance();
+
+				if (zombieBoss.isAttacking) {
+
+					zombieBoss.moveUpRightDownLeft(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling);
+
+					if (Constants.checkCloseCollision(this._player, zombieBoss)) {
+						this.loosePlayerHealth();
+					}
+				}
+				else {
+
+					zombieBoss.moveDownRight();
+
+					if (zombieBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling / 3)) // bring ZombieBoss to a suitable distance from player and then start attacking
+					{
+						zombieBoss.isAttacking = true;
+					}
+				}
+			}
+
+			if (zombieBoss.isShrinkingComplete()) {
+				gameObject.disableRendering();
+			}
+		}
+	}
+
+	private looseZombieBosshealth(zombieBoss: ZombieBoss) {
+
+		zombieBoss.setPopping();
+		zombieBoss.looseHealth();
+		zombieBoss.setHitStance();
+
+		this._bossHealthBar.setValue(zombieBoss.health);
+
+		if (zombieBoss.isDead()) {
+
+			this._player.setWinStance();
+			this._gameScoreBar.gainScore(3);
+			this.levelUp();
+		}
+	}
+
+	private zombieBossExists(): boolean {
+		var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == true);
+
+		if (gameObject)
+			return true;
+		else
+			return false;
+	}
+
+	//#endregion
+
+	//#region ZombieBossRocketBlocks
+
+	private zombieBossRocketBlockSizeWidth: number = 130 * 1.1;
+	private zombieBossRocketBlockSizeHeight: number = 150 * 1.1;
+
+	private zombieBossRocketBlockGameObjects: Array<ZombieBossRocketBlock> = [];
+
+	private zombieBossRocketBlockPopDelayDefault: number = 8 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private zombieBossRocketBlockPopDelay: number = 0;
+
+	spawnZombieBossRocketBlocks() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: ZombieBossRocketBlock = new ZombieBossRocketBlock(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+			gameObject.width = this.zombieBossRocketBlockSizeWidth;
+			gameObject.height = this.zombieBossRocketBlockSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.zombieBossRocketBlockSizeWidth;
+			sprite.height = this.zombieBossRocketBlockSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.zombieBossRocketBlockGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generateZombieBossRocketBlocks() {
+
+		let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (zombieBoss) {
+
+			this.zombieBossRocketBlockPopDelay -= 0.1;
+
+			if (this.zombieBossRocketBlockPopDelay < 0) {
+
+				let zombieBossRocketBlock = this.zombieBossRocketBlockGameObjects.find(x => x.isAnimating == false);
+
+				if (zombieBossRocketBlock) {
+					zombieBossRocketBlock.reset();
+					zombieBossRocketBlock.reposition();
+					zombieBossRocketBlock.setPopping();
+					zombieBossRocketBlock.enableRendering();
+				}
+
+				this.zombieBossRocketBlockPopDelay = this.zombieBossRocketBlockPopDelayDefault;
+			}
+		}
+	}
+
+	animateZombieBossRocketBlocks() {
+
+		let animatingZombieBossRocketBlocks = this.zombieBossRocketBlockGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingZombieBossRocketBlocks) {
+
+			animatingZombieBossRocketBlocks.forEach(gameObject => {
+				gameObject.moveDownRight();
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.hover();
+
+					if (Constants.checkCloseCollision(gameObject, this._player)) {
+						gameObject.setBlast();
+						this.loosePlayerHealth();
+					}
+
+					if (gameObject.autoBlast())
+						gameObject.setBlast();
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region MafiaBosss	
+
+	private mafiaBossSizeWidth: number = 200;
+	private mafiaBossSizeHeight: number = 200;
+
+	private mafiaBossGameObjects: Array<MafiaBoss> = [];
+
+	private spawnMafiaBosss() {
+		const gameObject: MafiaBoss = new MafiaBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
+		gameObject.disableRendering();
+		gameObject.width = this.mafiaBossSizeWidth;
+		gameObject.height = this.mafiaBossSizeHeight;
+
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_IDLE));
+
+		sprite.x = 0;
+		sprite.y = 0;
+		sprite.width = this.mafiaBossSizeWidth;
+		sprite.height = this.mafiaBossSizeHeight;
+
+		sprite.anchor.set(0.5, 0.5);
+
+		gameObject.addChild(sprite);
+
+		this.mafiaBossGameObjects.push(gameObject);
+		this._sceneContainer.addChild(gameObject);
+	}
+
+	private generateMafiaBoss() {
+
+		if (this._mafiaBossCheckpoint.shouldRelease(this._gameScoreBar.getScore()) && !this.mafiaBossExists()) {
+
+			var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				var mafiaBoss = gameObject as MafiaBoss;
+				mafiaBoss.setPosition(0, mafiaBoss.height * -1);
+				mafiaBoss.reset();
+				mafiaBoss.health = this._mafiaBossCheckpoint.getReleasePointDifference() * 1.5;
+
+				gameObject.enableRendering();
+
+				this._mafiaBossCheckpoint.increaseThreasholdLimit(this._mafiaBossReleasePoint_increase, this._gameScoreBar.getScore());
+
+				this._bossHealthBar.setMaximumValue(mafiaBoss.health);
+				this._bossHealthBar.setValue(mafiaBoss.health);
+				this._bossHealthBar.setIcon(mafiaBoss.getGameObjectSprite().getTexture());
+
+				this.generateInterimScreen("Beware of Crimson Mafia");
+			}
+		}
+	}
+
+	private animateMafiaBoss() {
+
+		var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
+		let mafiaBoss: MafiaBoss = gameObject as MafiaBoss;
+
+		if (gameObject) {
+
+			if (mafiaBoss.isDead()) {
+				mafiaBoss.shrink();
+			}
+			else {
+				gameObject.pop();
+				gameObject.hover();
+				mafiaBoss.depleteHitStance();
+				mafiaBoss.depleteWinStance();
+
+				if (mafiaBoss.isAttacking) {
+
+					mafiaBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling, this._player.getCloseBounds());
+
+					if (Constants.checkCloseCollision(this._player, mafiaBoss)) {
+						this.loosePlayerHealth();
+					}
+				}
+				else {
+
+					mafiaBoss.moveDownRight();
+
+					if (mafiaBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling / 3)) // bring MafiaBoss to a suitable distance from player and then start attacking
+					{
+						mafiaBoss.isAttacking = true;
+					}
+				}
+			}
+
+			if (mafiaBoss.isShrinkingComplete()) {
+				gameObject.disableRendering();
+			}
+		}
+	}
+
+	private looseMafiaBosshealth(mafiaBoss: MafiaBoss) {
+
+		mafiaBoss.setPopping();
+		mafiaBoss.looseHealth();
+		mafiaBoss.setHitStance();
+
+		this._bossHealthBar.setValue(mafiaBoss.health);
+
+		if (mafiaBoss.isDead()) {
+
+			this._player.setWinStance();
+			this._gameScoreBar.gainScore(3);
+			this.levelUp();
+		}
+	}
+
+	private mafiaBossExists(): boolean {
+		var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
+
+		if (gameObject)
+			return true;
+		else
+			return false;
+	}
+
+	//#endregion
+
+	//#region MafiaBossRockets
+
+	private mafiaBossRocketSizeWidth: number = 90;
+	private mafiaBossRocketSizeHeight: number = 90;
+
+	private mafiaBossRocketGameObjects: Array<MafiaBossRocket> = [];
+
+	private mafiaBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private mafiaBossRocketPopDelay: number = 0;
+
+	spawnMafiaBossRockets() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: MafiaBossRocket = new MafiaBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			gameObject.disableRendering();
+			gameObject.width = this.mafiaBossRocketSizeWidth;
+			gameObject.height = this.mafiaBossRocketSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.mafiaBossRocketSizeWidth;
+			sprite.height = this.mafiaBossRocketSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.mafiaBossRocketGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generateMafiaBossRockets() {
+
+		let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (mafiaBoss) {
+
+			this.mafiaBossRocketPopDelay -= 0.1;
+
+			if (this.mafiaBossRocketPopDelay < 0) {
+
+				let mafiaBossRocket = this.mafiaBossRocketGameObjects.find(x => x.isAnimating == false);
+
+				if (mafiaBossRocket) {
+					mafiaBossRocket.reset();
+					mafiaBossRocket.reposition(mafiaBoss);
+					mafiaBossRocket.setPopping();
+					mafiaBossRocket.enableRendering();
+
+					this.setBossRocketDirection(mafiaBoss, mafiaBossRocket, this._player);
+				}
+
+				this.mafiaBossRocketPopDelay = this.mafiaBossRocketPopDelayDefault;
+			}
+		}
+	}
+
+	animateMafiaBossRockets() {
+
+		let animatingMafiaBossRockets = this.mafiaBossRocketGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingMafiaBossRockets) {
+
+			animatingMafiaBossRockets.forEach(gameObject => {
+
+				let mafiaBossRocket = gameObject as MafiaBossRocket;
+
+				if (mafiaBossRocket.awaitMoveDownLeft) {
+					mafiaBossRocket.moveDownLeft();
+				}
+				else if (mafiaBossRocket.awaitMoveUpRight) {
+					mafiaBossRocket.moveUpRight();
+				}
+				else if (mafiaBossRocket.awaitMoveUpLeft) {
+					mafiaBossRocket.moveUpLeft();
+				}
+				else if (mafiaBossRocket.awaitMoveDownRight) {
+					mafiaBossRocket.moveDownRight();
+				}
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.hover();
+
+					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+					if (Constants.checkCloseCollision(gameObject, this._player)) {
+						gameObject.setBlast();
+						this.loosePlayerHealth();
+						mafiaBoss?.setWinStance();
+					}
+
+					if (gameObject.autoBlast())
+						gameObject.setBlast();
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region MafiaBossRocketBullsEyes
+
+	private mafiaBossRocketBullsEyeSizeWidth: number = 90;
+	private mafiaBossRocketBullsEyeSizeHeight: number = 90;
+
+	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossRocketBullsEye> = [];
+
+	private mafiaBossRocketBullsEyePopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private mafiaBossRocketBullsEyePopDelay: number = 0;
+
+	spawnMafiaBossRocketBullsEyes() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: MafiaBossRocketBullsEye = new MafiaBossRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+			gameObject.width = this.mafiaBossRocketBullsEyeSizeWidth;
+			gameObject.height = this.mafiaBossRocketBullsEyeSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.mafiaBossRocketBullsEyeSizeWidth;
+			sprite.height = this.mafiaBossRocketBullsEyeSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.mafiaBossRocketBullsEyeGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generateMafiaBossRocketBullsEyes() {
+
+		let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (mafiaBoss) {
+
+			this.mafiaBossRocketBullsEyePopDelay -= 0.1;
+
+			if (this.mafiaBossRocketBullsEyePopDelay < 0) {
+
+				let mafiaBossRocketBullsEye = this.mafiaBossRocketBullsEyeGameObjects.find(x => x.isAnimating == false);
+
+				if (mafiaBossRocketBullsEye) {
+					mafiaBossRocketBullsEye.reset();
+					mafiaBossRocketBullsEye.reposition(mafiaBoss);
+					mafiaBossRocketBullsEye.setPopping();
+					mafiaBossRocketBullsEye.setTarget(this._player.getCloseBounds());
+					mafiaBossRocketBullsEye.enableRendering();
+				}
+
+				this.mafiaBossRocketBullsEyePopDelay = this.mafiaBossRocketBullsEyePopDelayDefault;
+			}
+		}
+	}
+
+	animateMafiaBossRocketBullsEyes() {
+
+		let animatingMafiaBossRocketBullsEyes = this.mafiaBossRocketBullsEyeGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingMafiaBossRocketBullsEyes) {
+
+			animatingMafiaBossRocketBullsEyes.forEach(gameObject => {
+
+				let mafiaBossRocketBullsEye = gameObject as MafiaBossRocketBullsEye;
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+					gameObject.moveDownRight();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.rotate(RotationDirection.Forward, 0, 2.5);
+
+					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+					if (mafiaBoss) {
+						mafiaBossRocketBullsEye.move();
+
+						if (Constants.checkCloseCollision(gameObject, this._player)) {
+							gameObject.setBlast();
+							this.loosePlayerHealth();
+							mafiaBoss.setWinStance();
+						}
+						else {
+							if (gameObject.autoBlast())
+								gameObject.setBlast();
+						}
+					}
+					else {
+						gameObject.setBlast();
+					}
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
 	//#region Honks	
 
-	private roadHonkSizeWidth: number = 128;
-	private roadHonkSizeHeight: number = 128;
+	private roadHonkSizeWidth: number = 125;
+	private roadHonkSizeHeight: number = 125;
 
 	private roadHonkGameObjects: Array<GameObject> = [];
 
@@ -1773,8 +2491,7 @@ export class GameScene extends Container implements IScene {
 			honk.reset();
 			honk.reposition(source);
 			honk.setPopping();
-
-			source.setPopping();
+			//source.setPopping();
 
 			gameObject.enableRendering();
 		}
@@ -2031,9 +2748,22 @@ export class GameScene extends Container implements IScene {
 
 			//TODO: check more enemy types to set direction
 			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+			let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+			let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
-			if (ufoBoss) {
+			let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
+
+			if (ufoBossRocketSeeking) {
+				this.setPlayerRocketDirection(this._player, playerRocket, ufoBossRocketSeeking);
+			}
+			else if (ufoBoss) {
 				this.setPlayerRocketDirection(this._player, playerRocket, ufoBoss);
+			}
+			else if (zombieBoss) {
+				this.setPlayerRocketDirection(this._player, playerRocket, zombieBoss);
+			}
+			else if (mafiaBoss) {
+				this.setPlayerRocketDirection(this._player, playerRocket, mafiaBoss);
 			}
 		}
 	}
@@ -2078,6 +2808,11 @@ export class GameScene extends Container implements IScene {
 						let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
 						let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
 
+						let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
+						let zombieBossRocketBlock = this.zombieBossRocketBlockGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
+
+						let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
+
 						if (ufoBossRocketSeeking) {
 							playerRocket.setBlast();
 							ufoBossRocketSeeking.setBlast();
@@ -2085,6 +2820,18 @@ export class GameScene extends Container implements IScene {
 						else if (ufoBoss) {
 							playerRocket.setBlast();
 							this.looseUfoBosshealth(ufoBoss as UfoBoss);
+						}
+						else if (zombieBossRocketBlock) {
+							playerRocket.setBlast();
+							zombieBossRocketBlock.looseHealth();
+						}
+						else if (zombieBoss) {
+							playerRocket.setBlast();
+							this.looseZombieBosshealth(zombieBoss as ZombieBoss);
+						}
+						else if (mafiaBoss) {
+							playerRocket.setBlast();
+							this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
 						}
 
 						if (playerRocket.autoBlast())
@@ -2195,64 +2942,6 @@ export class GameScene extends Container implements IScene {
 		this.animatePlayerBalloon();
 	}
 
-	private animateGameObjects() {
-
-		this.animateRoadMarks();
-
-		this.animateSideWalksTop();
-		this.animateHedgesTop();
-		this.animateTreesTop();
-		//this.animateHeavyBillboardsTop();
-		this.animateLightBillboardsTop();
-
-		this.animateVehicleEnemys();
-		this.animateVehicleBoss();
-		this.animateVehicleBossRockets();
-
-		this.animateHonks();
-
-		this.animateSideWalksBottom();
-		this.animateHedgesBottom();
-		this.animateTreesBottom();
-		this.animateLightBillboardsBottom();
-
-		this.animatePlayerHonkBomb();
-		this.animatePlayerRocket();
-
-		this.animateUfoBoss();
-		this.animateUfoBossRockets();
-		this.animateUfoBossRocketSeekings();
-
-		this.animateClouds();
-
-		this.animateInterimScreen();
-	}
-
-	private generateGameObjects() {
-
-		this.generateRoadMarks();
-		this.generateSideWalksTop();
-		//this.generateHeavyBillboardsTop();
-		this.generateLightBillboardsTop();
-		this.generateHedgesTop();
-		this.generateTreesTop();
-
-		this.generateVehicleEnemys();
-		this.generateVehicleBoss();
-		this.generateVehicleBossRockets();
-
-		this.generateUfoBoss();
-		this.generateUfoBossRockets();
-		this.generateUfoBossRocketSeekings();
-
-		this.generateClouds();
-
-		this.generateSideWalksBottom();
-		this.generateHedgesBottom();
-		this.generateLightBillboardsBottom();
-		this.generateTreesBottom();
-	}
-
 	public resize(scale: number): void {
 		this._sceneContainer.scale.set(scale);
 		this.repositionGameScoreBar();
@@ -2264,12 +2953,87 @@ export class GameScene extends Container implements IScene {
 		this.generateInterimScreen("LEVEL " + this._gameLevel.toString() + " COMPLETE");
 	}
 
+	private generateGameObjects() {
+
+		this.generateRoadMarks();
+		this.generateSideWalksTop();
+		//this.generateHeavyBillboardsTop();
+		this.generateLightBillboardsTop();
+		this.generateHedgesTop();
+		this.generateTreesTop();
+		this.generateLampsTop();
+
+		this.generateVehicleEnemys();
+		this.generateVehicleBoss();
+		this.generateVehicleBossRockets();
+
+		this.generateUfoBoss();
+		this.generateUfoBossRockets();
+		this.generateUfoBossRocketSeekings();
+
+		this.generateZombieBoss();
+		this.generateZombieBossRocketBlocks();
+
+		this.generateMafiaBoss();
+		this.generateMafiaBossRockets();
+		this.generateMafiaBossRocketBullsEyes();
+
+		this.generateClouds();
+
+		this.generateSideWalksBottom();
+		this.generateHedgesBottom();
+		this.generateLightBillboardsBottom();
+		this.generateTreesBottom();
+		this.generateLampsBottom();
+	}
+
+	private animateGameObjects() {
+
+		this.animateRoadMarks();
+
+		this.animateSideWalksTop();
+		this.animateHedgesTop();
+		this.animateTreesTop();
+		//this.animateHeavyBillboardsTop();
+		this.animateLightBillboardsTop();
+		this.animateLampsTop();
+
+		this.animateVehicleEnemys();
+		this.animateVehicleBoss();
+		this.animateVehicleBossRockets();
+
+		this.animateHonks();
+
+		this.animateSideWalksBottom();
+		this.animateHedgesBottom();
+		this.animateTreesBottom();
+		this.animateLightBillboardsBottom();
+		this.animateLampsBottom();
+
+		this.animatePlayerHonkBomb();
+		this.animatePlayerRocket();
+
+		this.animateUfoBoss();
+		this.animateUfoBossRockets();
+		this.animateUfoBossRocketSeekings();
+
+		this.animateZombieBoss();
+		this.animateZombieBossRocketBlocks();
+
+		this.animateMafiaBoss();
+		this.animateMafiaBossRockets();
+		this.animateMafiaBossRocketBullsEyes();
+
+		this.animateClouds();
+		this.animateInterimScreen();
+	}
+
 	private anyBossExists(): boolean {
-		return (this.ufoBossExists() || this.vehicleBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
+		return (this.ufoBossExists() || this.vehicleBossExists() || this.zombieBossExists() || this.mafiaBossExists());
 	}
 
 	private anyInAirBossExists(): boolean {
-		return (this.ufoBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
+		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
 	}
 
 	//#endregion

@@ -3,6 +3,17 @@ import { ConstructTemplate } from "./ConstructTemplate";
 import { GameObject } from "./GameObject";
 
 //#region Enums
+export enum RotationDirection {
+	Forward,
+	Backward,
+}
+
+export enum MafiaBossMovementPattern {
+	PLAYER_SEEKING,
+	RECTANGULAR_SQUARE,
+	RIGHT_LEFT,
+	UP_DOWN,
+}
 
 export enum UfoBossMovementPattern {
 	PLAYER_SEEKING,
@@ -160,6 +171,17 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK, "road_side_walk_1.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_HEDGE, "road_side_hedge_1.png"),
 
+		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_2.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_3.png"),
+
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_2.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_3.png"),
+
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LAMP, "road_side_lamp_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LAMP, "road_side_lamp_2.png"),
+
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_1.png"),
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_2.png"),
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_3.png"),
@@ -189,14 +211,6 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.HONK, "honk_1.png"),
 		new ConstructTemplate(ConstructType.HONK, "honk_2.png"),
 		new ConstructTemplate(ConstructType.HONK, "honk_3.png"),
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_2.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_3.png"),
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_2.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, "billboard_3.png"),
 
 		new ConstructTemplate(ConstructType.PLAYER_BALLOON, "player_1_character.png"),
 		new ConstructTemplate(ConstructType.PLAYER_BALLOON_IDLE, "player_balloon_1_idle.png"),
@@ -243,8 +257,24 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_1.png"),
 		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_2.png"),
 		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_3.png"),
-
 		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET_SEEKING, "ufo_boss_rocket_seeking.png"),
+
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_HIT, "zombie_boss_1_hit.png"),
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_IDLE, "zombie_boss_1_idle.png"),
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_WIN, "zombie_boss_1_win.png"),
+
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_1.png"),
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_2.png"),
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_3.png"),
+
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_HIT, "mafia_boss_1_hit.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_IDLE, "mafia_boss_1_idle.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_WIN, "mafia_boss_1_win.png"),
+
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_1.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_2.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_3.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE, "mafia_boss_rocket_bulls_eye.png"),
 	];
 
 	//#endregion
@@ -308,14 +338,14 @@ export abstract class Constants {
 
 	static checkCloseCollision(objA: GameObject, objB: GameObject): boolean {
 
-		const a = objA.getBounds();
-		const b = objB.getBounds();
+		const a = objA.getBounds(true);
+		const b = objB.getBounds(true);
 
 		const aLeft = a.left + a.width / 4;
 		const bLeft = b.left + b.width / 4;
 
-		const aRight = a.right - a.width / 4;
-		const bRight = b.right - b.width / 4;
+		const aRight = a.right /*- a.width / 4*/;
+		const bRight = b.right /*- b.width / 4*/;
 
 		const rightmostLeft = aLeft < bLeft ? bLeft : aLeft;
 		const leftmostRight = aRight > bRight ? bRight : aRight;
@@ -327,8 +357,8 @@ export abstract class Constants {
 		const aTop = a.top + a.height / 4;
 		const bTop = b.top + b.height / 4;
 
-		const aBottom = a.bottom - a.height / 4;
-		const bBottom = b.bottom - b.height / 4;
+		const aBottom = a.bottom /*- a.height / 4*/;
+		const bBottom = b.bottom /*- b.height / 4*/;
 
 		const bottommostTop = aTop < bTop ? bTop : aTop;
 		const topmostBottom = aBottom > bBottom ? bBottom : aBottom;

@@ -1,4 +1,5 @@
-import { Container, Texture } from 'pixi.js';
+import { Container, Rectangle, Texture } from 'pixi.js';
+import { RotationDirection } from './Constants';
 import { GameObjectSprite } from './GameObjectSprite';
 
 export class GameObject extends Container {
@@ -65,7 +66,6 @@ export class GameObject extends Container {
 	}
 
 	isDead(): boolean {
-
 		return this.health <= 0;
 	}
 
@@ -237,6 +237,55 @@ export class GameObject extends Container {
 
 	setRotation(angle: number) {
 		this.angle = angle;
+	}
+
+	rotate(
+		rotationDirection: RotationDirection = RotationDirection.Forward,
+		threadhold: number = 0,
+		rotationSpeed: number = 0.1) {
+		switch (rotationDirection) {
+			case RotationDirection.Forward:
+				{
+					if (threadhold == 0) {
+						this.angle += rotationSpeed;
+					}
+					else {
+						if (this.angle <= threadhold)
+							this.angle += rotationSpeed;
+					}
+				}
+				break;
+			case RotationDirection.Backward:
+				{
+					if (threadhold == 0) {
+						this.angle -= rotationSpeed;
+					}
+					else {
+						if (this.angle >= threadhold * -1)
+							this.angle -= rotationSpeed;
+					}
+
+				}
+				break;
+		}
+	}
+
+	unRotate(rotationSpeed: number = 0.1) {
+		if (this.angle != 0) {
+			if (this.angle < 0) {
+				this.angle += rotationSpeed;
+				return;
+			}
+
+			if (this.angle > 0) {
+				this.angle -= rotationSpeed;
+			}
+		}
+	}
+
+	getCloseBounds(): Rectangle {
+		let bounds = this.getBounds(true);
+		return new Rectangle(bounds.left + this.width / 4, bounds.top + this.height / 4, bounds.right - this.width / 4, bounds.bottom - this.height / 4);
 	}
 
 	//#endregion

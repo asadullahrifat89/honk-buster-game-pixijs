@@ -81,14 +81,10 @@ export class HealthBar extends Container {
 	}
 
 	setValue(value: number) {
-
 		if (this._maximumHealth == 0)
 			this._maximumHealth = 100;
 
-		if (this._maximumHealth > 0)
-			this._progressBar.progress = value / this._maximumHealth * 100;
-		else
-			this._progressBar.progress = value;
+		this._progressBar.progress = value / this._maximumHealth * 100;
 
 		if (this._progressBar.progress > 0)
 			this.alpha = 1;

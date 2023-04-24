@@ -13,7 +13,6 @@ export class VehicleBossRocket extends GameObject {
 	}
 
 	reset() {
-
 		this.alpha = 1;
 		this.scale.set(1);
 
@@ -23,9 +22,7 @@ export class VehicleBossRocket extends GameObject {
 	}
 
 	reposition(vehicleBoss: VehicleBoss) {
-		this.setPosition(
-			(vehicleBoss.getLeft() + vehicleBoss.width / 2) - this.width / 2,
-			vehicleBoss.getTop() + vehicleBoss.height / 2);
+		this.setPosition((vehicleBoss.getRight() - vehicleBoss.width / 2) - this.width / 2, vehicleBoss.getTop());
 	}
 
 	setBlast() {
@@ -42,3 +39,4 @@ export class VehicleBossRocket extends GameObject {
 		return false;
 	}
 }
+
