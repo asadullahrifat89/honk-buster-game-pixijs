@@ -7,7 +7,7 @@ export class SeekingRocketBase extends GameObject {
 	private readonly _grace: number = 7;
 	private readonly _lag: number = 60;
 
-	seek(target: Rectangle, doubleSpeed: boolean) {
+	seek(target: Rectangle, doubleSpeed: boolean = false) {
 		let left = this.getLeft();
 		let top = this.getTop();
 
