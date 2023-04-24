@@ -59,6 +59,7 @@ export class GameScene extends Container implements IScene {
 
 		this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
 		this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
+		//this._sceneContainer.filters = [new DropShadowFilter()];
 
 		this.addChild(this._sceneContainer);
 
@@ -1868,8 +1869,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region Honks	
 
-	private roadHonkSizeWidth: number = 128;
-	private roadHonkSizeHeight: number = 128;
+	private roadHonkSizeWidth: number = 125;
+	private roadHonkSizeHeight: number = 125;
 
 	private roadHonkGameObjects: Array<GameObject> = [];
 
