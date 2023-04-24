@@ -1573,9 +1573,12 @@ export class GameScene extends Container implements IScene {
 					gameObject.pop();
 					gameObject.hover();
 
+					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
 					if (Constants.checkCloseCollision(gameObject, this._player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
+						ufoBoss?.setWinStance();
 					}
 
 					if (gameObject.autoBlast())
@@ -1707,6 +1710,7 @@ export class GameScene extends Container implements IScene {
 						if (Constants.checkCloseCollision(gameObject, this._player)) {
 							gameObject.setBlast();
 							this.loosePlayerHealth();
+							ufoBoss.setWinStance();
 						}
 						else {
 							if (gameObject.autoBlast())
