@@ -1554,7 +1554,7 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setValue(ufoBoss.health);
 				this._bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
 
-				this.generateInterimScreen("Beat the Scarlet Saucer");
+				this.generateInterimScreen("Scarlet Saucer Arrived");
 			}
 		}
 	}
@@ -1926,7 +1926,7 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setValue(zombieBoss.health);
 				this._bossHealthBar.setIcon(zombieBoss.getGameObjectSprite().getTexture());
 
-				this.generateInterimScreen("Evade & Destroy Zombie Blocks");
+				this.generateInterimScreen("Zombie Blocks Arrived");
 			}
 		}
 	}
