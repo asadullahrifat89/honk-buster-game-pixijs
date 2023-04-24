@@ -2072,8 +2072,13 @@ export class GameScene extends Container implements IScene {
 						//TODO: check collision for more enemy types
 
 						let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
+						let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
 
-						if (ufoBoss) {
+						if (ufoBossRocketSeeking) {
+							playerRocket.setBlast();
+							ufoBossRocketSeeking.setBlast();
+						}
+						else if (ufoBoss) {
 							playerRocket.setBlast();
 							this.looseUfoBosshealth(ufoBoss as UfoBoss);
 						}
