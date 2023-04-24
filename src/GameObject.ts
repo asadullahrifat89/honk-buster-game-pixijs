@@ -285,7 +285,7 @@ export class GameObject extends Container {
 
 	getCloseBounds(): Rectangle {
 		let bounds = this.getBounds(true);
-		return new Rectangle(bounds.left + this.width / 3, bounds.top + this.height / 3, bounds.right - this.width / 3, bounds.bottom - this.height / 3);
+		return new Rectangle(bounds.left + this.width / 4, bounds.top + this.height / 4, bounds.right - this.width / 4, bounds.bottom - this.height / 4);
 	}
 
 	//#endregion
