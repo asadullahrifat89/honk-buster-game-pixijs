@@ -1,5 +1,5 @@
 ﻿import { Texture } from 'pixi.js';
-import { Constants, ConstructType, MovementDirection, PlayerBalloonStance, PlayerBalloonTemplate } from './Constants';
+import { Constants, ConstructType, MovementDirection, PlayerBalloonStance, PlayerBalloonTemplate, RotationDirection } from './Constants';
 import { GameController } from './GameController';
 import { GameObject } from './GameObject';
 
@@ -15,9 +15,9 @@ export class PlayerBalloon extends GameObject {
 	private readonly _movementStopDelayDefault: number = 6;
 
 	private _lastSpeed: number = 0;
-	//private readonly _rotationThreadhold: number = 9;
-	//private readonly _unrotationSpeed: number = 1.1;
-	//private readonly _rotationSpeed: number = 0.5;
+	private readonly _rotationThreadhold: number = 9;
+	private readonly _unrotationSpeed: number = 1.1;
+	private readonly _rotationSpeed: number = 0.5;
 
 	private _attackStanceDelay: number = 0;
 	private readonly _attackStanceDelayDefault: number = 1.5;
@@ -152,6 +152,7 @@ export class PlayerBalloon extends GameObject {
 		this._movementDirection = MovementDirection.Up;
 		this._movementStopDelay = this._movementStopDelayDefault;
 		this._lastSpeed = this.speed;
+		this.rotate(RotationDirection.Backward, this._rotationThreadhold, this._rotationSpeed);
 	}
 
 	override moveDown() {
@@ -159,6 +160,7 @@ export class PlayerBalloon extends GameObject {
 		this._movementDirection = MovementDirection.Down;
 		this._movementStopDelay = this._movementStopDelayDefault;
 		this._lastSpeed = this.speed;
+		this.rotate(RotationDirection.Forward, this._rotationThreadhold, this._rotationSpeed);
 	}
 
 	override moveLeft() {
@@ -166,6 +168,7 @@ export class PlayerBalloon extends GameObject {
 		this._movementDirection = MovementDirection.Left;
 		this._movementStopDelay = this._movementStopDelayDefault;
 		this._lastSpeed = this.speed;
+		this.rotate(RotationDirection.Backward, this._rotationThreadhold, this._rotationSpeed);
 	}
 
 	override moveRight() {
@@ -173,6 +176,7 @@ export class PlayerBalloon extends GameObject {
 		this._movementDirection = MovementDirection.Right;
 		this._movementStopDelay = this._movementStopDelayDefault;
 		this._lastSpeed = this.speed;
+		this.rotate(RotationDirection.Forward, this._rotationThreadhold, this._rotationSpeed);
 	}
 
 	override moveUpRight() {
@@ -180,6 +184,7 @@ export class PlayerBalloon extends GameObject {
 		this._movementDirection = MovementDirection.UpRight;
 		this._movementStopDelay = this._movementStopDelayDefault;
 		this._lastSpeed = this.speed;
+		this.rotate(RotationDirection.Forward, this._rotationThreadhold, this._rotationSpeed);
 	}
 
 	override moveUpLeft() {
@@ -187,6 +192,7 @@ export class PlayerBalloon extends GameObject {
 		this._movementDirection = MovementDirection.UpLeft;
 		this._movementStopDelay = this._movementStopDelayDefault;
 		this._lastSpeed = this.speed;
+		this.rotate(RotationDirection.Backward, this._rotationThreadhold, this._rotationSpeed);
 	}
 
 	override moveDownRight() {
@@ -194,6 +200,7 @@ export class PlayerBalloon extends GameObject {
 		this._movementDirection = MovementDirection.DownRight;
 		this._movementStopDelay = this._movementStopDelayDefault;
 		this._lastSpeed = this.speed;
+		this.rotate(RotationDirection.Forward, this._rotationThreadhold, this._rotationSpeed);
 	}
 
 	override moveDownLeft() {
@@ -201,6 +208,7 @@ export class PlayerBalloon extends GameObject {
 		this._movementDirection = MovementDirection.DownLeft;
 		this._movementStopDelay = this._movementStopDelayDefault;
 		this._lastSpeed = this.speed;
+		this.rotate(RotationDirection.Backward, this._rotationThreadhold, this._rotationSpeed);
 	}
 
 	gainhealth() {
@@ -319,10 +327,10 @@ export class PlayerBalloon extends GameObject {
 						break;
 					default:
 						break;
-				}
+				}				
 			}
 
-			//UnRotate(rotationSpeed: _unrotationSpeed);
+			this.unRotate(this._unrotationSpeed);
 		}
 		else {
 			this._movementDirection = MovementDirection.None;

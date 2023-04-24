@@ -3,6 +3,10 @@ import { ConstructTemplate } from "./ConstructTemplate";
 import { GameObject } from "./GameObject";
 
 //#region Enums
+export enum RotationDirection {
+	Forward,
+	Backward,
+}
 
 export enum UfoBossMovementPattern {
 	PLAYER_SEEKING,
@@ -169,7 +173,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, "road_side_light_billboard_3.png"),
 
 		new ConstructTemplate(ConstructType.ROAD_SIDE_LAMP, "road_side_lamp_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LAMP, "road_side_lamp_2.png"), 
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LAMP, "road_side_lamp_2.png"),
 
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_1.png"),
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_2.png"),
