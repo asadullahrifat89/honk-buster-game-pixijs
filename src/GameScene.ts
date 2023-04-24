@@ -53,7 +53,7 @@ export class GameScene extends Container implements IScene {
 	private readonly _zombieBossCheckpoint: GameCheckpoint;
 
 	//TODO: set defaults _mafiaBossReleasePoint = 100
-	private readonly _mafiaBossReleasePoint: number = 15; // first appearance
+	private readonly _mafiaBossReleasePoint: number = 100; // first appearance
 	private readonly _mafiaBossReleasePoint_increase: number = 15;
 	private readonly _mafiaBossCheckpoint: GameCheckpoint;
 
@@ -3037,6 +3037,6 @@ export class GameScene extends Container implements IScene {
 	}
 
 	//#endregion
-
+	  
 	//#endregion
 }
