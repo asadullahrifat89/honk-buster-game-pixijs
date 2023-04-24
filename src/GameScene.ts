@@ -19,6 +19,7 @@ import { HealthBar } from "./HealthBar";
 import { UfoBoss } from "./UfoBoss";
 import { PlayerRocket } from "./PlayerRocket";
 import { UfoBossRocket } from "./UfoBossRocket";
+import { UfoBossRocketSeeking } from "./UfoBossRocketSeeking";
 
 
 export class GameScene extends Container implements IScene {
@@ -87,6 +88,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnPlayerBalloon();
 
 		this.spawnUfoBossRockets();
+		this.spawnUfoBossRocketSeekings();
 		this.spawnUfoBosss();
 
 		this.spawnClouds();
@@ -1571,9 +1573,12 @@ export class GameScene extends Container implements IScene {
 					gameObject.pop();
 					gameObject.hover();
 
+					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
 					if (Constants.checkCloseCollision(gameObject, this._player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
+						ufoBoss?.setWinStance();
 					}
 
 					if (gameObject.autoBlast())
@@ -1612,6 +1617,115 @@ export class GameScene extends Container implements IScene {
 		else {
 			rocket.awaitMoveDownRight = true;
 			rocket.setRotation(33);
+		}
+	}
+
+	//#endregion
+
+	//#region UfoBossRocketSeekings
+
+	private ufoBossRocketSeekingSizeWidth: number = 90;
+	private ufoBossRocketSeekingSizeHeight: number = 90;
+
+	private ufoBossRocketSeekingGameObjects: Array<UfoBossRocketSeeking> = [];
+
+	private ufoBossRocketSeekingPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private ufoBossRocketSeekingPopDelay: number = 0;
+
+	spawnUfoBossRocketSeekings() {
+
+		for (let j = 0; j < 2; j++) {
+
+			const gameObject: UfoBossRocketSeeking = new UfoBossRocketSeeking(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+			gameObject.width = this.ufoBossRocketSeekingSizeWidth;
+			gameObject.height = this.ufoBossRocketSeekingSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET_SEEKING));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.ufoBossRocketSeekingSizeWidth;
+			sprite.height = this.ufoBossRocketSeekingSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.ufoBossRocketSeekingGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generateUfoBossRocketSeekings() {
+
+		let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (ufoBoss) {
+
+			if (this.ufoBossRocketSeekingGameObjects.every(x => x.isAnimating == false)) {
+
+				this.ufoBossRocketSeekingPopDelay -= 0.1;
+
+				if (this.ufoBossRocketSeekingPopDelay < 0) {
+
+					let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == false);
+
+					if (ufoBossRocketSeeking) {
+						ufoBossRocketSeeking.reset();
+						ufoBossRocketSeeking.reposition(ufoBoss);
+						ufoBossRocketSeeking.setPopping();
+						ufoBossRocketSeeking.enableRendering();
+					}
+
+					this.ufoBossRocketSeekingPopDelay = this.ufoBossRocketSeekingPopDelayDefault;
+				}
+			}
+		}
+	}
+
+	animateUfoBossRocketSeekings() {
+
+		let animatingUfoBossRocketSeekings = this.ufoBossRocketSeekingGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingUfoBossRocketSeekings) {
+
+			animatingUfoBossRocketSeekings.forEach(gameObject => {
+
+				let ufoBossRocketSeeking = gameObject as UfoBossRocketSeeking;
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+					gameObject.moveDownRight();
+				}
+				else {
+
+					gameObject.pop();
+
+					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+					if (ufoBoss) {
+						ufoBossRocketSeeking.seek(this._player.getBounds());
+
+						if (Constants.checkCloseCollision(gameObject, this._player)) {
+							gameObject.setBlast();
+							this.loosePlayerHealth();
+							ufoBoss.setWinStance();
+						}
+						else {
+							if (gameObject.autoBlast())
+								gameObject.setBlast();
+						}
+					}
+					else {
+						gameObject.setBlast();
+					}
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
 		}
 	}
 
@@ -1962,8 +2076,13 @@ export class GameScene extends Container implements IScene {
 						//TODO: check collision for more enemy types
 
 						let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
+						let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
 
-						if (ufoBoss) {
+						if (ufoBossRocketSeeking) {
+							playerRocket.setBlast();
+							ufoBossRocketSeeking.setBlast();
+						}
+						else if (ufoBoss) {
 							playerRocket.setBlast();
 							this.looseUfoBosshealth(ufoBoss as UfoBoss);
 						}
@@ -2102,6 +2221,7 @@ export class GameScene extends Container implements IScene {
 
 		this.animateUfoBoss();
 		this.animateUfoBossRockets();
+		this.animateUfoBossRocketSeekings();
 
 		this.animateClouds();
 
@@ -2123,6 +2243,7 @@ export class GameScene extends Container implements IScene {
 
 		this.generateUfoBoss();
 		this.generateUfoBossRockets();
+		this.generateUfoBossRocketSeekings();
 
 		this.generateClouds();
 
