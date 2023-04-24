@@ -20,6 +20,7 @@ import { UfoBoss } from "./UfoBoss";
 import { PlayerRocket } from "./PlayerRocket";
 import { UfoBossRocket } from "./UfoBossRocket";
 import { UfoBossRocketSeeking } from "./UfoBossRocketSeeking";
+import { ZombieBoss } from "./ZombieBoss";
 
 
 export class GameScene extends Container implements IScene {
@@ -35,13 +36,17 @@ export class GameScene extends Container implements IScene {
 	//TODO: set defaults _vehicleBossReleasePoint = 25
 	private readonly _vehicleBossReleasePoint: number = 25; // first appearance
 	private readonly _vehicleBossReleasePoint_increase: number = 15;
+	private readonly _vehicleBossCheckpoint: GameCheckpoint;
 
 	//TODO: set defaults _ufoBossReleasePoint = 50
 	private readonly _ufoBossReleasePoint: number = 50; // first appearance
 	private readonly _ufoBossReleasePoint_increase: number = 15;
-
-	private readonly _vehicleBossCheckpoint: GameCheckpoint;
 	private readonly _ufoBossCheckpoint: GameCheckpoint;
+
+	//TODO: set defaults _zombieBossReleasePoint = 75
+	private readonly _zombieBossReleasePoint: number = 75; // first appearance
+	private readonly _zombieBossReleasePoint_increase: number = 15;
+	private readonly _zombieBossCheckpoint: GameCheckpoint;
 
 	private _playerHealthBar: HealthBar;
 	private _bossHealthBar: HealthBar;
@@ -65,6 +70,7 @@ export class GameScene extends Container implements IScene {
 
 		this._vehicleBossCheckpoint = new GameCheckpoint(this._vehicleBossReleasePoint);
 		this._ufoBossCheckpoint = new GameCheckpoint(this._ufoBossReleasePoint);
+		this._zombieBossCheckpoint = new GameCheckpoint(this._zombieBossReleasePoint);
 
 		this.spawnRoadMarks();
 
@@ -93,6 +99,8 @@ export class GameScene extends Container implements IScene {
 		this.spawnUfoBossRockets();
 		this.spawnUfoBossRocketSeekings();
 		this.spawnUfoBosss();
+
+		this.spawnZombieBosss();
 
 		this.spawnClouds();
 
@@ -1867,6 +1875,128 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region ZombieBosss	
+
+	private zombieBossSizeWidth: number = 200;
+	private zombieBossSizeHeight: number = 200;
+
+	private zombieBossGameObjects: Array<ZombieBoss> = [];
+
+	private spawnZombieBosss() {
+		const gameObject: ZombieBoss = new ZombieBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
+		gameObject.disableRendering();
+		gameObject.width = this.zombieBossSizeWidth;
+		gameObject.height = this.zombieBossSizeHeight;
+
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_IDLE));
+
+		sprite.x = 0;
+		sprite.y = 0;
+		sprite.width = this.zombieBossSizeWidth;
+		sprite.height = this.zombieBossSizeHeight;
+
+		sprite.anchor.set(0.5, 0.5);
+
+		gameObject.addChild(sprite);
+
+		this.zombieBossGameObjects.push(gameObject);
+		this._sceneContainer.addChild(gameObject);
+	}
+
+	private generateZombieBoss() {
+
+		if (this._zombieBossCheckpoint.shouldRelease(this._gameScoreBar.getScore()) && !this.zombieBossExists()) {
+
+			var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				var zombieBoss = gameObject as ZombieBoss;
+				zombieBoss.setPosition(0, zombieBoss.height * -1);
+				zombieBoss.reset();
+				zombieBoss.health = this._zombieBossCheckpoint.getReleasePointDifference() * 1.5;
+
+				gameObject.enableRendering();
+
+				this._zombieBossCheckpoint.increaseThreasholdLimit(this._zombieBossReleasePoint_increase, this._gameScoreBar.getScore());
+
+				this._bossHealthBar.setMaximumValue(zombieBoss.health);
+				this._bossHealthBar.setValue(zombieBoss.health);
+				this._bossHealthBar.setIcon(zombieBoss.getGameObjectSprite().getTexture());
+
+				this.generateInterimScreen("Evade & Destroy Zombie Blocks");
+			}
+		}
+	}
+
+	private animateZombieBoss() {
+
+		var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == true);
+		let zombieBoss: ZombieBoss = gameObject as ZombieBoss;
+
+		if (gameObject) {
+
+			if (zombieBoss.isDead()) {
+				zombieBoss.shrink();
+			}
+			else {
+				gameObject.pop();
+				gameObject.hover();
+				zombieBoss.depleteHitStance();
+				zombieBoss.depleteWinStance();
+
+				if (zombieBoss.isAttacking) {
+
+					zombieBoss.moveUpRightDownLeft(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling);
+
+					if (Constants.checkCloseCollision(this._player, zombieBoss)) {
+						this.loosePlayerHealth();
+					}
+				}
+				else {
+
+					zombieBoss.moveDownRight();
+
+					if (zombieBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling / 3)) // bring ZombieBoss to a suitable distance from player and then start attacking
+					{
+						zombieBoss.isAttacking = true;
+					}
+				}
+			}
+
+			if (zombieBoss.isShrinkingComplete()) {
+				gameObject.disableRendering();
+			}
+		}
+	}
+
+	private looseZombieBosshealth(zombieBoss: ZombieBoss) {
+
+		zombieBoss.setPopping();
+		zombieBoss.looseHealth();
+		zombieBoss.setHitStance();
+
+		this._bossHealthBar.setValue(zombieBoss.health);
+
+		if (zombieBoss.isDead()) {
+
+			this._player.setWinStance();
+			this._gameScoreBar.gainScore(3);
+			this.levelUp();
+		}
+	}
+
+	private zombieBossExists(): boolean {
+		var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == true);
+
+		if (gameObject)
+			return true;
+		else
+			return false;
+	}
+
+	//#endregion
+
 	//#region Honks	
 
 	private roadHonkSizeWidth: number = 125;
@@ -2214,6 +2344,8 @@ export class GameScene extends Container implements IScene {
 						let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
 						let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
 
+						let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
+
 						if (ufoBossRocketSeeking) {
 							playerRocket.setBlast();
 							ufoBossRocketSeeking.setBlast();
@@ -2221,6 +2353,10 @@ export class GameScene extends Container implements IScene {
 						else if (ufoBoss) {
 							playerRocket.setBlast();
 							this.looseUfoBosshealth(ufoBoss as UfoBoss);
+						}
+						else if (zombieBoss) {
+							playerRocket.setBlast();
+							this.looseZombieBosshealth(zombieBoss as ZombieBoss);
 						}
 
 						if (playerRocket.autoBlast())
@@ -2372,6 +2508,8 @@ export class GameScene extends Container implements IScene {
 		this.animateUfoBossRockets();
 		this.animateUfoBossRocketSeekings();
 
+		this.animateZombieBoss();
+
 		this.animateClouds();
 
 		this.animateInterimScreen();
@@ -2395,6 +2533,8 @@ export class GameScene extends Container implements IScene {
 		this.generateUfoBossRockets();
 		this.generateUfoBossRocketSeekings();
 
+		this.generateZombieBoss();
+
 		this.generateClouds();
 
 		this.generateSideWalksBottom();
@@ -2405,11 +2545,11 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private anyBossExists(): boolean {
-		return (this.ufoBossExists() || this.vehicleBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
+		return (this.ufoBossExists() || this.vehicleBossExists() || this.zombieBossExists() /*|| MafiaBossExists()*/);
 	}
 
 	private anyInAirBossExists(): boolean {
-		return (this.ufoBossExists() /*|| ZombieBossExists() || MafiaBossExists()*/);
+		return (this.ufoBossExists() || this.zombieBossExists() /*|| MafiaBossExists()*/);
 	}
 
 	//#endregion
