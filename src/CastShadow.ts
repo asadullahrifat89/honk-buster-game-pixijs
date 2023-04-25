@@ -2,11 +2,12 @@
 import { GameObject } from './GameObject';
 
 
-export class DropShadow extends GameObject {
+export class CastShadow extends GameObject {
 
 	public source: GameObject = new GameObject(0);
 
 	constructor(source: GameObject, width: number, height: number) {
+
 		super(0);
 		this.alpha = 0.7;
 		this.source = source;
@@ -19,13 +20,13 @@ export class DropShadow extends GameObject {
 		graphics.y = 0;		
 
 		this.x = (source.getLeft() + source.width / 2) - this.width / 2;
-		this.y = source.getBottom() + (source.dropShadowDistance);
+		this.y = source.getBottom() + (source.castShadowDistance);
 
 		this.addChild(graphics);
 	}
 
 	reset() {
 		this.x = (this.source.getLeft() + this.source.width / 2) - this.width / 2;
-		this.y = this.source.getBottom() + (this.source.dropShadowDistance);
+		this.y = this.source.getBottom() + (this.source.castShadowDistance);
 	}
 }

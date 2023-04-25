@@ -28,7 +28,7 @@ import { MafiaBossRocketBullsEye } from "./MafiaBossRocketBullsEye";
 import { HealthPickup } from "./HealthPickup";
 import { PowerUpPickup } from "./PowerUpPickup";
 import { PlayerRocketBullsEye } from "./PlayerRocketBullsEye";
-import { DropShadow } from "./DropShadow";
+import { CastShadow } from "./CastShadow";
 
 
 export class GameScene extends Container implements IScene {
@@ -78,7 +78,7 @@ export class GameScene extends Container implements IScene {
 
 		this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
 		this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
-		//this._sceneContainer.filters = [new DropShadowFilter()];
+		//this._sceneContainer.filters = [new CastShadowFilter()];
 
 		this.addChild(this._sceneContainer);
 
@@ -155,25 +155,25 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region DropShadow
+	//#region CastShadow
 
-	private dropShadowGameObjects: Array<DropShadow> = [];
+	private castShadowGameObjects: Array<CastShadow> = [];
 
-	spawnDropShadow(source: GameObject) {
+	spawnCastShadow(source: GameObject) {
 
-		const gameObject: DropShadow = new DropShadow(source, source.width / 2, 25);
+		const gameObject: CastShadow = new CastShadow(source, source.width / 2, 25);
 		gameObject.disableRendering();
 
-		this.dropShadowGameObjects.push(gameObject);
+		this.castShadowGameObjects.push(gameObject);
 		this._sceneContainer.addChild(gameObject);
 	}
 
-	animateDropShadows() {
-		var animatingDropShadows = this.dropShadowGameObjects.filter(x => x.source.isAnimating == true);
+	animateCastShadows() {
+		var animatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == true);
 
-		if (animatingDropShadows) {
+		if (animatingCastShadows) {
 
-			animatingDropShadows.forEach(dropShadow => {
+			animatingCastShadows.forEach(dropShadow => {
 				dropShadow.reset();
 
 				if (!dropShadow.isAnimating)
@@ -181,11 +181,11 @@ export class GameScene extends Container implements IScene {
 			});
 		}
 
-		var nonAnimatingDropShadows = this.dropShadowGameObjects.filter(x => x.source.isAnimating == false);
+		var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false);
 
-		if (nonAnimatingDropShadows) {
+		if (nonAnimatingCastShadows) {
 
-			nonAnimatingDropShadows.forEach(dropShadow => {
+			nonAnimatingCastShadows.forEach(dropShadow => {
 				if (dropShadow.isAnimating)
 					dropShadow.disableRendering();
 			});
@@ -291,7 +291,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.treeSizeWidth * 5;
 			gameObject.height = this.treeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -319,7 +319,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.treeSizeWidth * 5;
 			gameObject.height = this.treeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -431,7 +431,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.hedgeSizeWidth * 5;
 			gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 			// add hedges to the hedge top gameObject
 			for (let i = 0; i < 5; i++) {
@@ -460,7 +460,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.hedgeSizeWidth * 5;
 			gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 			// add hedges to the hedge bottom gameObject
 			for (let i = 0; i < 5; i++) {
@@ -574,7 +574,7 @@ export class GameScene extends Container implements IScene {
 	//		gameObject.width = this.roadHeavyBillboardSizeWidth * 5;
 	//		gameObject.height = this.roadHeavyBillboardSizeHeight / 2 * 5;
 
-	//		// gameObject.filters = [new DropShadowFilter()];
+	//		// gameObject.filters = [new CastShadowFilter()];
 
 
 	//		for (let i = 0; i < 5; i++) {
@@ -605,7 +605,7 @@ export class GameScene extends Container implements IScene {
 	////		gameObject.width = this.roadHeavyBillboardSizeWidth * 5;
 	////		gameObject.height = this.roadHeavyBillboardSizeHeight / 2 * 5;
 
-	////		// gameObject.filters = [new DropShadowFilter()];
+	////		// gameObject.filters = [new CastShadowFilter()];
 
 	////		
 	////		for (let i = 0; i < 5; i++) {
@@ -883,7 +883,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.lightBillboardSizeWidth * 5;
 			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 
 			for (let i = 0; i < 5; i++) {
@@ -994,7 +994,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.sideWalkWidth * 5;
 			gameObject.height = this.sideWalkHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 			// add sideWalks to the sideWalk top gameObject
 			for (let i = 0; i < 5; i++) {
@@ -1028,7 +1028,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.sideWalkWidth * 5;
 			gameObject.height = this.sideWalkHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 			// add sideWalks to the sideWalk top gameObject
 			for (let i = 0; i < 5; i++) {
@@ -2597,7 +2597,7 @@ export class GameScene extends Container implements IScene {
 
 		this._sceneContainer.addChild(this._player);
 
-		this.spawnDropShadow(this._player);
+		this.spawnCastShadow(this._player);
 	}
 
 	generatePlayerBalloon() {
@@ -3490,7 +3490,7 @@ export class GameScene extends Container implements IScene {
 		this.animateHealthPickups();
 		this.animatePowerUpPickups();
 
-		this.animateDropShadows();
+		this.animateCastShadows();
 
 		this.animateClouds();
 		this.animateInGameMessage();
