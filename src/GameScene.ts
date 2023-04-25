@@ -161,14 +161,14 @@ export class GameScene extends Container implements IScene {
 
 	spawnDropShadow(source: GameObject) {
 
-		const dropShadow: DropShadow = new DropShadow(source);
-		dropShadow.disableRendering();
+		const gameObject: DropShadow = new DropShadow(source, source.width / 2, 25);
+		gameObject.disableRendering();
 
-		this.dropShadowGameObjects.push(dropShadow);
-		this._sceneContainer.addChild(dropShadow);
+		this.dropShadowGameObjects.push(gameObject);
+		this._sceneContainer.addChild(gameObject);
 	}
 
-	animateDropShadow() {
+	animateDropShadows() {
 		var animatingDropShadows = this.dropShadowGameObjects.filter(x => x.source.isAnimating == true);
 
 		if (animatingDropShadows) {
@@ -2596,6 +2596,8 @@ export class GameScene extends Container implements IScene {
 		this._player.setPlayerTemplate(playerTemplate);
 
 		this._sceneContainer.addChild(this._player);
+
+		this.spawnDropShadow(this._player);
 	}
 
 	generatePlayerBalloon() {
@@ -3487,6 +3489,8 @@ export class GameScene extends Container implements IScene {
 
 		this.animateHealthPickups();
 		this.animatePowerUpPickups();
+
+		this.animateDropShadows();
 
 		this.animateClouds();
 		this.animateInGameMessage();
