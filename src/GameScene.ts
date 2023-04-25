@@ -1510,6 +1510,10 @@ export class GameScene extends Container implements IScene {
 
 			this.vehicleBossRocketGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -1599,6 +1603,8 @@ export class GameScene extends Container implements IScene {
 
 		this.ufoBossGameObjects.push(gameObject);
 		this._sceneContainer.addChild(gameObject);
+
+		this.spawnCastShadow(gameObject);
 	}
 
 	private generateUfoBoss() {
@@ -1726,6 +1732,8 @@ export class GameScene extends Container implements IScene {
 
 			this.ufoBossRocketGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -1867,6 +1875,8 @@ export class GameScene extends Container implements IScene {
 
 			this.ufoBossRocketSeekingGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -1971,6 +1981,8 @@ export class GameScene extends Container implements IScene {
 
 		this.zombieBossGameObjects.push(gameObject);
 		this._sceneContainer.addChild(gameObject);
+
+		this.spawnCastShadow(gameObject);
 	}
 
 	private generateZombieBoss() {
@@ -2098,6 +2110,8 @@ export class GameScene extends Container implements IScene {
 
 			this.zombieBossRocketBlockGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -2187,6 +2201,8 @@ export class GameScene extends Container implements IScene {
 
 		this.mafiaBossGameObjects.push(gameObject);
 		this._sceneContainer.addChild(gameObject);
+
+		this.spawnCastShadow(gameObject);
 	}
 
 	private generateMafiaBoss() {
@@ -2314,6 +2330,8 @@ export class GameScene extends Container implements IScene {
 
 			this.mafiaBossRocketGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -2427,6 +2445,8 @@ export class GameScene extends Container implements IScene {
 
 			this.mafiaBossRocketBullsEyeGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -2805,6 +2825,8 @@ export class GameScene extends Container implements IScene {
 
 			this.playerRocketGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -2981,6 +3003,8 @@ export class GameScene extends Container implements IScene {
 
 			this.playerRocketBullsEyeGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -3115,6 +3139,8 @@ export class GameScene extends Container implements IScene {
 
 			this.healthPickupGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -3225,6 +3251,8 @@ export class GameScene extends Container implements IScene {
 
 			this.powerUpPickupGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
