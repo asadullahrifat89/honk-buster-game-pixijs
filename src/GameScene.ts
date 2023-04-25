@@ -29,6 +29,7 @@ import { HealthPickup } from "./HealthPickup";
 import { PowerUpPickup } from "./PowerUpPickup";
 import { PlayerRocketBullsEye } from "./PlayerRocketBullsEye";
 import { CastShadow } from "./CastShadow";
+import { DropShadowFilter } from "@pixi/filter-drop-shadow";
 
 
 export class GameScene extends Container implements IScene {
@@ -294,7 +295,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.treeSizeWidth * 5;
 			gameObject.height = this.treeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new CastShadowFilter()];
+			gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -322,7 +323,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.treeSizeWidth * 5;
 			gameObject.height = this.treeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new CastShadowFilter()];
+			gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -434,9 +435,8 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.hedgeSizeWidth * 5;
 			gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new CastShadowFilter()];
+			gameObject.filters = [new DropShadowFilter()];
 
-			// add hedges to the hedge top gameObject
 			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
@@ -463,9 +463,8 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.hedgeSizeWidth * 5;
 			gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new CastShadowFilter()];
+			gameObject.filters = [new DropShadowFilter()];
 
-			// add hedges to the hedge bottom gameObject
 			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
@@ -724,6 +723,8 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.lampSizeWidth * 5;
 			gameObject.height = this.lampSizeHeight / 2 * 5;
 
+			gameObject.filters = [new DropShadowFilter()];
+
 			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
@@ -749,6 +750,8 @@ export class GameScene extends Container implements IScene {
 			gameObject.disableRendering();
 			gameObject.width = this.lampSizeWidth * 5;
 			gameObject.height = this.lampSizeHeight / 2 * 5;
+
+			gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -860,6 +863,8 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.lightBillboardSizeWidth * 5;
 			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
 
+			gameObject.filters = [new DropShadowFilter()];
+
 			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
@@ -886,8 +891,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.lightBillboardSizeWidth * 5;
 			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new CastShadowFilter()];
-
+			gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -1223,6 +1227,8 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.vehicleEnemySizeWidth;
 			gameObject.height = this.vehicleEnemySizeHeight;
 
+			gameObject.filters = [new DropShadowFilter()];
+
 			var vehicleType = Constants.getRandomNumber(0, 1);
 
 			var uri: string = "";
@@ -1349,6 +1355,8 @@ export class GameScene extends Container implements IScene {
 		gameObject.disableRendering();
 		gameObject.width = this.vehicleBossSizeWidth;
 		gameObject.height = this.vehicleBossSizeHeight;
+
+		gameObject.filters = [new DropShadowFilter()];
 
 		var vehicleType = Constants.getRandomNumber(0, 1);
 
