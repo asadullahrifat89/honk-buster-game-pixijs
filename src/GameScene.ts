@@ -1589,8 +1589,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region UfoEnemys	
 
-	private ufoEnemySizeWidth: number = 200;
-	private ufoEnemySizeHeight: number = 200;
+	private ufoEnemySizeWidth: number = 190;
+	private ufoEnemySizeHeight: number = 190;
 
 	private ufoEnemyGameObjects: Array<UfoEnemy> = [];
 
@@ -3084,9 +3084,13 @@ export class GameScene extends Container implements IScene {
 			let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
 			let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
+			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
 
 			if (ufoBossRocketSeeking) {
 				this.setPlayerRocketDirection(this._player, playerRocket, ufoBossRocketSeeking);
+			}
+			else if (ufoEnemy) {
+				this.setPlayerRocketDirection(this._player, playerRocket, ufoEnemy);
 			}
 			else if (ufoBoss) {
 				this.setPlayerRocketDirection(this._player, playerRocket, ufoBoss);
@@ -3258,15 +3262,18 @@ export class GameScene extends Container implements IScene {
 
 			this._player.setAttackStance();
 
-			//TODO: check more enemy types to set target
 			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 			let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 			let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
 			let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
+			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
 
 			if (ufoBossRocketSeeking) {
 				playerRocketBullsEye.setTarget(ufoBossRocketSeeking.getCloseBounds());
+			}
+			else if (ufoEnemy) {
+				playerRocketBullsEye.setTarget(ufoEnemy.getCloseBounds());
 			}
 			else if (ufoBoss) {
 				playerRocketBullsEye.setTarget(ufoBoss.getCloseBounds());
@@ -3305,8 +3312,6 @@ export class GameScene extends Container implements IScene {
 					gameObject.pop();
 					gameObject.rotate(RotationDirection.Forward, 0, 2.5);
 					gameObject.move();
-
-					//TODO: check collision for more enemy types
 
 					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
 					let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
