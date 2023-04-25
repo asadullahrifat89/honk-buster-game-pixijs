@@ -9,6 +9,7 @@ export class HealthBar extends Container {
 	private _progressBar: ProgressBar;
 	private _imageContainer: GameObject;
 	private _maximumHealth: number = 0;
+	public tag: any;
 
 	constructor(texture: Texture, scene: Container) {
 		super();

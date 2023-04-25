@@ -3,7 +3,7 @@ import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
 import { Cloud } from "./Cloud";
-import { Constants, ConstructType, RotationDirection } from './Constants';
+import { Constants, ConstructType, PowerUpType, RotationDirection } from './Constants';
 import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
 import { PlayerBalloon } from "./PlayerBalloon";
@@ -26,6 +26,7 @@ import { MafiaBoss } from "./MafiaBoss";
 import { MafiaBossRocket } from "./MafiaBossRocket";
 import { MafiaBossRocketBullsEye } from "./MafiaBossRocketBullsEye";
 import { HealthPickup } from "./HealthPickup";
+import { PowerUpPickup } from "./PowerUpPickup";
 
 
 export class GameScene extends Container implements IScene {
@@ -60,6 +61,7 @@ export class GameScene extends Container implements IScene {
 
 	private _playerHealthBar: HealthBar;
 	private _bossHealthBar: HealthBar;
+	private _powerUpMeter: HealthBar;
 
 	private _gameLevel: number = 0;
 
@@ -119,6 +121,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnMafiaBossRocketBullsEyes();
 
 		this.spawnHealthPickups();
+		this.spawnPowerUpPickups();
 
 		this.spawnClouds();
 
@@ -136,6 +139,11 @@ export class GameScene extends Container implements IScene {
 		this._bossHealthBar.setMaximumValue(100);
 		this._bossHealthBar.setValue(0);
 		this.repositionVehicleBossHealthBar();
+
+		this._powerUpMeter = new HealthBar(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR), this);
+		this._powerUpMeter.setMaximumValue(100);
+		this._powerUpMeter.setValue(0);
+		this.repositionPowerUpMeter();
 
 		this._interimScreen = new InterimScreen(this);
 
@@ -2989,6 +2997,143 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region PowerUpPickups	
+
+	private powerUpPickupSizeWidth: number = 327 / 3;
+	private powerUpPickupSizeHeight: number = 327 / 3;
+
+	private powerUpPickupGameObjects: Array<PowerUpPickup> = [];
+
+	private powerUpPickupPopDelayDefault: number = 100 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private powerUpPickupPopDelay: number = 0;
+
+	private spawnPowerUpPickups() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: PowerUpPickup = new PowerUpPickup(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 1));
+			gameObject.disableRendering();
+			gameObject.width = this.powerUpPickupSizeWidth;
+			gameObject.height = this.powerUpPickupSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.powerUpPickupSizeWidth;
+			sprite.height = this.powerUpPickupSizeHeight;
+			sprite.anchor.set(0.5, 0.5);
+
+			gameObject.addChild(sprite);
+
+			this.powerUpPickupGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private generatePowerUpPickups() {
+
+		if ((this.anyInAirBossExists() /*|| UfoEnemyExists()*/) && !this._powerUpMeter.hasHealth()) {
+			this.powerUpPickupPopDelay -= 0.1;
+
+			if (this.powerUpPickupPopDelay < 0) {
+
+				var gameObject = this.powerUpPickupGameObjects.find(x => x.isAnimating == false);
+
+				if (gameObject) {
+
+					gameObject.reset();
+
+					var powerUpPickup = gameObject as PowerUpPickup;
+
+					if (powerUpPickup) {
+						var topOrLeft = Constants.getRandomNumber(0, 1);
+
+						switch (topOrLeft) {
+							case 0:
+								{
+									var xLaneWidth = Constants.DEFAULT_GAME_VIEW_WIDTH / 4;
+									powerUpPickup.setPosition(Constants.getRandomNumber(0, xLaneWidth - powerUpPickup.width), powerUpPickup.height * -1);
+								}
+								break;
+							case 1:
+								{
+									var yLaneWidth = (Constants.DEFAULT_GAME_VIEW_HEIGHT / 2) / 2;
+									powerUpPickup.setPosition(powerUpPickup.width * -1, Constants.getRandomNumber(0, yLaneWidth));
+								}
+								break;
+							default:
+								break;
+						}
+					}
+
+					gameObject.enableRendering();
+
+					this.powerUpPickupPopDelay = this.powerUpPickupPopDelayDefault;
+				}
+			}
+		}
+	}
+
+	private animatePowerUpPickups() {
+
+		var animatingPowerUpPickups = this.powerUpPickupGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingPowerUpPickups) {
+
+			animatingPowerUpPickups.forEach(gameObject => {
+
+				if (gameObject.isPickedUp) {
+					gameObject.shrink();
+				}
+				else {
+
+					gameObject.moveDownRight();
+
+					if (Constants.checkCloseCollision(gameObject, this._player)) {
+						gameObject.pickedUp();
+
+						this._powerUpMeter.tag = gameObject.powerUpType;
+						this._powerUpMeter.setIcon(gameObject.getGameObjectSprite().getTexture());
+
+						switch (gameObject.powerUpType) {
+							case PowerUpType.BULLS_EYE: // if bulls eye powerup, allow using a single shot of 20 bombs
+								{
+									this._powerUpMeter.setMaximumValue(20);
+									this._powerUpMeter.setValue(20);
+
+									this.generateInterimScreen("Bylls Eye +20");
+								}
+								break;
+							case PowerUpType.ARMOR:
+								{
+									this._powerUpMeter.setMaximumValue(10);
+									this._powerUpMeter.setValue(10);
+
+									this.generateInterimScreen("Armor +10");
+								}
+								break;
+							default:
+								break;
+						}
+					}
+				}
+
+				if (gameObject.isShrinkingComplete() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	private depletePowerUp() {
+		// use up the power up
+		if (this._powerUpMeter.hasHealth())
+			this._powerUpMeter.setValue(this._powerUpMeter.getValue() - 1);
+	}
+
+	//#endregion
+
 	//#region GameController
 
 	setGameController() {
@@ -3017,6 +3162,10 @@ export class GameScene extends Container implements IScene {
 
 	private repositionVehicleBossHealthBar() {
 		this._bossHealthBar.reposition((Manager.width) - 205, 10);
+	}
+
+	private repositionPowerUpMeter() {
+		this._powerUpMeter.reposition((Manager.width) - 305, 10);
 	}
 
 	//#endregion
@@ -3092,6 +3241,7 @@ export class GameScene extends Container implements IScene {
 		this.generateMafiaBossRocketBullsEyes();
 
 		this.generateHealthPickups();
+		this.generatePowerUpPickups();
 
 		this.generateClouds();
 
@@ -3140,6 +3290,7 @@ export class GameScene extends Container implements IScene {
 		this.animateMafiaBossRocketBullsEyes();
 
 		this.animateHealthPickups();
+		this.animatePowerUpPickups();
 
 		this.animateClouds();
 		this.animateInterimScreen();
