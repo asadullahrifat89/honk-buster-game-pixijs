@@ -29,7 +29,6 @@ import { HealthPickup } from "./HealthPickup";
 import { PowerUpPickup } from "./PowerUpPickup";
 import { PlayerRocketBullsEye } from "./PlayerRocketBullsEye";
 import { CastShadow } from "./CastShadow";
-import { DropShadowFilter } from "@pixi/filter-drop-shadow";
 import { UfoEnemy } from "./UfoEnemy";
 
 
@@ -308,7 +307,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.treeSizeWidth * 5;
 			gameObject.height = this.treeSizeHeight / 2 * 5;
 
-			gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -336,7 +335,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.treeSizeWidth * 5;
 			gameObject.height = this.treeSizeHeight / 2 * 5;
 
-			gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -448,7 +447,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.hedgeSizeWidth * 5;
 			gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
-			gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -476,7 +475,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.hedgeSizeWidth * 5;
 			gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
-			gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -736,7 +735,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.lampSizeWidth * 5;
 			gameObject.height = this.lampSizeHeight / 2 * 5;
 
-			gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -764,7 +763,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.lampSizeWidth * 5;
 			gameObject.height = this.lampSizeHeight / 2 * 5;
 
-			gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -876,7 +875,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.lightBillboardSizeWidth * 5;
 			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
 
-			gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -904,7 +903,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.lightBillboardSizeWidth * 5;
 			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
 
-			gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -1240,7 +1239,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.vehicleEnemySizeWidth;
 			gameObject.height = this.vehicleEnemySizeHeight;
 
-			gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
 			var vehicleType = Constants.getRandomNumber(0, 1);
 
@@ -1369,7 +1368,7 @@ export class GameScene extends Container implements IScene {
 		gameObject.width = this.vehicleBossSizeWidth;
 		gameObject.height = this.vehicleBossSizeHeight;
 
-		gameObject.filters = [new DropShadowFilter()];
+		// gameObject.filters = [new DropShadowFilter()];
 
 		var vehicleType = Constants.getRandomNumber(0, 1);
 
@@ -1588,10 +1587,10 @@ export class GameScene extends Container implements IScene {
 
 	//#region UfoEnemys	
 
-	private ufoEnemySizeWidth: number = 242;
-	private ufoEnemySizeHeight: number = 242;
+	private ufoEnemySizeWidth: number = 212;
+	private ufoEnemySizeHeight: number = 212;
 
-	private ufoEnemyGameObjects: Array<GameObject> = [];
+	private ufoEnemyGameObjects: Array<UfoEnemy> = [];
 
 	private ufoEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private ufoEnemyPopDelay: number = 0;
@@ -1605,7 +1604,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.ufoEnemySizeWidth;
 			gameObject.height = this.ufoEnemySizeHeight;
 
-			gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
 			const texture = Constants.getRandomTexture(ConstructType.UFO_ENEMY);
 			const sprite: GameObjectSprite = new GameObjectSprite(texture);
@@ -2793,7 +2792,7 @@ export class GameScene extends Container implements IScene {
 
 		if (this._gameController.isAttacking) {
 
-			if (this.anyInAirBossExists() || this.ufoBossExists()) {
+			if (this.anyInAirBossExists() || this.ufoEnemyExists()) {
 
 				if (this._powerUpMeter.hasHealth()) {
 
