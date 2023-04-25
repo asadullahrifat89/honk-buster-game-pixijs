@@ -161,7 +161,7 @@ export class GameScene extends Container implements IScene {
 
 	spawnCastShadow(source: GameObject) {
 
-		const gameObject: CastShadow = new CastShadow(source, source.width / 2, 25);
+		const gameObject: CastShadow = new CastShadow(source, 40, 15);
 		gameObject.disableRendering();
 
 		this.castShadowGameObjects.push(gameObject);
@@ -181,7 +181,7 @@ export class GameScene extends Container implements IScene {
 			});
 		}
 
-		var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false);
+		var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false || x.source.isBlasting || x.source.isDead());
 
 		if (nonAnimatingCastShadows) {
 
@@ -2701,6 +2701,8 @@ export class GameScene extends Container implements IScene {
 
 			this.playerHonkBombGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 

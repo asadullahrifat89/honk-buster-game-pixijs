@@ -26,7 +26,7 @@ export class CastShadow extends GameObject {
 	}
 
 	reset() {
-		this.x = (this.source.getLeft() + this.source.width / 2) - this.width / 2;
+		this.x = (this.source.getLeft() /*+ this.source.width / 2*/) /*- this.width / 2*/;
 		this.y = this.source.getBottom() + (this.source.castShadowDistance);
 	}
 }
