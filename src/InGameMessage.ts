@@ -1,4 +1,4 @@
-﻿import { BitmapFont, BitmapText, Container } from "pixi.js";
+﻿import { BitmapText, Container, BitmapFont } from "pixi.js";
 
 
 export class InGameMessage {

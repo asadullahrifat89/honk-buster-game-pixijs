@@ -12,7 +12,7 @@ export class LoaderScene extends Container implements IScene {
 	private loaderBarFill: Graphics;
 
 	constructor() {
-		super();
+		super();		
 
 		// lets make a loader graphic:
 		const loaderBarWidth = Manager.width * 0.8; // just an auxiliar variable
