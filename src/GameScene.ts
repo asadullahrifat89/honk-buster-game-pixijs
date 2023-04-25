@@ -25,6 +25,7 @@ import { ZombieBossRocketBlock } from "./ZombieBossRocketBlock";
 import { MafiaBoss } from "./MafiaBoss";
 import { MafiaBossRocket } from "./MafiaBossRocket";
 import { MafiaBossRocketBullsEye } from "./MafiaBossRocketBullsEye";
+import { HealthPickup } from "./HealthPickup";
 
 
 export class GameScene extends Container implements IScene {
@@ -43,7 +44,7 @@ export class GameScene extends Container implements IScene {
 	private readonly _vehicleBossCheckpoint: GameCheckpoint;
 
 	//TODO: set defaults _ufoBossReleasePoint = 50
-	private readonly _ufoBossReleasePoint: number = 15; // first appearance
+	private readonly _ufoBossReleasePoint: number = 50; // first appearance
 	private readonly _ufoBossReleasePoint_increase: number = 15;
 	private readonly _ufoBossCheckpoint: GameCheckpoint;
 
@@ -116,6 +117,8 @@ export class GameScene extends Container implements IScene {
 		this.spawnMafiaBosss();
 		this.spawnMafiaBossRockets();
 		this.spawnMafiaBossRocketBullsEyes();
+
+		this.spawnHealthPickups();
 
 		this.spawnClouds();
 
@@ -2876,6 +2879,116 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region HealthPickups	
+
+	private healthPickupSizeWidth: number = 327 / 3;
+	private healthPickupSizeHeight: number = 327 / 3;
+
+	private healthPickupGameObjects: Array<HealthPickup> = [];
+
+	private healthPickupPopDelayDefault: number = 100 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private healthPickupPopDelay: number = 0;
+
+	private spawnHealthPickups() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: HealthPickup = new HealthPickup(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 1));
+			gameObject.disableRendering();
+			gameObject.width = this.healthPickupSizeWidth;
+			gameObject.height = this.healthPickupSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.healthPickupSizeWidth;
+			sprite.height = this.healthPickupSizeHeight;
+			sprite.anchor.set(0.5, 0.5);
+
+			gameObject.addChild(sprite);
+
+			this.healthPickupGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private generateHealthPickups() {
+
+		if (HealthPickup.shouldGenerate(this._player.health)) {
+			this.healthPickupPopDelay -= 0.1;
+
+			if (this.healthPickupPopDelay < 0) {
+
+				var gameObject = this.healthPickupGameObjects.find(x => x.isAnimating == false);
+
+				if (gameObject) {
+
+					gameObject.reset();
+
+					var healthPickup = gameObject as HealthPickup;
+
+					if (healthPickup) {
+						var topOrLeft = Constants.getRandomNumber(0, 1);
+
+						switch (topOrLeft) {
+							case 0:
+								{
+									var xLaneWidth = Constants.DEFAULT_GAME_VIEW_WIDTH / 4;
+									healthPickup.setPosition(Constants.getRandomNumber(0, xLaneWidth - healthPickup.width), healthPickup.height * -1);
+								}
+								break;
+							case 1:
+								{
+									var yLaneWidth = (Constants.DEFAULT_GAME_VIEW_HEIGHT / 2) / 2;
+									healthPickup.setPosition(healthPickup.width * -1, Constants.getRandomNumber(0, yLaneWidth));
+								}
+								break;
+							default:
+								break;
+						}
+					}
+
+					gameObject.enableRendering();
+
+					this.healthPickupPopDelay = this.healthPickupPopDelayDefault;
+				}
+			}
+		}
+	}
+
+	private animateHealthPickups() {
+
+		var animatingHealthPickups = this.healthPickupGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingHealthPickups) {
+
+			animatingHealthPickups.forEach(gameObject => {
+
+				if (gameObject.isPickedUp) {
+					gameObject.shrink();
+				}
+				else {
+
+					gameObject.moveDownRight();
+
+					if (Constants.checkCloseCollision(gameObject, this._player)) {
+						gameObject.pickedUp();
+
+						this._player.gainhealth();
+						this._playerHealthBar.setValue(this._player.health);
+					}
+				}
+
+				if (gameObject.isShrinkingComplete() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
 	//#region GameController
 
 	setGameController() {
@@ -2978,6 +3091,8 @@ export class GameScene extends Container implements IScene {
 		this.generateMafiaBossRockets();
 		this.generateMafiaBossRocketBullsEyes();
 
+		this.generateHealthPickups();
+
 		this.generateClouds();
 
 		this.generateSideWalksBottom();
@@ -3024,6 +3139,8 @@ export class GameScene extends Container implements IScene {
 		this.animateMafiaBossRockets();
 		this.animateMafiaBossRocketBullsEyes();
 
+		this.animateHealthPickups();
+
 		this.animateClouds();
 		this.animateInterimScreen();
 	}
@@ -3037,6 +3154,6 @@ export class GameScene extends Container implements IScene {
 	}
 
 	//#endregion
-	  
+
 	//#endregion
 }

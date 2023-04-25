@@ -230,9 +230,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.BLAST, "blast_1.png"),
 		new ConstructTemplate(ConstructType.BLAST, "blast_2.png"),
 
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, "vehicle_boss_rocket.png"),
-
-		new ConstructTemplate(ConstructType.HEALTH_PICKUP, "health_pickup.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, "vehicle_boss_rocket.png"),		
 
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_1.png"),
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_2.png"),
@@ -268,6 +266,10 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_2.png"),
 		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_3.png"),
 		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE, "mafia_boss_rocket_bulls_eye.png"),
+
+		new ConstructTemplate(ConstructType.HEALTH_PICKUP, "health_pickup.png"),
+		new ConstructTemplate(ConstructType.POWERUP_PICKUP_ARMOR, "powerup_pickup_armor.png"),
+		new ConstructTemplate(ConstructType.POWERUP_PICKUP_ARMOR, "powerup_pickup_bulls_eye.png"),
 	];
 
 	//#endregion
