@@ -279,6 +279,13 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.POWERUP_PICKUP_ARMOR, "powerup_pickup_armor.png"),
 		new ConstructTemplate(ConstructType.POWERUP_PICKUP_BULLS_EYE, "powerup_pickup_bulls_eye.png"),
 
+		new ConstructTemplate(ConstructType.UFO_ENEMY, "enemy_1.png"),
+		new ConstructTemplate(ConstructType.UFO_ENEMY, "enemy_2.png"),
+		new ConstructTemplate(ConstructType.UFO_ENEMY, "enemy_3.png"),
+		new ConstructTemplate(ConstructType.UFO_ENEMY, "enemy_4.png"),
+
+		new ConstructTemplate(ConstructType.UFO_ENEMY_ROCKET, "enemy_bomb.png"),
+
 		new ConstructTemplate(ConstructType.GAME_COVER_IMAGE, "cover_image.png"),
 	];
 
