@@ -1,5 +1,5 @@
 import { Container, Rectangle, Texture } from 'pixi.js';
-import { RotationDirection } from './Constants';
+import { Constants, RotationDirection } from './Constants';
 import { GameObjectSprite } from './GameObjectSprite';
 
 export class GameObject extends Container {
@@ -39,6 +39,8 @@ export class GameObject extends Container {
 	public awaitMoveDownLeft: boolean = false;
 	public awaitMoveUpLeft: boolean = false;
 	public awaitMoveDownRight: boolean = false;
+
+	public dropShadowDistance: number = Constants.DEFAULT_DROP_SHADOW_DISTANCE;	
 
 	//#endregion
 

@@ -54,6 +54,7 @@ export class PlayerBalloon extends GameObject {
 		this._lastSpeed = 0;
 
 		this.rotation = 0;
+
 	}
 
 	reposition() {

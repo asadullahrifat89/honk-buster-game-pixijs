@@ -28,6 +28,7 @@ import { MafiaBossRocketBullsEye } from "./MafiaBossRocketBullsEye";
 import { HealthPickup } from "./HealthPickup";
 import { PowerUpPickup } from "./PowerUpPickup";
 import { PlayerRocketBullsEye } from "./PlayerRocketBullsEye";
+import { DropShadow } from "./DropShadow";
 
 
 export class GameScene extends Container implements IScene {
@@ -154,6 +155,45 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region DropShadow
+
+	private dropShadowGameObjects: Array<DropShadow> = [];
+
+	spawnDropShadow(source: GameObject) {
+
+		const dropShadow: DropShadow = new DropShadow(source);
+		dropShadow.disableRendering();
+
+		this.dropShadowGameObjects.push(dropShadow);
+		this._sceneContainer.addChild(dropShadow);
+	}
+
+	animateDropShadow() {
+		var animatingDropShadows = this.dropShadowGameObjects.filter(x => x.source.isAnimating == true);
+
+		if (animatingDropShadows) {
+
+			animatingDropShadows.forEach(dropShadow => {
+				dropShadow.reset();
+
+				if (!dropShadow.isAnimating)
+					dropShadow.enableRendering();
+			});
+		}
+
+		var nonAnimatingDropShadows = this.dropShadowGameObjects.filter(x => x.source.isAnimating == false);
+
+		if (nonAnimatingDropShadows) {
+
+			nonAnimatingDropShadows.forEach(dropShadow => {
+				if (dropShadow.isAnimating)
+					dropShadow.disableRendering();
+			});
+		}
+	}
+
+	//#endregion
+
 	//#region RoadMarks
 
 	private roadMarkXyAdjustment: number = 19;
@@ -221,7 +261,6 @@ export class GameScene extends Container implements IScene {
 
 				if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
-
 				}
 			});
 		}
@@ -2553,6 +2592,7 @@ export class GameScene extends Container implements IScene {
 		sprite.anchor.set(0.5, 0.5);
 
 		this._player.addChild(sprite);
+
 		this._player.setPlayerTemplate(playerTemplate);
 
 		this._sceneContainer.addChild(this._player);
