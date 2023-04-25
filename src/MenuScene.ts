@@ -55,7 +55,7 @@ export class MenuScene extends Container implements IScene {
 		this._coverContainer.addChild(subTitle);
 
 		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), "New Game", this.newGame);
-		button.setPosition(this._coverContainer.width / 2 - button.width / 2, this._coverContainer.height / 2 - button.height / 2);
+		button.setPosition(this._coverContainer.width / 2 - button.width / 2, this._coverContainer.height / 2 - button.height / 2);		
 
 		this._coverContainer.addChild(button);
 
@@ -66,6 +66,8 @@ export class MenuScene extends Container implements IScene {
 
 	public update(_framesPassed: number) {
 		//this._coverContainer.hover();
+
+		
 	}
 
 	public resize(scale: number): void {

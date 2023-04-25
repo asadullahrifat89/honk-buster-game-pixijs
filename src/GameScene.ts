@@ -29,6 +29,8 @@ import { HealthPickup } from "./HealthPickup";
 import { PowerUpPickup } from "./PowerUpPickup";
 import { PlayerRocketBullsEye } from "./PlayerRocketBullsEye";
 import { CastShadow } from "./CastShadow";
+import { UfoEnemy } from "./UfoEnemy";
+import { UfoEnemyRocket } from "./UfoEnemyRocket";
 
 
 export class GameScene extends Container implements IScene {
@@ -61,6 +63,15 @@ export class GameScene extends Container implements IScene {
 	private readonly _mafiaBossReleasePoint_increase: number = 15;
 	private readonly _mafiaBossCheckpoint: GameCheckpoint;
 
+	//TODO: set defaults _ufoEnemyReleasePoint = 35
+	private readonly _ufoEnemyReleasePoint: number = 15; // first appearance
+	private readonly _ufoEnemyReleasePoint_increase: number = 5;
+	private readonly _ufoEnemyCheckpoint: GameCheckpoint;
+
+	private _ufoEnemyFleetAppeared: boolean = false;
+	private _ufoEnemyKillCount: number = 0;
+	private readonly _ufoEnemyKillCount_limit: number = 20;
+
 	private _playerHealthBar: HealthBar;
 	private _bossHealthBar: HealthBar;
 	private _powerUpMeter: HealthBar;
@@ -86,6 +97,7 @@ export class GameScene extends Container implements IScene {
 		this._ufoBossCheckpoint = new GameCheckpoint(this._ufoBossReleasePoint);
 		this._zombieBossCheckpoint = new GameCheckpoint(this._zombieBossReleasePoint);
 		this._mafiaBossCheckpoint = new GameCheckpoint(this._mafiaBossReleasePoint);
+		this._ufoEnemyCheckpoint = new GameCheckpoint(this._ufoEnemyReleasePoint);
 
 		this.spawnRoadMarks();
 
@@ -122,6 +134,9 @@ export class GameScene extends Container implements IScene {
 		this.spawnMafiaBosss();
 		this.spawnMafiaBossRockets();
 		this.spawnMafiaBossRocketBullsEyes();
+
+		this.spawnUfoEnemyRockets();
+		this.spawnUfoEnemys();
 
 		this.spawnHealthPickups();
 		this.spawnPowerUpPickups();
@@ -294,7 +309,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.treeSizeWidth * 5;
 			gameObject.height = this.treeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new CastShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -322,7 +337,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.treeSizeWidth * 5;
 			gameObject.height = this.treeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new CastShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -434,9 +449,8 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.hedgeSizeWidth * 5;
 			gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new CastShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
-			// add hedges to the hedge top gameObject
 			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
@@ -463,9 +477,8 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.hedgeSizeWidth * 5;
 			gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new CastShadowFilter()];
+			// gameObject.filters = [new DropShadowFilter()];
 
-			// add hedges to the hedge bottom gameObject
 			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
@@ -724,6 +737,8 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.lampSizeWidth * 5;
 			gameObject.height = this.lampSizeHeight / 2 * 5;
 
+			// gameObject.filters = [new DropShadowFilter()];
+
 			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
@@ -749,6 +764,8 @@ export class GameScene extends Container implements IScene {
 			gameObject.disableRendering();
 			gameObject.width = this.lampSizeWidth * 5;
 			gameObject.height = this.lampSizeHeight / 2 * 5;
+
+			// gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -860,6 +877,8 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.lightBillboardSizeWidth * 5;
 			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
 
+			// gameObject.filters = [new DropShadowFilter()];
+
 			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
@@ -886,8 +905,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.lightBillboardSizeWidth * 5;
 			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new CastShadowFilter()];
-
+			// gameObject.filters = [new DropShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -1223,22 +1241,18 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.vehicleEnemySizeWidth;
 			gameObject.height = this.vehicleEnemySizeHeight;
 
+			// gameObject.filters = [new DropShadowFilter()];
+
 			var vehicleType = Constants.getRandomNumber(0, 1);
 
 			var uri: string = "";
 			switch (vehicleType) {
 				case 0: {
-
 					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
-
-					break;
-				}
+				} break;
 				case 1: {
-
 					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
-
-					break;
-				}
+				} break;
 				default: break;
 			}
 
@@ -1315,7 +1329,7 @@ export class GameScene extends Container implements IScene {
 
 				if (vehicleEnemy) {
 
-					if (vehicleEnemy.honk()) {
+					if (vehicleEnemy.honk() && !this.ufoEnemyExists() && !this.anyInAirBossExists()) {
 						this.generateHonk(gameObject);
 					}
 				}
@@ -1356,22 +1370,18 @@ export class GameScene extends Container implements IScene {
 		gameObject.width = this.vehicleBossSizeWidth;
 		gameObject.height = this.vehicleBossSizeHeight;
 
+		// gameObject.filters = [new DropShadowFilter()];
+
 		var vehicleType = Constants.getRandomNumber(0, 1);
 
 		var uri: string = "";
 		switch (vehicleType) {
 			case 0: {
-
 				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
-
-				break;
-			}
+			} break;
 			case 1: {
-
 				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
-
-				break;
-			}
+			} break;
 			default: break;
 		}
 
@@ -1569,6 +1579,230 @@ export class GameScene extends Container implements IScene {
 				}
 
 				if (gameObject.hasFaded()) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region UfoEnemys	
+
+	private ufoEnemySizeWidth: number = 190;
+	private ufoEnemySizeHeight: number = 190;
+
+	private ufoEnemyGameObjects: Array<UfoEnemy> = [];
+
+	private ufoEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private ufoEnemyPopDelay: number = 0;
+
+	private spawnUfoEnemys() {
+
+		for (let j = 0; j < 7; j++) {
+
+			const gameObject: UfoEnemy = new UfoEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+			gameObject.width = this.ufoEnemySizeWidth;
+			gameObject.height = this.ufoEnemySizeHeight;
+
+			// gameObject.filters = [new DropShadowFilter()];
+
+			const texture = Constants.getRandomTexture(ConstructType.UFO_ENEMY);
+			const sprite: GameObjectSprite = new GameObjectSprite(texture);
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.ufoEnemySizeWidth;
+			sprite.height = this.ufoEnemySizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+
+			gameObject.addChild(sprite);
+
+			this.ufoEnemyGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
+		}
+	}
+
+	private generateUfoEnemys() {
+
+		if (!this.anyBossExists() && this._ufoEnemyCheckpoint.shouldRelease(this._gameScoreBar.getScore())) {
+
+			this.ufoEnemyPopDelay -= 0.1;
+
+			if (this.ufoEnemyPopDelay < 0) {
+
+				var gameObject = this.ufoEnemyGameObjects.find(x => x.isAnimating == false);
+
+				if (gameObject) {
+
+					var ufoEnemy = gameObject as UfoEnemy;
+					ufoEnemy.reposition();
+					ufoEnemy.reset();
+
+					gameObject.enableRendering();
+
+					this.ufoEnemyPopDelay = this.ufoEnemyPopDelayDefault;
+
+					if (!this._ufoEnemyFleetAppeared) {
+
+						this.generateInGameMessage("Beware of UFO Fleet");
+						this._ufoEnemyFleetAppeared = true;
+					}
+				}
+			}
+		}
+	}
+
+	private animateUfoEnemys() {
+
+		var animatingUfoEnemys = this.ufoEnemyGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingUfoEnemys) {
+
+			animatingUfoEnemys.forEach(gameObject => {
+
+				if (gameObject.isDead()) {
+					gameObject.shrink();
+				}
+				else {
+					gameObject.pop();
+					gameObject.hover();
+					gameObject.moveDownRight();
+				}
+
+				// generate honk
+
+				let ufoEnemy = gameObject as UfoEnemy;
+
+				if (ufoEnemy) {
+
+					if (!this.anyBossExists() && ufoEnemy.honk()) {
+						this.generateHonk(gameObject);
+					}
+
+					if (ufoEnemy.attack()) {
+						this.generateUfoEnemyRockets(ufoEnemy);
+					}
+				}
+
+				if (gameObject.isShrinkingComplete() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	private looseUfoEnemyhealth(ufoEnemy: UfoEnemy) {
+
+		ufoEnemy.setPopping();
+		ufoEnemy.looseHealth();
+
+		if (ufoEnemy.isDead()) {
+			this._gameScoreBar.gainScore(2);
+
+			this._ufoEnemyKillCount++;
+
+			if (this._ufoEnemyKillCount > this._ufoEnemyKillCount_limit) // after killing limited enemies increase the threadhold limit
+			{
+				this._ufoEnemyCheckpoint.increaseThreasholdLimit(this._ufoEnemyReleasePoint_increase, this._gameScoreBar.getScore());
+				this._ufoEnemyKillCount = 0;
+				this._ufoEnemyFleetAppeared = false;
+
+				this.levelUp();
+			}
+		}
+	}
+
+	private ufoEnemyExists(): boolean {
+		var gameObject = this.ufoEnemyGameObjects.find(x => x.isAnimating == true);
+
+		if (gameObject)
+			return true;
+		else
+			return false;
+	}
+
+	//#endregion
+
+	//#region UfoEnemyRockets
+
+	private ufoEnemyRocketSizeWidth: number = 90;
+	private ufoEnemyRocketSizeHeight: number = 90;
+
+	private ufoEnemyRocketGameObjects: Array<UfoEnemyRocket> = [];
+
+	spawnUfoEnemyRockets() {
+
+		for (let j = 0; j < 7; j++) {
+
+			const gameObject: UfoEnemyRocket = new UfoEnemyRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			gameObject.disableRendering();
+			gameObject.width = this.ufoEnemyRocketSizeWidth;
+			gameObject.height = this.ufoEnemyRocketSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY_ROCKET));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.ufoEnemyRocketSizeWidth;
+			sprite.height = this.ufoEnemyRocketSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.ufoEnemyRocketGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
+		}
+	}
+
+	generateUfoEnemyRockets(ufoEnemy: UfoEnemy) {
+
+		let ufoEnemyRocket = this.ufoEnemyRocketGameObjects.find(x => x.isAnimating == false);
+
+		if (ufoEnemyRocket) {
+			ufoEnemyRocket.reset();
+			ufoEnemyRocket.reposition(ufoEnemy);
+			ufoEnemyRocket.setPopping();
+			ufoEnemyRocket.enableRendering();
+		}
+	}
+
+	animateUfoEnemyRockets() {
+
+		let animatingUfoEnemyRockets = this.ufoEnemyRocketGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingUfoEnemyRockets) {
+
+			animatingUfoEnemyRockets.forEach(gameObject => {
+
+				let ufoEnemyRocket = gameObject as UfoEnemyRocket;
+				ufoEnemyRocket.moveDownRight();
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.hover();
+
+					if (Constants.checkCloseCollision(gameObject, this._player)) {
+						gameObject.setBlast();
+						this.loosePlayerHealth();
+					}
+
+					if (gameObject.autoBlast())
+						gameObject.setBlast();
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
@@ -2566,7 +2800,6 @@ export class GameScene extends Container implements IScene {
 			honk.reset();
 			honk.reposition(source);
 			honk.setPopping();
-			//source.setPopping();
 
 			gameObject.enableRendering();
 		}
@@ -2644,7 +2877,7 @@ export class GameScene extends Container implements IScene {
 
 		if (this._gameController.isAttacking) {
 
-			if (this.anyInAirBossExists()) {
+			if (this.anyInAirBossExists() || this.ufoEnemyExists()) {
 
 				if (this._powerUpMeter.hasHealth()) {
 
@@ -2851,9 +3084,13 @@ export class GameScene extends Container implements IScene {
 			let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
 			let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
+			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
 
 			if (ufoBossRocketSeeking) {
 				this.setPlayerRocketDirection(this._player, playerRocket, ufoBossRocketSeeking);
+			}
+			else if (ufoEnemy) {
+				this.setPlayerRocketDirection(this._player, playerRocket, ufoEnemy);
 			}
 			else if (ufoBoss) {
 				this.setPlayerRocketDirection(this._player, playerRocket, ufoBoss);
@@ -2912,9 +3149,15 @@ export class GameScene extends Container implements IScene {
 
 						let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
 
+						let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerRocket));
+
 						if (ufoBossRocketSeeking) {
 							playerRocket.setBlast();
 							ufoBossRocketSeeking.setBlast();
+						}
+						else if (ufoEnemy) {
+							playerRocket.setBlast();
+							this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
 						}
 						else if (ufoBoss) {
 							playerRocket.setBlast();
@@ -3019,15 +3262,18 @@ export class GameScene extends Container implements IScene {
 
 			this._player.setAttackStance();
 
-			//TODO: check more enemy types to set target
 			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 			let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 			let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
 			let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
+			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
 
 			if (ufoBossRocketSeeking) {
 				playerRocketBullsEye.setTarget(ufoBossRocketSeeking.getCloseBounds());
+			}
+			else if (ufoEnemy) {
+				playerRocketBullsEye.setTarget(ufoEnemy.getCloseBounds());
 			}
 			else if (ufoBoss) {
 				playerRocketBullsEye.setTarget(ufoBoss.getCloseBounds());
@@ -3067,8 +3313,6 @@ export class GameScene extends Container implements IScene {
 					gameObject.rotate(RotationDirection.Forward, 0, 2.5);
 					gameObject.move();
 
-					//TODO: check collision for more enemy types
-
 					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
 					let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
 
@@ -3077,6 +3321,8 @@ export class GameScene extends Container implements IScene {
 
 					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
 
+					let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerRocket));
+
 					if (ufoBossRocketSeeking) {
 						playerRocket.setBlast();
 						ufoBossRocketSeeking.setBlast();
@@ -3084,6 +3330,10 @@ export class GameScene extends Container implements IScene {
 					else if (ufoBoss) {
 						playerRocket.setBlast();
 						this.looseUfoBosshealth(ufoBoss as UfoBoss);
+					}
+					else if (ufoEnemy) {
+						playerRocket.setBlast();
+						this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
 					}
 					else if (zombieBossRocketBlock) {
 						playerRocket.setBlast();
@@ -3258,7 +3508,7 @@ export class GameScene extends Container implements IScene {
 
 	private generatePowerUpPickups() {
 
-		if ((this.anyInAirBossExists() /*|| UfoEnemyExists()*/) && !this._powerUpMeter.hasHealth()) {
+		if ((this.anyInAirBossExists() || this.ufoEnemyExists()) && !this._powerUpMeter.hasHealth()) {
 			this.powerUpPickupPopDelay -= 0.1;
 
 			if (this.powerUpPickupPopDelay < 0) {
@@ -3467,6 +3717,8 @@ export class GameScene extends Container implements IScene {
 		this.generateMafiaBossRockets();
 		this.generateMafiaBossRocketBullsEyes();
 
+		this.generateUfoEnemys();
+
 		this.generateHealthPickups();
 		this.generatePowerUpPickups();
 
@@ -3516,6 +3768,9 @@ export class GameScene extends Container implements IScene {
 		this.animateMafiaBoss();
 		this.animateMafiaBossRockets();
 		this.animateMafiaBossRocketBullsEyes();
+
+		this.animateUfoEnemys();
+		this.animateUfoEnemyRockets();
 
 		this.animateHealthPickups();
 		this.animatePowerUpPickups();

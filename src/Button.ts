@@ -1,10 +1,13 @@
-﻿import { BitmapText, Container, BitmapFont, DisplayObject } from "pixi.js";
+﻿import { GrayscaleFilter } from "@pixi/filter-grayscale";
+import { BitmapText, Container, BitmapFont, DisplayObject, FederatedPointerEvent } from "pixi.js";
 
 
 export class Button extends Container {
 
 	constructor(background: DisplayObject, text: string, onPressed: any) {
 		super();
+
+		this.filters = null;
 
 		// If you need to know, this is the expensive part. This creates the font atlas
 		BitmapFont.from("gameplay", {
@@ -30,10 +33,23 @@ export class Button extends Container {
 		this.addChild(buttonText);
 
 		this.on("pointertap", onPressed, this);
+		this.on('pointerover', this.onButtonOver, this);
+		this.on('pointerout', this.onButtonOut, this);
+
+		// Shows hand cursor
+		this.cursor = 'pointer';
 	}
 
 	setPosition(x: number, y: number) {
 		this.x = x;
 		this.y = y;
+	}
+
+	onButtonOver(_e: FederatedPointerEvent) {
+		this.filters = [new GrayscaleFilter()];
+	}
+
+	onButtonOut(_e: FederatedPointerEvent) {
+		this.filters = null;
 	}
 }
