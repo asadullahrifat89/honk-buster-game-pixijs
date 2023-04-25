@@ -10,6 +10,7 @@ export class VehicleBossRocket extends GameObject {
 
 	constructor(speed: number) {
 		super(speed);
+		this.gravitatesUp = true;
 	}
 
 	reset() {

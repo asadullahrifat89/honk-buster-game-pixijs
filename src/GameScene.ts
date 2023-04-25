@@ -174,10 +174,13 @@ export class GameScene extends Container implements IScene {
 		if (animatingCastShadows) {
 
 			animatingCastShadows.forEach(dropShadow => {
-				dropShadow.reset();
 
-				if (!dropShadow.isAnimating)
+				if (!dropShadow.isAnimating) {
+					dropShadow.reset();
 					dropShadow.enableRendering();
+				}
+
+				dropShadow.move();
 			});
 		}
 
@@ -2746,10 +2749,7 @@ export class GameScene extends Container implements IScene {
 					}
 					else {
 
-						playerHonkBomb.setPosition(
-							playerHonkBomb.x + playerHonkBomb.speed,
-							playerHonkBomb.y + playerHonkBomb.speed * 1.2
-						);
+						playerHonkBomb.move();
 
 						if (playerHonkBomb.depleteBlastDelay()) {
 
