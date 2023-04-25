@@ -64,7 +64,7 @@ export class GameScene extends Container implements IScene {
 	private readonly _mafiaBossCheckpoint: GameCheckpoint;
 
 	//TODO: set defaults _ufoEnemyReleasePoint = 35
-	private readonly _ufoEnemyReleasePoint: number = 35; // first appearance
+	private readonly _ufoEnemyReleasePoint: number = 15; // first appearance
 	private readonly _ufoEnemyReleasePoint_increase: number = 5;
 	private readonly _ufoEnemyCheckpoint: GameCheckpoint;
 
@@ -1598,7 +1598,7 @@ export class GameScene extends Container implements IScene {
 
 	private spawnUfoEnemys() {
 
-		for (let j = 0; j < 10; j++) {
+		for (let j = 0; j < 7; j++) {
 
 			const gameObject: UfoEnemy = new UfoEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
