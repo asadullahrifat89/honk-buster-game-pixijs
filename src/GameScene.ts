@@ -1228,17 +1228,11 @@ export class GameScene extends Container implements IScene {
 			var uri: string = "";
 			switch (vehicleType) {
 				case 0: {
-
 					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
-
-					break;
-				}
+				} break;
 				case 1: {
-
 					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
-
-					break;
-				}
+				} break;
 				default: break;
 			}
 
@@ -1361,17 +1355,11 @@ export class GameScene extends Container implements IScene {
 		var uri: string = "";
 		switch (vehicleType) {
 			case 0: {
-
-				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
-
-				break;
-			}
+				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);				
+			} break;
 			case 1: {
-
 				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
-
-				break;
-			}
+			} break;
 			default: break;
 		}
 
