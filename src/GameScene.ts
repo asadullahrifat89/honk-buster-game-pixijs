@@ -28,6 +28,7 @@ import { MafiaBossRocketBullsEye } from "./MafiaBossRocketBullsEye";
 import { HealthPickup } from "./HealthPickup";
 import { PowerUpPickup } from "./PowerUpPickup";
 import { PlayerRocketBullsEye } from "./PlayerRocketBullsEye";
+import { CastShadow } from "./CastShadow";
 
 
 export class GameScene extends Container implements IScene {
@@ -77,7 +78,7 @@ export class GameScene extends Container implements IScene {
 
 		this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
 		this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
-		//this._sceneContainer.filters = [new DropShadowFilter()];
+		//this._sceneContainer.filters = [new CastShadowFilter()];
 
 		this.addChild(this._sceneContainer);
 
@@ -154,6 +155,48 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region CastShadow
+
+	private castShadowGameObjects: Array<CastShadow> = [];
+
+	spawnCastShadow(source: GameObject) {
+
+		const gameObject: CastShadow = new CastShadow(source, 40, 15);
+		gameObject.disableRendering();
+
+		this.castShadowGameObjects.push(gameObject);
+		this._sceneContainer.addChild(gameObject);
+	}
+
+	animateCastShadows() {
+		var animatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == true);
+
+		if (animatingCastShadows) {
+
+			animatingCastShadows.forEach(dropShadow => {
+
+				if (!dropShadow.isAnimating) {
+					dropShadow.reset();
+					dropShadow.enableRendering();
+				}
+
+				dropShadow.move();
+			});
+		}
+
+		var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false || x.source.isBlasting || x.source.isDead());
+
+		if (nonAnimatingCastShadows) {
+
+			nonAnimatingCastShadows.forEach(dropShadow => {
+				if (dropShadow.isAnimating)
+					dropShadow.disableRendering();
+			});
+		}
+	}
+
+	//#endregion
+
 	//#region RoadMarks
 
 	private roadMarkXyAdjustment: number = 19;
@@ -221,7 +264,6 @@ export class GameScene extends Container implements IScene {
 
 				if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
-
 				}
 			});
 		}
@@ -252,7 +294,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.treeSizeWidth * 5;
 			gameObject.height = this.treeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -280,7 +322,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.treeSizeWidth * 5;
 			gameObject.height = this.treeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 			for (let i = 0; i < 5; i++) {
 
@@ -392,7 +434,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.hedgeSizeWidth * 5;
 			gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 			// add hedges to the hedge top gameObject
 			for (let i = 0; i < 5; i++) {
@@ -421,7 +463,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.hedgeSizeWidth * 5;
 			gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 			// add hedges to the hedge bottom gameObject
 			for (let i = 0; i < 5; i++) {
@@ -535,7 +577,7 @@ export class GameScene extends Container implements IScene {
 	//		gameObject.width = this.roadHeavyBillboardSizeWidth * 5;
 	//		gameObject.height = this.roadHeavyBillboardSizeHeight / 2 * 5;
 
-	//		// gameObject.filters = [new DropShadowFilter()];
+	//		// gameObject.filters = [new CastShadowFilter()];
 
 
 	//		for (let i = 0; i < 5; i++) {
@@ -566,7 +608,7 @@ export class GameScene extends Container implements IScene {
 	////		gameObject.width = this.roadHeavyBillboardSizeWidth * 5;
 	////		gameObject.height = this.roadHeavyBillboardSizeHeight / 2 * 5;
 
-	////		// gameObject.filters = [new DropShadowFilter()];
+	////		// gameObject.filters = [new CastShadowFilter()];
 
 	////		
 	////		for (let i = 0; i < 5; i++) {
@@ -844,7 +886,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.lightBillboardSizeWidth * 5;
 			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 
 			for (let i = 0; i < 5; i++) {
@@ -955,7 +997,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.sideWalkWidth * 5;
 			gameObject.height = this.sideWalkHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 			// add sideWalks to the sideWalk top gameObject
 			for (let i = 0; i < 5; i++) {
@@ -989,7 +1031,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.width = this.sideWalkWidth * 5;
 			gameObject.height = this.sideWalkHeight / 2 * 5;
 
-			// gameObject.filters = [new DropShadowFilter()];
+			// gameObject.filters = [new CastShadowFilter()];
 
 			// add sideWalks to the sideWalk top gameObject
 			for (let i = 0; i < 5; i++) {
@@ -1468,6 +1510,10 @@ export class GameScene extends Container implements IScene {
 
 			this.vehicleBossRocketGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -1557,6 +1603,8 @@ export class GameScene extends Container implements IScene {
 
 		this.ufoBossGameObjects.push(gameObject);
 		this._sceneContainer.addChild(gameObject);
+
+		this.spawnCastShadow(gameObject);
 	}
 
 	private generateUfoBoss() {
@@ -1684,6 +1732,8 @@ export class GameScene extends Container implements IScene {
 
 			this.ufoBossRocketGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -1825,6 +1875,8 @@ export class GameScene extends Container implements IScene {
 
 			this.ufoBossRocketSeekingGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -1929,6 +1981,8 @@ export class GameScene extends Container implements IScene {
 
 		this.zombieBossGameObjects.push(gameObject);
 		this._sceneContainer.addChild(gameObject);
+
+		this.spawnCastShadow(gameObject);
 	}
 
 	private generateZombieBoss() {
@@ -2056,6 +2110,8 @@ export class GameScene extends Container implements IScene {
 
 			this.zombieBossRocketBlockGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -2145,6 +2201,8 @@ export class GameScene extends Container implements IScene {
 
 		this.mafiaBossGameObjects.push(gameObject);
 		this._sceneContainer.addChild(gameObject);
+
+		this.spawnCastShadow(gameObject);
 	}
 
 	private generateMafiaBoss() {
@@ -2272,6 +2330,8 @@ export class GameScene extends Container implements IScene {
 
 			this.mafiaBossRocketGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -2385,6 +2445,8 @@ export class GameScene extends Container implements IScene {
 
 			this.mafiaBossRocketBullsEyeGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -2553,9 +2615,12 @@ export class GameScene extends Container implements IScene {
 		sprite.anchor.set(0.5, 0.5);
 
 		this._player.addChild(sprite);
+
 		this._player.setPlayerTemplate(playerTemplate);
 
 		this._sceneContainer.addChild(this._player);
+
+		this.spawnCastShadow(this._player);
 	}
 
 	generatePlayerBalloon() {
@@ -2659,6 +2724,8 @@ export class GameScene extends Container implements IScene {
 
 			this.playerHonkBombGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -2702,10 +2769,7 @@ export class GameScene extends Container implements IScene {
 					}
 					else {
 
-						playerHonkBomb.setPosition(
-							playerHonkBomb.x + playerHonkBomb.speed,
-							playerHonkBomb.y + playerHonkBomb.speed * 1.2
-						);
+						playerHonkBomb.move();
 
 						if (playerHonkBomb.depleteBlastDelay()) {
 
@@ -2761,6 +2825,8 @@ export class GameScene extends Container implements IScene {
 
 			this.playerRocketGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -2937,6 +3003,8 @@ export class GameScene extends Container implements IScene {
 
 			this.playerRocketBullsEyeGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -3071,6 +3139,8 @@ export class GameScene extends Container implements IScene {
 
 			this.healthPickupGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -3181,6 +3251,8 @@ export class GameScene extends Container implements IScene {
 
 			this.powerUpPickupGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
 		}
 	}
 
@@ -3447,6 +3519,8 @@ export class GameScene extends Container implements IScene {
 
 		this.animateHealthPickups();
 		this.animatePowerUpPickups();
+
+		this.animateCastShadows();
 
 		this.animateClouds();
 		this.animateInGameMessage();

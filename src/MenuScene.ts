@@ -54,7 +54,7 @@ export class MenuScene extends Container implements IScene {
 		subTitle.y = (this._coverContainer.height / 2 - subTitle.height / 2) - 60;
 		this._coverContainer.addChild(subTitle);
 
-		const button = new Button(new Graphics().beginFill(0x5FC4F8).drawRoundedRect(0, 0, 250, 50, 0).endFill(), "New Game", this.newGame);
+		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), "New Game", this.newGame);
 		button.setPosition(this._coverContainer.width / 2 - button.width / 2, this._coverContainer.height / 2 - button.height / 2);
 
 		this._coverContainer.addChild(button);

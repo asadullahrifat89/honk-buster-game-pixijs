@@ -7,10 +7,11 @@ export class PlayerHonkBomb extends GameObject {
 	private honkBombTemplate: PlayerHonkBombTemplate = PlayerHonkBombTemplate.Cracker;
 	private honkBombUris: string[] = [];
 	private blastDelay: number = 0;
-	private readonly blastDelayDefault: number = 20;
+	private readonly blastDelayDefault: number = 25;
 
 	constructor(speed: number) {
 		super(speed);
+		this.gravitatesDown = true;
 	}
 
 	reset() {
@@ -23,7 +24,11 @@ export class PlayerHonkBomb extends GameObject {
 	}
 
 	reposition(source: GameObject) {
-		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 15);
+		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 40);
+	}
+
+	move() {
+		this.setPosition(this.x + this.speed, this.y + this.speed * 1.5);
 	}
 
 	setHonkBombTemplate(honkBombTemplate: PlayerHonkBombTemplate) {
