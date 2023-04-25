@@ -1,4 +1,4 @@
-﻿import { Container, Graphics, BitmapFont, FederatedPointerEvent } from "pixi.js";
+﻿import { Container, Graphics, BitmapFont, FederatedPointerEvent, BitmapText } from "pixi.js";
 import { Button } from "./Button";
 import { Constants, ConstructType } from "./Constants";
 import { GameObject } from "./GameObject";
@@ -19,7 +19,7 @@ export class MenuScene extends Container implements IScene {
 		BitmapFont.from("gameplay", {
 			fill: "#ffffff",
 			fontFamily: "gameplay",
-			fontSize: 26,
+			fontSize: 35,
 			align: "center",
 		});
 
@@ -36,7 +36,25 @@ export class MenuScene extends Container implements IScene {
 
 		this._coverContainer.addChild(sprite);
 
-		const button = new Button(new Graphics().beginFill(0x5FC4F8).drawRoundedRect(0, 0, 250, 50, 0), "New Game", this.newGame);
+		const title = new BitmapText("Honk Buster", {
+			fontName: "gameplay",
+			fontSize: 35,
+			align: "center",
+		});
+		title.x = this._coverContainer.width / 2 - title.width / 2;
+		title.y = (this._coverContainer.height / 2 - title.height / 2) - 120;
+		this._coverContainer.addChild(title);
+
+		const subTitle = new BitmapText("Save the planet from honkers", {
+			fontName: "gameplay",
+			fontSize: 22,
+			align: "center",
+		});
+		subTitle.x = this._coverContainer.width / 2 - subTitle.width / 2;
+		subTitle.y = (this._coverContainer.height / 2 - subTitle.height / 2) - 60;
+		this._coverContainer.addChild(subTitle);
+
+		const button = new Button(new Graphics().beginFill(0x5FC4F8).drawRoundedRect(0, 0, 250, 50, 0).endFill(), "New Game", this.newGame);
 		button.setPosition(this._coverContainer.width / 2 - button.width / 2, this._coverContainer.height / 2 - button.height / 2);
 
 		this._coverContainer.addChild(button);
