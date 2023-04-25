@@ -14,6 +14,7 @@ export class GameController extends Container {
 	constructor() {
 		super();
 
+		this.interactive = true;
 		this.keyboard.events.on('pressed', null, () => {
 
 			if (this.keyboard.isKeyPressed('Space')) {
