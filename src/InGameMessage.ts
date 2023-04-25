@@ -1,7 +1,7 @@
-﻿import { BitmapFont, BitmapText, Container } from "pixi.js";
+﻿import { BitmapText, Container, BitmapFont } from "pixi.js";
 
 
-export class InterimScreen {
+export class InGameMessage {
 
 	private _textBlock: BitmapText;
 	public isAnimating: boolean = false;

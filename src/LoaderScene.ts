@@ -1,8 +1,8 @@
 import { Container, Graphics, Assets } from "pixi.js";
 import { manifest } from "./assets";
-import { GameScene } from "./GameScene";
 import { IScene } from "./IScene";
 import { Manager } from "./Manager";
+import { MenuScene } from "./MenuScene";
 
 export class LoaderScene extends Container implements IScene {
 
@@ -12,7 +12,7 @@ export class LoaderScene extends Container implements IScene {
 	private loaderBarFill: Graphics;
 
 	constructor() {
-		super();
+		super();		
 
 		// lets make a loader graphic:
 		const loaderBarWidth = Manager.width * 0.8; // just an auxiliar variable
@@ -74,7 +74,7 @@ export class LoaderScene extends Container implements IScene {
 		// Let's remove our loading bar
 		this.removeChild(this.loaderBar);
 
-		// Change scene to the game scene!
-		Manager.changeScene(new GameScene());
+		// Change scene to the menu scene!
+		Manager.changeScene(new MenuScene());
 	}
 }

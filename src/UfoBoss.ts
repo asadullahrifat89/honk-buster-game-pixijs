@@ -9,9 +9,6 @@ export class UfoBoss extends UfoBossBase {
 	private _ufoBossWinTexture: Texture = Constants.getRandomTexture(ConstructType.UFO_BOSS_WIN);
 	private _ufoBossHitTexture: Texture = Constants.getRandomTexture(ConstructType.UFO_BOSS_HIT);
 
-	private readonly _grace: number = 7;
-	private readonly _lag: number = 125;
-
 	private _changeMovementPatternDelay: number = 0;
 
 	private _hitStanceDelay: number = 0;
@@ -84,56 +81,15 @@ export class UfoBoss extends UfoBossBase {
 		}
 	}
 
-	seekPlayer(playerPoint: Rectangle) {
+	override seekPlayer(target: Rectangle) {
 		this._changeMovementPatternDelay -= 0.1;
 
 		if (this._changeMovementPatternDelay < 0) {
 			this.randomizeMovementPattern();
 		}
 
-		let left = this.getLeft();
-		let top = this.getTop();
-
-		let playerMiddleX = left + this.width / 2;
-		let playerMiddleY = top + this.height / 2;
-
-		// move up
-		if (playerPoint.y < playerMiddleY - this._grace) {
-			var distance = Math.abs(playerPoint.y - playerMiddleY);
-			let speed = this.getFlightSpeed(distance);
-
-			this.y = (top - speed);
-		}
-
-		// move left
-		if (playerPoint.x < playerMiddleX - this._grace) {
-			var distance = Math.abs(playerPoint.x - playerMiddleX);
-			let speed = this.getFlightSpeed(distance);
-
-			this.x = (left - speed);
-		}
-
-		// move down
-		if (playerPoint.y > playerMiddleY + this._grace) {
-			var distance = Math.abs(playerPoint.y - playerMiddleY);
-			let speed = this.getFlightSpeed(distance);
-
-			this.y = (top + speed);
-		}
-
-		// move right
-		if (playerPoint.x > playerMiddleX + this._grace) {
-			var distance = Math.abs(playerPoint.x - playerMiddleX);
-			let speed = this.getFlightSpeed(distance);
-
-			this.x = (left + speed);
-		}
-	}
-
-	getFlightSpeed(distance: number) {
-		var flightSpeed = distance / this._lag;
-		return flightSpeed;
-	}
+		super.seekPlayer(target);
+	}	
 
 	moveInIsometricSquares(sceneWidth: number, sceneHeight: number) {
 		this._changeMovementPatternDelay -= 0.1;

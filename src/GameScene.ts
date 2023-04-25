@@ -3,7 +3,7 @@ import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
 import { Cloud } from "./Cloud";
-import { Constants, ConstructType, RotationDirection } from './Constants';
+import { Constants, ConstructType, PowerUpType, RotationDirection } from './Constants';
 import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
 import { PlayerBalloon } from "./PlayerBalloon";
@@ -13,7 +13,7 @@ import { PlayerHonkBomb } from "./PlayerHonkBomb";
 import { GameScoreBar } from "./GameScoreBar";
 import { GameCheckpoint } from "./GameCheckpoint";
 import { VehicleBoss } from "./VehicleBoss";
-import { InterimScreen } from "./InterimScreen";
+import { InGameMessage } from "./InGameMessage";
 import { VehicleBossRocket } from "./VehicleBossRocket";
 import { HealthBar } from "./HealthBar";
 import { UfoBoss } from "./UfoBoss";
@@ -25,6 +25,9 @@ import { ZombieBossRocketBlock } from "./ZombieBossRocketBlock";
 import { MafiaBoss } from "./MafiaBoss";
 import { MafiaBossRocket } from "./MafiaBossRocket";
 import { MafiaBossRocketBullsEye } from "./MafiaBossRocketBullsEye";
+import { HealthPickup } from "./HealthPickup";
+import { PowerUpPickup } from "./PowerUpPickup";
+import { PlayerRocketBullsEye } from "./PlayerRocketBullsEye";
 
 
 export class GameScene extends Container implements IScene {
@@ -35,7 +38,7 @@ export class GameScene extends Container implements IScene {
 	private _sceneContainer: Container = new Container();
 	private _gameScoreBar: GameScoreBar;
 
-	private _interimScreen: InterimScreen;
+	private _inGameMessage: InGameMessage;
 
 	//TODO: set defaults _vehicleBossReleasePoint = 25
 	private readonly _vehicleBossReleasePoint: number = 25; // first appearance
@@ -53,12 +56,13 @@ export class GameScene extends Container implements IScene {
 	private readonly _zombieBossCheckpoint: GameCheckpoint;
 
 	//TODO: set defaults _mafiaBossReleasePoint = 100
-	private readonly _mafiaBossReleasePoint: number = 15; // first appearance
+	private readonly _mafiaBossReleasePoint: number = 100; // first appearance
 	private readonly _mafiaBossReleasePoint_increase: number = 15;
 	private readonly _mafiaBossCheckpoint: GameCheckpoint;
 
 	private _playerHealthBar: HealthBar;
 	private _bossHealthBar: HealthBar;
+	private _powerUpMeter: HealthBar;
 
 	private _gameLevel: number = 0;
 
@@ -104,6 +108,7 @@ export class GameScene extends Container implements IScene {
 
 		this.spawnPlayerHonkBombs();
 		this.spawnPlayerRockets();
+		this.spawnPlayerRocketBullsEyes();
 		this.spawnPlayerBalloon();
 
 		this.spawnUfoBossRockets();
@@ -116,6 +121,9 @@ export class GameScene extends Container implements IScene {
 		this.spawnMafiaBosss();
 		this.spawnMafiaBossRockets();
 		this.spawnMafiaBossRocketBullsEyes();
+
+		this.spawnHealthPickups();
+		this.spawnPowerUpPickups();
 
 		this.spawnClouds();
 
@@ -132,9 +140,14 @@ export class GameScene extends Container implements IScene {
 		this._bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
 		this._bossHealthBar.setMaximumValue(100);
 		this._bossHealthBar.setValue(0);
-		this.repositionVehicleBossHealthBar();
+		this.repositionBossHealthBar();
 
-		this._interimScreen = new InterimScreen(this);
+		this._powerUpMeter = new HealthBar(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR), this);
+		this._powerUpMeter.setMaximumValue(100);
+		this._powerUpMeter.setValue(0);
+		this.repositionPowerUpMeter();
+
+		this._inGameMessage = new InGameMessage(this);
 
 		this.setGameController();
 	}
@@ -1357,7 +1370,7 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setValue(vehicleBoss.health);
 				this._bossHealthBar.setIcon(vehicleBoss.getGameObjectSprite().getTexture());
 
-				this.generateInterimScreen("Crazy Honker Arrived");
+				this.generateInGameMessage("Crazy Honker Arrived");
 			}
 		}
 	}
@@ -1567,7 +1580,7 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setValue(ufoBoss.health);
 				this._bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
 
-				this.generateInterimScreen("Scarlet Saucer Arrived");
+				this.generateInGameMessage("Scarlet Saucer Arrived");
 			}
 		}
 	}
@@ -1939,7 +1952,7 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setValue(zombieBoss.health);
 				this._bossHealthBar.setIcon(zombieBoss.getGameObjectSprite().getTexture());
 
-				this.generateInterimScreen("Zombie Blocks Arrived");
+				this.generateInGameMessage("Zombie Blocks Arrived");
 			}
 		}
 	}
@@ -2155,7 +2168,7 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setValue(mafiaBoss.health);
 				this._bossHealthBar.setIcon(mafiaBoss.getGameObjectSprite().getTexture());
 
-				this.generateInterimScreen("Beware of Crimson Mafia");
+				this.generateInGameMessage("Beware of Crimson Mafia");
 			}
 		}
 	}
@@ -2567,7 +2580,27 @@ export class GameScene extends Container implements IScene {
 		if (this._gameController.isAttacking) {
 
 			if (this.anyInAirBossExists()) {
-				this.generatePlayerRocket();
+
+				if (this._powerUpMeter.hasHealth()) {
+
+					switch (this._powerUpMeter.tag) {
+						case PowerUpType.BULLS_EYE:
+							{
+								this.generatePlayerRocketBullsEye();
+							}
+							break;
+						case PowerUpType.ARMOR:
+							{
+								this.generatePlayerRocket();
+							}
+							break;
+						default:
+							break;
+					}
+				}
+				else {
+					this.generatePlayerRocket();
+				}
 			}
 			else {
 				this.generatePlayerHonkBomb();
@@ -2580,15 +2613,15 @@ export class GameScene extends Container implements IScene {
 	loosePlayerHealth() {
 		this._player.setPopping();
 
-		this._player.looseHealth();
-		this._player.setHitStance();
+		if (this._powerUpMeter.hasHealth() && this._powerUpMeter.tag == PowerUpType.ARMOR) {
+			this.depletePowerUp();
+		}
+		else {
+			this._player.looseHealth();
+			this._player.setHitStance();
+			this._playerHealthBar.setValue(this._player.health);
 
-		this._playerHealthBar.setValue(this._player.health);
-
-		if (this.anyBossExists()) {
-			//let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
-			//if (vehicleBoss)
+			//TODO: game over
 		}
 	}
 
@@ -2646,7 +2679,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	animatePlayerHonkBomb() {
+	animatePlayerHonkBombs() {
 
 		var animatingHonkBombs = this.playerHonkBombGameObjects.filter(x => x.isAnimating == true);
 
@@ -2768,7 +2801,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	animatePlayerRocket() {
+	animatePlayerRockets() {
 
 		var animatingHonkBombs = this.playerRocketGameObjects.filter(x => x.isAnimating == true);
 
@@ -2876,6 +2909,384 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region PlayerRocketBullsEyes
+
+	private playerRocketBullsEyeSizeWidth: number = 90;
+	private playerRocketBullsEyeSizeHeight: number = 90;
+
+	private playerRocketBullsEyeGameObjects: Array<PlayerRocketBullsEye> = [];
+
+	spawnPlayerRocketBullsEyes() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: PlayerRocketBullsEye = new PlayerRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+			gameObject.width = this.playerRocketBullsEyeSizeWidth;
+			gameObject.height = this.playerRocketBullsEyeSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET_BULLS_EYE));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.playerRocketBullsEyeSizeWidth;
+			sprite.height = this.playerRocketBullsEyeSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.playerRocketBullsEyeGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generatePlayerRocketBullsEye() {
+
+		let playerRocketBullsEye = this.playerRocketBullsEyeGameObjects.find(x => x.isAnimating == false);
+
+		if (playerRocketBullsEye) {
+			playerRocketBullsEye.reset();
+			playerRocketBullsEye.reposition(this._player);
+			playerRocketBullsEye.setPopping();
+
+			this._player.setAttackStance();
+
+			//TODO: check more enemy types to set target
+			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+			let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+			let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+			let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
+
+			if (ufoBossRocketSeeking) {
+				playerRocketBullsEye.setTarget(ufoBossRocketSeeking.getCloseBounds());
+			}
+			else if (ufoBoss) {
+				playerRocketBullsEye.setTarget(ufoBoss.getCloseBounds());
+			}
+			else if (zombieBoss) {
+				playerRocketBullsEye.setTarget(zombieBoss.getCloseBounds());
+			}
+			else if (mafiaBoss) {
+				playerRocketBullsEye.setTarget(mafiaBoss.getCloseBounds());
+			}
+
+			playerRocketBullsEye.enableRendering();
+
+			if (this._powerUpMeter.hasHealth() && this._powerUpMeter.tag == PowerUpType.BULLS_EYE)
+				this.depletePowerUp();
+		}
+	}
+
+	animatePlayerRocketBullsEyes() {
+
+		let animatingPlayerRocketBullsEyes = this.playerRocketBullsEyeGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingPlayerRocketBullsEyes) {
+
+			animatingPlayerRocketBullsEyes.forEach(gameObject => {
+
+				let playerRocket = gameObject as PlayerRocketBullsEye;
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+					gameObject.moveDownRight();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.rotate(RotationDirection.Forward, 0, 2.5);
+					gameObject.move();
+
+					//TODO: check collision for more enemy types
+
+					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
+					let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
+
+					let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
+					let zombieBossRocketBlock = this.zombieBossRocketBlockGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
+
+					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
+
+					if (ufoBossRocketSeeking) {
+						playerRocket.setBlast();
+						ufoBossRocketSeeking.setBlast();
+					}
+					else if (ufoBoss) {
+						playerRocket.setBlast();
+						this.looseUfoBosshealth(ufoBoss as UfoBoss);
+					}
+					else if (zombieBossRocketBlock) {
+						playerRocket.setBlast();
+						zombieBossRocketBlock.looseHealth();
+					}
+					else if (zombieBoss) {
+						playerRocket.setBlast();
+						this.looseZombieBosshealth(zombieBoss as ZombieBoss);
+					}
+					else if (mafiaBoss) {
+						playerRocket.setBlast();
+						this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
+					}
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region HealthPickups	
+
+	private healthPickupSizeWidth: number = 327 / 3;
+	private healthPickupSizeHeight: number = 327 / 3;
+
+	private healthPickupGameObjects: Array<HealthPickup> = [];
+
+	private healthPickupPopDelayDefault: number = 130 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private healthPickupPopDelay: number = 0;
+
+	private spawnHealthPickups() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: HealthPickup = new HealthPickup(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED));
+			gameObject.disableRendering();
+			gameObject.width = this.healthPickupSizeWidth;
+			gameObject.height = this.healthPickupSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.healthPickupSizeWidth;
+			sprite.height = this.healthPickupSizeHeight;
+			sprite.anchor.set(0.5, 0.5);
+
+			gameObject.addChild(sprite);
+
+			this.healthPickupGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private generateHealthPickups() {
+
+		if (HealthPickup.shouldGenerate(this._player.health)) {
+			this.healthPickupPopDelay -= 0.1;
+
+			if (this.healthPickupPopDelay < 0) {
+
+				var gameObject = this.healthPickupGameObjects.find(x => x.isAnimating == false);
+
+				if (gameObject) {
+
+					gameObject.reset();
+
+					var healthPickup = gameObject as HealthPickup;
+
+					if (healthPickup) {
+						var topOrLeft = Constants.getRandomNumber(0, 1);
+
+						switch (topOrLeft) {
+							case 0:
+								{
+									var xLaneWidth = Constants.DEFAULT_GAME_VIEW_WIDTH / 4;
+									healthPickup.setPosition(Constants.getRandomNumber(0, xLaneWidth - healthPickup.width), healthPickup.height * -1);
+								}
+								break;
+							case 1:
+								{
+									var yLaneWidth = (Constants.DEFAULT_GAME_VIEW_HEIGHT / 2) / 2;
+									healthPickup.setPosition(healthPickup.width * -1, Constants.getRandomNumber(0, yLaneWidth));
+								}
+								break;
+							default:
+								break;
+						}
+					}
+
+					gameObject.enableRendering();
+
+					this.healthPickupPopDelay = this.healthPickupPopDelayDefault;
+				}
+			}
+		}
+	}
+
+	private animateHealthPickups() {
+
+		var animatingHealthPickups = this.healthPickupGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingHealthPickups) {
+
+			animatingHealthPickups.forEach(gameObject => {
+
+				if (gameObject.isPickedUp) {
+					gameObject.shrink();
+				}
+				else {
+
+					gameObject.moveDownRight();
+
+					if (Constants.checkCloseCollision(gameObject, this._player)) {
+						gameObject.pickedUp();
+
+						this._player.gainhealth();
+						this._playerHealthBar.setValue(this._player.health);
+					}
+				}
+
+				if (gameObject.isShrinkingComplete() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region PowerUpPickups	
+
+	private powerUpPickupSizeWidth: number = 327 / 3;
+	private powerUpPickupSizeHeight: number = 327 / 3;
+
+	private powerUpPickupGameObjects: Array<PowerUpPickup> = [];
+
+	private powerUpPickupPopDelayDefault: number = 130 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private powerUpPickupPopDelay: number = 0;
+
+	private spawnPowerUpPickups() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: PowerUpPickup = new PowerUpPickup(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED));
+			gameObject.disableRendering();
+			gameObject.width = this.powerUpPickupSizeWidth;
+			gameObject.height = this.powerUpPickupSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.powerUpPickupSizeWidth;
+			sprite.height = this.powerUpPickupSizeHeight;
+			sprite.anchor.set(0.5, 0.5);
+
+			gameObject.addChild(sprite);
+
+			this.powerUpPickupGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private generatePowerUpPickups() {
+
+		if ((this.anyInAirBossExists() /*|| UfoEnemyExists()*/) && !this._powerUpMeter.hasHealth()) {
+			this.powerUpPickupPopDelay -= 0.1;
+
+			if (this.powerUpPickupPopDelay < 0) {
+
+				var gameObject = this.powerUpPickupGameObjects.find(x => x.isAnimating == false);
+
+				if (gameObject) {
+
+					gameObject.reset();
+
+					var powerUpPickup = gameObject as PowerUpPickup;
+
+					if (powerUpPickup) {
+						var topOrLeft = Constants.getRandomNumber(0, 1);
+
+						switch (topOrLeft) {
+							case 0:
+								{
+									var xLaneWidth = Constants.DEFAULT_GAME_VIEW_WIDTH / 4;
+									powerUpPickup.setPosition(Constants.getRandomNumber(0, xLaneWidth - powerUpPickup.width), powerUpPickup.height * -1);
+								}
+								break;
+							case 1:
+								{
+									var yLaneWidth = (Constants.DEFAULT_GAME_VIEW_HEIGHT / 2) / 2;
+									powerUpPickup.setPosition(powerUpPickup.width * -1, Constants.getRandomNumber(0, yLaneWidth));
+								}
+								break;
+							default:
+								break;
+						}
+					}
+
+					gameObject.enableRendering();
+
+					this.powerUpPickupPopDelay = this.powerUpPickupPopDelayDefault;
+				}
+			}
+		}
+	}
+
+	private animatePowerUpPickups() {
+
+		var animatingPowerUpPickups = this.powerUpPickupGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingPowerUpPickups) {
+
+			animatingPowerUpPickups.forEach(gameObject => {
+
+				if (gameObject.isPickedUp) {
+					gameObject.shrink();
+				}
+				else {
+
+					gameObject.moveDownRight();
+
+					if (Constants.checkCloseCollision(gameObject, this._player)) {
+						gameObject.pickedUp();
+
+						this._powerUpMeter.tag = gameObject.powerUpType;
+						this._powerUpMeter.setIcon(gameObject.getGameObjectSprite().getTexture());
+
+						switch (gameObject.powerUpType) {
+							case PowerUpType.BULLS_EYE: // if bulls eye powerup, allow using a single shot of 20 bombs
+								{
+									this._powerUpMeter.setMaximumValue(20);
+									this._powerUpMeter.setValue(20);
+
+									this.generateInGameMessage("Bylls Eye +20");
+								}
+								break;
+							case PowerUpType.ARMOR:
+								{
+									this._powerUpMeter.setMaximumValue(10);
+									this._powerUpMeter.setValue(10);
+
+									this.generateInGameMessage("Armor +10");
+								}
+								break;
+							default:
+								break;
+						}
+					}
+				}
+
+				if (gameObject.isShrinkingComplete() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	private depletePowerUp() {
+		// use up the power up
+		if (this._powerUpMeter.hasHealth())
+			this._powerUpMeter.setValue(this._powerUpMeter.getValue() - 1);
+	}
+
+	//#endregion
+
 	//#region GameController
 
 	setGameController() {
@@ -2902,29 +3313,33 @@ export class GameScene extends Container implements IScene {
 		this._playerHealthBar.reposition((Manager.width) - 105, 10);
 	}
 
-	private repositionVehicleBossHealthBar() {
+	private repositionBossHealthBar() {
 		this._bossHealthBar.reposition((Manager.width) - 205, 10);
+	}
+
+	private repositionPowerUpMeter() {
+		this._powerUpMeter.reposition((Manager.width) - 305, 10);
 	}
 
 	//#endregion
 
-	//#region InterimScreen
+	//#region InGameMessage
 
-	private generateInterimScreen(title: string) {
-		if (this._interimScreen.isAnimating == false) {
-			this._interimScreen.setTitle(title);
-			this._interimScreen.reset();
-			this._interimScreen.reposition(Manager.width / 2, Manager.height / 2);
-			this._interimScreen.enableRendering();
+	private generateInGameMessage(title: string) {
+		if (this._inGameMessage.isAnimating == false) {
+			this._inGameMessage.setTitle(title);
+			this._inGameMessage.reset();
+			this._inGameMessage.reposition(Manager.width / 2, Manager.height / 2);
+			this._inGameMessage.enableRendering();
 		}
 	}
 
-	private animateInterimScreen() {
-		if (this._interimScreen.isAnimating == true) {
-			this._interimScreen.depleteOnScreenDelay();
+	private animateInGameMessage() {
+		if (this._inGameMessage.isAnimating == true) {
+			this._inGameMessage.depleteOnScreenDelay();
 
-			if (this._interimScreen.isDepleted()) {
-				this._interimScreen.disableRendering();
+			if (this._inGameMessage.isDepleted()) {
+				this._inGameMessage.disableRendering();
 			}
 		}
 	}
@@ -2946,11 +3361,13 @@ export class GameScene extends Container implements IScene {
 		this._sceneContainer.scale.set(scale);
 		this.repositionGameScoreBar();
 		this.repositionPlayerHealthBar();
+		this.repositionBossHealthBar();
+		this.repositionPowerUpMeter();
 	}
 
 	private levelUp() {
 		this._gameLevel++;
-		this.generateInterimScreen("LEVEL " + this._gameLevel.toString() + " COMPLETE");
+		this.generateInGameMessage("LEVEL " + this._gameLevel.toString() + " COMPLETE");
 	}
 
 	private generateGameObjects() {
@@ -2977,6 +3394,9 @@ export class GameScene extends Container implements IScene {
 		this.generateMafiaBoss();
 		this.generateMafiaBossRockets();
 		this.generateMafiaBossRocketBullsEyes();
+
+		this.generateHealthPickups();
+		this.generatePowerUpPickups();
 
 		this.generateClouds();
 
@@ -3010,8 +3430,9 @@ export class GameScene extends Container implements IScene {
 		this.animateLightBillboardsBottom();
 		this.animateLampsBottom();
 
-		this.animatePlayerHonkBomb();
-		this.animatePlayerRocket();
+		this.animatePlayerHonkBombs();
+		this.animatePlayerRockets();
+		this.animatePlayerRocketBullsEyes();
 
 		this.animateUfoBoss();
 		this.animateUfoBossRockets();
@@ -3024,8 +3445,11 @@ export class GameScene extends Container implements IScene {
 		this.animateMafiaBossRockets();
 		this.animateMafiaBossRocketBullsEyes();
 
+		this.animateHealthPickups();
+		this.animatePowerUpPickups();
+
 		this.animateClouds();
-		this.animateInterimScreen();
+		this.animateInGameMessage();
 	}
 
 	private anyBossExists(): boolean {
@@ -3040,3 +3464,4 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 }
+

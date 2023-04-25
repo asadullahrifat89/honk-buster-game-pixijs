@@ -61,12 +61,7 @@ export class Manager {
 		// if we have a scene, we let it know that a resize happened!
 		if (Manager.currentScene) {
 			Manager.currentScene.resize(this.scaling);
-		}
-
-		// if the screen supports fullscreen, toggle it
-		if (document.documentElement.requestFullscreen) {
-			document.documentElement.requestFullscreen();
-		}
+		}		
 	}
 
 	private static getScaling() {
@@ -102,6 +97,12 @@ export class Manager {
 
 	// Call this function when you want to go to a new scene
 	public static changeScene(newScene: IScene): void {
+
+		// if the screen supports fullscreen, toggle it
+		if (document.documentElement.requestFullscreen) {
+			document.documentElement.requestFullscreen();
+		}
+
 		// Remove and destroy old scene... if we had one..
 		if (Manager.currentScene) {
 			Manager.app.stage.removeChild(Manager.currentScene);

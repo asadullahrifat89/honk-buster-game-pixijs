@@ -11,7 +11,7 @@ export class GameObject extends Container {
 
 	private hoverDelay: number = 0;
 	private readonly hoverDelayDefault: number = 25;
-	private readonly hoverSpeed: number = 0.7;
+	private readonly hoverSpeed: number = 0.5;
 
 	private dillyDallyDelay: number = 0;
 	private readonly dillyDallyDelayDefault: number = 25;
