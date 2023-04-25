@@ -30,6 +30,7 @@ import { PowerUpPickup } from "./PowerUpPickup";
 import { PlayerRocketBullsEye } from "./PlayerRocketBullsEye";
 import { CastShadow } from "./CastShadow";
 import { UfoEnemy } from "./UfoEnemy";
+import { UfoEnemyRocket } from "./UfoEnemyRocket";
 
 
 export class GameScene extends Container implements IScene {
@@ -134,6 +135,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnMafiaBossRockets();
 		this.spawnMafiaBossRocketBullsEyes();
 
+		this.spawnUfoEnemyRockets();
 		this.spawnUfoEnemys();
 
 		this.spawnHealthPickups();
@@ -1587,8 +1589,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region UfoEnemys	
 
-	private ufoEnemySizeWidth: number = 212;
-	private ufoEnemySizeHeight: number = 212;
+	private ufoEnemySizeWidth: number = 200;
+	private ufoEnemySizeHeight: number = 200;
 
 	private ufoEnemyGameObjects: Array<UfoEnemy> = [];
 
@@ -1678,12 +1680,12 @@ export class GameScene extends Container implements IScene {
 
 				if (ufoEnemy) {
 
-					if (ufoEnemy.honk()) {
+					if (!this.anyBossExists() && ufoEnemy.honk()) {
 						this.generateHonk(gameObject);
 					}
 
 					if (ufoEnemy.attack()) {
-						//TODO: generate ufo enemy rocket
+						this.generateUfoEnemyRockets(ufoEnemy);
 					}
 				}
 
@@ -1722,6 +1724,89 @@ export class GameScene extends Container implements IScene {
 			return true;
 		else
 			return false;
+	}
+
+	//#endregion
+
+	//#region UfoEnemyRockets
+
+	private ufoEnemyRocketSizeWidth: number = 90;
+	private ufoEnemyRocketSizeHeight: number = 90;
+
+	private ufoEnemyRocketGameObjects: Array<UfoEnemyRocket> = [];
+
+	spawnUfoEnemyRockets() {
+
+		for (let j = 0; j < 7; j++) {
+
+			const gameObject: UfoEnemyRocket = new UfoEnemyRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			gameObject.disableRendering();
+			gameObject.width = this.ufoEnemyRocketSizeWidth;
+			gameObject.height = this.ufoEnemyRocketSizeHeight;
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY_ROCKET));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.ufoEnemyRocketSizeWidth;
+			sprite.height = this.ufoEnemyRocketSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.ufoEnemyRocketGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
+		}
+	}
+
+	generateUfoEnemyRockets(ufoEnemy: UfoEnemy) {
+
+		let ufoEnemyRocket = this.ufoEnemyRocketGameObjects.find(x => x.isAnimating == false);
+
+		if (ufoEnemyRocket) {
+			ufoEnemyRocket.reset();
+			ufoEnemyRocket.reposition(ufoEnemy);
+			ufoEnemyRocket.setPopping();
+			ufoEnemyRocket.enableRendering();
+		}
+	}
+
+	animateUfoEnemyRockets() {
+
+		let animatingUfoEnemyRockets = this.ufoEnemyRocketGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingUfoEnemyRockets) {
+
+			animatingUfoEnemyRockets.forEach(gameObject => {
+
+				let ufoEnemyRocket = gameObject as UfoEnemyRocket;
+				ufoEnemyRocket.moveDownRight();
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.hover();
+
+					if (Constants.checkCloseCollision(gameObject, this._player)) {
+						gameObject.setBlast();
+						this.loosePlayerHealth();
+					}
+
+					if (gameObject.autoBlast())
+						gameObject.setBlast();
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
 	}
 
 	//#endregion
@@ -3680,6 +3765,7 @@ export class GameScene extends Container implements IScene {
 		this.animateMafiaBossRocketBullsEyes();
 
 		this.animateUfoEnemys();
+		this.animateUfoEnemyRockets();
 
 		this.animateHealthPickups();
 		this.animatePowerUpPickups();
