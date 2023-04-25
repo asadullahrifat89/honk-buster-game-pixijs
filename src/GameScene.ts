@@ -140,7 +140,7 @@ export class GameScene extends Container implements IScene {
 		this._bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
 		this._bossHealthBar.setMaximumValue(100);
 		this._bossHealthBar.setValue(0);
-		this.repositionVehicleBossHealthBar();
+		this.repositionBossHealthBar();
 
 		this._powerUpMeter = new HealthBar(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR), this);
 		this._powerUpMeter.setMaximumValue(100);
@@ -3313,7 +3313,7 @@ export class GameScene extends Container implements IScene {
 		this._playerHealthBar.reposition((Manager.width) - 105, 10);
 	}
 
-	private repositionVehicleBossHealthBar() {
+	private repositionBossHealthBar() {
 		this._bossHealthBar.reposition((Manager.width) - 205, 10);
 	}
 
@@ -3361,6 +3361,8 @@ export class GameScene extends Container implements IScene {
 		this._sceneContainer.scale.set(scale);
 		this.repositionGameScoreBar();
 		this.repositionPlayerHealthBar();
+		this.repositionBossHealthBar();
+		this.repositionPowerUpMeter();
 	}
 
 	private levelUp() {
@@ -3462,3 +3464,4 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 }
+
