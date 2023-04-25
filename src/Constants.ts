@@ -3,6 +3,13 @@ import { ConstructTemplate } from "./ConstructTemplate";
 import { GameObject } from "./GameObject";
 
 //#region Enums
+
+export enum PowerUpType {
+	//SEEKING_SNITCH,
+	ARMOR,
+	BULLS_EYE,
+}
+
 export enum RotationDirection {
 	Forward,
 	Backward,
