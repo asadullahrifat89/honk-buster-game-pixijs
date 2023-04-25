@@ -13,7 +13,7 @@ import { PlayerHonkBomb } from "./PlayerHonkBomb";
 import { GameScoreBar } from "./GameScoreBar";
 import { GameCheckpoint } from "./GameCheckpoint";
 import { VehicleBoss } from "./VehicleBoss";
-import { InterimScreen } from "./InterimScreen";
+import { InGameMessage } from "./InGameMessage";
 import { VehicleBossRocket } from "./VehicleBossRocket";
 import { HealthBar } from "./HealthBar";
 import { UfoBoss } from "./UfoBoss";
@@ -38,7 +38,7 @@ export class GameScene extends Container implements IScene {
 	private _sceneContainer: Container = new Container();
 	private _gameScoreBar: GameScoreBar;
 
-	private _interimScreen: InterimScreen;
+	private _inGameMessage: InGameMessage;
 
 	//TODO: set defaults _vehicleBossReleasePoint = 25
 	private readonly _vehicleBossReleasePoint: number = 25; // first appearance
@@ -147,7 +147,7 @@ export class GameScene extends Container implements IScene {
 		this._powerUpMeter.setValue(0);
 		this.repositionPowerUpMeter();
 
-		this._interimScreen = new InterimScreen(this);
+		this._inGameMessage = new InGameMessage(this);
 
 		this.setGameController();
 	}
@@ -1370,7 +1370,7 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setValue(vehicleBoss.health);
 				this._bossHealthBar.setIcon(vehicleBoss.getGameObjectSprite().getTexture());
 
-				this.generateInterimScreen("Crazy Honker Arrived");
+				this.generateInGameMessage("Crazy Honker Arrived");
 			}
 		}
 	}
@@ -1580,7 +1580,7 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setValue(ufoBoss.health);
 				this._bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
 
-				this.generateInterimScreen("Scarlet Saucer Arrived");
+				this.generateInGameMessage("Scarlet Saucer Arrived");
 			}
 		}
 	}
@@ -1952,7 +1952,7 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setValue(zombieBoss.health);
 				this._bossHealthBar.setIcon(zombieBoss.getGameObjectSprite().getTexture());
 
-				this.generateInterimScreen("Zombie Blocks Arrived");
+				this.generateInGameMessage("Zombie Blocks Arrived");
 			}
 		}
 	}
@@ -2168,7 +2168,7 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setValue(mafiaBoss.health);
 				this._bossHealthBar.setIcon(mafiaBoss.getGameObjectSprite().getTexture());
 
-				this.generateInterimScreen("Beware of Crimson Mafia");
+				this.generateInGameMessage("Beware of Crimson Mafia");
 			}
 		}
 	}
@@ -3255,7 +3255,7 @@ export class GameScene extends Container implements IScene {
 									this._powerUpMeter.setMaximumValue(20);
 									this._powerUpMeter.setValue(20);
 
-									this.generateInterimScreen("Bylls Eye +20");
+									this.generateInGameMessage("Bylls Eye +20");
 								}
 								break;
 							case PowerUpType.ARMOR:
@@ -3263,7 +3263,7 @@ export class GameScene extends Container implements IScene {
 									this._powerUpMeter.setMaximumValue(10);
 									this._powerUpMeter.setValue(10);
 
-									this.generateInterimScreen("Armor +10");
+									this.generateInGameMessage("Armor +10");
 								}
 								break;
 							default:
@@ -3323,23 +3323,23 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region InterimScreen
+	//#region InGameMessage
 
-	private generateInterimScreen(title: string) {
-		if (this._interimScreen.isAnimating == false) {
-			this._interimScreen.setTitle(title);
-			this._interimScreen.reset();
-			this._interimScreen.reposition(Manager.width / 2, Manager.height / 2);
-			this._interimScreen.enableRendering();
+	private generateInGameMessage(title: string) {
+		if (this._inGameMessage.isAnimating == false) {
+			this._inGameMessage.setTitle(title);
+			this._inGameMessage.reset();
+			this._inGameMessage.reposition(Manager.width / 2, Manager.height / 2);
+			this._inGameMessage.enableRendering();
 		}
 	}
 
-	private animateInterimScreen() {
-		if (this._interimScreen.isAnimating == true) {
-			this._interimScreen.depleteOnScreenDelay();
+	private animateInGameMessage() {
+		if (this._inGameMessage.isAnimating == true) {
+			this._inGameMessage.depleteOnScreenDelay();
 
-			if (this._interimScreen.isDepleted()) {
-				this._interimScreen.disableRendering();
+			if (this._inGameMessage.isDepleted()) {
+				this._inGameMessage.disableRendering();
 			}
 		}
 	}
@@ -3367,7 +3367,7 @@ export class GameScene extends Container implements IScene {
 
 	private levelUp() {
 		this._gameLevel++;
-		this.generateInterimScreen("LEVEL " + this._gameLevel.toString() + " COMPLETE");
+		this.generateInGameMessage("LEVEL " + this._gameLevel.toString() + " COMPLETE");
 	}
 
 	private generateGameObjects() {
@@ -3449,7 +3449,7 @@ export class GameScene extends Container implements IScene {
 		this.animatePowerUpPickups();
 
 		this.animateClouds();
-		this.animateInterimScreen();
+		this.animateInGameMessage();
 	}
 
 	private anyBossExists(): boolean {

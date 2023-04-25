@@ -8,6 +8,11 @@ export class MenuScene extends Container implements IScene {
         super();
     }
 
-    public update(_framesPassed: number) { }
-    public resize(_scale: number): void { }
+    public update(_framesPassed: number) {
+
+    }
+
+    public resize(_scale: number): void {
+
+    }
 }
