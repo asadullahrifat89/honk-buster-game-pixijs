@@ -1,4 +1,4 @@
-﻿import { BitmapText, Container, Graphics, BitmapFont, FederatedPointerEvent } from "pixi.js";
+﻿import { BitmapText, Container, Graphics, BitmapFont, FederatedPointerEvent, DisplayObject } from "pixi.js";
 import { Constants, ConstructType } from "./Constants";
 import { GameObject } from "./GameObject";
 import { GameObjectSprite } from "./GameObjectSprite";
@@ -35,23 +35,8 @@ export class MenuScene extends Container implements IScene {
 
 		this._coverContainer.addChild(sprite);
 
-		const button = new Container();
-		button.interactive = true;
-		button.addChild(new Graphics().beginFill(0x5FC4F8).drawRoundedRect(0, 0, 250, 50, 5));
-		button.x = this._coverContainer.width / 2 - button.width / 2;
-		button.y = this._coverContainer.height / 2 - button.height / 2;
-
-		const textBlock = new BitmapText("New Game", {
-			fontName: "gameplay",
-			fontSize: 26,
-			align: "center",
-		});		
-
-		textBlock.x = button.width / 2 - textBlock.width / 2;
-		textBlock.y = (button.height / 2 - textBlock.height / 2) + 2;
-
-		button.addChild(textBlock);
-		button.on("pointertap", this.newGame, this);
+		const button = new Button(new Graphics().beginFill(0x5FC4F8).drawRoundedRect(0, 0, 250, 50, 5), "New Game", this.newGame);
+		button.setPosition(this._coverContainer.width / 2 - button.width / 2, this._coverContainer.height / 2 - button.height / 2);
 
 		this._coverContainer.addChild(button);
 
@@ -61,7 +46,7 @@ export class MenuScene extends Container implements IScene {
 	}
 
 	public update(_framesPassed: number) {
-		this._coverContainer.hover();
+		//this._coverContainer.hover();
 	}
 
 	public resize(scale: number): void {
@@ -75,4 +60,42 @@ export class MenuScene extends Container implements IScene {
 		// Change scene to the menu scene!
 		Manager.changeScene(new GameScene());
 	}
+}
+
+export class Button extends Container {
+
+	constructor(background: DisplayObject, text: string, onPressed: any) {
+		super();
+
+		// If you need to know, this is the expensive part. This creates the font atlas
+		BitmapFont.from("gameplay", {
+			fill: "#ffffff",
+			fontFamily: "gameplay",
+			fontSize: 26,
+			align: "center",
+		});
+
+		this.interactive = true;
+
+		this.addChild(background);
+
+		const buttonText = new BitmapText(text, {
+			fontName: "gameplay",
+			fontSize: 26,
+			align: "center",
+		});
+
+		buttonText.x = this.width / 2 - buttonText.width / 2;
+		buttonText.y = (this.height / 2 - buttonText.height / 2) + 2;
+
+		this.addChild(buttonText);
+
+		this.on("pointertap", onPressed, this);
+	}
+
+	setPosition(x: number, y: number) {
+		this.x = x;
+		this.y = y;
+	}
+
 }
