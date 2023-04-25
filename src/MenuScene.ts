@@ -1,8 +1,8 @@
-﻿import { ButtonContainer } from "@pixi/ui";
-import { BitmapText, Container, Graphics, BitmapFont } from "pixi.js";
+﻿import { BitmapText, Container, Graphics, BitmapFont, FederatedPointerEvent } from "pixi.js";
 import { Constants, ConstructType } from "./Constants";
 import { GameObject } from "./GameObject";
 import { GameObjectSprite } from "./GameObjectSprite";
+import { GameScene } from "./GameScene";
 import { IScene } from "./IScene";
 import { Manager } from "./Manager";
 
@@ -35,7 +35,8 @@ export class MenuScene extends Container implements IScene {
 
 		this._coverContainer.addChild(sprite);
 
-		const button = new ButtonContainer();
+		const button = new Container();
+		button.interactive = true;
 		button.addChild(new Graphics().beginFill(0x5FC4F8).drawRoundedRect(0, 0, 250, 50, 5));
 		button.x = this._coverContainer.width / 2 - button.width / 2;
 		button.y = this._coverContainer.height / 2 - button.height / 2;
@@ -44,12 +45,13 @@ export class MenuScene extends Container implements IScene {
 			fontName: "gameplay",
 			fontSize: 26,
 			align: "center",
-		});
+		});		
 
 		textBlock.x = button.width / 2 - textBlock.width / 2;
 		textBlock.y = (button.height / 2 - textBlock.height / 2) + 2;
 
 		button.addChild(textBlock);
+		button.on("pointertap", this.newGame, this);
 
 		this._coverContainer.addChild(button);
 
@@ -59,11 +61,18 @@ export class MenuScene extends Container implements IScene {
 	}
 
 	public update(_framesPassed: number) {
-		//this._coverContainer.hover();
+		this._coverContainer.hover();
 	}
 
 	public resize(scale: number): void {
 		this._coverContainer.scale.set(scale);
 		this._coverContainer.setPosition(Manager.width / 2 - this._coverContainer.width / 2, Manager.height / 2 - this._coverContainer.height / 2);
+	}
+
+	private newGame(_e: FederatedPointerEvent) {
+		this.removeChild(this._coverContainer);
+
+		// Change scene to the menu scene!
+		Manager.changeScene(new GameScene());
 	}
 }
