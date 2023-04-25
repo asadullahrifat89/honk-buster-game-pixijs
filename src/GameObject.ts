@@ -21,7 +21,7 @@ export class GameObject extends Container {
 	private readonly vibrateDelayDefault: number = 8;
 	private readonly vibrateSpeed: number = 0.3;
 
-	private readonly expandSpeed: number = 0.07;
+	public expandSpeed: number = 0.07;
 
 	public isAnimating: boolean = false;
 	public speed: number = 3;
@@ -162,8 +162,11 @@ export class GameObject extends Container {
 	}
 
 	shrink() {
-		this.scale.x -= this.expandSpeed;
-		this.scale.y -= this.expandSpeed;
+		if (this.scale.x > 0)
+			this.scale.x -= this.expandSpeed;
+
+		if (this.scale.y > 0)
+			this.scale.y -= this.expandSpeed;
 	}
 
 	pop() {

@@ -24,7 +24,7 @@ export class PlayerHonkBomb extends GameObject {
 	}
 
 	reposition(source: GameObject) {
-		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 35);
+		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 40);
 	}
 
 	move() {

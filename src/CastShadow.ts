@@ -11,6 +11,7 @@ export class CastShadow extends GameObject {
 		super(source.speed);
 
 		this.alpha = 0.7;
+		this.expandSpeed = 0.013;
 		this.source = source;
 
 		this.width = width;
@@ -24,15 +25,18 @@ export class CastShadow extends GameObject {
 		this.y = source.getBottom() + (source.castShadowDistance);
 
 		this.addChild(graphics);
+
 	}
 
 	reset() {
+		this.scale.set(1);
 		this.setPosition(this.source.getLeft(), this.source.getBottom() + (this.source.castShadowDistance));
 	}
 
 	move() {
 		if (this.source.gravitatesDown) {
-			this.setPosition(this.source.x, this.y + this.speed);
+			this.setPosition(this.source.x, this.y + this.speed / 1.5);
+			this.shrink();
 		}
 		else if (this.source.gravitatesUp) {
 			this.x = this.source.x;
