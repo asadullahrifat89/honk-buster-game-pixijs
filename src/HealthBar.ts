@@ -10,6 +10,7 @@ export class HealthBar extends Container {
 	private _imageContainer: GameObject;
 	private _maximumHealth: number = 0;
 	public tag: any;
+	private _value: number = 100;
 
 	constructor(texture: Texture, scene: Container) {
 		super();
@@ -85,16 +86,18 @@ export class HealthBar extends Container {
 		if (this._maximumHealth == 0)
 			this._maximumHealth = 100;
 
-		this._progressBar.progress = value / this._maximumHealth * 100;
+		this._value = value;
 
-		if (this._progressBar.progress > 0)
+		this._progressBar.progress = this._value / this._maximumHealth * 100;
+
+		if (this._value > 0)
 			this.alpha = 1;
 		else
 			this.alpha = 0;
 	}
 
 	getValue(): number {
-		return this._progressBar.progress;
+		return this._value;
 	}
 
 	reset() {

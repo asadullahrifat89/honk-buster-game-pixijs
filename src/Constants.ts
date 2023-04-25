@@ -276,7 +276,7 @@ export abstract class Constants {
 
 		new ConstructTemplate(ConstructType.HEALTH_PICKUP, "health_pickup.png"),
 		new ConstructTemplate(ConstructType.POWERUP_PICKUP_ARMOR, "powerup_pickup_armor.png"),
-		new ConstructTemplate(ConstructType.POWERUP_PICKUP_ARMOR, "powerup_pickup_bulls_eye.png"),
+		new ConstructTemplate(ConstructType.POWERUP_PICKUP_BULLS_EYE, "powerup_pickup_bulls_eye.png"),
 	];
 
 	//#endregion

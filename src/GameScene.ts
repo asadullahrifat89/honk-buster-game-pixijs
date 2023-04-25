@@ -2613,15 +2613,15 @@ export class GameScene extends Container implements IScene {
 	loosePlayerHealth() {
 		this._player.setPopping();
 
-		this._player.looseHealth();
-		this._player.setHitStance();
+		if (this._powerUpMeter.hasHealth() && this._powerUpMeter.tag == PowerUpType.ARMOR) {
+			this.depletePowerUp();
+		}
+		else {
+			this._player.looseHealth();
+			this._player.setHitStance();
+			this._playerHealthBar.setValue(this._player.health);
 
-		this._playerHealthBar.setValue(this._player.health);
-
-		if (this.anyBossExists()) {
-			//let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
-			//if (vehicleBoss)
+			//TODO: game over
 		}
 	}
 
@@ -2997,6 +2997,7 @@ export class GameScene extends Container implements IScene {
 
 					gameObject.pop();
 					gameObject.rotate(RotationDirection.Forward, 0, 2.5);
+					gameObject.move();
 
 					//TODO: check collision for more enemy types
 
@@ -3046,14 +3047,14 @@ export class GameScene extends Container implements IScene {
 
 	private healthPickupGameObjects: Array<HealthPickup> = [];
 
-	private healthPickupPopDelayDefault: number = 100 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private healthPickupPopDelayDefault: number = 130 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private healthPickupPopDelay: number = 0;
 
 	private spawnHealthPickups() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: HealthPickup = new HealthPickup(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 1));
+			const gameObject: HealthPickup = new HealthPickup(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED));
 			gameObject.disableRendering();
 			gameObject.width = this.healthPickupSizeWidth;
 			gameObject.height = this.healthPickupSizeHeight;
@@ -3156,14 +3157,14 @@ export class GameScene extends Container implements IScene {
 
 	private powerUpPickupGameObjects: Array<PowerUpPickup> = [];
 
-	private powerUpPickupPopDelayDefault: number = 100 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private powerUpPickupPopDelayDefault: number = 130 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private powerUpPickupPopDelay: number = 0;
 
 	private spawnPowerUpPickups() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: PowerUpPickup = new PowerUpPickup(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 1));
+			const gameObject: PowerUpPickup = new PowerUpPickup(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED));
 			gameObject.disableRendering();
 			gameObject.width = this.powerUpPickupSizeWidth;
 			gameObject.height = this.powerUpPickupSizeHeight;
