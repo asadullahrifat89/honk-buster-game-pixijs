@@ -13,6 +13,7 @@ import { SoundManager } from "./SoundManager";
 export class PlayerSelectionScene extends Container implements IScene {
 
 	private sceneContainer: GameObject;
+	private playerTemplate: number = 0;
 
 	constructor() {
 		super();
@@ -58,6 +59,7 @@ export class PlayerSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			player_2_sprite.filters = [new BlurFilter()];
 			player_1_sprite.filters = null;
+			this.playerTemplate = 0;
 		});
 		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width, this.sceneContainer.height / 2 - player_1_sprite.height / 2);
 		this.sceneContainer.addChild(player_1_button);
@@ -71,10 +73,10 @@ export class PlayerSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			player_1_sprite.filters = [new BlurFilter()];
 			player_2_sprite.filters = null;
+			this.playerTemplate = 1;
 		});
 		player_2_button.setPosition(this.sceneContainer.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2);
 		this.sceneContainer.addChild(player_2_button);
-
 
 		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), this.onProceed, "Select");
 		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height - button.height * 2);
@@ -92,6 +94,6 @@ export class PlayerSelectionScene extends Container implements IScene {
 	private onProceed(_e: FederatedPointerEvent) {
 		SoundManager.play(SoundType.OPTION_SELECT);
 		this.removeChild(this.sceneContainer);
-		SceneManager.changeScene(new GameScene());
+		SceneManager.changeScene(new GameScene(this.playerTemplate));
 	}
 }

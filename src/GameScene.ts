@@ -85,8 +85,10 @@ export class GameScene extends Container implements IScene {
 
 	//#region Constructor
 
-	constructor() {
+	constructor(playerTemplate: number) {
 		super();
+
+		this.playerTemplate = playerTemplate;
 
 		this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
 		this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
@@ -2874,12 +2876,13 @@ export class GameScene extends Container implements IScene {
 
 	private playerBalloonSizeWidth: number = 150;
 	private playerBalloonSizeHeight: number = 150;
+	private playerTemplate: number = 0;
 
 	private _player: PlayerBalloon = new PlayerBalloon(Constants.DEFAULT_CONSTRUCT_SPEED);
 
 	spawnPlayerBalloon() {
 
-		let playerTemplate = Constants.getRandomNumber(0, 1);
+		this.playerTemplate = Constants.getRandomNumber(0, 1);
 		this._player.disableRendering();
 
 		this._player.width = this.playerBalloonSizeWidth;
@@ -2895,7 +2898,7 @@ export class GameScene extends Container implements IScene {
 
 		this._player.addChild(sprite);
 
-		this._player.setPlayerTemplate(playerTemplate);
+		this._player.setPlayerTemplate(this.playerTemplate);
 
 		this._sceneContainer.addChild(this._player);
 
