@@ -168,8 +168,8 @@ export class GameScene extends Container implements IScene {
 
 		this.setGameController();
 
-		SoundManager.play(SoundType.AMBIENCE, 0.6, true);
-		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.5, true);
+		SoundManager.play(SoundType.AMBIENCE, 0.4, true);
+		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.6, true);
 		SoundManager.play(SoundType.GAME_START);
 	}
 
@@ -2807,6 +2807,8 @@ export class GameScene extends Container implements IScene {
 			honk.setPopping();
 
 			gameObject.enableRendering();
+
+			SoundManager.play(SoundType.HONK, 0.5);
 		}
 	}
 
@@ -2936,10 +2938,11 @@ export class GameScene extends Container implements IScene {
 	private playerHonkBombSizeHeight: number = 45;
 
 	private playerHonkBombGameObjects: Array<GameObject> = [];
+	private playerHonkBombTemplate: number = 0;
 
 	spawnPlayerHonkBombs() {
 
-		let playerHonkBombTemplate = Constants.getRandomNumber(0, 1);
+		this.playerHonkBombTemplate = Constants.getRandomNumber(0, 1);
 
 		for (let j = 0; j < 3; j++) {
 
@@ -2958,7 +2961,7 @@ export class GameScene extends Container implements IScene {
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
-			gameObject.setHonkBombTemplate(playerHonkBombTemplate);
+			gameObject.setHonkBombTemplate(this.playerHonkBombTemplate);
 
 			this.playerHonkBombGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
@@ -3009,7 +3012,7 @@ export class GameScene extends Container implements IScene {
 
 						playerHonkBomb.move();
 
-						if (playerHonkBomb.depleteBlastDelay()) {
+						if (playerHonkBomb.depleteBlastDelay()) {							
 
 							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
 

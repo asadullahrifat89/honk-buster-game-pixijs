@@ -4,30 +4,30 @@ import { SoundObject } from './SoundObject';
 
 export class SoundObjectPlayer {
 
-	private audioObjects: SoundObject[];
+	private soundObjects: SoundObject[];
 	public soundType: SoundType = SoundType.NONE;
 
 	constructor(soundType: SoundType, volume: number, loop: boolean) {
 
 		// hold all sound objects for the sound type
-		this.audioObjects = Constants.SOUND_TEMPLATES.filter(x => x.soundType == soundType).map(u => new SoundObject(u.uri, volume, loop));
+		this.soundObjects = Constants.SOUND_TEMPLATES.filter(x => x.soundType == soundType).map(u => new SoundObject(u.uri, volume, loop));
 	}
 
 	play() {
-		this.audioObjects.forEach(audioObject => {
-			if (audioObject.isPlaying())
+		this.soundObjects.forEach(audioObject => {
+			if (audioObject.isPlaying() && audioObject.isLooping())
 				audioObject.stop();
 		});
 
-		var index = Constants.getRandomNumber(0, this.audioObjects.length - 1);
-		var audioObject = this.audioObjects[index];
+		var index = Constants.getRandomNumber(0, this.soundObjects.length - 1);
+		var audioObject = this.soundObjects[index];
 
 		if (audioObject)
 			audioObject.play();
 	}
 
 	pause() {
-		var playings = this.audioObjects.filter(x => x.isPlaying());
+		var playings = this.soundObjects.filter(x => x.isPlaying());
 
 		if (playings) {
 			playings.forEach(playing => {
@@ -37,7 +37,7 @@ export class SoundObjectPlayer {
 	}
 
 	resume() {
-		var playings = this.audioObjects.filter(x => x.isPaused());
+		var playings = this.soundObjects.filter(x => x.isPaused());
 
 		if (playings) {
 			playings.forEach(playing => {
@@ -47,21 +47,21 @@ export class SoundObjectPlayer {
 	}
 
 	stop() {
-		this.audioObjects.forEach(audioObject => {
+		this.soundObjects.forEach(audioObject => {
 			if (audioObject.isPlaying())
 				audioObject.stop();
 		});
 	}
 
 	setVolume(volume: number) {
-		this.audioObjects.forEach(audioObject => {
+		this.soundObjects.forEach(audioObject => {
 			if (audioObject.isPlaying())
 				audioObject.setVolume(volume);
 		});
 	}
 
 	setLoop(loop: boolean) {
-		this.audioObjects.forEach(audioObject => {
+		this.soundObjects.forEach(audioObject => {
 			if (audioObject.isPlaying())
 				audioObject.setLoop(loop);
 		});

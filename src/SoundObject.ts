@@ -46,5 +46,9 @@ export class SoundObject {
 	isPaused(): boolean {
 		return this.sound.paused;
 	}
+
+	isLooping(): boolean {
+		return this.sound.loop;
+	}
 }
 
