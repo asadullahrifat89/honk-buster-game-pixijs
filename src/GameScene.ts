@@ -1355,7 +1355,7 @@ export class GameScene extends Container implements IScene {
 
 			if (vehicleEnemy.isDead()) {
 				vehicleEnemy.setBlast();
-				this._gameScoreBar.gainScore(2);				
+				this._gameScoreBar.gainScore(2);
 			}
 		}
 	}
@@ -1428,6 +1428,9 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setIcon(vehicleBoss.getGameObjectSprite().getTexture());
 
 				this.generateInGameMessage("Crazy Honker Arrived");
+
+				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
 			}
 		}
 	}
@@ -1480,6 +1483,9 @@ export class GameScene extends Container implements IScene {
 			this._player.setWinStance();
 			this._gameScoreBar.gainScore(3);
 			this.levelUp();
+
+			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 		}
 	}
 
@@ -1656,6 +1662,8 @@ export class GameScene extends Container implements IScene {
 
 						this.generateInGameMessage("Beware of UFO Fleet");
 						this._ufoEnemyFleetAppeared = true;
+						SoundManager.play(SoundType.UFO_ENEMY_ENTRY);
+						SoundManager.play(SoundType.UFO_HOVERING, 0.6, true);
 					}
 				}
 			}
@@ -1718,6 +1726,8 @@ export class GameScene extends Container implements IScene {
 				this._ufoEnemyFleetAppeared = false;
 
 				this.levelUp();
+
+				SoundManager.stop(SoundType.UFO_HOVERING);
 			}
 		}
 	}
