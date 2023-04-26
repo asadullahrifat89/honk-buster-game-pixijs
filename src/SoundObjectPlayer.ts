@@ -2,7 +2,7 @@
 import { SoundObject } from './SoundObject';
 
 
-export class SoundPlayer {
+export class SoundObjectPlayer {
 
     private audioObjects: SoundObject[];
 
