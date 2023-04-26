@@ -3,7 +3,7 @@ import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
 import { Cloud } from "./Cloud";
-import { Constants, ConstructType, PowerUpType, RotationDirection } from './Constants';
+import { Constants, ConstructType, PowerUpType, RotationDirection, SoundType } from './Constants';
 import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
 import { PlayerBalloon } from "./PlayerBalloon";
@@ -31,6 +31,7 @@ import { PlayerRocketBullsEye } from "./PlayerRocketBullsEye";
 import { CastShadow } from "./CastShadow";
 import { UfoEnemy } from "./UfoEnemy";
 import { UfoEnemyRocket } from "./UfoEnemyRocket";
+import { SoundManager } from "./SoundManager";
 
 
 export class GameScene extends Container implements IScene {
@@ -166,6 +167,10 @@ export class GameScene extends Container implements IScene {
 		this._inGameMessage = new InGameMessage(this);
 
 		this.setGameController();
+
+		SoundManager.play(SoundType.AMBIENCE, 0.6, true);
+		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.5, true);
+		SoundManager.play(SoundType.GAME_START);
 	}
 
 	//#endregion

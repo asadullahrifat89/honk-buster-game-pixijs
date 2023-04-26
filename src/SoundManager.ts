@@ -14,15 +14,15 @@ export class SoundManager {
 		}
 	}
 
-	public static play(soundType: SoundType) {
+	public static play(soundType: SoundType, volume: number = 1, loop: boolean = false) {
 		var soundObjectPlayer = this.soundObjectPlayers.find(x => x.soundType == soundType);
 
 		if (soundObjectPlayer) {
 			soundObjectPlayer.play();
 		}
 		else {
-			let soundObjectPlayer = new SoundObjectPlayer(soundType, 1, false);
-			this.soundObjectPlayers.push(soundObjectPlayer); // if play is called without a prior call to load play with default settings
+			let soundObjectPlayer = new SoundObjectPlayer(soundType, volume, loop);
+			this.soundObjectPlayers.push(soundObjectPlayer);
 			soundObjectPlayer.play();
 		}
 	}
