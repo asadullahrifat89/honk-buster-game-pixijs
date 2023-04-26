@@ -1,5 +1,5 @@
 ﻿import { DropShadowFilter } from "@pixi/filter-drop-shadow";
-import { Container, Graphics, BitmapFont, FederatedPointerEvent, BitmapText } from "pixi.js";
+import { Container, Graphics, FederatedPointerEvent, Text } from "pixi.js";
 import { Button } from "./Button";
 import { Constants, ConstructType, SoundType } from "./Constants";
 import { GameObject } from "./GameObject";
@@ -10,20 +10,12 @@ import { SceneManager } from "./SceneManager";
 import { SoundManager } from "./SoundManager";
 
 
-export class MenuScene extends Container implements IScene {
+export class GameTitleScene extends Container implements IScene {
 
 	private sceneContainer: GameObject;
 
 	constructor() {
 		super();
-
-		// If you need to know, this is the expensive part. This creates the font atlas
-		BitmapFont.from("gameplay", {
-			fill: "#ffffff",
-			fontFamily: "gameplay",
-			fontSize: 35,
-			align: "center",
-		});
 
 		this.sceneContainer = new GameObject(0);
 		this.sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
@@ -39,19 +31,21 @@ export class MenuScene extends Container implements IScene {
 		sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
 		this.sceneContainer.addChild(sprite);
 
-		const title = new BitmapText("Honk Buster", {
-			fontName: "gameplay",
-			fontSize: 35,
+		const title = new Text("Honk Buster", {
+			fontFamily: "gameplay",
 			align: "center",
+			fill: "#ffffff",
+			fontSize: 35
 		});
 		title.x = this.sceneContainer.width / 2 - title.width / 2;
 		title.y = (this.sceneContainer.height / 2 - title.height / 2) - 120;
 		this.sceneContainer.addChild(title);
 
-		const subTitle = new BitmapText("Save the planet from honkers", {
-			fontName: "gameplay",
-			fontSize: 22,
+		const subTitle = new Text("Save the planet from honkers", {
+			fontFamily: "gameplay",
 			align: "center",
+			fill: "#ffffff",
+			fontSize: 22,
 		});
 		subTitle.x = this.sceneContainer.width / 2 - subTitle.width / 2;
 		subTitle.y = (this.sceneContainer.height / 2 - subTitle.height / 2) - 60;

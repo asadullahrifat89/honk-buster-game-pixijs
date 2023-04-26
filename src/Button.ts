@@ -1,5 +1,5 @@
 ﻿import { GrayscaleFilter } from "@pixi/filter-grayscale";
-import { BitmapText, Container, BitmapFont, DisplayObject, FederatedPointerEvent } from "pixi.js";
+import { Container, DisplayObject, FederatedPointerEvent, Text, TextStyle } from "pixi.js";
 
 
 export class Button extends Container {
@@ -9,12 +9,11 @@ export class Button extends Container {
 
 		this.filters = null;
 
-		// If you need to know, this is the expensive part. This creates the font atlas
-		BitmapFont.from("gameplay", {
-			fill: "#ffffff",
+		const buttonTextStyle: TextStyle = new TextStyle({
 			fontFamily: "gameplay",
-			fontSize: 26,
 			align: "center",
+			fill: "#ffffff",
+			fontSize: 26
 		});
 
 		this.interactive = true;
@@ -22,11 +21,7 @@ export class Button extends Container {
 		this.addChild(background);
 
 		if (text != "") {
-			const buttonText = new BitmapText(text, {
-				fontName: "gameplay",
-				fontSize: 26,
-				align: "center",
-			});
+			const buttonText = new Text(text, buttonTextStyle);
 
 			buttonText.x = this.width / 2 - buttonText.width / 2;
 			buttonText.y = (this.height / 2 - buttonText.height / 2);
@@ -39,7 +34,7 @@ export class Button extends Container {
 		this.on('pointerout', this.onButtonOut, this);
 
 		// Shows hand cursor
-		this.cursor = 'pointer';		
+		this.cursor = 'pointer';
 	}
 
 	setPosition(x: number, y: number) {
