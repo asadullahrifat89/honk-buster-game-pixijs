@@ -1878,6 +1878,11 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
 
 				this.generateInGameMessage("Scarlet Saucer Arrived");
+
+				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
+				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
+				SoundManager.play(SoundType.UFO_HOVERING, 0.8, true);
 			}
 		}
 	}
@@ -1939,6 +1944,8 @@ export class GameScene extends Container implements IScene {
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.UFO_BOSS_DEAD);
+			SoundManager.stop(SoundType.UFO_HOVERING);
 		}
 	}
 
@@ -2259,6 +2266,11 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setIcon(zombieBoss.getGameObjectSprite().getTexture());
 
 				this.generateInGameMessage("Zombie Blocks Arrived");
+
+				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
+				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
+				SoundManager.play(SoundType.UFO_HOVERING, 0.8, true);
 			}
 		}
 	}
@@ -2320,6 +2332,8 @@ export class GameScene extends Container implements IScene {
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.UFO_BOSS_DEAD);
+			SoundManager.stop(SoundType.UFO_HOVERING);
 		}
 	}
 
@@ -2482,6 +2496,12 @@ export class GameScene extends Container implements IScene {
 				this._bossHealthBar.setIcon(mafiaBoss.getGameObjectSprite().getTexture());
 
 				this.generateInGameMessage("Beware of Crimson Mafia");
+
+
+				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
+				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
+				SoundManager.play(SoundType.UFO_HOVERING, 0.8, true);
 			}
 		}
 	}
@@ -2543,6 +2563,8 @@ export class GameScene extends Container implements IScene {
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.UFO_BOSS_DEAD);
+			SoundManager.stop(SoundType.UFO_HOVERING);
 		}
 	}
 
@@ -2825,7 +2847,7 @@ export class GameScene extends Container implements IScene {
 			honk.reposition(source);
 			honk.setPopping();
 
-			gameObject.enableRendering();			
+			gameObject.enableRendering();
 		}
 	}
 
@@ -3372,6 +3394,9 @@ export class GameScene extends Container implements IScene {
 						playerRocket.setBlast();
 						this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
 					}
+
+					if (playerRocket.autoBlast())
+						playerRocket.setBlast();
 				}
 
 				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {

@@ -21,7 +21,7 @@ export class UfoEnemyRocket extends GameObject {
 
 		this._autoBlastDelay = this._autoBlastDelayDefault;
 
-		SoundManager.play(SoundType.ORB_LAUNCH, 0.8);
+		SoundManager.play(SoundType.ORB_LAUNCH, 0.4);
 	}
 
 	reposition(source: GameObject) {
