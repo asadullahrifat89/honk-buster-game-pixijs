@@ -4,8 +4,8 @@ import { Button } from "./Button";
 import { Constants, ConstructType, SoundType } from "./Constants";
 import { GameObject } from "./GameObject";
 import { GameObjectSprite } from "./GameObjectSprite";
-import { GameScene } from "./GameScene";
 import { IScene } from "./IScene";
+import { PlayerHonkBombSelectionScene } from "./PlayerHonkBombSelectionScene";
 import { SceneManager } from "./SceneManager";
 import { SoundManager } from "./SoundManager";
 
@@ -13,7 +13,6 @@ import { SoundManager } from "./SoundManager";
 export class PlayerSelectionScene extends Container implements IScene {
 
 	private sceneContainer: GameObject;
-	private playerTemplate: number = 0;
 
 	constructor() {
 		super();
@@ -59,7 +58,7 @@ export class PlayerSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			player_2_sprite.filters = [new BlurFilter()];
 			player_1_sprite.filters = null;
-			this.playerTemplate = 0;
+			Constants.SELECTED_PLAYER_TEMPLATE = 0;
 		});
 		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width, this.sceneContainer.height / 2 - player_1_sprite.height / 2);
 		this.sceneContainer.addChild(player_1_button);
@@ -73,7 +72,7 @@ export class PlayerSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			player_1_sprite.filters = [new BlurFilter()];
 			player_2_sprite.filters = null;
-			this.playerTemplate = 1;
+			Constants.SELECTED_PLAYER_TEMPLATE = 1;
 		});
 		player_2_button.setPosition(this.sceneContainer.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2);
 		this.sceneContainer.addChild(player_2_button);
@@ -94,6 +93,7 @@ export class PlayerSelectionScene extends Container implements IScene {
 	private onProceed(_e: FederatedPointerEvent) {
 		SoundManager.play(SoundType.OPTION_SELECT);
 		this.removeChild(this.sceneContainer);
-		SceneManager.changeScene(new GameScene(this.playerTemplate));
+		SceneManager.changeScene(new PlayerHonkBombSelectionScene());
 	}
 }
+

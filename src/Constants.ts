@@ -206,6 +206,9 @@ export abstract class Constants {
 	public static DEFAULT_BLAST_SHRINK_SCALE: number = 0.8;
 	public static DEFAULT_DROP_SHADOW_DISTANCE: number = 65;
 
+	public static SELECTED_PLAYER_TEMPLATE: number = 0;
+	public static SELECTED_HONK_BUSTER_TEMPLATE: number = 0;
+
 	public static SOUND_TEMPLATES: (SoundTemplate)[] = [
 
 		new SoundTemplate(SoundType.CRACKER_DROP, "cracker_drop_1.mp3"),

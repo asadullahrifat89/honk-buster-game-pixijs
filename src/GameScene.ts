@@ -85,10 +85,11 @@ export class GameScene extends Container implements IScene {
 
 	//#region Constructor
 
-	constructor(playerTemplate: number) {
+	constructor() {
 		super();
 
-		this.playerTemplate = playerTemplate;
+		this.playerTemplate = Constants.SELECTED_PLAYER_TEMPLATE;
+		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
 
 		this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
 		this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
@@ -2882,7 +2883,6 @@ export class GameScene extends Container implements IScene {
 
 	spawnPlayerBalloon() {
 
-		this.playerTemplate = Constants.getRandomNumber(0, 1);
 		this._player.disableRendering();
 
 		this._player.width = this.playerBalloonSizeWidth;
@@ -2980,11 +2980,9 @@ export class GameScene extends Container implements IScene {
 	private playerHonkBombSizeHeight: number = 45;
 
 	private playerHonkBombGameObjects: Array<GameObject> = [];
-	private playerHonkBombTemplate: number = 0;
+	private playerHonkBusterTemplate: number = 0;
 
 	spawnPlayerHonkBombs() {
-
-		this.playerHonkBombTemplate = Constants.getRandomNumber(0, 1);
 
 		for (let j = 0; j < 3; j++) {
 
@@ -3003,7 +3001,7 @@ export class GameScene extends Container implements IScene {
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
-			gameObject.setHonkBombTemplate(this.playerHonkBombTemplate);
+			gameObject.setHonkBombTemplate(this.playerHonkBusterTemplate);
 
 			this.playerHonkBombGameObjects.push(gameObject);
 			this._sceneContainer.addChild(gameObject);
