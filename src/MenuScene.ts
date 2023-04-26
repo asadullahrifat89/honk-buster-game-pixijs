@@ -65,9 +65,7 @@ export class MenuScene extends Container implements IScene {
 	}
 
 	public update(_framesPassed: number) {
-		//this._coverContainer.hover();
-
-		
+				
 	}
 
 	public resize(scale: number): void {
@@ -77,8 +75,6 @@ export class MenuScene extends Container implements IScene {
 
 	private newGame(_e: FederatedPointerEvent) {
 		this.removeChild(this._coverContainer);
-
-		// Change scene to the menu scene!
 		Manager.changeScene(new GameScene());
 	}
 }
