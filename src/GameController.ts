@@ -53,9 +53,5 @@ export class GameController extends Container {
 		else {
 			this.isMoveDown = false;
 		}
-
-		//if (this.keyboard.isKeyPressed('Space')) {
-		//	this.isAttacking = true;
-		//}
 	}
 }

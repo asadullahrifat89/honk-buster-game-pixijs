@@ -1603,8 +1603,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region UfoEnemys	
 
-	private ufoEnemySizeWidth: number = 190;
-	private ufoEnemySizeHeight: number = 190;
+	private ufoEnemySizeWidth: number = 180;
+	private ufoEnemySizeHeight: number = 180;
 
 	private ufoEnemyGameObjects: Array<UfoEnemy> = [];
 
@@ -3664,10 +3664,13 @@ export class GameScene extends Container implements IScene {
 
 	setGameController() {
 
+		this.resizeGameController();
+		this.addChild(this._gameController);
+	}
+
+	private resizeGameController() {
 		this._gameController.height = SceneManager.height;
 		this._gameController.width = SceneManager.width;
-
-		this.addChild(this._gameController);
 	}
 
 	//#endregion
@@ -3736,7 +3739,9 @@ export class GameScene extends Container implements IScene {
 		this.repositionPlayerHealthBar();
 		this.repositionBossHealthBar();
 		this.repositionPowerUpMeter();
-	}
+
+		this.resizeGameController();
+	}   
 
 	private levelUp() {
 		this._gameLevel++;
