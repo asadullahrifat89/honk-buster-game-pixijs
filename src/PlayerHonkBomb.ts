@@ -36,11 +36,11 @@ export class PlayerHonkBomb extends GameObject {
 
 		switch (this.honkBombTemplate) {
 			case PlayerHonkBombTemplate.Cracker: {
-				this.honkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.ConstructType == ConstructType.PLAYER_HONK_BOMB && x.Uri.includes("cracker")).map(x => x.Uri);
+				this.honkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("cracker")).map(x => x.uri);
 				break;
 			}
 			case PlayerHonkBombTemplate.TrashCan: {
-				this.honkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.ConstructType == ConstructType.PLAYER_HONK_BOMB && x.Uri.includes("trash")).map(x => x.Uri);
+				this.honkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("trash")).map(x => x.uri);
 				break;
 			}
 			default: break;

@@ -2,11 +2,12 @@
 
 export class ConstructTemplate {
 
-    public ConstructType: ConstructType = 0;
-    public Uri: string = "";
+    public constructType: ConstructType = 0;
+    public uri: string = "";
 
     constructor(constructType: ConstructType, uri: string) {
-        this.ConstructType = constructType;
-        this.Uri = uri;
+        this.constructType = constructType;
+        this.uri = uri;
     }
 }
+

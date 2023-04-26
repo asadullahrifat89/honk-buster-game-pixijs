@@ -1,6 +1,7 @@
 import { Texture } from "pixi.js";
 import { ConstructTemplate } from "./ConstructTemplate";
 import { GameObject } from "./GameObject";
+import { SoundTemplate } from "./SoundTemplate";
 
 //#region Enums
 
@@ -148,6 +149,47 @@ export enum ConstructType {
 	TITLE_SCREEN
 }
 
+export enum SoundType {
+	GAME_START,
+	GAME_PAUSE,
+	GAME_OVER,
+
+	CRACKER_DROP,
+	CRACKER_BLAST,
+
+	TRASH_CAN_HIT,
+
+	ROCKET_LAUNCH,
+	ROCKET_BLAST,
+
+	HONK,
+	HONK_BUST_REACTION,
+
+	SEEKER_ROCKET_LAUNCH,
+	BULLS_EYE_ROCKET_LAUNCH,
+
+	AMBIENCE,
+
+	UFO_BOSS_ENTRY,
+	UFO_HOVERING,
+	UFO_BOSS_DEAD,
+
+	POWERUP_PICKUP,
+	HEALTH_PICKUP,
+
+	PLAYER_HEALTH_LOSS,
+
+	UFO_ENEMY_ENTRY,
+
+	GAME_BACKGROUND_MUSIC,
+	BOSS_BACKGROUND_MUSIC,
+
+	ORB_LAUNCH,
+
+	LEVEL_UP,
+	OPTION_SELECT
+}
+
 //#endregion
 
 export abstract class Constants {
@@ -161,6 +203,11 @@ export abstract class Constants {
 	public static DEFAULT_CONSTRUCT_SPEED: number = 3 * Constants.DEFAULT_CONSTRUCT_DELTA;
 	public static DEFAULT_BLAST_SHRINK_SCALE: number = 0.8;
 	public static DEFAULT_DROP_SHADOW_DISTANCE: number = 65;
+
+	public static SOUND_TEMPLATES: (SoundTemplate)[] = [
+
+		new SoundTemplate(SoundType.CRACKER_DROP, "cracker_drop_1.mp3"),
+	];
 
 	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
 
@@ -238,7 +285,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.BLAST, "blast_1.png"),
 		new ConstructTemplate(ConstructType.BLAST, "blast_2.png"),
 
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, "vehicle_boss_rocket.png"),		
+		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, "vehicle_boss_rocket.png"),
 
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_1.png"),
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_2.png"),
@@ -303,8 +350,8 @@ export abstract class Constants {
 
 	static getRandomUri(constructType: ConstructType): string {
 
-		const treeTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.ConstructType == constructType);
-		const uri = treeTemplates[this.getRandomNumber(0, treeTemplates.length - 1)].Uri;
+		const treeTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == constructType);
+		const uri = treeTemplates[this.getRandomNumber(0, treeTemplates.length - 1)].uri;
 
 		return uri;
 	}
