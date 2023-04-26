@@ -2,7 +2,7 @@ import { Container, Graphics, Assets } from "pixi.js";
 import { manifest } from "./assets";
 import { IScene } from "./IScene";
 import { SceneManager } from "./SceneManager";
-import { MenuScene } from "./MenuScene";
+import { GameTitleScene } from "./GameTitleScene";
 
 export class LoaderScene extends Container implements IScene {
 
@@ -75,6 +75,6 @@ export class LoaderScene extends Container implements IScene {
 		this.removeChild(this.loaderBar);
 
 		// Change scene to the menu scene!
-		SceneManager.changeScene(new MenuScene());
+		SceneManager.changeScene(new GameTitleScene());
 	}
 }

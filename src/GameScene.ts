@@ -32,6 +32,7 @@ import { CastShadow } from "./CastShadow";
 import { UfoEnemy } from "./UfoEnemy";
 import { UfoEnemyRocket } from "./UfoEnemyRocket";
 import { SoundManager } from "./SoundManager";
+import { GameOverScene } from "./GameOverScene";
 
 
 export class GameScene extends Container implements IScene {
@@ -1603,8 +1604,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region UfoEnemys	
 
-	private ufoEnemySizeWidth: number = 190;
-	private ufoEnemySizeHeight: number = 190;
+	private ufoEnemySizeWidth: number = 170;
+	private ufoEnemySizeHeight: number = 170;
 
 	private ufoEnemyGameObjects: Array<UfoEnemy> = [];
 
@@ -2969,6 +2970,17 @@ export class GameScene extends Container implements IScene {
 			this._playerHealthBar.setValue(this._player.health);
 
 			//TODO: game over
+
+			if (this._player.isDead()) {
+				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+				SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+				SoundManager.stop(SoundType.UFO_HOVERING);
+				SoundManager.stop(SoundType.AMBIENCE);				
+
+				Constants.GAME_SCORE = this._gameScoreBar.getScore();
+				this.removeChild(this._sceneContainer);
+				SceneManager.changeScene(new GameOverScene());
+			}
 		}
 	}
 
@@ -3126,7 +3138,6 @@ export class GameScene extends Container implements IScene {
 
 			this._player.setAttackStance();
 
-			//TODO: check more enemy types to set direction
 			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 			let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 			let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
@@ -3186,8 +3197,6 @@ export class GameScene extends Container implements IScene {
 					else {
 
 						playerRocket.hover();
-
-						//TODO: check collision for more enemy types
 
 						let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
 						let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
@@ -3664,10 +3673,13 @@ export class GameScene extends Container implements IScene {
 
 	setGameController() {
 
+		this.resizeGameController();
+		this.addChild(this._gameController);
+	}
+
+	private resizeGameController() {
 		this._gameController.height = SceneManager.height;
 		this._gameController.width = SceneManager.width;
-
-		this.addChild(this._gameController);
 	}
 
 	//#endregion
@@ -3736,7 +3748,9 @@ export class GameScene extends Container implements IScene {
 		this.repositionPlayerHealthBar();
 		this.repositionBossHealthBar();
 		this.repositionPowerUpMeter();
-	}
+
+		this.resizeGameController();
+	}   
 
 	private levelUp() {
 		this._gameLevel++;

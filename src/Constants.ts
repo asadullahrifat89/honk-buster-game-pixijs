@@ -208,6 +208,7 @@ export abstract class Constants {
 
 	public static SELECTED_PLAYER_TEMPLATE: number = 0;
 	public static SELECTED_HONK_BUSTER_TEMPLATE: number = 0;
+	public static GAME_SCORE: number = 0;
 
 	public static SOUND_TEMPLATES: (SoundTemplate)[] = [
 

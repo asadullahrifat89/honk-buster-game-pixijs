@@ -1,5 +1,5 @@
 ﻿import { DropShadowFilter } from "@pixi/filter-drop-shadow";
-import { Container, Graphics, BitmapFont, FederatedPointerEvent, BitmapText, BlurFilter, Texture } from "pixi.js";
+import { Container, Graphics, FederatedPointerEvent, Text, BlurFilter, Texture } from "pixi.js";
 import { Button } from "./Button";
 import { Constants, ConstructType, SoundType } from "./Constants";
 import { GameObject } from "./GameObject";
@@ -17,14 +17,6 @@ export class PlayerSelectionScene extends Container implements IScene {
 	constructor() {
 		super();
 
-		// If you need to know, this is the expensive part. This creates the font atlas
-		BitmapFont.from("gameplay", {
-			fill: "#ffffff",
-			fontFamily: "gameplay",
-			fontSize: 35,
-			align: "center",
-		});
-
 		this.sceneContainer = new GameObject(0);
 		this.sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		this.sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
@@ -40,10 +32,11 @@ export class PlayerSelectionScene extends Container implements IScene {
 		sprite.filters = [new BlurFilter()];
 		this.sceneContainer.addChild(sprite);
 
-		const title = new BitmapText("Select Character", {
-			fontName: "gameplay",
+		const title = new Text("Select Character", {
+			fontFamily: "gameplay",
 			fontSize: 35,
 			align: "center",
+			fill: "#ffffff",
 		});
 		title.x = this.sceneContainer.width / 2 - title.width / 2;
 		title.y = (this.sceneContainer.height / 2 - title.height / 2) - 120;

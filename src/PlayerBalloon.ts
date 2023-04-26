@@ -48,6 +48,7 @@ export class PlayerBalloon extends GameObject {
 
 	reset() {
 
+		//TODO: set this.health = 100;
 		this.health = 100;
 		this._movementDirection = MovementDirection.None;
 		this._movementStopDelay = this._movementStopDelayDefault;
