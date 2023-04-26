@@ -4,7 +4,7 @@ import { BitmapText, Container, BitmapFont, DisplayObject, FederatedPointerEvent
 
 export class Button extends Container {
 
-	constructor(background: DisplayObject, text: string, onPressed: any) {
+	constructor(background: DisplayObject, onPressed: any, text: string = "") {
 		super();
 
 		this.filters = null;
@@ -21,23 +21,25 @@ export class Button extends Container {
 
 		this.addChild(background);
 
-		const buttonText = new BitmapText(text, {
-			fontName: "gameplay",
-			fontSize: 26,
-			align: "center",
-		});
+		if (text != "") {
+			const buttonText = new BitmapText(text, {
+				fontName: "gameplay",
+				fontSize: 26,
+				align: "center",
+			});
 
-		buttonText.x = this.width / 2 - buttonText.width / 2;
-		buttonText.y = (this.height / 2 - buttonText.height / 2);
+			buttonText.x = this.width / 2 - buttonText.width / 2;
+			buttonText.y = (this.height / 2 - buttonText.height / 2);
 
-		this.addChild(buttonText);
+			this.addChild(buttonText);
+		}
 
 		this.on("pointertap", onPressed, this);
 		this.on('pointerover', this.onButtonOver, this);
 		this.on('pointerout', this.onButtonOut, this);
 
 		// Shows hand cursor
-		this.cursor = 'pointer';
+		this.cursor = 'pointer';		
 	}
 
 	setPosition(x: number, y: number) {
@@ -47,9 +49,13 @@ export class Button extends Container {
 
 	onButtonOver(_e: FederatedPointerEvent) {
 		this.filters = [new GrayscaleFilter()];
+		this.scale.set(1.1);
+		this.x -= 7;
 	}
 
 	onButtonOut(_e: FederatedPointerEvent) {
 		this.filters = null;
+		this.scale.set(1);
+		this.x += 7;
 	}
 }
