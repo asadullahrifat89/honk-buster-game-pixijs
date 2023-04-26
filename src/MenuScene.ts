@@ -1,11 +1,12 @@
 ﻿import { Container, Graphics, BitmapFont, FederatedPointerEvent, BitmapText } from "pixi.js";
 import { Button } from "./Button";
-import { Constants, ConstructType } from "./Constants";
+import { Constants, ConstructType, SoundType } from "./Constants";
 import { GameObject } from "./GameObject";
 import { GameObjectSprite } from "./GameObjectSprite";
 import { GameScene } from "./GameScene";
 import { IScene } from "./IScene";
 import { SceneManager } from "./SceneManager";
+import { SoundManager } from "./SoundManager";
 
 
 export class MenuScene extends Container implements IScene {
@@ -74,6 +75,7 @@ export class MenuScene extends Container implements IScene {
 	}
 
 	private newGame(_e: FederatedPointerEvent) {
+		SoundManager.play(SoundType.OPTION_SELECT);
 		this.removeChild(this._coverContainer);
 		SceneManager.changeScene(new GameScene());
 	}
