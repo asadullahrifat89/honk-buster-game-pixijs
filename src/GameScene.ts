@@ -1936,6 +1936,9 @@ export class GameScene extends Container implements IScene {
 			this._player.setWinStance();
 			this._gameScoreBar.gainScore(3);
 			this.levelUp();
+
+			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 		}
 	}
 
@@ -2314,6 +2317,9 @@ export class GameScene extends Container implements IScene {
 			this._player.setWinStance();
 			this._gameScoreBar.gainScore(3);
 			this.levelUp();
+
+			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 		}
 	}
 
@@ -2534,6 +2540,9 @@ export class GameScene extends Container implements IScene {
 			this._player.setWinStance();
 			this._gameScoreBar.gainScore(3);
 			this.levelUp();
+
+			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 		}
 	}
 
@@ -2816,9 +2825,7 @@ export class GameScene extends Container implements IScene {
 			honk.reposition(source);
 			honk.setPopping();
 
-			gameObject.enableRendering();
-
-			SoundManager.play(SoundType.HONK, 0.5);
+			gameObject.enableRendering();			
 		}
 	}
 

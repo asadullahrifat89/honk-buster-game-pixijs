@@ -1,6 +1,7 @@
-﻿import { Constants, ConstructType } from './Constants';
+﻿import { Constants, ConstructType, SoundType } from './Constants';
 import { GameObject } from './GameObject';
 import { SeekingRocketBase } from './SeekingRocketBase';
+import { SoundManager } from './SoundManager';
 
 
 export class UfoBossRocketSeeking extends SeekingRocketBase {
@@ -19,6 +20,8 @@ export class UfoBossRocketSeeking extends SeekingRocketBase {
 		this.angle = 0;
 		this.isBlasting = false;
 		this._autoBlastDelay = this._autoBlastDelayDefault;
+
+		SoundManager.play(SoundType.SEEKER_ROCKET_LAUNCH, 0.8);
 	}
 
 	reposition(source: GameObject) {
@@ -34,6 +37,8 @@ export class UfoBossRocketSeeking extends SeekingRocketBase {
 		this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
 
 		this.isBlasting = true;
+
+		SoundManager.play(SoundType.ROCKET_BLAST);
 	}
 
 	autoBlast() {
