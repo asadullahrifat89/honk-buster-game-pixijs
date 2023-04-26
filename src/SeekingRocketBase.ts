@@ -1,7 +1,7 @@
 ﻿import { Rectangle } from 'pixi.js';
 import { Constants } from './Constants';
 import { GameObject } from './GameObject';
-import { Manager } from './Manager';
+import { SceneManager } from './SceneManager;
 
 
 export class SeekingRocketBase extends GameObject {
@@ -18,7 +18,7 @@ export class SeekingRocketBase extends GameObject {
 		let targetMiddleX = target.x + target.width / 2;
 		let targetMiddleY = target.y + target.height / 2;
 
-		var scaling = Manager.scaling;
+		var scaling = SceneManager.scaling;
 
 		// move up
 		if (targetMiddleY < rocketMiddleY) {

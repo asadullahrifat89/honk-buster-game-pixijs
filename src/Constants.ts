@@ -150,6 +150,8 @@ export enum ConstructType {
 }
 
 export enum SoundType {
+	NONE,
+
 	GAME_START,
 	GAME_PAUSE,
 	GAME_OVER,

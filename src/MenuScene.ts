@@ -5,7 +5,7 @@ import { GameObject } from "./GameObject";
 import { GameObjectSprite } from "./GameObjectSprite";
 import { GameScene } from "./GameScene";
 import { IScene } from "./IScene";
-import { Manager } from "./Manager";
+import { SceneManager } from "./Manager";
 
 
 export class MenuScene extends Container implements IScene {
@@ -59,7 +59,7 @@ export class MenuScene extends Container implements IScene {
 
 		this._coverContainer.addChild(button);
 
-		this._coverContainer.setPosition(Manager.width / 2 - this._coverContainer.width / 2, Manager.height / 2 - this._coverContainer.height / 2);
+		this._coverContainer.setPosition(SceneManager.width / 2 - this._coverContainer.width / 2, SceneManager.height / 2 - this._coverContainer.height / 2);
 
 		this.addChild(this._coverContainer);
 	}
@@ -70,11 +70,11 @@ export class MenuScene extends Container implements IScene {
 
 	public resize(scale: number): void {
 		this._coverContainer.scale.set(scale);
-		this._coverContainer.setPosition(Manager.width / 2 - this._coverContainer.width / 2, Manager.height / 2 - this._coverContainer.height / 2);
+		this._coverContainer.setPosition(SceneManager.width / 2 - this._coverContainer.width / 2, SceneManager.height / 2 - this._coverContainer.height / 2);
 	}
 
 	private newGame(_e: FederatedPointerEvent) {
 		this.removeChild(this._coverContainer);
-		Manager.changeScene(new GameScene());
+		SceneManager.changeScene(new GameScene());
 	}
 }

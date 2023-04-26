@@ -1,6 +1,6 @@
 ﻿import { Constants, ConstructType } from './Constants';
 import { GameObject } from './GameObject';
-import { Manager } from './Manager';
+import { SceneManager } from './SceneManager;
 
 
 export class ZombieBossRocketBlock extends GameObject {
@@ -51,7 +51,7 @@ export class ZombieBossRocketBlock extends GameObject {
 
     reposition() {
         var topOrLeft = Constants.getRandomNumber(0, 1); // generate top and left corner lane wise vehicles
-        var lane = Manager.height < 450 ? Constants.getRandomNumber(0, 2) : Constants.getRandomNumber(0, 3); // generate number of lanes based on screen height
+        var lane = SceneManager.height < 450 ? Constants.getRandomNumber(0, 2) : Constants.getRandomNumber(0, 3); // generate number of lanes based on screen height
         var randomY = Constants.getRandomNumber(-10, 10);
 
         switch (topOrLeft) {

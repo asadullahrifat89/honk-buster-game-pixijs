@@ -8,7 +8,7 @@ import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
 import { PlayerBalloon } from "./PlayerBalloon";
 import { GameController } from "./GameController";
-import { Manager } from "./Manager";
+import { SceneManager } from "./Manager";
 import { PlayerHonkBomb } from "./PlayerHonkBomb";
 import { GameScoreBar } from "./GameScoreBar";
 import { GameCheckpoint } from "./GameCheckpoint";
@@ -1442,7 +1442,7 @@ export class GameScene extends Container implements IScene {
 
 				if (vehicleBoss.isAttacking) {
 
-					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling);
+					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling);
 
 					if (vehicleBoss.honk()) {
 						this.generateHonk(gameObject);
@@ -1451,7 +1451,7 @@ export class GameScene extends Container implements IScene {
 				}
 				else {
 
-					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false || this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling / 2))) {
+					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false || this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 2))) {
 						vehicleBoss.isAttacking = true;
 					}
 				}
@@ -1885,7 +1885,7 @@ export class GameScene extends Container implements IScene {
 
 				if (ufoBoss.isAttacking) {
 
-					ufoBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling, this._player.getCloseBounds());
+					ufoBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling, this._player.getCloseBounds());
 
 					if (Constants.checkCloseCollision(this._player, ufoBoss)) {
 						this.loosePlayerHealth();
@@ -1895,7 +1895,7 @@ export class GameScene extends Container implements IScene {
 
 					ufoBoss.moveDownRight();
 
-					if (ufoBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling / 3)) // bring UfoBoss to a suitable distance from player and then start attacking
+					if (ufoBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 3)) // bring UfoBoss to a suitable distance from player and then start attacking
 					{
 						ufoBoss.isAttacking = true;
 					}
@@ -2263,7 +2263,7 @@ export class GameScene extends Container implements IScene {
 
 				if (zombieBoss.isAttacking) {
 
-					zombieBoss.moveUpRightDownLeft(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling);
+					zombieBoss.moveUpRightDownLeft(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling);
 
 					if (Constants.checkCloseCollision(this._player, zombieBoss)) {
 						this.loosePlayerHealth();
@@ -2273,7 +2273,7 @@ export class GameScene extends Container implements IScene {
 
 					zombieBoss.moveDownRight();
 
-					if (zombieBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling / 3)) // bring ZombieBoss to a suitable distance from player and then start attacking
+					if (zombieBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 3)) // bring ZombieBoss to a suitable distance from player and then start attacking
 					{
 						zombieBoss.isAttacking = true;
 					}
@@ -2483,7 +2483,7 @@ export class GameScene extends Container implements IScene {
 
 				if (mafiaBoss.isAttacking) {
 
-					mafiaBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling, this._player.getCloseBounds());
+					mafiaBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling, this._player.getCloseBounds());
 
 					if (Constants.checkCloseCollision(this._player, mafiaBoss)) {
 						this.loosePlayerHealth();
@@ -2493,7 +2493,7 @@ export class GameScene extends Container implements IScene {
 
 					mafiaBoss.moveDownRight();
 
-					if (mafiaBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling / 3)) // bring MafiaBoss to a suitable distance from player and then start attacking
+					if (mafiaBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 3)) // bring MafiaBoss to a suitable distance from player and then start attacking
 					{
 						mafiaBoss.isAttacking = true;
 					}
@@ -2871,8 +2871,8 @@ export class GameScene extends Container implements IScene {
 		this._player.recoverFromHealthLoss();
 
 		this._player.move(
-			Constants.DEFAULT_GAME_VIEW_WIDTH * Manager.scaling,
-			Constants.DEFAULT_GAME_VIEW_HEIGHT * Manager.scaling,
+			Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling,
+			Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling,
 			this._gameController);
 
 		if (this._gameController.isAttacking) {
@@ -3613,8 +3613,8 @@ export class GameScene extends Container implements IScene {
 
 	setGameController() {
 
-		this._gameController.height = Manager.height;
-		this._gameController.width = Manager.width;
+		this._gameController.height = SceneManager.height;
+		this._gameController.width = SceneManager.width;
 
 		this.addChild(this._gameController);
 	}
@@ -3624,7 +3624,7 @@ export class GameScene extends Container implements IScene {
 	//#region GameScoreBar
 
 	private repositionGameScoreBar() {
-		this._gameScoreBar.reposition((Manager.width) / 2, 10);
+		this._gameScoreBar.reposition((SceneManager.width) / 2, 10);
 	}
 
 	//#endregion
@@ -3632,15 +3632,15 @@ export class GameScene extends Container implements IScene {
 	//#region HealthBars
 
 	private repositionPlayerHealthBar() {
-		this._playerHealthBar.reposition((Manager.width) - 105, 10);
+		this._playerHealthBar.reposition((SceneManager.width) - 105, 10);
 	}
 
 	private repositionBossHealthBar() {
-		this._bossHealthBar.reposition((Manager.width) - 205, 10);
+		this._bossHealthBar.reposition((SceneManager.width) - 205, 10);
 	}
 
 	private repositionPowerUpMeter() {
-		this._powerUpMeter.reposition((Manager.width) - 305, 10);
+		this._powerUpMeter.reposition((SceneManager.width) - 305, 10);
 	}
 
 	//#endregion
@@ -3651,7 +3651,7 @@ export class GameScene extends Container implements IScene {
 		if (this._inGameMessage.isAnimating == false) {
 			this._inGameMessage.setTitle(title);
 			this._inGameMessage.reset();
-			this._inGameMessage.reposition(Manager.width / 2, Manager.height / 2);
+			this._inGameMessage.reposition(SceneManager.width / 2, SceneManager.height / 2);
 			this._inGameMessage.enableRendering();
 		}
 	}
