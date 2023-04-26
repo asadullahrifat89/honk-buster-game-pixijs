@@ -1,6 +1,6 @@
 ﻿import { Constants, ConstructType } from './Constants';
 import { GameObject } from './GameObject';
-import { SceneManager } from './SceneManager;
+import { SceneManager } from './SceneManager';
 
 
 export class ZombieBossRocketBlock extends GameObject {

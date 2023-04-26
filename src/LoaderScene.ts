@@ -1,7 +1,7 @@
 import { Container, Graphics, Assets } from "pixi.js";
 import { manifest } from "./assets";
 import { IScene } from "./IScene";
-import { SceneManager } from "./Manager";
+import { SceneManager } from "./SceneManager";
 import { MenuScene } from "./MenuScene";
 
 export class LoaderScene extends Container implements IScene {

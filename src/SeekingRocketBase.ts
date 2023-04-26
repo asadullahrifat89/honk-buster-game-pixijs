@@ -1,7 +1,7 @@
 ﻿import { Rectangle } from 'pixi.js';
 import { Constants } from './Constants';
 import { GameObject } from './GameObject';
-import { SceneManager } from './SceneManager;
+import { SceneManager } from './SceneManager';
 
 
 export class SeekingRocketBase extends GameObject {

@@ -8,7 +8,7 @@ import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
 import { PlayerBalloon } from "./PlayerBalloon";
 import { GameController } from "./GameController";
-import { SceneManager } from "./Manager";
+import { SceneManager } from "./SceneManager";
 import { PlayerHonkBomb } from "./PlayerHonkBomb";
 import { GameScoreBar } from "./GameScoreBar";
 import { GameCheckpoint } from "./GameCheckpoint";

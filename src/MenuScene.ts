@@ -5,7 +5,7 @@ import { GameObject } from "./GameObject";
 import { GameObjectSprite } from "./GameObjectSprite";
 import { GameScene } from "./GameScene";
 import { IScene } from "./IScene";
-import { SceneManager } from "./Manager";
+import { SceneManager } from "./SceneManager";
 
 
 export class MenuScene extends Container implements IScene {
