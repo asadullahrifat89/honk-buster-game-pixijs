@@ -1,6 +1,7 @@
-﻿import { Constants, ConstructType } from './Constants';
+﻿import { Constants, ConstructType, SoundType } from './Constants';
 import { GameObject } from './GameObject';
-import { Manager } from './Manager';
+import { SceneManager } from './SceneManager';
+import { SoundManager } from './SoundManager';
 
 
 export class ZombieBossRocketBlock extends GameObject {
@@ -24,6 +25,8 @@ export class ZombieBossRocketBlock extends GameObject {
         this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 1.5;
 
         this._autoBlastDelay = this._autoBlastDelayDefault;
+
+        SoundManager.play(SoundType.ORB_LAUNCH, 0.4);
     }
 
     looseHealth() {
@@ -39,6 +42,8 @@ export class ZombieBossRocketBlock extends GameObject {
         this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE - 0.2);
         this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
         this.isBlasting = true;
+
+        SoundManager.play(SoundType.ROCKET_BLAST);
     }
 
     autoBlast(): boolean {
@@ -51,7 +56,7 @@ export class ZombieBossRocketBlock extends GameObject {
 
     reposition() {
         var topOrLeft = Constants.getRandomNumber(0, 1); // generate top and left corner lane wise vehicles
-        var lane = Manager.height < 450 ? Constants.getRandomNumber(0, 2) : Constants.getRandomNumber(0, 3); // generate number of lanes based on screen height
+        var lane = SceneManager.height < 450 ? Constants.getRandomNumber(0, 2) : Constants.getRandomNumber(0, 3); // generate number of lanes based on screen height
         var randomY = Constants.getRandomNumber(-10, 10);
 
         switch (topOrLeft) {

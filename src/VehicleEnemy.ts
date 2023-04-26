@@ -1,7 +1,8 @@
 ﻿import { Texture } from 'pixi.js';
-import { Constants, ConstructType } from './Constants';
+import { Constants, ConstructType, SoundType } from './Constants';
 import { VehicleBase } from './VehicleBase';
 import { GrayscaleFilter } from '@pixi/filter-grayscale';
+import { SoundManager } from './SoundManager';
 
 export class VehicleEnemy extends VehicleBase {
 
@@ -48,6 +49,7 @@ export class VehicleEnemy extends VehicleBase {
 		this.willHonk = false;
 		this.speed = this.speed * 1.5;
 		this.filters = [this.grayScaleFilter];
+		SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
 	}
 }
 

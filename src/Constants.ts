@@ -1,6 +1,7 @@
 import { Texture } from "pixi.js";
 import { ConstructTemplate } from "./ConstructTemplate";
 import { GameObject } from "./GameObject";
+import { SoundTemplate } from "./SoundTemplate";
 
 //#region Enums
 
@@ -148,6 +149,49 @@ export enum ConstructType {
 	TITLE_SCREEN
 }
 
+export enum SoundType {
+	NONE,
+
+	GAME_START,
+	GAME_PAUSE,
+	GAME_OVER,
+
+	CRACKER_DROP,
+	CRACKER_BLAST,
+
+	TRASH_CAN_HIT,
+
+	ROCKET_LAUNCH,
+	ROCKET_BLAST,
+
+	HONK,
+	HONK_BUST_REACTION,
+
+	SEEKER_ROCKET_LAUNCH,
+	BULLS_EYE_ROCKET_LAUNCH,
+
+	AMBIENCE,
+
+	UFO_BOSS_ENTRY,
+	UFO_HOVERING,
+	UFO_BOSS_DEAD,
+
+	POWERUP_PICKUP,
+	HEALTH_PICKUP,
+
+	PLAYER_HEALTH_LOSS,
+
+	UFO_ENEMY_ENTRY,
+
+	GAME_BACKGROUND_MUSIC,
+	BOSS_BACKGROUND_MUSIC,
+
+	ORB_LAUNCH,
+
+	LEVEL_UP,
+	OPTION_SELECT
+}
+
 //#endregion
 
 export abstract class Constants {
@@ -161,6 +205,106 @@ export abstract class Constants {
 	public static DEFAULT_CONSTRUCT_SPEED: number = 3 * Constants.DEFAULT_CONSTRUCT_DELTA;
 	public static DEFAULT_BLAST_SHRINK_SCALE: number = 0.8;
 	public static DEFAULT_DROP_SHADOW_DISTANCE: number = 65;
+
+	public static SOUND_TEMPLATES: (SoundTemplate)[] = [
+
+		new SoundTemplate(SoundType.CRACKER_DROP, "cracker_drop_1.mp3"),
+		new SoundTemplate(SoundType.CRACKER_DROP, "cracker_drop_2.mp3"),
+
+		new SoundTemplate(SoundType.CRACKER_BLAST, "cracker_blast_1.mp3"),
+		new SoundTemplate(SoundType.CRACKER_BLAST, "cracker_blast_2.mp3"),
+		new SoundTemplate(SoundType.CRACKER_BLAST, "cracker_blast_3.mp3"),
+		new SoundTemplate(SoundType.CRACKER_BLAST, "cracker_blast_4.mp3"),
+
+		new SoundTemplate(SoundType.TRASH_CAN_HIT, "trashcan_hit_1.mp3"),
+		new SoundTemplate(SoundType.TRASH_CAN_HIT, "trashcan_hit_2.mp3"),
+		new SoundTemplate(SoundType.TRASH_CAN_HIT, "trashcan_hit_3.mp3"),
+		new SoundTemplate(SoundType.TRASH_CAN_HIT, "trashcan_hit_4.mp3"),
+		new SoundTemplate(SoundType.TRASH_CAN_HIT, "trashcan_hit_5.mp3"),
+
+		new SoundTemplate(SoundType.ROCKET_LAUNCH, "rocket_launch_1.mp3"),
+		new SoundTemplate(SoundType.ROCKET_LAUNCH, "rocket_launch_2.mp3"),
+		new SoundTemplate(SoundType.ROCKET_LAUNCH, "rocket_launch_3.mp3"),
+
+		new SoundTemplate(SoundType.ROCKET_BLAST, "rocket_blast_1.mp3"),
+		new SoundTemplate(SoundType.ROCKET_BLAST, "rocket_blast_2.mp3"),
+		new SoundTemplate(SoundType.ROCKET_BLAST, "rocket_blast_3.mp3"),
+
+		new SoundTemplate(SoundType.HONK, "car_honk_1.mp3"),
+		new SoundTemplate(SoundType.HONK, "car_honk_2.mp3"),
+		new SoundTemplate(SoundType.HONK, "car_honk_3.mp3"),
+
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_1.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_2.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_3.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_4.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_5.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_6.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_7.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_8.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_9.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_10.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_11.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_12.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_13.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_14.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_15.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_16.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_17.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_18.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_19.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_20.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_21.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_22.mp3"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, "honk_bust_reaction_23.mp3"),
+
+		new SoundTemplate(SoundType.SEEKER_ROCKET_LAUNCH, "seeker_rocket_launch_1.mp3"),
+		new SoundTemplate(SoundType.SEEKER_ROCKET_LAUNCH, "seeker_rocket_launch_2.mp3"),
+
+		new SoundTemplate(SoundType.BULLS_EYE_ROCKET_LAUNCH, "bulls_eye_rocket_launch_1.mp3"),
+
+		new SoundTemplate(SoundType.AMBIENCE, "ambience_1.mp3"),
+		new SoundTemplate(SoundType.AMBIENCE, "ambience_2.mp3"),
+		new SoundTemplate(SoundType.AMBIENCE, "ambience_3.mp3"),
+
+		new SoundTemplate(SoundType.UFO_HOVERING, "ufo_boss_hovering_1.mp3"),
+		new SoundTemplate(SoundType.UFO_HOVERING, "ufo_boss_hovering_2.mp3"),
+		new SoundTemplate(SoundType.UFO_HOVERING, "ufo_boss_hovering_3.mp3"),
+
+		new SoundTemplate(SoundType.UFO_BOSS_ENTRY, "ufo_boss_entry_1.mp3"),
+		new SoundTemplate(SoundType.UFO_BOSS_ENTRY, "ufo_boss_entry_2.mp3"),
+
+		new SoundTemplate(SoundType.UFO_BOSS_DEAD, "ufo_boss_dead_1.mp3"),
+		new SoundTemplate(SoundType.UFO_BOSS_DEAD, "ufo_boss_dead_2.mp3"),
+
+		new SoundTemplate(SoundType.POWERUP_PICKUP, "power_up_pickup_1.mp3"),
+		new SoundTemplate(SoundType.HEALTH_PICKUP, "health_pickup_1.mp3"),
+
+		new SoundTemplate(SoundType.PLAYER_HEALTH_LOSS, "player_health_loss_1.mp3"),
+
+		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, "ufo_enemy_entry_1.mp3"),
+		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, "ufo_enemy_entry_2.mp3"),
+
+		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, "game_background_music_1.mp3"),
+		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, "game_background_music_2.mp3"),
+		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, "game_background_music_3.mp3"),
+		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, "game_background_music_4.mp3"),
+
+		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, "boss_background_music_1.mp3"),
+		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, "boss_background_music_2.mp3"),
+		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, "boss_background_music_3.mp3"),
+		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, "boss_background_music_4.mp3"),
+		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, "boss_background_music_5.mp3"),
+
+		new SoundTemplate(SoundType.GAME_START, "game_start.mp3"),
+		new SoundTemplate(SoundType.GAME_PAUSE, "game_pause.mp3"),
+		new SoundTemplate(SoundType.GAME_OVER, "game_over.mp3"),
+
+		new SoundTemplate(SoundType.ORB_LAUNCH, "orb_launch.mp3"),
+
+		new SoundTemplate(SoundType.LEVEL_UP, "level_up.mp3"),
+		new SoundTemplate(SoundType.OPTION_SELECT, "option_select.mp3"),
+	];
 
 	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
 
@@ -238,7 +382,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.BLAST, "blast_1.png"),
 		new ConstructTemplate(ConstructType.BLAST, "blast_2.png"),
 
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, "vehicle_boss_rocket.png"),		
+		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, "vehicle_boss_rocket.png"),
 
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_1.png"),
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_2.png"),
@@ -303,8 +447,8 @@ export abstract class Constants {
 
 	static getRandomUri(constructType: ConstructType): string {
 
-		const treeTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.ConstructType == constructType);
-		const uri = treeTemplates[this.getRandomNumber(0, treeTemplates.length - 1)].Uri;
+		const treeTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == constructType);
+		const uri = treeTemplates[this.getRandomNumber(0, treeTemplates.length - 1)].uri;
 
 		return uri;
 	}

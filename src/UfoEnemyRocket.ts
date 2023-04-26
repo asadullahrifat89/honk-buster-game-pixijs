@@ -1,5 +1,6 @@
-﻿import { Constants, ConstructType } from './Constants';
+﻿import { Constants, ConstructType, SoundType } from './Constants';
 import { GameObject } from './GameObject';
+import { SoundManager } from './SoundManager';
 
 
 export class UfoEnemyRocket extends GameObject {
@@ -19,6 +20,8 @@ export class UfoEnemyRocket extends GameObject {
 		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_ENEMY_ROCKET));
 
 		this._autoBlastDelay = this._autoBlastDelayDefault;
+
+		SoundManager.play(SoundType.ORB_LAUNCH, 0.4);
 	}
 
 	reposition(source: GameObject) {
@@ -34,6 +37,8 @@ export class UfoEnemyRocket extends GameObject {
 		this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
 
 		this.isBlasting = true;
+
+		SoundManager.play(SoundType.ROCKET_BLAST);
 	}
 
 	autoBlast() {

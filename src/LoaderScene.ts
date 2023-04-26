@@ -1,7 +1,7 @@
 import { Container, Graphics, Assets } from "pixi.js";
 import { manifest } from "./assets";
 import { IScene } from "./IScene";
-import { Manager } from "./Manager";
+import { SceneManager } from "./SceneManager";
 import { MenuScene } from "./MenuScene";
 
 export class LoaderScene extends Container implements IScene {
@@ -15,7 +15,7 @@ export class LoaderScene extends Container implements IScene {
 		super();		
 
 		// lets make a loader graphic:
-		const loaderBarWidth = Manager.width * 0.8; // just an auxiliar variable
+		const loaderBarWidth = SceneManager.width * 0.8; // just an auxiliar variable
 
 		// the fill of the bar.
 		this.loaderBarFill = new Graphics();
@@ -35,8 +35,8 @@ export class LoaderScene extends Container implements IScene {
 		this.loaderBar.addChild(this.loaderBarBoder);
 
 		//Looks complex but this just centers the bar on screen.
-		this.loaderBar.position.x = (Manager.width - this.loaderBar.width) / 2;
-		this.loaderBar.position.y = (Manager.height - this.loaderBar.height) / 2;
+		this.loaderBar.position.x = (SceneManager.width - this.loaderBar.width) / 2;
+		this.loaderBar.position.y = (SceneManager.height - this.loaderBar.height) / 2;
 		this.addChild(this.loaderBar);
 
 		// Start loading!
@@ -75,6 +75,6 @@ export class LoaderScene extends Container implements IScene {
 		this.removeChild(this.loaderBar);
 
 		// Change scene to the menu scene!
-		Manager.changeScene(new MenuScene());
+		SceneManager.changeScene(new MenuScene());
 	}
 }

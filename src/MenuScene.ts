@@ -1,11 +1,12 @@
 ﻿import { Container, Graphics, BitmapFont, FederatedPointerEvent, BitmapText } from "pixi.js";
 import { Button } from "./Button";
-import { Constants, ConstructType } from "./Constants";
+import { Constants, ConstructType, SoundType } from "./Constants";
 import { GameObject } from "./GameObject";
 import { GameObjectSprite } from "./GameObjectSprite";
 import { GameScene } from "./GameScene";
 import { IScene } from "./IScene";
-import { Manager } from "./Manager";
+import { SceneManager } from "./SceneManager";
+import { SoundManager } from "./SoundManager";
 
 
 export class MenuScene extends Container implements IScene {
@@ -59,26 +60,23 @@ export class MenuScene extends Container implements IScene {
 
 		this._coverContainer.addChild(button);
 
-		this._coverContainer.setPosition(Manager.width / 2 - this._coverContainer.width / 2, Manager.height / 2 - this._coverContainer.height / 2);
+		this._coverContainer.setPosition(SceneManager.width / 2 - this._coverContainer.width / 2, SceneManager.height / 2 - this._coverContainer.height / 2);
 
 		this.addChild(this._coverContainer);
 	}
 
 	public update(_framesPassed: number) {
-		//this._coverContainer.hover();
-
-		
+				
 	}
 
 	public resize(scale: number): void {
 		this._coverContainer.scale.set(scale);
-		this._coverContainer.setPosition(Manager.width / 2 - this._coverContainer.width / 2, Manager.height / 2 - this._coverContainer.height / 2);
+		this._coverContainer.setPosition(SceneManager.width / 2 - this._coverContainer.width / 2, SceneManager.height / 2 - this._coverContainer.height / 2);
 	}
 
 	private newGame(_e: FederatedPointerEvent) {
+		SoundManager.play(SoundType.OPTION_SELECT);
 		this.removeChild(this._coverContainer);
-
-		// Change scene to the menu scene!
-		Manager.changeScene(new GameScene());
+		SceneManager.changeScene(new GameScene());
 	}
 }

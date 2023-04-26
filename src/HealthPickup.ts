@@ -1,4 +1,6 @@
-﻿import { GameObject } from './GameObject';
+﻿import { SoundType } from './Constants';
+import { GameObject } from './GameObject';
+import { SoundManager } from './SoundManager';
 
 
 export class HealthPickup extends GameObject {
@@ -20,6 +22,7 @@ export class HealthPickup extends GameObject {
 
 	pickedUp() {
 		this.isPickedUp = true;
+		SoundManager.play(SoundType.HEALTH_PICKUP);
 	}
 }
 

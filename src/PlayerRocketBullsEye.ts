@@ -1,7 +1,8 @@
 ﻿import { Rectangle } from 'pixi.js';
-import { Constants, ConstructType } from './Constants';
+import { Constants, ConstructType, SoundType } from './Constants';
 import { GameObject } from './GameObject';
 import { SeekingRocketBase } from './SeekingRocketBase';
+import { SoundManager } from './SoundManager';
 
 
 export class PlayerRocketBullsEye extends SeekingRocketBase {
@@ -21,6 +22,8 @@ export class PlayerRocketBullsEye extends SeekingRocketBase {
         this.isBlasting = false;
         this._autoBlastDelay = this._autoBlastDelayDefault;
         this._targetHitbox = new Rectangle();
+
+        SoundManager.play(SoundType.BULLS_EYE_ROCKET_LAUNCH);
     }
 
     reposition(source: GameObject) {
@@ -36,6 +39,8 @@ export class PlayerRocketBullsEye extends SeekingRocketBase {
         this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
 
         this.isBlasting = true;
+
+        SoundManager.play(SoundType.ROCKET_BLAST);
     }
 
     autoBlast() {

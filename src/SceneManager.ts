@@ -1,12 +1,10 @@
 import { Application } from "pixi.js";
 import { IScene } from "./IScene";
 
-
-export class Manager {
+export class SceneManager {
 
 	//#region Properties
 
-	// Safely store variables for our game
 	private static app: Application;
 	private static currentScene: IScene;
 
@@ -24,7 +22,7 @@ export class Manager {
 	public static initialize(width: number, height: number, background: number): void {
 
 		// Create our pixi app
-		Manager.app = new Application({
+		SceneManager.app = new Application({
 			view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
 			resizeTo: window, // This line here handles the actual resize!
 			resolution: window.devicePixelRatio || 1,
@@ -36,18 +34,19 @@ export class Manager {
 		});
 
 		// Add the ticker
-		Manager.app.ticker.minFPS = 50;
-		Manager.app.ticker.maxFPS = 60;
+		SceneManager.app.ticker.minFPS = 50;
+		SceneManager.app.ticker.maxFPS = 60;
 
-		Manager.app.ticker.add(Manager.update)
+		SceneManager.app.ticker.add(SceneManager.update)
 
 		// listen for the browser telling us that the screen size changed
-		window.addEventListener("resize", Manager.resize);
+		window.addEventListener("resize", SceneManager.resize);
 	}
 
 	public static get width(): number {
 		return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 	}
+
 	public static get height(): number {
 		return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 	}
@@ -56,12 +55,32 @@ export class Manager {
 	public static resize(): void {
 
 		// set the scaling on resize
-		this.scaling = Manager.getScaling();
+		this.scaling = SceneManager.getScaling();
 
 		// if we have a scene, we let it know that a resize happened!
-		if (Manager.currentScene) {
-			Manager.currentScene.resize(this.scaling);
-		}		
+		if (SceneManager.currentScene) {
+			SceneManager.currentScene.resize(this.scaling);
+		}
+	}
+
+	// Call this function when you want to go to a new scene
+	public static changeScene(newScene: IScene): void {
+
+		// if the screen supports fullscreen, toggle it
+		if (document.documentElement.requestFullscreen) {
+			document.documentElement.requestFullscreen();
+		}
+
+		// Remove and destroy old scene... if we had one..
+		if (SceneManager.currentScene) {
+			SceneManager.app.stage.removeChild(SceneManager.currentScene);
+			SceneManager.currentScene.destroy();
+		}
+
+		// Add the new one
+		SceneManager.currentScene = newScene;
+		SceneManager.app.stage.addChild(SceneManager.currentScene);
+		SceneManager.resize();
 	}
 
 	private static getScaling() {
@@ -95,26 +114,6 @@ export class Manager {
 		return scaling;
 	}
 
-	// Call this function when you want to go to a new scene
-	public static changeScene(newScene: IScene): void {
-
-		// if the screen supports fullscreen, toggle it
-		if (document.documentElement.requestFullscreen) {
-			document.documentElement.requestFullscreen();
-		}
-
-		// Remove and destroy old scene... if we had one..
-		if (Manager.currentScene) {
-			Manager.app.stage.removeChild(Manager.currentScene);
-			Manager.currentScene.destroy();
-		}
-
-		// Add the new one
-		Manager.currentScene = newScene;
-		Manager.app.stage.addChild(Manager.currentScene);
-		Manager.resize();
-	}
-
 	// This update will be called by a pixi ticker and tell the scene that a tick happened
 	private static update(framesPassed: number): void {
 
@@ -122,8 +121,8 @@ export class Manager {
 
 		// Let the current scene know that we updated it...
 		// Just for funzies, sanity check that it exists first.
-		if (Manager.currentScene) {
-			Manager.currentScene.update(framesPassed);
+		if (SceneManager.currentScene) {
+			SceneManager.currentScene.update(framesPassed);
 		}
 
 		// as I said before, I HATE the "frame passed" approach. I would rather use `Manager.app.ticker.deltaMS`

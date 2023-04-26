@@ -1,5 +1,6 @@
-﻿import { Constants, ConstructType, PowerUpType } from './Constants';
+﻿import { Constants, ConstructType, PowerUpType, SoundType } from './Constants';
 import { GameObject } from './GameObject';
+import { SoundManager } from './SoundManager';
 
 
 export class PowerUpPickup extends GameObject {
@@ -34,5 +35,6 @@ export class PowerUpPickup extends GameObject {
 
     pickedUp() {
         this.isPickedUp = true;
+        SoundManager.play(SoundType.POWERUP_PICKUP);
     }
 }

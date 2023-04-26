@@ -63,10 +63,10 @@ export class PlayerBalloon extends GameObject {
 
 	setPlayerTemplate(playerTemplate: PlayerBalloonTemplate) {
 
-		let playerIdleUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.ConstructType == ConstructType.PLAYER_BALLOON_IDLE).map(x => x.Uri);
-		let playerWinUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.ConstructType == ConstructType.PLAYER_BALLOON_WIN).map(x => x.Uri);
-		let playerHitUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.ConstructType == ConstructType.PLAYER_BALLOON_HIT).map(x => x.Uri);
-		let playerAttackUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.ConstructType == ConstructType.PLAYER_BALLOON_ATTACK).map(x => x.Uri);
+		let playerIdleUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_BALLOON_IDLE).map(x => x.uri);
+		let playerWinUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_BALLOON_WIN).map(x => x.uri);
+		let playerHitUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_BALLOON_HIT).map(x => x.uri);
+		let playerAttackUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_BALLOON_ATTACK).map(x => x.uri);
 
 		switch (playerTemplate) {
 			case PlayerBalloonTemplate.Blue: {
