@@ -1355,7 +1355,7 @@ export class GameScene extends Container implements IScene {
 
 			if (vehicleEnemy.isDead()) {
 				vehicleEnemy.setBlast();
-				this._gameScoreBar.gainScore(2);
+				this._gameScoreBar.gainScore(2);				
 			}
 		}
 	}
@@ -3012,7 +3012,7 @@ export class GameScene extends Container implements IScene {
 
 						playerHonkBomb.move();
 
-						if (playerHonkBomb.depleteBlastDelay()) {							
+						if (playerHonkBomb.depleteBlastDelay()) {
 
 							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
 

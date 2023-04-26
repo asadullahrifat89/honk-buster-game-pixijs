@@ -23,7 +23,7 @@ export class PlayerHonkBomb extends GameObject {
 		this.angle = 0;
 		this.blastDelay = this.blastDelayDefault;
 
-		SoundManager.play(SoundType.CRACKER_DROP);
+		SoundManager.play(SoundType.CRACKER_DROP, 0.5);
 	}
 
 	reposition(source: GameObject) {
@@ -69,7 +69,7 @@ export class PlayerHonkBomb extends GameObject {
 	setBlast() {
 
 		switch (this.playerHonkBombTemplate) {
-			case 0: { SoundManager.play(SoundType.CRACKER_BLAST); } break;
+			case 0: { SoundManager.play(SoundType.CRACKER_BLAST, 0.8); } break;
 			case 1: { SoundManager.play(SoundType.TRASH_CAN_HIT); } break;
 			default: break;
 		}

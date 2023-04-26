@@ -1,6 +1,7 @@
-﻿import { Constants, ConstructType } from './Constants';
+﻿import { Constants, ConstructType, SoundType } from './Constants';
 import { GameObject } from './GameObject';
 import { PlayerBalloon } from './PlayerBalloon';
+import { SoundManager } from './SoundManager';
 
 
 export class PlayerRocket extends GameObject {
@@ -27,6 +28,8 @@ export class PlayerRocket extends GameObject {
 		this.awaitMoveDownRight = false;
 
 		this._autoBlastDelay = this._autoBlastDelayDefault;
+
+		SoundManager.play(SoundType.ROCKET_LAUNCH, 0.5);
 	}
 
 	reposition(source: PlayerBalloon) {
@@ -46,6 +49,8 @@ export class PlayerRocket extends GameObject {
 		this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
 
 		this.isBlasting = true;
+
+		SoundManager.play(SoundType.ROCKET_BLAST);
 	}
 
 	autoBlast() {
