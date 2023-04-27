@@ -122,13 +122,13 @@ export class GameController extends Container {
 		this.addChild(joystick);
 
 		const attackButtonSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
-		attackButtonSprite.height = 132;
-		attackButtonSprite.width = 132;
+		attackButtonSprite.height = 130;
+		attackButtonSprite.width = 130;
 
 		const attackButton = new Button(attackButtonSprite, () => {
 			this.isAttacking = true;
 		});
-		attackButton.scale.set(0.9);
+		/*attackButton.scale.set(0.9);*/
 		attackButton.x = attackButton.width / 1.3;
 		attackButton.y = SceneManager.height - attackButton.height * 1.7;
 
