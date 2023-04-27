@@ -22,6 +22,7 @@ export class GameController extends Container {
 	public isPaused: boolean = false;
 
 	private joystickActivated: boolean = false;
+	private keyboardActivated: boolean = false;
 	public power: number = 1;
 	private settings: GameControllerSettings;
 
@@ -31,10 +32,22 @@ export class GameController extends Container {
 		this.settings = settings;
 
 		this.interactive = true;
+
+		this.on("pointertap", () => {
+			joystick.alpha = 1;
+			attackButton.alpha = 1;
+		});
 		this.keyboard.events.on('pressed', null, () => {
 
 			if (!this.isPaused && this.keyboard.isKeyPressed('Space')) {
 				this.isAttacking = true;
+			}
+
+			this.keyboardActivated = true;
+
+			if (this.keyboardActivated) {
+				joystick.alpha = 0;
+				attackButton.alpha = 0;
 			}
 		});
 
@@ -119,6 +132,9 @@ export class GameController extends Container {
 			onStart: () => {
 				this.joystickActivated = true;
 				this.power = 0.1;
+				this.keyboardActivated = false;
+				joystick.alpha = 1;
+				attackButton.alpha = 1;
 			},
 
 			onEnd: () => {
