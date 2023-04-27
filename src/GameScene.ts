@@ -33,6 +33,7 @@ import { UfoEnemy } from "./UfoEnemy";
 import { UfoEnemyRocket } from "./UfoEnemyRocket";
 import { SoundManager } from "./SoundManager";
 import { GameOverScene } from "./GameOverScene";
+import { DropShadowFilter } from "@pixi/filter-drop-shadow";
 
 
 export class GameScene extends Container implements IScene {
@@ -94,7 +95,7 @@ export class GameScene extends Container implements IScene {
 
 		this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
 		this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
-		//this._sceneContainer.filters = [new DropShadowFilter()];
+		this._sceneContainer.filters = [new DropShadowFilter()];
 
 		this.addChild(this._sceneContainer);
 
@@ -239,8 +240,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.roadMarkSizeWidth * 5;
-			gameObject.height = this.roadMarkSizeHeight / 2 * 5;
+			//gameObject.width = this.roadMarkSizeWidth * 5;
+			//gameObject.height = this.roadMarkSizeHeight / 2 * 5;
 
 			for (let i = 0; i < 5; i++) {
 
@@ -315,8 +316,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.treeSizeWidth * 5;
-			gameObject.height = this.treeSizeHeight / 2 * 5;
+			//gameObject.width = this.treeSizeWidth * 5;
+			//gameObject.height = this.treeSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -343,8 +344,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.treeSizeWidth * 5;
-			gameObject.height = this.treeSizeHeight / 2 * 5;
+			//gameObject.width = this.treeSizeWidth * 5;
+			//gameObject.height = this.treeSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -455,8 +456,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.hedgeSizeWidth * 5;
-			gameObject.height = this.hedgeSizeHeight / 2 * 5;
+			//gameObject.width = this.hedgeSizeWidth * 5;
+			//gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -483,8 +484,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.hedgeSizeWidth * 5;
-			gameObject.height = this.hedgeSizeHeight / 2 * 5;
+			//gameObject.width = this.hedgeSizeWidth * 5;
+			//gameObject.height = this.hedgeSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -743,8 +744,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.lampSizeWidth * 5;
-			gameObject.height = this.lampSizeHeight / 2 * 5;
+			//gameObject.width = this.lampSizeWidth * 5;
+			//gameObject.height = this.lampSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -771,8 +772,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.lampSizeWidth * 5;
-			gameObject.height = this.lampSizeHeight / 2 * 5;
+			//gameObject.width = this.lampSizeWidth * 5;
+			//gameObject.height = this.lampSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -883,8 +884,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.lightBillboardSizeWidth * 5;
-			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
+			//gameObject.width = this.lightBillboardSizeWidth * 5;
+			//gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -911,8 +912,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.lightBillboardSizeWidth * 5;
-			gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
+			//gameObject.width = this.lightBillboardSizeWidth * 5;
+			//gameObject.height = this.lightBillboardSizeHeight / 2 * 5;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -1021,8 +1022,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.sideWalkWidth * 5;
-			gameObject.height = this.sideWalkHeight / 2 * 5;
+			//gameObject.width = this.sideWalkWidth * 5;
+			//gameObject.height = this.sideWalkHeight / 2 * 5;
 
 			// gameObject.filters = [new CastShadowFilter()];
 
@@ -1055,8 +1056,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.sideWalkWidth * 5;
-			gameObject.height = this.sideWalkHeight / 2 * 5;
+			//gameObject.width = this.sideWalkWidth * 5;
+			//gameObject.height = this.sideWalkHeight / 2 * 5;
 
 			// gameObject.filters = [new CastShadowFilter()];
 
@@ -1169,8 +1170,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: Cloud = new Cloud(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2));
 			gameObject.disableRendering();
-			gameObject.width = this.cloudSizeWidth;
-			gameObject.height = this.cloudSizeHeight;
+			//gameObject.width = this.cloudSizeWidth;
+			//gameObject.height = this.cloudSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.CLOUD));
 
@@ -1247,8 +1248,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.vehicleEnemySizeWidth;
-			gameObject.height = this.vehicleEnemySizeHeight;
+			//gameObject.width = this.vehicleEnemySizeWidth;
+			//gameObject.height = this.vehicleEnemySizeHeight;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -1376,8 +1377,8 @@ export class GameScene extends Container implements IScene {
 	private spawnVehicleBosss() {
 		const gameObject: VehicleBoss = new VehicleBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
 		gameObject.disableRendering();
-		gameObject.width = this.vehicleBossSizeWidth;
-		gameObject.height = this.vehicleBossSizeHeight;
+		//gameObject.width = this.vehicleBossSizeWidth;
+		//gameObject.height = this.vehicleBossSizeHeight;
 
 		// gameObject.filters = [new DropShadowFilter()];
 
@@ -1520,8 +1521,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 1.7);
 			gameObject.disableRendering();
-			gameObject.width = this.vehicleBossRocketSizeWidth;
-			gameObject.height = this.vehicleBossRocketSizeHeight;
+			//gameObject.width = this.vehicleBossRocketSizeWidth;
+			//gameObject.height = this.vehicleBossRocketSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
 
@@ -1618,8 +1619,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: UfoEnemy = new UfoEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.ufoEnemySizeWidth;
-			gameObject.height = this.ufoEnemySizeHeight;
+			//gameObject.width = this.ufoEnemySizeWidth;
+			//gameObject.height = this.ufoEnemySizeHeight;
 
 			// gameObject.filters = [new DropShadowFilter()];
 
@@ -1760,8 +1761,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: UfoEnemyRocket = new UfoEnemyRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
-			gameObject.width = this.ufoEnemyRocketSizeWidth;
-			gameObject.height = this.ufoEnemyRocketSizeHeight;
+			//gameObject.width = this.ufoEnemyRocketSizeWidth;
+			//gameObject.height = this.ufoEnemyRocketSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY_ROCKET));
 
@@ -1840,8 +1841,8 @@ export class GameScene extends Container implements IScene {
 	private spawnUfoBosss() {
 		const gameObject: UfoBoss = new UfoBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
 		gameObject.disableRendering();
-		gameObject.width = this.ufoBossSizeWidth;
-		gameObject.height = this.ufoBossSizeHeight;
+		//gameObject.width = this.ufoBossSizeWidth;
+		//gameObject.height = this.ufoBossSizeHeight;
 
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_IDLE));
 
@@ -1980,8 +1981,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: UfoBossRocket = new UfoBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
-			gameObject.width = this.ufoBossRocketSizeWidth;
-			gameObject.height = this.ufoBossRocketSizeHeight;
+			//gameObject.width = this.ufoBossRocketSizeWidth;
+			//gameObject.height = this.ufoBossRocketSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET));
 
@@ -2123,8 +2124,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: UfoBossRocketSeeking = new UfoBossRocketSeeking(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.ufoBossRocketSeekingSizeWidth;
-			gameObject.height = this.ufoBossRocketSeekingSizeHeight;
+			//gameObject.width = this.ufoBossRocketSeekingSizeWidth;
+			//gameObject.height = this.ufoBossRocketSeekingSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET_SEEKING));
 
@@ -2228,8 +2229,8 @@ export class GameScene extends Container implements IScene {
 	private spawnZombieBosss() {
 		const gameObject: ZombieBoss = new ZombieBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
 		gameObject.disableRendering();
-		gameObject.width = this.zombieBossSizeWidth;
-		gameObject.height = this.zombieBossSizeHeight;
+		//gameObject.width = this.zombieBossSizeWidth;
+		//gameObject.height = this.zombieBossSizeHeight;
 
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_IDLE));
 
@@ -2368,8 +2369,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: ZombieBossRocketBlock = new ZombieBossRocketBlock(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.zombieBossRocketBlockSizeWidth;
-			gameObject.height = this.zombieBossRocketBlockSizeHeight;
+			//gameObject.width = this.zombieBossRocketBlockSizeWidth;
+			//gameObject.height = this.zombieBossRocketBlockSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK));
 
@@ -2458,8 +2459,8 @@ export class GameScene extends Container implements IScene {
 	private spawnMafiaBosss() {
 		const gameObject: MafiaBoss = new MafiaBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
 		gameObject.disableRendering();
-		gameObject.width = this.mafiaBossSizeWidth;
-		gameObject.height = this.mafiaBossSizeHeight;
+		//gameObject.width = this.mafiaBossSizeWidth;
+		//gameObject.height = this.mafiaBossSizeHeight;
 
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_IDLE));
 
@@ -2599,8 +2600,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: MafiaBossRocket = new MafiaBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
-			gameObject.width = this.mafiaBossRocketSizeWidth;
-			gameObject.height = this.mafiaBossRocketSizeHeight;
+			//gameObject.width = this.mafiaBossRocketSizeWidth;
+			//gameObject.height = this.mafiaBossRocketSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET));
 
@@ -2714,8 +2715,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: MafiaBossRocketBullsEye = new MafiaBossRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.mafiaBossRocketBullsEyeSizeWidth;
-			gameObject.height = this.mafiaBossRocketBullsEyeSizeHeight;
+			//gameObject.width = this.mafiaBossRocketBullsEyeSizeWidth;
+			//gameObject.height = this.mafiaBossRocketBullsEyeSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE));
 
@@ -2821,8 +2822,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: Honk = new Honk(0);
 			gameObject.disableRendering();
-			gameObject.width = this.roadHonkSizeWidth;
-			gameObject.height = this.roadHonkSizeHeight;
+			//gameObject.width = this.roadHonkSizeWidth;
+			//gameObject.height = this.roadHonkSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HONK));
 
@@ -2886,15 +2887,15 @@ export class GameScene extends Container implements IScene {
 
 		this._player.disableRendering();
 
-		this._player.width = this.playerBalloonSizeWidth;
-		this._player.height = this.playerBalloonSizeHeight;
+		//this._player.width = this.playerBalloonSizeWidth;
+		//this._player.height = this.playerBalloonSizeHeight;
 
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_BALLOON_IDLE));
 
 		sprite.x = 0;
 		sprite.y = 0;
 		sprite.width = this.playerBalloonSizeWidth;
-		sprite.height = this.playerBalloonSizeWidth;
+		sprite.height = this.playerBalloonSizeHeight;
 		sprite.anchor.set(0.5, 0.5);
 
 		this._player.addChild(sprite);
@@ -3000,8 +3001,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: PlayerHonkBomb = new PlayerHonkBomb(4);
 			gameObject.disableRendering();
-			gameObject.width = this.playerHonkBombSizeWidth;
-			gameObject.height = this.playerHonkBombSizeHeight;
+			//gameObject.width = this.playerHonkBombSizeWidth;
+			//gameObject.height = this.playerHonkBombSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_HONK_BOMB));
 
@@ -3103,8 +3104,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: PlayerRocket = new PlayerRocket(4);
 			gameObject.disableRendering();
-			gameObject.width = this.playerRocketSizeWidth;
-			gameObject.height = this.playerRocketSizeHeight;
+			//gameObject.width = this.playerRocketSizeWidth;
+			//gameObject.height = this.playerRocketSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET));
 
@@ -3288,8 +3289,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: PlayerRocketBullsEye = new PlayerRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
-			gameObject.width = this.playerRocketBullsEyeSizeWidth;
-			gameObject.height = this.playerRocketBullsEyeSizeHeight;
+			//gameObject.width = this.playerRocketBullsEyeSizeWidth;
+			//gameObject.height = this.playerRocketBullsEyeSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET_BULLS_EYE));
 
@@ -3434,8 +3435,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: HealthPickup = new HealthPickup(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED));
 			gameObject.disableRendering();
-			gameObject.width = this.healthPickupSizeWidth;
-			gameObject.height = this.healthPickupSizeHeight;
+			//gameObject.width = this.healthPickupSizeWidth;
+			//gameObject.height = this.healthPickupSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP));
 
@@ -3546,8 +3547,8 @@ export class GameScene extends Container implements IScene {
 
 			const gameObject: PowerUpPickup = new PowerUpPickup(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED));
 			gameObject.disableRendering();
-			gameObject.width = this.powerUpPickupSizeWidth;
-			gameObject.height = this.powerUpPickupSizeHeight;
+			//gameObject.width = this.powerUpPickupSizeWidth;
+			//gameObject.height = this.powerUpPickupSizeHeight;
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR));
 
