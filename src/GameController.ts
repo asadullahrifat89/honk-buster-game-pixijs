@@ -162,7 +162,9 @@ export class GameController extends Container {
 		attackButtonGraphics.addChild(attackButtonSprite);
 
 		const attackButton = new Button(attackButtonGraphics, () => {
-			this.isAttacking = true;
+			if (!this.isPaused) {
+				this.isAttacking = true;
+			}
 		});
 		attackButton.x = attackButtonSpritebg.width / 1.3;
 		attackButton.y = SceneManager.height - attackButtonSpritebg.height * 1.7;
