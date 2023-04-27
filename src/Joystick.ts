@@ -13,13 +13,18 @@ export class Joystick extends Container {
 
     innerAlphaStandby = 0.5;
 
-    constructor(opts: JoystickSettings) {
-        super();
+    constructor(settings: JoystickSettings) {
+        super();      
 
         this.settings = Object.assign({
             outerScale: { x: 1, y: 1 },
             innerScale: { x: 1, y: 1 },
-        }, opts);
+        }, settings);
+
+        this.width = settings.width;
+        this.height = settings.height;
+
+        //this.settings = settings;
 
         if (!this.settings.outer) {
             const outer = new Graphics();
@@ -265,4 +270,6 @@ export interface JoystickSettings {
     onChange?: (data: JoystickChangeEvent) => void;
     onStart?: () => void;
     onEnd?: () => void;
+    width: number;
+    height: number;
 }

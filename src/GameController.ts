@@ -1,6 +1,7 @@
-﻿import { Container, Sprite } from 'pixi.js';
+﻿import { Container, Texture } from 'pixi.js';
+import { GameObjectSprite } from './GameObjectSprite';
 import { Joystick } from './Joystick';
-//import { SceneManager } from './SceneManager';
+
 
 export class GameController extends Container {
 
@@ -25,15 +26,26 @@ export class GameController extends Container {
 			}
 		});
 
-		let outerSprite = Sprite.from("joystick.png");
-		let innerSprite = Sprite.from("joystick-handle.png");
+		const outerSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick"));
+		//outerSprite.x = 0;
+		//outerSprite.y = 0;
+		outerSprite.height = 278;
+		outerSprite.width = 278;
+
+		const innerSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
+		//innerSprite.x = 0;
+		//innerSprite.y = 0;
+		innerSprite.height = 132;
+		innerSprite.width = 132;
 
 		const joystick = new Joystick({
 			outer: outerSprite,
 			inner: innerSprite,
 
-			outerScale: { x: 0.5, y: 0.5 },
-			innerScale: { x: 0.8, y: 0.8 },
+			width: 278,
+			height: 278,
+			//outerScale: { x: 0.5, y: 0.5 },
+			//innerScale: { x: 0.8, y: 0.8 },
 
 			onChange: (data) => {
 				//console.log(data.angle); // Angle from 0 to 360
@@ -52,9 +64,8 @@ export class GameController extends Container {
 			},
 		});
 
-
-		//joystick.x = SceneManager.width - joystick.width * 1.5;
-		//joystick.y = SceneManager.height - joystick.height * 1.5;
+		joystick.x = 200;
+		joystick.y = 200;
 		this.addChild(joystick);
 	}
 
