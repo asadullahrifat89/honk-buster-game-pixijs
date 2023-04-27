@@ -26,6 +26,10 @@ export class GameController extends Container {
 	public power: number = 1;
 	private settings: GameControllerSettings;
 
+	private attackButton: Button;
+	private pauseButton: Button;
+	private joystick: Joystick;
+
 	constructor(settings: GameControllerSettings) {
 		super();
 
@@ -34,8 +38,8 @@ export class GameController extends Container {
 		this.interactive = true;
 
 		this.on("pointertap", () => {
-			joystick.alpha = 1;
-			attackButton.alpha = 1;
+			this.joystick.alpha = 1;
+			this.attackButton.alpha = 1;
 		});
 		this.keyboard.events.on('pressed', null, () => {
 
@@ -46,22 +50,53 @@ export class GameController extends Container {
 			this.keyboardActivated = true;
 
 			if (this.keyboardActivated) {
-				joystick.alpha = 0;
-				attackButton.alpha = 0;
+				this.joystick.alpha = 0;
+				this.attackButton.alpha = 0;
 			}
 		});
 
-		const outerSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick"));
-		outerSprite.height = 278;
-		outerSprite.width = 278;
+		const pauseButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
+		pauseButtonSpritebg.height = 100;
+		pauseButtonSpritebg.width = 100;
 
-		const innerSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
-		innerSprite.height = 132;
-		innerSprite.width = 132;
+		const pauseButtonSprite: GameObjectSprite = new GameObjectSprite(Texture.from("pause_button"));
+		pauseButtonSprite.height = 50;
+		pauseButtonSprite.width = 50;
+		pauseButtonSprite.x = pauseButtonSpritebg.width / 2 - pauseButtonSprite.width / 2;
+		pauseButtonSprite.y = pauseButtonSpritebg.height / 2 - pauseButtonSprite.height / 2;
 
-		const joystick = new Joystick({
-			outer: outerSprite,
-			inner: innerSprite,
+		const pauseButtonGraphics = new Container();
+		pauseButtonGraphics.addChild(pauseButtonSpritebg);
+		pauseButtonGraphics.addChild(pauseButtonSprite);
+
+		this.pauseButton = new Button(pauseButtonGraphics, () => {
+			this.isPaused = !this.isPaused;
+
+			if (this.isPaused) {
+				pauseButtonSprite.setTexture(Texture.from("resume_button"));
+				SoundManager.play(SoundType.GAME_PAUSE);
+			}
+			else {
+				pauseButtonSprite.setTexture(Texture.from("pause_button"));
+				SoundManager.play(SoundType.GAME_START);
+			}
+
+			this.settings.onPause?.(this.isPaused);
+		});
+		this.setPauseButtonPosition();
+		this.addChild(this.pauseButton);
+
+		const joystickOuterSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick"));
+		joystickOuterSprite.height = 278;
+		joystickOuterSprite.width = 278;
+
+		const joystickInnerSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
+		joystickInnerSprite.height = 132;
+		joystickInnerSprite.width = 132;
+
+		this.joystick = new Joystick({
+			outer: joystickOuterSprite,
+			inner: joystickInnerSprite,
 
 			width: 278,
 			height: 278,
@@ -133,8 +168,8 @@ export class GameController extends Container {
 				this.joystickActivated = true;
 				this.power = 0.1;
 				this.keyboardActivated = false;
-				joystick.alpha = 1;
-				attackButton.alpha = 1;
+				this.joystick.alpha = 1;
+				this.attackButton.alpha = 1;
 			},
 
 			onEnd: () => {
@@ -143,9 +178,8 @@ export class GameController extends Container {
 			},
 		});
 
-		joystick.x = SceneManager.width - joystick.width;
-		joystick.y = SceneManager.height - joystick.height;
-		this.addChild(joystick);
+		this.setJoystickPosition();
+		this.addChild(this.joystick);
 
 		const attackButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
 		attackButtonSpritebg.height = 130;
@@ -161,48 +195,13 @@ export class GameController extends Container {
 		attackButtonGraphics.addChild(attackButtonSpritebg);
 		attackButtonGraphics.addChild(attackButtonSprite);
 
-		const attackButton = new Button(attackButtonGraphics, () => {
+		this.attackButton = new Button(attackButtonGraphics, () => {
 			if (!this.isPaused) {
 				this.isAttacking = true;
 			}
 		});
-		attackButton.x = attackButtonSpritebg.width / 1.3;
-		attackButton.y = SceneManager.height - attackButtonSpritebg.height * 1.7;
-
-		this.addChild(attackButton);
-
-		const pauseButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
-		pauseButtonSpritebg.height = 100;
-		pauseButtonSpritebg.width = 100;
-
-		const pauseButtonSprite: GameObjectSprite = new GameObjectSprite(Texture.from("pause_button"));
-		pauseButtonSprite.height = 50;
-		pauseButtonSprite.width = 50;
-		pauseButtonSprite.x = pauseButtonSpritebg.width / 2 - pauseButtonSprite.width / 2;
-		pauseButtonSprite.y = pauseButtonSpritebg.height / 2 - pauseButtonSprite.height / 2;
-
-		const pauseButtonGraphics = new Container();
-		pauseButtonGraphics.addChild(pauseButtonSpritebg);
-		pauseButtonGraphics.addChild(pauseButtonSprite);
-
-		const pauseButton = new Button(pauseButtonGraphics, () => {
-			this.isPaused = !this.isPaused;
-
-			if (this.isPaused) {
-				pauseButtonSprite.setTexture(Texture.from("resume_button"));
-				SoundManager.play(SoundType.GAME_PAUSE);
-			}
-			else {
-				pauseButtonSprite.setTexture(Texture.from("pause_button"));
-				SoundManager.play(SoundType.GAME_START);
-			}
-
-			this.settings.onPause?.(this.isPaused);
-		});
-		pauseButton.x = SceneManager.width - pauseButtonSpritebg.width;
-		pauseButton.y = pauseButtonSpritebg.height / 2.5;
-
-		this.addChild(pauseButton);
+		this.setAttackButtonPosition();
+		this.addChild(this.attackButton);
 	}
 
 	update() {
@@ -238,4 +237,25 @@ export class GameController extends Container {
 			}
 		}
 	}
+
+	resize() {
+		this.setJoystickPosition();
+		this.setAttackButtonPosition();
+		this.setPauseButtonPosition();
+	}
+
+    private setPauseButtonPosition() {
+        this.pauseButton.x = SceneManager.width - this.pauseButton.width;
+        this.pauseButton.y = this.pauseButton.height / 2.5;
+    }
+
+    private setAttackButtonPosition() {
+        this.attackButton.x = this.attackButton.width / 2;
+        this.attackButton.y = SceneManager.height - this.attackButton.height * 1.3;
+    }
+
+    private setJoystickPosition() {
+        this.joystick.x = SceneManager.width - this.joystick.width / 1.4;
+        this.joystick.y = SceneManager.height - this.joystick.height / 1.4;
+    }
 }

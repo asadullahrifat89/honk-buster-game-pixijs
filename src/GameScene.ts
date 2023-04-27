@@ -33,7 +33,6 @@ import { UfoEnemy } from "./UfoEnemy";
 import { UfoEnemyRocket } from "./UfoEnemyRocket";
 import { SoundManager } from "./SoundManager";
 import { GameOverScene } from "./GameOverScene";
-import { DropShadowFilter } from "@pixi/filter-drop-shadow";
 
 
 export class GameScene extends Container implements IScene {
@@ -135,7 +134,7 @@ export class GameScene extends Container implements IScene {
 
 		this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
 		this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
-		this._sceneContainer.filters = [new DropShadowFilter()];
+		//this._sceneContainer.filters = [new DropShadowFilter()];
 
 		this.addChild(this._sceneContainer);
 
@@ -3784,6 +3783,7 @@ export class GameScene extends Container implements IScene {
 		this.repositionPlayerHealthBar();
 		this.repositionBossHealthBar();
 		this.repositionPowerUpMeter();
+		this._gameController.resize();
 	}
 
 	private levelUp() {
