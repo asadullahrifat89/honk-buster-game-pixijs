@@ -14,6 +14,7 @@ export class GameController extends Container {
 	public isMoveLeft: boolean = false;
 	public isMoveRight: boolean = false;
 	public isAttacking: boolean = false;
+	public isPaused: boolean = false;
 
 	private joystickActivated: boolean = false;
 	public power: number = 1;
@@ -47,8 +48,6 @@ export class GameController extends Container {
 			innerScale: { x: 0.9, y: 0.9 },
 
 			onChange: (data) => {
-				//console.log(data.direction);
-
 				this.power = data.power;
 
 				switch (data.direction) {
@@ -121,7 +120,6 @@ export class GameController extends Container {
 		joystick.y = SceneManager.height - joystick.height;
 		this.addChild(joystick);
 
-
 		const attackButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
 		attackButtonSpritebg.height = 130;
 		attackButtonSpritebg.width = 130;
@@ -139,11 +137,32 @@ export class GameController extends Container {
 		const attackButton = new Button(attackButtonGraphics, () => {
 			this.isAttacking = true;
 		});
-		/*attackButton.scale.set(0.9);*/
-		attackButton.x = 130 / 1.3;
-		attackButton.y = SceneManager.height - 130 * 1.7;
+		attackButton.x = attackButtonSpritebg.width / 1.3;
+		attackButton.y = SceneManager.height - attackButtonSpritebg.height * 1.7;
 
 		this.addChild(attackButton);
+
+		const pauseButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
+		pauseButtonSpritebg.height = 100;
+		pauseButtonSpritebg.width = 100;
+
+		const pauseButtonSprite: GameObjectSprite = new GameObjectSprite(Texture.from("pause_button"));
+		pauseButtonSprite.height = 50;
+		pauseButtonSprite.width = 50;
+		pauseButtonSprite.x = pauseButtonSpritebg.width / 2 - pauseButtonSprite.width / 2;
+		pauseButtonSprite.y = pauseButtonSpritebg.height / 2 - pauseButtonSprite.height / 2;
+
+		const pauseButtonGraphics = new Container();
+		pauseButtonGraphics.addChild(pauseButtonSpritebg);
+		pauseButtonGraphics.addChild(pauseButtonSprite);
+
+		const pauseButton = new Button(pauseButtonGraphics, () => {
+			this.isPaused = !this.isPaused;
+		});
+		pauseButton.x = SceneManager.width - pauseButtonSpritebg.width;
+		pauseButton.y = pauseButtonSpritebg.height / 3.5;
+
+		this.addChild(pauseButton);
 	}
 
 	update() {

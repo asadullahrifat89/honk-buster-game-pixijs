@@ -13,6 +13,8 @@ export const manifest: ResolverManifest = {
 			assets:
 			{
 				"attack_button": "./attack_button.png",
+				"pause_button": "./pause_button.png",
+				"resume_button": "./resume_button.png",
 
 				"bang_1": "./bang_1.png",
 				"bang_2": "./bang_2.png",
@@ -39,10 +41,7 @@ export const manifest: ResolverManifest = {
 				"enemy_3": "./enemy_3.png",
 				"enemy_4": "./enemy_4.png",
 
-				"enemy_bomb": "./enemy_bomb.png",
-
-				"game_pause": "./game_pause.png",
-				"game_resume": "./game_resume.png",
+				"enemy_bomb": "./enemy_bomb.png",				
 
 				"health_pickup": "./health_pickup.png",
 
