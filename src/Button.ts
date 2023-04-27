@@ -46,11 +46,13 @@ export class Button extends Container {
 		this.filters = [new GrayscaleFilter()];
 		this.scale.set(1.1);
 		this.x -= 7;
+		this.y -= 3.5;
 	}
 
 	onButtonOut(_e: FederatedPointerEvent) {
 		this.filters = null;
 		this.scale.set(1);
 		this.x += 7;
+		this.y += 3.5;
 	}
 }

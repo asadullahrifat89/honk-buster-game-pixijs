@@ -42,6 +42,9 @@ export const manifest: ResolverManifest = {
 				"honk_buster_1": "./honk_buster_1.png",
 				"honk_buster_2": "./honk_buster_2.png",
 
+				"joystick": "./joystick.png",
+				"joystick_handle": "./joystick_handle.png",
+
 				"mafia_boss_1_hit": "./mafia_boss_1_hit.png",
 				"mafia_boss_1_idle": "./mafia_boss_1_idle.png",
 				"mafia_boss_1_win": "./mafia_boss_1_win.png",
