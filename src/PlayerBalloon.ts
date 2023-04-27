@@ -250,7 +250,7 @@ export class PlayerBalloon extends GameObject {
 
 	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
 
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * controller.power;
 
 		let halfHeight = this.height / 2;
 		let halfWidth = this.width / 2;

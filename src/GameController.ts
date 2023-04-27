@@ -16,7 +16,7 @@ export class GameController extends Container {
 	public isAttacking: boolean = false;
 
 	private joystickActivated: boolean = false;
-	//public direction: Direction = Direction.NONE;
+	public power: number = 1;
 
 	constructor() {
 		super();
@@ -43,17 +43,39 @@ export class GameController extends Container {
 
 			width: 278,
 			height: 278,
-			outerScale: { x: 0.5, y: 0.5 },
-			innerScale: { x: 0.8, y: 0.8 },
+			outerScale: { x: 0.6, y: 0.6 },
+			innerScale: { x: 0.9, y: 0.9 },
 
 			onChange: (data) => {
 				//console.log(data.direction);
 
+				this.power = data.power;
+
 				switch (data.direction) {
-					case Direction.TOP: { this.isMoveUp = true; this.isMoveDown = false; } break;
-					case Direction.BOTTOM: { this.isMoveDown = true; this.isMoveUp = false; } break;
-					case Direction.LEFT: { this.isMoveLeft = true; this.isMoveRight = false; } break;
-					case Direction.RIGHT: { this.isMoveRight = true; this.isMoveLeft = false; } break;
+					case Direction.TOP: {
+						this.isMoveUp = true;
+						this.isMoveLeft = false;
+						this.isMoveDown = false;
+						this.isMoveRight = false;
+					} break;
+					case Direction.BOTTOM: {
+						this.isMoveUp = false;
+						this.isMoveLeft = false;
+						this.isMoveDown = true;
+						this.isMoveRight = false;
+					} break;
+					case Direction.LEFT: {
+						this.isMoveUp = false;
+						this.isMoveLeft = true;
+						this.isMoveDown = false;
+						this.isMoveRight = false;
+					} break;
+					case Direction.RIGHT: {
+						this.isMoveUp = false;
+						this.isMoveLeft = false;
+						this.isMoveDown = false;
+						this.isMoveRight = true;
+					} break;
 					case Direction.TOP_LEFT: {
 						this.isMoveUp = true;
 						this.isMoveLeft = true;
@@ -86,10 +108,12 @@ export class GameController extends Container {
 
 			onStart: () => {
 				this.joystickActivated = true;
+				this.power = 0.1;
 			},
 
 			onEnd: () => {
 				this.joystickActivated = false;
+				this.power = 1;
 			},
 		});
 
@@ -105,7 +129,7 @@ export class GameController extends Container {
 			this.isAttacking = true;
 		});
 		attackButton.scale.set(0.9);
-		attackButton.x = attackButton.width;
+		attackButton.x = attackButton.width / 1.3;
 		attackButton.y = SceneManager.height - attackButton.height * 1.7;
 
 		this.addChild(attackButton);
