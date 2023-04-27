@@ -1,4 +1,4 @@
-import { Container, Graphics, Assets, Text } from "pixi.js";
+import { Container, Graphics, Assets } from "pixi.js";
 import { manifest } from "./assets";
 import { IScene } from "./IScene";
 import { SceneManager } from "./SceneManager";
@@ -42,15 +42,15 @@ export class LoaderScene extends Container implements IScene {
 		this.loaderBar.position.y = (SceneManager.height - this.loaderBar.height) / 2;
 		this.addChild(this.loaderBar);
 
-		const title = new Text("LOADING", {
-			fontFamily: "gameplay",
-			fontSize: 35,
-			align: "center",
-			fill: "#ffffff",
-		});
-		title.x = SceneManager.width / 2 - title.width / 2;
-		title.y = (SceneManager.height / 2 - title.height / 2) - 120;
-		this.addChild(title);
+		//const title = new Text("LOADING", {
+		//	fontFamily: "gameplay",
+		//	fontSize: 35,
+		//	align: "center",
+		//	fill: "#ffffff",
+		//});
+		//title.x = SceneManager.width / 2 - title.width / 2;
+		//title.y = (SceneManager.height / 2 - title.height / 2) - 120;
+		//this.addChild(title);
 
 		// Start loading!
 		this.initializeLoader().then(() => {
