@@ -1,4 +1,4 @@
-import { Container, Graphics, Assets } from "pixi.js";
+import { Container, Graphics, Assets, Text } from "pixi.js";
 import { manifest } from "./assets";
 import { IScene } from "./IScene";
 import { SceneManager } from "./SceneManager";
@@ -12,22 +12,22 @@ export class LoaderScene extends Container implements IScene {
 	private loaderBarFill: Graphics;
 
 	constructor() {
-		super();		
+		super();
 
 		// lets make a loader graphic:
 		const loaderBarWidth = SceneManager.width * 0.8; // just an auxiliar variable
 
 		// the fill of the bar.
 		this.loaderBarFill = new Graphics();
-		this.loaderBarFill.beginFill(0x008800, 1);
-		this.loaderBarFill.drawRect(0, 0, loaderBarWidth, 50);
+		this.loaderBarFill.beginFill(0x008881, 1);
+		this.loaderBarFill.drawRoundedRect(0, 0, loaderBarWidth, 50, 10);
 		this.loaderBarFill.endFill();
 		this.loaderBarFill.scale.x = 0; // we draw the filled bar and with scale we set the %
 
 		// The border of the bar.
 		this.loaderBarBoder = new Graphics();
-		this.loaderBarBoder.lineStyle(10, 0x0, 1);
-		this.loaderBarBoder.drawRect(0, 0, loaderBarWidth, 50);
+		this.loaderBarBoder.lineStyle(10, 0xffffff, 1);
+		this.loaderBarBoder.drawRoundedRect(0, 0, loaderBarWidth, 50, 10);
 
 		// Now we keep the border and the fill in a container so we can move them together.
 		this.loaderBar = new Container();
@@ -38,6 +38,16 @@ export class LoaderScene extends Container implements IScene {
 		this.loaderBar.position.x = (SceneManager.width - this.loaderBar.width) / 2;
 		this.loaderBar.position.y = (SceneManager.height - this.loaderBar.height) / 2;
 		this.addChild(this.loaderBar);
+
+		const title = new Text("LOADING", {
+			fontFamily: "gameplay",
+			fontSize: 35,
+			align: "center",
+			fill: "#ffffff",
+		});
+		title.x = SceneManager.width / 2 - title.width / 2;
+		title.y = (SceneManager.height / 2 - title.height / 2) - 120;
+		this.addChild(title);
 
 		// Start loading!
 		this.initializeLoader().then(() => {
