@@ -1,8 +1,10 @@
 ﻿import { Container, Texture } from 'pixi.js';
 import { Button } from './Button';
+import { SoundType } from './Constants';
 import { GameObjectSprite } from './GameObjectSprite';
 import { Direction, Joystick } from './Joystick';
 import { SceneManager } from './SceneManager';
+import { SoundManager } from './SoundManager';
 
 
 export class GameController extends Container {
@@ -25,7 +27,7 @@ export class GameController extends Container {
 		this.interactive = true;
 		this.keyboard.events.on('pressed', null, () => {
 
-			if (this.keyboard.isKeyPressed('Space')) {
+			if (!this.isPaused && this.keyboard.isKeyPressed('Space')) {
 				this.isAttacking = true;
 			}
 		});
@@ -48,59 +50,62 @@ export class GameController extends Container {
 			innerScale: { x: 0.9, y: 0.9 },
 
 			onChange: (data) => {
-				this.power = data.power;
+				if (!this.isPaused) {
+					this.power = data.power;
 
-				switch (data.direction) {
-					case Direction.TOP: {
-						this.isMoveUp = true;
-						this.isMoveLeft = false;
-						this.isMoveDown = false;
-						this.isMoveRight = false;
-					} break;
-					case Direction.BOTTOM: {
-						this.isMoveUp = false;
-						this.isMoveLeft = false;
-						this.isMoveDown = true;
-						this.isMoveRight = false;
-					} break;
-					case Direction.LEFT: {
-						this.isMoveUp = false;
-						this.isMoveLeft = true;
-						this.isMoveDown = false;
-						this.isMoveRight = false;
-					} break;
-					case Direction.RIGHT: {
-						this.isMoveUp = false;
-						this.isMoveLeft = false;
-						this.isMoveDown = false;
-						this.isMoveRight = true;
-					} break;
-					case Direction.TOP_LEFT: {
-						this.isMoveUp = true;
-						this.isMoveLeft = true;
-						this.isMoveDown = false;
-						this.isMoveRight = false;
-					} break;
-					case Direction.TOP_RIGHT: {
-						this.isMoveUp = true;
-						this.isMoveLeft = false;
-						this.isMoveDown = false;
-						this.isMoveRight = true;
-					} break;
-					case Direction.BOTTOM_LEFT: {
-						this.isMoveUp = false;
-						this.isMoveLeft = true;
-						this.isMoveDown = true;
-						this.isMoveRight = false;
-					} break;
-					case Direction.BOTTOM_RIGHT: {
-						this.isMoveUp = false;
-						this.isMoveLeft = false;
-						this.isMoveDown = true;
-						this.isMoveRight = true;
-					} break;
-					default:
+					switch (data.direction) {
+						case Direction.TOP: {
+							this.isMoveUp = true;
+							this.isMoveLeft = false;
+							this.isMoveDown = false;
+							this.isMoveRight = false;
+						} break;
+						case Direction.BOTTOM: {
+							this.isMoveUp = false;
+							this.isMoveLeft = false;
+							this.isMoveDown = true;
+							this.isMoveRight = false;
+						} break;
+						case Direction.LEFT: {
+							this.isMoveUp = false;
+							this.isMoveLeft = true;
+							this.isMoveDown = false;
+							this.isMoveRight = false;
+						} break;
+						case Direction.RIGHT: {
+							this.isMoveUp = false;
+							this.isMoveLeft = false;
+							this.isMoveDown = false;
+							this.isMoveRight = true;
+						} break;
+						case Direction.TOP_LEFT: {
+							this.isMoveUp = true;
+							this.isMoveLeft = true;
+							this.isMoveDown = false;
+							this.isMoveRight = false;
+						} break;
+						case Direction.TOP_RIGHT: {
+							this.isMoveUp = true;
+							this.isMoveLeft = false;
+							this.isMoveDown = false;
+							this.isMoveRight = true;
+						} break;
+						case Direction.BOTTOM_LEFT: {
+							this.isMoveUp = false;
+							this.isMoveLeft = true;
+							this.isMoveDown = true;
+							this.isMoveRight = false;
+						} break;
+						case Direction.BOTTOM_RIGHT: {
+							this.isMoveUp = false;
+							this.isMoveLeft = false;
+							this.isMoveDown = true;
+							this.isMoveRight = true;
+						} break;
+						default:
+					}
 				}
+
 				//console.log(data.power); // Power from 0 to 1
 				//console.log(data.angle); // Angle from 0 to 360
 			},
@@ -161,13 +166,15 @@ export class GameController extends Container {
 
 			if (this.isPaused) {
 				pauseButtonSprite.setTexture(Texture.from("resume_button"));
+				SoundManager.play(SoundType.GAME_PAUSE);
 			}
 			else {
 				pauseButtonSprite.setTexture(Texture.from("pause_button"));
+				SoundManager.play(SoundType.GAME_START);
 			}
 		});
 		pauseButton.x = SceneManager.width - pauseButtonSpritebg.width;
-		pauseButton.y = pauseButtonSpritebg.height / 3.5;
+		pauseButton.y = pauseButtonSpritebg.height / 2.5;
 
 		this.addChild(pauseButton);
 	}

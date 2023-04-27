@@ -3729,11 +3729,13 @@ export class GameScene extends Container implements IScene {
 
 	public update(_framesPassed: number) {
 
-		this.generateGameObjects();
-		this.animateGameObjects();
+		if (!this._gameController.isPaused) {
+			this.generateGameObjects();
+			this.animateGameObjects();
 
-		this._gameController.update();
-		this.animatePlayerBalloon();
+			this._gameController.update();
+			this.animatePlayerBalloon();
+		}
 	}
 
 	public resize(scale: number): void {
