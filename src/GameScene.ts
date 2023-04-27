@@ -2975,7 +2975,7 @@ export class GameScene extends Container implements IScene {
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 				SoundManager.stop(SoundType.UFO_HOVERING);
-				SoundManager.stop(SoundType.AMBIENCE);				
+				SoundManager.stop(SoundType.AMBIENCE);
 
 				Constants.GAME_SCORE = this._gameScoreBar.getScore();
 				this.removeChild(this._sceneContainer);
@@ -3672,14 +3672,7 @@ export class GameScene extends Container implements IScene {
 	//#region GameController
 
 	setGameController() {
-
-		this.resizeGameController();
 		this.addChild(this._gameController);
-	}
-
-	private resizeGameController() {
-		this._gameController.height = SceneManager.height;
-		this._gameController.width = SceneManager.width;
 	}
 
 	//#endregion
@@ -3748,9 +3741,7 @@ export class GameScene extends Container implements IScene {
 		this.repositionPlayerHealthBar();
 		this.repositionBossHealthBar();
 		this.repositionPowerUpMeter();
-
-		this.resizeGameController();
-	}   
+	}
 
 	private levelUp() {
 		this._gameLevel++;

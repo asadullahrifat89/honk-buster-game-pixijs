@@ -1,6 +1,7 @@
 ﻿import { Container, Texture } from 'pixi.js';
 import { GameObjectSprite } from './GameObjectSprite';
 import { Joystick } from './Joystick';
+import { SceneManager } from './SceneManager';
 
 
 export class GameController extends Container {
@@ -44,8 +45,8 @@ export class GameController extends Container {
 
 			width: 278,
 			height: 278,
-			//outerScale: { x: 0.5, y: 0.5 },
-			//innerScale: { x: 0.8, y: 0.8 },
+			outerScale: { x: 0.5, y: 0.5 },
+			innerScale: { x: 0.8, y: 0.8 },
 
 			onChange: (data) => {
 				//console.log(data.angle); // Angle from 0 to 360
@@ -64,9 +65,12 @@ export class GameController extends Container {
 			},
 		});
 
-		joystick.x = 200;
-		joystick.y = 200;
+		joystick.x = SceneManager.width - joystick.width;
+		joystick.y = SceneManager.height - joystick.height;
 		this.addChild(joystick);
+
+		//this.addChild(outerSprite);
+		//this.addChild(innerSprite);
 	}
 
 	update() {
