@@ -153,6 +153,48 @@ export const manifest: ResolverManifest = {
 				"zombie_boss_cube_2": "./zombie_boss_cube_2.png",
 				"zombie_boss_cube_3": "./zombie_boss_cube_3.png",
 			},
-		}
+		},
+		{
+			name: "soundsBundle",
+			assets: {
+				"option_select": "./option_select.mp3",
+
+				"game_over": "./game_over.mp3",
+				"game_pause": "./game_pause.mp3",
+				"game_start": "./game_start.mp3",
+
+				"power_up_pickup_1": "./power_up_pickup_1.mp3",
+
+				"ambience_1": "./ambience_1.mp3",
+				"ambience_2": "./ambience_2.mp3",
+				"ambience_3": "./ambience_3.mp3",
+
+				"car_honk_1": "./car_honk_1.mp3",
+				"car_honk_2": "./car_honk_2.mp3",
+				"car_honk_3": "./car_honk_3.mp3",
+
+				"cracker_drop_1": "./cracker_drop_1.mp3",
+				"cracker_drop_2": "./cracker_drop_2.mp3",
+
+				"cracker_blast_1": "./cracker_blast_1.mp3",
+				"cracker_blast_2": "./cracker_blast_2.mp3",
+				"cracker_blast_3": "./cracker_blast_3.mp3",
+				"cracker_blast_4": "./cracker_blast_4.mp3",
+
+				"trashcan_hit_1": "./trashcan_hit_1.mp3",
+				"trashcan_hit_2": "./trashcan_hit_2.mp3",
+				"trashcan_hit_3": "./trashcan_hit_3.mp3",
+				"trashcan_hit_4": "./trashcan_hit_4.mp3",
+				"trashcan_hit_5": "./trashcan_hit_5.mp3",
+
+				"rocket_blast_1": "./rocket_blast_1.mp3",
+				"rocket_blast_2": "./rocket_blast_2.mp3",
+				"rocket_blast_3": "./rocket_blast_3.mp3",
+
+				"rocket_launch_1": "./rocket_launch_1.mp3",
+				"rocket_launch_2": "./rocket_launch_2.mp3",
+				"rocket_launch_3": "./rocket_launch_3.mp3",
+			},
+		},
 	]
 }
