@@ -1,11 +1,21 @@
 import type { ResolverManifest } from "pixi.js";
 
 export const manifest: ResolverManifest = {
-	bundles: [
+	bundles: [		
+		{
+			name: "fontsBundle",
+			assets: {
+				"gameplay": "./gameplay.ttf"
+			},
+		},
 		{
 			name: "imagesBundle",
 			assets:
 			{
+				"attack_button": "./attack_button.png",
+				"pause_button": "./pause_button.png",
+				"resume_button": "./resume_button.png",
+
 				"bang_1": "./bang_1.png",
 				"bang_2": "./bang_2.png",
 
@@ -31,7 +41,7 @@ export const manifest: ResolverManifest = {
 				"enemy_3": "./enemy_3.png",
 				"enemy_4": "./enemy_4.png",
 
-				"enemy_bomb": "./enemy_bomb.png",
+				"enemy_bomb": "./enemy_bomb.png",				
 
 				"health_pickup": "./health_pickup.png",
 
@@ -142,12 +152,6 @@ export const manifest: ResolverManifest = {
 				"zombie_boss_cube_1": "./zombie_boss_cube_1.png",
 				"zombie_boss_cube_2": "./zombie_boss_cube_2.png",
 				"zombie_boss_cube_3": "./zombie_boss_cube_3.png",
-			},
-		},
-		{
-			name: "fontsBundle",
-			assets: {
-				"gameplay":"./gameplay.ttf"
 			},
 		}
 	]

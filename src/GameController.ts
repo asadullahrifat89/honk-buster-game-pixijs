@@ -1,9 +1,14 @@
 ﻿import { Container, Texture } from 'pixi.js';
 import { Button } from './Button';
+import { SoundType } from './Constants';
 import { GameObjectSprite } from './GameObjectSprite';
 import { Direction, Joystick } from './Joystick';
 import { SceneManager } from './SceneManager';
+import { SoundManager } from './SoundManager';
 
+export interface GameControllerSettings {
+	onPause?: (isPaused: boolean) => void;
+}
 
 export class GameController extends Container {
 
@@ -14,18 +19,35 @@ export class GameController extends Container {
 	public isMoveLeft: boolean = false;
 	public isMoveRight: boolean = false;
 	public isAttacking: boolean = false;
+	public isPaused: boolean = false;
 
 	private joystickActivated: boolean = false;
+	private keyboardActivated: boolean = false;
 	public power: number = 1;
+	private settings: GameControllerSettings;
 
-	constructor() {
+	constructor(settings: GameControllerSettings) {
 		super();
 
+		this.settings = settings;
+
 		this.interactive = true;
+
+		this.on("pointertap", () => {
+			joystick.alpha = 1;
+			attackButton.alpha = 1;
+		});
 		this.keyboard.events.on('pressed', null, () => {
 
-			if (this.keyboard.isKeyPressed('Space')) {
+			if (!this.isPaused && this.keyboard.isKeyPressed('Space')) {
 				this.isAttacking = true;
+			}
+
+			this.keyboardActivated = true;
+
+			if (this.keyboardActivated) {
+				joystick.alpha = 0;
+				attackButton.alpha = 0;
 			}
 		});
 
@@ -47,61 +69,62 @@ export class GameController extends Container {
 			innerScale: { x: 0.9, y: 0.9 },
 
 			onChange: (data) => {
-				//console.log(data.direction);
+				if (!this.isPaused) {
+					this.power = data.power;
 
-				this.power = data.power;
-
-				switch (data.direction) {
-					case Direction.TOP: {
-						this.isMoveUp = true;
-						this.isMoveLeft = false;
-						this.isMoveDown = false;
-						this.isMoveRight = false;
-					} break;
-					case Direction.BOTTOM: {
-						this.isMoveUp = false;
-						this.isMoveLeft = false;
-						this.isMoveDown = true;
-						this.isMoveRight = false;
-					} break;
-					case Direction.LEFT: {
-						this.isMoveUp = false;
-						this.isMoveLeft = true;
-						this.isMoveDown = false;
-						this.isMoveRight = false;
-					} break;
-					case Direction.RIGHT: {
-						this.isMoveUp = false;
-						this.isMoveLeft = false;
-						this.isMoveDown = false;
-						this.isMoveRight = true;
-					} break;
-					case Direction.TOP_LEFT: {
-						this.isMoveUp = true;
-						this.isMoveLeft = true;
-						this.isMoveDown = false;
-						this.isMoveRight = false;
-					} break;
-					case Direction.TOP_RIGHT: {
-						this.isMoveUp = true;
-						this.isMoveLeft = false;
-						this.isMoveDown = false;
-						this.isMoveRight = true;
-					} break;
-					case Direction.BOTTOM_LEFT: {
-						this.isMoveUp = false;
-						this.isMoveLeft = true;
-						this.isMoveDown = true;
-						this.isMoveRight = false;
-					} break;
-					case Direction.BOTTOM_RIGHT: {
-						this.isMoveUp = false;
-						this.isMoveLeft = false;
-						this.isMoveDown = true;
-						this.isMoveRight = true;
-					} break;
-					default:
+					switch (data.direction) {
+						case Direction.TOP: {
+							this.isMoveUp = true;
+							this.isMoveLeft = false;
+							this.isMoveDown = false;
+							this.isMoveRight = false;
+						} break;
+						case Direction.BOTTOM: {
+							this.isMoveUp = false;
+							this.isMoveLeft = false;
+							this.isMoveDown = true;
+							this.isMoveRight = false;
+						} break;
+						case Direction.LEFT: {
+							this.isMoveUp = false;
+							this.isMoveLeft = true;
+							this.isMoveDown = false;
+							this.isMoveRight = false;
+						} break;
+						case Direction.RIGHT: {
+							this.isMoveUp = false;
+							this.isMoveLeft = false;
+							this.isMoveDown = false;
+							this.isMoveRight = true;
+						} break;
+						case Direction.TOP_LEFT: {
+							this.isMoveUp = true;
+							this.isMoveLeft = true;
+							this.isMoveDown = false;
+							this.isMoveRight = false;
+						} break;
+						case Direction.TOP_RIGHT: {
+							this.isMoveUp = true;
+							this.isMoveLeft = false;
+							this.isMoveDown = false;
+							this.isMoveRight = true;
+						} break;
+						case Direction.BOTTOM_LEFT: {
+							this.isMoveUp = false;
+							this.isMoveLeft = true;
+							this.isMoveDown = true;
+							this.isMoveRight = false;
+						} break;
+						case Direction.BOTTOM_RIGHT: {
+							this.isMoveUp = false;
+							this.isMoveLeft = false;
+							this.isMoveDown = true;
+							this.isMoveRight = true;
+						} break;
+						default:
+					}
 				}
+
 				//console.log(data.power); // Power from 0 to 1
 				//console.log(data.angle); // Angle from 0 to 360
 			},
@@ -109,6 +132,9 @@ export class GameController extends Container {
 			onStart: () => {
 				this.joystickActivated = true;
 				this.power = 0.1;
+				this.keyboardActivated = false;
+				joystick.alpha = 1;
+				attackButton.alpha = 1;
 			},
 
 			onEnd: () => {
@@ -121,18 +147,62 @@ export class GameController extends Container {
 		joystick.y = SceneManager.height - joystick.height;
 		this.addChild(joystick);
 
-		const attackButtonSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
-		attackButtonSprite.height = 132;
-		attackButtonSprite.width = 132;
+		const attackButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
+		attackButtonSpritebg.height = 130;
+		attackButtonSpritebg.width = 130;
 
-		const attackButton = new Button(attackButtonSprite, () => {
-			this.isAttacking = true;
+		const attackButtonSprite: GameObjectSprite = new GameObjectSprite(Texture.from("attack_button"));
+		attackButtonSprite.height = 80;
+		attackButtonSprite.width = 80;
+		attackButtonSprite.x = attackButtonSpritebg.width / 2 - attackButtonSprite.width / 2;
+		attackButtonSprite.y = attackButtonSpritebg.height / 2 - attackButtonSprite.height / 2;
+
+		const attackButtonGraphics = new Container();
+		attackButtonGraphics.addChild(attackButtonSpritebg);
+		attackButtonGraphics.addChild(attackButtonSprite);
+
+		const attackButton = new Button(attackButtonGraphics, () => {
+			if (!this.isPaused) {
+				this.isAttacking = true;
+			}
 		});
-		attackButton.scale.set(0.9);
-		attackButton.x = attackButton.width / 1.3;
-		attackButton.y = SceneManager.height - attackButton.height * 1.7;
+		attackButton.x = attackButtonSpritebg.width / 1.3;
+		attackButton.y = SceneManager.height - attackButtonSpritebg.height * 1.7;
 
 		this.addChild(attackButton);
+
+		const pauseButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
+		pauseButtonSpritebg.height = 100;
+		pauseButtonSpritebg.width = 100;
+
+		const pauseButtonSprite: GameObjectSprite = new GameObjectSprite(Texture.from("pause_button"));
+		pauseButtonSprite.height = 50;
+		pauseButtonSprite.width = 50;
+		pauseButtonSprite.x = pauseButtonSpritebg.width / 2 - pauseButtonSprite.width / 2;
+		pauseButtonSprite.y = pauseButtonSpritebg.height / 2 - pauseButtonSprite.height / 2;
+
+		const pauseButtonGraphics = new Container();
+		pauseButtonGraphics.addChild(pauseButtonSpritebg);
+		pauseButtonGraphics.addChild(pauseButtonSprite);
+
+		const pauseButton = new Button(pauseButtonGraphics, () => {
+			this.isPaused = !this.isPaused;
+
+			if (this.isPaused) {
+				pauseButtonSprite.setTexture(Texture.from("resume_button"));
+				SoundManager.play(SoundType.GAME_PAUSE);
+			}
+			else {
+				pauseButtonSprite.setTexture(Texture.from("pause_button"));
+				SoundManager.play(SoundType.GAME_START);
+			}
+
+			this.settings.onPause?.(this.isPaused);
+		});
+		pauseButton.x = SceneManager.width - pauseButtonSpritebg.width;
+		pauseButton.y = pauseButtonSpritebg.height / 2.5;
+
+		this.addChild(pauseButton);
 	}
 
 	update() {
