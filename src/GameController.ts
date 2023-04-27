@@ -1,4 +1,5 @@
 ﻿import { Container, Texture } from 'pixi.js';
+import { Button } from './Button';
 import { GameObjectSprite } from './GameObjectSprite';
 import { Direction, Joystick } from './Joystick';
 import { SceneManager } from './SceneManager';
@@ -29,14 +30,10 @@ export class GameController extends Container {
 		});
 
 		const outerSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick"));
-		//outerSprite.x = 0;
-		//outerSprite.y = 0;
 		outerSprite.height = 278;
 		outerSprite.width = 278;
 
 		const innerSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
-		//innerSprite.x = 0;
-		//innerSprite.y = 0;
 		innerSprite.height = 132;
 		innerSprite.width = 132;
 
@@ -49,7 +46,7 @@ export class GameController extends Container {
 			outerScale: { x: 0.5, y: 0.5 },
 			innerScale: { x: 0.8, y: 0.8 },
 
-			onChange: (data) => {				
+			onChange: (data) => {
 				//console.log(data.direction);
 
 				switch (data.direction) {
@@ -88,12 +85,10 @@ export class GameController extends Container {
 			},
 
 			onStart: () => {
-				/*	console.log('start')*/
 				this.joystickActivated = true;
 			},
 
 			onEnd: () => {
-				//console.log('end')
 				this.joystickActivated = false;
 			},
 		});
@@ -101,6 +96,19 @@ export class GameController extends Container {
 		joystick.x = SceneManager.width - joystick.width;
 		joystick.y = SceneManager.height - joystick.height;
 		this.addChild(joystick);
+
+		const attackButtonSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
+		attackButtonSprite.height = 132;
+		attackButtonSprite.width = 132;
+
+		const attackButton = new Button(attackButtonSprite, () => {
+			this.isAttacking = true;
+		});
+		attackButton.scale.set(0.9);
+		attackButton.x = attackButton.width;
+		attackButton.y = SceneManager.height - attackButton.height * 1.7;
+
+		this.addChild(attackButton);
 	}
 
 	update() {
