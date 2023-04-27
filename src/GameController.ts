@@ -1,6 +1,6 @@
 ﻿import { Container, Texture } from 'pixi.js';
 import { GameObjectSprite } from './GameObjectSprite';
-import { Joystick } from './Joystick';
+import { Direction, Joystick } from './Joystick';
 import { SceneManager } from './SceneManager';
 
 
@@ -15,6 +15,7 @@ export class GameController extends Container {
 	public isAttacking: boolean = false;
 
 	private joystickActivated: boolean = false;
+	//public direction: Direction = Direction.NONE;
 
 	constructor() {
 		super();
@@ -48,10 +49,42 @@ export class GameController extends Container {
 			outerScale: { x: 0.5, y: 0.5 },
 			innerScale: { x: 0.8, y: 0.8 },
 
-			onChange: (data) => {
-				//console.log(data.angle); // Angle from 0 to 360
-				console.log(data.direction); // 'left', 'top', 'bottom', 'right', 'top_left', 'top_right', 'bottom_left' or 'bottom_right'.
+			onChange: (data) => {				
+				//console.log(data.direction);
+
+				switch (data.direction) {
+					case Direction.TOP: { this.isMoveUp = true; this.isMoveDown = false; } break;
+					case Direction.BOTTOM: { this.isMoveDown = true; this.isMoveUp = false; } break;
+					case Direction.LEFT: { this.isMoveLeft = true; this.isMoveRight = false; } break;
+					case Direction.RIGHT: { this.isMoveRight = true; this.isMoveLeft = false; } break;
+					case Direction.TOP_LEFT: {
+						this.isMoveUp = true;
+						this.isMoveLeft = true;
+						this.isMoveDown = false;
+						this.isMoveRight = false;
+					} break;
+					case Direction.TOP_RIGHT: {
+						this.isMoveUp = true;
+						this.isMoveLeft = false;
+						this.isMoveDown = false;
+						this.isMoveRight = true;
+					} break;
+					case Direction.BOTTOM_LEFT: {
+						this.isMoveUp = false;
+						this.isMoveLeft = true;
+						this.isMoveDown = true;
+						this.isMoveRight = false;
+					} break;
+					case Direction.BOTTOM_RIGHT: {
+						this.isMoveUp = false;
+						this.isMoveLeft = false;
+						this.isMoveDown = true;
+						this.isMoveRight = true;
+					} break;
+					default:
+				}
 				//console.log(data.power); // Power from 0 to 1
+				//console.log(data.angle); // Angle from 0 to 360
 			},
 
 			onStart: () => {
@@ -68,9 +101,6 @@ export class GameController extends Container {
 		joystick.x = SceneManager.width - joystick.width;
 		joystick.y = SceneManager.height - joystick.height;
 		this.addChild(joystick);
-
-		//this.addChild(outerSprite);
-		//this.addChild(innerSprite);
 	}
 
 	update() {

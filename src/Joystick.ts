@@ -252,6 +252,7 @@ export interface JoystickChangeEvent {
 }
 
 export enum Direction {
+    NONE = 'none',
     LEFT = 'left',
     TOP = 'top',
     BOTTOM = 'bottom',
