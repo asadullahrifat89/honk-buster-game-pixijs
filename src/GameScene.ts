@@ -40,7 +40,7 @@ export class GameScene extends Container implements IScene {
 
 	//#region Properties
 
-	private _gameController: GameController = new GameController();
+	private _gameController: GameController;
 	private _sceneContainer: Container = new Container();
 	private _gameScoreBar: GameScoreBar;
 
@@ -90,6 +90,46 @@ export class GameScene extends Container implements IScene {
 	constructor() {
 		super();
 
+		this._gameController = new GameController({
+			onPause: (isPaused) => {
+				if (isPaused) {
+					if (this.anyBossExists()) {
+						SoundManager.pause(SoundType.BOSS_BACKGROUND_MUSIC);
+
+						if (this.anyInAirBossExists()) {
+							SoundManager.pause(SoundType.UFO_HOVERING);
+						}
+					}
+					else {
+						SoundManager.pause(SoundType.GAME_BACKGROUND_MUSIC);
+					}
+
+					if (this.ufoEnemyExists()) {
+						SoundManager.pause(SoundType.UFO_HOVERING);
+					}
+
+					SoundManager.pause(SoundType.AMBIENCE);
+				}
+				else {
+					if (this.anyBossExists()) {
+						SoundManager.resume(SoundType.BOSS_BACKGROUND_MUSIC);
+
+						if (this.anyInAirBossExists()) {
+							SoundManager.resume(SoundType.UFO_HOVERING);
+						}
+					}
+					else {
+						SoundManager.resume(SoundType.GAME_BACKGROUND_MUSIC);
+					}
+
+					if (this.ufoEnemyExists()) {
+						SoundManager.resume(SoundType.UFO_HOVERING);
+					}
+
+					SoundManager.resume(SoundType.AMBIENCE);
+				}
+			}
+		});
 		this.playerTemplate = Constants.SELECTED_PLAYER_TEMPLATE;
 		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
 

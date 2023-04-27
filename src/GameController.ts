@@ -6,6 +6,9 @@ import { Direction, Joystick } from './Joystick';
 import { SceneManager } from './SceneManager';
 import { SoundManager } from './SoundManager';
 
+export interface GameControllerSettings {
+	onPause?: (isPaused: boolean) => void;
+}
 
 export class GameController extends Container {
 
@@ -20,9 +23,12 @@ export class GameController extends Container {
 
 	private joystickActivated: boolean = false;
 	public power: number = 1;
+	private settings: GameControllerSettings;
 
-	constructor() {
+	constructor(settings: GameControllerSettings) {
 		super();
+
+		this.settings = settings;
 
 		this.interactive = true;
 		this.keyboard.events.on('pressed', null, () => {
@@ -172,6 +178,8 @@ export class GameController extends Container {
 				pauseButtonSprite.setTexture(Texture.from("pause_button"));
 				SoundManager.play(SoundType.GAME_START);
 			}
+
+			this.settings.onPause?.(this.isPaused);
 		});
 		pauseButton.x = SceneManager.width - pauseButtonSpritebg.width;
 		pauseButton.y = pauseButtonSpritebg.height / 2.5;
