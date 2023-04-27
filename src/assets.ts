@@ -1,7 +1,13 @@
 import type { ResolverManifest } from "pixi.js";
 
 export const manifest: ResolverManifest = {
-	bundles: [
+	bundles: [		
+		{
+			name: "fontsBundle",
+			assets: {
+				"gameplay": "./gameplay.ttf"
+			},
+		},
 		{
 			name: "imagesBundle",
 			assets:
@@ -142,12 +148,6 @@ export const manifest: ResolverManifest = {
 				"zombie_boss_cube_1": "./zombie_boss_cube_1.png",
 				"zombie_boss_cube_2": "./zombie_boss_cube_2.png",
 				"zombie_boss_cube_3": "./zombie_boss_cube_3.png",
-			},
-		},
-		{
-			name: "fontsBundle",
-			assets: {
-				"gameplay":"./gameplay.ttf"
 			},
 		}
 	]

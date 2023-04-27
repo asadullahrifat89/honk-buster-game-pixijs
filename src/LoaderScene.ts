@@ -3,6 +3,7 @@ import { manifest } from "./assets";
 import { IScene } from "./IScene";
 import { SceneManager } from "./SceneManager";
 import { GameTitleScene } from "./GameTitleScene";
+import { DropShadowFilter } from "@pixi/filter-drop-shadow";
 
 export class LoaderScene extends Container implements IScene {
 
@@ -13,6 +14,8 @@ export class LoaderScene extends Container implements IScene {
 
 	constructor() {
 		super();
+
+		this.filters = [new DropShadowFilter()];
 
 		// lets make a loader graphic:
 		const loaderBarWidth = SceneManager.width * 0.8; // just an auxiliar variable
