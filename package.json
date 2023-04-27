@@ -11,7 +11,6 @@
     "@pixi/filter-grayscale": "^5.1.1",
     "@pixi/sound": "^5.1.2",
     "@pixi/ui": "^0.7.0",
-    "pixi-virtual-joystick": "^0.4.1",
     "pixi.js": "^7.2.4",
     "pixi.js-keyboard": "^1.1.6",
     "pixi.js-mouse": "^1.1.6"
