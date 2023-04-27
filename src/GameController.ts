@@ -158,6 +158,13 @@ export class GameController extends Container {
 
 		const pauseButton = new Button(pauseButtonGraphics, () => {
 			this.isPaused = !this.isPaused;
+
+			if (this.isPaused) {
+				pauseButtonSprite.setTexture(Texture.from("resume_button"));
+			}
+			else {
+				pauseButtonSprite.setTexture(Texture.from("pause_button"));
+			}
 		});
 		pauseButton.x = SceneManager.width - pauseButtonSpritebg.width;
 		pauseButton.y = pauseButtonSpritebg.height / 3.5;
