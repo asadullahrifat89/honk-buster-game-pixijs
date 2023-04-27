@@ -83,8 +83,7 @@ export class GameController extends Container {
 
 			this.settings.onPause?.(this.isPaused);
 		});
-		this.pauseButton.x = SceneManager.width - this.pauseButton.width;
-		this.pauseButton.y = this.pauseButton.height / 2.5;
+		this.setPauseButtonPosition();
 		this.addChild(this.pauseButton);
 
 		const joystickOuterSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick"));
@@ -179,8 +178,7 @@ export class GameController extends Container {
 			},
 		});
 
-		this.joystick.x = SceneManager.width - this.joystick.width / 1.6;
-		this.joystick.y = SceneManager.height - this.joystick.height / 1.6;
+		this.setJoystickPosition();
 		this.addChild(this.joystick);
 
 		const attackButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
@@ -202,8 +200,7 @@ export class GameController extends Container {
 				this.isAttacking = true;
 			}
 		});
-		this.attackButton.x = this.attackButton.width / 2;
-		this.attackButton.y = SceneManager.height - this.attackButton.height * 1.3;
+		this.setAttackButtonPosition();
 		this.addChild(this.attackButton);
 	}
 
@@ -242,14 +239,23 @@ export class GameController extends Container {
 	}
 
 	resize() {
-
-		this.joystick.x = SceneManager.width - this.joystick.width / 1.6;
-		this.joystick.y = SceneManager.height - this.joystick.height / 1.6;
-
-		this.attackButton.x = this.attackButton.width / 2;
-		this.attackButton.y = SceneManager.height - this.attackButton.height * 1.3;
-
-		this.pauseButton.x = SceneManager.width - this.pauseButton.width;
-		this.pauseButton.y = this.pauseButton.height / 2.5;
+		this.setJoystickPosition();
+		this.setAttackButtonPosition();
+		this.setPauseButtonPosition();
 	}
+
+    private setPauseButtonPosition() {
+        this.pauseButton.x = SceneManager.width - this.pauseButton.width;
+        this.pauseButton.y = this.pauseButton.height / 2.5;
+    }
+
+    private setAttackButtonPosition() {
+        this.attackButton.x = this.attackButton.width / 2;
+        this.attackButton.y = SceneManager.height - this.attackButton.height * 1.3;
+    }
+
+    private setJoystickPosition() {
+        this.joystick.x = SceneManager.width - this.joystick.width / 1.4;
+        this.joystick.y = SceneManager.height - this.joystick.height / 1.4;
+    }
 }
