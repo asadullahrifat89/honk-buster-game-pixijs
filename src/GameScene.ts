@@ -3117,6 +3117,7 @@ export class GameScene extends Container implements IScene {
 					else {
 
 						playerHonkBomb.move();
+						playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
 
 						if (playerHonkBomb.depleteBlastDelay()) {
 
