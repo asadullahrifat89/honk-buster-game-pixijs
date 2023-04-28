@@ -1,4 +1,4 @@
-import { Container, Texture } from "pixi.js";
+import { BlurFilter, Container, Texture } from "pixi.js";
 import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
@@ -107,6 +107,10 @@ export class GameScene extends Container implements IScene {
 					}
 
 					SoundManager.pause(SoundType.AMBIENCE);
+
+					this.generateInGameMessage("Game paused");
+
+					this._sceneContainer.filters = [new BlurFilter()];
 				}
 				else {
 					if (this.anyBossExists()) {
@@ -125,6 +129,12 @@ export class GameScene extends Container implements IScene {
 					}
 
 					SoundManager.resume(SoundType.AMBIENCE);
+
+					if (this._inGameMessage.isAnimating == true && this._inGameMessage.getText() == "Game paused") {
+						this._inGameMessage.disableRendering();
+					}
+
+					this._sceneContainer.filters = null;
 				}
 			}
 		});
@@ -1745,7 +1755,7 @@ export class GameScene extends Container implements IScene {
 					}
 				}
 
-				if (gameObject.isShrinkingComplete() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.hasShrinked() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
@@ -1965,7 +1975,7 @@ export class GameScene extends Container implements IScene {
 				}
 			}
 
-			if (ufoBoss.isShrinkingComplete()) {
+			if (ufoBoss.hasShrinked()) {
 				gameObject.disableRendering();
 			}
 		}
@@ -2353,7 +2363,7 @@ export class GameScene extends Container implements IScene {
 				}
 			}
 
-			if (zombieBoss.isShrinkingComplete()) {
+			if (zombieBoss.hasShrinked()) {
 				gameObject.disableRendering();
 			}
 		}
@@ -2584,7 +2594,7 @@ export class GameScene extends Container implements IScene {
 				}
 			}
 
-			if (mafiaBoss.isShrinkingComplete()) {
+			if (mafiaBoss.hasShrinked()) {
 				gameObject.disableRendering();
 			}
 		}
@@ -3560,7 +3570,7 @@ export class GameScene extends Container implements IScene {
 					}
 				}
 
-				if (gameObject.isShrinkingComplete() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.hasShrinked() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
@@ -3693,7 +3703,7 @@ export class GameScene extends Container implements IScene {
 					}
 				}
 
-				if (gameObject.isShrinkingComplete() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.hasShrinked() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
