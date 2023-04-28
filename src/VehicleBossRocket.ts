@@ -26,7 +26,7 @@ export class VehicleBossRocket extends GameObject {
 	}
 
 	reposition(vehicleBoss: VehicleBoss) {
-		this.setPosition((vehicleBoss.getRight() - vehicleBoss.width / 2) - this.width / 2, vehicleBoss.getTop());
+		this.setPosition((vehicleBoss.getLeft()), vehicleBoss.getTop());
 	}
 
 	setBlast() {

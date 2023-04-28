@@ -2,7 +2,6 @@ import { Container, Texture } from "pixi.js";
 import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
-import { Cloud } from "./Cloud";
 import { Constants, ConstructType, PowerUpType, RotationDirection, SoundType } from './Constants';
 import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
@@ -186,7 +185,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnHealthPickups();
 		this.spawnPowerUpPickups();
 
-		this.spawnClouds();
+		//this.spawnClouds();
 
 		this.generatePlayerBalloon();
 
@@ -1195,79 +1194,79 @@ export class GameScene extends Container implements IScene {
 
 	//#region Clouds	
 
-	private cloudSizeWidth: number = 512 / 2;
-	private cloudSizeHeight: number = 350 / 2;
+	//private cloudSizeWidth: number = 512 / 2;
+	//private cloudSizeHeight: number = 350 / 2;
 
-	private cloudGameObjects: Array<GameObject> = [];
+	//private cloudGameObjects: Array<GameObject> = [];
 
-	private cloudPopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private cloudPopDelay: number = 0;
+	//private cloudPopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	//private cloudPopDelay: number = 0;
 
-	private spawnClouds() {
+	//private spawnClouds() {
 
-		for (let j = 0; j < 5; j++) {
+	//	for (let j = 0; j < 5; j++) {
 
-			const gameObject: Cloud = new Cloud(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2));
-			gameObject.disableRendering();
-			//gameObject.width = this.cloudSizeWidth;
-			//gameObject.height = this.cloudSizeHeight;
+	//		const gameObject: Cloud = new Cloud(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2));
+	//		gameObject.disableRendering();
+	//		//gameObject.width = this.cloudSizeWidth;
+	//		//gameObject.height = this.cloudSizeHeight;
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.CLOUD));
+	//		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.CLOUD));
 
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.cloudSizeWidth;
-			sprite.height = this.cloudSizeHeight;
-			//sprite.filters = [new BlurFilter(4, 10)];
-			//cloudContainer.filters = [new BlurFilter(2, 10)];
-			gameObject.addChild(sprite);
+	//		sprite.x = 0;
+	//		sprite.y = 0;
+	//		sprite.width = this.cloudSizeWidth;
+	//		sprite.height = this.cloudSizeHeight;
+	//		//sprite.filters = [new BlurFilter(4, 10)];
+	//		//cloudContainer.filters = [new BlurFilter(2, 10)];
+	//		gameObject.addChild(sprite);
 
-			this.cloudGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.cloudGameObjects.push(gameObject);
+	//		this._sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private generateClouds() {
+	//private generateClouds() {
 
-		this.cloudPopDelay -= 0.1;
+	//	this.cloudPopDelay -= 0.1;
 
-		if (this.cloudPopDelay < 0) {
+	//	if (this.cloudPopDelay < 0) {
 
-			var gameObject = this.cloudGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.cloudGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
+	//		if (gameObject) {
 
-				gameObject.setTexture(Constants.getRandomTexture(ConstructType.CLOUD));
-				gameObject.speed = Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2);
+	//			gameObject.setTexture(Constants.getRandomTexture(ConstructType.CLOUD));
+	//			gameObject.speed = Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2);
 
-				var cloud = gameObject as Cloud;
-				cloud.reposition();
+	//			var cloud = gameObject as Cloud;
+	//			cloud.reposition();
 
-				gameObject.enableRendering();
+	//			gameObject.enableRendering();
 
-				this.cloudPopDelay = this.cloudPopDelayDefault;
-			}
-		}
-	}
+	//			this.cloudPopDelay = this.cloudPopDelayDefault;
+	//		}
+	//	}
+	//}
 
-	private animateClouds() {
+	//private animateClouds() {
 
-		var animatingClouds = this.cloudGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingClouds = this.cloudGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingClouds) {
+	//	if (animatingClouds) {
 
-			animatingClouds.forEach(gameObject => {
+	//		animatingClouds.forEach(gameObject => {
 
-				gameObject.hover();
-				gameObject.moveDownRight();
+	//			gameObject.hover();
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+	//			if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
 
-				}
-			});
-		}
-	}
+	//			}
+	//		});
+	//	}
+	//}
 
 	//#endregion
 
@@ -3821,7 +3820,7 @@ export class GameScene extends Container implements IScene {
 		this.generateHealthPickups();
 		this.generatePowerUpPickups();
 
-		this.generateClouds();
+		//this.generateClouds();
 
 		this.generateSideWalksBottom();
 		this.generateHedgesBottom();
@@ -3876,7 +3875,7 @@ export class GameScene extends Container implements IScene {
 
 		this.animateCastShadows();
 
-		this.animateClouds();
+		//this.animateClouds();
 		this.animateInGameMessage();
 	}
 

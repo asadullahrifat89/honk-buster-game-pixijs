@@ -1,5 +1,4 @@
-﻿import { DropShadowFilter } from "@pixi/filter-drop-shadow";
-import { Container, Graphics, FederatedPointerEvent, Text, BlurFilter, Texture } from "pixi.js";
+﻿import { Container, Graphics, FederatedPointerEvent, Text, BlurFilter, Texture } from "pixi.js";
 import { Button } from "./Button";
 import { Constants, ConstructType, SoundType } from "./Constants";
 import { GameObject } from "./GameObject";
@@ -21,7 +20,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		this.sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		this.sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
 		this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);
-		this.sceneContainer.filters = [new DropShadowFilter()];
+		//this.sceneContainer.filters = [new DropShadowFilter()];
 		this.addChild(this.sceneContainer);
 
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
