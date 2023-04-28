@@ -361,15 +361,15 @@ export class GameScene extends Container implements IScene {
 
 	//#region Trees
 
-	private treeXyAdjustment: number = 85.5;
+	private treeXyAdjustment: number = 190;
 
-	private treeSizeWidth: number = 450;
-	private treeSizeHeight: number = 450;
+	private treeSizeWidth: number = 260;
+	private treeSizeHeight: number = 260;
 
 	private treeBottomGameObjects: Array<GameObject> = [];
 	private treeTopGameObjects: Array<GameObject> = [];
 
-	private treePopDelayDefault: number = 62 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private treePopDelayDefault: number = 75 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private treePopDelayTop: number = 0;
 	private treePopDelayBottom: number = 0;
 
@@ -384,8 +384,8 @@ export class GameScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
 
-				sprite.x = this.treeSizeWidth * i - (this.treeXyAdjustment * i);
-				sprite.y = (this.treeSizeHeight / 2) * i - ((this.treeXyAdjustment / 2) * i);
+				sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
+				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
 				sprite.width = this.treeSizeWidth;
 				sprite.height = this.treeSizeHeight;
 
@@ -410,8 +410,8 @@ export class GameScene extends Container implements IScene {
 				const texture = Texture.from(uri);
 				const sprite: GameObjectSprite = new GameObjectSprite(texture);
 
-				sprite.x = this.treeSizeWidth * i - (this.treeXyAdjustment * i);
-				sprite.y = (this.treeSizeHeight / 2) * i - ((this.treeXyAdjustment / 2) * i);
+				sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
+				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
 				sprite.width = this.treeSizeWidth;
 				sprite.height = this.treeSizeHeight;
 
@@ -448,7 +448,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition(gameObject.width * -1, -570);
+				gameObject.setPosition(gameObject.width * -1, -620);
 				gameObject.enableRendering();
 				this.treePopDelayBottom = this.treePopDelayDefault;
 			}
@@ -1121,12 +1121,12 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 10; j++) {
 
 			const gameObject: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+			gameObject.vehicleType = Constants.getRandomNumber(0, 1);
 
-			var vehicleType = Constants.getRandomNumber(0, 1);
+			gameObject.disableRendering();			
 
 			var uri: string = "";
-			switch (vehicleType) {
+			switch (gameObject.vehicleType) {
 				case 0: {
 					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
 				} break;
@@ -1141,8 +1141,18 @@ export class GameScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.vehicleEnemySizeWidth;
-			sprite.height = this.vehicleEnemySizeHeight;
+
+			switch (gameObject.vehicleType) {
+				case 0: {
+					sprite.width = this.vehicleEnemySizeWidth / 1.2;
+					sprite.height = this.vehicleEnemySizeHeight / 1.2;
+				} break;
+				case 1: {
+					sprite.width = this.vehicleEnemySizeWidth;
+					sprite.height = this.vehicleEnemySizeHeight;
+				} break;
+				default: break;
+			}
 
 			sprite.anchor.set(0.5, 0.5);
 
@@ -2932,13 +2942,13 @@ export class GameScene extends Container implements IScene {
 
 					if (playerHonkBomb.isBlasting) {
 
-						playerHonkBomb.fade();					
+						playerHonkBomb.fade();
 
 						switch (playerHonkBomb.playerHonkBombTemplate) {
 							case PlayerHonkBombTemplate.Cracker: {
-								playerHonkBomb.shrink();								
+								playerHonkBomb.shrink();
 							} break;
-							case PlayerHonkBombTemplate.TrashCan: {								
+							case PlayerHonkBombTemplate.TrashCan: {
 								playerHonkBomb.moveUpRight();
 								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
 							} break;
