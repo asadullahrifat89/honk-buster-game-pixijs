@@ -142,8 +142,8 @@ export class GameScene extends Container implements IScene {
 		this.playerTemplate = Constants.SELECTED_PLAYER_TEMPLATE;
 		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
 
-		this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
-		this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
+		//this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
+		//this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
 		//this.filters = [new GodrayFilter()];
 
 		this.addChild(this._sceneContainer);
@@ -1448,12 +1448,12 @@ export class GameScene extends Container implements IScene {
 
 		if (gameObject) {
 
+			gameObject.pop();
+
 			if (vehicleBoss.isDead()) {
 				vehicleBoss.moveDownRight();
 			}
 			else {
-				gameObject.pop();
-
 				if (vehicleBoss.isAttacking) {
 
 					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling);
@@ -1651,8 +1651,8 @@ export class GameScene extends Container implements IScene {
 				if (gameObject) {
 
 					var ufoEnemy = gameObject as UfoEnemy;
-					ufoEnemy.reposition();
 					ufoEnemy.reset();
+					ufoEnemy.reposition();
 
 					gameObject.enableRendering();
 
@@ -1678,16 +1678,15 @@ export class GameScene extends Container implements IScene {
 
 			animatingUfoEnemys.forEach(gameObject => {
 
+				gameObject.pop();
+
 				if (gameObject.isDead()) {
 					gameObject.shrink();
 				}
 				else {
-					gameObject.pop();
 					gameObject.hover();
 					gameObject.moveDownRight();
 				}
-
-				// generate honk
 
 				let ufoEnemy = gameObject as UfoEnemy;
 
@@ -1697,7 +1696,7 @@ export class GameScene extends Container implements IScene {
 						this.generateHonk(gameObject);
 					}
 
-					if (ufoEnemy.attack()) {
+					if (!this.anyBossExists() && ufoEnemy.attack()) {
 						this.generateUfoEnemyRockets(ufoEnemy);
 					}
 				}
@@ -1745,8 +1744,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region UfoEnemyRockets
 
-	private ufoEnemyRocketSizeWidth: number = 90;
-	private ufoEnemyRocketSizeHeight: number = 90;
+	private ufoEnemyRocketSizeWidth: number = 85;
+	private ufoEnemyRocketSizeHeight: number = 85;
 
 	private ufoEnemyRocketGameObjects: Array<UfoEnemyRocket> = [];
 
