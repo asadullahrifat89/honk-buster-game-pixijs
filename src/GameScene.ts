@@ -1745,7 +1745,7 @@ export class GameScene extends Container implements IScene {
 					}
 				}
 
-				if (gameObject.isShrinkingComplete() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.hasShrinked() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
@@ -1965,7 +1965,7 @@ export class GameScene extends Container implements IScene {
 				}
 			}
 
-			if (ufoBoss.isShrinkingComplete()) {
+			if (ufoBoss.hasShrinked()) {
 				gameObject.disableRendering();
 			}
 		}
@@ -2353,7 +2353,7 @@ export class GameScene extends Container implements IScene {
 				}
 			}
 
-			if (zombieBoss.isShrinkingComplete()) {
+			if (zombieBoss.hasShrinked()) {
 				gameObject.disableRendering();
 			}
 		}
@@ -2584,7 +2584,7 @@ export class GameScene extends Container implements IScene {
 				}
 			}
 
-			if (mafiaBoss.isShrinkingComplete()) {
+			if (mafiaBoss.hasShrinked()) {
 				gameObject.disableRendering();
 			}
 		}
@@ -3095,7 +3095,7 @@ export class GameScene extends Container implements IScene {
 					if (playerHonkBomb.isBlasting) {
 
 						playerHonkBomb.expand();
-						playerHonkBomb.fade();
+						playerHonkBomb.fade();						
 						playerHonkBomb.moveDownRight();
 
 					}
@@ -3103,7 +3103,7 @@ export class GameScene extends Container implements IScene {
 
 						playerHonkBomb.move();
 
-						if (playerHonkBomb.depleteBlastDelay()) {
+						if (playerHonkBomb.depleteBlastDelay()) {							
 
 							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
 
@@ -3560,7 +3560,7 @@ export class GameScene extends Container implements IScene {
 					}
 				}
 
-				if (gameObject.isShrinkingComplete() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.hasShrinked() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
@@ -3693,7 +3693,7 @@ export class GameScene extends Container implements IScene {
 					}
 				}
 
-				if (gameObject.isShrinkingComplete() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.hasShrinked() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
