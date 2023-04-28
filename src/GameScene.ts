@@ -2,7 +2,7 @@ import { BlurFilter, Container, Graphics, Texture } from "pixi.js";
 import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
-import { Constants, ConstructType, PowerUpType, RotationDirection, SoundType } from './Constants';
+import { Constants, ConstructType, PlayerHonkBombTemplate, PowerUpType, RotationDirection, SoundType } from './Constants';
 import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
 import { PlayerBalloon } from "./PlayerBalloon";
@@ -239,7 +239,7 @@ export class GameScene extends Container implements IScene {
 			case 0: { this.generateInGameMessage("Drop crackers on the honkers"); } break;
 			case 1: { this.generateInGameMessage("Drop garbage on the honkers"); } break;
 			default:
-		}		
+		}
 	}
 
 	//#endregion
@@ -2931,7 +2931,9 @@ export class GameScene extends Container implements IScene {
 
 					if (playerHonkBomb.isBlasting) {
 
-						playerHonkBomb.expand();
+						if (playerHonkBomb.playerHonkBombTemplate == PlayerHonkBombTemplate.Cracker) {
+							playerHonkBomb.expand();
+						}
 						playerHonkBomb.fade();
 						playerHonkBomb.moveDownRight();
 
@@ -2941,7 +2943,7 @@ export class GameScene extends Container implements IScene {
 						playerHonkBomb.move();
 						playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
 
-						if (playerHonkBomb.depleteBlastDelay()) {
+						if (playerHonkBomb.awaitBlast()) {
 
 							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
 
@@ -2958,7 +2960,7 @@ export class GameScene extends Container implements IScene {
 					}
 				}
 
-				if (gameObject.hasFaded()) {
+				if (gameObject.hasFaded() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
