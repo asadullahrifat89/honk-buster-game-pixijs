@@ -2,18 +2,11 @@ import { BitmapFont, BitmapText, Container } from "pixi.js";
 
 export class GameScoreBar {
 
-	//#region Properties
-
 	private _textBlock: BitmapText;
 	private _score: number = 0;
 
-	//#endregion
-
-	//#region Methods
-
 	constructor(scene: Container) {
-
-		// If you need to know, this is the expensive part. This creates the font atlas
+		
 		BitmapFont.from("gameplay", {
 			fill: "#ffffff",
 			fontFamily: "gameplay",
@@ -21,11 +14,10 @@ export class GameScoreBar {
 			align: "center",
 		});
 
-		this._textBlock = new BitmapText("000", {
+		this._textBlock = new BitmapText("o", {
 			fontName: "gameplay",
 			fontSize: 26,
 			align: "center",
-			//tint: 0xffffff
 		});
 
 		scene.addChild(this._textBlock);
@@ -56,7 +48,5 @@ export class GameScoreBar {
 	getScore(): number {
 		return this._score;
 	}
-
-	//#endregion
 }
 

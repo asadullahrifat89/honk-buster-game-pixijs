@@ -235,7 +235,11 @@ export class GameScene extends Container implements IScene {
 
 		this._sceneContainer.alpha = 0;
 
-		this.generateInGameMessage("Drop bombs on the honkers");
+		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
+			case 0: { this.generateInGameMessage("Drop crackers on the honkers"); } break;
+			case 1: { this.generateInGameMessage("Drop garbage on the honkers"); } break;
+			default:
+		}		
 	}
 
 	//#endregion
@@ -2711,16 +2715,18 @@ export class GameScene extends Container implements IScene {
 
 	private generateHonk(source: GameObject) {
 
-		var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
+		if (source.getLeft() > 0 && source.getTop() > 0) {
+			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
 
-		if (gameObject) {
+			if (gameObject) {
 
-			var honk = gameObject as Honk;
-			honk.reset();
-			honk.reposition(source);
-			honk.setPopping();
+				var honk = gameObject as Honk;
+				honk.reset();
+				honk.reposition(source);
+				honk.setPopping();
 
-			gameObject.enableRendering();
+				gameObject.enableRendering();
+			}
 		}
 	}
 

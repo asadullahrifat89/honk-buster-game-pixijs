@@ -182,9 +182,7 @@ export const manifest: ResolverManifest = {
 
 				"trashcan_hit_1": "./trashcan_hit_1.mp3",
 				"trashcan_hit_2": "./trashcan_hit_2.mp3",
-				"trashcan_hit_3": "./trashcan_hit_3.mp3",
-				"trashcan_hit_4": "./trashcan_hit_4.mp3",
-				"trashcan_hit_5": "./trashcan_hit_5.mp3",
+				"trashcan_hit_3": "./trashcan_hit_3.mp3",				
 
 				"rocket_blast_1": "./rocket_blast_1.mp3",
 				"rocket_blast_2": "./rocket_blast_2.mp3",
