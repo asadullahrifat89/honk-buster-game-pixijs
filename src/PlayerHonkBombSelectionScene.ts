@@ -70,8 +70,12 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		this.sceneContainer.addChild(player_2_button);
 
 		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), () => {
-			SoundManager.play(SoundType.OPTION_SELECT);
-			SceneManager.isNavigating = true;
+
+			if (player_1_sprite.filters || player_2_sprite.filters) {
+				SoundManager.play(SoundType.OPTION_SELECT);
+				SceneManager.isNavigating = true;
+			}
+			
 		}, "Select");
 		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height - button.height * 2);
 		this.sceneContainer.addChild(button);
