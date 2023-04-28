@@ -5,6 +5,43 @@ import { SceneManager } from "./SceneManager";
 import { GameTitleScene } from "./GameTitleScene";
 import { DropShadowFilter } from "@pixi/filter-drop-shadow";
 
+export class GameScreenOrientationScene extends Container implements IScene {
+
+	private changeOrienationText: Text;
+
+	constructor() {
+		super();
+
+		this.changeOrienationText = new Text("Pls Change Screen Orientation", {
+			fontFamily: "gameplay",
+			fontSize: 18,
+			align: "center",
+			fill: "#ffffff",
+		});
+		this.changeOrienationText.x = SceneManager.width / 2 - this.changeOrienationText.width / 2;
+		this.changeOrienationText.y = (SceneManager.height / 2 - this.changeOrienationText.height / 2) - 120;
+		this.changeOrienationText.alpha = 0;
+	}
+
+	resize(_scale: number): void {
+
+		// check if screen orientation is in correct mode
+		if (SceneManager.width < SceneManager.height) {
+
+			this.changeOrienationText.alpha = 1;
+		}
+		else {			
+
+			// Change scene to the menu scene!
+			SceneManager.changeScene(new GameTitleScene());
+		}
+	}
+
+	update(_framesPassed: number): void {
+		// To be a scene we must have the update method even if we don't use it.
+	}
+}
+
 export class GameLoaderScene extends Container implements IScene {
 
 	// for making our loader graphics...
@@ -91,7 +128,7 @@ export class GameLoaderScene extends Container implements IScene {
 		await Assets.loadBundle(bundleIds, this.downloadProgress.bind(this));
 	}
 
-	private downloadProgress(progressRatio: number): void {		
+	private downloadProgress(progressRatio: number): void {
 		this.loaderBarFill.scale.x = progressRatio; // progressRatio goes from 0 to 1, so set it to scale
 	}
 
