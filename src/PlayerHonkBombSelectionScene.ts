@@ -75,6 +75,14 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 	}
 
 	public update(_framesPassed: number) {
+		if (SceneManager.isNavigating) {
+			this.sceneContainer.alpha -= 0.06;
+
+			if (this.sceneContainer.alpha <= 0) {
+				this.removeChild(this.sceneContainer);
+				SceneManager.changeScene(new GameScene());
+			}
+		}
 	}
 
 	public resize(scale: number): void {
@@ -84,8 +92,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 
 	private onProceed(_e: FederatedPointerEvent) {
 		SoundManager.play(SoundType.OPTION_SELECT);
-		this.removeChild(this.sceneContainer);
-		SceneManager.changeScene(new GameScene());
+		SceneManager.isNavigating = true;
 	}
 }
 

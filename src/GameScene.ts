@@ -3783,7 +3783,7 @@ export class GameScene extends Container implements IScene {
 	public update(_framesPassed: number) {
 
 		if (this._sceneContainer.alpha < 1) {
-			this._sceneContainer.alpha += 0.007;
+			this._sceneContainer.alpha += 0.006;
 		}
 
 		if (!this._gameController.isPaused) {
