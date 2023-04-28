@@ -3737,6 +3737,12 @@ export class GameScene extends Container implements IScene {
 		this.repositionBossHealthBar();
 		this.repositionPowerUpMeter();
 		this._gameController.resize();
+
+		this._roadBackgroundDay.width = SceneManager.width;
+		this._roadBackgroundDay.height = SceneManager.height;
+
+		this._roadBackgroundNight.width = SceneManager.width;
+		this._roadBackgroundNight.height = SceneManager.height;
 	}
 
 	private levelUp() {

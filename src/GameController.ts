@@ -100,8 +100,8 @@ export class GameController extends Container {
 
 			width: 278,
 			height: 278,
-			outerScale: { x: 0.6, y: 0.6 },
-			innerScale: { x: 0.9, y: 0.9 },
+			outerScale: { x: 0.5, y: 0.5 },
+			innerScale: { x: 0.8, y: 0.8 },
 
 			onChange: (data) => {
 				if (!this.isPaused) {
@@ -160,6 +160,7 @@ export class GameController extends Container {
 					}
 				}
 
+				console.log(data.direction); // Power from 0 to 1
 				//console.log(data.power); // Power from 0 to 1
 				//console.log(data.angle); // Angle from 0 to 360
 			},

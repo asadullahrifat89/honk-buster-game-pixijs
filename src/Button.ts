@@ -48,11 +48,11 @@ export class Button extends Container {
 
 	onButtonOver(_e: FederatedPointerEvent) {		
 		this.filters = [this.buttonFilter];
-		this.scale.set(1.1);
+		//this.scale.set(1.1);
 	}
 
 	onButtonOut(_e: FederatedPointerEvent) {	
 		this.filters = null;
-		this.scale.set(1);
+		//this.scale.set(1);
 	}
 }
