@@ -6,10 +6,10 @@ import { GameObjectSprite } from "./GameObjectSprite";
 
 export class HealthBar extends Container {
 
-	private _progressBar: ProgressBar;
-	private _imageContainer: GameObject;
-	private _maximumHealth: number = 0;
-	private _value: number = 100;
+	private progressBar: ProgressBar;
+	private icon: GameObject;
+	private maximumHealth: number = 0;
+	private value: number = 100;
 
 	public tag: any;
 
@@ -19,9 +19,9 @@ export class HealthBar extends Container {
 		this.width = 100;
 		this.height = 30;
 
-		this._progressBar = new ProgressBar();
-		this._progressBar.width = 60;
-		this._progressBar.height = 10;
+		this.progressBar = new ProgressBar();
+		this.progressBar.width = 60;
+		this.progressBar.height = 10;
 
 		let progressBarBackgroundContainer = new Container();
 		progressBarBackgroundContainer.width = 60;
@@ -32,7 +32,7 @@ export class HealthBar extends Container {
 		healthBar_bg_sprite.height = 10;
 		progressBarBackgroundContainer.addChild(healthBar_bg_sprite);
 
-		this._progressBar.setBackground(progressBarBackgroundContainer);
+		this.progressBar.setBackground(progressBarBackgroundContainer);
 
 		let progressBarForegroundContainer = new Container();
 		progressBarForegroundContainer.width = 60;
@@ -43,62 +43,62 @@ export class HealthBar extends Container {
 		healthBar_sprite.height = 10;
 		progressBarForegroundContainer.addChild(healthBar_sprite);
 
-		this._progressBar.setFill(progressBarForegroundContainer);
+		this.progressBar.setFill(progressBarForegroundContainer);
 
-		this._progressBar.progress = 0;
+		this.progressBar.progress = 0;
 
-		this._progressBar.x = 35;
-		this._progressBar.y = 10;
+		this.progressBar.x = 35;
+		this.progressBar.y = 10;
 
-		this.addChild(this._progressBar);
+		this.addChild(this.progressBar);
 
-		this._imageContainer = new GameObject(0);
-		this._imageContainer.height = 30;
-		this._imageContainer.width = 30;
+		this.icon = new GameObject(0);
+		this.icon.height = 30;
+		this.icon.width = 30;
 
-		this._imageContainer.x = 0;
-		this._imageContainer.y = 0;
+		this.icon.x = 0;
+		this.icon.y = 0;
 
 		let sprite: GameObjectSprite = new GameObjectSprite(texture);
 		sprite.width = 30;
 		sprite.height = 30;
 		sprite.x = 0;
 		sprite.y = 0;
-		this._imageContainer.addChild(sprite);
+		this.icon.addChild(sprite);
 
-		this.addChild(this._imageContainer);
+		this.addChild(this.icon);
 
 		scene.addChild(this);
 	}
 
 	hasHealth(): boolean {
-		return this._progressBar.progress > 0;
+		return this.progressBar.progress > 0;
 	}
 
 	setMaximumValue(value: number) {
-		this._maximumHealth = value;
+		this.maximumHealth = value;
 	}
 
 	setIcon(texture: Texture) {
-		this._imageContainer.setTexture(texture);
+		this.icon.setTexture(texture);
 	}
 
 	setValue(value: number) {
-		if (this._maximumHealth == 0)
-			this._maximumHealth = 100;
+		if (this.maximumHealth == 0)
+			this.maximumHealth = 100;
 
-		this._value = value;
+		this.value = value;
 
-		this._progressBar.progress = this._value / this._maximumHealth * 100;
+		this.progressBar.progress = this.value / this.maximumHealth * 100;
 
-		if (this._value > 0)
+		if (this.value > 0)
 			this.alpha = 1;
 		else
 			this.alpha = 0;
 	}
 
 	getValue(): number {
-		return this._value;
+		return this.value;
 	}
 
 	reset() {

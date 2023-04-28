@@ -6,8 +6,8 @@ import { SoundManager } from './SoundManager';
 
 export class ZombieBossRocketBlock extends GameObject {
 
-    private _autoBlastDelay: number = 0;
-    private readonly _autoBlastDelayDefault: number = 9;
+    private autoBlastDelay: number = 0;
+    private readonly autoBlastDelayDefault: number = 9;
 
     constructor(speed: number) {
         super(speed);
@@ -24,7 +24,7 @@ export class ZombieBossRocketBlock extends GameObject {
         this.health = this.hitPoint * Constants.getRandomNumber(0, 2);
         this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 1.5;
 
-        this._autoBlastDelay = this._autoBlastDelayDefault;
+        this.autoBlastDelay = this.autoBlastDelayDefault;
 
         SoundManager.play(SoundType.ORB_LAUNCH, 0.4);
     }
@@ -47,8 +47,8 @@ export class ZombieBossRocketBlock extends GameObject {
     }
 
     autoBlast(): boolean {
-        this._autoBlastDelay -= 0.1;
-        if (this._autoBlastDelay <= 0)
+        this.autoBlastDelay -= 0.1;
+        if (this.autoBlastDelay <= 0)
             return true;
 
         return false;

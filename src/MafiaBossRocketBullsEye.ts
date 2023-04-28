@@ -7,8 +7,8 @@ import { SoundManager } from './SoundManager';
 
 export class MafiaBossRocketBullsEye extends SeekingRocketBase {
 
-	private _autoBlastDelay: number = 0;
-	private readonly _autoBlastDelayDefault: number = 15;	
+	private autoBlastDelay: number = 0;
+	private readonly autoBlastDelayDefault: number = 15;	
 
 	constructor(speed: number) {
 		super(speed);
@@ -20,8 +20,8 @@ export class MafiaBossRocketBullsEye extends SeekingRocketBase {
 		this.scale.set(1);
 		this.angle = 0;
 		this.isBlasting = false;
-		this._autoBlastDelay = this._autoBlastDelayDefault;
-		this._targetHitbox = new Rectangle();
+		this.autoBlastDelay = this.autoBlastDelayDefault;
+		this.targetHitbox = new Rectangle();
 
 		SoundManager.play(SoundType.BULLS_EYE_ROCKET_LAUNCH);
 	}
@@ -44,16 +44,16 @@ export class MafiaBossRocketBullsEye extends SeekingRocketBase {
 	}
 
 	autoBlast() {
-		this._autoBlastDelay -= 0.1;
+		this.autoBlastDelay -= 0.1;
 
-		if (this._autoBlastDelay <= 0)
+		if (this.autoBlastDelay <= 0)
 			return true;
 
 		return false;
 	}	
 
 	move() {
-		this.seek(this._targetHitbox);
+		this.seek(this.targetHitbox);
 	}
 }
 

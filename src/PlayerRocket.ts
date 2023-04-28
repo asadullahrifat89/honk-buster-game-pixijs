@@ -6,8 +6,8 @@ import { SoundManager } from './SoundManager';
 
 export class PlayerRocket extends GameObject {
 
-	private _autoBlastDelay: number = 0;
-	private readonly _autoBlastDelayDefault: number = 8;
+	private autoBlastDelay: number = 0;
+	private readonly autoBlastDelayDefault: number = 8;
 
 	constructor(speed: number) {
 		super(speed);
@@ -27,7 +27,7 @@ export class PlayerRocket extends GameObject {
 		this.awaitMoveUpLeft = false;
 		this.awaitMoveDownRight = false;
 
-		this._autoBlastDelay = this._autoBlastDelayDefault;
+		this.autoBlastDelay = this.autoBlastDelayDefault;
 
 		SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
 	}
@@ -51,9 +51,9 @@ export class PlayerRocket extends GameObject {
 	}
 
 	autoBlast() {
-		this._autoBlastDelay -= 0.1;
+		this.autoBlastDelay -= 0.1;
 
-		if (this._autoBlastDelay <= 0)
+		if (this.autoBlastDelay <= 0)
 			return true;
 
 		return false;

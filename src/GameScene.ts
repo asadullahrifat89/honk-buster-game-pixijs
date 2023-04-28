@@ -39,48 +39,48 @@ export class GameScene extends Container implements IScene {
 
 	//#region Properties
 
-	private _gameController: GameController;
-	private _sceneContainer: Container = new Container();
-	private _gameScoreBar: GameScoreBar;
+	private gameController: GameController;
+	private sceneContainer: Container = new Container();
+	private gameScoreBar: GameScoreBar;
 
-	private _inGameMessage: InGameMessage;
+	private inGameMessage: InGameMessage;
 
 	//TODO: set defaults _vehicleBossReleasePoint = 25
-	private readonly _vehicleBossReleasePoint: number = 25; // first appearance
-	private readonly _vehicleBossReleasePoint_increase: number = 15;
-	private readonly _vehicleBossCheckpoint: GameCheckpoint;
+	private readonly vehicleBossReleasePoint: number = 25; // first appearance
+	private readonly vehicleBossReleasePoint_increase: number = 15;
+	private readonly vehicleBossCheckpoint: GameCheckpoint;
 
 	//TODO: set defaults _ufoEnemyReleasePoint = 35
-	private readonly _ufoEnemyReleasePoint: number = 35; // first appearance
-	private readonly _ufoEnemyReleasePoint_increase: number = 5;
-	private readonly _ufoEnemyCheckpoint: GameCheckpoint;
+	private readonly ufoEnemyReleasePoint: number = 35; // first appearance
+	private readonly ufoEnemyReleasePoint_increase: number = 5;
+	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
 	//TODO: set defaults _ufoBossReleasePoint = 50
-	private readonly _ufoBossReleasePoint: number = 50; // first appearance
-	private readonly _ufoBossReleasePoint_increase: number = 15;
-	private readonly _ufoBossCheckpoint: GameCheckpoint;
+	private readonly ufoBossReleasePoint: number = 50; // first appearance
+	private readonly ufoBossReleasePoint_increase: number = 15;
+	private readonly ufoBossCheckpoint: GameCheckpoint;
 
 	//TODO: set defaults _zombieBossReleasePoint = 75
-	private readonly _zombieBossReleasePoint: number = 75; // first appearance
-	private readonly _zombieBossReleasePoint_increase: number = 15;
-	private readonly _zombieBossCheckpoint: GameCheckpoint;
+	private readonly zombieBossReleasePoint: number = 75; // first appearance
+	private readonly zombieBossReleasePoint_increase: number = 15;
+	private readonly zombieBossCheckpoint: GameCheckpoint;
 
 	//TODO: set defaults _mafiaBossReleasePoint = 100
-	private readonly _mafiaBossReleasePoint: number = 100; // first appearance
-	private readonly _mafiaBossReleasePoint_increase: number = 15;
-	private readonly _mafiaBossCheckpoint: GameCheckpoint;
+	private readonly mafiaBossReleasePoint: number = 100; // first appearance
+	private readonly mafiaBossReleasePoint_increase: number = 15;
+	private readonly mafiaBossCheckpoint: GameCheckpoint;
 
-	private _ufoEnemyFleetAppeared: boolean = false;
-	private _ufoEnemyKillCount: number = 0;
-	private readonly _ufoEnemyKillCount_limit: number = 20;
+	private ufoEnemyFleetAppeared: boolean = false;
+	private ufoEnemyKillCount: number = 0;
+	private readonly ufoEnemyKillCount_limit: number = 20;
 
-	private _playerHealthBar: HealthBar;
-	private _bossHealthBar: HealthBar;
-	private _powerUpMeter: HealthBar;
+	private playerHealthBar: HealthBar;
+	private bossHealthBar: HealthBar;
+	private powerUpMeter: HealthBar;
 
-	private _gameLevel: number = 0;
-	private _roadBackgroundDay: Graphics;
-	private _roadBackgroundNight: Graphics;
+	private gameLevel: number = 0;
+	private roadBackgroundDay: Graphics;
+	private roadBackgroundNight: Graphics;
 
 	//#endregion
 
@@ -91,12 +91,12 @@ export class GameScene extends Container implements IScene {
 	constructor() {
 		super();
 
-		this._roadBackgroundDay = new Graphics().beginFill(0x464646, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
-		this._roadBackgroundNight = new Graphics().beginFill(0x1f2326, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+		this.roadBackgroundDay = new Graphics().beginFill(0x464646, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+		this.roadBackgroundNight = new Graphics().beginFill(0x1f2326, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 
-		this.addChildAt(this._roadBackgroundDay, 0);
+		this.addChildAt(this.roadBackgroundDay, 0);
 
-		this._gameController = new GameController({
+		this.gameController = new GameController({
 			onPause: (isPaused) => {
 				if (isPaused) {
 					if (this.anyBossExists()) {
@@ -118,7 +118,7 @@ export class GameScene extends Container implements IScene {
 
 					this.generateInGameMessage("Game paused");
 
-					this._sceneContainer.filters = [new BlurFilter()];
+					this.sceneContainer.filters = [new BlurFilter()];
 				}
 				else {
 					if (this.anyBossExists()) {
@@ -138,11 +138,11 @@ export class GameScene extends Container implements IScene {
 
 					SoundManager.resume(SoundType.AMBIENCE);
 
-					if (this._inGameMessage.isAnimating == true && this._inGameMessage.getText() == "Game paused") {
-						this._inGameMessage.disableRendering();
+					if (this.inGameMessage.isAnimating == true && this.inGameMessage.getText() == "Game paused") {
+						this.inGameMessage.disableRendering();
 					}
 
-					this._sceneContainer.filters = null;
+					this.sceneContainer.filters = null;
 				}
 			}
 		});
@@ -154,13 +154,13 @@ export class GameScene extends Container implements IScene {
 		//this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
 		//this.filters = [new GodrayFilter()];
 
-		this.addChild(this._sceneContainer);
+		this.addChild(this.sceneContainer);
 
-		this._vehicleBossCheckpoint = new GameCheckpoint(this._vehicleBossReleasePoint);
-		this._ufoBossCheckpoint = new GameCheckpoint(this._ufoBossReleasePoint);
-		this._zombieBossCheckpoint = new GameCheckpoint(this._zombieBossReleasePoint);
-		this._mafiaBossCheckpoint = new GameCheckpoint(this._mafiaBossReleasePoint);
-		this._ufoEnemyCheckpoint = new GameCheckpoint(this._ufoEnemyReleasePoint);
+		this.vehicleBossCheckpoint = new GameCheckpoint(this.vehicleBossReleasePoint);
+		this.ufoBossCheckpoint = new GameCheckpoint(this.ufoBossReleasePoint);
+		this.zombieBossCheckpoint = new GameCheckpoint(this.zombieBossReleasePoint);
+		this.mafiaBossCheckpoint = new GameCheckpoint(this.mafiaBossReleasePoint);
+		this.ufoEnemyCheckpoint = new GameCheckpoint(this.ufoEnemyReleasePoint);
 
 		this.spawnRoadMarks();
 
@@ -208,25 +208,25 @@ export class GameScene extends Container implements IScene {
 
 		this.generatePlayerBalloon();
 
-		this._gameScoreBar = new GameScoreBar(this);
+		this.gameScoreBar = new GameScoreBar(this);
 		this.repositionGameScoreBar();
 
-		this._playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this);
-		this._playerHealthBar.setMaximumValue(100);
-		this._playerHealthBar.setValue(100);
+		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this);
+		this.playerHealthBar.setMaximumValue(100);
+		this.playerHealthBar.setValue(100);
 		this.repositionPlayerHealthBar();
 
-		this._bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
-		this._bossHealthBar.setMaximumValue(100);
-		this._bossHealthBar.setValue(0);
+		this.bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
+		this.bossHealthBar.setMaximumValue(100);
+		this.bossHealthBar.setValue(0);
 		this.repositionBossHealthBar();
 
-		this._powerUpMeter = new HealthBar(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR), this);
-		this._powerUpMeter.setMaximumValue(100);
-		this._powerUpMeter.setValue(0);
+		this.powerUpMeter = new HealthBar(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR), this);
+		this.powerUpMeter.setMaximumValue(100);
+		this.powerUpMeter.setValue(0);
 		this.repositionPowerUpMeter();
 
-		this._inGameMessage = new InGameMessage(this);
+		this.inGameMessage = new InGameMessage(this);
 
 		this.setGameController();
 
@@ -234,7 +234,7 @@ export class GameScene extends Container implements IScene {
 		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.6, true);
 		SoundManager.play(SoundType.GAME_START);
 
-		this._sceneContainer.alpha = 0;
+		this.sceneContainer.alpha = 0;
 
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
 			case 0: { this.generateInGameMessage("Drop crackers on the honkers"); } break;
@@ -255,7 +255,7 @@ export class GameScene extends Container implements IScene {
 		gameObject.disableRendering();
 
 		this.castShadowGameObjects.push(gameObject);
-		this._sceneContainer.addChild(gameObject);
+		this.sceneContainer.addChild(gameObject);
 	}
 
 	animateCastShadows() {
@@ -319,7 +319,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.roadMarkGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -393,7 +393,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.treeTopGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -419,7 +419,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.treeBottomGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -525,7 +525,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.hedgeTopGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -549,7 +549,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.hedgeBottomGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -658,7 +658,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.lampTopGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -682,7 +682,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.lampBottomGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -790,7 +790,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.lightBillboardTopGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -814,7 +814,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.lightBillboardBottomGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -925,7 +925,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.sideWalkTopGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -954,7 +954,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.sideWalkBottomGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -1149,7 +1149,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.vehicleEnemyGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -1251,7 +1251,7 @@ export class GameScene extends Container implements IScene {
 
 			if (vehicleEnemy.isDead()) {
 				vehicleEnemy.setBlast();
-				this._gameScoreBar.gainScore(2);
+				this.gameScoreBar.gainScore(2);
 			}
 		}
 	}
@@ -1295,12 +1295,12 @@ export class GameScene extends Container implements IScene {
 		gameObject.addChild(sprite);
 
 		this.vehicleBossGameObjects.push(gameObject);
-		this._sceneContainer.addChild(gameObject);
+		this.sceneContainer.addChild(gameObject);
 	}
 
 	private generateVehicleBoss() {
 
-		if (this._vehicleBossCheckpoint.shouldRelease(this._gameScoreBar.getScore()) && !this.vehicleBossExists()) {
+		if (this.vehicleBossCheckpoint.shouldRelease(this.gameScoreBar.getScore()) && !this.vehicleBossExists()) {
 
 			var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == false);
 
@@ -1309,15 +1309,15 @@ export class GameScene extends Container implements IScene {
 				var vehicleBoss = gameObject as VehicleBoss;
 				vehicleBoss.reposition();
 				vehicleBoss.reset();
-				vehicleBoss.health = this._vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
+				vehicleBoss.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
 
 				gameObject.enableRendering();
 
-				this._vehicleBossCheckpoint.increaseThreasholdLimit(this._vehicleBossReleasePoint_increase, this._gameScoreBar.getScore());
+				this.vehicleBossCheckpoint.increaseThreasholdLimit(this.vehicleBossReleasePoint_increase, this.gameScoreBar.getScore());
 
-				this._bossHealthBar.setMaximumValue(vehicleBoss.health);
-				this._bossHealthBar.setValue(vehicleBoss.health);
-				this._bossHealthBar.setIcon(vehicleBoss.getGameObjectSprite().getTexture());
+				this.bossHealthBar.setMaximumValue(vehicleBoss.health);
+				this.bossHealthBar.setValue(vehicleBoss.health);
+				this.bossHealthBar.setIcon(vehicleBoss.getGameObjectSprite().getTexture());
 
 				this.generateInGameMessage("Crazy Honker Arrived");
 
@@ -1368,12 +1368,12 @@ export class GameScene extends Container implements IScene {
 		vehicleBoss.setPopping();
 		vehicleBoss.looseHealth();
 
-		this._bossHealthBar.setValue(vehicleBoss.health);
+		this.bossHealthBar.setValue(vehicleBoss.health);
 
 		if (vehicleBoss.isDead()) {
 
 			this._player.setWinStance();
-			this._gameScoreBar.gainScore(3);
+			this.gameScoreBar.gainScore(3);
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -1420,7 +1420,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.vehicleBossRocketGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 
@@ -1518,7 +1518,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.ufoEnemyGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -1526,7 +1526,7 @@ export class GameScene extends Container implements IScene {
 
 	private generateUfoEnemys() {
 
-		if (!this.anyBossExists() && this._ufoEnemyCheckpoint.shouldRelease(this._gameScoreBar.getScore())) {
+		if (!this.anyBossExists() && this.ufoEnemyCheckpoint.shouldRelease(this.gameScoreBar.getScore())) {
 
 			this.ufoEnemyPopDelay -= 0.1;
 
@@ -1544,10 +1544,10 @@ export class GameScene extends Container implements IScene {
 
 					this.ufoEnemyPopDelay = this.ufoEnemyPopDelayDefault;
 
-					if (!this._ufoEnemyFleetAppeared) {
+					if (!this.ufoEnemyFleetAppeared) {
 
 						this.generateInGameMessage("Beware of UFO Fleet");
-						this._ufoEnemyFleetAppeared = true;
+						this.ufoEnemyFleetAppeared = true;
 						SoundManager.play(SoundType.UFO_ENEMY_ENTRY);
 						SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.6, true);
 					}
@@ -1602,15 +1602,15 @@ export class GameScene extends Container implements IScene {
 		ufoEnemy.looseHealth();
 
 		if (ufoEnemy.isDead()) {
-			this._gameScoreBar.gainScore(2);
+			this.gameScoreBar.gainScore(2);
 
-			this._ufoEnemyKillCount++;
+			this.ufoEnemyKillCount++;
 
-			if (this._ufoEnemyKillCount > this._ufoEnemyKillCount_limit) // after killing limited enemies increase the threadhold limit
+			if (this.ufoEnemyKillCount > this.ufoEnemyKillCount_limit) // after killing limited enemies increase the threadhold limit
 			{
-				this._ufoEnemyCheckpoint.increaseThreasholdLimit(this._ufoEnemyReleasePoint_increase, this._gameScoreBar.getScore());
-				this._ufoEnemyKillCount = 0;
-				this._ufoEnemyFleetAppeared = false;
+				this.ufoEnemyCheckpoint.increaseThreasholdLimit(this.ufoEnemyReleasePoint_increase, this.gameScoreBar.getScore());
+				this.ufoEnemyKillCount = 0;
+				this.ufoEnemyFleetAppeared = false;
 
 				this.levelUp();
 
@@ -1655,7 +1655,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.ufoEnemyRocketGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -1734,14 +1734,14 @@ export class GameScene extends Container implements IScene {
 		gameObject.addChild(sprite);
 
 		this.ufoBossGameObjects.push(gameObject);
-		this._sceneContainer.addChild(gameObject);
+		this.sceneContainer.addChild(gameObject);
 
 		this.spawnCastShadow(gameObject);
 	}
 
 	private generateUfoBoss() {
 
-		if (this._ufoBossCheckpoint.shouldRelease(this._gameScoreBar.getScore()) && !this.ufoBossExists()) {
+		if (this.ufoBossCheckpoint.shouldRelease(this.gameScoreBar.getScore()) && !this.ufoBossExists()) {
 
 			var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == false);
 
@@ -1750,15 +1750,15 @@ export class GameScene extends Container implements IScene {
 				var ufoBoss = gameObject as UfoBoss;
 				ufoBoss.setPosition(0, ufoBoss.height * -1);
 				ufoBoss.reset();
-				ufoBoss.health = this._ufoBossCheckpoint.getReleasePointDifference() * 1.5;
+				ufoBoss.health = this.ufoBossCheckpoint.getReleasePointDifference() * 1.5;
 
 				gameObject.enableRendering();
 
-				this._ufoBossCheckpoint.increaseThreasholdLimit(this._ufoBossReleasePoint_increase, this._gameScoreBar.getScore());
+				this.ufoBossCheckpoint.increaseThreasholdLimit(this.ufoBossReleasePoint_increase, this.gameScoreBar.getScore());
 
-				this._bossHealthBar.setMaximumValue(ufoBoss.health);
-				this._bossHealthBar.setValue(ufoBoss.health);
-				this._bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
+				this.bossHealthBar.setMaximumValue(ufoBoss.health);
+				this.bossHealthBar.setValue(ufoBoss.health);
+				this.bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
 
 				this.generateInGameMessage("Scarlet Saucer Arrived");
 
@@ -1819,12 +1819,12 @@ export class GameScene extends Container implements IScene {
 		ufoBoss.looseHealth();
 		ufoBoss.setHitStance();
 
-		this._bossHealthBar.setValue(ufoBoss.health);
+		this.bossHealthBar.setValue(ufoBoss.health);
 
 		if (ufoBoss.isDead()) {
 
 			this._player.setWinStance();
-			this._gameScoreBar.gainScore(3);
+			this.gameScoreBar.gainScore(3);
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -1875,7 +1875,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.ufoBossRocketGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2016,7 +2016,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.ufoBossRocketSeekingGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2120,14 +2120,14 @@ export class GameScene extends Container implements IScene {
 		gameObject.addChild(sprite);
 
 		this.zombieBossGameObjects.push(gameObject);
-		this._sceneContainer.addChild(gameObject);
+		this.sceneContainer.addChild(gameObject);
 
 		this.spawnCastShadow(gameObject);
 	}
 
 	private generateZombieBoss() {
 
-		if (this._zombieBossCheckpoint.shouldRelease(this._gameScoreBar.getScore()) && !this.zombieBossExists()) {
+		if (this.zombieBossCheckpoint.shouldRelease(this.gameScoreBar.getScore()) && !this.zombieBossExists()) {
 
 			var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == false);
 
@@ -2136,15 +2136,15 @@ export class GameScene extends Container implements IScene {
 				var zombieBoss = gameObject as ZombieBoss;
 				zombieBoss.setPosition(0, zombieBoss.height * -1);
 				zombieBoss.reset();
-				zombieBoss.health = this._zombieBossCheckpoint.getReleasePointDifference() * 1.5;
+				zombieBoss.health = this.zombieBossCheckpoint.getReleasePointDifference() * 1.5;
 
 				gameObject.enableRendering();
 
-				this._zombieBossCheckpoint.increaseThreasholdLimit(this._zombieBossReleasePoint_increase, this._gameScoreBar.getScore());
+				this.zombieBossCheckpoint.increaseThreasholdLimit(this.zombieBossReleasePoint_increase, this.gameScoreBar.getScore());
 
-				this._bossHealthBar.setMaximumValue(zombieBoss.health);
-				this._bossHealthBar.setValue(zombieBoss.health);
-				this._bossHealthBar.setIcon(zombieBoss.getGameObjectSprite().getTexture());
+				this.bossHealthBar.setMaximumValue(zombieBoss.health);
+				this.bossHealthBar.setValue(zombieBoss.health);
+				this.bossHealthBar.setIcon(zombieBoss.getGameObjectSprite().getTexture());
 
 				this.generateInGameMessage("Zombie Blocks Arrived");
 
@@ -2205,12 +2205,12 @@ export class GameScene extends Container implements IScene {
 		zombieBoss.looseHealth();
 		zombieBoss.setHitStance();
 
-		this._bossHealthBar.setValue(zombieBoss.health);
+		this.bossHealthBar.setValue(zombieBoss.health);
 
 		if (zombieBoss.isDead()) {
 
 			this._player.setWinStance();
-			this._gameScoreBar.gainScore(3);
+			this.gameScoreBar.gainScore(3);
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -2261,7 +2261,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.zombieBossRocketBlockGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2350,14 +2350,14 @@ export class GameScene extends Container implements IScene {
 		gameObject.addChild(sprite);
 
 		this.mafiaBossGameObjects.push(gameObject);
-		this._sceneContainer.addChild(gameObject);
+		this.sceneContainer.addChild(gameObject);
 
 		this.spawnCastShadow(gameObject);
 	}
 
 	private generateMafiaBoss() {
 
-		if (this._mafiaBossCheckpoint.shouldRelease(this._gameScoreBar.getScore()) && !this.mafiaBossExists()) {
+		if (this.mafiaBossCheckpoint.shouldRelease(this.gameScoreBar.getScore()) && !this.mafiaBossExists()) {
 
 			var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == false);
 
@@ -2366,15 +2366,15 @@ export class GameScene extends Container implements IScene {
 				var mafiaBoss = gameObject as MafiaBoss;
 				mafiaBoss.setPosition(0, mafiaBoss.height * -1);
 				mafiaBoss.reset();
-				mafiaBoss.health = this._mafiaBossCheckpoint.getReleasePointDifference() * 1.5;
+				mafiaBoss.health = this.mafiaBossCheckpoint.getReleasePointDifference() * 1.5;
 
 				gameObject.enableRendering();
 
-				this._mafiaBossCheckpoint.increaseThreasholdLimit(this._mafiaBossReleasePoint_increase, this._gameScoreBar.getScore());
+				this.mafiaBossCheckpoint.increaseThreasholdLimit(this.mafiaBossReleasePoint_increase, this.gameScoreBar.getScore());
 
-				this._bossHealthBar.setMaximumValue(mafiaBoss.health);
-				this._bossHealthBar.setValue(mafiaBoss.health);
-				this._bossHealthBar.setIcon(mafiaBoss.getGameObjectSprite().getTexture());
+				this.bossHealthBar.setMaximumValue(mafiaBoss.health);
+				this.bossHealthBar.setValue(mafiaBoss.health);
+				this.bossHealthBar.setIcon(mafiaBoss.getGameObjectSprite().getTexture());
 
 				this.generateInGameMessage("Beware of Crimson Mafia");
 
@@ -2435,12 +2435,12 @@ export class GameScene extends Container implements IScene {
 		mafiaBoss.looseHealth();
 		mafiaBoss.setHitStance();
 
-		this._bossHealthBar.setValue(mafiaBoss.health);
+		this.bossHealthBar.setValue(mafiaBoss.health);
 
 		if (mafiaBoss.isDead()) {
 
 			this._player.setWinStance();
-			this._gameScoreBar.gainScore(3);
+			this.gameScoreBar.gainScore(3);
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -2491,7 +2491,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.mafiaBossRocketGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2604,7 +2604,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.mafiaBossRocketBullsEyeGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2710,7 +2710,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.roadHonkGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -2777,7 +2777,7 @@ export class GameScene extends Container implements IScene {
 
 		this._player.setPlayerTemplate(this.playerTemplate);
 
-		this._sceneContainer.addChild(this._player);
+		this.sceneContainer.addChild(this._player);
 
 		this.spawnCastShadow(this._player);
 	}
@@ -2799,15 +2799,15 @@ export class GameScene extends Container implements IScene {
 		this._player.move(
 			Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling,
 			Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling,
-			this._gameController);
+			this.gameController);
 
-		if (this._gameController.isAttacking) {
+		if (this.gameController.isAttacking) {
 
 			if (this.anyInAirBossExists() || this.ufoEnemyExists()) {
 
-				if (this._powerUpMeter.hasHealth()) {
+				if (this.powerUpMeter.hasHealth()) {
 
-					switch (this._powerUpMeter.tag) {
+					switch (this.powerUpMeter.tag) {
 						case PowerUpType.BULLS_EYE:
 							{
 								this.generatePlayerRocketBullsEye();
@@ -2830,14 +2830,14 @@ export class GameScene extends Container implements IScene {
 				this.generatePlayerHonkBomb();
 			}
 
-			this._gameController.isAttacking = false;
+			this.gameController.isAttacking = false;
 		}
 	}
 
 	loosePlayerHealth() {
 		this._player.setPopping();
 
-		if (this._powerUpMeter.hasHealth() && this._powerUpMeter.tag == PowerUpType.ARMOR) {
+		if (this.powerUpMeter.hasHealth() && this.powerUpMeter.tag == PowerUpType.ARMOR) {
 			this.depletePowerUp();
 		}
 		else {
@@ -2846,7 +2846,7 @@ export class GameScene extends Container implements IScene {
 
 			this._player.looseHealth();
 			this._player.setHitStance();
-			this._playerHealthBar.setValue(this._player.health);
+			this.playerHealthBar.setValue(this._player.health);
 
 			//TODO: game over
 
@@ -2856,8 +2856,8 @@ export class GameScene extends Container implements IScene {
 				SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 				SoundManager.stop(SoundType.AMBIENCE);
 
-				Constants.GAME_SCORE = this._gameScoreBar.getScore();
-				this.removeChild(this._sceneContainer);
+				Constants.GAME_SCORE = this.gameScoreBar.getScore();
+				this.removeChild(this.sceneContainer);
 				SceneManager.changeScene(new GameOverScene());
 			}
 		}
@@ -2893,7 +2893,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.setHonkBombTemplate(this.playerHonkBusterTemplate);
 
 			this.playerHonkBombGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3003,7 +3003,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.PlayerHonkBombExplosionGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -3068,7 +3068,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.playerRocketGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3251,7 +3251,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.playerRocketBullsEyeGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3293,7 +3293,7 @@ export class GameScene extends Container implements IScene {
 
 			playerRocketBullsEye.enableRendering();
 
-			if (this._powerUpMeter.hasHealth() && this._powerUpMeter.tag == PowerUpType.BULLS_EYE)
+			if (this.powerUpMeter.hasHealth() && this.powerUpMeter.tag == PowerUpType.BULLS_EYE)
 				this.depletePowerUp();
 		}
 	}
@@ -3395,7 +3395,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.healthPickupGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3464,7 +3464,7 @@ export class GameScene extends Container implements IScene {
 						gameObject.pickedUp();
 
 						this._player.gainhealth();
-						this._playerHealthBar.setValue(this._player.health);
+						this.playerHealthBar.setValue(this._player.health);
 					}
 				}
 
@@ -3505,7 +3505,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.powerUpPickupGameObjects.push(gameObject);
-			this._sceneContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3513,7 +3513,7 @@ export class GameScene extends Container implements IScene {
 
 	private generatePowerUpPickups() {
 
-		if ((this.anyInAirBossExists() || this.ufoEnemyExists()) && !this._powerUpMeter.hasHealth()) {
+		if ((this.anyInAirBossExists() || this.ufoEnemyExists()) && !this.powerUpMeter.hasHealth()) {
 			this.powerUpPickupPopDelay -= 0.1;
 
 			if (this.powerUpPickupPopDelay < 0) {
@@ -3573,22 +3573,22 @@ export class GameScene extends Container implements IScene {
 					if (Constants.checkCloseCollision(gameObject, this._player)) {
 						gameObject.pickedUp();
 
-						this._powerUpMeter.tag = gameObject.powerUpType;
-						this._powerUpMeter.setIcon(gameObject.getGameObjectSprite().getTexture());
+						this.powerUpMeter.tag = gameObject.powerUpType;
+						this.powerUpMeter.setIcon(gameObject.getGameObjectSprite().getTexture());
 
 						switch (gameObject.powerUpType) {
 							case PowerUpType.BULLS_EYE: // if bulls eye powerup, allow using a single shot of 20 bombs
 								{
-									this._powerUpMeter.setMaximumValue(20);
-									this._powerUpMeter.setValue(20);
+									this.powerUpMeter.setMaximumValue(20);
+									this.powerUpMeter.setValue(20);
 
 									this.generateInGameMessage("Bylls Eye +20");
 								}
 								break;
 							case PowerUpType.ARMOR:
 								{
-									this._powerUpMeter.setMaximumValue(10);
-									this._powerUpMeter.setValue(10);
+									this.powerUpMeter.setMaximumValue(10);
+									this.powerUpMeter.setValue(10);
 
 									this.generateInGameMessage("Armor +10");
 								}
@@ -3608,8 +3608,8 @@ export class GameScene extends Container implements IScene {
 
 	private depletePowerUp() {
 		// use up the power up
-		if (this._powerUpMeter.hasHealth())
-			this._powerUpMeter.setValue(this._powerUpMeter.getValue() - 1);
+		if (this.powerUpMeter.hasHealth())
+			this.powerUpMeter.setValue(this.powerUpMeter.getValue() - 1);
 	}
 
 	//#endregion
@@ -3617,7 +3617,7 @@ export class GameScene extends Container implements IScene {
 	//#region GameController
 
 	setGameController() {
-		this.addChild(this._gameController);
+		this.addChild(this.gameController);
 	}
 
 	//#endregion
@@ -3625,7 +3625,7 @@ export class GameScene extends Container implements IScene {
 	//#region GameScoreBar
 
 	private repositionGameScoreBar() {
-		this._gameScoreBar.reposition((SceneManager.width) / 2, 10);
+		this.gameScoreBar.reposition((SceneManager.width) / 2, 10);
 	}
 
 	//#endregion
@@ -3633,15 +3633,15 @@ export class GameScene extends Container implements IScene {
 	//#region HealthBars
 
 	private repositionPlayerHealthBar() {
-		this._playerHealthBar.reposition((SceneManager.width) - 105, 10);
+		this.playerHealthBar.reposition((SceneManager.width) - 105, 10);
 	}
 
 	private repositionBossHealthBar() {
-		this._bossHealthBar.reposition((SceneManager.width) - 205, 10);
+		this.bossHealthBar.reposition((SceneManager.width) - 205, 10);
 	}
 
 	private repositionPowerUpMeter() {
-		this._powerUpMeter.reposition((SceneManager.width) - 305, 10);
+		this.powerUpMeter.reposition((SceneManager.width) - 305, 10);
 	}
 
 	//#endregion
@@ -3649,20 +3649,20 @@ export class GameScene extends Container implements IScene {
 	//#region InGameMessage
 
 	private generateInGameMessage(title: string) {
-		if (this._inGameMessage.isAnimating == false) {
-			this._inGameMessage.setTitle(title);
-			this._inGameMessage.reset();
-			this._inGameMessage.reposition(SceneManager.width / 2, SceneManager.height / 2);
-			this._inGameMessage.enableRendering();
+		if (this.inGameMessage.isAnimating == false) {
+			this.inGameMessage.setTitle(title);
+			this.inGameMessage.reset();
+			this.inGameMessage.reposition(SceneManager.width / 2, SceneManager.height / 2);
+			this.inGameMessage.enableRendering();
 		}
 	}
 
 	private animateInGameMessage() {
-		if (this._inGameMessage.isAnimating == true) {
-			this._inGameMessage.depleteOnScreenDelay();
+		if (this.inGameMessage.isAnimating == true) {
+			this.inGameMessage.depleteOnScreenDelay();
 
-			if (this._inGameMessage.isDepleted()) {
-				this._inGameMessage.disableRendering();
+			if (this.inGameMessage.isDepleted()) {
+				this.inGameMessage.disableRendering();
 			}
 		}
 	}
@@ -3673,15 +3673,15 @@ export class GameScene extends Container implements IScene {
 
 	public update(_framesPassed: number) {
 
-		if (this._sceneContainer.alpha < 1) {
-			this._sceneContainer.alpha += 0.006;
+		if (this.sceneContainer.alpha < 1) {
+			this.sceneContainer.alpha += 0.006;
 		}
 
-		if (!this._gameController.isPaused) {
+		if (!this.gameController.isPaused) {
 			this.generateGameObjects();
 			this.animateGameObjects();
 
-			this._gameController.update();
+			this.gameController.update();
 			this.animatePlayerBalloon();
 		}
 	}
@@ -3689,27 +3689,27 @@ export class GameScene extends Container implements IScene {
 	public resize(scale: number): void {
 
 		if (SceneManager.width < SceneManager.height) {
-			this._gameController.pauseGame();
+			this.gameController.pauseGame();
 		}
 		else {
-			this._sceneContainer.scale.set(scale);
+			this.sceneContainer.scale.set(scale);
 			this.repositionGameScoreBar();
 			this.repositionPlayerHealthBar();
 			this.repositionBossHealthBar();
 			this.repositionPowerUpMeter();
-			this._gameController.resize();
+			this.gameController.resize();
 
-			this._roadBackgroundDay.width = SceneManager.width;
-			this._roadBackgroundDay.height = SceneManager.height;
+			this.roadBackgroundDay.width = SceneManager.width;
+			this.roadBackgroundDay.height = SceneManager.height;
 
-			this._roadBackgroundNight.width = SceneManager.width;
-			this._roadBackgroundNight.height = SceneManager.height;
+			this.roadBackgroundNight.width = SceneManager.width;
+			this.roadBackgroundNight.height = SceneManager.height;
 		}
 	}
 
 	private levelUp() {
-		this._gameLevel++;
-		this.generateInGameMessage("LEVEL " + this._gameLevel.toString() + " COMPLETE");
+		this.gameLevel++;
+		this.generateInGameMessage("LEVEL " + this.gameLevel.toString() + " COMPLETE");
 		SoundManager.play(SoundType.LEVEL_UP);
 	}
 
@@ -3819,12 +3819,12 @@ export class GameScene extends Container implements IScene {
 
 	private switchToNightMode() {
 		this.removeChildAt(0);
-		this.addChildAt(this._roadBackgroundNight, 0);
+		this.addChildAt(this.roadBackgroundNight, 0);
 	}
 
 	private switchToDayMode() {
 		this.removeChildAt(0);
-		this.addChildAt(this._roadBackgroundDay, 0);
+		this.addChildAt(this.roadBackgroundDay, 0);
 	}
 
 	//#endregion

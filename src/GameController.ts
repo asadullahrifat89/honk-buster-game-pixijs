@@ -20,10 +20,11 @@ export class GameController extends Container {
 	public isMoveRight: boolean = false;
 	public isAttacking: boolean = false;
 	public isPaused: boolean = false;
+	public power: number = 1;
 
 	private joystickActivated: boolean = false;
 	private keyboardActivated: boolean = false;
-	public power: number = 1;
+	
 	private settings: GameControllerSettings;
 
 	private attackButton: Button;
