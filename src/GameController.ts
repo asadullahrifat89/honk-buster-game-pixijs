@@ -44,13 +44,19 @@ export class GameController extends Container {
 			this.joystick.alpha = 1;
 			this.attackButton.alpha = 1;
 		});
+
 		this.keyboard.events.on('pressed', null, () => {
 
-			if (!this.isPaused && this.keyboard.isKeyPressed('Space')) {
-				this.isAttacking = true;
+			if (!this.isPaused) {
+				if (this.keyboard.isKeyPressed('Space')) {
+					this.isAttacking = true;
+				}
+				else {
+					this.power = 0.1;
+				}
 			}
 
-			this.keyboardActivated = true;
+			this.keyboardActivated = true;			
 
 			if (this.keyboardActivated && !this.joystickActivated) {
 				this.joystick.alpha = 0;
@@ -226,6 +232,8 @@ export class GameController extends Container {
 			if (this.keyboard.isKeyDown('ArrowLeft', 'KeyA')) {
 				this.isMoveLeft = true;
 				this.isMoveRight = false;
+
+				this.increasePowerOnKeyboardPress();
 			}
 			else {
 				this.isMoveLeft = false;
@@ -234,6 +242,8 @@ export class GameController extends Container {
 			if (this.keyboard.isKeyDown('ArrowRight', 'KeyD')) {
 				this.isMoveRight = true;
 				this.isMoveLeft = false;
+
+				this.increasePowerOnKeyboardPress();
 			}
 			else {
 				this.isMoveRight = false;
@@ -242,6 +252,8 @@ export class GameController extends Container {
 			if (this.keyboard.isKeyDown('ArrowUp', 'KeyW')) {
 				this.isMoveUp = true;
 				this.isMoveDown = false;
+
+				this.increasePowerOnKeyboardPress();
 			}
 			else {
 				this.isMoveUp = false;
@@ -250,11 +262,24 @@ export class GameController extends Container {
 			if (this.keyboard.isKeyDown('ArrowDown', 'KeyS')) {
 				this.isMoveDown = true;
 				this.isMoveUp = false;
+
+				this.increasePowerOnKeyboardPress();
 			}
 			else {
 				this.isMoveDown = false;
 			}
 		}
+
+		if (!this.isMoveLeft && !this.isMoveRight && !this.isMoveUp && !this.isMoveDown) {
+			this.power = 1;
+		}
+	}
+
+	private increasePowerOnKeyboardPress() {
+		if (this.power < 1)
+			this.power += 0.1;
+
+		//console.log(this.power);
 	}
 
 	resize() {
