@@ -8,9 +8,12 @@ export class SoundObjectPlayer {
 	public soundType: SoundType = SoundType.NONE;
 
 	constructor(soundType: SoundType, volume: number, loop: boolean) {
-		this.soundType = soundType;
-		// hold all sound objects for the sound type
-		this.soundObjects = Constants.SOUND_TEMPLATES.filter(x => x.soundType == soundType).map(u => new SoundObject(u.uri, volume, loop));
+		this.soundType = soundType;		
+		this.soundObjects = Constants.SOUND_TEMPLATES.filter(x => x.soundType == soundType).map(u => new SoundObject(u.uri, volume, loop)); // hold all sound objects for the sound type
+	}
+
+	isPlaying(): boolean {
+		return this.soundObjects.some(x => x.isPlaying());
 	}
 
 	play() {

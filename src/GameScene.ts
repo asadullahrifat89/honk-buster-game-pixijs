@@ -1,4 +1,4 @@
-import { BlurFilter, Container, Texture } from "pixi.js";
+import { BlurFilter, Container, Graphics, Texture } from "pixi.js";
 import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
@@ -49,6 +49,11 @@ export class GameScene extends Container implements IScene {
 	private readonly _vehicleBossReleasePoint_increase: number = 15;
 	private readonly _vehicleBossCheckpoint: GameCheckpoint;
 
+	//TODO: set defaults _ufoEnemyReleasePoint = 35
+	private readonly _ufoEnemyReleasePoint: number = 35; // first appearance
+	private readonly _ufoEnemyReleasePoint_increase: number = 5;
+	private readonly _ufoEnemyCheckpoint: GameCheckpoint;
+
 	//TODO: set defaults _ufoBossReleasePoint = 50
 	private readonly _ufoBossReleasePoint: number = 50; // first appearance
 	private readonly _ufoBossReleasePoint_increase: number = 15;
@@ -64,11 +69,6 @@ export class GameScene extends Container implements IScene {
 	private readonly _mafiaBossReleasePoint_increase: number = 15;
 	private readonly _mafiaBossCheckpoint: GameCheckpoint;
 
-	//TODO: set defaults _ufoEnemyReleasePoint = 35
-	private readonly _ufoEnemyReleasePoint: number = 15; // first appearance
-	private readonly _ufoEnemyReleasePoint_increase: number = 5;
-	private readonly _ufoEnemyCheckpoint: GameCheckpoint;
-
 	private _ufoEnemyFleetAppeared: boolean = false;
 	private _ufoEnemyKillCount: number = 0;
 	private readonly _ufoEnemyKillCount_limit: number = 20;
@@ -78,6 +78,8 @@ export class GameScene extends Container implements IScene {
 	private _powerUpMeter: HealthBar;
 
 	private _gameLevel: number = 0;
+	private _roadBackgroundDay: Graphics;
+	private _roadBackgroundNight: Graphics;
 
 	//#endregion
 
@@ -87,6 +89,11 @@ export class GameScene extends Container implements IScene {
 
 	constructor() {
 		super();
+
+		this._roadBackgroundDay = new Graphics().beginFill(0x464646, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+		this._roadBackgroundNight = new Graphics().beginFill(0x1f2326, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+
+		this.addChildAt(this._roadBackgroundDay, 0);
 
 		this._gameController = new GameController({
 			onPause: (isPaused) => {
@@ -1437,6 +1444,8 @@ export class GameScene extends Container implements IScene {
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
+
+				this.switchToNightMode();
 			}
 		}
 	}
@@ -1492,6 +1501,8 @@ export class GameScene extends Container implements IScene {
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
+
+			this.switchToDayMode();
 		}
 	}
 
@@ -1677,13 +1688,11 @@ export class GameScene extends Container implements IScene {
 		if (animatingUfoEnemys) {
 
 			animatingUfoEnemys.forEach(gameObject => {
-
-				gameObject.pop();
-
 				if (gameObject.isDead()) {
 					gameObject.shrink();
 				}
 				else {
+					gameObject.pop();
 					gameObject.hover();
 					gameObject.moveDownRight();
 				}
@@ -1878,6 +1887,8 @@ export class GameScene extends Container implements IScene {
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
+
+				this.switchToNightMode();
 			}
 		}
 	}
@@ -1941,6 +1952,8 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+
+			this.switchToDayMode();
 		}
 	}
 
@@ -2260,6 +2273,8 @@ export class GameScene extends Container implements IScene {
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
+
+				this.switchToNightMode();
 			}
 		}
 	}
@@ -2323,6 +2338,8 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+
+			this.switchToDayMode();
 		}
 	}
 
@@ -2482,11 +2499,12 @@ export class GameScene extends Container implements IScene {
 
 				this.generateInGameMessage("Beware of Crimson Mafia");
 
-
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
+
+				this.switchToNightMode();
 			}
 		}
 	}
@@ -2550,6 +2568,8 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+
+			this.switchToDayMode();
 		}
 	}
 
@@ -2940,6 +2960,9 @@ export class GameScene extends Container implements IScene {
 			this.depletePowerUp();
 		}
 		else {
+
+			SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
+
 			this._player.looseHealth();
 			this._player.setHitStance();
 			this._playerHealthBar.setValue(this._player.health);
@@ -3817,6 +3840,16 @@ export class GameScene extends Container implements IScene {
 
 	private anyInAirBossExists(): boolean {
 		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
+	}
+
+	private switchToNightMode() {
+		this.removeChildAt(0);
+		this.addChildAt(this._roadBackgroundNight, 0);
+	}
+
+	private switchToDayMode() {
+		this.removeChildAt(0);
+		this.addChildAt(this._roadBackgroundDay, 0);
 	}
 
 	//#endregion
