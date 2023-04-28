@@ -1,11 +1,15 @@
-﻿import { GrayscaleFilter } from "@pixi/filter-grayscale";
-import { Container, DisplayObject, FederatedPointerEvent, Text, TextStyle } from "pixi.js";
+﻿import { ColorMatrixFilter, Container, DisplayObject, FederatedPointerEvent, Text, TextStyle } from "pixi.js";
 
 
 export class Button extends Container {
 
+	private buttonFilter: ColorMatrixFilter;
+
 	constructor(background: DisplayObject, onPressed: any, text: string = "") {
 		super();
+
+		this.buttonFilter = new ColorMatrixFilter();
+		this.buttonFilter.sepia(false);
 
 		this.filters = null;
 
@@ -42,17 +46,13 @@ export class Button extends Container {
 		this.y = y;
 	}
 
-	onButtonOver(_e: FederatedPointerEvent) {
-		this.filters = [new GrayscaleFilter()];
+	onButtonOver(_e: FederatedPointerEvent) {		
+		this.filters = [this.buttonFilter];
 		this.scale.set(1.1);
-		//this.x -= 7;
-		//this.y -= 3.5;
 	}
 
-	onButtonOut(_e: FederatedPointerEvent) {
+	onButtonOut(_e: FederatedPointerEvent) {	
 		this.filters = null;
 		this.scale.set(1);
-		//this.x += 7;
-		//this.y += 3.5;
 	}
 }

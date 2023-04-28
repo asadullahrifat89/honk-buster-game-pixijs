@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@pixi/filter-drop-shadow": "^5.2.0",
+    "@pixi/filter-godray": "^5.1.1",
     "@pixi/filter-grayscale": "^5.1.1",
     "@pixi/sound": "^5.1.2",
     "@pixi/ui": "^0.7.0",
