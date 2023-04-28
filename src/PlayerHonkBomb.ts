@@ -81,7 +81,7 @@ export class PlayerHonkBomb extends GameObject {
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 			} break;
 			case PlayerHonkBombTemplate.TrashCan: {
-				this.speed = 0.8;
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 2.5;
 			} break;
 			default: break;
 		}

@@ -2936,12 +2936,11 @@ export class GameScene extends Container implements IScene {
 
 						switch (playerHonkBomb.playerHonkBombTemplate) {
 							case PlayerHonkBombTemplate.Cracker: {
-								playerHonkBomb.shrink();
-								playerHonkBomb.moveUpRight();
+								playerHonkBomb.shrink();								
 							} break;
-							case PlayerHonkBombTemplate.TrashCan: {
-								playerHonkBomb.moveDownLeft();
-								//playerHonkBomb.rotate(RotationDirection.Backward, 0, 0.5);
+							case PlayerHonkBombTemplate.TrashCan: {								
+								playerHonkBomb.moveUpRight();
+								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
 							} break;
 							default:
 						}
