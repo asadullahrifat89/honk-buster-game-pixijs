@@ -65,6 +65,60 @@ export class VehicleBase extends GameObject {
 		}
 	}
 
+	repositionReverse() {
+		var topOrLeft = Constants.getRandomNumber(0, 1); // generate top and left corner lane wise vehicles
+		var lane = Constants.getRandomNumber(0, 1); // generate number of lanes based of screen height
+		var randomY = Constants.getRandomNumber(-5, 5);
+
+		switch (topOrLeft) {
+			case 0:
+				{
+					var xLaneWidth = Constants.DEFAULT_GAME_VIEW_WIDTH / 4;
+
+					switch (lane) {
+						case 0:
+							{
+								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH - this.width / 2, Constants.DEFAULT_GAME_VIEW_HEIGHT + this.height + randomY);
+								break;
+							}
+						case 1:
+							{
+								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH + (xLaneWidth - this.width / 1.5), Constants.DEFAULT_GAME_VIEW_HEIGHT + (this.height * -1) + randomY);
+								break;
+							}
+						default:
+							break;
+					}
+
+					break;
+				}
+			case 1:
+				{
+					var yLaneHeight = Constants.DEFAULT_GAME_VIEW_HEIGHT / 6;
+
+					switch (lane) {
+						case 0:
+							{
+								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH + this.width, Constants.DEFAULT_GAME_VIEW_HEIGHT + (this.height / 2) + randomY);
+								break;
+							}
+
+						case 1:
+							{
+								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH + this.width, Constants.DEFAULT_GAME_VIEW_HEIGHT + (yLaneHeight - this.height / 3) + randomY);
+								break;
+							}
+						default:
+							break;
+					}
+
+					break;
+				}
+			default:
+				break;
+		}
+	}
+
 	honk(): boolean {
 		if (this.willHonk) {
 			this.honkDelay--;

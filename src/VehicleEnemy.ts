@@ -36,7 +36,7 @@ export class VehicleEnemy extends VehicleBase {
 		this.setTexture(texture);
 
 		if (this.willHonk) {
-			this.health = this.hitPoint * Constants.getRandomNumber(0, 2);
+			this.health = this.hitPoint * Constants.getRandomNumber(0, 1);
 			this.setHonkDelay();
 		}
 	}
@@ -47,7 +47,7 @@ export class VehicleEnemy extends VehicleBase {
 
 	setBlast() {
 		this.willHonk = false;
-		this.speed = this.speed * 1.5;
+		this.speed = this.speed * 1.2;
 		this.filters = [this.grayScaleFilter];
 		SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
 	}
