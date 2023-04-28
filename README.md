@@ -8,6 +8,8 @@ They are also corrupting humans into some crazy honkers who will try to stop you
 The game has infinite levels so it gets harder as you play.
 Strive to get a high score.
 
+Play here: https://asadullahrifat89.github.io/honk-buster-game-pixijs/
+
 ## Screenshots
 ![asadullahrifat89 github io_honk-buster-game-pixijs_(iPad Air)](https://user-images.githubusercontent.com/25480176/235152017-e45fbbba-2152-456e-8bcf-2d961244f3d7.png)
 ![asadullahrifat89 github io_honk-buster-game-pixijs_(iPad Air) (1)](https://user-images.githubusercontent.com/25480176/235151954-db87a6a5-142e-4ec2-aaa2-0923f3bacb1d.png)
