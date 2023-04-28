@@ -1121,12 +1121,12 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 10; j++) {
 
 			const gameObject: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+			gameObject.vehicleType = Constants.getRandomNumber(0, 1);
 
-			var vehicleType = Constants.getRandomNumber(0, 1);
+			gameObject.disableRendering();			
 
 			var uri: string = "";
-			switch (vehicleType) {
+			switch (gameObject.vehicleType) {
 				case 0: {
 					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
 				} break;
@@ -1141,8 +1141,18 @@ export class GameScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.vehicleEnemySizeWidth;
-			sprite.height = this.vehicleEnemySizeHeight;
+
+			switch (gameObject.vehicleType) {
+				case 0: {
+					sprite.width = this.vehicleEnemySizeWidth / 1.2;
+					sprite.height = this.vehicleEnemySizeHeight / 1.2;
+				} break;
+				case 1: {
+					sprite.width = this.vehicleEnemySizeWidth;
+					sprite.height = this.vehicleEnemySizeHeight;
+				} break;
+				default: break;
+			}
 
 			sprite.anchor.set(0.5, 0.5);
 
@@ -2932,13 +2942,13 @@ export class GameScene extends Container implements IScene {
 
 					if (playerHonkBomb.isBlasting) {
 
-						playerHonkBomb.fade();					
+						playerHonkBomb.fade();
 
 						switch (playerHonkBomb.playerHonkBombTemplate) {
 							case PlayerHonkBombTemplate.Cracker: {
-								playerHonkBomb.shrink();								
+								playerHonkBomb.shrink();
 							} break;
-							case PlayerHonkBombTemplate.TrashCan: {								
+							case PlayerHonkBombTemplate.TrashCan: {
 								playerHonkBomb.moveUpRight();
 								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
 							} break;

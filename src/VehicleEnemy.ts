@@ -1,12 +1,13 @@
-﻿import { Texture } from 'pixi.js';
-import { Constants, ConstructType, SoundType } from './Constants';
+﻿import { Constants, ConstructType, SoundType } from './Constants';
 import { VehicleBase } from './VehicleBase';
 import { GrayscaleFilter } from '@pixi/filter-grayscale';
 import { SoundManager } from './SoundManager';
+import { Texture } from 'pixi.js';
 
 export class VehicleEnemy extends VehicleBase {
 
 	private grayScaleFilter: GrayscaleFilter = new GrayscaleFilter();
+	public vehicleType: number = 0;
 
 	constructor(speed: number) {
 		super(speed);
@@ -15,12 +16,10 @@ export class VehicleEnemy extends VehicleBase {
 	reset() {
 		this.speed = Constants.getRandomNumber(2, 4);
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
-		this.filters = null;
-
-		var vehicleType = Constants.getRandomNumber(0, 1);
+		this.filters = null;		
 
 		let uri: string = "";
-		switch (vehicleType) {
+		switch (this.vehicleType) {
 			case 0: {
 				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
 				break;
