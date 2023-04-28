@@ -47,7 +47,7 @@ export class VehicleEnemy extends VehicleBase {
 
 	setBlast() {
 		this.willHonk = false;
-		this.speed = this.speed * 1.5;
+		this.speed = this.speed * 1.2;
 		this.filters = [this.grayScaleFilter];
 		SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
 	}
