@@ -75,6 +75,9 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				SceneManager.isNavigating = true;
 			}
+			else {
+				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
+			}
 			
 		}, "Select");
 		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height - button.height * 2);

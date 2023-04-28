@@ -76,6 +76,9 @@ export class PlayerSelectionScene extends Container implements IScene {
 				this.removeChild(this.sceneContainer);
 				SceneManager.changeScene(new PlayerHonkBombSelectionScene());
 			}
+			else {
+				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
+			}
 
 		}, "Select");
 		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height - button.height * 2);

@@ -58,4 +58,8 @@ export class SoundManager {
 			soundObjectPlayer.setVolume(volume);
 		}
 	}
+
+	public static isPlaying(soundType: SoundType): boolean {
+		return this.soundObjectPlayers.some(x => x.soundType == soundType && x.isPlaying());
+	}
 }
