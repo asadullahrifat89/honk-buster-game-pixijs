@@ -1,4 +1,4 @@
-import { Container, Texture } from "pixi.js";
+import { BlurFilter, Container, Texture } from "pixi.js";
 import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
@@ -109,6 +109,8 @@ export class GameScene extends Container implements IScene {
 					SoundManager.pause(SoundType.AMBIENCE);
 
 					this.generateInGameMessage("Game paused");
+
+					this._sceneContainer.filters = [new BlurFilter()];
 				}
 				else {
 					if (this.anyBossExists()) {
@@ -128,9 +130,11 @@ export class GameScene extends Container implements IScene {
 
 					SoundManager.resume(SoundType.AMBIENCE);
 
-					if (this._inGameMessage.isAnimating == true) {
+					if (this._inGameMessage.isAnimating == true && this._inGameMessage.getText() == "Game paused") {
 						this._inGameMessage.disableRendering();
 					}
+
+					this._sceneContainer.filters = null;
 				}
 			}
 		});
@@ -3101,7 +3105,7 @@ export class GameScene extends Container implements IScene {
 					if (playerHonkBomb.isBlasting) {
 
 						playerHonkBomb.expand();
-						playerHonkBomb.fade();						
+						playerHonkBomb.fade();
 						playerHonkBomb.moveDownRight();
 
 					}
@@ -3109,7 +3113,7 @@ export class GameScene extends Container implements IScene {
 
 						playerHonkBomb.move();
 
-						if (playerHonkBomb.depleteBlastDelay()) {							
+						if (playerHonkBomb.depleteBlastDelay()) {
 
 							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
 

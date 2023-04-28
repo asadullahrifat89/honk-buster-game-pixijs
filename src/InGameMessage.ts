@@ -1,9 +1,10 @@
-﻿import { BitmapText, Container, BitmapFont } from "pixi.js";
+﻿import { Container, Text } from "pixi.js";
 
 
 export class InGameMessage {
 
-	private _textBlock: BitmapText;
+	//private _textBlock: BitmapText;
+	private _textBlock: Text;
 	public isAnimating: boolean = false;
 
 	private _messageOnScreenDelay: number = 0;
@@ -11,18 +12,24 @@ export class InGameMessage {
 
 	constructor(scene: Container) {
 
-		// If you need to know, this is the expensive part. This creates the font atlas
-		BitmapFont.from("gameplay", {
-			fill: "#ffffff",
-			fontFamily: "gameplay",
-			fontSize: 26,
-			align: "center",
-		});
+		//BitmapFont.from("gameplay", {
+		//	fill: "#ffffff",
+		//	fontFamily: "gameplay",
+		//	fontSize: 26,
+		//	align: "center",
+		//});
 
-		this._textBlock = new BitmapText("000", {
-			fontName: "gameplay",
-			fontSize: 26,
+		//this._textBlock = new BitmapText("000", {
+		//	fontName: "gameplay",
+		//	fontSize: 26,
+		//	align: "center",
+		//});
+
+		this._textBlock = new Text("", {
+			fontFamily: "gameplay",
 			align: "center",
+			fill: "#ffffff",
+			fontSize: 26
 		});
 
 		this.disableRendering();
@@ -30,8 +37,8 @@ export class InGameMessage {
 	}
 
 	disableRendering() {
-		this._textBlock.renderable = false;
 		this.isAnimating = false;
+		this._textBlock.renderable = false;
 	}
 
 	enableRendering() {
@@ -58,5 +65,9 @@ export class InGameMessage {
 	reposition(x: number, y: number) {
 		this._textBlock.x = x - this._textBlock.width / 2;
 		this._textBlock.y = y - this._textBlock.height / 2;
+	}
+
+	getText(): string {
+		return this._textBlock.text;
 	}
 }
