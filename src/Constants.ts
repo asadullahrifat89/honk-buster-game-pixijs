@@ -100,8 +100,7 @@ export enum ConstructType {
 	ROAD_SIDE_LIGHT_BILLBOARD,
 	ROAD_SIDE_BILLBOARD,
 
-	HONK,
-	HONK_BUSTER,
+	HONK,	
 
 	CLOUD,
 
@@ -222,9 +221,7 @@ export abstract class Constants {
 
 		new SoundTemplate(SoundType.TRASH_CAN_HIT, "trashcan_hit_1.mp3"),
 		new SoundTemplate(SoundType.TRASH_CAN_HIT, "trashcan_hit_2.mp3"),
-		new SoundTemplate(SoundType.TRASH_CAN_HIT, "trashcan_hit_3.mp3"),
-		new SoundTemplate(SoundType.TRASH_CAN_HIT, "trashcan_hit_4.mp3"),
-		new SoundTemplate(SoundType.TRASH_CAN_HIT, "trashcan_hit_5.mp3"),
+		new SoundTemplate(SoundType.TRASH_CAN_HIT, "trashcan_hit_3.mp3"),		
 
 		new SoundTemplate(SoundType.ROCKET_LAUNCH, "rocket_launch_1.mp3"),
 		new SoundTemplate(SoundType.ROCKET_LAUNCH, "rocket_launch_2.mp3"),

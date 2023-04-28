@@ -2,7 +2,7 @@ import { BlurFilter, Container, Graphics, Texture } from "pixi.js";
 import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
 import { GameObject } from './GameObject';
-import { Constants, ConstructType, PowerUpType, RotationDirection, SoundType } from './Constants';
+import { Constants, ConstructType, PlayerHonkBombTemplate, PowerUpType, RotationDirection, SoundType } from './Constants';
 import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
 import { PlayerBalloon } from "./PlayerBalloon";
@@ -32,6 +32,7 @@ import { UfoEnemy } from "./UfoEnemy";
 import { UfoEnemyRocket } from "./UfoEnemyRocket";
 import { SoundManager } from "./SoundManager";
 import { GameOverScene } from "./GameOverScene";
+import { PlayerHonkBombExplosion } from "./PlayerHonkBombExplosion";
 
 
 export class GameScene extends Container implements IScene {
@@ -165,7 +166,6 @@ export class GameScene extends Container implements IScene {
 
 		this.spawnSideWalksTop();
 		this.spawnHedgesTop();
-		//this.spawnHeavyBillboardsTop();
 		this.spawnLightBillboardsTop();
 		this.spawnTreesTop();
 		this.spawnLampsTop();
@@ -182,6 +182,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnLightBillboardsBottom();
 
 		this.spawnPlayerHonkBombs();
+		this.spawnPlayerHonkBombExplosions();
 		this.spawnPlayerRockets();
 		this.spawnPlayerRocketBullsEyes();
 		this.spawnPlayerBalloon();
@@ -235,7 +236,11 @@ export class GameScene extends Container implements IScene {
 
 		this._sceneContainer.alpha = 0;
 
-		this.generateInGameMessage("Drop bombs on the honkers");
+		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
+			case 0: { this.generateInGameMessage("Drop crackers on the honkers"); } break;
+			case 1: { this.generateInGameMessage("Drop garbage on the honkers"); } break;
+			default:
+		}
 	}
 
 	//#endregion
@@ -2711,16 +2716,18 @@ export class GameScene extends Container implements IScene {
 
 	private generateHonk(source: GameObject) {
 
-		var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
+		if (source.getLeft() > 0 && source.getTop() > 0) {
+			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
 
-		if (gameObject) {
+			if (gameObject) {
 
-			var honk = gameObject as Honk;
-			honk.reset();
-			honk.reposition(source);
-			honk.setPopping();
+				var honk = gameObject as Honk;
+				honk.reset();
+				honk.reposition(source);
+				honk.setPopping();
 
-			gameObject.enableRendering();
+				gameObject.enableRendering();
+			}
 		}
 	}
 
@@ -2860,8 +2867,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region PlayerHonkBombs
 
-	private playerHonkBombSizeWidth: number = 45;
-	private playerHonkBombSizeHeight: number = 45;
+	private playerHonkBombSizeWidth: number = 50;
+	private playerHonkBombSizeHeight: number = 50;
 
 	private playerHonkBombGameObjects: Array<GameObject> = [];
 	private playerHonkBusterTemplate: number = 0;
@@ -2925,17 +2932,27 @@ export class GameScene extends Container implements IScene {
 
 					if (playerHonkBomb.isBlasting) {
 
-						playerHonkBomb.expand();
-						playerHonkBomb.fade();
-						playerHonkBomb.moveDownRight();
+						playerHonkBomb.fade();					
 
+						switch (playerHonkBomb.playerHonkBombTemplate) {
+							case PlayerHonkBombTemplate.Cracker: {
+								playerHonkBomb.shrink();								
+							} break;
+							case PlayerHonkBombTemplate.TrashCan: {								
+								playerHonkBomb.moveUpRight();
+								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
+							} break;
+							default:
+						}
 					}
 					else {
 
 						playerHonkBomb.move();
 						playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
 
-						if (playerHonkBomb.depleteBlastDelay()) {
+						if (playerHonkBomb.awaitBlast()) {
+
+							this.generatePlayerHonkBombExplosion(playerHonkBomb);
 
 							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
 
@@ -2952,7 +2969,74 @@ export class GameScene extends Container implements IScene {
 					}
 				}
 
-				if (gameObject.hasFaded()) {
+				if (gameObject.hasFaded() || gameObject.hasShrinked() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region PlayerHonkBombExplosions
+
+	private PlayerHonkBombExplosionSizeWidth: number = 130;
+	private PlayerHonkBombExplosionSizeHeight: number = 130;
+
+	private PlayerHonkBombExplosionGameObjects: Array<GameObject> = [];
+
+	spawnPlayerHonkBombExplosions() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: PlayerHonkBombExplosion = new PlayerHonkBombExplosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2);
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.BLAST));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.PlayerHonkBombExplosionSizeWidth;
+			sprite.height = this.PlayerHonkBombExplosionSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.PlayerHonkBombExplosionGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generatePlayerHonkBombExplosion(source: GameObject) {
+
+		var gameObject = this.PlayerHonkBombExplosionGameObjects.find(x => x.isAnimating == false);
+
+		if (gameObject) {
+
+			var PlayerHonkBombExplosion = gameObject as PlayerHonkBombExplosion;
+			PlayerHonkBombExplosion.reset(this.playerHonkBusterTemplate);
+			PlayerHonkBombExplosion.reposition(source);
+			PlayerHonkBombExplosion.setPopping();
+
+			gameObject.enableRendering();
+
+			this._player.setAttackStance();
+		}
+	}
+
+	animatePlayerHonkBombExplosions() {
+
+		var animatingHonkBombs = this.PlayerHonkBombExplosionGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingHonkBombs) {
+
+			animatingHonkBombs.forEach(gameObject => {
+
+				gameObject.pop();
+				gameObject.fade();
+				gameObject.moveDownRight();
+
+				if (gameObject.hasFaded() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
@@ -3622,7 +3706,7 @@ export class GameScene extends Container implements IScene {
 
 			this._roadBackgroundNight.width = SceneManager.width;
 			this._roadBackgroundNight.height = SceneManager.height;
-		}		
+		}
 	}
 
 	private levelUp() {
@@ -3700,6 +3784,7 @@ export class GameScene extends Container implements IScene {
 		}
 
 		this.animatePlayerHonkBombs();
+		this.animatePlayerHonkBombExplosions();
 		this.animatePlayerRockets();
 		this.animatePlayerRocketBullsEyes();
 

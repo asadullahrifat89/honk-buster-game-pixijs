@@ -19,3 +19,4 @@ export class Honk extends GameObject {
 		this.y = source.y;
 	}
 }
+
