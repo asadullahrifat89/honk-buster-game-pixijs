@@ -222,6 +222,7 @@ export class GameController extends Container {
 		this.keyboard.update();
 
 		if (!this.joystickActivated) {
+
 			if (this.keyboard.isKeyDown('ArrowLeft', 'KeyA')) {
 				this.isMoveLeft = true;
 				this.isMoveRight = false;
