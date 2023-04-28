@@ -173,7 +173,7 @@ export enum SoundType {
 	AMBIENCE,
 
 	UFO_BOSS_ENTRY,
-	UFO_HOVERING,
+	UFO_BOSS_HOVERING,
 	UFO_BOSS_DEAD,
 
 	POWERUP_PICKUP,
@@ -271,9 +271,9 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.AMBIENCE, "ambience_2.mp3"),
 		new SoundTemplate(SoundType.AMBIENCE, "ambience_3.mp3"),
 
-		new SoundTemplate(SoundType.UFO_HOVERING, "ufo_boss_hovering_1.mp3"),
-		new SoundTemplate(SoundType.UFO_HOVERING, "ufo_boss_hovering_2.mp3"),
-		new SoundTemplate(SoundType.UFO_HOVERING, "ufo_boss_hovering_3.mp3"),
+		new SoundTemplate(SoundType.UFO_BOSS_HOVERING, "ufo_boss_hovering_1.mp3"),
+		new SoundTemplate(SoundType.UFO_BOSS_HOVERING, "ufo_boss_hovering_2.mp3"),
+		new SoundTemplate(SoundType.UFO_BOSS_HOVERING, "ufo_boss_hovering_3.mp3"),
 
 		new SoundTemplate(SoundType.UFO_BOSS_ENTRY, "ufo_boss_entry_1.mp3"),
 		new SoundTemplate(SoundType.UFO_BOSS_ENTRY, "ufo_boss_entry_2.mp3"),

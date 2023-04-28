@@ -22,7 +22,7 @@ export class LoaderScene extends Container implements IScene {
 
 		// the fill of the bar.
 		this.loaderBarFill = new Graphics();
-		this.loaderBarFill.beginFill(0x008881, 1);
+		this.loaderBarFill.beginFill(0x5fc4f8, 1);
 		this.loaderBarFill.drawRoundedRect(0, 0, loaderBarWidth, 50, 10);
 		this.loaderBarFill.endFill();
 		this.loaderBarFill.scale.x = 0; // we draw the filled bar and with scale we set the %
