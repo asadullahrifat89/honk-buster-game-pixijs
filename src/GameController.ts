@@ -183,12 +183,12 @@ export class GameController extends Container {
 		this.addChild(this.joystick);
 
 		const attackButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
-		attackButtonSpritebg.height = 130;
-		attackButtonSpritebg.width = 130;
+		attackButtonSpritebg.height = 125;
+		attackButtonSpritebg.width = 125;
 
 		const attackButtonSprite: GameObjectSprite = new GameObjectSprite(Texture.from("attack_button"));
-		attackButtonSprite.height = 80;
-		attackButtonSprite.width = 80;
+		attackButtonSprite.height = 65;
+		attackButtonSprite.width = 65;
 		attackButtonSprite.x = attackButtonSpritebg.width / 2 - attackButtonSprite.width / 2;
 		attackButtonSprite.y = attackButtonSpritebg.height / 2 - attackButtonSprite.height / 2;
 
@@ -245,18 +245,18 @@ export class GameController extends Container {
 		this.setPauseButtonPosition();
 	}
 
-    private setPauseButtonPosition() {
-        this.pauseButton.x = SceneManager.width - this.pauseButton.width;
-        this.pauseButton.y = this.pauseButton.height / 2.5;
-    }
+	private setPauseButtonPosition() {
+		this.pauseButton.x = SceneManager.width - this.pauseButton.width * 1.1;
+		this.pauseButton.y = this.pauseButton.height / 2.2;
+	}
 
-    private setAttackButtonPosition() {
-        this.attackButton.x = this.attackButton.width / 2;
-        this.attackButton.y = SceneManager.height - this.attackButton.height * 1.3;
-    }
+	private setAttackButtonPosition() {
+		this.attackButton.x = this.attackButton.width / 2;
+		this.attackButton.y = SceneManager.height - this.attackButton.height * 1.3;
+	}
 
-    private setJoystickPosition() {
-        this.joystick.x = SceneManager.width - this.joystick.width / 1.4;
-        this.joystick.y = SceneManager.height - this.joystick.height / 1.4;
-    }
+	private setJoystickPosition() {
+		this.joystick.x = SceneManager.width - this.joystick.width / 1.4;
+		this.joystick.y = SceneManager.height - this.joystick.height / 1.4;
+	}
 }

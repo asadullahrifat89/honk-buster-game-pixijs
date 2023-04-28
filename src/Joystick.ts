@@ -57,7 +57,7 @@ export class Joystick extends Container {
 
 		this.addChild(this.outer);
 		this.addChild(this.inner);
-		
+
 		this.outerRadius = this.width / 2.5;
 		this.innerRadius = this.inner.width / 2;
 
@@ -73,8 +73,11 @@ export class Joystick extends Container {
 		let power: number;
 		let startPosition: Point;
 
-		function onDragStart(event: FederatedPointerEvent) {			
-			startPosition = event.getLocalPosition(that);
+		function onDragStart(_event: FederatedPointerEvent) {
+			/*startPosition = event.getLocalPosition(that);*/
+			startPosition = new Point(0, 0);
+
+			//console.log(startPosition);
 
 			dragging = true;
 			that.inner.alpha = 1;
@@ -95,7 +98,7 @@ export class Joystick extends Container {
 
 		function onDragMove(event: FederatedPointerEvent) {
 			if (dragging == false) { return; }
-			
+
 			let newPosition = event.getLocalPosition(that);
 
 			let sideX = newPosition.x - startPosition.x;
@@ -113,6 +116,7 @@ export class Joystick extends Container {
 			//else {
 			//	calRadius = that.outerRadius - that.innerRadius;
 			//}
+
 			/**
 			 * x:   -1 <-> 1
 			 * y:   -1 <-> 1
@@ -125,6 +129,7 @@ export class Joystick extends Container {
 			 *          |
 			 *          |
 			 */
+
 			let direction = Direction.LEFT;
 
 			if (sideX == 0) {
