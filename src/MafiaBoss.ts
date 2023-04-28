@@ -5,19 +5,19 @@ import { UfoBossBase } from './UfoBossBase';
 
 export class MafiaBoss extends UfoBossBase {
 
-	private _mafiaBossIdleTexture: Texture = Constants.getRandomTexture(ConstructType.MAFIA_BOSS_IDLE);
-	private _mafiaBossWinTexture: Texture = Constants.getRandomTexture(ConstructType.MAFIA_BOSS_WIN);
-	private _mafiaBossHitTexture: Texture = Constants.getRandomTexture(ConstructType.MAFIA_BOSS_HIT);
+	private mafiaBossIdleTexture: Texture = Constants.getRandomTexture(ConstructType.MAFIA_BOSS_IDLE);
+	private mafiaBossWinTexture: Texture = Constants.getRandomTexture(ConstructType.MAFIA_BOSS_WIN);
+	private mafiaBossHitTexture: Texture = Constants.getRandomTexture(ConstructType.MAFIA_BOSS_HIT);
 
-	private _changeMovementPatternDelay: number = 0;
+	private changeMovementPatternDelay: number = 0;
 
-	private _hitStanceDelay: number = 0;
-	private readonly _hitStanceDelayDefault: number = 1.5;
+	private hitStanceDelay: number = 0;
+	private readonly hitStanceDelayDefault: number = 1.5;
 
-	private _winStanceDelay: number = 0;
-	private readonly _winStanceDelayDefault: number = 8;
+	private winStanceDelay: number = 0;
+	private readonly winStanceDelayDefault: number = 8;
 
-	private _movementDirection: MovementDirection = MovementDirection.None;
+	private movementDirection: MovementDirection = MovementDirection.None;
 
 	private mafiaBossStance: BossStance = BossStance.Idle;
 	private movementPattern: MafiaBossMovementPattern = MafiaBossMovementPattern.PLAYER_SEEKING;
@@ -29,14 +29,14 @@ export class MafiaBoss extends UfoBossBase {
 	override reset() {
 		super.reset();
 		this.mafiaBossStance = BossStance.Idle;
-		this.setTexture(this._mafiaBossIdleTexture);
+		this.setTexture(this.mafiaBossIdleTexture);
 		this.scale.set(1);
 		this.randomizeMovementPattern();
 	}
 
 	randomizeMovementPattern() {
-		this._changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
-		this._movementDirection = MovementDirection.None;
+		this.changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
+		this.movementDirection = MovementDirection.None;
 		this.movementPattern = Constants.getRandomNumber(0, 3);
 	}
 
@@ -44,47 +44,47 @@ export class MafiaBoss extends UfoBossBase {
 		if (this.mafiaBossStance != BossStance.Win) {
 			this.mafiaBossStance = BossStance.Hit;
 
-			this.setTexture(this._mafiaBossHitTexture);
+			this.setTexture(this.mafiaBossHitTexture);
 
-			this._hitStanceDelay = this._hitStanceDelayDefault;
+			this.hitStanceDelay = this.hitStanceDelayDefault;
 		}
 	}
 
 	setWinStance() {
 		this.mafiaBossStance = BossStance.Win;
-		this.setTexture(this._mafiaBossWinTexture);
-		this._winStanceDelay = this._winStanceDelayDefault;
+		this.setTexture(this.mafiaBossWinTexture);
+		this.winStanceDelay = this.winStanceDelayDefault;
 	}
 
 	setIdleStance() {
 		this.mafiaBossStance = BossStance.Idle;
-		this.setTexture(this._mafiaBossIdleTexture);
+		this.setTexture(this.mafiaBossIdleTexture);
 	}
 
 	depleteWinStance() {
-		if (this._winStanceDelay > 0) {
-			this._winStanceDelay -= 0.1;
+		if (this.winStanceDelay > 0) {
+			this.winStanceDelay -= 0.1;
 
-			if (this._winStanceDelay <= 0) {
+			if (this.winStanceDelay <= 0) {
 				this.setIdleStance();
 			}
 		}
 	}
 
 	depleteHitStance() {
-		if (this._hitStanceDelay > 0) {
-			this._hitStanceDelay -= 0.1;
+		if (this.hitStanceDelay > 0) {
+			this.hitStanceDelay -= 0.1;
 
-			if (this._hitStanceDelay <= 0) {
+			if (this.hitStanceDelay <= 0) {
 				this.setIdleStance();
 			}
 		}
 	}
 
 	override seekPlayer(target: Rectangle) {
-		this._changeMovementPatternDelay -= 0.1;
+		this.changeMovementPatternDelay -= 0.1;
 
-		if (this._changeMovementPatternDelay < 0) {
+		if (this.changeMovementPatternDelay < 0) {
 			this.randomizeMovementPattern();
 		}
 
@@ -92,34 +92,34 @@ export class MafiaBoss extends UfoBossBase {
 	}	
 
 	moveRightLeft(sceneWidth: number) {
-		this._changeMovementPatternDelay -= 0.1;
+		this.changeMovementPatternDelay -= 0.1;
 
-		if (this._changeMovementPatternDelay < 0) {
+		if (this.changeMovementPatternDelay < 0) {
 			this.randomizeMovementPattern();
 			return true;
 		}
 
-		if (this.isAttacking && this._movementDirection == MovementDirection.None) {
-			this._movementDirection = MovementDirection.Right;
+		if (this.isAttacking && this.movementDirection == MovementDirection.None) {
+			this.movementDirection = MovementDirection.Right;
 		}
 		else {
 			this.isAttacking = true;
 		}
 
 		if (this.isAttacking) {
-			if (this._movementDirection == MovementDirection.Right) {
+			if (this.movementDirection == MovementDirection.Right) {
 				this.moveRight();
 
 				if (this.getRight() > sceneWidth) {
-					this._movementDirection = MovementDirection.Left;
+					this.movementDirection = MovementDirection.Left;
 				}
 			}
 			else {
-				if (this._movementDirection == MovementDirection.Left) {
+				if (this.movementDirection == MovementDirection.Left) {
 					this.moveLeft();
 
 					if (this.getLeft() < 0) {
-						this._movementDirection = MovementDirection.Right;
+						this.movementDirection = MovementDirection.Right;
 					}
 				}
 			}
@@ -129,34 +129,34 @@ export class MafiaBoss extends UfoBossBase {
 	}
 
 	moveUpDown(sceneHeight: number) {
-		this._changeMovementPatternDelay -= 0.1;
+		this.changeMovementPatternDelay -= 0.1;
 
-		if (this._changeMovementPatternDelay < 0) {
+		if (this.changeMovementPatternDelay < 0) {
 			this.randomizeMovementPattern();
 			return true;
 		}
 
-		if (this.isAttacking && this._movementDirection == MovementDirection.None) {
-			this._movementDirection = MovementDirection.Up;
+		if (this.isAttacking && this.movementDirection == MovementDirection.None) {
+			this.movementDirection = MovementDirection.Up;
 		}
 		else {
 			this.isAttacking = true;
 		}
 
 		if (this.isAttacking) {
-			if (this._movementDirection == MovementDirection.Up) {
+			if (this.movementDirection == MovementDirection.Up) {
 				this.moveUp();
 
 				if (this.getTop() - this.height / 2 < 0) {
-					this._movementDirection = MovementDirection.Down;
+					this.movementDirection = MovementDirection.Down;
 				}
 			}
 			else {
-				if (this._movementDirection == MovementDirection.Down) {
+				if (this.movementDirection == MovementDirection.Down) {
 					this.moveDown();
 
 					if (this.getBottom() > sceneHeight) {
-						this._movementDirection = MovementDirection.Up;
+						this.movementDirection = MovementDirection.Up;
 					}
 				}
 			}
@@ -166,49 +166,49 @@ export class MafiaBoss extends UfoBossBase {
 	}
 
 	moveInRectangularSquares(sceneWidth: number, sceneHeight: number) {
-		this._changeMovementPatternDelay -= 0.1;
+		this.changeMovementPatternDelay -= 0.1;
 
-		if (this._changeMovementPatternDelay < 0) {
+		if (this.changeMovementPatternDelay < 0) {
 			this.randomizeMovementPattern();
 			return true;
 		}
 
-		if (this.isAttacking && this._movementDirection == MovementDirection.None) {
-			this._movementDirection = MovementDirection.Up;
+		if (this.isAttacking && this.movementDirection == MovementDirection.None) {
+			this.movementDirection = MovementDirection.Up;
 		}
 		else {
 			this.isAttacking = true;
 		}
 
-		if (this._movementDirection == MovementDirection.Up) {
+		if (this.movementDirection == MovementDirection.Up) {
 			this.moveUp();
 
 			if (this.getTop() - this.height / 2 < 0) {
-				this._movementDirection = MovementDirection.Right;
+				this.movementDirection = MovementDirection.Right;
 			}
 		}
 		else {
-			if (this._movementDirection == MovementDirection.Right) {
+			if (this.movementDirection == MovementDirection.Right) {
 				this.moveRight();
 
 				if (this.getRight() > sceneWidth) {
-					this._movementDirection = MovementDirection.Down;
+					this.movementDirection = MovementDirection.Down;
 				}
 			}
 			else {
-				if (this._movementDirection == MovementDirection.Down) {
+				if (this.movementDirection == MovementDirection.Down) {
 					this.moveDown();
 
 					if (this.getBottom() > sceneHeight) {
-						this._movementDirection = MovementDirection.Left;
+						this.movementDirection = MovementDirection.Left;
 					}
 				}
 				else {
-					if (this._movementDirection == MovementDirection.Left) {
+					if (this.movementDirection == MovementDirection.Left) {
 						this.moveLeft();
 
 						if (this.getLeft() - this.width < 0) {
-							this._movementDirection = MovementDirection.Up;
+							this.movementDirection = MovementDirection.Up;
 						}
 					}
 				}

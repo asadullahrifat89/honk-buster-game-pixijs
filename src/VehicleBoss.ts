@@ -5,8 +5,8 @@ import { VehicleBossBase } from './VehicleBossBase';
 
 export class VehicleBoss extends VehicleBossBase {
 
-    private _movementDirection: MovementDirection = MovementDirection.None;
-    private _changeMovementPatternDelay: number = 0;
+    private movementDirection: MovementDirection = MovementDirection.None;
+    private changeMovementPatternDelay: number = 0;
 
     constructor(speed: number) {
         super(speed);        
@@ -40,8 +40,8 @@ export class VehicleBoss extends VehicleBossBase {
 
     randomizeMovementPattern() {
         this.speed = Constants.getRandomNumber(Constants.DEFAULT_CONSTRUCT_SPEED, Constants.DEFAULT_CONSTRUCT_SPEED + 2);
-        this._changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
-        this._movementDirection = MovementDirection.None;
+        this.changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
+        this.movementDirection = MovementDirection.None;
     }
 
     move(
@@ -52,35 +52,35 @@ export class VehicleBoss extends VehicleBossBase {
 
     moveUpLeftDownRight(sceneWidth: number, sceneHeight: number) {
 
-        this._changeMovementPatternDelay -= 0.1;
+        this.changeMovementPatternDelay -= 0.1;
 
-        if (this._changeMovementPatternDelay < 0) {
+        if (this.changeMovementPatternDelay < 0) {
             this.randomizeMovementPattern();
             return true;
         }
 
-        if (this.isAttacking && this._movementDirection == MovementDirection.None) {
-            this._movementDirection = MovementDirection.UpLeft;
+        if (this.isAttacking && this.movementDirection == MovementDirection.None) {
+            this.movementDirection = MovementDirection.UpLeft;
         }
         else {
             this.isAttacking = true;
         }
 
         if (this.isAttacking) {
-            if (this._movementDirection == MovementDirection.UpLeft) {
+            if (this.movementDirection == MovementDirection.UpLeft) {
                 this.moveUpLeft();
 
                 if (this.getBottom() < 0 || this.getRight() < 0) {
                     this.reposition();
-                    this._movementDirection = MovementDirection.DownRight;
+                    this.movementDirection = MovementDirection.DownRight;
                 }
             }
             else {
-                if (this._movementDirection == MovementDirection.DownRight) {
+                if (this.movementDirection == MovementDirection.DownRight) {
                     this.moveDownRight();
 
                     if (this.getLeft() > sceneWidth || this.getTop() > sceneHeight) {
-                        this._movementDirection = MovementDirection.UpLeft;
+                        this.movementDirection = MovementDirection.UpLeft;
                     }
                 }
             }

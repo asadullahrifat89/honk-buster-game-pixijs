@@ -20,10 +20,11 @@ export class GameController extends Container {
 	public isMoveRight: boolean = false;
 	public isAttacking: boolean = false;
 	public isPaused: boolean = false;
+	public power: number = 1;
 
 	private joystickActivated: boolean = false;
 	private keyboardActivated: boolean = false;
-	public power: number = 1;
+
 	private settings: GameControllerSettings;
 
 	private attackButton: Button;
@@ -43,15 +44,21 @@ export class GameController extends Container {
 			this.joystick.alpha = 1;
 			this.attackButton.alpha = 1;
 		});
+
 		this.keyboard.events.on('pressed', null, () => {
 
-			if (!this.isPaused && this.keyboard.isKeyPressed('Space')) {
-				this.isAttacking = true;
+			if (!this.isPaused) {
+				if (this.keyboard.isKeyPressed('Space')) {
+					this.isAttacking = true;
+				}
+				else {
+					this.power = 0.1;
+				}
 			}
 
-			this.keyboardActivated = true;
+			this.keyboardActivated = true;			
 
-			if (this.keyboardActivated) {
+			if (this.keyboardActivated && !this.joystickActivated) {
 				this.joystick.alpha = 0;
 				this.attackButton.alpha = 0;
 			}
@@ -221,34 +228,58 @@ export class GameController extends Container {
 		this.keyboard.update();
 
 		if (!this.joystickActivated) {
+
 			if (this.keyboard.isKeyDown('ArrowLeft', 'KeyA')) {
-				this.isMoveLeft = true; this.isMoveRight = false;
+				this.isMoveLeft = true;
+				this.isMoveRight = false;
+
+				this.increasePowerOnKeyboardPress();
 			}
 			else {
 				this.isMoveLeft = false;
 			}
 
 			if (this.keyboard.isKeyDown('ArrowRight', 'KeyD')) {
-				this.isMoveRight = true; this.isMoveLeft = false;
+				this.isMoveRight = true;
+				this.isMoveLeft = false;
+
+				this.increasePowerOnKeyboardPress();
 			}
 			else {
 				this.isMoveRight = false;
 			}
 
 			if (this.keyboard.isKeyDown('ArrowUp', 'KeyW')) {
-				this.isMoveUp = true; this.isMoveDown = false;
+				this.isMoveUp = true;
+				this.isMoveDown = false;
+
+				this.increasePowerOnKeyboardPress();
 			}
 			else {
 				this.isMoveUp = false;
 			}
 
 			if (this.keyboard.isKeyDown('ArrowDown', 'KeyS')) {
-				this.isMoveDown = true; this.isMoveUp = false;
+				this.isMoveDown = true;
+				this.isMoveUp = false;
+
+				this.increasePowerOnKeyboardPress();
 			}
 			else {
 				this.isMoveDown = false;
 			}
 		}
+
+		if (!this.isMoveLeft && !this.isMoveRight && !this.isMoveUp && !this.isMoveDown) {
+			this.power = 1;
+		}
+	}
+
+	private increasePowerOnKeyboardPress() {
+		if (this.power < 1)
+			this.power += 0.1;
+
+		//console.log(this.power);
 	}
 
 	resize() {

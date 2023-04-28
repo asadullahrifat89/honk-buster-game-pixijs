@@ -6,8 +6,8 @@ import { VehicleBoss } from './VehicleBoss';
 
 export class VehicleBossRocket extends GameObject {
 
-	private _autoBlastDelay: number = 0;
-	private readonly _autoBlastDelayDefault: number = 9;
+	private autoBlastDelay: number = 0;
+	private readonly autoBlastDelayDefault: number = 9;
 
 	constructor(speed: number) {
 		super(speed);
@@ -20,7 +20,7 @@ export class VehicleBossRocket extends GameObject {
 
 		this.isBlasting = false;
 		this.setTexture(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
-		this._autoBlastDelay = this._autoBlastDelayDefault;
+		this.autoBlastDelay = this.autoBlastDelayDefault;
 
 		SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
 	}
@@ -38,8 +38,8 @@ export class VehicleBossRocket extends GameObject {
 	}
 
 	autoBlast(): boolean {
-		this._autoBlastDelay -= 0.1;
-		if (this._autoBlastDelay <= 0)
+		this.autoBlastDelay -= 0.1;
+		if (this.autoBlastDelay <= 0)
 			return true;
 
 		return false;

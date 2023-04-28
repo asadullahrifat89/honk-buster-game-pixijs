@@ -4,7 +4,7 @@ import { VehicleBase } from './VehicleBase';
 
 export class UfoEnemy extends VehicleBase {
 
-	private _attackDelay: number = 0;
+	private attackDelay: number = 0;
 
 	constructor(speed: number) {
 		super(speed);
@@ -28,9 +28,9 @@ export class UfoEnemy extends VehicleBase {
 
 	attack(): boolean {
 		if (!this.isDead()) {
-			this._attackDelay--;
+			this.attackDelay--;
 
-			if (this._attackDelay < 0) {
+			if (this.attackDelay < 0) {
 				this.setAttackDelay();
 				return true;
 			}
@@ -40,7 +40,7 @@ export class UfoEnemy extends VehicleBase {
 	}
 
 	setAttackDelay() {
-		this._attackDelay = Constants.getRandomNumber(50, 80);
+		this.attackDelay = Constants.getRandomNumber(50, 80);
 	}
 
 	looseHealth() {

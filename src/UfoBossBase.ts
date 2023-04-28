@@ -6,8 +6,8 @@ export class UfoBossBase extends GameObject {
 
 	public isAttacking: boolean = false;
 
-	private readonly _grace: number = 7;
-	private readonly _lag: number = 125;
+	private readonly grace: number = 7;
+	private readonly lag: number = 125;
 
 	reset() {
 		this.alpha = 1;
@@ -35,7 +35,7 @@ export class UfoBossBase extends GameObject {
 		let targetMiddleY = target.y + target.height / 2;
 
 		// move up
-		if (targetMiddleY < bossMiddleY - this._grace) {
+		if (targetMiddleY < bossMiddleY - this.grace) {
 			var distance = Math.abs(targetMiddleY - bossMiddleY);
 			let speed = this.getFlightSpeed(distance);
 
@@ -43,7 +43,7 @@ export class UfoBossBase extends GameObject {
 		}
 
 		// move left
-		if (targetMiddleX < bossMiddleX - this._grace) {
+		if (targetMiddleX < bossMiddleX - this.grace) {
 			var distance = Math.abs(targetMiddleX - bossMiddleX);
 			let speed = this.getFlightSpeed(distance);
 
@@ -51,7 +51,7 @@ export class UfoBossBase extends GameObject {
 		}
 
 		// move down
-		if (targetMiddleY > bossMiddleY + this._grace) {
+		if (targetMiddleY > bossMiddleY + this.grace) {
 			var distance = Math.abs(targetMiddleY - bossMiddleY);
 			let speed = this.getFlightSpeed(distance);
 
@@ -59,7 +59,7 @@ export class UfoBossBase extends GameObject {
 		}
 
 		// move right
-		if (targetMiddleX > bossMiddleX + this._grace) {
+		if (targetMiddleX > bossMiddleX + this.grace) {
 			var distance = Math.abs(targetMiddleX - bossMiddleX);
 			let speed = this.getFlightSpeed(distance);
 
@@ -68,7 +68,7 @@ export class UfoBossBase extends GameObject {
 	}
 
 	getFlightSpeed(distance: number) {
-		var flightSpeed = distance / this._lag;
+		var flightSpeed = distance / this.lag;
 		return flightSpeed;
 	}
 }

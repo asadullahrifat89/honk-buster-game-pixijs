@@ -5,19 +5,19 @@ import { UfoBossBase } from './UfoBossBase';
 
 export class UfoBoss extends UfoBossBase {
 
-	private _ufoBossIdleTexture: Texture = Constants.getRandomTexture(ConstructType.UFO_BOSS_IDLE);
-	private _ufoBossWinTexture: Texture = Constants.getRandomTexture(ConstructType.UFO_BOSS_WIN);
-	private _ufoBossHitTexture: Texture = Constants.getRandomTexture(ConstructType.UFO_BOSS_HIT);
+	private ufoBossIdleTexture: Texture = Constants.getRandomTexture(ConstructType.UFO_BOSS_IDLE);
+	private ufoBossWinTexture: Texture = Constants.getRandomTexture(ConstructType.UFO_BOSS_WIN);
+	private ufoBossHitTexture: Texture = Constants.getRandomTexture(ConstructType.UFO_BOSS_HIT);
 
-	private _changeMovementPatternDelay: number = 0;
+	private changeMovementPatternDelay: number = 0;
 
-	private _hitStanceDelay: number = 0;
-	private readonly _hitStanceDelayDefault: number = 1.5;
+	private hitStanceDelay: number = 0;
+	private readonly hitStanceDelayDefault: number = 1.5;
 
-	private _winStanceDelay: number = 0;
-	private readonly _winStanceDelayDefault: number = 8;
+	private winStanceDelay: number = 0;
+	private readonly winStanceDelayDefault: number = 8;
 
-	private _movementDirection: MovementDirection = MovementDirection.None;
+	private movementDirection: MovementDirection = MovementDirection.None;
 
 	private ufoBossStance: BossStance = BossStance.Idle;
 	public movementPattern: UfoBossMovementPattern = UfoBossMovementPattern.ISOMETRIC_SQUARE;
@@ -29,14 +29,14 @@ export class UfoBoss extends UfoBossBase {
 	override reset() {
 		super.reset();
 		this.ufoBossStance = BossStance.Idle;
-		this.setTexture(this._ufoBossIdleTexture);
+		this.setTexture(this.ufoBossIdleTexture);
 		this.scale.set(1);
 		this.randomizeMovementPattern();
 	}
 
 	randomizeMovementPattern() {
-		this._changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
-		this._movementDirection = MovementDirection.None;
+		this.changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
+		this.movementDirection = MovementDirection.None;
 		this.movementPattern = Constants.getRandomNumber(0, 5);
 	}
 
@@ -44,47 +44,47 @@ export class UfoBoss extends UfoBossBase {
 		if (this.ufoBossStance != BossStance.Win) {
 			this.ufoBossStance = BossStance.Hit;
 
-			this.setTexture(this._ufoBossHitTexture);
+			this.setTexture(this.ufoBossHitTexture);
 
-			this._hitStanceDelay = this._hitStanceDelayDefault;
+			this.hitStanceDelay = this.hitStanceDelayDefault;
 		}
 	}
 
 	setWinStance() {
 		this.ufoBossStance = BossStance.Win;
-		this.setTexture(this._ufoBossWinTexture);
-		this._winStanceDelay = this._winStanceDelayDefault;
+		this.setTexture(this.ufoBossWinTexture);
+		this.winStanceDelay = this.winStanceDelayDefault;
 	}
 
 	setIdleStance() {
 		this.ufoBossStance = BossStance.Idle;
-		this.setTexture(this._ufoBossIdleTexture);
+		this.setTexture(this.ufoBossIdleTexture);
 	}
 
 	depleteWinStance() {
-		if (this._winStanceDelay > 0) {
-			this._winStanceDelay -= 0.1;
+		if (this.winStanceDelay > 0) {
+			this.winStanceDelay -= 0.1;
 
-			if (this._winStanceDelay <= 0) {
+			if (this.winStanceDelay <= 0) {
 				this.setIdleStance();
 			}
 		}
 	}
 
 	depleteHitStance() {
-		if (this._hitStanceDelay > 0) {
-			this._hitStanceDelay -= 0.1;
+		if (this.hitStanceDelay > 0) {
+			this.hitStanceDelay -= 0.1;
 
-			if (this._hitStanceDelay <= 0) {
+			if (this.hitStanceDelay <= 0) {
 				this.setIdleStance();
 			}
 		}
 	}
 
 	override seekPlayer(target: Rectangle) {
-		this._changeMovementPatternDelay -= 0.1;
+		this.changeMovementPatternDelay -= 0.1;
 
-		if (this._changeMovementPatternDelay < 0) {
+		if (this.changeMovementPatternDelay < 0) {
 			this.randomizeMovementPattern();
 		}
 
@@ -92,50 +92,50 @@ export class UfoBoss extends UfoBossBase {
 	}	
 
 	moveInIsometricSquares(sceneWidth: number, sceneHeight: number) {
-		this._changeMovementPatternDelay -= 0.1;
+		this.changeMovementPatternDelay -= 0.1;
 
-		if (this._changeMovementPatternDelay < 0) {
+		if (this.changeMovementPatternDelay < 0) {
 			this.randomizeMovementPattern();
 			return true;
 		}
 
-		if (this.isAttacking && this._movementDirection == MovementDirection.None) {
-			this._movementDirection = MovementDirection.UpRight;
+		if (this.isAttacking && this.movementDirection == MovementDirection.None) {
+			this.movementDirection = MovementDirection.UpRight;
 		}
 		else {
 			this.isAttacking = true;
 		}
 
 		if (this.isAttacking) {
-			if (this._movementDirection == MovementDirection.UpRight) {
+			if (this.movementDirection == MovementDirection.UpRight) {
 				this.moveUpRight();
 
 				if (this.getTop() < 0) {
-					this._movementDirection = MovementDirection.DownRight;
+					this.movementDirection = MovementDirection.DownRight;
 				}
 			}
 			else {
-				if (this._movementDirection == MovementDirection.DownRight) {
+				if (this.movementDirection == MovementDirection.DownRight) {
 					this.moveDownRight();
 
 					if (this.getRight() > sceneWidth || this.getBottom() > sceneHeight) {
-						this._movementDirection = MovementDirection.DownLeft;
+						this.movementDirection = MovementDirection.DownLeft;
 					}
 				}
 				else {
-					if (this._movementDirection == MovementDirection.DownLeft) {
+					if (this.movementDirection == MovementDirection.DownLeft) {
 						this.moveDownLeft();
 
 						if (this.getLeft() < 0 || this.getBottom() > sceneHeight) {
-							this._movementDirection = MovementDirection.UpLeft;
+							this.movementDirection = MovementDirection.UpLeft;
 						}
 					}
 					else {
-						if (this._movementDirection == MovementDirection.UpLeft) {
+						if (this.movementDirection == MovementDirection.UpLeft) {
 							this.moveUpLeft();
 
 							if (this.getTop() < 0 || this.getLeft() < 0) {
-								this._movementDirection = MovementDirection.UpRight;
+								this.movementDirection = MovementDirection.UpRight;
 							}
 						}
 					}
@@ -147,34 +147,34 @@ export class UfoBoss extends UfoBossBase {
 	}
 
 	moveUpRightDownLeft(sceneWidth: number, sceneHeight: number) {
-		this._changeMovementPatternDelay -= 0.1;
+		this.changeMovementPatternDelay -= 0.1;
 
-		if (this._changeMovementPatternDelay < 0) {
+		if (this.changeMovementPatternDelay < 0) {
 			this.randomizeMovementPattern();
 			return true;
 		}
 
-		if (this.isAttacking && this._movementDirection == MovementDirection.None) {
-			this._movementDirection = MovementDirection.UpRight;
+		if (this.isAttacking && this.movementDirection == MovementDirection.None) {
+			this.movementDirection = MovementDirection.UpRight;
 		}
 		else {
 			this.isAttacking = true;
 		}
 
 		if (this.isAttacking) {
-			if (this._movementDirection == MovementDirection.UpRight) {
+			if (this.movementDirection == MovementDirection.UpRight) {
 				this.moveUpRight();
 
 				if (this.getTop() < 0 || this.getLeft() > sceneWidth) {
-					this._movementDirection = MovementDirection.DownLeft;
+					this.movementDirection = MovementDirection.DownLeft;
 				}
 			}
 			else {
-				if (this._movementDirection == MovementDirection.DownLeft) {
+				if (this.movementDirection == MovementDirection.DownLeft) {
 					this.moveDownLeft();
 
 					if (this.getLeft() < 0 || this.getBottom() > sceneHeight) {
-						this._movementDirection = MovementDirection.UpRight;
+						this.movementDirection = MovementDirection.UpRight;
 					}
 				}
 			}
@@ -184,34 +184,34 @@ export class UfoBoss extends UfoBossBase {
 	}
 
 	moveUpLeftDownRight(sceneWidth: number, sceneHeight: number) {
-		this._changeMovementPatternDelay -= 0.1;
+		this.changeMovementPatternDelay -= 0.1;
 
-		if (this._changeMovementPatternDelay < 0) {
+		if (this.changeMovementPatternDelay < 0) {
 			this.randomizeMovementPattern();
 			return true;
 		}
 
-		if (this.isAttacking && this._movementDirection == MovementDirection.None) {
-			this._movementDirection = MovementDirection.UpLeft;
+		if (this.isAttacking && this.movementDirection == MovementDirection.None) {
+			this.movementDirection = MovementDirection.UpLeft;
 		}
 		else {
 			this.isAttacking = true;
 		}
 
 		if (this.isAttacking) {
-			if (this._movementDirection == MovementDirection.UpLeft) {
+			if (this.movementDirection == MovementDirection.UpLeft) {
 				this.moveUpLeft();
 
 				if (this.getTop() < 0 || this.getLeft() < 0) {
-					this._movementDirection = MovementDirection.DownRight;
+					this.movementDirection = MovementDirection.DownRight;
 				}
 			}
 			else {
-				if (this._movementDirection == MovementDirection.DownRight) {
+				if (this.movementDirection == MovementDirection.DownRight) {
 					this.moveDownRight();
 
 					if (this.getRight() > sceneWidth || this.getBottom() > sceneHeight) {
-						this._movementDirection = MovementDirection.UpLeft;
+						this.movementDirection = MovementDirection.UpLeft;
 					}
 				}
 			}
@@ -221,34 +221,34 @@ export class UfoBoss extends UfoBossBase {
 	}
 
 	moveRightLeft(sceneWidth: number) {
-		this._changeMovementPatternDelay -= 0.1;
+		this.changeMovementPatternDelay -= 0.1;
 
-		if (this._changeMovementPatternDelay < 0) {
+		if (this.changeMovementPatternDelay < 0) {
 			this.randomizeMovementPattern();
 			return true;
 		}
 
-		if (this.isAttacking && this._movementDirection == MovementDirection.None) {
-			this._movementDirection = MovementDirection.Right;
+		if (this.isAttacking && this.movementDirection == MovementDirection.None) {
+			this.movementDirection = MovementDirection.Right;
 		}
 		else {
 			this.isAttacking = true;
 		}
 
 		if (this.isAttacking) {
-			if (this._movementDirection == MovementDirection.Right) {
+			if (this.movementDirection == MovementDirection.Right) {
 				this.moveRight();
 
 				if (this.getRight() > sceneWidth) {
-					this._movementDirection = MovementDirection.Left;
+					this.movementDirection = MovementDirection.Left;
 				}
 			}
 			else {
-				if (this._movementDirection == MovementDirection.Left) {
+				if (this.movementDirection == MovementDirection.Left) {
 					this.moveLeft();
 
 					if (this.getLeft() < 0) {
-						this._movementDirection = MovementDirection.Right;
+						this.movementDirection = MovementDirection.Right;
 					}
 				}
 			}
@@ -258,34 +258,34 @@ export class UfoBoss extends UfoBossBase {
 	}
 
 	moveUpDown(sceneHeight: number) {
-		this._changeMovementPatternDelay -= 0.1;
+		this.changeMovementPatternDelay -= 0.1;
 
-		if (this._changeMovementPatternDelay < 0) {
+		if (this.changeMovementPatternDelay < 0) {
 			this.randomizeMovementPattern();
 			return true;
 		}
 
-		if (this.isAttacking && this._movementDirection == MovementDirection.None) {
-			this._movementDirection = MovementDirection.Up;
+		if (this.isAttacking && this.movementDirection == MovementDirection.None) {
+			this.movementDirection = MovementDirection.Up;
 		}
 		else {
 			this.isAttacking = true;
 		}
 
 		if (this.isAttacking) {
-			if (this._movementDirection == MovementDirection.Up) {
+			if (this.movementDirection == MovementDirection.Up) {
 				this.moveUp();
 
 				if (this.getTop() - this.height / 2 < 0) {
-					this._movementDirection = MovementDirection.Down;
+					this.movementDirection = MovementDirection.Down;
 				}
 			}
 			else {
-				if (this._movementDirection == MovementDirection.Down) {
+				if (this.movementDirection == MovementDirection.Down) {
 					this.moveDown();
 
 					if (this.getBottom() > sceneHeight) {
-						this._movementDirection = MovementDirection.Up;
+						this.movementDirection = MovementDirection.Up;
 					}
 				}
 			}

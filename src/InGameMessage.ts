@@ -4,11 +4,12 @@
 export class InGameMessage {
 
 	//private _textBlock: BitmapText;
-	private _textBlock: Text;
+	
 	public isAnimating: boolean = false;
 
-	private _messageOnScreenDelay: number = 0;
-	private readonly _messageOnScreenDelayDefault: number = 20;
+	private messageText: Text;
+	private messageOnScreenDelay: number = 0;
+	private readonly messageOnScreenDelayDefault: number = 20;
 
 	constructor(scene: Container) {
 
@@ -25,7 +26,7 @@ export class InGameMessage {
 		//	align: "center",
 		//});
 
-		this._textBlock = new Text("", {
+		this.messageText = new Text("", {
 			fontFamily: "gameplay",
 			align: "center",
 			fill: "#ffffff",
@@ -33,41 +34,41 @@ export class InGameMessage {
 		});
 
 		this.disableRendering();
-		scene.addChild(this._textBlock);
+		scene.addChild(this.messageText);
 	}
 
 	disableRendering() {
 		this.isAnimating = false;
-		this._textBlock.renderable = false;
+		this.messageText.renderable = false;
 	}
 
 	enableRendering() {
 		this.isAnimating = true;
-		this._textBlock.renderable = true;
+		this.messageText.renderable = true;
 	}
 
 	reset() {
-		this._messageOnScreenDelay = this._messageOnScreenDelayDefault;
+		this.messageOnScreenDelay = this.messageOnScreenDelayDefault;
 	}
 
 	depleteOnScreenDelay() {
-		this._messageOnScreenDelay -= 0.1;
+		this.messageOnScreenDelay -= 0.1;
 	}
 
 	isDepleted() {
-		return this._messageOnScreenDelay <= 0;;
+		return this.messageOnScreenDelay <= 0;;
 	}
 
 	setTitle(title: string) {
-		this._textBlock.text = title;
+		this.messageText.text = title;
 	}
 
 	reposition(x: number, y: number) {
-		this._textBlock.x = x - this._textBlock.width / 2;
-		this._textBlock.y = y - this._textBlock.height / 2;
+		this.messageText.x = x - this.messageText.width / 2;
+		this.messageText.y = y - this.messageText.height / 2;
 	}
 
 	getText(): string {
-		return this._textBlock.text;
+		return this.messageText.text;
 	}
 }
