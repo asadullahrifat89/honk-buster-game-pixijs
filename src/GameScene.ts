@@ -3019,8 +3019,6 @@ export class GameScene extends Container implements IScene {
 			PlayerHonkBombExplosion.setPopping();
 
 			gameObject.enableRendering();
-
-			this._player.setAttackStance();
 		}
 	}
 

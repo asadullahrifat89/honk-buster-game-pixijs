@@ -19,8 +19,7 @@ export class PlayerHonkBombExplosion extends GameObject {
 		SoundManager.play(SoundType.HONK, 0.5);
 	}
 
-	reposition(source: GameObject) {
-		/*  this.x = (source.x - this.width / 2);*/
+	reposition(source: GameObject) {		
 		this.x = source.x;
 		this.y = source.y;
 	}
