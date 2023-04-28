@@ -1150,7 +1150,7 @@ export class GameScene extends Container implements IScene {
 
 	private generateVehicleEnemys() {
 
-		if (!this.anyBossExists() && !this.ufoEnemyExists()) {
+		if (/*!this.anyBossExists() &&*/ !this.vehicleBossExists() && !this.ufoEnemyExists()) {
 			this.vehicleEnemyPopDelay -= 0.1;
 
 			if (this.vehicleEnemyPopDelay < 0) {
@@ -1160,7 +1160,12 @@ export class GameScene extends Container implements IScene {
 				if (gameObject) {
 
 					var vehicleEnemy = gameObject as VehicleEnemy;
-					vehicleEnemy.reposition();
+
+					if (this.anyInAirBossExists())
+						vehicleEnemy.repositionReverse();
+					else
+						vehicleEnemy.reposition();
+
 					vehicleEnemy.reset();
 
 					gameObject.enableRendering();
@@ -1180,7 +1185,14 @@ export class GameScene extends Container implements IScene {
 			animatingVehicleEnemys.forEach(gameObject => {
 
 				gameObject.pop();
-				gameObject.moveDownRight();
+
+				if (this.anyInAirBossExists()) { // ass in air bosses stop the player, the vehicles should pass by
+					gameObject.moveUpLeft();
+					gameObject.moveUpLeft(); // move with double speed
+				}
+				else {
+					gameObject.moveDownRight();
+				}
 
 				// prevent overlapping
 
@@ -1209,8 +1221,17 @@ export class GameScene extends Container implements IScene {
 					}
 				}
 
-				if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+				// recycle vehicle
+
+				if (this.anyInAirBossExists()) {
+					if (gameObject.getRight() < 0 || gameObject.getBottom() < 0) {
+						gameObject.disableRendering();
+					}
+				}
+				else {
+					if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+						gameObject.disableRendering();
+					}
 				}
 			});
 		}
@@ -1550,9 +1571,13 @@ export class GameScene extends Container implements IScene {
 
 				if (ufoEnemy) {
 
+					// generate honk
+
 					if (!this.anyBossExists() && ufoEnemy.honk()) {
 						this.generateHonk(gameObject);
 					}
+
+					// fire orbs
 
 					if (!this.anyBossExists() && ufoEnemy.attack()) {
 						this.generateUfoEnemyRockets(ufoEnemy);

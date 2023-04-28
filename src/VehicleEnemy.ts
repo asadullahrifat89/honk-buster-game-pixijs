@@ -36,7 +36,7 @@ export class VehicleEnemy extends VehicleBase {
 		this.setTexture(texture);
 
 		if (this.willHonk) {
-			this.health = this.hitPoint * Constants.getRandomNumber(0, 2);
+			this.health = this.hitPoint * Constants.getRandomNumber(0, 1);
 			this.setHonkDelay();
 		}
 	}
