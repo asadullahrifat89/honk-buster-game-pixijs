@@ -160,7 +160,7 @@ export class GameController extends Container {
 					}
 				}
 
-				console.log(data.direction); // Power from 0 to 1
+				//console.log(data.direction);
 				//console.log(data.power); // Power from 0 to 1
 				//console.log(data.angle); // Angle from 0 to 360
 			},

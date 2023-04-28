@@ -111,8 +111,8 @@ export class SceneManager {
 			scaling = 0.95;
 		else scaling = 1;
 
-		console.log("ScreenWidth: " + screenWidth);
-		console.log("Scaling: " + scaling);
+		//console.log("ScreenWidth: " + screenWidth);
+		//console.log("Scaling: " + scaling);
 
 		return scaling;
 	}

@@ -1444,8 +1444,6 @@ export class GameScene extends Container implements IScene {
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
-
-				this.switchToNightMode();
 			}
 		}
 	}
@@ -1501,8 +1499,6 @@ export class GameScene extends Container implements IScene {
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
-
-			this.switchToDayMode();
 		}
 	}
 
