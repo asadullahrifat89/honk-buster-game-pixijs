@@ -30,6 +30,8 @@ export class GameController extends Container {
 	private pauseButton: Button;
 	private joystick: Joystick;
 
+	private pauseButtonSprite: GameObjectSprite;
+
 	constructor(settings: GameControllerSettings) {
 		super();
 
@@ -59,29 +61,21 @@ export class GameController extends Container {
 		pauseButtonSpritebg.height = 100;
 		pauseButtonSpritebg.width = 100;
 
-		const pauseButtonSprite: GameObjectSprite = new GameObjectSprite(Texture.from("pause_button"));
-		pauseButtonSprite.height = 50;
-		pauseButtonSprite.width = 50;
-		pauseButtonSprite.x = pauseButtonSpritebg.width / 2 - pauseButtonSprite.width / 2;
-		pauseButtonSprite.y = pauseButtonSpritebg.height / 2 - pauseButtonSprite.height / 2;
+		this.pauseButtonSprite = new GameObjectSprite(Texture.from("pause_button"));
+		this.pauseButtonSprite.height = 50;
+		this.pauseButtonSprite.width = 50;
+		this.pauseButtonSprite.x = pauseButtonSpritebg.width / 2 - this.pauseButtonSprite.width / 2;
+		this.pauseButtonSprite.y = pauseButtonSpritebg.height / 2 - this.pauseButtonSprite.height / 2;
 
 		const pauseButtonGraphics = new Container();
 		pauseButtonGraphics.addChild(pauseButtonSpritebg);
-		pauseButtonGraphics.addChild(pauseButtonSprite);
+		pauseButtonGraphics.addChild(this.pauseButtonSprite);
 
 		this.pauseButton = new Button(pauseButtonGraphics, () => {
-			this.isPaused = !this.isPaused;
-
-			if (this.isPaused) {
-				pauseButtonSprite.setTexture(Texture.from("resume_button"));
-				SoundManager.play(SoundType.GAME_PAUSE);
-			}
-			else {
-				pauseButtonSprite.setTexture(Texture.from("pause_button"));
-				SoundManager.play(SoundType.GAME_START);
-			}
-
-			this.settings.onPause?.(this.isPaused);
+			if (this.isPaused)
+				this.resumeGame();
+			else
+				this.pauseGame();
 		});
 		this.setPauseButtonPosition();
 		this.addChild(this.pauseButton);
@@ -203,6 +197,24 @@ export class GameController extends Container {
 		});
 		this.setAttackButtonPosition();
 		this.addChild(this.attackButton);
+	}
+
+	public pauseGame() {
+		this.isPaused = true;
+
+		this.pauseButtonSprite.setTexture(Texture.from("resume_button"));
+		SoundManager.play(SoundType.GAME_PAUSE);
+
+		this.settings.onPause?.(this.isPaused);
+	}
+
+	private resumeGame() {
+		this.isPaused = false;
+
+		this.pauseButtonSprite.setTexture(Texture.from("pause_button"));
+		SoundManager.play(SoundType.GAME_START);
+
+		this.settings.onPause?.(this.isPaused);
 	}
 
 	update() {

@@ -4,43 +4,7 @@ import { IScene } from "./IScene";
 import { SceneManager } from "./SceneManager";
 import { GameTitleScene } from "./GameTitleScene";
 import { DropShadowFilter } from "@pixi/filter-drop-shadow";
-
-export class GameScreenOrientationScene extends Container implements IScene {
-
-	private changeOrienationText: Text;
-
-	constructor() {
-		super();
-
-		this.changeOrienationText = new Text("Pls Change Screen Orientation", {
-			fontFamily: "gameplay",
-			fontSize: 18,
-			align: "center",
-			fill: "#ffffff",
-		});
-		this.changeOrienationText.x = SceneManager.width / 2 - this.changeOrienationText.width / 2;
-		this.changeOrienationText.y = (SceneManager.height / 2 - this.changeOrienationText.height / 2) - 120;
-		this.changeOrienationText.alpha = 0;
-	}
-
-	resize(_scale: number): void {
-
-		// check if screen orientation is in correct mode
-		if (SceneManager.width < SceneManager.height) {
-
-			this.changeOrienationText.alpha = 1;
-		}
-		else {			
-
-			// Change scene to the menu scene!
-			SceneManager.changeScene(new GameTitleScene());
-		}
-	}
-
-	update(_framesPassed: number): void {
-		// To be a scene we must have the update method even if we don't use it.
-	}
-}
+import { ScreenOrientationScene } from "./ScreenOrientationScene";
 
 export class GameLoaderScene extends Container implements IScene {
 
@@ -105,18 +69,6 @@ export class GameLoaderScene extends Container implements IScene {
 
 	resize(_scale: number): void {
 
-		// check if screen orientation is in correct mode
-		if (SceneManager.width < SceneManager.height) {
-
-			this.changeOrienationText.alpha = 1;
-		}
-		else {
-			// Let's remove our loading bar
-			this.removeChild(this.loaderBar);
-
-			// Change scene to the menu scene!
-			SceneManager.changeScene(new GameTitleScene());
-		}
 	}
 
 	private async initializeLoader(): Promise<void> {
@@ -138,7 +90,11 @@ export class GameLoaderScene extends Container implements IScene {
 		// check if screen orientation is in correct mode
 		if (SceneManager.width < SceneManager.height) {
 
-			this.changeOrienationText.alpha = 1;
+			// Let's remove our loading bar
+			this.removeChild(this.loaderBar);
+
+			// Change scene to the menu scene!
+			SceneManager.changeScene(new ScreenOrientationScene());
 		}
 		else {
 			// Let's remove our loading bar
