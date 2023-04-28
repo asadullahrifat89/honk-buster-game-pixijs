@@ -32,6 +32,7 @@ import { UfoEnemy } from "./UfoEnemy";
 import { UfoEnemyRocket } from "./UfoEnemyRocket";
 import { SoundManager } from "./SoundManager";
 import { GameOverScene } from "./GameOverScene";
+import { PlayerHonkBombExplosion } from "./PlayerHonkBombExplosion";
 
 
 export class GameScene extends Container implements IScene {
@@ -165,7 +166,6 @@ export class GameScene extends Container implements IScene {
 
 		this.spawnSideWalksTop();
 		this.spawnHedgesTop();
-		//this.spawnHeavyBillboardsTop();
 		this.spawnLightBillboardsTop();
 		this.spawnTreesTop();
 		this.spawnLampsTop();
@@ -182,6 +182,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnLightBillboardsBottom();
 
 		this.spawnPlayerHonkBombs();
+		this.spawnPlayerHonkBombExplosions();
 		this.spawnPlayerRockets();
 		this.spawnPlayerRocketBullsEyes();
 		this.spawnPlayerBalloon();
@@ -2931,12 +2932,19 @@ export class GameScene extends Container implements IScene {
 
 					if (playerHonkBomb.isBlasting) {
 
-						if (playerHonkBomb.playerHonkBombTemplate == PlayerHonkBombTemplate.Cracker) {
-							playerHonkBomb.expand();
-						}
-						playerHonkBomb.fade();
-						playerHonkBomb.moveDownRight();
+						playerHonkBomb.fade();					
 
+						switch (playerHonkBomb.playerHonkBombTemplate) {
+							case PlayerHonkBombTemplate.Cracker: {
+								playerHonkBomb.shrink();
+								playerHonkBomb.moveUpRight();
+							} break;
+							case PlayerHonkBombTemplate.TrashCan: {
+								playerHonkBomb.moveDownLeft();
+								//playerHonkBomb.rotate(RotationDirection.Backward, 0, 0.5);
+							} break;
+							default:
+						}
 					}
 					else {
 
@@ -2944,6 +2952,8 @@ export class GameScene extends Container implements IScene {
 						playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
 
 						if (playerHonkBomb.awaitBlast()) {
+
+							this.generatePlayerHonkBombExplosion(playerHonkBomb);
 
 							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
 
@@ -2959,6 +2969,73 @@ export class GameScene extends Container implements IScene {
 						}
 					}
 				}
+
+				if (gameObject.hasFaded() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region PlayerHonkBombExplosions
+
+	private PlayerHonkBombExplosionSizeWidth: number = 125;
+	private PlayerHonkBombExplosionSizeHeight: number = 125;
+
+	private PlayerHonkBombExplosionGameObjects: Array<GameObject> = [];
+
+	spawnPlayerHonkBombExplosions() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: PlayerHonkBombExplosion = new PlayerHonkBombExplosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2);
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.BLAST));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.PlayerHonkBombExplosionSizeWidth;
+			sprite.height = this.PlayerHonkBombExplosionSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.PlayerHonkBombExplosionGameObjects.push(gameObject);
+			this._sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generatePlayerHonkBombExplosion(source: GameObject) {
+
+		var gameObject = this.PlayerHonkBombExplosionGameObjects.find(x => x.isAnimating == false);
+
+		if (gameObject) {
+
+			var PlayerHonkBombExplosion = gameObject as PlayerHonkBombExplosion;
+			PlayerHonkBombExplosion.reset(this.playerHonkBusterTemplate);
+			PlayerHonkBombExplosion.reposition(source);
+			PlayerHonkBombExplosion.setPopping();
+
+			gameObject.enableRendering();
+
+			this._player.setAttackStance();
+		}
+	}
+
+	animatePlayerHonkBombExplosions() {
+
+		var animatingHonkBombs = this.PlayerHonkBombExplosionGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingHonkBombs) {
+
+			animatingHonkBombs.forEach(gameObject => {
+
+				gameObject.pop();
+				gameObject.fade();
+				gameObject.moveDownRight();
 
 				if (gameObject.hasFaded() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
@@ -3708,6 +3785,7 @@ export class GameScene extends Container implements IScene {
 		}
 
 		this.animatePlayerHonkBombs();
+		this.animatePlayerHonkBombExplosions();
 		this.animatePlayerRockets();
 		this.animatePlayerRocketBullsEyes();
 

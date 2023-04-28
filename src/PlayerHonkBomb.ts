@@ -74,16 +74,14 @@ export class PlayerHonkBomb extends GameObject {
 		}
 
 		this.isBlasting = true;
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 
 		switch (this.playerHonkBombTemplate) {
 			case PlayerHonkBombTemplate.Cracker: {
 				this.angle = 0;
-				this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
-				this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 			} break;
 			case PlayerHonkBombTemplate.TrashCan: {
-				//this.setTexture(Constants.getRandomTexture(ConstructType.BANG));				
+				this.speed = 0.8;
 			} break;
 			default: break;
 		}
