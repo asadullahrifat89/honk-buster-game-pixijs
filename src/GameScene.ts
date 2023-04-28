@@ -2969,7 +2969,7 @@ export class GameScene extends Container implements IScene {
 					}
 				}
 
-				if (gameObject.hasFaded() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.hasFaded() || gameObject.hasShrinked() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
@@ -2980,8 +2980,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region PlayerHonkBombExplosions
 
-	private PlayerHonkBombExplosionSizeWidth: number = 125;
-	private PlayerHonkBombExplosionSizeHeight: number = 125;
+	private PlayerHonkBombExplosionSizeWidth: number = 130;
+	private PlayerHonkBombExplosionSizeHeight: number = 130;
 
 	private PlayerHonkBombExplosionGameObjects: Array<GameObject> = [];
 
