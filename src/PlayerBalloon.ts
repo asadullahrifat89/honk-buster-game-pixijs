@@ -222,7 +222,7 @@ export class PlayerBalloon extends GameObject {
 		{
 			this.health -= this.hitPoint;
 			this.alpha = 0.7;
-			this._healthLossRecoveryDelay = 10;
+			this._healthLossRecoveryDelay = 8;
 		}
 	}
 
@@ -244,8 +244,9 @@ export class PlayerBalloon extends GameObject {
 			}
 		}
 
-		if (this._healthLossRecoveryDelay <= 0 && this.alpha != 1)
-			this.alpha = 1;
+		if (this._healthLossRecoveryDelay <= 0 && this.alpha != 1) {			
+			this.alpha = 1;			
+		}
 	}
 
 	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
@@ -329,7 +330,7 @@ export class PlayerBalloon extends GameObject {
 						break;
 					default:
 						break;
-				}				
+				}
 			}
 
 			this.unRotate(this._unrotationSpeed);
