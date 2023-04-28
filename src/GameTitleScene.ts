@@ -1,4 +1,4 @@
-﻿import { Container, Graphics, FederatedPointerEvent, Text } from "pixi.js";
+﻿import { Container, Graphics, Text } from "pixi.js";
 import { Button } from "./Button";
 import { Constants, ConstructType, SoundType } from "./Constants";
 import { GameObject } from "./GameObject";
@@ -50,7 +50,10 @@ export class GameTitleScene extends Container implements IScene {
 		subTitle.y = (this.sceneContainer.height / 2 - subTitle.height / 2) - 60;
 		this.sceneContainer.addChild(subTitle);
 
-		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), this.onProceed, "New Game");
+		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), () => {
+			SoundManager.play(SoundType.OPTION_SELECT);
+			SceneManager.isNavigating = true;
+		}, "New Game");
 		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height / 2 - button.height / 2);
 		this.sceneContainer.addChild(button);
 	}
@@ -63,18 +66,13 @@ export class GameTitleScene extends Container implements IScene {
 			if (this.sceneContainer.alpha <= 0) {
 				this.removeChild(this.sceneContainer);
 				SceneManager.changeScene(new PlayerSelectionScene());
-			}				
+			}
 		}
 	}
 
 	public resize(scale: number): void {
 		this.sceneContainer.scale.set(scale);
 		this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);
-	}
-
-	private onProceed(_e: FederatedPointerEvent) {
-		SoundManager.play(SoundType.OPTION_SELECT);
-		SceneManager.isNavigating = true;
 	}
 }
 

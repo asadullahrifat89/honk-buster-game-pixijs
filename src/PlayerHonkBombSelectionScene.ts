@@ -1,4 +1,4 @@
-﻿import { Container, Graphics, FederatedPointerEvent, Text, BlurFilter, Texture } from "pixi.js";
+﻿import { Container, Graphics, Text, BlurFilter, Texture } from "pixi.js";
 import { Button } from "./Button";
 import { Constants, ConstructType, SoundType } from "./Constants";
 import { GameObject } from "./GameObject";
@@ -69,7 +69,10 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		player_2_button.setPosition(this.sceneContainer.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2);
 		this.sceneContainer.addChild(player_2_button);
 
-		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), this.onProceed, "Select");
+		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), () => {
+			SoundManager.play(SoundType.OPTION_SELECT);
+			SceneManager.isNavigating = true;
+		}, "Select");
 		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height - button.height * 2);
 		this.sceneContainer.addChild(button);
 	}
@@ -88,11 +91,6 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 	public resize(scale: number): void {
 		this.sceneContainer.scale.set(scale);
 		this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);
-	}
-
-	private onProceed(_e: FederatedPointerEvent) {
-		SoundManager.play(SoundType.OPTION_SELECT);
-		SceneManager.isNavigating = true;
 	}
 }
 
