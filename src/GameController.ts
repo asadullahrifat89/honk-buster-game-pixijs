@@ -24,7 +24,7 @@ export class GameController extends Container {
 
 	private joystickActivated: boolean = false;
 	private keyboardActivated: boolean = false;
-	
+
 	private settings: GameControllerSettings;
 
 	private attackButton: Button;
@@ -52,7 +52,7 @@ export class GameController extends Container {
 
 			this.keyboardActivated = true;
 
-			if (this.keyboardActivated) {
+			if (this.keyboardActivated && !this.joystickActivated) {
 				this.joystick.alpha = 0;
 				this.attackButton.alpha = 0;
 			}
@@ -223,28 +223,32 @@ export class GameController extends Container {
 
 		if (!this.joystickActivated) {
 			if (this.keyboard.isKeyDown('ArrowLeft', 'KeyA')) {
-				this.isMoveLeft = true; this.isMoveRight = false;
+				this.isMoveLeft = true;
+				this.isMoveRight = false;
 			}
 			else {
 				this.isMoveLeft = false;
 			}
 
 			if (this.keyboard.isKeyDown('ArrowRight', 'KeyD')) {
-				this.isMoveRight = true; this.isMoveLeft = false;
+				this.isMoveRight = true;
+				this.isMoveLeft = false;
 			}
 			else {
 				this.isMoveRight = false;
 			}
 
 			if (this.keyboard.isKeyDown('ArrowUp', 'KeyW')) {
-				this.isMoveUp = true; this.isMoveDown = false;
+				this.isMoveUp = true;
+				this.isMoveDown = false;
 			}
 			else {
 				this.isMoveUp = false;
 			}
 
 			if (this.keyboard.isKeyDown('ArrowDown', 'KeyS')) {
-				this.isMoveDown = true; this.isMoveUp = false;
+				this.isMoveDown = true;
+				this.isMoveUp = false;
 			}
 			else {
 				this.isMoveDown = false;
