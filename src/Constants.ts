@@ -100,8 +100,7 @@ export enum ConstructType {
 	ROAD_SIDE_LIGHT_BILLBOARD,
 	ROAD_SIDE_BILLBOARD,
 
-	HONK,
-	HONK_BUSTER,
+	HONK,	
 
 	CLOUD,
 

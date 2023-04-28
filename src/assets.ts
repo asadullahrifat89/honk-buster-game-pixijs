@@ -47,10 +47,7 @@ export const manifest: ResolverManifest = {
 
 				"honk_1": "./honk_1.png",
 				"honk_2": "./honk_2.png",
-				"honk_3": "./honk_3.png",
-
-				"honk_buster_1": "./honk_buster_1.png",
-				"honk_buster_2": "./honk_buster_2.png",
+				"honk_3": "./honk_3.png",				
 
 				"joystick": "./joystick.png",
 				"joystick_handle": "./joystick_handle.png",
