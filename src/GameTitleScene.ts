@@ -40,7 +40,7 @@ export class GameTitleScene extends Container implements IScene {
 		title.y = (this.sceneContainer.height / 2 - title.height / 2) - 120;
 		this.sceneContainer.addChild(title);
 
-		const subTitle = new Text("Save the planet from honkers", {
+		const subTitle = new Text("Stop Honkers, Stop Sound Pollution", {
 			fontFamily: "gameplay",
 			align: "center",
 			fill: "#ffffff",
@@ -57,6 +57,14 @@ export class GameTitleScene extends Container implements IScene {
 
 	public update(_framesPassed: number) {
 
+		if (SceneManager.isNavigating) {
+			this.sceneContainer.alpha -= 0.06;
+
+			if (this.sceneContainer.alpha <= 0) {
+				this.removeChild(this.sceneContainer);
+				SceneManager.changeScene(new PlayerSelectionScene());
+			}				
+		}
 	}
 
 	public resize(scale: number): void {
@@ -66,8 +74,7 @@ export class GameTitleScene extends Container implements IScene {
 
 	private onProceed(_e: FederatedPointerEvent) {
 		SoundManager.play(SoundType.OPTION_SELECT);
-		this.removeChild(this.sceneContainer);
-		SceneManager.changeScene(new PlayerSelectionScene());
+		SceneManager.isNavigating = true;
 	}
 }
 

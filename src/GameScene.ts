@@ -138,6 +138,7 @@ export class GameScene extends Container implements IScene {
 				}
 			}
 		});
+
 		this.playerTemplate = Constants.SELECTED_PLAYER_TEMPLATE;
 		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
 
@@ -224,6 +225,10 @@ export class GameScene extends Container implements IScene {
 		SoundManager.play(SoundType.AMBIENCE, 0.4, true);
 		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.6, true);
 		SoundManager.play(SoundType.GAME_START);
+
+		this._sceneContainer.alpha = 0;
+
+		this.generateInGameMessage("Drop bombs on the honkers");
 	}
 
 	//#endregion
@@ -3112,6 +3117,7 @@ export class GameScene extends Container implements IScene {
 					else {
 
 						playerHonkBomb.move();
+						playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
 
 						if (playerHonkBomb.depleteBlastDelay()) {
 
@@ -3776,6 +3782,10 @@ export class GameScene extends Container implements IScene {
 	//#region Scene
 
 	public update(_framesPassed: number) {
+
+		if (this._sceneContainer.alpha < 1) {
+			this._sceneContainer.alpha += 0.006;
+		}
 
 		if (!this._gameController.isPaused) {
 			this.generateGameObjects();

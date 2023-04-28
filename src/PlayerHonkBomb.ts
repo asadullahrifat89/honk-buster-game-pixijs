@@ -65,7 +65,7 @@ export class PlayerHonkBomb extends GameObject {
 	}
 
 	setBlast() {
-
+		this.angle = 0;
 		switch (this.playerHonkBombTemplate) {
 			case 0: { SoundManager.play(SoundType.CRACKER_BLAST, 0.8); } break;
 			case 1: { SoundManager.play(SoundType.TRASH_CAN_HIT); } break;
