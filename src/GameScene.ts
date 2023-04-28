@@ -2860,8 +2860,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region PlayerHonkBombs
 
-	private playerHonkBombSizeWidth: number = 45;
-	private playerHonkBombSizeHeight: number = 45;
+	private playerHonkBombSizeWidth: number = 50;
+	private playerHonkBombSizeHeight: number = 50;
 
 	private playerHonkBombGameObjects: Array<GameObject> = [];
 	private playerHonkBusterTemplate: number = 0;
@@ -3622,7 +3622,7 @@ export class GameScene extends Container implements IScene {
 
 			this._roadBackgroundNight.width = SceneManager.width;
 			this._roadBackgroundNight.height = SceneManager.height;
-		}		
+		}
 	}
 
 	private levelUp() {
