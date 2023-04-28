@@ -107,6 +107,8 @@ export class GameScene extends Container implements IScene {
 					}
 
 					SoundManager.pause(SoundType.AMBIENCE);
+
+					this.generateInGameMessage("Game paused");
 				}
 				else {
 					if (this.anyBossExists()) {
@@ -125,6 +127,10 @@ export class GameScene extends Container implements IScene {
 					}
 
 					SoundManager.resume(SoundType.AMBIENCE);
+
+					if (this._inGameMessage.isAnimating == true) {
+						this._inGameMessage.disableRendering();
+					}
 				}
 			}
 		});
