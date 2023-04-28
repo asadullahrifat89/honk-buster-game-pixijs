@@ -29,7 +29,7 @@ export class PlayerRocket extends GameObject {
 
 		this._autoBlastDelay = this._autoBlastDelayDefault;
 
-		SoundManager.play(SoundType.ROCKET_LAUNCH, 0.5);
+		SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
 	}
 
 	reposition(source: PlayerBalloon) {

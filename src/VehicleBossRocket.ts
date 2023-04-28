@@ -22,7 +22,7 @@ export class VehicleBossRocket extends GameObject {
 		this.setTexture(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
 		this._autoBlastDelay = this._autoBlastDelayDefault;
 
-		SoundManager.play(SoundType.ROCKET_LAUNCH, 0.8);
+		SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
 	}
 
 	reposition(vehicleBoss: VehicleBoss) {
