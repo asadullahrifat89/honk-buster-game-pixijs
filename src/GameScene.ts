@@ -3605,18 +3605,24 @@ export class GameScene extends Container implements IScene {
 	}
 
 	public resize(scale: number): void {
-		this._sceneContainer.scale.set(scale);
-		this.repositionGameScoreBar();
-		this.repositionPlayerHealthBar();
-		this.repositionBossHealthBar();
-		this.repositionPowerUpMeter();
-		this._gameController.resize();
 
-		this._roadBackgroundDay.width = SceneManager.width;
-		this._roadBackgroundDay.height = SceneManager.height;
+		if (SceneManager.width < SceneManager.height) {
+			this._gameController.pauseGame();
+		}
+		else {
+			this._sceneContainer.scale.set(scale);
+			this.repositionGameScoreBar();
+			this.repositionPlayerHealthBar();
+			this.repositionBossHealthBar();
+			this.repositionPowerUpMeter();
+			this._gameController.resize();
 
-		this._roadBackgroundNight.width = SceneManager.width;
-		this._roadBackgroundNight.height = SceneManager.height;
+			this._roadBackgroundDay.width = SceneManager.width;
+			this._roadBackgroundDay.height = SceneManager.height;
+
+			this._roadBackgroundNight.width = SceneManager.width;
+			this._roadBackgroundNight.height = SceneManager.height;
+		}		
 	}
 
 	private levelUp() {

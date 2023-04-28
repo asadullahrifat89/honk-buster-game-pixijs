@@ -1,16 +1,18 @@
-import { Container, Graphics, Assets } from "pixi.js";
+import { Container, Graphics, Assets, Text } from "pixi.js";
 import { manifest } from "./assets";
 import { IScene } from "./IScene";
 import { SceneManager } from "./SceneManager";
 import { GameTitleScene } from "./GameTitleScene";
 import { DropShadowFilter } from "@pixi/filter-drop-shadow";
+import { ScreenOrientationScene } from "./ScreenOrientationScene";
 
-export class LoaderScene extends Container implements IScene {
+export class GameLoaderScene extends Container implements IScene {
 
 	// for making our loader graphics...
 	private loaderBar: Container;
 	private loaderBarBoder: Graphics;
 	private loaderBarFill: Graphics;
+	private changeOrienationText: Text;
 
 	constructor() {
 		super();
@@ -42,15 +44,17 @@ export class LoaderScene extends Container implements IScene {
 		this.loaderBar.position.y = (SceneManager.height - this.loaderBar.height) / 2;
 		this.addChild(this.loaderBar);
 
-		//const title = new Text("LOADING", {
-		//	fontFamily: "gameplay",
-		//	fontSize: 35,
-		//	align: "center",
-		//	fill: "#ffffff",
-		//});
-		//title.x = SceneManager.width / 2 - title.width / 2;
-		//title.y = (SceneManager.height / 2 - title.height / 2) - 120;
-		//this.addChild(title);
+		this.changeOrienationText = new Text("Pls Change Screen Orientation", {
+			fontFamily: "gameplay",
+			fontSize: 18,
+			align: "center",
+			fill: "#ffffff",
+		});
+		this.changeOrienationText.x = SceneManager.width / 2 - this.changeOrienationText.width / 2;
+		this.changeOrienationText.y = (SceneManager.height / 2 - this.changeOrienationText.height / 2) - 120;
+		this.changeOrienationText.alpha = 0;
+
+		this.addChild(this.changeOrienationText);
 
 		// Start loading!
 		this.initializeLoader().then(() => {
@@ -64,7 +68,7 @@ export class LoaderScene extends Container implements IScene {
 	}
 
 	resize(_scale: number): void {
-		//this.scale.set(scale);
+
 	}
 
 	private async initializeLoader(): Promise<void> {
@@ -77,17 +81,27 @@ export class LoaderScene extends Container implements IScene {
 	}
 
 	private downloadProgress(progressRatio: number): void {
-		// progressRatio goes from 0 to 1, so set it to scale
-		this.loaderBarFill.scale.x = progressRatio;
+		this.loaderBarFill.scale.x = progressRatio; // progressRatio goes from 0 to 1, so set it to scale
 	}
 
 	private gameLoaded(): void {
 		// Our game finished loading!
 
-		// Let's remove our loading bar
-		this.removeChild(this.loaderBar);
+		// check if screen orientation is in correct mode
+		if (SceneManager.width < SceneManager.height) {
 
-		// Change scene to the menu scene!
-		SceneManager.changeScene(new GameTitleScene());
+			// Let's remove our loading bar
+			this.removeChild(this.loaderBar);
+
+			// Change scene to the menu scene!
+			SceneManager.changeScene(new ScreenOrientationScene());
+		}
+		else {
+			// Let's remove our loading bar
+			this.removeChild(this.loaderBar);
+
+			// Change scene to the menu scene!
+			SceneManager.changeScene(new GameTitleScene());
+		}
 	}
 }

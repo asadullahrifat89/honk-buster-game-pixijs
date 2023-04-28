@@ -3,6 +3,7 @@ import { Button } from "./Button";
 import { Constants, ConstructType, SoundType } from "./Constants";
 import { GameObject } from "./GameObject";
 import { GameObjectSprite } from "./GameObjectSprite";
+import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "./IScene";
 import { PlayerSelectionScene } from "./PlayerSelectionScene";
 import { SceneManager } from "./SceneManager";
@@ -71,8 +72,15 @@ export class GameTitleScene extends Container implements IScene {
 	}
 
 	public resize(scale: number): void {
-		this.sceneContainer.scale.set(scale);
-		this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);
+
+		if (SceneManager.width < SceneManager.height) {
+			this.removeChild(this.sceneContainer);
+			SceneManager.changeScene(new ScreenOrientationScene());
+		}
+		else {
+			this.sceneContainer.scale.set(scale);
+			this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);
+		}		
 	}
 }
 

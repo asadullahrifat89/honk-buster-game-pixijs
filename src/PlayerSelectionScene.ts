@@ -6,6 +6,7 @@ import { GameObjectSprite } from "./GameObjectSprite";
 import { IScene } from "./IScene";
 import { PlayerHonkBombSelectionScene } from "./PlayerHonkBombSelectionScene";
 import { SceneManager } from "./SceneManager";
+import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { SoundManager } from "./SoundManager";
 
 
@@ -89,8 +90,15 @@ export class PlayerSelectionScene extends Container implements IScene {
 	}
 
 	public resize(scale: number): void {
-		this.sceneContainer.scale.set(scale);
-		this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);
+
+		if (SceneManager.width < SceneManager.height) {
+			this.removeChild(this.sceneContainer);
+			SceneManager.changeScene(new ScreenOrientationScene());
+		}
+		else {
+			this.sceneContainer.scale.set(scale);
+			this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);
+		}		
 	}
 }
 
