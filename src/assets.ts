@@ -163,11 +163,10 @@ export const manifest: ResolverManifest = {
 				"game_pause": "./game_pause.mp3",
 				"game_start": "./game_start.mp3",
 
-				"power_up_pickup_1": "./power_up_pickup_1.mp3",
+				"level_up": "./level_up.mp3",
 
-				"ambience_1": "./ambience_1.mp3",
-				"ambience_2": "./ambience_2.mp3",
-				"ambience_3": "./ambience_3.mp3",
+				"power_up_pickup_1": "./power_up_pickup_1.mp3",
+				"health_pickup_1": "./health_pickup_1.mp3",
 
 				"car_honk_1": "./car_honk_1.mp3",
 				"car_honk_2": "./car_honk_2.mp3",
@@ -194,6 +193,25 @@ export const manifest: ResolverManifest = {
 				"rocket_launch_1": "./rocket_launch_1.mp3",
 				"rocket_launch_2": "./rocket_launch_2.mp3",
 				"rocket_launch_3": "./rocket_launch_3.mp3",
+
+				"orb_launch": "./orb_launch.mp3",
+
+				"ambience_1": "./ambience_1.mp3",
+				"ambience_2": "./ambience_2.mp3",
+				"ambience_3": "./ambience_3.mp3",	
+
+				"ufo_boss_dead_1": "./ufo_boss_dead_1.mp3",
+				"ufo_boss_dead_2": "./ufo_boss_dead_2.mp3",
+
+				"ufo_boss_entry_1": "./ufo_boss_entry_1.mp3",
+				"ufo_boss_entry_2": "./ufo_boss_entry_2.mp3",
+
+				"ufo_boss_hovering_1": "./ufo_boss_hovering_1.mp3",
+				"ufo_boss_hovering_2": "./ufo_boss_hovering_2.mp3",
+				"ufo_boss_hovering_3": "./ufo_boss_hovering_3.mp3",
+
+				"ufo_enemy_entry_1": "./ufo_enemy_entry_1.mp3",
+				"ufo_enemy_entry_2": "./ufo_enemy_entry_2.mp3",
 			},
 		},
 	]

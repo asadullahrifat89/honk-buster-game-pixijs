@@ -95,7 +95,7 @@ export class GameScene extends Container implements IScene {
 						SoundManager.pause(SoundType.BOSS_BACKGROUND_MUSIC);
 
 						if (this.anyInAirBossExists()) {
-							SoundManager.pause(SoundType.UFO_HOVERING);
+							SoundManager.pause(SoundType.UFO_BOSS_HOVERING);
 						}
 					}
 					else {
@@ -103,7 +103,7 @@ export class GameScene extends Container implements IScene {
 					}
 
 					if (this.ufoEnemyExists()) {
-						SoundManager.pause(SoundType.UFO_HOVERING);
+						SoundManager.pause(SoundType.UFO_BOSS_HOVERING);
 					}
 
 					SoundManager.pause(SoundType.AMBIENCE);
@@ -117,7 +117,7 @@ export class GameScene extends Container implements IScene {
 						SoundManager.resume(SoundType.BOSS_BACKGROUND_MUSIC);
 
 						if (this.anyInAirBossExists()) {
-							SoundManager.resume(SoundType.UFO_HOVERING);
+							SoundManager.resume(SoundType.UFO_BOSS_HOVERING);
 						}
 					}
 					else {
@@ -125,7 +125,7 @@ export class GameScene extends Container implements IScene {
 					}
 
 					if (this.ufoEnemyExists()) {
-						SoundManager.resume(SoundType.UFO_HOVERING);
+						SoundManager.resume(SoundType.UFO_BOSS_HOVERING);
 					}
 
 					SoundManager.resume(SoundType.AMBIENCE);
@@ -1663,7 +1663,7 @@ export class GameScene extends Container implements IScene {
 						this.generateInGameMessage("Beware of UFO Fleet");
 						this._ufoEnemyFleetAppeared = true;
 						SoundManager.play(SoundType.UFO_ENEMY_ENTRY);
-						SoundManager.play(SoundType.UFO_HOVERING, 0.6, true);
+						SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.6, true);
 					}
 				}
 			}
@@ -1727,7 +1727,7 @@ export class GameScene extends Container implements IScene {
 
 				this.levelUp();
 
-				SoundManager.stop(SoundType.UFO_HOVERING);
+				SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 			}
 		}
 	}
@@ -1878,7 +1878,7 @@ export class GameScene extends Container implements IScene {
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
-				SoundManager.play(SoundType.UFO_HOVERING, 0.8, true);
+				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
 			}
 		}
 	}
@@ -1941,7 +1941,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
-			SoundManager.stop(SoundType.UFO_HOVERING);
+			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 		}
 	}
 
@@ -2260,7 +2260,7 @@ export class GameScene extends Container implements IScene {
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
-				SoundManager.play(SoundType.UFO_HOVERING, 0.8, true);
+				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
 			}
 		}
 	}
@@ -2323,7 +2323,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
-			SoundManager.stop(SoundType.UFO_HOVERING);
+			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 		}
 	}
 
@@ -2487,7 +2487,7 @@ export class GameScene extends Container implements IScene {
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
-				SoundManager.play(SoundType.UFO_HOVERING, 0.8, true);
+				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
 			}
 		}
 	}
@@ -2550,7 +2550,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
-			SoundManager.stop(SoundType.UFO_HOVERING);
+			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 		}
 	}
 
@@ -2950,7 +2950,7 @@ export class GameScene extends Container implements IScene {
 			if (this._player.isDead()) {
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
-				SoundManager.stop(SoundType.UFO_HOVERING);
+				SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 				SoundManager.stop(SoundType.AMBIENCE);
 
 				Constants.GAME_SCORE = this._gameScoreBar.getScore();
@@ -3720,6 +3720,7 @@ export class GameScene extends Container implements IScene {
 	private levelUp() {
 		this._gameLevel++;
 		this.generateInGameMessage("LEVEL " + this._gameLevel.toString() + " COMPLETE");
+		SoundManager.play(SoundType.LEVEL_UP);
 	}
 
 	private generateGameObjects() {
