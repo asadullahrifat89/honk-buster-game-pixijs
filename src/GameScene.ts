@@ -371,8 +371,8 @@ export class GameScene extends Container implements IScene {
 	private treeTopGameObjects: Array<GameObject> = [];
 
 	private treePopDelayDefault: number = 60 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private treePopDelayTop: number = 10;
-	private treePopDelayBottom: number = 10;
+	private treePopDelayTop: number = 17.5;
+	private treePopDelayBottom: number = 16;
 
 	private spawnTreesTop() {
 
@@ -413,6 +413,8 @@ export class GameScene extends Container implements IScene {
 				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
 				sprite.width = this.treeSizeWidth;
 				sprite.height = this.treeSizeHeight;
+				sprite.scale.set(-1, 1);
+				sprite.anchor.set(0.5, 0.5);
 
 				gameObject.addChild(sprite);
 			}
@@ -431,7 +433,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.treeTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition(-800, gameObject.height * -1);
+				gameObject.setPosition(-710, gameObject.height * -1);
 				gameObject.enableRendering();
 				this.treePopDelayTop = this.treePopDelayDefault;
 			}
@@ -447,7 +449,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition(gameObject.width * -1, -610);
+				gameObject.setPosition(gameObject.width * -1, -525);
 				gameObject.enableRendering();
 				this.treePopDelayBottom = this.treePopDelayDefault;
 			}
@@ -896,8 +898,8 @@ export class GameScene extends Container implements IScene {
 	private sideWalkBottomGameObjects: Array<RoadSideWalk> = [];
 
 	private sideWalkPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private sideWalkPopDelayTop: number = 4;
-	private sideWalkPopDelayBottom: number = 8;
+	private sideWalkPopDelayTop: number = 12;
+	private sideWalkPopDelayBottom: number = 16;
 
 	private spawnSideWalksTop() {
 
