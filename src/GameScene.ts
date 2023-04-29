@@ -92,7 +92,7 @@ export class GameScene extends Container implements IScene {
 	constructor() {
 		super();
 
-		this.roadBackgroundDay = new Graphics().beginFill(0x5fc4f8, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+		this.roadBackgroundDay = new Graphics().beginFill(0x4187ab, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 		this.roadBackgroundNight = new Graphics().beginFill(0x1f2326, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 
 		this.addChildAt(this.roadBackgroundDay, 0);
@@ -290,14 +290,14 @@ export class GameScene extends Container implements IScene {
 
 	//#region RoadMarks
 
-	private roadMarkXyAdjustment: number = 1200;
+	private roadMarkXyAdjustment: number = 1153;
 
 	private roadMarkSizeWidth: number = 2300;
 	private roadMarkSizeHeight: number = 2300;
 
 	private roadMarkGameObjects: Array<GameObject> = [];
 
-	private roadMarkPopDelayDefault: number = 170 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private roadMarkPopDelayDefault: number = 200 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadMarkPopDelay: number = 0;
 
 	private spawnRoadMarks() {
@@ -1107,7 +1107,7 @@ export class GameScene extends Container implements IScene {
 	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
 
 	private vehicleEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private vehicleEnemyPopDelay: number = 0;
+	private vehicleEnemyPopDelay: number = 20;
 
 	private spawnVehicleEnemys() {
 
