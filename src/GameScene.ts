@@ -163,7 +163,9 @@ export class GameScene extends Container implements IScene {
 		this.mafiaBossCheckpoint = new GameCheckpoint(this.mafiaBossReleasePoint);
 		this.ufoEnemyCheckpoint = new GameCheckpoint(this.ufoEnemyReleasePoint);
 
-		this.spawnRoadMarks();
+		this.spawnRoadMarksTop();
+		this.spawnRoadMarksMiddle();
+		this.spawnRoadMarksBottom();
 
 		this.spawnSideWalksTop();
 		//this.spawnHedgesTop();
@@ -290,17 +292,23 @@ export class GameScene extends Container implements IScene {
 
 	//#region RoadMarks
 
-	private roadMarkXyAdjustment: number = 1153;
+	private roadMarkXyAdjustment: number = 512;
 
-	private roadMarkSizeWidth: number = 2300;
-	private roadMarkSizeHeight: number = 2300;
+	private roadMarkSizeWidth: number = 1024;
+	private roadMarkSizeHeight: number = 1024;
 
-	private roadMarkGameObjects: Array<GameObject> = [];
+	private roadMarksTopGameObjects: Array<GameObject> = [];
+	private roadMarksMiddleGameObjects: Array<GameObject> = [];
+	private roadMarksBottomGameObjects: Array<GameObject> = [];
 
-	private roadMarkPopDelayDefault: number = 190 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private roadMarkPopDelay: number = 0;
+	private roadMarkPopDelayDefault: number = 80 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private roadMarkPopDelayTop: number = 10;
+	private roadMarkPopDelayMiddle: number = 7;
+	private roadMarkPopDelayBottom: number = 4;
 
-	private spawnRoadMarks() {
+	private roadMarkXyDisplacement: number = 565;
+
+	private spawnRoadMarksTop() {
 
 		for (let j = 0; j < 3; j++) {
 
@@ -319,32 +327,148 @@ export class GameScene extends Container implements IScene {
 				gameObject.addChild(sprite);
 			}
 
-			this.roadMarkGameObjects.push(gameObject);
+			this.roadMarksTopGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
-	private generateRoadMarks() {
+	private generateRoadMarksTop() {
 
-		this.roadMarkPopDelay -= 0.1;
+		this.roadMarkPopDelayTop -= 0.1;
 
-		if (this.roadMarkPopDelay < 0) {
+		if (this.roadMarkPopDelayTop < 0) {
 
-			var gameObject = this.roadMarkGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.roadMarksTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 
-				gameObject.setPosition(gameObject.width * -1 - 1450, gameObject.height * -1);
+				gameObject.setPosition(gameObject.width * -1 + this.roadMarkXyDisplacement / 2, gameObject.height * -1);
 				gameObject.enableRendering();
 
-				this.roadMarkPopDelay = this.roadMarkPopDelayDefault;
+				this.roadMarkPopDelayTop = this.roadMarkPopDelayDefault;
 			}
 		}
 	}
 
-	private animateRoadMarks() {
+	private animateRoadMarksTop() {
 
-		var animatingRoadMarks = this.roadMarkGameObjects.filter(x => x.isAnimating == true);
+		var animatingRoadMarks = this.roadMarksTopGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingRoadMarks) {
+
+			animatingRoadMarks.forEach(gameObject => {
+				gameObject.moveDownRight();
+
+				if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	private spawnRoadMarksMiddle() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+
+			for (let i = 0; i < 5; i++) {
+
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_MARK));
+
+				sprite.x = this.roadMarkSizeWidth * i - (this.roadMarkXyAdjustment * i);
+				sprite.y = (this.roadMarkSizeHeight / 2) * i - ((this.roadMarkXyAdjustment / 2) * i);
+				sprite.width = this.roadMarkSizeWidth;
+				sprite.height = this.roadMarkSizeHeight;
+
+				gameObject.addChild(sprite);
+			}
+
+			this.roadMarksMiddleGameObjects.push(gameObject);
+			this.sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private generateRoadMarksMiddle() {
+
+		this.roadMarkPopDelayMiddle -= 0.1;
+
+		if (this.roadMarkPopDelayMiddle < 0) {
+
+			var gameObject = this.roadMarksMiddleGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				gameObject.setPosition(gameObject.width * -1 - this.roadMarkXyDisplacement, gameObject.height * -1);
+				gameObject.enableRendering();
+
+				this.roadMarkPopDelayMiddle = this.roadMarkPopDelayDefault;
+			}
+		}
+	}
+
+	private animateRoadMarksMiddle() {
+
+		var animatingRoadMarks = this.roadMarksMiddleGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingRoadMarks) {
+
+			animatingRoadMarks.forEach(gameObject => {
+				gameObject.moveDownRight();
+
+				if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	private spawnRoadMarksBottom() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+
+			for (let i = 0; i < 5; i++) {
+
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_MARK));
+
+				sprite.x = this.roadMarkSizeWidth * i - (this.roadMarkXyAdjustment * i);
+				sprite.y = (this.roadMarkSizeHeight / 2) * i - ((this.roadMarkXyAdjustment / 2) * i);
+				sprite.width = this.roadMarkSizeWidth;
+				sprite.height = this.roadMarkSizeHeight;
+
+				gameObject.addChild(sprite);
+			}
+
+			this.roadMarksBottomGameObjects.push(gameObject);
+			this.sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private generateRoadMarksBottom() {
+
+		this.roadMarkPopDelayBottom -= 0.1;
+
+		if (this.roadMarkPopDelayBottom < 0) {
+
+			var gameObject = this.roadMarksBottomGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				gameObject.setPosition(gameObject.width * -1 - this.roadMarkXyDisplacement * 2.8, gameObject.height * -1);
+				gameObject.enableRendering();
+
+				this.roadMarkPopDelayBottom = this.roadMarkPopDelayDefault;
+			}
+		}
+	}
+
+	private animateRoadMarksBottom() {
+
+		var animatingRoadMarks = this.roadMarksBottomGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingRoadMarks) {
 
@@ -3750,7 +3874,9 @@ export class GameScene extends Container implements IScene {
 	private generateGameObjects() {
 
 		if (!this.anyInAirBossExists()) {
-			this.generateRoadMarks();
+			this.generateRoadMarksTop();
+			this.generateRoadMarksMiddle();
+			this.generateRoadMarksBottom();
 			this.generateSideWalksTop();
 			//this.generateLightBillboardsTop();
 			//this.generateHedgesTop();
@@ -3792,7 +3918,9 @@ export class GameScene extends Container implements IScene {
 	private animateGameObjects() {
 
 		if (!this.anyInAirBossExists()) {
-			this.animateRoadMarks();
+			this.animateRoadMarksTop();
+			this.animateRoadMarksMiddle();
+			this.animateRoadMarksBottom();
 
 			this.animateSideWalksTop();
 			//this.animateHedgesTop();
