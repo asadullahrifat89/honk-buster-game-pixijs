@@ -317,12 +317,12 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_3.png"),
 
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_2.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_3.png"),		
+		//new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_2.png"),
+		//new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_3.png"),		
 
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_2.png"),	
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_3.png"),
+		//new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_2.png"),	
+		//new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_3.png"),
 
 		new ConstructTemplate(ConstructType.ROAD_SIDE_HEDGE, "road_side_hedge_1.png"),
 
