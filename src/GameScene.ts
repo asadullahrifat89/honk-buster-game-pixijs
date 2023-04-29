@@ -1106,7 +1106,7 @@ export class GameScene extends Container implements IScene {
 	private vehicleEnemySizeWidth: number = 242;
 	private vehicleEnemySizeHeight: number = 242;
 
-	private vehicleEnemyGameObjects: Array<GameObject> = [];
+	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
 
 	private vehicleEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private vehicleEnemyPopDelay: number = 0;
@@ -1169,14 +1169,26 @@ export class GameScene extends Container implements IScene {
 
 				if (gameObject) {
 
-					var vehicleEnemy = gameObject as VehicleEnemy;
+					gameObject.reset();				
+
+					let sprite = gameObject.getGameObjectSprite();
+
+					switch (gameObject.vehicleType) {
+						case 0: {
+							sprite.width = this.vehicleEnemySizeWidth / 1.2;
+							sprite.height = this.vehicleEnemySizeHeight / 1.2;
+						} break;
+						case 1: {
+							sprite.width = this.vehicleEnemySizeWidth;
+							sprite.height = this.vehicleEnemySizeHeight;
+						} break;
+						default: break;
+					}
 
 					if (this.anyInAirBossExists())
-						vehicleEnemy.repositionReverse();
+						gameObject.repositionReverse();
 					else
-						vehicleEnemy.reposition();
-
-					vehicleEnemy.reset();
+						gameObject.reposition();
 
 					gameObject.enableRendering();
 
@@ -1272,12 +1284,11 @@ export class GameScene extends Container implements IScene {
 
 	private spawnVehicleBosss() {
 		const gameObject: VehicleBoss = new VehicleBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
+		gameObject.vehicleType = Constants.getRandomNumber(0, 1);
 		gameObject.disableRendering();
 
-		var vehicleType = Constants.getRandomNumber(0, 1);
-
 		var uri: string = "";
-		switch (vehicleType) {
+		switch (gameObject.vehicleType) {
 			case 0: {
 				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
 			} break;
@@ -1292,8 +1303,18 @@ export class GameScene extends Container implements IScene {
 
 		sprite.x = 0;
 		sprite.y = 0;
-		sprite.width = this.vehicleBossSizeWidth;
-		sprite.height = this.vehicleBossSizeHeight;
+
+		switch (gameObject.vehicleType) {
+			case 0: {
+				sprite.width = this.vehicleBossSizeWidth / 1.2;
+				sprite.height = this.vehicleBossSizeHeight / 1.2;
+			} break;
+			case 1: {
+				sprite.width = this.vehicleBossSizeWidth;
+				sprite.height = this.vehicleBossSizeHeight;
+			} break;
+			default: break;
+		}
 
 		sprite.anchor.set(0.5, 0.5);
 
@@ -1309,20 +1330,32 @@ export class GameScene extends Container implements IScene {
 
 			var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
+			if (gameObject) {				
+				gameObject.reset();				
+				gameObject.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
 
-				var vehicleBoss = gameObject as VehicleBoss;
-				vehicleBoss.reposition();
-				vehicleBoss.reset();
-				vehicleBoss.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
+				let sprite = gameObject.getGameObjectSprite();
 
+				switch (gameObject.vehicleType) {
+					case 0: {
+						sprite.width = this.vehicleBossSizeWidth / 1.2;
+						sprite.height = this.vehicleBossSizeHeight / 1.2;
+					} break;
+					case 1: {
+						sprite.width = this.vehicleBossSizeWidth;
+						sprite.height = this.vehicleBossSizeHeight;
+					} break;
+					default: break;
+				}
+
+				gameObject.reposition();
 				gameObject.enableRendering();
 
 				this.vehicleBossCheckpoint.increaseThreasholdLimit(this.vehicleBossReleasePoint_increase, this.gameScoreBar.getScore());
 
-				this.bossHealthBar.setMaximumValue(vehicleBoss.health);
-				this.bossHealthBar.setValue(vehicleBoss.health);
-				this.bossHealthBar.setIcon(vehicleBoss.getGameObjectSprite().getTexture());
+				this.bossHealthBar.setMaximumValue(gameObject.health);
+				this.bossHealthBar.setValue(gameObject.health);
+				this.bossHealthBar.setIcon(gameObject.getGameObjectSprite().getTexture());
 
 				this.generateInGameMessage("Crazy Honker Arrived");
 

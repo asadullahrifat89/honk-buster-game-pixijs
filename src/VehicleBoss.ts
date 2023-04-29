@@ -7,18 +7,19 @@ export class VehicleBoss extends VehicleBossBase {
 
     private movementDirection: MovementDirection = MovementDirection.None;
     private changeMovementPatternDelay: number = 0;
+    public vehicleType: number = 0;
 
     constructor(speed: number) {
         super(speed);        
     }
 
     override reset() {
-        super.reset();
+        super.reset();      
 
-        var vehicleType = Constants.getRandomNumber(0, 1);
+        this.vehicleType = Constants.getRandomNumber(0, 1);
 
         let uri: string = "";
-        switch (vehicleType) {
+        switch (this.vehicleType) {
             case 0: {
                 uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
                 break;

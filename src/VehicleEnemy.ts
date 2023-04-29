@@ -13,10 +13,12 @@ export class VehicleEnemy extends VehicleBase {
 		super(speed);
 	}
 
-	reset() {
+	reset() {		
 		this.speed = Constants.getRandomNumber(2, 4);
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
 		this.filters = null;		
+
+		this.vehicleType = Constants.getRandomNumber(0, 1);
 
 		let uri: string = "";
 		switch (this.vehicleType) {
@@ -46,7 +48,7 @@ export class VehicleEnemy extends VehicleBase {
 
 	setBlast() {
 		this.willHonk = false;
-		this.speed = this.speed * 1.2;
+		this.speed = this.speed * 1.3;
 		this.filters = [this.grayScaleFilter];
 		SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
 	}
