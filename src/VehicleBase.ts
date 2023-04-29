@@ -12,11 +12,11 @@ export class VehicleBase extends GameObject {
 	}
 
 	reposition() {
-		var topOrLeft = Constants.getRandomNumber(0, 1); // generate top and left corner lane wise vehicles
+		var xOrYlane = Constants.getRandomNumber(0, 1); // generate top and left corner lane wise vehicles
 		var lane = Constants.getRandomNumber(0, 1); // generate number of lanes based of screen height
 		var randomY = Constants.getRandomNumber(-5, 5);
 
-		switch (topOrLeft) {
+		switch (xOrYlane) {
 			case 0:
 				{
 					var xLaneWidth = Constants.DEFAULT_GAME_VIEW_WIDTH / 4;
@@ -25,19 +25,20 @@ export class VehicleBase extends GameObject {
 						case 0:
 							{
 								this.setPosition(0 - this.width, (this.height * -1) + randomY);
-								break;
+
 							}
+							break;
 						case 1:
 							{
 								this.setPosition((xLaneWidth - this.width), (this.height * -1) + randomY);
-								break;
+
 							}
+							break;
 						default:
 							break;
 					}
-
-					break;
 				}
+				break;
 			case 1:
 				{
 					var yLaneHeight = Constants.DEFAULT_GAME_VIEW_HEIGHT / 6;
@@ -46,31 +47,31 @@ export class VehicleBase extends GameObject {
 						case 0:
 							{
 								this.setPosition(this.width * -1, (0 - this.height / 2) + randomY);
-								break;
-							}
 
+							}
+							break;
 						case 1:
 							{
 								this.setPosition(this.width * -1, (yLaneHeight - this.height / 3) + randomY);
-								break;
+
 							}
+							break;
 						default:
 							break;
 					}
-
-					break;
 				}
+				break;
 			default:
 				break;
 		}
 	}
 
 	repositionReverse() {
-		var topOrLeft = Constants.getRandomNumber(0, 1); // generate top and left corner lane wise vehicles
+		var xOrYlane = Constants.getRandomNumber(0, 1); // generate top and left corner lane wise vehicles
 		var lane = Constants.getRandomNumber(0, 1); // generate number of lanes based of screen height
 		var randomY = Constants.getRandomNumber(-5, 5);
 
-		switch (topOrLeft) {
+		switch (xOrYlane) {
 			case 0:
 				{
 					var xLaneWidth = Constants.DEFAULT_GAME_VIEW_WIDTH / 4;
@@ -78,42 +79,41 @@ export class VehicleBase extends GameObject {
 					switch (lane) {
 						case 0:
 							{
-								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH - this.width / 2, Constants.DEFAULT_GAME_VIEW_HEIGHT + this.height + randomY);
-								break;
+								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH - this.width /*/ 2*/, Constants.DEFAULT_GAME_VIEW_HEIGHT + this.height + randomY);
 							}
+							break;
 						case 1:
 							{
-								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH + (xLaneWidth - this.width / 1.5), Constants.DEFAULT_GAME_VIEW_HEIGHT + (this.height * -1) + randomY);
-								break;
+								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH + (xLaneWidth - this.width /*/ 2*/), Constants.DEFAULT_GAME_VIEW_HEIGHT + (this.height * -1) + randomY);
 							}
+							break;
 						default:
 							break;
 					}
-
-					break;
 				}
+				break;
 			case 1:
 				{
-					var yLaneHeight = Constants.DEFAULT_GAME_VIEW_HEIGHT / 6;
+					var yLaneHeight = Constants.DEFAULT_GAME_VIEW_HEIGHT / 5;
 
 					switch (lane) {
 						case 0:
 							{
 								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH + this.width, Constants.DEFAULT_GAME_VIEW_HEIGHT + (this.height / 2) + randomY);
-								break;
+								//console.log("left lane 0");
 							}
-
+							break;
 						case 1:
 							{
-								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH + this.width, Constants.DEFAULT_GAME_VIEW_HEIGHT + (yLaneHeight - this.height / 3) + randomY);
-								break;
+								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH + this.width, Constants.DEFAULT_GAME_VIEW_HEIGHT + (yLaneHeight - this.height) + randomY);
+								console.log("y lane 1");
 							}
+							break;
 						default:
 							break;
 					}
-
-					break;
 				}
+				break;
 			default:
 				break;
 		}

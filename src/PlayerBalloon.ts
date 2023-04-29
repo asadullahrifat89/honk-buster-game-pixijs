@@ -1,7 +1,8 @@
 ﻿import { Texture } from 'pixi.js';
-import { Constants, ConstructType, MovementDirection, PlayerBalloonStance, PlayerBalloonTemplate, RotationDirection } from './Constants';
+import { Constants, ConstructType, MovementDirection, PlayerBalloonStance, PlayerBalloonTemplate, RotationDirection, SoundType } from './Constants';
 import { GameController } from './GameController';
 import { GameObject } from './GameObject';
+import { SoundManager } from './SoundManager';
 
 
 export class PlayerBalloon extends GameObject {
@@ -219,6 +220,8 @@ export class PlayerBalloon extends GameObject {
 			this.health -= this.hitPoint;
 			this.alpha = 0.7;
 			this.healthLossRecoveryDelay = 8;
+
+			SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
 		}
 	}
 

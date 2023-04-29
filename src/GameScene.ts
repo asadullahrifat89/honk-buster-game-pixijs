@@ -57,7 +57,7 @@ export class GameScene extends Container implements IScene {
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
 	//TODO: set defaults _ufoBossReleasePoint = 50
-	private readonly ufoBossReleasePoint: number = 50; // first appearance
+	private readonly ufoBossReleasePoint: number = 5; // first appearance
 	private readonly ufoBossReleasePoint_increase: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
 
@@ -899,7 +899,7 @@ export class GameScene extends Container implements IScene {
 
 	private sideWalkPopDelayDefault: number = 110 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private sideWalkPopDelayTop: number = 0;
-	private sideWalkPopDelayBottom: number = 0;
+	private sideWalkPopDelayBottom: number = 4;
 
 	private spawnSideWalksTop() {
 
@@ -2846,8 +2846,6 @@ export class GameScene extends Container implements IScene {
 			this.depletePowerUp();
 		}
 		else {
-
-			SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
 
 			this._player.looseHealth();
 			this._player.setHitStance();
