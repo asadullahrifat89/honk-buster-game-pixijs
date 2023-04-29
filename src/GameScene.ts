@@ -416,7 +416,7 @@ export class GameScene extends Container implements IScene {
 				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
 				sprite.width = this.treeSizeWidth;
 				sprite.height = this.treeSizeHeight;				
-
+				    
 				gameObject.addChild(sprite);
 			}
 
@@ -3704,7 +3704,7 @@ export class GameScene extends Container implements IScene {
 	public update(_framesPassed: number) {
 
 		if (this.sceneContainer.alpha < 1) {
-			this.sceneContainer.alpha += 0.006;
+			this.sceneContainer.alpha += 0.003;
 		}
 
 		if (!this.gameController.isPaused) {
