@@ -210,7 +210,7 @@ export class PlayerBalloon extends GameObject {
 	}
 
 	gainhealth() {
-		this.health += this.hitPoint * 3;
+		this.health += this.hitPoint * 2;
 	}
 
 	looseHealth() {
