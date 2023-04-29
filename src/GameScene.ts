@@ -33,6 +33,7 @@ import { UfoEnemyRocket } from "./UfoEnemyRocket";
 import { SoundManager } from "./SoundManager";
 import { GameOverScene } from "./GameOverScene";
 import { PlayerHonkBombExplosion } from "./PlayerHonkBombExplosion";
+import { RoadSideWalk } from "./RoadSideWalk";
 
 
 export class GameScene extends Container implements IScene {
@@ -893,8 +894,8 @@ export class GameScene extends Container implements IScene {
 	private sideWalkWidth: number = 750;
 	private sideWalkHeight: number = 750;
 
-	private sideWalkTopGameObjects: Array<GameObject> = [];
-	private sideWalkBottomGameObjects: Array<GameObject> = [];
+	private sideWalkTopGameObjects: Array<RoadSideWalk> = [];
+	private sideWalkBottomGameObjects: Array<RoadSideWalk> = [];
 
 	private sideWalkPopDelayDefault: number = 100 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private sideWalkPopDelayTop: number = 0;
@@ -904,7 +905,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: RoadSideWalk = new RoadSideWalk(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			for (let i = 0; i < 5; i++) {
@@ -929,7 +930,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: RoadSideWalk = new RoadSideWalk(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			for (let i = 0; i < 5; i++) {
@@ -941,10 +942,6 @@ export class GameScene extends Container implements IScene {
 
 				sprite.width = this.sideWalkWidth;
 				sprite.height = this.sideWalkHeight;
-
-				//sideWalk.anchor.set(0.5, 0.5);
-				//sideWalk.rotation = Constants.degreesToRadians(-63.5);
-				//sideWalk.skew.set(0, Constants.degreesToRadians(37));
 
 				gameObject.addChild(sprite);
 			}
@@ -963,6 +960,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.sideWalkTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
+				gameObject.reset();
 				gameObject.x = -2500;
 				gameObject.y = gameObject.height * -1;
 				gameObject.enableRendering();
@@ -980,6 +978,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.sideWalkBottomGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
+				gameObject.reset();
 				gameObject.x = gameObject.width * -1;
 				gameObject.y = -1250;
 				gameObject.enableRendering();
