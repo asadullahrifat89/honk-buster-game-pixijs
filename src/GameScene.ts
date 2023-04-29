@@ -889,7 +889,7 @@ export class GameScene extends Container implements IScene {
 
 	//#region SideWalks
 
-	private sideWalkXyAdjustment: number = 187;
+	private sideWalkXyAdjustment: number = 170;
 
 	private sideWalkWidth: number = 750;
 	private sideWalkHeight: number = 750;
@@ -897,7 +897,7 @@ export class GameScene extends Container implements IScene {
 	private sideWalkTopGameObjects: Array<RoadSideWalk> = [];
 	private sideWalkBottomGameObjects: Array<RoadSideWalk> = [];
 
-	private sideWalkPopDelayDefault: number = 100 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private sideWalkPopDelayDefault: number = 110 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private sideWalkPopDelayTop: number = 0;
 	private sideWalkPopDelayBottom: number = 0;
 
