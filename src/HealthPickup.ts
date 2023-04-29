@@ -12,7 +12,7 @@ export class HealthPickup extends GameObject {
 	}
 
 	public static shouldGenerate(playerHealth: number): boolean {
-		return playerHealth <= 50;
+		return playerHealth <= 40; // generate health if health is below 40 %
 	}
 
 	reset() {

@@ -81,7 +81,7 @@ export class GameScene extends Container implements IScene {
 
 	private gameLevel: number = 0;
 	private roadBackgroundDay: Graphics;
-	private roadBackgroundNight: Graphics;
+	//private roadBackgroundNight: Graphics;
 
 	//#endregion
 
@@ -93,7 +93,7 @@ export class GameScene extends Container implements IScene {
 		super();
 
 		this.roadBackgroundDay = new Graphics().beginFill(0x4187ab, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
-		this.roadBackgroundNight = new Graphics().beginFill(0x1f2326, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+		//this.roadBackgroundNight = new Graphics().beginFill(0x1f2326, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 
 		this.addChildAt(this.roadBackgroundDay, 0);
 
@@ -334,7 +334,7 @@ export class GameScene extends Container implements IScene {
 
 			if (gameObject) {
 
-				gameObject.setPosition((gameObject.width * -1) - 695, gameObject.height * -1);
+				gameObject.setPosition((gameObject.width * -1) - 730, gameObject.height * -1);
 				gameObject.enableRendering();
 
 				this.roadMarkPopDelay = this.roadMarkPopDelayDefault;
@@ -482,9 +482,8 @@ export class GameScene extends Container implements IScene {
 			animatingTrees.forEach(gameObject => {
 				gameObject.moveDownRight();
 
-				if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
-
 				}
 			});
 		}
@@ -1805,7 +1804,7 @@ export class GameScene extends Container implements IScene {
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
 
-				this.switchToNightMode();
+				//this.switchToNightMode();
 			}
 		}
 	}
@@ -1870,7 +1869,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 
-			this.switchToDayMode();
+			//this.switchToDayMode();
 		}
 	}
 
@@ -2191,7 +2190,7 @@ export class GameScene extends Container implements IScene {
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
 
-				this.switchToNightMode();
+				//this.switchToNightMode();
 			}
 		}
 	}
@@ -2256,7 +2255,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 
-			this.switchToDayMode();
+			//this.switchToDayMode();
 		}
 	}
 
@@ -2421,7 +2420,7 @@ export class GameScene extends Container implements IScene {
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
 
-				this.switchToNightMode();
+				//this.switchToNightMode();
 			}
 		}
 	}
@@ -2486,7 +2485,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 
-			this.switchToDayMode();
+			//this.switchToDayMode();
 		}
 	}
 
@@ -3439,7 +3438,7 @@ export class GameScene extends Container implements IScene {
 
 	private generateHealthPickups() {
 
-		if (HealthPickup.shouldGenerate(this._player.health)) {
+		if (HealthPickup.shouldGenerate(this.playerHealthBar.getProgress())) { // generate health if health is below 40 %
 			this.healthPickupPopDelay -= 0.1;
 
 			if (this.healthPickupPopDelay < 0) {
@@ -3447,25 +3446,22 @@ export class GameScene extends Container implements IScene {
 				var gameObject = this.healthPickupGameObjects.find(x => x.isAnimating == false);
 
 				if (gameObject) {
-
 					gameObject.reset();
 
-					var healthPickup = gameObject as HealthPickup;
-
-					if (healthPickup) {
+					if (gameObject) {
 						var topOrLeft = Constants.getRandomNumber(0, 1);
 
 						switch (topOrLeft) {
 							case 0:
 								{
 									var xLaneWidth = Constants.DEFAULT_GAME_VIEW_WIDTH / 4;
-									healthPickup.setPosition(Constants.getRandomNumber(0, xLaneWidth - healthPickup.width), healthPickup.height * -1);
+									gameObject.setPosition(Constants.getRandomNumber(0, xLaneWidth - gameObject.width), gameObject.height * -1);
 								}
 								break;
 							case 1:
 								{
 									var yLaneWidth = (Constants.DEFAULT_GAME_VIEW_HEIGHT / 2) / 2;
-									healthPickup.setPosition(healthPickup.width * -1, Constants.getRandomNumber(0, yLaneWidth));
+									gameObject.setPosition(gameObject.width * -1, Constants.getRandomNumber(0, yLaneWidth));
 								}
 								break;
 							default:
@@ -3493,7 +3489,6 @@ export class GameScene extends Container implements IScene {
 					gameObject.shrink();
 				}
 				else {
-
 					gameObject.moveDownRight();
 
 					if (Constants.checkCloseCollision(gameObject, this._player)) {
@@ -3738,8 +3733,8 @@ export class GameScene extends Container implements IScene {
 			this.roadBackgroundDay.width = SceneManager.width;
 			this.roadBackgroundDay.height = SceneManager.height;
 
-			this.roadBackgroundNight.width = SceneManager.width;
-			this.roadBackgroundNight.height = SceneManager.height;
+			//this.roadBackgroundNight.width = SceneManager.width;
+			//this.roadBackgroundNight.height = SceneManager.height;
 		}
 	}
 
@@ -3853,15 +3848,15 @@ export class GameScene extends Container implements IScene {
 		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
 	}
 
-	private switchToNightMode() {
-		this.removeChildAt(0);
-		this.addChildAt(this.roadBackgroundNight, 0);
-	}
+	//private switchToNightMode() {
+	//	this.removeChildAt(0);
+	//	this.addChildAt(this.roadBackgroundNight, 0);
+	//}
 
-	private switchToDayMode() {
-		this.removeChildAt(0);
-		this.addChildAt(this.roadBackgroundDay, 0);
-	}
+	//private switchToDayMode() {
+	//	this.removeChildAt(0);
+	//	this.addChildAt(this.roadBackgroundDay, 0);
+	//}
 
 	//#endregion
 

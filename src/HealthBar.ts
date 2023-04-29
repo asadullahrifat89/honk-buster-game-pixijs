@@ -101,6 +101,10 @@ export class HealthBar extends Container {
 		return this.value;
 	}
 
+	getProgress(): number {
+		return this.progressBar.progress;
+	}
+
 	reset() {
 		this.setValue(0);
 	}
