@@ -151,12 +151,10 @@ export class GameScene extends Container implements IScene {
 			}
 		});
 
+		this.sceneContainer.filters = [new BlurFilter(2)];
+
 		this.playerTemplate = Constants.SELECTED_PLAYER_TEMPLATE;
 		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
-
-		//this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
-		//this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
-		//this.filters = [new GodrayFilter()];
 
 		this.addChild(this.sceneContainer);
 
@@ -415,8 +413,8 @@ export class GameScene extends Container implements IScene {
 				sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
 				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
 				sprite.width = this.treeSizeWidth;
-				sprite.height = this.treeSizeHeight;				
-				    
+				sprite.height = this.treeSizeHeight;
+
 				gameObject.addChild(sprite);
 			}
 
@@ -2900,7 +2898,7 @@ export class GameScene extends Container implements IScene {
 	private playerHonkBombSizeHeight: number = 50;
 
 	private playerHonkBombGameObjects: Array<GameObject> = [];
-	private playerHonkBusterTemplate: number = 0;	
+	private playerHonkBusterTemplate: number = 0;
 
 	spawnPlayerHonkBombs() {
 
@@ -3705,6 +3703,11 @@ export class GameScene extends Container implements IScene {
 
 		if (this.sceneContainer.alpha < 1) {
 			this.sceneContainer.alpha += 0.003;
+			let filter = this.sceneContainer.filters?.at(0) as BlurFilter;
+			filter.blur -= 0.006;
+
+			if (this.sceneContainer.alpha == 1)
+				this.sceneContainer.filters = null;
 		}
 
 		if (!this.gameController.isPaused) {
