@@ -889,7 +889,7 @@ export class GameScene extends Container implements IScene {
 
 	//#region SideWalks
 
-	private sideWalkXyAdjustment: number = 170;
+	private sideWalkXyAdjustment: number = 190;
 
 	private sideWalkWidth: number = 750;
 	private sideWalkHeight: number = 750;
@@ -980,7 +980,7 @@ export class GameScene extends Container implements IScene {
 			if (gameObject) {
 				gameObject.reset();
 				gameObject.x = gameObject.width * -1;
-				gameObject.y = -1250;
+				gameObject.y = -1230;
 				gameObject.enableRendering();
 				this.sideWalkPopDelayBottom = this.sideWalkPopDelayDefault;
 			}
