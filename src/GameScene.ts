@@ -92,7 +92,7 @@ export class GameScene extends Container implements IScene {
 	constructor() {
 		super();
 
-		this.roadBackgroundDay = new Graphics().beginFill(0x464646, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+		this.roadBackgroundDay = new Graphics().beginFill(0x5fc4f8, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 		this.roadBackgroundNight = new Graphics().beginFill(0x1f2326, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 
 		this.addChildAt(this.roadBackgroundDay, 0);
@@ -290,14 +290,14 @@ export class GameScene extends Container implements IScene {
 
 	//#region RoadMarks
 
-	private roadMarkXyAdjustment: number = 20;
+	private roadMarkXyAdjustment: number = 1200;
 
-	private roadMarkSizeWidth: number = 280;
-	private roadMarkSizeHeight: number = 280;
+	private roadMarkSizeWidth: number = 2300;
+	private roadMarkSizeHeight: number = 2300;
 
 	private roadMarkGameObjects: Array<GameObject> = [];
 
-	private roadMarkPopDelayDefault: number = 87 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private roadMarkPopDelayDefault: number = 170 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadMarkPopDelay: number = 0;
 
 	private spawnRoadMarks() {
@@ -307,7 +307,7 @@ export class GameScene extends Container implements IScene {
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			for (let i = 0; i < 10; i++) {
+			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_MARK));
 
@@ -334,7 +334,7 @@ export class GameScene extends Container implements IScene {
 
 			if (gameObject) {
 
-				gameObject.setPosition((gameObject.width * - 1) - 100, gameObject.height * -1);
+				gameObject.setPosition(gameObject.width * -1 - 1450, gameObject.height * -1);
 				gameObject.enableRendering();
 
 				this.roadMarkPopDelay = this.roadMarkPopDelayDefault;
@@ -371,8 +371,8 @@ export class GameScene extends Container implements IScene {
 	private treeTopGameObjects: Array<GameObject> = [];
 
 	private treePopDelayDefault: number = 60 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private treePopDelayTop: number = 0;
-	private treePopDelayBottom: number = 0;
+	private treePopDelayTop: number = 10;
+	private treePopDelayBottom: number = 10;
 
 	private spawnTreesTop() {
 
