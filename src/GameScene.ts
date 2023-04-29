@@ -292,22 +292,22 @@ export class GameScene extends Container implements IScene {
 
 	private roadMarkXyAdjustment: number = 19;
 
-	private roadMarkSizeWidth: number = 256;
-	private roadMarkSizeHeight: number = 256;
+	private roadMarkSizeWidth: number = 280;
+	private roadMarkSizeHeight: number = 280;
 
 	private roadMarkGameObjects: Array<GameObject> = [];
 
-	private roadMarkPopDelayDefault: number = 39.5 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private roadMarkPopDelayDefault: number = 110 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadMarkPopDelay: number = 0;
 
 	private spawnRoadMarks() {
 
-		for (let j = 0; j < 5; j++) {
+		for (let j = 0; j < 3; j++) {
 
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+			for (let i = 0; i < 10; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_MARK));
 
@@ -334,7 +334,7 @@ export class GameScene extends Container implements IScene {
 
 			if (gameObject) {
 
-				gameObject.setPosition(gameObject.width * - 1.1, gameObject.height * -1);
+				gameObject.setPosition((gameObject.width * - 1) - 100, gameObject.height * -1);
 				gameObject.enableRendering();
 
 				this.roadMarkPopDelay = this.roadMarkPopDelayDefault;
@@ -1169,7 +1169,7 @@ export class GameScene extends Container implements IScene {
 
 				if (gameObject) {
 
-					gameObject.reset();				
+					gameObject.reset();
 
 					let sprite = gameObject.getGameObjectSprite();
 
@@ -1330,8 +1330,8 @@ export class GameScene extends Container implements IScene {
 
 			var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {				
-				gameObject.reset();				
+			if (gameObject) {
+				gameObject.reset();
 				gameObject.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
 
 				let sprite = gameObject.getGameObjectSprite();
