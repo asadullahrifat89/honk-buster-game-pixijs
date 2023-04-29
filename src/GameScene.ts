@@ -297,7 +297,7 @@ export class GameScene extends Container implements IScene {
 
 	private roadMarkGameObjects: Array<GameObject> = [];
 
-	private roadMarkPopDelayDefault: number = 110 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private roadMarkPopDelayDefault: number = 100 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadMarkPopDelay: number = 0;
 
 	private spawnRoadMarks() {
@@ -897,7 +897,7 @@ export class GameScene extends Container implements IScene {
 	private sideWalkTopGameObjects: Array<RoadSideWalk> = [];
 	private sideWalkBottomGameObjects: Array<RoadSideWalk> = [];
 
-	private sideWalkPopDelayDefault: number = 110 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private sideWalkPopDelayDefault: number = 100 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private sideWalkPopDelayTop: number = 0;
 	private sideWalkPopDelayBottom: number = 4;
 
