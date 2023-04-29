@@ -290,14 +290,14 @@ export class GameScene extends Container implements IScene {
 
 	//#region RoadMarks
 
-	private roadMarkXyAdjustment: number = 19;
+	private roadMarkXyAdjustment: number = 20;
 
 	private roadMarkSizeWidth: number = 280;
 	private roadMarkSizeHeight: number = 280;
 
 	private roadMarkGameObjects: Array<GameObject> = [];
 
-	private roadMarkPopDelayDefault: number = 100 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private roadMarkPopDelayDefault: number = 87 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadMarkPopDelay: number = 0;
 
 	private spawnRoadMarks() {
@@ -897,7 +897,7 @@ export class GameScene extends Container implements IScene {
 	private sideWalkTopGameObjects: Array<RoadSideWalk> = [];
 	private sideWalkBottomGameObjects: Array<RoadSideWalk> = [];
 
-	private sideWalkPopDelayDefault: number = 100 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private sideWalkPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private sideWalkPopDelayTop: number = 0;
 	private sideWalkPopDelayBottom: number = 4;
 
@@ -910,7 +910,7 @@ export class GameScene extends Container implements IScene {
 
 			for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK));
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK_TOP));
 
 				sprite.x = this.sideWalkWidth * i - (this.sideWalkXyAdjustment * i);
 				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
@@ -935,7 +935,7 @@ export class GameScene extends Container implements IScene {
 
 			for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK));
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK_BOTTOM));
 
 				sprite.x = this.sideWalkWidth * i - (this.sideWalkXyAdjustment * i);
 				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
@@ -960,7 +960,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.sideWalkTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.reset();
+				//gameObject.reset();
 				gameObject.x = -2500;
 				gameObject.y = gameObject.height * -1;
 				gameObject.enableRendering();
@@ -978,7 +978,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.sideWalkBottomGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.reset();
+				//gameObject.reset();
 				gameObject.x = gameObject.width * -1;
 				gameObject.y = -1230;
 				gameObject.enableRendering();

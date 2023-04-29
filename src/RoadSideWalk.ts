@@ -9,6 +9,6 @@ export class RoadSideWalk extends GameObject {
     }
 
     reset() {
-        this.setTexture(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK));
+        this.setTexture(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK_TOP));
     }
 }

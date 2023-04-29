@@ -92,7 +92,8 @@ export enum ConstructType {
 	VEHICLE_BOSS_ROCKET,
 
 	ROAD_MARK,
-	ROAD_SIDE_WALK,	
+	ROAD_SIDE_WALK_TOP,	
+	ROAD_SIDE_WALK_BOTTOM,	
 
 	ROAD_SIDE_TREE,
 	ROAD_SIDE_HEDGE,
@@ -315,9 +316,13 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_2.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, "tree_3.png"),
 
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK, "road_side_walk_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK, "road_side_walk_2.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK, "road_side_walk_3.png"),		
+		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_2.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_3.png"),		
+
+		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_2.png"),	
+		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_3.png"),
 
 		new ConstructTemplate(ConstructType.ROAD_SIDE_HEDGE, "road_side_hedge_1.png"),
 

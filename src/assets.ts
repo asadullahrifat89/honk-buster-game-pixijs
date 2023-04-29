@@ -99,9 +99,13 @@ export const manifest: ResolverManifest = {
 				//"road_side_light_billboard_2": "./road_side_light_billboard_2.png",
 				//"road_side_light_billboard_3": "./road_side_light_billboard_3.png",
 
-				"road_side_walk_1": "./road_side_walk_1.png",
-				"road_side_walk_2": "./road_side_walk_2.png",
-				"road_side_walk_3": "./road_side_walk_3.png",				
+				"road_side_walk_top_1": "./road_side_walk_top_1.png",
+				"road_side_walk_top_2": "./road_side_walk_top_2.png",
+				"road_side_walk_top_3": "./road_side_walk_top_3.png",	
+
+				"road_side_walk_bottom_1": "./road_side_walk_bottom_1.png",
+				"road_side_walk_bottom_2": "./road_side_walk_bottom_2.png",
+				"road_side_walk_bottom_3": "./road_side_walk_bottom_3.png",	
 
 				"trash_1": "./trash_1.png",
 				"trash_2": "./trash_2.png",
