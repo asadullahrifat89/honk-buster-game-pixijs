@@ -415,9 +415,7 @@ export class GameScene extends Container implements IScene {
 				sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
 				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
 				sprite.width = this.treeSizeWidth;
-				sprite.height = this.treeSizeHeight;
-				sprite.scale.set(-1, 1);
-				sprite.anchor.set(0.5, 0.5);
+				sprite.height = this.treeSizeHeight;				
 
 				gameObject.addChild(sprite);
 			}
@@ -452,7 +450,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition(gameObject.width * -1, -525);
+				gameObject.setPosition(gameObject.width * -1, -580);
 				gameObject.enableRendering();
 				this.treePopDelayBottom = this.treePopDelayDefault;
 			}
@@ -2902,18 +2900,7 @@ export class GameScene extends Container implements IScene {
 	private playerHonkBombSizeHeight: number = 50;
 
 	private playerHonkBombGameObjects: Array<GameObject> = [];
-	private playerHonkBusterTemplate: number = 0;
-
-	private gameOver() {
-		SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-		SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
-		SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-		SoundManager.stop(SoundType.AMBIENCE);
-
-		Constants.GAME_SCORE = this.gameScoreBar.getScore();
-		this.removeChild(this.sceneContainer);
-		SceneManager.changeScene(new GameOverScene());
-	}
+	private playerHonkBusterTemplate: number = 0;	
 
 	spawnPlayerHonkBombs() {
 
@@ -3869,6 +3856,17 @@ export class GameScene extends Container implements IScene {
 	//	this.removeChildAt(0);
 	//	this.addChildAt(this.roadBackgroundDay, 0);
 	//}
+
+	private gameOver() {
+		SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+		SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+		SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+		SoundManager.stop(SoundType.AMBIENCE);
+
+		Constants.GAME_SCORE = this.gameScoreBar.getScore();
+		this.removeChild(this.sceneContainer);
+		SceneManager.changeScene(new GameOverScene());
+	}
 
 	//#endregion
 
