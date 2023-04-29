@@ -145,6 +145,9 @@ export class GameScene extends Container implements IScene {
 
 					this.sceneContainer.filters = null;
 				}
+			},
+			onQuit: () => {
+				this.gameOver();
 			}
 		});
 
@@ -2886,14 +2889,7 @@ export class GameScene extends Container implements IScene {
 			//TODO: game over
 
 			if (this._player.isDead()) {
-				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
-				SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-				SoundManager.stop(SoundType.AMBIENCE);
-
-				Constants.GAME_SCORE = this.gameScoreBar.getScore();
-				this.removeChild(this.sceneContainer);
-				SceneManager.changeScene(new GameOverScene());
+				this.gameOver();
 			}
 		}
 	}
@@ -2907,6 +2903,17 @@ export class GameScene extends Container implements IScene {
 
 	private playerHonkBombGameObjects: Array<GameObject> = [];
 	private playerHonkBusterTemplate: number = 0;
+
+	private gameOver() {
+		SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+		SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+		SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+		SoundManager.stop(SoundType.AMBIENCE);
+
+		Constants.GAME_SCORE = this.gameScoreBar.getScore();
+		this.removeChild(this.sceneContainer);
+		SceneManager.changeScene(new GameOverScene());
+	}
 
 	spawnPlayerHonkBombs() {
 
@@ -3685,6 +3692,11 @@ export class GameScene extends Container implements IScene {
 			this.onScreenMessage.reset();
 			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height / 2);
 			this.onScreenMessage.enableRendering();
+		}
+		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
+			this.onScreenMessage.setTitle(title);
+			this.onScreenMessage.reset();
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height / 2);
 		}
 	}
 

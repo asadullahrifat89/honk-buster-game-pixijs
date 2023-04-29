@@ -3,8 +3,6 @@
 
 export class OnScreenMessage {
 
-	//private _textBlock: BitmapText;
-	
 	public isAnimating: boolean = false;
 
 	private messageText: Text;
@@ -12,19 +10,6 @@ export class OnScreenMessage {
 	private readonly messageOnScreenDelayDefault: number = 20;
 
 	constructor(scene: Container) {
-
-		//BitmapFont.from("gameplay", {
-		//	fill: "#ffffff",
-		//	fontFamily: "gameplay",
-		//	fontSize: 26,
-		//	align: "center",
-		//});
-
-		//this._textBlock = new BitmapText("000", {
-		//	fontName: "gameplay",
-		//	fontSize: 26,
-		//	align: "center",
-		//});
 
 		this.messageText = new Text("", {
 			fontFamily: "gameplay",
