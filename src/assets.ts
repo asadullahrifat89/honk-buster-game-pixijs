@@ -92,7 +92,7 @@ export const manifest: ResolverManifest = {
 
 				//"road_side_hedge_1": "./road_side_hedge_1.png",
 
-				//"road_side_lamp_1": "./road_side_lamp_1.png",
+				"road_side_lamp_1": "./road_side_lamp_1.png",
 				//"road_side_lamp_2": "./road_side_lamp_2.png",
 
 				//"road_side_light_billboard_1": "./road_side_light_billboard_1.png",
