@@ -24,7 +24,7 @@ export class GameObject extends Container {
 	public expandSpeed: number = 0.07;
 
 	public isAnimating: boolean = false;
-	public speed: number = 3;
+	public speed: number = Constants.DEFAULT_CONSTRUCT_SPEED;
 	public health: number = 100;
 	public hitPoint: number = 5;
 

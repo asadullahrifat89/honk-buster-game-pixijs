@@ -165,10 +165,10 @@ export class GameScene extends Container implements IScene {
 		this.spawnRoadMarks();
 
 		this.spawnSideWalksTop();
-		this.spawnHedgesTop();
-		this.spawnLightBillboardsTop();
-		this.spawnTreesTop();
-		this.spawnLampsTop();
+		//this.spawnHedgesTop();
+		//this.spawnLightBillboardsTop();
+		//this.spawnTreesTop();
+		//this.spawnLampsTop();
 
 		this.spawnVehicleEnemys();
 		this.spawnVehicleBosss();
@@ -176,10 +176,10 @@ export class GameScene extends Container implements IScene {
 		this.spawnVehicleBossRockets();
 
 		this.spawnSideWalksBottom();
-		this.spawnHedgesBottom();
-		this.spawnLampsBottom();
-		this.spawnTreesBottom();
-		this.spawnLightBillboardsBottom();
+		//this.spawnHedgesBottom();
+		//this.spawnLampsBottom();
+		//this.spawnTreesBottom();
+		//this.spawnLightBillboardsBottom();
 
 		this.spawnPlayerHonkBombs();
 		this.spawnPlayerHonkBombExplosions();
@@ -361,542 +361,542 @@ export class GameScene extends Container implements IScene {
 
 	//#region Trees
 
-	private treeXyAdjustment: number = 190;
+	//private treeXyAdjustment: number = 185;
 
-	private treeSizeWidth: number = 260;
-	private treeSizeHeight: number = 260;
+	//private treeSizeWidth: number = 260;
+	//private treeSizeHeight: number = 260;
 
-	private treeBottomGameObjects: Array<GameObject> = [];
-	private treeTopGameObjects: Array<GameObject> = [];
+	//private treeBottomGameObjects: Array<GameObject> = [];
+	//private treeTopGameObjects: Array<GameObject> = [];
 
-	private treePopDelayDefault: number = 75 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private treePopDelayTop: number = 0;
-	private treePopDelayBottom: number = 0;
+	//private treePopDelayDefault: number = 50 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	//private treePopDelayTop: number = 0;
+	//private treePopDelayBottom: number = 0;
 
-	private spawnTreesTop() {
+	//private spawnTreesTop() {
 
-		for (let j = 0; j < 5; j++) {
+	//	for (let j = 0; j < 2; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+	//		for (let i = 0; i < 2; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
+	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
 
-				sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
-				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
-				sprite.width = this.treeSizeWidth;
-				sprite.height = this.treeSizeHeight;
+	//			sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
+	//			sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
+	//			sprite.width = this.treeSizeWidth;
+	//			sprite.height = this.treeSizeHeight;
 
-				gameObject.addChild(sprite);
-			}
+	//			gameObject.addChild(sprite);
+	//		}
 
-			this.treeTopGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.treeTopGameObjects.push(gameObject);
+	//		this.sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private spawnTreesBottom() {
+	//private spawnTreesBottom() {
 
-		for (let j = 0; j < 5; j++) {
+	//	for (let j = 0; j < 2; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+	//		for (let i = 0; i < 2; i++) {
 
-				const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_TREE);
-				const texture = Texture.from(uri);
-				const sprite: GameObjectSprite = new GameObjectSprite(texture);
+	//			const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_TREE);
+	//			const texture = Texture.from(uri);
+	//			const sprite: GameObjectSprite = new GameObjectSprite(texture);
 
-				sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
-				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
-				sprite.width = this.treeSizeWidth;
-				sprite.height = this.treeSizeHeight;
+	//			sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
+	//			sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
+	//			sprite.width = this.treeSizeWidth;
+	//			sprite.height = this.treeSizeHeight;
 
-				gameObject.addChild(sprite);
-			}
+	//			gameObject.addChild(sprite);
+	//		}
 
-			this.treeBottomGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.treeBottomGameObjects.push(gameObject);
+	//		this.sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private generateTreesTop() {
+	//private generateTreesTop() {
 
-		this.treePopDelayTop -= 0.1;
+	//	this.treePopDelayTop -= 0.1;
 
-		if (this.treePopDelayTop < 0) {
+	//	if (this.treePopDelayTop < 0) {
 
-			var gameObject = this.treeTopGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.treeTopGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.setPosition(-850, gameObject.height * -1);
-				gameObject.enableRendering();
-				this.treePopDelayTop = this.treePopDelayDefault;
-			}
-		}
-	}
+	//		if (gameObject) {
+	//			gameObject.setPosition(400, gameObject.height * -1);
+	//			gameObject.enableRendering();
+	//			this.treePopDelayTop = this.treePopDelayDefault;
+	//		}
+	//	}
+	//}
 
-	private generateTreesBottom() {
+	//private generateTreesBottom() {
 
-		this.treePopDelayBottom -= 0.1;
+	//	this.treePopDelayBottom -= 0.1;
 
-		if (this.treePopDelayBottom < 0) {
+	//	if (this.treePopDelayBottom < 0) {
 
-			var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.setPosition(gameObject.width * -1, -620);
-				gameObject.enableRendering();
-				this.treePopDelayBottom = this.treePopDelayDefault;
-			}
-		}
-	}
+	//		if (gameObject) {
+	//			gameObject.setPosition(gameObject.width * -1, -620);
+	//			gameObject.enableRendering();
+	//			this.treePopDelayBottom = this.treePopDelayDefault;
+	//		}
+	//	}
+	//}
 
-	private animateTreesTop() {
+	//private animateTreesTop() {
 
-		var animatingTrees = this.treeTopGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingTrees = this.treeTopGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingTrees) {
+	//	if (animatingTrees) {
 
-			animatingTrees.forEach(gameObject => {
-				gameObject.moveDownRight();
+	//		animatingTrees.forEach(gameObject => {
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+	//			if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
 
-				}
-			});
-		}
-	}
+	//			}
+	//		});
+	//	}
+	//}
 
-	private animateTreesBottom() {
+	//private animateTreesBottom() {
 
-		var animatingTrees = this.treeBottomGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingTrees = this.treeBottomGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingTrees) {
+	//	if (animatingTrees) {
 
-			animatingTrees.forEach(gameObject => {
-				gameObject.moveDownRight();
+	//		animatingTrees.forEach(gameObject => {
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+	//			if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
 
-				}
-			});
-		}
-	}
+	//			}
+	//		});
+	//	}
+	//}
 
 	//#endregion
 
 	//#region Hedges
 
-	private hedgeXyAdjustment: number = 30.5;
+	//private hedgeXyAdjustment: number = 30.5;
 
-	private hedgeSizeWidth: number = 450;
-	private hedgeSizeHeight: number = 450;
+	//private hedgeSizeWidth: number = 450;
+	//private hedgeSizeHeight: number = 450;
 
-	private hedgeBottomGameObjects: Array<GameObject> = [];
-	private hedgeTopGameObjects: Array<GameObject> = [];
+	//private hedgeBottomGameObjects: Array<GameObject> = [];
+	//private hedgeTopGameObjects: Array<GameObject> = [];
 
-	private hedgePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private hedgePopDelayTop: number = 0;
-	private hedgePopDelayBottom: number = 0;
+	//private hedgePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	//private hedgePopDelayTop: number = 0;
+	//private hedgePopDelayBottom: number = 0;
 
-	private spawnHedgesTop() {
+	//private spawnHedgesTop() {
 
-		for (let j = 0; j < 5; j++) {
+	//	for (let j = 0; j < 5; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+	//		for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
+	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
 
-				sprite.x = this.hedgeSizeWidth * i - (this.hedgeXyAdjustment * i);
-				sprite.y = (this.hedgeSizeHeight / 2) * i - ((this.hedgeXyAdjustment / 2) * i);
-				sprite.width = this.hedgeSizeWidth;
-				sprite.height = this.hedgeSizeHeight;
+	//			sprite.x = this.hedgeSizeWidth * i - (this.hedgeXyAdjustment * i);
+	//			sprite.y = (this.hedgeSizeHeight / 2) * i - ((this.hedgeXyAdjustment / 2) * i);
+	//			sprite.width = this.hedgeSizeWidth;
+	//			sprite.height = this.hedgeSizeHeight;
 
-				gameObject.addChild(sprite);
-			}
+	//			gameObject.addChild(sprite);
+	//		}
 
-			this.hedgeTopGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.hedgeTopGameObjects.push(gameObject);
+	//		this.sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private spawnHedgesBottom() {
+	//private spawnHedgesBottom() {
 
-		for (let j = 0; j < 5; j++) {
+	//	for (let j = 0; j < 5; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+	//		for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
+	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
 
-				sprite.x = this.hedgeSizeWidth * i - (this.hedgeXyAdjustment * i);
-				sprite.y = (this.hedgeSizeHeight / 2) * i - ((this.hedgeXyAdjustment / 2) * i);
-				sprite.width = this.hedgeSizeWidth;
-				sprite.height = this.hedgeSizeHeight;
+	//			sprite.x = this.hedgeSizeWidth * i - (this.hedgeXyAdjustment * i);
+	//			sprite.y = (this.hedgeSizeHeight / 2) * i - ((this.hedgeXyAdjustment / 2) * i);
+	//			sprite.width = this.hedgeSizeWidth;
+	//			sprite.height = this.hedgeSizeHeight;
 
-				gameObject.addChild(sprite);
-			}
+	//			gameObject.addChild(sprite);
+	//		}
 
-			this.hedgeBottomGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.hedgeBottomGameObjects.push(gameObject);
+	//		this.sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private generateHedgesTop() {
+	//private generateHedgesTop() {
 
-		this.hedgePopDelayTop -= 0.1;
+	//	this.hedgePopDelayTop -= 0.1;
 
-		if (this.hedgePopDelayTop < 0) {
+	//	if (this.hedgePopDelayTop < 0) {
 
-			var gameObject = this.hedgeTopGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.hedgeTopGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.setPosition(-1430, gameObject.height * -1);
-				gameObject.enableRendering();
-				this.hedgePopDelayTop = this.hedgePopDelayDefault;
-			}
-		}
-	}
+	//		if (gameObject) {
+	//			gameObject.setPosition(-1430, gameObject.height * -1);
+	//			gameObject.enableRendering();
+	//			this.hedgePopDelayTop = this.hedgePopDelayDefault;
+	//		}
+	//	}
+	//}
 
-	private generateHedgesBottom() {
+	//private generateHedgesBottom() {
 
-		this.hedgePopDelayBottom -= 0.1;
+	//	this.hedgePopDelayBottom -= 0.1;
 
-		if (this.hedgePopDelayBottom < 0) {
+	//	if (this.hedgePopDelayBottom < 0) {
 
-			var gameObject = this.hedgeBottomGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.hedgeBottomGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.setPosition(gameObject.width * -1, -710);
-				gameObject.enableRendering();
-				this.hedgePopDelayBottom = this.hedgePopDelayDefault;
+	//		if (gameObject) {
+	//			gameObject.setPosition(gameObject.width * -1, -710);
+	//			gameObject.enableRendering();
+	//			this.hedgePopDelayBottom = this.hedgePopDelayDefault;
 
-				// console.log("Hedge bottom gameObject popped.");
-			}
-		}
-	}
+	//			// console.log("Hedge bottom gameObject popped.");
+	//		}
+	//	}
+	//}
 
-	private animateHedgesTop() {
+	//private animateHedgesTop() {
 
-		var animatingHedges = this.hedgeTopGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingHedges = this.hedgeTopGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingHedges) {
+	//	if (animatingHedges) {
 
-			animatingHedges.forEach(gameObject => {
-				gameObject.moveDownRight();
+	//		animatingHedges.forEach(gameObject => {
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x - this.hedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+	//			if (gameObject.x - this.hedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
 
-				}
-			});
-		}
-	}
+	//			}
+	//		});
+	//	}
+	//}
 
-	private animateHedgesBottom() {
+	//private animateHedgesBottom() {
 
-		var animatingHedges = this.hedgeBottomGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingHedges = this.hedgeBottomGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingHedges) {
+	//	if (animatingHedges) {
 
-			animatingHedges.forEach(gameObject => {
-				gameObject.moveDownRight();
+	//		animatingHedges.forEach(gameObject => {
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x - this.hedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+	//			if (gameObject.x - this.hedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
 
-				}
-			});
-		}
-	}
+	//			}
+	//		});
+	//	}
+	//}
 
 	//#endregion
 
 	//#region Lamps
 
-	private lampXyAdjustment: number = 31.5;
-	private lampXyDistance = 250;
+	//private lampXyAdjustment: number = 31.5;
+	//private lampXyDistance = 250;
 
-	private lampSizeWidth: number = 268 / 2;
-	private lampSizeHeight: number = 234 / 2;
+	//private lampSizeWidth: number = 268 / 2;
+	//private lampSizeHeight: number = 234 / 2;
 
-	private lampBottomGameObjects: Array<GameObject> = [];
-	private lampTopGameObjects: Array<GameObject> = [];
+	//private lampBottomGameObjects: Array<GameObject> = [];
+	//private lampTopGameObjects: Array<GameObject> = [];
 
-	private lampPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private lampPopDelayTop: number = 0;
-	private lampPopDelayBottom: number = 0;
+	//private lampPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	//private lampPopDelayTop: number = 0;
+	//private lampPopDelayBottom: number = 0;
 
-	private spawnLampsTop() {
+	//private spawnLampsTop() {
 
-		for (let j = 0; j < 5; j++) {
+	//	for (let j = 0; j < 5; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+	//		for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
+	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
 
-				sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i)) + (this.lampXyDistance * i);
-				sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
-				sprite.width = this.lampSizeWidth;
-				sprite.height = this.lampSizeHeight;
+	//			sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i)) + (this.lampXyDistance * i);
+	//			sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
+	//			sprite.width = this.lampSizeWidth;
+	//			sprite.height = this.lampSizeHeight;
 
-				gameObject.addChild(sprite);
-			}
+	//			gameObject.addChild(sprite);
+	//		}
 
-			this.lampTopGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.lampTopGameObjects.push(gameObject);
+	//		this.sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private spawnLampsBottom() {
+	//private spawnLampsBottom() {
 
-		for (let j = 0; j < 5; j++) {
+	//	for (let j = 0; j < 5; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+	//		for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
+	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
 
-				sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i)) + (this.lampXyDistance * i);
-				sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
-				sprite.width = this.lampSizeWidth;
-				sprite.height = this.lampSizeHeight;
+	//			sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i)) + (this.lampXyDistance * i);
+	//			sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
+	//			sprite.width = this.lampSizeWidth;
+	//			sprite.height = this.lampSizeHeight;
 
-				gameObject.addChild(sprite);
-			}
+	//			gameObject.addChild(sprite);
+	//		}
 
-			this.lampBottomGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.lampBottomGameObjects.push(gameObject);
+	//		this.sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private generateLampsTop() {
+	//private generateLampsTop() {
 
-		this.lampPopDelayTop -= 0.1;
+	//	this.lampPopDelayTop -= 0.1;
 
-		if (this.lampPopDelayTop < 0) {
+	//	if (this.lampPopDelayTop < 0) {
 
-			var gameObject = this.lampTopGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.lampTopGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.setPosition(-510, gameObject.height * -1);
-				gameObject.enableRendering();
-				this.lampPopDelayTop = this.lampPopDelayDefault;
-			}
-		}
-	}
+	//		if (gameObject) {
+	//			gameObject.setPosition(-510, gameObject.height * -1);
+	//			gameObject.enableRendering();
+	//			this.lampPopDelayTop = this.lampPopDelayDefault;
+	//		}
+	//	}
+	//}
 
-	private generateLampsBottom() {
+	//private generateLampsBottom() {
 
-		this.lampPopDelayBottom -= 0.1;
+	//	this.lampPopDelayBottom -= 0.1;
 
-		if (this.lampPopDelayBottom < 0) {
+	//	if (this.lampPopDelayBottom < 0) {
 
-			var gameObject = this.lampBottomGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.lampBottomGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.x = gameObject.width * -1;
-				gameObject.y = -330;
-				gameObject.enableRendering();
-				this.lampPopDelayBottom = this.lampPopDelayDefault;
-			}
-		}
-	}
+	//		if (gameObject) {
+	//			gameObject.x = gameObject.width * -1;
+	//			gameObject.y = -330;
+	//			gameObject.enableRendering();
+	//			this.lampPopDelayBottom = this.lampPopDelayDefault;
+	//		}
+	//	}
+	//}
 
-	private animateLampsTop() {
+	//private animateLampsTop() {
 
-		var animatingLamps = this.lampTopGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingLamps = this.lampTopGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingLamps) {
+	//	if (animatingLamps) {
 
-			animatingLamps.forEach(gameObject => {
-				gameObject.moveDownRight();
+	//		animatingLamps.forEach(gameObject => {
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x - this.lampSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+	//			if (gameObject.x - this.lampSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
 
-				}
-			});
-		}
-	}
+	//			}
+	//		});
+	//	}
+	//}
 
-	private animateLampsBottom() {
+	//private animateLampsBottom() {
 
-		var animatingLamps = this.lampBottomGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingLamps = this.lampBottomGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingLamps) {
+	//	if (animatingLamps) {
 
-			animatingLamps.forEach(gameObject => {
-				gameObject.moveDownRight();
+	//		animatingLamps.forEach(gameObject => {
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x - this.lampSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+	//			if (gameObject.x - this.lampSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
 
-				}
-			});
-		}
-	}
+	//			}
+	//		});
+	//	}
+	//}
 
 	//#endregion
 
 	//#region LightBillboards
 
-	private lightBillboardXyAdjustment: number = 31.5;
-	private lightBillboardXyDistance = 250;
+	//private lightBillboardXyAdjustment: number = 31.5;
+	//private lightBillboardXyDistance = 250;
 
-	private lightBillboardSizeWidth: number = 128;
-	private lightBillboardSizeHeight: number = 128;
+	//private lightBillboardSizeWidth: number = 128;
+	//private lightBillboardSizeHeight: number = 128;
 
-	private lightBillboardBottomGameObjects: Array<GameObject> = [];
-	private lightBillboardTopGameObjects: Array<GameObject> = [];
+	//private lightBillboardBottomGameObjects: Array<GameObject> = [];
+	//private lightBillboardTopGameObjects: Array<GameObject> = [];
 
-	private lightBillboardPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private lightBillboardPopDelayTop: number = 0;
-	private lightBillboardPopDelayBottom: number = 0;
+	//private lightBillboardPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	//private lightBillboardPopDelayTop: number = 0;
+	//private lightBillboardPopDelayBottom: number = 0;
 
-	private spawnLightBillboardsTop() {
+	//private spawnLightBillboardsTop() {
 
-		for (let j = 0; j < 5; j++) {
+	//	for (let j = 0; j < 5; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+	//		for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
+	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
 
-				sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
-				sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
-				sprite.width = this.lightBillboardSizeWidth;
-				sprite.height = this.lightBillboardSizeHeight;
+	//			sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
+	//			sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
+	//			sprite.width = this.lightBillboardSizeWidth;
+	//			sprite.height = this.lightBillboardSizeHeight;
 
-				gameObject.addChild(sprite);
-			}
+	//			gameObject.addChild(sprite);
+	//		}
 
-			this.lightBillboardTopGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.lightBillboardTopGameObjects.push(gameObject);
+	//		this.sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private spawnLightBillboardsBottom() {
+	//private spawnLightBillboardsBottom() {
 
-		for (let j = 0; j < 5; j++) {
+	//	for (let j = 0; j < 5; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+	//		for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
+	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
 
-				sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
-				sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
-				sprite.width = this.lightBillboardSizeWidth;
-				sprite.height = this.lightBillboardSizeHeight;
+	//			sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
+	//			sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
+	//			sprite.width = this.lightBillboardSizeWidth;
+	//			sprite.height = this.lightBillboardSizeHeight;
 
-				gameObject.addChild(sprite);
-			}
+	//			gameObject.addChild(sprite);
+	//		}
 
-			this.lightBillboardBottomGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.lightBillboardBottomGameObjects.push(gameObject);
+	//		this.sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private generateLightBillboardsTop() {
+	//private generateLightBillboardsTop() {
 
-		this.lightBillboardPopDelayTop -= 0.1;
+	//	this.lightBillboardPopDelayTop -= 0.1;
 
-		if (this.lightBillboardPopDelayTop < 0) {
+	//	if (this.lightBillboardPopDelayTop < 0) {
 
-			var gameObject = this.lightBillboardTopGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.lightBillboardTopGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.setPosition(-380, gameObject.height * -1.1);
-				gameObject.enableRendering();
-				this.lightBillboardPopDelayTop = this.lightBillboardPopDelayDefault;
-			}
-		}
-	}
+	//		if (gameObject) {
+	//			gameObject.setPosition(-380, gameObject.height * -1.1);
+	//			gameObject.enableRendering();
+	//			this.lightBillboardPopDelayTop = this.lightBillboardPopDelayDefault;
+	//		}
+	//	}
+	//}
 
-	private generateLightBillboardsBottom() {
+	//private generateLightBillboardsBottom() {
 
-		this.lightBillboardPopDelayBottom -= 0.1;
+	//	this.lightBillboardPopDelayBottom -= 0.1;
 
-		if (this.lightBillboardPopDelayBottom < 0) {
+	//	if (this.lightBillboardPopDelayBottom < 0) {
 
-			var gameObject = this.lightBillboardBottomGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.lightBillboardBottomGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.setPosition(gameObject.width * -1, -180);
-				gameObject.enableRendering();
-				this.lightBillboardPopDelayBottom = this.lightBillboardPopDelayDefault;
-			}
-		}
-	}
+	//		if (gameObject) {
+	//			gameObject.setPosition(gameObject.width * -1, -180);
+	//			gameObject.enableRendering();
+	//			this.lightBillboardPopDelayBottom = this.lightBillboardPopDelayDefault;
+	//		}
+	//	}
+	//}
 
-	private animateLightBillboardsTop() {
+	//private animateLightBillboardsTop() {
 
-		var animatingLightBillboards = this.lightBillboardTopGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingLightBillboards = this.lightBillboardTopGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingLightBillboards) {
+	//	if (animatingLightBillboards) {
 
-			animatingLightBillboards.forEach(gameObject => {
-				gameObject.moveDownRight();
+	//		animatingLightBillboards.forEach(gameObject => {
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+	//			if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
 
-				}
-			});
-		}
-	}
+	//			}
+	//		});
+	//	}
+	//}
 
-	private animateLightBillboardsBottom() {
+	//private animateLightBillboardsBottom() {
 
-		var animatingLightBillboards = this.lightBillboardBottomGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingLightBillboards = this.lightBillboardBottomGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingLightBillboards) {
+	//	if (animatingLightBillboards) {
 
-			animatingLightBillboards.forEach(gameObject => {
-				gameObject.moveDownRight();
+	//		animatingLightBillboards.forEach(gameObject => {
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+	//			if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
 
-				}
-			});
-		}
-	}
+	//			}
+	//		});
+	//	}
+	//}
 
 	//#endregion
 
 	//#region SideWalks
 
-	private sideWalkXyAdjustment: number = 111.5;
+	private sideWalkXyAdjustment: number = 187;
 
-	private sideWalkWidth: number = 450;
-	private sideWalkHeight: number = 450;
+	private sideWalkWidth: number = 750;
+	private sideWalkHeight: number = 750;
 
 	private sideWalkTopGameObjects: Array<GameObject> = [];
 	private sideWalkBottomGameObjects: Array<GameObject> = [];
 
-	private sideWalkPopDelayDefault: number = 50 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private sideWalkPopDelayDefault: number = 100 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private sideWalkPopDelayTop: number = 0;
 	private sideWalkPopDelayBottom: number = 0;
 
@@ -916,10 +916,6 @@ export class GameScene extends Container implements IScene {
 
 				sprite.width = this.sideWalkWidth;
 				sprite.height = this.sideWalkHeight;
-
-				//sideWalk.anchor.set(0.5, 0.5);
-				//sideWalk.rotation = Constants.degreesToRadians(-63.5);
-				//sideWalk.skew.set(0, Constants.degreesToRadians(37));
 
 				gameObject.addChild(sprite);
 			}
@@ -967,7 +963,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.sideWalkTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.x = -945;
+				gameObject.x = -2500;
 				gameObject.y = gameObject.height * -1;
 				gameObject.enableRendering();
 				this.sideWalkPopDelayTop = this.sideWalkPopDelayDefault;
@@ -985,7 +981,7 @@ export class GameScene extends Container implements IScene {
 
 			if (gameObject) {
 				gameObject.x = gameObject.width * -1;
-				gameObject.y = -435;
+				gameObject.y = -1250;
 				gameObject.enableRendering();
 				this.sideWalkPopDelayBottom = this.sideWalkPopDelayDefault;
 			}
@@ -1123,7 +1119,7 @@ export class GameScene extends Container implements IScene {
 			const gameObject: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.vehicleType = Constants.getRandomNumber(0, 1);
 
-			gameObject.disableRendering();			
+			gameObject.disableRendering();
 
 			var uri: string = "";
 			switch (gameObject.vehicleType) {
@@ -3728,10 +3724,10 @@ export class GameScene extends Container implements IScene {
 		if (!this.anyInAirBossExists()) {
 			this.generateRoadMarks();
 			this.generateSideWalksTop();
-			this.generateLightBillboardsTop();
-			this.generateHedgesTop();
-			this.generateTreesTop();
-			this.generateLampsTop();
+			//this.generateLightBillboardsTop();
+			//this.generateHedgesTop();
+			//this.generateTreesTop();
+			//this.generateLampsTop();
 		}
 
 		this.generateVehicleEnemys();
@@ -3758,10 +3754,10 @@ export class GameScene extends Container implements IScene {
 
 		if (!this.anyInAirBossExists()) {
 			this.generateSideWalksBottom();
-			this.generateHedgesBottom();
-			this.generateLightBillboardsBottom();
-			this.generateTreesBottom();
-			this.generateLampsBottom();
+			//this.generateHedgesBottom();
+			//this.generateLightBillboardsBottom();
+			//this.generateTreesBottom();
+			//this.generateLampsBottom();
 		}
 	}
 
@@ -3771,10 +3767,10 @@ export class GameScene extends Container implements IScene {
 			this.animateRoadMarks();
 
 			this.animateSideWalksTop();
-			this.animateHedgesTop();
-			this.animateTreesTop();
-			this.animateLightBillboardsTop();
-			this.animateLampsTop();
+			//this.animateHedgesTop();
+			//this.animateTreesTop();
+			//this.animateLightBillboardsTop();
+			//this.animateLampsTop();
 		}
 
 		this.animateVehicleEnemys();
@@ -3785,10 +3781,10 @@ export class GameScene extends Container implements IScene {
 
 		if (!this.anyInAirBossExists()) {
 			this.animateSideWalksBottom();
-			this.animateHedgesBottom();
-			this.animateTreesBottom();
-			this.animateLightBillboardsBottom();
-			this.animateLampsBottom();
+			//this.animateHedgesBottom();
+			//this.animateTreesBottom();
+			//this.animateLightBillboardsBottom();
+			//this.animateLampsBottom();
 		}
 
 		this.animatePlayerHonkBombs();
