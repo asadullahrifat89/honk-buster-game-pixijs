@@ -261,29 +261,31 @@ export class GameScene extends Container implements IScene {
 	}
 
 	animateCastShadows() {
-		var animatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == true);
+		if (this.sceneContainer.alpha >= 1) {
+			var animatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == true);
 
-		if (animatingCastShadows) {
+			if (animatingCastShadows) {
 
-			animatingCastShadows.forEach(dropShadow => {
+				animatingCastShadows.forEach(dropShadow => {
 
-				if (!dropShadow.isAnimating) {
-					dropShadow.reset();
-					dropShadow.enableRendering();
-				}
+					if (!dropShadow.isAnimating) {
+						dropShadow.reset();
+						dropShadow.enableRendering();
+					}
 
-				dropShadow.move();
-			});
-		}
+					dropShadow.move();
+				});
+			}
 
-		var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false || x.source.isBlasting || x.source.isDead());
+			var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false || x.source.isBlasting || x.source.isDead());
 
-		if (nonAnimatingCastShadows) {
+			if (nonAnimatingCastShadows) {
 
-			nonAnimatingCastShadows.forEach(dropShadow => {
-				if (dropShadow.isAnimating)
-					dropShadow.disableRendering();
-			});
+				nonAnimatingCastShadows.forEach(dropShadow => {
+					if (dropShadow.isAnimating)
+						dropShadow.disableRendering();
+				});
+			}
 		}
 	}
 

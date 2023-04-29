@@ -11,46 +11,45 @@ export class SeekingRocketBase extends GameObject {
 	public targetHitbox: Rectangle = new Rectangle();
 
 	setTarget(target: Rectangle) {
+		let rocketX = this.getLeft() /*+ this.width / 2*/;
+		let rocketY = this.getTop() /*+ this.height / 2*/;
 
-		let rocketMiddleX = this.getLeft() + this.width / 2;
-		let rocketMiddleY = this.getTop() + this.height / 2;
-
-		let targetMiddleX = target.x + target.width / 2;
-		let targetMiddleY = target.y + target.height / 2;
+		let targetX = target.x /*+ target.width / 2*/;
+		let targetY = target.y /*+ target.height / 2*/;
 
 		var scaling = SceneManager.scaling;
 
 		// move up
-		if (targetMiddleY < rocketMiddleY) {
-			var distance = Math.abs(targetMiddleY - rocketMiddleY);
-			this.targetHitbox.y = targetMiddleY - distance;
+		if (targetY < rocketY) {
+			var distance = Math.abs(targetY - rocketY);
+			this.targetHitbox.y = targetY - distance;
 
 			if (this.targetHitbox.y > 0)
 				this.targetHitbox.y -= distance;
 		}
 
 		// move left
-		if (targetMiddleX < rocketMiddleX) {
-			var distance = Math.abs(targetMiddleX - rocketMiddleX);
-			this.targetHitbox.x = targetMiddleX - distance;
+		if (targetX < rocketX) {
+			var distance = Math.abs(targetX - rocketX);
+			this.targetHitbox.x = targetX - distance;
 
 			if (this.targetHitbox.x > 0)
 				this.targetHitbox.x -= distance;
 		}
 
 		// move down
-		if (targetMiddleY > rocketMiddleY) {
-			var distance = Math.abs(targetMiddleY - rocketMiddleY);
-			this.targetHitbox.y = targetMiddleY + distance;
+		if (targetY > rocketY) {
+			var distance = Math.abs(targetY - rocketY);
+			this.targetHitbox.y = targetY + distance;
 
 			if (this.targetHitbox.y < Constants.DEFAULT_GAME_VIEW_HEIGHT * scaling)
 				this.targetHitbox.y += distance;
 		}
 
 		// move right
-		if (targetMiddleX > rocketMiddleX) {
-			var distance = Math.abs(targetMiddleX - rocketMiddleX);
-			this.targetHitbox.x = targetMiddleX + distance;
+		if (targetX > rocketX) {
+			var distance = Math.abs(targetX - rocketX);
+			this.targetHitbox.x = targetX + distance;
 
 			if (this.targetHitbox.x < Constants.DEFAULT_GAME_VIEW_WIDTH * scaling)
 				this.targetHitbox.x += distance;
@@ -61,39 +60,39 @@ export class SeekingRocketBase extends GameObject {
 		let left = this.getLeft();
 		let top = this.getTop();
 
-		let rocketMiddleX = left + this.width / 2;
-		let rocketMiddleY = top + this.height / 2;
+		let rocketX = left /*+ this.width / 2*/;
+		let rocketY = top /*+ this.height / 2*/;
 
-		let targetMiddleX = target.x + target.width / 2;
-		let targetMiddleY = target.y + target.height / 2;
+		let targetX = target.x /*+ target.width / 2*/;
+		let targetY = target.y /*+ target.height / 2*/;
 
 		// move up
-		if (targetMiddleY < rocketMiddleY - this.grace) {
-			var distance = Math.abs(targetMiddleY - rocketMiddleY);
+		if (targetY < rocketY - this.grace) {
+			var distance = Math.abs(targetY - rocketY);
 			let speed = this.calculateSpeed(distance, doubleSpeed);
 
 			this.y = (top - speed);
 		}
 
 		// move left
-		if (targetMiddleX < rocketMiddleX - this.grace) {
-			var distance = Math.abs(targetMiddleX - rocketMiddleX);
+		if (targetX < rocketX - this.grace) {
+			var distance = Math.abs(targetX - rocketX);
 			let speed = this.calculateSpeed(distance, doubleSpeed);
 
 			this.x = (left - speed);
 		}
 
 		// move down
-		if (targetMiddleY > rocketMiddleY + this.grace) {
-			var distance = Math.abs(targetMiddleY - rocketMiddleY);
+		if (targetY > rocketY + this.grace) {
+			var distance = Math.abs(targetY - rocketY);
 			let speed = this.calculateSpeed(distance, doubleSpeed);
 
 			this.y = (top + speed);
 		}
 
 		// move right
-		if (targetMiddleX > rocketMiddleX + this.grace) {
-			var distance = Math.abs(targetMiddleX - rocketMiddleX);
+		if (targetX > rocketX + this.grace) {
+			var distance = Math.abs(targetX - rocketX);
 			let speed = this.calculateSpeed(distance, doubleSpeed);
 
 			this.x = (left + speed);
