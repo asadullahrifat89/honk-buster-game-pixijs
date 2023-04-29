@@ -1,7 +1,7 @@
 ﻿import { Container, Text } from "pixi.js";
 
 
-export class InGameMessage {
+export class OnScreenMessage {
 
 	//private _textBlock: BitmapText;
 	
