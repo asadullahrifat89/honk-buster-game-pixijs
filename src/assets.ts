@@ -111,9 +111,9 @@ export const manifest: ResolverManifest = {
 				"trash_2": "./trash_2.png",
 				"trash_3": "./trash_3.png",
 
-				//"tree_1": "./tree_1.png",
-				//"tree_2": "./tree_2.png",
-				//"tree_3": "./tree_3.png",
+				"tree_1": "./tree_1.png",
+				"tree_2": "./tree_2.png",
+				"tree_3": "./tree_3.png",
 
 				"ufo_boss_1_hit": "./ufo_boss_1_hit.png",
 				"ufo_boss_1_idle": "./ufo_boss_1_idle.png",

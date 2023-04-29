@@ -168,7 +168,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnSideWalksTop();
 		//this.spawnHedgesTop();
 		//this.spawnLightBillboardsTop();
-		//this.spawnTreesTop();
+		this.spawnTreesTop();
 		//this.spawnLampsTop();
 
 		this.spawnVehicleEnemys();
@@ -179,7 +179,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnSideWalksBottom();
 		//this.spawnHedgesBottom();
 		//this.spawnLampsBottom();
-		//this.spawnTreesBottom();
+		this.spawnTreesBottom();
 		//this.spawnLightBillboardsBottom();
 
 		this.spawnPlayerHonkBombs();
@@ -362,133 +362,131 @@ export class GameScene extends Container implements IScene {
 
 	//#region Trees
 
-	//private treeXyAdjustment: number = 185;
+	private treeXyAdjustment: number = 100;
 
-	//private treeSizeWidth: number = 260;
-	//private treeSizeHeight: number = 260;
+	private treeSizeWidth: number = 260;
+	private treeSizeHeight: number = 260;
 
-	//private treeBottomGameObjects: Array<GameObject> = [];
-	//private treeTopGameObjects: Array<GameObject> = [];
+	private treeBottomGameObjects: Array<GameObject> = [];
+	private treeTopGameObjects: Array<GameObject> = [];
 
-	//private treePopDelayDefault: number = 50 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	//private treePopDelayTop: number = 0;
-	//private treePopDelayBottom: number = 0;
+	private treePopDelayDefault: number = 60 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private treePopDelayTop: number = 0;
+	private treePopDelayBottom: number = 0;
 
-	//private spawnTreesTop() {
+	private spawnTreesTop() {
 
-	//	for (let j = 0; j < 2; j++) {
+		for (let j = 0; j < 3; j++) {
 
-	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-	//		gameObject.disableRendering();
+			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
 
-	//		for (let i = 0; i < 2; i++) {
+			for (let i = 0; i < 5; i++) {
 
-	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
 
-	//			sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
-	//			sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
-	//			sprite.width = this.treeSizeWidth;
-	//			sprite.height = this.treeSizeHeight;
+				sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
+				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
+				sprite.width = this.treeSizeWidth;
+				sprite.height = this.treeSizeHeight;
 
-	//			gameObject.addChild(sprite);
-	//		}
+				gameObject.addChild(sprite);
+			}
 
-	//		this.treeTopGameObjects.push(gameObject);
-	//		this.sceneContainer.addChild(gameObject);
-	//	}
-	//}
+			this.treeTopGameObjects.push(gameObject);
+			this.sceneContainer.addChild(gameObject);
+		}
+	}
 
-	//private spawnTreesBottom() {
+	private spawnTreesBottom() {
 
-	//	for (let j = 0; j < 2; j++) {
+		for (let j = 0; j < 3; j++) {
 
-	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-	//		gameObject.disableRendering();
+			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
 
-	//		for (let i = 0; i < 2; i++) {
+			for (let i = 0; i < 5; i++) {
 
-	//			const uri = Constants.getRandomUri(ConstructType.ROAD_SIDE_TREE);
-	//			const texture = Texture.from(uri);
-	//			const sprite: GameObjectSprite = new GameObjectSprite(texture);
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
 
-	//			sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
-	//			sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
-	//			sprite.width = this.treeSizeWidth;
-	//			sprite.height = this.treeSizeHeight;
+				sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
+				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
+				sprite.width = this.treeSizeWidth;
+				sprite.height = this.treeSizeHeight;
 
-	//			gameObject.addChild(sprite);
-	//		}
+				gameObject.addChild(sprite);
+			}
 
-	//		this.treeBottomGameObjects.push(gameObject);
-	//		this.sceneContainer.addChild(gameObject);
-	//	}
-	//}
+			this.treeBottomGameObjects.push(gameObject);
+			this.sceneContainer.addChild(gameObject);
+		}
+	}
 
-	//private generateTreesTop() {
+	private generateTreesTop() {
 
-	//	this.treePopDelayTop -= 0.1;
+		this.treePopDelayTop -= 0.1;
 
-	//	if (this.treePopDelayTop < 0) {
+		if (this.treePopDelayTop < 0) {
 
-	//		var gameObject = this.treeTopGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.treeTopGameObjects.find(x => x.isAnimating == false);
 
-	//		if (gameObject) {
-	//			gameObject.setPosition(400, gameObject.height * -1);
-	//			gameObject.enableRendering();
-	//			this.treePopDelayTop = this.treePopDelayDefault;
-	//		}
-	//	}
-	//}
+			if (gameObject) {
+				gameObject.setPosition(-800, gameObject.height * -1);
+				gameObject.enableRendering();
+				this.treePopDelayTop = this.treePopDelayDefault;
+			}
+		}
+	}
 
-	//private generateTreesBottom() {
+	private generateTreesBottom() {
 
-	//	this.treePopDelayBottom -= 0.1;
+		this.treePopDelayBottom -= 0.1;
 
-	//	if (this.treePopDelayBottom < 0) {
+		if (this.treePopDelayBottom < 0) {
 
-	//		var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
 
-	//		if (gameObject) {
-	//			gameObject.setPosition(gameObject.width * -1, -620);
-	//			gameObject.enableRendering();
-	//			this.treePopDelayBottom = this.treePopDelayDefault;
-	//		}
-	//	}
-	//}
+			if (gameObject) {
+				gameObject.setPosition(gameObject.width * -1, -610);
+				gameObject.enableRendering();
+				this.treePopDelayBottom = this.treePopDelayDefault;
+			}
+		}
+	}
 
-	//private animateTreesTop() {
+	private animateTreesTop() {
 
-	//	var animatingTrees = this.treeTopGameObjects.filter(x => x.isAnimating == true);
+		var animatingTrees = this.treeTopGameObjects.filter(x => x.isAnimating == true);
 
-	//	if (animatingTrees) {
+		if (animatingTrees) {
 
-	//		animatingTrees.forEach(gameObject => {
-	//			gameObject.moveDownRight();
+			animatingTrees.forEach(gameObject => {
+				gameObject.moveDownRight();
 
-	//			if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-	//				gameObject.disableRendering();
+				if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
 
-	//			}
-	//		});
-	//	}
-	//}
+				}
+			});
+		}
+	}
 
-	//private animateTreesBottom() {
+	private animateTreesBottom() {
 
-	//	var animatingTrees = this.treeBottomGameObjects.filter(x => x.isAnimating == true);
+		var animatingTrees = this.treeBottomGameObjects.filter(x => x.isAnimating == true);
 
-	//	if (animatingTrees) {
+		if (animatingTrees) {
 
-	//		animatingTrees.forEach(gameObject => {
-	//			gameObject.moveDownRight();
+			animatingTrees.forEach(gameObject => {
+				gameObject.moveDownRight();
 
-	//			if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-	//				gameObject.disableRendering();
+				if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
 
-	//			}
-	//		});
-	//	}
-	//}
+				}
+			});
+		}
+	}
 
 	//#endregion
 
@@ -3756,7 +3754,7 @@ export class GameScene extends Container implements IScene {
 			this.generateSideWalksTop();
 			//this.generateLightBillboardsTop();
 			//this.generateHedgesTop();
-			//this.generateTreesTop();
+			this.generateTreesTop();
 			//this.generateLampsTop();
 		}
 
@@ -3786,7 +3784,7 @@ export class GameScene extends Container implements IScene {
 			this.generateSideWalksBottom();
 			//this.generateHedgesBottom();
 			//this.generateLightBillboardsBottom();
-			//this.generateTreesBottom();
+			this.generateTreesBottom();
 			//this.generateLampsBottom();
 		}
 	}
@@ -3798,7 +3796,7 @@ export class GameScene extends Container implements IScene {
 
 			this.animateSideWalksTop();
 			//this.animateHedgesTop();
-			//this.animateTreesTop();
+			this.animateTreesTop();
 			//this.animateLightBillboardsTop();
 			//this.animateLampsTop();
 		}
@@ -3812,7 +3810,7 @@ export class GameScene extends Container implements IScene {
 		if (!this.anyInAirBossExists()) {
 			this.animateSideWalksBottom();
 			//this.animateHedgesBottom();
-			//this.animateTreesBottom();
+			this.animateTreesBottom();
 			//this.animateLightBillboardsBottom();
 			//this.animateLampsBottom();
 		}
