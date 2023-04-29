@@ -151,12 +151,10 @@ export class GameScene extends Container implements IScene {
 			}
 		});
 
+		this.sceneContainer.filters = [new BlurFilter(2)];
+
 		this.playerTemplate = Constants.SELECTED_PLAYER_TEMPLATE;
 		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
-
-		//this._sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH;
-		//this._sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT;
-		//this.filters = [new GodrayFilter()];
 
 		this.addChild(this.sceneContainer);
 
@@ -416,8 +414,6 @@ export class GameScene extends Container implements IScene {
 				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
 				sprite.width = this.treeSizeWidth;
 				sprite.height = this.treeSizeHeight;
-				sprite.scale.set(-1, 1);
-				sprite.anchor.set(0.5, 0.5);
 
 				gameObject.addChild(sprite);
 			}
@@ -452,7 +448,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition(gameObject.width * -1, -525);
+				gameObject.setPosition(gameObject.width * -1, -580);
 				gameObject.enableRendering();
 				this.treePopDelayBottom = this.treePopDelayDefault;
 			}
@@ -2904,17 +2900,6 @@ export class GameScene extends Container implements IScene {
 	private playerHonkBombGameObjects: Array<GameObject> = [];
 	private playerHonkBusterTemplate: number = 0;
 
-	private gameOver() {
-		SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-		SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
-		SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-		SoundManager.stop(SoundType.AMBIENCE);
-
-		Constants.GAME_SCORE = this.gameScoreBar.getScore();
-		this.removeChild(this.sceneContainer);
-		SceneManager.changeScene(new GameOverScene());
-	}
-
 	spawnPlayerHonkBombs() {
 
 		for (let j = 0; j < 3; j++) {
@@ -3717,7 +3702,12 @@ export class GameScene extends Container implements IScene {
 	public update(_framesPassed: number) {
 
 		if (this.sceneContainer.alpha < 1) {
-			this.sceneContainer.alpha += 0.006;
+			this.sceneContainer.alpha += 0.003;
+			let filter = this.sceneContainer.filters?.at(0) as BlurFilter;
+			filter.blur -= 0.006;
+
+			if (this.sceneContainer.alpha == 1)
+				this.sceneContainer.filters = null;
 		}
 
 		if (!this.gameController.isPaused) {
@@ -3869,6 +3859,17 @@ export class GameScene extends Container implements IScene {
 	//	this.removeChildAt(0);
 	//	this.addChildAt(this.roadBackgroundDay, 0);
 	//}
+
+	private gameOver() {
+		SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+		SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+		SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+		SoundManager.stop(SoundType.AMBIENCE);
+
+		Constants.GAME_SCORE = this.gameScoreBar.getScore();
+		this.removeChild(this.sceneContainer);
+		SceneManager.changeScene(new GameOverScene());
+	}
 
 	//#endregion
 
