@@ -57,7 +57,7 @@ export class GameScene extends Container implements IScene {
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
 	//TODO: set defaults _ufoBossReleasePoint = 50
-	private readonly ufoBossReleasePoint: number = 5; // first appearance
+	private readonly ufoBossReleasePoint: number = 2; // first appearance
 	private readonly ufoBossReleasePoint_increase: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
 
@@ -213,8 +213,8 @@ export class GameScene extends Container implements IScene {
 		this.repositionGameScoreBar();
 
 		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this);
-		this.playerHealthBar.setMaximumValue(100);
-		this.playerHealthBar.setValue(100);
+		this.playerHealthBar.setMaximumValue(this._player.health);
+		this.playerHealthBar.setValue(this._player.health);
 		this.repositionPlayerHealthBar();
 
 		this.bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
