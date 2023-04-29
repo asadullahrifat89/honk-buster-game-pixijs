@@ -508,10 +508,10 @@ export abstract class Constants {
 		const b = objB.getBounds(true);
 
 		const aLeft = a.left + a.width / 4;
-		const bLeft = b.left + b.width / 4;
+		const bLeft = b.left /*+ b.width / 4*/;
 
-		const aRight = a.right /*- a.width / 4*/;
-		const bRight = b.right /*- b.width / 4*/;
+		const aRight = a.right - a.width / 4;
+		const bRight = b.right/* - b.width / 4*/;
 
 		const rightmostLeft = aLeft < bLeft ? bLeft : aLeft;
 		const leftmostRight = aRight > bRight ? bRight : aRight;
@@ -521,9 +521,9 @@ export abstract class Constants {
 		}
 
 		const aTop = a.top + a.height / 4;
-		const bTop = b.top + b.height / 4;
+		const bTop = b.top /*+ b.height / 4*/;
 
-		const aBottom = a.bottom /*- a.height / 4*/;
+		const aBottom = a.bottom - a.height / 4;
 		const bBottom = b.bottom /*- b.height / 4*/;
 
 		const bottommostTop = aTop < bTop ? bTop : aTop;
