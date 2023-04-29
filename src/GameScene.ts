@@ -297,7 +297,7 @@ export class GameScene extends Container implements IScene {
 
 	private roadMarkGameObjects: Array<GameObject> = [];
 
-	private roadMarkPopDelayDefault: number = 200 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private roadMarkPopDelayDefault: number = 190 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadMarkPopDelay: number = 0;
 
 	private spawnRoadMarks() {
