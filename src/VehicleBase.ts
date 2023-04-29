@@ -24,12 +24,12 @@ export class VehicleBase extends GameObject {
 					switch (lane) {
 						case 0:
 							{
-								this.setPosition(0 - this.width / 2, (this.height * -1) + randomY);
+								this.setPosition(0 - this.width, (this.height * -1) + randomY);
 								break;
 							}
 						case 1:
 							{
-								this.setPosition((xLaneWidth - this.width / 1.5), (this.height * -1) + randomY);
+								this.setPosition((xLaneWidth - this.width), (this.height * -1) + randomY);
 								break;
 							}
 						default:
