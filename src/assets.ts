@@ -19,9 +19,9 @@ export const manifest: ResolverManifest = {
 				"bang_1": "./bang_1.png",
 				"bang_2": "./bang_2.png",
 
-				"billboard_1": "./billboard_1.png",
-				"billboard_2": "./billboard_2.png",
-				"billboard_3": "./billboard_3.png",
+				//"billboard_1": "./billboard_1.png",
+				//"billboard_2": "./billboard_2.png",
+				//"billboard_3": "./billboard_3.png",
 
 				"blast_1": "./blast_1.png",
 				"blast_2": "./blast_2.png",
@@ -90,14 +90,14 @@ export const manifest: ResolverManifest = {
 
 				"road_marks": "./road_marks.png",
 
-				"road_side_hedge_1": "./road_side_hedge_1.png",
+				//"road_side_hedge_1": "./road_side_hedge_1.png",
 
-				"road_side_lamp_1": "./road_side_lamp_1.png",
-				"road_side_lamp_2": "./road_side_lamp_2.png",
+				//"road_side_lamp_1": "./road_side_lamp_1.png",
+				//"road_side_lamp_2": "./road_side_lamp_2.png",
 
-				"road_side_light_billboard_1": "./road_side_light_billboard_1.png",
-				"road_side_light_billboard_2": "./road_side_light_billboard_2.png",
-				"road_side_light_billboard_3": "./road_side_light_billboard_3.png",
+				//"road_side_light_billboard_1": "./road_side_light_billboard_1.png",
+				//"road_side_light_billboard_2": "./road_side_light_billboard_2.png",
+				//"road_side_light_billboard_3": "./road_side_light_billboard_3.png",
 
 				"road_side_walk_1": "./road_side_walk_1.png",
 				"road_side_walk_2": "./road_side_walk_2.png",
@@ -107,9 +107,9 @@ export const manifest: ResolverManifest = {
 				"trash_2": "./trash_2.png",
 				"trash_3": "./trash_3.png",
 
-				"tree_1": "./tree_1.png",
-				"tree_2": "./tree_2.png",
-				"tree_3": "./tree_3.png",
+				//"tree_1": "./tree_1.png",
+				//"tree_2": "./tree_2.png",
+				//"tree_3": "./tree_3.png",
 
 				"ufo_boss_1_hit": "./ufo_boss_1_hit.png",
 				"ufo_boss_1_idle": "./ufo_boss_1_idle.png",
