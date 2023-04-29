@@ -92,7 +92,7 @@ export class GameScene extends Container implements IScene {
 	constructor() {
 		super();
 
-		this.roadBackgroundDay = new Graphics().beginFill(0x464646, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+		this.roadBackgroundDay = new Graphics().beginFill(0x4187ab, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 		this.roadBackgroundNight = new Graphics().beginFill(0x1f2326, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 
 		this.addChildAt(this.roadBackgroundDay, 0);
@@ -169,7 +169,7 @@ export class GameScene extends Container implements IScene {
 		//this.spawnHedgesTop();
 		//this.spawnLightBillboardsTop();
 		this.spawnTreesTop();
-		//this.spawnLampsTop();
+		this.spawnLampsTop();
 
 		this.spawnVehicleEnemys();
 		this.spawnVehicleBosss();
@@ -290,14 +290,14 @@ export class GameScene extends Container implements IScene {
 
 	//#region RoadMarks
 
-	private roadMarkXyAdjustment: number = 20;
+	private roadMarkXyAdjustment: number = 890;
 
-	private roadMarkSizeWidth: number = 280;
-	private roadMarkSizeHeight: number = 280;
+	private roadMarkSizeWidth: number = 1400;
+	private roadMarkSizeHeight: number = 1400;
 
-	private roadMarkGameObjects: Array<GameObject> = [];
+	private roadMarksGameObjects: Array<GameObject> = [];
 
-	private roadMarkPopDelayDefault: number = 87 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private roadMarkPopDelayDefault: number = 84.5 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadMarkPopDelay: number = 0;
 
 	private spawnRoadMarks() {
@@ -307,7 +307,7 @@ export class GameScene extends Container implements IScene {
 			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			for (let i = 0; i < 10; i++) {
+			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_MARK));
 
@@ -319,7 +319,7 @@ export class GameScene extends Container implements IScene {
 				gameObject.addChild(sprite);
 			}
 
-			this.roadMarkGameObjects.push(gameObject);
+			this.roadMarksGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
@@ -330,11 +330,11 @@ export class GameScene extends Container implements IScene {
 
 		if (this.roadMarkPopDelay < 0) {
 
-			var gameObject = this.roadMarkGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.roadMarksGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 
-				gameObject.setPosition((gameObject.width * - 1) - 100, gameObject.height * -1);
+				gameObject.setPosition((gameObject.width * -1) - 695, gameObject.height * -1);
 				gameObject.enableRendering();
 
 				this.roadMarkPopDelay = this.roadMarkPopDelayDefault;
@@ -344,14 +344,14 @@ export class GameScene extends Container implements IScene {
 
 	private animateRoadMarks() {
 
-		var animatingRoadMarks = this.roadMarkGameObjects.filter(x => x.isAnimating == true);
+		var animatingRoadMarks = this.roadMarksGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingRoadMarks) {
 
 			animatingRoadMarks.forEach(gameObject => {
 				gameObject.moveDownRight();
 
-				if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
@@ -371,8 +371,8 @@ export class GameScene extends Container implements IScene {
 	private treeTopGameObjects: Array<GameObject> = [];
 
 	private treePopDelayDefault: number = 60 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private treePopDelayTop: number = 0;
-	private treePopDelayBottom: number = 0;
+	private treePopDelayTop: number = 17.5;
+	private treePopDelayBottom: number = 16;
 
 	private spawnTreesTop() {
 
@@ -413,6 +413,8 @@ export class GameScene extends Container implements IScene {
 				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
 				sprite.width = this.treeSizeWidth;
 				sprite.height = this.treeSizeHeight;
+				sprite.scale.set(-1, 1);
+				sprite.anchor.set(0.5, 0.5);
 
 				gameObject.addChild(sprite);
 			}
@@ -431,7 +433,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.treeTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition(-800, gameObject.height * -1);
+				gameObject.setPosition(-710, gameObject.height * -1);
 				gameObject.enableRendering();
 				this.treePopDelayTop = this.treePopDelayDefault;
 			}
@@ -447,7 +449,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition(gameObject.width * -1, -610);
+				gameObject.setPosition(gameObject.width * -1, -525);
 				gameObject.enableRendering();
 				this.treePopDelayBottom = this.treePopDelayDefault;
 			}
@@ -624,42 +626,42 @@ export class GameScene extends Container implements IScene {
 
 	//#region Lamps
 
-	//private lampXyAdjustment: number = 31.5;
-	//private lampXyDistance = 250;
+	private lampXyAdjustment: number = 100;
+	private lampXyDistance = 250;
 
-	//private lampSizeWidth: number = 268 / 2;
-	//private lampSizeHeight: number = 234 / 2;
+	private lampSizeWidth: number = 750;
+	private lampSizeHeight: number = 750;
 
 	//private lampBottomGameObjects: Array<GameObject> = [];
-	//private lampTopGameObjects: Array<GameObject> = [];
+	private lampTopGameObjects: Array<GameObject> = [];
 
-	//private lampPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	//private lampPopDelayTop: number = 0;
+	private lampPopDelayDefault: number = 150 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private lampPopDelayTop: number = 7;
 	//private lampPopDelayBottom: number = 0;
 
-	//private spawnLampsTop() {
+	private spawnLampsTop() {
 
-	//	for (let j = 0; j < 5; j++) {
+		for (let j = 0; j < 5; j++) {
 
-	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
-	//		gameObject.disableRendering();
+			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
 
-	//		for (let i = 0; i < 5; i++) {
+			for (let i = 0; i < 5; i++) {
 
-	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
 
-	//			sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i)) + (this.lampXyDistance * i);
-	//			sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
-	//			sprite.width = this.lampSizeWidth;
-	//			sprite.height = this.lampSizeHeight;
+				sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i)) + (this.lampXyDistance * i);
+				sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
+				sprite.width = this.lampSizeWidth;
+				sprite.height = this.lampSizeHeight;
 
-	//			gameObject.addChild(sprite);
-	//		}
+				gameObject.addChild(sprite);
+			}
 
-	//		this.lampTopGameObjects.push(gameObject);
-	//		this.sceneContainer.addChild(gameObject);
-	//	}
-	//}
+			this.lampTopGameObjects.push(gameObject);
+			this.sceneContainer.addChild(gameObject);
+		}
+	}
 
 	//private spawnLampsBottom() {
 
@@ -685,21 +687,21 @@ export class GameScene extends Container implements IScene {
 	//	}
 	//}
 
-	//private generateLampsTop() {
+	private generateLampsTop() {
 
-	//	this.lampPopDelayTop -= 0.1;
+		this.lampPopDelayTop -= 0.1;
 
-	//	if (this.lampPopDelayTop < 0) {
+		if (this.lampPopDelayTop < 0) {
 
-	//		var gameObject = this.lampTopGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.lampTopGameObjects.find(x => x.isAnimating == false);
 
-	//		if (gameObject) {
-	//			gameObject.setPosition(-510, gameObject.height * -1);
-	//			gameObject.enableRendering();
-	//			this.lampPopDelayTop = this.lampPopDelayDefault;
-	//		}
-	//	}
-	//}
+			if (gameObject) {
+				gameObject.setPosition((gameObject.width * -1), (gameObject.height * -1) - 235);
+				gameObject.enableRendering();
+				this.lampPopDelayTop = this.lampPopDelayDefault;
+			}
+		}
+	}
 
 	//private generateLampsBottom() {
 
@@ -718,22 +720,22 @@ export class GameScene extends Container implements IScene {
 	//	}
 	//}
 
-	//private animateLampsTop() {
+	private animateLampsTop() {
 
-	//	var animatingLamps = this.lampTopGameObjects.filter(x => x.isAnimating == true);
+		var animatingLamps = this.lampTopGameObjects.filter(x => x.isAnimating == true);
 
-	//	if (animatingLamps) {
+		if (animatingLamps) {
 
-	//		animatingLamps.forEach(gameObject => {
-	//			gameObject.moveDownRight();
+			animatingLamps.forEach(gameObject => {
+				gameObject.moveDownRight();
 
-	//			if (gameObject.x - this.lampSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-	//				gameObject.disableRendering();
+				if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
 
-	//			}
-	//		});
-	//	}
-	//}
+				}
+			});
+		}
+	}
 
 	//private animateLampsBottom() {
 
@@ -896,8 +898,8 @@ export class GameScene extends Container implements IScene {
 	private sideWalkBottomGameObjects: Array<RoadSideWalk> = [];
 
 	private sideWalkPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private sideWalkPopDelayTop: number = 0;
-	private sideWalkPopDelayBottom: number = 4;
+	private sideWalkPopDelayTop: number = 12;
+	private sideWalkPopDelayBottom: number = 16;
 
 	private spawnSideWalksTop() {
 
@@ -1107,7 +1109,7 @@ export class GameScene extends Container implements IScene {
 	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
 
 	private vehicleEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private vehicleEnemyPopDelay: number = 0;
+	private vehicleEnemyPopDelay: number = 20;
 
 	private spawnVehicleEnemys() {
 
@@ -3755,7 +3757,7 @@ export class GameScene extends Container implements IScene {
 			//this.generateLightBillboardsTop();
 			//this.generateHedgesTop();
 			this.generateTreesTop();
-			//this.generateLampsTop();
+			this.generateLampsTop();
 		}
 
 		this.generateVehicleEnemys();
@@ -3798,7 +3800,7 @@ export class GameScene extends Container implements IScene {
 			//this.animateHedgesTop();
 			this.animateTreesTop();
 			//this.animateLightBillboardsTop();
-			//this.animateLampsTop();
+			this.animateLampsTop();
 		}
 
 		this.animateVehicleEnemys();
