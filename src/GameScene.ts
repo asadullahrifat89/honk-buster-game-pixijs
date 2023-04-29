@@ -1160,7 +1160,7 @@ export class GameScene extends Container implements IScene {
 
 	private generateVehicleEnemys() {
 
-		if (/*!this.anyBossExists() &&*/ !this.vehicleBossExists() && !this.ufoEnemyExists()) {
+		if (!this.vehicleBossExists() && !this.ufoEnemyExists()) {
 			this.vehicleEnemyPopDelay -= 0.1;
 
 			if (this.vehicleEnemyPopDelay < 0) {
