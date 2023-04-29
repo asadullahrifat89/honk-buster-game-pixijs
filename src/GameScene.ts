@@ -12,7 +12,7 @@ import { PlayerHonkBomb } from "./PlayerHonkBomb";
 import { GameScoreBar } from "./GameScoreBar";
 import { GameCheckpoint } from "./GameCheckpoint";
 import { VehicleBoss } from "./VehicleBoss";
-import { InGameMessage } from "./InGameMessage";
+import { OnScreenMessage } from "./OnScreenMessage";
 import { VehicleBossRocket } from "./VehicleBossRocket";
 import { HealthBar } from "./HealthBar";
 import { UfoBoss } from "./UfoBoss";
@@ -44,7 +44,7 @@ export class GameScene extends Container implements IScene {
 	private sceneContainer: Container = new Container();
 	private gameScoreBar: GameScoreBar;
 
-	private inGameMessage: InGameMessage;
+	private onScreenMessage: OnScreenMessage;
 
 	//TODO: set defaults _vehicleBossReleasePoint = 25
 	private readonly vehicleBossReleasePoint: number = 25; // first appearance
@@ -117,7 +117,7 @@ export class GameScene extends Container implements IScene {
 
 					SoundManager.pause(SoundType.AMBIENCE);
 
-					this.generateInGameMessage("Game paused");
+					this.generateOnScreenMessage("Game paused");
 
 					this.sceneContainer.filters = [new BlurFilter()];
 				}
@@ -139,12 +139,15 @@ export class GameScene extends Container implements IScene {
 
 					SoundManager.resume(SoundType.AMBIENCE);
 
-					if (this.inGameMessage.isAnimating == true && this.inGameMessage.getText() == "Game paused") {
-						this.inGameMessage.disableRendering();
+					if (this.onScreenMessage.isAnimating == true && this.onScreenMessage.getText() == "Game paused") {
+						this.onScreenMessage.disableRendering();
 					}
 
 					this.sceneContainer.filters = null;
 				}
+			},
+			onQuit: () => {
+				this.gameOver();
 			}
 		});
 
@@ -227,7 +230,7 @@ export class GameScene extends Container implements IScene {
 		this.powerUpMeter.setValue(0);
 		this.repositionPowerUpMeter();
 
-		this.inGameMessage = new InGameMessage(this);
+		this.onScreenMessage = new OnScreenMessage(this);
 
 		this.setGameController();
 
@@ -238,8 +241,8 @@ export class GameScene extends Container implements IScene {
 		this.sceneContainer.alpha = 0;
 
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
-			case 0: { this.generateInGameMessage("Drop crackers on the honkers"); } break;
-			case 1: { this.generateInGameMessage("Drop garbage on the honkers"); } break;
+			case 0: { this.generateOnScreenMessage("Drop crackers on the honkers"); } break;
+			case 1: { this.generateOnScreenMessage("Drop garbage on the honkers"); } break;
 			default:
 		}
 	}
@@ -1356,7 +1359,7 @@ export class GameScene extends Container implements IScene {
 				this.bossHealthBar.setValue(gameObject.health);
 				this.bossHealthBar.setIcon(gameObject.getGameObjectSprite().getTexture());
 
-				this.generateInGameMessage("Crazy Honker Arrived");
+				this.generateOnScreenMessage("Crazy Honker Arrived");
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
@@ -1583,7 +1586,7 @@ export class GameScene extends Container implements IScene {
 
 					if (!this.ufoEnemyFleetAppeared) {
 
-						this.generateInGameMessage("Beware of UFO Fleet");
+						this.generateOnScreenMessage("Beware of UFO Fleet");
 						this.ufoEnemyFleetAppeared = true;
 						SoundManager.play(SoundType.UFO_ENEMY_ENTRY);
 						SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.6, true);
@@ -1797,7 +1800,7 @@ export class GameScene extends Container implements IScene {
 				this.bossHealthBar.setValue(ufoBoss.health);
 				this.bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
 
-				this.generateInGameMessage("Scarlet Saucer Arrived");
+				this.generateOnScreenMessage("Scarlet Saucer Arrived");
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
@@ -2183,7 +2186,7 @@ export class GameScene extends Container implements IScene {
 				this.bossHealthBar.setValue(zombieBoss.health);
 				this.bossHealthBar.setIcon(zombieBoss.getGameObjectSprite().getTexture());
 
-				this.generateInGameMessage("Zombie Blocks Arrived");
+				this.generateOnScreenMessage("Zombie Blocks Arrived");
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
@@ -2413,7 +2416,7 @@ export class GameScene extends Container implements IScene {
 				this.bossHealthBar.setValue(mafiaBoss.health);
 				this.bossHealthBar.setIcon(mafiaBoss.getGameObjectSprite().getTexture());
 
-				this.generateInGameMessage("Beware of Crimson Mafia");
+				this.generateOnScreenMessage("Beware of Crimson Mafia");
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
@@ -2886,14 +2889,7 @@ export class GameScene extends Container implements IScene {
 			//TODO: game over
 
 			if (this._player.isDead()) {
-				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
-				SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-				SoundManager.stop(SoundType.AMBIENCE);
-
-				Constants.GAME_SCORE = this.gameScoreBar.getScore();
-				this.removeChild(this.sceneContainer);
-				SceneManager.changeScene(new GameOverScene());
+				this.gameOver();
 			}
 		}
 	}
@@ -2907,6 +2903,17 @@ export class GameScene extends Container implements IScene {
 
 	private playerHonkBombGameObjects: Array<GameObject> = [];
 	private playerHonkBusterTemplate: number = 0;
+
+	private gameOver() {
+		SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+		SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+		SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+		SoundManager.stop(SoundType.AMBIENCE);
+
+		Constants.GAME_SCORE = this.gameScoreBar.getScore();
+		this.removeChild(this.sceneContainer);
+		SceneManager.changeScene(new GameOverScene());
+	}
 
 	spawnPlayerHonkBombs() {
 
@@ -3613,7 +3620,7 @@ export class GameScene extends Container implements IScene {
 									this.powerUpMeter.setMaximumValue(20);
 									this.powerUpMeter.setValue(20);
 
-									this.generateInGameMessage("Bylls Eye +20");
+									this.generateOnScreenMessage("Bylls Eye +20");
 								}
 								break;
 							case PowerUpType.ARMOR:
@@ -3621,7 +3628,7 @@ export class GameScene extends Container implements IScene {
 									this.powerUpMeter.setMaximumValue(10);
 									this.powerUpMeter.setValue(10);
 
-									this.generateInGameMessage("Armor +10");
+									this.generateOnScreenMessage("Armor +10");
 								}
 								break;
 							default:
@@ -3677,23 +3684,28 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region InGameMessage
+	//#region OnScreenMessage
 
-	private generateInGameMessage(title: string) {
-		if (this.inGameMessage.isAnimating == false) {
-			this.inGameMessage.setTitle(title);
-			this.inGameMessage.reset();
-			this.inGameMessage.reposition(SceneManager.width / 2, SceneManager.height / 2);
-			this.inGameMessage.enableRendering();
+	private generateOnScreenMessage(title: string) {
+		if (this.onScreenMessage.isAnimating == false) {
+			this.onScreenMessage.setTitle(title);
+			this.onScreenMessage.reset();
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height / 2);
+			this.onScreenMessage.enableRendering();
+		}
+		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
+			this.onScreenMessage.setTitle(title);
+			this.onScreenMessage.reset();
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height / 2);
 		}
 	}
 
-	private animateInGameMessage() {
-		if (this.inGameMessage.isAnimating == true) {
-			this.inGameMessage.depleteOnScreenDelay();
+	private animateOnScreenMessage() {
+		if (this.onScreenMessage.isAnimating == true) {
+			this.onScreenMessage.depleteOnScreenDelay();
 
-			if (this.inGameMessage.isDepleted()) {
-				this.inGameMessage.disableRendering();
+			if (this.onScreenMessage.isDepleted()) {
+				this.onScreenMessage.disableRendering();
 			}
 		}
 	}
@@ -3740,7 +3752,7 @@ export class GameScene extends Container implements IScene {
 
 	private levelUp() {
 		this.gameLevel++;
-		this.generateInGameMessage("LEVEL " + this.gameLevel.toString() + " COMPLETE");
+		this.generateOnScreenMessage("LEVEL " + this.gameLevel.toString() + " COMPLETE");
 		SoundManager.play(SoundType.LEVEL_UP);
 	}
 
@@ -3837,7 +3849,7 @@ export class GameScene extends Container implements IScene {
 		this.animateCastShadows();
 
 		//this.animateClouds();
-		this.animateInGameMessage();
+		this.animateOnScreenMessage();
 	}
 
 	private anyBossExists(): boolean {

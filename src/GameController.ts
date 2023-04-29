@@ -8,6 +8,7 @@ import { SoundManager } from './SoundManager';
 
 export interface GameControllerSettings {
 	onPause?: (isPaused: boolean) => void;
+	onQuit?: (/*isQuiting: boolean*/) => void;
 }
 
 export class GameController extends Container {
@@ -29,6 +30,7 @@ export class GameController extends Container {
 
 	private attackButton: Button;
 	private pauseButton: Button;
+	private quitButton: Button;
 	private joystick: Joystick;
 
 	private pauseButtonSprite: GameObjectSprite;
@@ -56,7 +58,7 @@ export class GameController extends Container {
 				}
 			}
 
-			this.keyboardActivated = true;			
+			this.keyboardActivated = true;
 
 			if (this.keyboardActivated && !this.joystickActivated) {
 				this.joystick.alpha = 0;
@@ -86,6 +88,27 @@ export class GameController extends Container {
 		});
 		this.setPauseButtonPosition();
 		this.addChild(this.pauseButton);
+
+		const quitButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
+		quitButtonSpritebg.height = 100;
+		quitButtonSpritebg.width = 100;
+
+		const quitButtonSprite = new GameObjectSprite(Texture.from("quit_button"));
+		quitButtonSprite.height = 50;
+		quitButtonSprite.width = 50;
+		quitButtonSprite.x = quitButtonSpritebg.width / 2 - quitButtonSprite.width / 2;
+		quitButtonSprite.y = quitButtonSpritebg.height / 2 - quitButtonSprite.height / 2;
+
+		const quitButtonGraphics = new Container();
+		quitButtonGraphics.addChild(quitButtonSpritebg);
+		quitButtonGraphics.addChild(quitButtonSprite);
+
+		this.quitButton = new Button(quitButtonGraphics, () => {
+			this.quitGame();
+		});
+		this.setQuitButtonPosition();
+		this.quitButton.renderable = false;
+		this.addChild(this.quitButton);
 
 		const joystickOuterSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick"));
 		joystickOuterSprite.height = 278;
@@ -213,6 +236,8 @@ export class GameController extends Container {
 		SoundManager.play(SoundType.GAME_PAUSE);
 
 		this.settings.onPause?.(this.isPaused);
+
+		this.quitButton.renderable = true;
 	}
 
 	private resumeGame() {
@@ -222,6 +247,15 @@ export class GameController extends Container {
 		SoundManager.play(SoundType.GAME_START);
 
 		this.settings.onPause?.(this.isPaused);
+
+		this.quitButton.renderable = false;
+	}
+
+	public quitGame() {
+
+		SoundManager.play(SoundType.GAME_OVER);
+
+		this.settings.onQuit?.();
 	}
 
 	update() {
@@ -291,6 +325,11 @@ export class GameController extends Container {
 	private setPauseButtonPosition() {
 		this.pauseButton.x = SceneManager.width - this.pauseButton.width * 1.1;
 		this.pauseButton.y = this.pauseButton.height / 2.2;
+	}
+
+	private setQuitButtonPosition() {
+		this.quitButton.x = SceneManager.width - this.quitButton.width * 1.1;
+		this.quitButton.y = this.quitButton.height / 2.2 + 60;
 	}
 
 	private setAttackButtonPosition() {
