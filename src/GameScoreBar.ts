@@ -11,19 +11,19 @@ export class GameScoreBar {
 		BitmapFont.from("gameplay", {
 			fill: "#ffffff",
 			fontFamily: "gameplay",
-			fontSize: 30,
+			fontSize: 26,
 			align: "center",
 		});
 
 		this.scoreText = new BitmapText("o", {
 			fontName: "gameplay",
-			fontSize: 30,
+			fontSize: 26,
 			align: "center",
 		});
 
 		this.scoreContainer = new Container();
 
-		const graphics = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 80, 35, 3).endFill();
+		const graphics = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 2.5, 80, 30, 3).endFill();
 		this.scoreContainer.addChild(graphics);
 
 		this.scoreText.x = 10;

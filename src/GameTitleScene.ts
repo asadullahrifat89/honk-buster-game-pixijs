@@ -5,7 +5,7 @@ import { GameObjectContainer } from "./GameObjectContainer";
 import { GameObjectSprite } from "./GameObjectSprite";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "./IScene";
-import { PlayerSelectionScene } from "./PlayerSelectionScene";
+import { PlayerCharacterSelectionScene } from "./PlayerCharacterSelectionScene";
 import { SceneManager } from "./SceneManager";
 import { SoundManager } from "./SoundManager";
 
@@ -13,6 +13,7 @@ import { SoundManager } from "./SoundManager";
 export class GameTitleScene extends Container implements IScene {
 
 	private sceneContainer: GameObjectContainer;
+	private bg_container: GameObjectContainer;
 
 	constructor() {
 		super();
@@ -20,18 +21,22 @@ export class GameTitleScene extends Container implements IScene {
 		this.sceneContainer = new GameObjectContainer(0);
 		this.sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		this.sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
-		this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);
-		//this.sceneContainer.filters = [new DropShadowFilter()];
+		this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);		
 		this.addChild(this.sceneContainer);
 
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
-		sprite.x = 0;
-		sprite.y = 0;
-		sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
-		sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
-		this.sceneContainer.addChild(sprite);
+		const bg_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
+		bg_sprite.x = 0;
+		bg_sprite.y = 0;
+		bg_sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
+		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
 
-		const title = new Text("Honk Buster", {
+		this.bg_container = new GameObjectContainer(0);
+		this.bg_container.setHoverSpeed(0.2);
+		this.bg_container.addChild(bg_sprite);
+
+		this.sceneContainer.addChild(this.bg_container);
+
+		const title = new Text("Honk Busters", {
 			fontFamily: "gameplay",
 			align: "center",
 			fill: "#ffffff",
@@ -41,14 +46,14 @@ export class GameTitleScene extends Container implements IScene {
 		title.y = (this.sceneContainer.height / 2 - title.height / 2) - 120;
 		this.sceneContainer.addChild(title);
 
-		const subTitle = new Text("Let's put a stop to honking", {
+		const subTitle = new Text("Help the kids bust honking cars & aliens", {
 			fontFamily: "gameplay",
 			align: "center",
 			fill: "#ffffff",
-			fontSize: 25,
+			fontSize: 24,
 		});
 		subTitle.x = this.sceneContainer.width / 2 - subTitle.width / 2;
-		subTitle.y = (this.sceneContainer.height / 2 - subTitle.height / 2) - 60;
+		subTitle.y = (this.sceneContainer.height / 2 - subTitle.height / 2) - 65;
 		this.sceneContainer.addChild(subTitle);
 
 		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), () => {
@@ -66,8 +71,11 @@ export class GameTitleScene extends Container implements IScene {
 
 			if (this.sceneContainer.alpha <= 0) {
 				this.removeChild(this.sceneContainer);
-				SceneManager.changeScene(new PlayerSelectionScene());
+				SceneManager.changeScene(new PlayerCharacterSelectionScene());
 			}
+		}
+		else {
+			this.bg_container.hover();
 		}
 	}
 

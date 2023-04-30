@@ -11,7 +11,7 @@ export class GameObjectContainer extends Container {
 
 	private hoverDelay: number = 0;
 	private readonly hoverDelayDefault: number = 25;
-	private readonly hoverSpeed: number = 0.5;
+	private hoverSpeed: number = 0.4;
 
 	private dillyDallyDelay: number = 0;
 	private readonly dillyDallyDelayDefault: number = 25;
@@ -186,6 +186,10 @@ export class GameObjectContainer extends Container {
 				}
 			}
 		}
+	}
+
+	setHoverSpeed(speed: number) {
+		this.hoverSpeed = speed;
 	}
 
 	hover() {
