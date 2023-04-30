@@ -1,8 +1,8 @@
 ﻿import { Rectangle } from 'pixi.js';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 
 
-export class UfoBossBase extends GameObject {
+export class UfoBossBase extends GameObjectContainer {
 
 	public isAttacking: boolean = false;
 

@@ -2,7 +2,7 @@ import { Container, Rectangle, Texture } from 'pixi.js';
 import { Constants, RotationDirection } from './Constants';
 import { GameObjectSprite } from './GameObjectSprite';
 
-export class GameObject extends Container {
+export class GameObjectContainer extends Container {
 
 	//#region Properties
 

@@ -1,9 +1,9 @@
 ﻿import { Constants, ConstructType, PlayerHonkBombTemplate, SoundType } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 import { SoundManager } from './SoundManager';
 
 
-export class PlayerHonkBombExplosion extends GameObject {
+export class PlayerHonkBombExplosion extends GameObjectContainer {
 
 	constructor(speed: number) {
 		super(speed);
@@ -19,7 +19,7 @@ export class PlayerHonkBombExplosion extends GameObject {
 		SoundManager.play(SoundType.HONK, 0.5);
 	}
 
-	reposition(source: GameObject) {		
+	reposition(source: GameObjectContainer) {		
 		this.x = source.x;
 		this.y = source.y;
 	}

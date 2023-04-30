@@ -1,5 +1,5 @@
 ﻿import { Constants, ConstructType, SoundType } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 import { SeekingRocketBase } from './SeekingRocketBase';
 import { SoundManager } from './SoundManager';
 
@@ -24,7 +24,7 @@ export class UfoBossRocketSeeking extends SeekingRocketBase {
 		SoundManager.play(SoundType.SEEKER_ROCKET_LAUNCH, 0.8);
 	}
 
-	reposition(source: GameObject) {
+	reposition(source: GameObjectContainer) {
 		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 15);
 	}
 

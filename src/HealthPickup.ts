@@ -1,9 +1,9 @@
 ﻿import { SoundType } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 import { SoundManager } from './SoundManager';
 
 
-export class HealthPickup extends GameObject {
+export class HealthPickup extends GameObjectContainer {
 
 	public isPickedUp: boolean = false;
 

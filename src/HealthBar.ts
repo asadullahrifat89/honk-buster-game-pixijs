@@ -1,13 +1,13 @@
 ﻿import { ProgressBar } from "@pixi/ui";
 import { Container, Texture } from "pixi.js";
-import { GameObject } from "./GameObject";
+import { GameObjectContainer } from "./GameObjectContainer";
 import { GameObjectSprite } from "./GameObjectSprite";
 
 
 export class HealthBar extends Container {
 
 	private progressBar: ProgressBar;
-	private icon: GameObject;
+	private icon: GameObjectContainer;
 	private maximumHealth: number = 0;
 	private value: number = 100;
 
@@ -52,7 +52,7 @@ export class HealthBar extends Container {
 
 		this.addChild(this.progressBar);
 
-		this.icon = new GameObject(0);
+		this.icon = new GameObjectContainer(0);
 		this.icon.height = 30;
 		this.icon.width = 30;
 

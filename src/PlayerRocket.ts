@@ -1,10 +1,10 @@
 ﻿import { Constants, ConstructType, SoundType } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 import { PlayerBalloon } from './PlayerBalloon';
 import { SoundManager } from './SoundManager';
 
 
-export class PlayerRocket extends GameObject {
+export class PlayerRocket extends GameObjectContainer {
 
 	private autoBlastDelay: number = 0;
 	private readonly autoBlastDelayDefault: number = 8;

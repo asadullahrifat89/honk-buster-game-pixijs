@@ -1,9 +1,9 @@
 ﻿import { Constants, ConstructType, PlayerHonkBombTemplate, SoundType } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 import { SoundManager } from './SoundManager';
 
 
-export class PlayerHonkBomb extends GameObject {
+export class PlayerHonkBomb extends GameObjectContainer {
 
 	public playerHonkBombTemplate: PlayerHonkBombTemplate = PlayerHonkBombTemplate.Cracker;
 	private playerHonkBombUris: string[] = [];
@@ -27,7 +27,7 @@ export class PlayerHonkBomb extends GameObject {
 		SoundManager.play(SoundType.CRACKER_DROP, 0.5);
 	}
 
-	reposition(source: GameObject) {
+	reposition(source: GameObjectContainer) {
 		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 40);
 	}
 
