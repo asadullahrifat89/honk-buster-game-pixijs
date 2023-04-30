@@ -15,7 +15,7 @@ export class OnScreenMessage {
 			fontFamily: "gameplay",
 			align: "center",
 			fill: "#ffffff",
-			fontSize: 26
+			fontSize: 30
 		});
 
 		this.disableRendering();
