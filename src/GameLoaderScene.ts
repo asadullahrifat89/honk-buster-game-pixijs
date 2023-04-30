@@ -24,14 +24,14 @@ export class GameLoaderScene extends Container implements IScene {
 		// the fill of the bar.
 		this.loaderBarFill = new Graphics();
 		this.loaderBarFill.beginFill(0x5fc4f8, 1);
-		this.loaderBarFill.drawRoundedRect(0, 0, loaderBarWidth, 50, 10);
+		this.loaderBarFill.drawRoundedRect(0, 0, loaderBarWidth, 50, 5);
 		this.loaderBarFill.endFill();
 		this.loaderBarFill.scale.x = 0; // we draw the filled bar and with scale we set the %
 
 		// The border of the bar.
 		this.loaderBarBoder = new Graphics();
 		this.loaderBarBoder.lineStyle(10, 0xffffff, 1);
-		this.loaderBarBoder.drawRoundedRect(0, 0, loaderBarWidth, 50, 10);
+		this.loaderBarBoder.drawRoundedRect(0, 0, loaderBarWidth, 50, 5);
 
 		// Now we keep the border and the fill in a container so we can move them together.
 		this.loaderBar = new Container();
