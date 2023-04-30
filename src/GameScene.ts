@@ -238,15 +238,15 @@ export class GameScene extends Container implements IScene {
 
 		this.sceneContainer.alpha = 0;
 
+		// progress the frames a little bit to avoid blank scene
+		for (var i = 0; i < 320; i++) {
+			this.updateFrame();
+		}
+
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
 			case 0: { this.generateOnScreenMessage("Drop crackers on the honkers"); } break;
 			case 1: { this.generateOnScreenMessage("Drop garbage on the honkers"); } break;
 			default:
-		}
-
-		// progress the frames a little bit to avoid blank scene
-		for (var i = 0; i < 320; i++) {
-			this.updateFrame();
 		}
 	}
 

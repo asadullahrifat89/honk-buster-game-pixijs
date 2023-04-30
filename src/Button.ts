@@ -9,7 +9,8 @@ export class Button extends Container {
 		super();
 
 		this.buttonFilter = new ColorMatrixFilter();
-		this.buttonFilter.sepia(false);
+		//this.buttonFilter.sepia(false);
+		this.buttonFilter.saturate(1);
 
 		this.filters = null;
 

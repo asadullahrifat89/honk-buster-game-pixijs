@@ -35,7 +35,7 @@ export class GameTitleScene extends Container implements IScene {
 			fontFamily: "gameplay",
 			align: "center",
 			fill: "#ffffff",
-			fontSize: 35
+			fontSize: 45
 		});
 		title.x = this.sceneContainer.width / 2 - title.width / 2;
 		title.y = (this.sceneContainer.height / 2 - title.height / 2) - 120;
@@ -45,7 +45,7 @@ export class GameTitleScene extends Container implements IScene {
 			fontFamily: "gameplay",
 			align: "center",
 			fill: "#ffffff",
-			fontSize: 20,
+			fontSize: 25,
 		});
 		subTitle.x = this.sceneContainer.width / 2 - subTitle.width / 2;
 		subTitle.y = (this.sceneContainer.height / 2 - subTitle.height / 2) - 60;
