@@ -178,11 +178,13 @@ export class GameScene extends Container implements IScene {
 		this.spawnSideWalksBottom();
 		//this.spawnHedgesBottom();
 		//this.spawnLampsBottom();
-		this.spawnTreesBottom();
-		//this.spawnLightBillboardsBottom();
 
 		this.spawnPlayerHonkBombs();
 		this.spawnPlayerHonkBombExplosions();
+
+		this.spawnTreesBottom();
+		//this.spawnLightBillboardsBottom();
+		
 		this.spawnPlayerRockets();
 		this.spawnPlayerRocketBullsEyes();
 		this.spawnPlayerBalloon();
@@ -1208,12 +1210,19 @@ export class GameScene extends Container implements IScene {
 
 				gameObject.pop();
 
-				if (this.anyInAirBossExists()) { // ass in air bosses stop the player, the vehicles should pass by
+				if (this.anyInAirBossExists()) { // when in air bosses appear, stop the stage transition, and make the vehicles move forward
 					gameObject.moveUpLeft();
 					gameObject.moveUpLeft(); // move with double speed
 				}
 				else {
-					gameObject.moveDownRight();
+
+					if (this.vehicleBossExists()) { // when vehicle boss appears, the vehicles should back up
+						gameObject.moveDownRight();
+						gameObject.moveDownRight(); // move with double speed
+					}
+					else {
+						gameObject.moveDownRight();
+					}
 				}
 
 				// prevent overlapping
@@ -1222,11 +1231,11 @@ export class GameScene extends Container implements IScene {
 
 				if (collidingVehicleEnemy) {
 
-					if (collidingVehicleEnemy.speed > gameObject.speed) // colliding vehicleEnemy is faster
+					if (collidingVehicleEnemy.speed > gameObject.speed) // colliding vehicle is faster
 					{
 						gameObject.speed = collidingVehicleEnemy.speed;
 					}
-					else if (gameObject.speed > collidingVehicleEnemy.speed) // vehicleEnemy is faster
+					else if (gameObject.speed > collidingVehicleEnemy.speed) // current vehicle is faster
 					{
 						collidingVehicleEnemy.speed = gameObject.speed;
 					}
@@ -1388,8 +1397,7 @@ export class GameScene extends Container implements IScene {
 
 				}
 				else {
-
-					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false || this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 2))) {
+					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false || this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 1.8))) {
 						vehicleBoss.isAttacking = true;
 					}
 				}
@@ -2983,7 +2991,7 @@ export class GameScene extends Container implements IScene {
 
 							this.generatePlayerHonkBombExplosion(playerHonkBomb);
 
-							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
+							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
 
 							if (vehicleEnemy) {
 								this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
