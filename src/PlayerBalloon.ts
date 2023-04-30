@@ -1,11 +1,11 @@
 ﻿import { Texture } from 'pixi.js';
 import { Constants, ConstructType, MovementDirection, PlayerBalloonStance, PlayerBalloonTemplate, RotationDirection, SoundType } from './Constants';
 import { GameController } from './GameController';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 import { SoundManager } from './SoundManager';
 
 
-export class PlayerBalloon extends GameObject {
+export class PlayerBalloon extends GameObjectContainer {
 
 	//#region Properties
 

@@ -1,7 +1,7 @@
 ﻿import { Constants } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 
-export class VehicleBase extends GameObject {
+export class VehicleBase extends GameObjectContainer {
 
 	private honkDelay: number = 0;
 

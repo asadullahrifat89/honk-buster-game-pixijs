@@ -1,9 +1,9 @@
 ﻿import { Constants, ConstructType, PowerUpType, SoundType } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 import { SoundManager } from './SoundManager';
 
 
-export class PowerUpPickup extends GameObject {
+export class PowerUpPickup extends GameObjectContainer {
 
     public isPickedUp: boolean = false;
     public powerUpType: PowerUpType = PowerUpType.ARMOR;

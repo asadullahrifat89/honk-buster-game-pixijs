@@ -1,6 +1,6 @@
 import { Texture } from "pixi.js";
 import { ConstructTemplate } from "./ConstructTemplate";
-import { GameObject } from "./GameObject";
+import { GameObjectContainer } from "./GameObjectContainer";
 import { SoundTemplate } from "./SoundTemplate";
 
 //#region Enums
@@ -485,7 +485,7 @@ export abstract class Constants {
 		return texture;
 	}
 
-	static checkCollision(objA: GameObject, objB: GameObject): boolean {
+	static checkCollision(objA: GameObjectContainer, objB: GameObjectContainer): boolean {
 		const a = objA.getBounds();
 		const b = objB.getBounds();
 
@@ -502,7 +502,7 @@ export abstract class Constants {
 		return topmostBottom > bottommostTop;
 	}
 
-	static checkCloseCollision(objA: GameObject, objB: GameObject): boolean {
+	static checkCloseCollision(objA: GameObjectContainer, objB: GameObjectContainer): boolean {
 
 		const a = objA.getBounds(true);
 		const b = objB.getBounds(true);

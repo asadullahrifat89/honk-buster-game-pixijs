@@ -1,6 +1,6 @@
 ﻿import { Rectangle } from 'pixi.js';
 import { Constants, ConstructType, SoundType } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 import { SeekingRocketBase } from './SeekingRocketBase';
 import { SoundManager } from './SoundManager';
 
@@ -26,7 +26,7 @@ export class MafiaBossRocketBullsEye extends SeekingRocketBase {
 		SoundManager.play(SoundType.BULLS_EYE_ROCKET_LAUNCH);
 	}
 
-	reposition(source: GameObject) {
+	reposition(source: GameObjectContainer) {
 		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height);
 	}
 

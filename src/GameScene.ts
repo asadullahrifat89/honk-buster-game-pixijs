@@ -1,7 +1,7 @@
 import { BlurFilter, Container, Graphics, Texture } from "pixi.js";
 import { IScene } from "./IScene";
 import { GameObjectSprite } from './GameObjectSprite';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 import { Constants, ConstructType, PlayerHonkBombTemplate, PowerUpType, RotationDirection, SoundType } from './Constants';
 import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
@@ -254,7 +254,7 @@ export class GameScene extends Container implements IScene {
 
 	private castShadowGameObjects: Array<CastShadow> = [];
 
-	spawnCastShadow(source: GameObject) {
+	spawnCastShadow(source: GameObjectContainer) {
 
 		const gameObject: CastShadow = new CastShadow(source, 40, 15);
 		gameObject.disableRendering();
@@ -299,7 +299,7 @@ export class GameScene extends Container implements IScene {
 	private roadMarkSizeWidth: number = 1400;
 	private roadMarkSizeHeight: number = 1400;
 
-	private roadMarksGameObjects: Array<GameObject> = [];
+	private roadMarksGameObjects: Array<GameObjectContainer> = [];
 
 	private roadMarkPopDelayDefault: number = 84.5 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadMarkPopDelay: number = 0;
@@ -308,7 +308,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			for (let i = 0; i < 5; i++) {
@@ -371,8 +371,8 @@ export class GameScene extends Container implements IScene {
 	private treeSizeWidth: number = 260;
 	private treeSizeHeight: number = 260;
 
-	private treeBottomGameObjects: Array<GameObject> = [];
-	private treeTopGameObjects: Array<GameObject> = [];
+	private treeBottomGameObjects: Array<GameObjectContainer> = [];
+	private treeTopGameObjects: Array<GameObjectContainer> = [];
 
 	private treePopDelayDefault: number = 60 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private treePopDelayTop: number = 17.5;
@@ -382,7 +382,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			for (let i = 0; i < 5; i++) {
@@ -406,7 +406,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			for (let i = 0; i < 5; i++) {
@@ -499,8 +499,8 @@ export class GameScene extends Container implements IScene {
 	//private hedgeSizeWidth: number = 450;
 	//private hedgeSizeHeight: number = 450;
 
-	//private hedgeBottomGameObjects: Array<GameObject> = [];
-	//private hedgeTopGameObjects: Array<GameObject> = [];
+	//private hedgeBottomGameObjects: Array<GameObjectContainer> = [];
+	//private hedgeTopGameObjects: Array<GameObjectContainer> = [];
 
 	//private hedgePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	//private hedgePopDelayTop: number = 0;
@@ -510,7 +510,7 @@ export class GameScene extends Container implements IScene {
 
 	//	for (let j = 0; j < 5; j++) {
 
-	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
 	//		gameObject.disableRendering();
 
 	//		for (let i = 0; i < 5; i++) {
@@ -534,7 +534,7 @@ export class GameScene extends Container implements IScene {
 
 	//	for (let j = 0; j < 5; j++) {
 
-	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
 	//		gameObject.disableRendering();
 
 	//		for (let i = 0; i < 5; i++) {
@@ -632,8 +632,8 @@ export class GameScene extends Container implements IScene {
 	private lampSizeWidth: number = 750;
 	private lampSizeHeight: number = 750;
 
-	//private lampBottomGameObjects: Array<GameObject> = [];
-	private lampTopGameObjects: Array<GameObject> = [];
+	//private lampBottomGameObjects: Array<GameObjectContainer> = [];
+	private lampTopGameObjects: Array<GameObjectContainer> = [];
 
 	private lampPopDelayDefault: number = 150 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private lampPopDelayTop: number = 7;
@@ -643,7 +643,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			for (let i = 0; i < 5; i++) {
@@ -667,7 +667,7 @@ export class GameScene extends Container implements IScene {
 
 	//	for (let j = 0; j < 5; j++) {
 
-	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
 	//		gameObject.disableRendering();
 
 	//		for (let i = 0; i < 5; i++) {
@@ -764,8 +764,8 @@ export class GameScene extends Container implements IScene {
 	//private lightBillboardSizeWidth: number = 128;
 	//private lightBillboardSizeHeight: number = 128;
 
-	//private lightBillboardBottomGameObjects: Array<GameObject> = [];
-	//private lightBillboardTopGameObjects: Array<GameObject> = [];
+	//private lightBillboardBottomGameObjects: Array<GameObjectContainer> = [];
+	//private lightBillboardTopGameObjects: Array<GameObjectContainer> = [];
 
 	//private lightBillboardPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	//private lightBillboardPopDelayTop: number = 0;
@@ -775,7 +775,7 @@ export class GameScene extends Container implements IScene {
 
 	//	for (let j = 0; j < 5; j++) {
 
-	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
 	//		gameObject.disableRendering();
 
 	//		for (let i = 0; i < 5; i++) {
@@ -799,7 +799,7 @@ export class GameScene extends Container implements IScene {
 
 	//	for (let j = 0; j < 5; j++) {
 
-	//		const gameObject: GameObject = new GameObject(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
 	//		gameObject.disableRendering();
 
 	//		for (let i = 0; i < 5; i++) {
@@ -1028,7 +1028,7 @@ export class GameScene extends Container implements IScene {
 	//private cloudSizeWidth: number = 512 / 2;
 	//private cloudSizeHeight: number = 350 / 2;
 
-	//private cloudGameObjects: Array<GameObject> = [];
+	//private cloudGameObjects: Array<GameObjectContainer> = [];
 
 	//private cloudPopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	//private cloudPopDelay: number = 0;
@@ -1996,7 +1996,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	setBossRocketDirection(source: GameObject, rocket: GameObject, rocketTarget: GameObject) {
+	setBossRocketDirection(source: GameObjectContainer, rocket: GameObjectContainer, rocketTarget: GameObjectContainer) {
 
 		// rocket target is on the bottom right side of the UfoBoss
 		if (rocketTarget.getTop() > source.getTop() && rocketTarget.getLeft() > source.getLeft()) {
@@ -2727,7 +2727,7 @@ export class GameScene extends Container implements IScene {
 	private roadHonkSizeWidth: number = 125;
 	private roadHonkSizeHeight: number = 125;
 
-	private roadHonkGameObjects: Array<GameObject> = [];
+	private roadHonkGameObjects: Array<GameObjectContainer> = [];
 
 	private spawnHonks() {
 
@@ -2752,7 +2752,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private generateHonk(source: GameObject) {
+	private generateHonk(source: GameObjectContainer) {
 
 		if (source.getLeft() > 0 && source.getTop() > 0) {
 			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
@@ -2899,7 +2899,7 @@ export class GameScene extends Container implements IScene {
 	private playerHonkBombSizeWidth: number = 50;
 	private playerHonkBombSizeHeight: number = 50;
 
-	private playerHonkBombGameObjects: Array<GameObject> = [];
+	private playerHonkBombGameObjects: Array<GameObjectContainer> = [];
 	private playerHonkBusterTemplate: number = 0;
 
 	spawnPlayerHonkBombs() {
@@ -3012,7 +3012,7 @@ export class GameScene extends Container implements IScene {
 	private PlayerHonkBombExplosionSizeWidth: number = 130;
 	private PlayerHonkBombExplosionSizeHeight: number = 130;
 
-	private PlayerHonkBombExplosionGameObjects: Array<GameObject> = [];
+	private PlayerHonkBombExplosionGameObjects: Array<GameObjectContainer> = [];
 
 	spawnPlayerHonkBombExplosions() {
 
@@ -3036,7 +3036,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	generatePlayerHonkBombExplosion(source: GameObject) {
+	generatePlayerHonkBombExplosion(source: GameObjectContainer) {
 
 		var gameObject = this.PlayerHonkBombExplosionGameObjects.find(x => x.isAnimating == false);
 
@@ -3077,7 +3077,7 @@ export class GameScene extends Container implements IScene {
 	private playerRocketSizeWidth: number = 90;
 	private playerRocketSizeHeight: number = 90;
 
-	private playerRocketGameObjects: Array<GameObject> = [];
+	private playerRocketGameObjects: Array<GameObjectContainer> = [];
 
 	spawnPlayerRockets() {
 
@@ -3225,7 +3225,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	setPlayerRocketDirection(source: GameObject, rocket: GameObject, rocketTarget: GameObject) {
+	setPlayerRocketDirection(source: GameObjectContainer, rocket: GameObjectContainer, rocketTarget: GameObjectContainer) {
 
 		// rocket target is on the bottom right side of the UfoBoss
 		if (rocketTarget.getTop() > source.getTop() && rocketTarget.getLeft() > source.getLeft()) {

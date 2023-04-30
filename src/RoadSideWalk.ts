@@ -1,8 +1,8 @@
 ﻿import { Constants, ConstructType } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 
 
-export class RoadSideWalk extends GameObject {
+export class RoadSideWalk extends GameObjectContainer {
 
     constructor(speed: number) {
         super(speed);

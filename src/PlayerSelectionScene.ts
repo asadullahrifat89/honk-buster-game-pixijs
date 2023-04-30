@@ -1,7 +1,7 @@
 ﻿import { Container, Graphics, Text, BlurFilter, Texture } from "pixi.js";
 import { Button } from "./Button";
 import { Constants, ConstructType, SoundType } from "./Constants";
-import { GameObject } from "./GameObject";
+import { GameObjectContainer } from "./GameObjectContainer";
 import { GameObjectSprite } from "./GameObjectSprite";
 import { IScene } from "./IScene";
 import { PlayerHonkBombSelectionScene } from "./PlayerHonkBombSelectionScene";
@@ -12,12 +12,12 @@ import { SoundManager } from "./SoundManager";
 
 export class PlayerSelectionScene extends Container implements IScene {
 
-	private sceneContainer: GameObject;
+	private sceneContainer: GameObjectContainer;
 
 	constructor() {
 		super();
 
-		this.sceneContainer = new GameObject(0);
+		this.sceneContainer = new GameObjectContainer(0);
 		this.sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		this.sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
 		this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);

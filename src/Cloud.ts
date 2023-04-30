@@ -1,8 +1,8 @@
 ﻿import { Constants } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 
 
-export class Cloud extends GameObject {
+export class Cloud extends GameObjectContainer {
 
 	constructor(speed: number) {
 		super(speed);

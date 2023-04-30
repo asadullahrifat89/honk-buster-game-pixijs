@@ -1,10 +1,10 @@
 ﻿import { Constants, ConstructType, SoundType } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 import { SceneManager } from './SceneManager';
 import { SoundManager } from './SoundManager';
 
 
-export class ZombieBossRocketBlock extends GameObject {
+export class ZombieBossRocketBlock extends GameObjectContainer {
 
     private autoBlastDelay: number = 0;
     private readonly autoBlastDelayDefault: number = 9;

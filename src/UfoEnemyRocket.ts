@@ -1,9 +1,9 @@
 ﻿import { Constants, ConstructType, SoundType } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 import { SoundManager } from './SoundManager';
 
 
-export class UfoEnemyRocket extends GameObject {
+export class UfoEnemyRocket extends GameObjectContainer {
 
 	private autoBlastDelay: number = 0;
 	private readonly autoBlastDelayDefault: number = 12;
@@ -24,7 +24,7 @@ export class UfoEnemyRocket extends GameObject {
 		SoundManager.play(SoundType.ORB_LAUNCH, 0.4);
 	}
 
-	reposition(source: GameObject) {
+	reposition(source: GameObjectContainer) {
 		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 15);
 	}
 

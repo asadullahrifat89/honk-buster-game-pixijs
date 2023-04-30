@@ -1,10 +1,10 @@
 ﻿import { Rectangle } from 'pixi.js';
 import { Constants } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 import { SceneManager } from './SceneManager';
 
 
-export class SeekingRocketBase extends GameObject {
+export class SeekingRocketBase extends GameObjectContainer {
 
 	private readonly grace: number = 7;
 	private readonly lag: number = 60;

@@ -1,9 +1,9 @@
 ﻿import { Constants, ConstructType, SoundType } from './Constants';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 import { SoundManager } from './SoundManager';
 
 
-export class MafiaBossRocket extends GameObject {
+export class MafiaBossRocket extends GameObjectContainer {
 
     private autoBlastDelay: number = 0;
     private readonly autoBlastDelayDefault: number = 9;
@@ -30,7 +30,7 @@ export class MafiaBossRocket extends GameObject {
         SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
     }
 
-    reposition(source: GameObject) {
+    reposition(source: GameObjectContainer) {
         this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 15);
     }
 

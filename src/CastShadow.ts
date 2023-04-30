@@ -1,12 +1,12 @@
 ﻿import { Graphics } from 'pixi.js';
-import { GameObject } from './GameObject';
+import { GameObjectContainer } from './GameObjectContainer';
 
 
-export class CastShadow extends GameObject {
+export class CastShadow extends GameObjectContainer {
 
-	public source: GameObject = new GameObject(0);
+	public source: GameObjectContainer = new GameObjectContainer(0);
 
-	constructor(source: GameObject, width: number, height: number) {
+	constructor(source: GameObjectContainer, width: number, height: number) {
 
 		super(source.speed);
 
