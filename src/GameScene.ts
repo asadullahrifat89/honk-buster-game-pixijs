@@ -671,7 +671,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.lampTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition((gameObject.width * -1), (gameObject.height * -1) - 275);
+				gameObject.setPosition((gameObject.width * -1), (gameObject.height * -1) - 276);
 				gameObject.enableRendering();
 				this.lampPopDelayTop = this.lampPopDelayDefault;
 			}
