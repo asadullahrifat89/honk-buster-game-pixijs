@@ -15,7 +15,7 @@ export class GameObjectContainer extends Container {
 
 	private dillyDallyDelay: number = 0;
 	private readonly dillyDallyDelayDefault: number = 55;
-	private dillyDallySpeed: number = 0.1;
+	private dillyDallySpeed: number = 0.2;
 
 	private vibrateDelay: number = 0;
 	private readonly vibrateDelayDefault: number = 8;

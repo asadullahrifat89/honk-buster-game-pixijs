@@ -214,8 +214,8 @@ export class GameScene extends Container implements IScene {
 		this.repositionGameScoreBar();
 
 		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this);
-		this.playerHealthBar.setMaximumValue(this._player.health);
-		this.playerHealthBar.setValue(this._player.health);
+		this.playerHealthBar.setMaximumValue(this.player.health);
+		this.playerHealthBar.setValue(this.player.health);
 		this.repositionPlayerHealthBar();
 
 		this.bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
@@ -1321,12 +1321,14 @@ export class GameScene extends Container implements IScene {
 
 		if (gameObject) {
 
-			gameObject.pop();
+			gameObject.pop();			
 
 			if (vehicleBoss.isDead()) {
 				vehicleBoss.moveDownRight();
 			}
 			else {
+				gameObject.dillyDally();
+
 				if (vehicleBoss.isAttacking) {
 
 					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling);
@@ -1358,7 +1360,7 @@ export class GameScene extends Container implements IScene {
 
 		if (vehicleBoss.isDead()) {
 
-			this._player.setWinStance();
+			this.player.setWinStance();
 			this.gameScoreBar.gainScore(3);
 			this.levelUp();
 
@@ -1385,14 +1387,14 @@ export class GameScene extends Container implements IScene {
 
 	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
 
-	private vehicleBossRocketPopDelayDefault: number = 15 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private vehicleBossRocketPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private vehicleBossRocketPopDelay: number = 0;
 
 	spawnVehicleBossRockets() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 1.7);
+			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 1.5);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
@@ -1454,9 +1456,9 @@ export class GameScene extends Container implements IScene {
 				else {
 
 					gameObject.pop();
-					//gameObject.dillyDally();
+					gameObject.dillyDally();
 
-					if (Constants.checkCloseCollision(gameObject, this._player)) {
+					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
 					}
@@ -1679,7 +1681,7 @@ export class GameScene extends Container implements IScene {
 					gameObject.pop();
 					gameObject.hover();
 
-					if (Constants.checkCloseCollision(gameObject, this._player)) {
+					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
 					}
@@ -1776,9 +1778,9 @@ export class GameScene extends Container implements IScene {
 
 				if (ufoBoss.isAttacking) {
 
-					ufoBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling, this._player.getCloseBounds());
+					ufoBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling, this.player.getCloseBounds());
 
-					if (Constants.checkCloseCollision(this._player, ufoBoss)) {
+					if (Constants.checkCloseCollision(this.player, ufoBoss)) {
 						this.loosePlayerHealth();
 					}
 				}
@@ -1809,7 +1811,7 @@ export class GameScene extends Container implements IScene {
 
 		if (ufoBoss.isDead()) {
 
-			this._player.setWinStance();
+			this.player.setWinStance();
 			this.gameScoreBar.gainScore(3);
 			this.levelUp();
 
@@ -1885,7 +1887,7 @@ export class GameScene extends Container implements IScene {
 					ufoBossRocket.setPopping();
 					ufoBossRocket.enableRendering();
 
-					this.setBossRocketDirection(ufoBoss, ufoBossRocket, this._player);
+					this.setBossRocketDirection(ufoBoss, ufoBossRocket, this.player);
 				}
 
 				this.ufoBossRocketPopDelay = this.ufoBossRocketPopDelayDefault;
@@ -1927,7 +1929,7 @@ export class GameScene extends Container implements IScene {
 
 					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
-					if (Constants.checkCloseCollision(gameObject, this._player)) {
+					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
 						ufoBoss?.setWinStance();
@@ -2057,9 +2059,9 @@ export class GameScene extends Container implements IScene {
 					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
 					if (ufoBoss) {
-						ufoBossRocketSeeking.seek(this._player.getCloseBounds());
+						ufoBossRocketSeeking.seek(this.player.getCloseBounds());
 
-						if (Constants.checkCloseCollision(gameObject, this._player)) {
+						if (Constants.checkCloseCollision(gameObject, this.player)) {
 							gameObject.setBlast();
 							this.loosePlayerHealth();
 							ufoBoss.setWinStance();
@@ -2164,7 +2166,7 @@ export class GameScene extends Container implements IScene {
 
 					zombieBoss.moveUpRightDownLeft(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling);
 
-					if (Constants.checkCloseCollision(this._player, zombieBoss)) {
+					if (Constants.checkCloseCollision(this.player, zombieBoss)) {
 						this.loosePlayerHealth();
 					}
 				}
@@ -2195,7 +2197,7 @@ export class GameScene extends Container implements IScene {
 
 		if (zombieBoss.isDead()) {
 
-			this._player.setWinStance();
+			this.player.setWinStance();
 			this.gameScoreBar.gainScore(3);
 			this.levelUp();
 
@@ -2295,7 +2297,7 @@ export class GameScene extends Container implements IScene {
 					gameObject.pop();
 					gameObject.hover();
 
-					if (Constants.checkCloseCollision(gameObject, this._player)) {
+					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
 					}
@@ -2392,9 +2394,9 @@ export class GameScene extends Container implements IScene {
 
 				if (mafiaBoss.isAttacking) {
 
-					mafiaBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling, this._player.getCloseBounds());
+					mafiaBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling, this.player.getCloseBounds());
 
-					if (Constants.checkCloseCollision(this._player, mafiaBoss)) {
+					if (Constants.checkCloseCollision(this.player, mafiaBoss)) {
 						this.loosePlayerHealth();
 					}
 				}
@@ -2425,7 +2427,7 @@ export class GameScene extends Container implements IScene {
 
 		if (mafiaBoss.isDead()) {
 
-			this._player.setWinStance();
+			this.player.setWinStance();
 			this.gameScoreBar.gainScore(3);
 			this.levelUp();
 
@@ -2501,7 +2503,7 @@ export class GameScene extends Container implements IScene {
 					mafiaBossRocket.setPopping();
 					mafiaBossRocket.enableRendering();
 
-					this.setBossRocketDirection(mafiaBoss, mafiaBossRocket, this._player);
+					this.setBossRocketDirection(mafiaBoss, mafiaBossRocket, this.player);
 				}
 
 				this.mafiaBossRocketPopDelay = this.mafiaBossRocketPopDelayDefault;
@@ -2543,7 +2545,7 @@ export class GameScene extends Container implements IScene {
 
 					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
-					if (Constants.checkCloseCollision(gameObject, this._player)) {
+					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
 						mafiaBoss?.setWinStance();
@@ -2612,7 +2614,7 @@ export class GameScene extends Container implements IScene {
 					mafiaBossRocketBullsEye.reset();
 					mafiaBossRocketBullsEye.reposition(mafiaBoss);
 					mafiaBossRocketBullsEye.setPopping();
-					mafiaBossRocketBullsEye.setTarget(this._player.getCloseBounds());
+					mafiaBossRocketBullsEye.setTarget(this.player.getCloseBounds());
 					mafiaBossRocketBullsEye.enableRendering();
 				}
 
@@ -2646,7 +2648,7 @@ export class GameScene extends Container implements IScene {
 					if (mafiaBoss) {
 						mafiaBossRocketBullsEye.move();
 
-						if (Constants.checkCloseCollision(gameObject, this._player)) {
+						if (Constants.checkCloseCollision(gameObject, this.player)) {
 							gameObject.setBlast();
 							this.loosePlayerHealth();
 							mafiaBoss.setWinStance();
@@ -2742,11 +2744,11 @@ export class GameScene extends Container implements IScene {
 	private playerBalloonSizeHeight: number = 150;
 	private playerTemplate: number = 0;
 
-	private _player: PlayerBalloon = new PlayerBalloon(Constants.DEFAULT_CONSTRUCT_SPEED);
+	private player: PlayerBalloon = new PlayerBalloon(Constants.DEFAULT_CONSTRUCT_SPEED);
 
 	spawnPlayerBalloon() {
 
-		this._player.disableRendering();
+		this.player.disableRendering();
 
 		//this._player.width = this.playerBalloonSizeWidth;
 		//this._player.height = this.playerBalloonSizeHeight;
@@ -2759,30 +2761,31 @@ export class GameScene extends Container implements IScene {
 		sprite.height = this.playerBalloonSizeHeight;
 		sprite.anchor.set(0.5, 0.5);
 
-		this._player.addChild(sprite);
+		this.player.addChild(sprite);
 
-		this._player.setPlayerTemplate(this.playerTemplate);
+		this.player.setPlayerTemplate(this.playerTemplate);
 
-		this.sceneContainer.addChild(this._player);
+		this.sceneContainer.addChild(this.player);
 
-		this.spawnCastShadow(this._player);
+		this.spawnCastShadow(this.player);
 	}
 
 	generatePlayerBalloon() {
-		this._player.reset();
-		this._player.reposition();
-		this._player.enableRendering();
+		this.player.reset();
+		this.player.reposition();
+		this.player.enableRendering();
 	}
 
 	animatePlayerBalloon() {
-		this._player.pop();
-		this._player.hover();
-		this._player.depleteAttackStance();
-		this._player.depleteWinStance();
-		this._player.depleteHitStance();
-		this._player.recoverFromHealthLoss();
+		this.player.pop();
+		this.player.hover();
+		this.player.dillyDally();
+		this.player.depleteAttackStance();
+		this.player.depleteWinStance();
+		this.player.depleteHitStance();
+		this.player.recoverFromHealthLoss();
 
-		this._player.move(
+		this.player.move(
 			Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling,
 			Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling,
 			this.gameController);
@@ -2821,20 +2824,20 @@ export class GameScene extends Container implements IScene {
 	}
 
 	loosePlayerHealth() {
-		this._player.setPopping();
+		this.player.setPopping();
 
 		if (this.powerUpMeter.hasHealth() && this.powerUpMeter.tag == PowerUpType.ARMOR) {
 			this.depletePowerUp();
 		}
 		else {
 
-			this._player.looseHealth();
-			this._player.setHitStance();
-			this.playerHealthBar.setValue(this._player.health);
+			this.player.looseHealth();
+			this.player.setHitStance();
+			this.playerHealthBar.setValue(this.player.health);
 
 			//TODO: game over
 
-			if (this._player.isDead()) {
+			if (this.player.isDead()) {
 				this.gameOver();
 			}
 		}
@@ -2884,12 +2887,12 @@ export class GameScene extends Container implements IScene {
 
 			var playerHonkBomb = gameObject as PlayerHonkBomb;
 			playerHonkBomb.reset();
-			playerHonkBomb.reposition(this._player);
+			playerHonkBomb.reposition(this.player);
 			playerHonkBomb.setPopping();
 
 			gameObject.enableRendering();
 
-			this._player.setAttackStance();
+			this.player.setAttackStance();
 		}
 	}
 
@@ -3059,12 +3062,12 @@ export class GameScene extends Container implements IScene {
 
 			var playerRocket = gameObject as PlayerRocket;
 			playerRocket.reset();
-			playerRocket.reposition(this._player);
+			playerRocket.reposition(this.player);
 			playerRocket.setPopping();
 
 			gameObject.enableRendering();
 
-			this._player.setAttackStance();
+			this.player.setAttackStance();
 
 			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 			let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
@@ -3074,19 +3077,19 @@ export class GameScene extends Container implements IScene {
 			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
 
 			if (ufoBossRocketSeeking) {
-				this.setPlayerRocketDirection(this._player, playerRocket, ufoBossRocketSeeking);
+				this.setPlayerRocketDirection(this.player, playerRocket, ufoBossRocketSeeking);
 			}
 			else if (ufoEnemy) {
-				this.setPlayerRocketDirection(this._player, playerRocket, ufoEnemy);
+				this.setPlayerRocketDirection(this.player, playerRocket, ufoEnemy);
 			}
 			else if (ufoBoss) {
-				this.setPlayerRocketDirection(this._player, playerRocket, ufoBoss);
+				this.setPlayerRocketDirection(this.player, playerRocket, ufoBoss);
 			}
 			else if (zombieBoss) {
-				this.setPlayerRocketDirection(this._player, playerRocket, zombieBoss);
+				this.setPlayerRocketDirection(this.player, playerRocket, zombieBoss);
 			}
 			else if (mafiaBoss) {
-				this.setPlayerRocketDirection(this._player, playerRocket, mafiaBoss);
+				this.setPlayerRocketDirection(this.player, playerRocket, mafiaBoss);
 			}
 		}
 	}
@@ -3240,10 +3243,10 @@ export class GameScene extends Container implements IScene {
 
 		if (playerRocketBullsEye) {
 			playerRocketBullsEye.reset();
-			playerRocketBullsEye.reposition(this._player);
+			playerRocketBullsEye.reposition(this.player);
 			playerRocketBullsEye.setPopping();
 
-			this._player.setAttackStance();
+			this.player.setAttackStance();
 
 			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 			let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
@@ -3433,11 +3436,11 @@ export class GameScene extends Container implements IScene {
 				else {
 					gameObject.moveDownRight();
 
-					if (Constants.checkCloseCollision(gameObject, this._player)) {
+					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.pickedUp();
 
-						this._player.gainhealth();
-						this.playerHealthBar.setValue(this._player.health);
+						this.player.gainhealth();
+						this.playerHealthBar.setValue(this.player.health);
 					}
 				}
 
@@ -3543,7 +3546,7 @@ export class GameScene extends Container implements IScene {
 
 					gameObject.moveDownRight();
 
-					if (Constants.checkCloseCollision(gameObject, this._player)) {
+					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.pickedUp();
 
 						this.powerUpMeter.tag = gameObject.powerUpType;
