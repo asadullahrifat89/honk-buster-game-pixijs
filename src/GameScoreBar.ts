@@ -1,31 +1,41 @@
-import { BitmapFont, BitmapText, Container } from "pixi.js";
+import { BitmapFont, BitmapText, Container, Graphics } from "pixi.js";
 
 export class GameScoreBar {
 
+	private scoreContainer: Container;
 	private scoreText: BitmapText;
 	private score: number = 0;
 
 	constructor(scene: Container) {
-		
+
 		BitmapFont.from("gameplay", {
 			fill: "#ffffff",
 			fontFamily: "gameplay",
-			fontSize: 26,
+			fontSize: 30,
 			align: "center",
 		});
 
 		this.scoreText = new BitmapText("o", {
 			fontName: "gameplay",
-			fontSize: 26,
+			fontSize: 30,
 			align: "center",
 		});
 
-		scene.addChild(this.scoreText);
+		this.scoreContainer = new Container();
+
+		const graphics = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 80, 35, 3).endFill();
+		this.scoreContainer.addChild(graphics);
+
+		this.scoreText.x = 10;
+
+		this.scoreContainer.addChild(this.scoreText);
+
+		scene.addChild(this.scoreContainer);
 	}
 
 	reposition(x: number, y: number) {
-		this.scoreText.x = x - this.scoreText.width / 2;
-		this.scoreText.y = y;
+		this.scoreContainer.x = x - this.scoreContainer.width / 2;
+		this.scoreContainer.y = y;
 	}
 
 	reset() {

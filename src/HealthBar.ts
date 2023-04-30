@@ -1,5 +1,5 @@
 ﻿import { ProgressBar } from "@pixi/ui";
-import { Container, Texture } from "pixi.js";
+import { Container, Graphics, Texture } from "pixi.js";
 import { GameObjectContainer } from "./GameObjectContainer";
 import { GameObjectSprite } from "./GameObjectSprite";
 
@@ -18,6 +18,9 @@ export class HealthBar extends Container {
 
 		this.width = 100;
 		this.height = 30;
+
+		const graphics = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 100, 35, 3).endFill();
+		this.addChild(graphics);
 
 		this.progressBar = new ProgressBar();
 		this.progressBar.width = 60;
@@ -48,7 +51,7 @@ export class HealthBar extends Container {
 		this.progressBar.progress = 0;
 
 		this.progressBar.x = 35;
-		this.progressBar.y = 10;
+		this.progressBar.y = 12;
 
 		this.addChild(this.progressBar);
 
@@ -56,8 +59,8 @@ export class HealthBar extends Container {
 		this.icon.height = 30;
 		this.icon.width = 30;
 
-		this.icon.x = 0;
-		this.icon.y = 0;
+		this.icon.x = 3;
+		this.icon.y = 2;
 
 		let sprite: GameObjectSprite = new GameObjectSprite(texture);
 		sprite.width = 30;
