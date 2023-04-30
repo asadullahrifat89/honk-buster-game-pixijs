@@ -10,8 +10,8 @@ export class GameObjectContainer extends Container {
 	private readonly popUpScalingLimit: number = 1.5;
 
 	private hoverDelay: number = 0;
-	private readonly hoverDelayDefault: number = 25;
-	private hoverSpeed: number = 0.4;
+	private readonly hoverDelayDefault: number = 28;
+	private hoverSpeed: number = 0.3;
 
 	private dillyDallyDelay: number = 0;
 	private readonly dillyDallyDelayDefault: number = 25;
