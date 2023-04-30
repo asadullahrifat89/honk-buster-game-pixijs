@@ -28,6 +28,7 @@ export class SceneManager {
 			resizeTo: window, // This line here handles the actual resize!
 			resolution: window.devicePixelRatio || 1,
 			autoDensity: true,
+			antialias: true,
 			backgroundColor: background,
 			width: width,
 			height: height,
@@ -42,7 +43,7 @@ export class SceneManager {
 
 		// listen for the browser telling us that the screen size changed
 		window.addEventListener("resize", SceneManager.resize);
-	}	
+	}
 
 	public static get width(): number {
 		return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
