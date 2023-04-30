@@ -13,6 +13,7 @@ import { SoundManager } from "./SoundManager";
 export class PlayerHonkBombSelectionScene extends Container implements IScene {
 
 	private sceneContainer: GameObjectContainer;
+	private bg_container: GameObjectContainer;
 
 	constructor() {
 		super();
@@ -24,13 +25,18 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		//this.sceneContainer.filters = [new DropShadowFilter()];
 		this.addChild(this.sceneContainer);
 
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
-		sprite.x = 0;
-		sprite.y = 0;
-		sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
-		sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
-		sprite.filters = [new BlurFilter()];
-		this.sceneContainer.addChild(sprite);
+		const bg_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
+		bg_sprite.x = 0;
+		bg_sprite.y = 0;
+		bg_sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
+		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
+		bg_sprite.filters = [new BlurFilter()];
+
+		this.bg_container = new GameObjectContainer(0);
+		this.bg_container.setHoverSpeed(0.2);
+		this.bg_container.addChild(bg_sprite);
+
+		this.sceneContainer.addChild(this.bg_container);
 
 		const title = new Text("Select Honk Buster", {
 			fontFamily: "gameplay",
@@ -93,6 +99,9 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 				this.removeChild(this.sceneContainer);
 				SceneManager.changeScene(new GameScene());
 			}
+		}
+		else {
+			this.bg_container.hover();
 		}
 	}
 
