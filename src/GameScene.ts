@@ -81,7 +81,6 @@ export class GameScene extends Container implements IScene {
 
 	private gameLevel: number = 0;
 	private roadBackgroundDay: Graphics;
-	//private roadBackgroundNight: Graphics;
 
 	//#endregion
 
@@ -93,7 +92,6 @@ export class GameScene extends Container implements IScene {
 		super();
 
 		this.roadBackgroundDay = new Graphics().beginFill(0x4187ab, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
-		//this.roadBackgroundNight = new Graphics().beginFill(0x1f2326, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 
 		this.addChildAt(this.roadBackgroundDay, 0);
 
@@ -151,7 +149,7 @@ export class GameScene extends Container implements IScene {
 			}
 		});
 
-		this.sceneContainer.filters = [new BlurFilter(2)];
+		//this.sceneContainer.filters = [new BlurFilter(2)];
 
 		this.playerTemplate = Constants.SELECTED_PLAYER_TEMPLATE;
 		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
@@ -243,6 +241,11 @@ export class GameScene extends Container implements IScene {
 			case 1: { this.generateOnScreenMessage("Drop garbage on the honkers"); } break;
 			default:
 		}
+
+		// progress the frames a little bit to avoid blank scene
+		for (var i = 0; i < 320; i++) {
+			this.updateFrame();
+		}
 	}
 
 	//#endregion
@@ -261,31 +264,29 @@ export class GameScene extends Container implements IScene {
 	}
 
 	animateCastShadows() {
-		if (this.sceneContainer.alpha >= 1) {
-			var animatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == true);
+		var animatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == true);
 
-			if (animatingCastShadows) {
+		if (animatingCastShadows) {
 
-				animatingCastShadows.forEach(dropShadow => {
+			animatingCastShadows.forEach(dropShadow => {
 
-					if (!dropShadow.isAnimating) {
-						dropShadow.reset();
-						dropShadow.enableRendering();
-					}
+				if (!dropShadow.isAnimating) {
+					dropShadow.reset();
+					dropShadow.enableRendering();
+				}
 
-					dropShadow.move();
-				});
-			}
+				dropShadow.move();
+			});
+		}
 
-			var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false || x.source.isBlasting || x.source.isDead());
+		var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false || x.source.isBlasting || x.source.isDead());
 
-			if (nonAnimatingCastShadows) {
+		if (nonAnimatingCastShadows) {
 
-				nonAnimatingCastShadows.forEach(dropShadow => {
-					if (dropShadow.isAnimating)
-						dropShadow.disableRendering();
-				});
-			}
+			nonAnimatingCastShadows.forEach(dropShadow => {
+				if (dropShadow.isAnimating)
+					dropShadow.disableRendering();
+			});
 		}
 	}
 
@@ -3704,21 +3705,10 @@ export class GameScene extends Container implements IScene {
 	public update(_framesPassed: number) {
 
 		if (this.sceneContainer.alpha < 1) {
-			this.sceneContainer.alpha += 0.003;
-			let filter = this.sceneContainer.filters?.at(0) as BlurFilter;
-			filter.blur -= 0.006;
-
-			if (this.sceneContainer.alpha == 1)
-				this.sceneContainer.filters = null;
+			this.sceneContainer.alpha += 0.009;
 		}
 
-		if (!this.gameController.isPaused) {
-			this.generateGameObjects();
-			this.animateGameObjects();
-
-			this.gameController.update();
-			this.animatePlayerBalloon();
-		}
+		this.updateFrame();
 	}
 
 	public resize(scale: number): void {
@@ -3736,9 +3726,16 @@ export class GameScene extends Container implements IScene {
 
 			this.roadBackgroundDay.width = SceneManager.width;
 			this.roadBackgroundDay.height = SceneManager.height;
+		}
+	}
 
-			//this.roadBackgroundNight.width = SceneManager.width;
-			//this.roadBackgroundNight.height = SceneManager.height;
+	private updateFrame() {
+		if (!this.gameController.isPaused) {
+			this.generateGameObjects();
+			this.animateGameObjects();
+
+			this.gameController.update();
+			this.animatePlayerBalloon();
 		}
 	}
 
@@ -3851,16 +3848,6 @@ export class GameScene extends Container implements IScene {
 	private anyInAirBossExists(): boolean {
 		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
 	}
-
-	//private switchToNightMode() {
-	//	this.removeChildAt(0);
-	//	this.addChildAt(this.roadBackgroundNight, 0);
-	//}
-
-	//private switchToDayMode() {
-	//	this.removeChildAt(0);
-	//	this.addChildAt(this.roadBackgroundDay, 0);
-	//}
 
 	private gameOver() {
 		SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
