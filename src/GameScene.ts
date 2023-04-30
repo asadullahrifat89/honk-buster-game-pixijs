@@ -1148,6 +1148,7 @@ export class GameScene extends Container implements IScene {
 			animatingVehicleEnemys.forEach(gameObject => {
 
 				gameObject.pop();
+				gameObject.dillyDally();
 
 				if (this.anyInAirBossExists()) { // when in air bosses appear, stop the stage transition, and make the vehicles move forward
 					gameObject.moveUpLeft();

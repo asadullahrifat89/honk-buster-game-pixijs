@@ -14,8 +14,8 @@ export class GameObjectContainer extends Container {
 	private hoverSpeed: number = 0.3;
 
 	private dillyDallyDelay: number = 0;
-	private readonly dillyDallyDelayDefault: number = 25;
-	private readonly dillyDallySpeed: number = 0.9;
+	private readonly dillyDallyDelayDefault: number = 55;
+	private dillyDallySpeed: number = 0.1;
 
 	private vibrateDelay: number = 0;
 	private readonly vibrateDelayDefault: number = 8;
@@ -193,30 +193,38 @@ export class GameObjectContainer extends Container {
 	}
 
 	hover() {
-		this.hoverDelay--;
+		if (this.hoverSpeed > 0) {
+			this.hoverDelay--;
 
-		if (this.hoverDelay >= 0) {
-			this.y += this.hoverSpeed;
-		}
-		else {
-			this.y -= this.hoverSpeed;
+			if (this.hoverDelay >= 0) {
+				this.y += this.hoverSpeed;
+			}
+			else {
+				this.y -= this.hoverSpeed;
 
-			if (this.hoverDelay <= this.hoverDelayDefault * -1)
-				this.hoverDelay = this.hoverDelayDefault;
+				if (this.hoverDelay <= this.hoverDelayDefault * -1)
+					this.hoverDelay = this.hoverDelayDefault;
+			}
 		}
 	}
 
+	setDillyDallySpeed(speed: number) {
+		this.dillyDallySpeed = speed;
+	}
+
 	dillyDally() {
-		this.dillyDallyDelay--;
+		if (this.dillyDallySpeed > 0) {
+			this.dillyDallyDelay--;
 
-		if (this.dillyDallyDelay >= 0) {
-			this.x = (this.getLeft() + this.dillyDallySpeed);
-		}
-		else {
-			this.x = (this.getLeft() - this.dillyDallySpeed);
+			if (this.dillyDallyDelay >= 0) {
+				this.x = (this.x + this.dillyDallySpeed);
+			}
+			else {
+				this.x = (this.x - this.dillyDallySpeed);
 
-			if (this.dillyDallyDelay <= this.dillyDallyDelayDefault * -1)
-				this.dillyDallyDelay = this.dillyDallyDelayDefault;
+				if (this.dillyDallyDelay <= this.dillyDallyDelayDefault * -1)
+					this.dillyDallyDelay = this.dillyDallyDelayDefault;
+			}
 		}
 	}
 
