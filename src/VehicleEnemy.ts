@@ -13,10 +13,10 @@ export class VehicleEnemy extends VehicleBase {
 		super(speed);
 	}
 
-	reset() {		
+	reset() {
 		this.speed = Constants.getRandomNumber(2, 4);
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
-		this.filters = null;		
+		this.filters = null;
 
 		this.vehicleType = Constants.getRandomNumber(0, 1);
 
@@ -39,6 +39,10 @@ export class VehicleEnemy extends VehicleBase {
 		if (this.willHonk) {
 			this.health = this.hitPoint * Constants.getRandomNumber(0, 1);
 			this.setHonkDelay();
+			this.setDillyDallySpeed(Constants.getRandomNumber(0.50, 0.1));
+		}
+		else {
+			this.setDillyDallySpeed(0);
 		}
 	}
 
@@ -48,8 +52,9 @@ export class VehicleEnemy extends VehicleBase {
 
 	setBlast() {
 		this.willHonk = false;
-		this.speed = this.speed * 1.3;
+		this.speed = this.speed * 1.4;
 		this.filters = [this.grayScaleFilter];
+		this.setDillyDallySpeed(0);
 		SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
 	}
 }
