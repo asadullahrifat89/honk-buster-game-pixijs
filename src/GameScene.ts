@@ -184,7 +184,7 @@ export class GameScene extends Container implements IScene {
 
 		this.spawnTreesBottom();
 		//this.spawnLightBillboardsBottom();
-		
+
 		this.spawnPlayerRockets();
 		this.spawnPlayerRocketBullsEyes();
 		this.spawnPlayerBalloon();
@@ -628,18 +628,15 @@ export class GameScene extends Container implements IScene {
 
 	//#region Lamps
 
-	private lampXyAdjustment: number = 100;
-	private lampXyDistance = 250;
+	private lampXyAdjustment: number = 197;
 
 	private lampSizeWidth: number = 750;
 	private lampSizeHeight: number = 750;
 
-	//private lampBottomGameObjects: Array<GameObjectContainer> = [];
 	private lampTopGameObjects: Array<GameObjectContainer> = [];
 
-	private lampPopDelayDefault: number = 150 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private lampPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private lampPopDelayTop: number = 7;
-	//private lampPopDelayBottom: number = 0;
 
 	private spawnLampsTop() {
 
@@ -652,8 +649,8 @@ export class GameScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
 
-				sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i)) + (this.lampXyDistance * i);
-				sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
+				sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i));
+				sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i));
 				sprite.width = this.lampSizeWidth;
 				sprite.height = this.lampSizeHeight;
 
@@ -665,30 +662,6 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	//private spawnLampsBottom() {
-
-	//	for (let j = 0; j < 5; j++) {
-
-	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-	//		gameObject.disableRendering();
-
-	//		for (let i = 0; i < 5; i++) {
-
-	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
-
-	//			sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i)) + (this.lampXyDistance * i);
-	//			sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i)) + (this.lampXyDistance / 2 * i);
-	//			sprite.width = this.lampSizeWidth;
-	//			sprite.height = this.lampSizeHeight;
-
-	//			gameObject.addChild(sprite);
-	//		}
-
-	//		this.lampBottomGameObjects.push(gameObject);
-	//		this.sceneContainer.addChild(gameObject);
-	//	}
-	//}
-
 	private generateLampsTop() {
 
 		this.lampPopDelayTop -= 0.1;
@@ -698,29 +671,12 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.lampTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition((gameObject.width * -1), (gameObject.height * -1) - 235);
+				gameObject.setPosition((gameObject.width * -1), (gameObject.height * -1) - 276);
 				gameObject.enableRendering();
 				this.lampPopDelayTop = this.lampPopDelayDefault;
 			}
 		}
 	}
-
-	//private generateLampsBottom() {
-
-	//	this.lampPopDelayBottom -= 0.1;
-
-	//	if (this.lampPopDelayBottom < 0) {
-
-	//		var gameObject = this.lampBottomGameObjects.find(x => x.isAnimating == false);
-
-	//		if (gameObject) {
-	//			gameObject.x = gameObject.width * -1;
-	//			gameObject.y = -330;
-	//			gameObject.enableRendering();
-	//			this.lampPopDelayBottom = this.lampPopDelayDefault;
-	//		}
-	//	}
-	//}
 
 	private animateLampsTop() {
 
@@ -738,23 +694,6 @@ export class GameScene extends Container implements IScene {
 			});
 		}
 	}
-
-	//private animateLampsBottom() {
-
-	//	var animatingLamps = this.lampBottomGameObjects.filter(x => x.isAnimating == true);
-
-	//	if (animatingLamps) {
-
-	//		animatingLamps.forEach(gameObject => {
-	//			gameObject.moveDownRight();
-
-	//			if (gameObject.x - this.lampSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-	//				gameObject.disableRendering();
-
-	//			}
-	//		});
-	//	}
-	//}
 
 	//#endregion
 
