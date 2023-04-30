@@ -467,9 +467,8 @@ export class GameScene extends Container implements IScene {
 			animatingTrees.forEach(gameObject => {
 				gameObject.moveDownRight();
 
-				if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.x - gameObject.width / 2 > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
-
 				}
 			});
 		}
@@ -484,7 +483,7 @@ export class GameScene extends Container implements IScene {
 			animatingTrees.forEach(gameObject => {
 				gameObject.moveDownRight();
 
-				if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.x - gameObject.width / 2 > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height / 2 > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
