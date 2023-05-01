@@ -7,16 +7,25 @@ export class OnScreenMessage {
 	public isAnimating: boolean = false;
 
 	private messageAuthor: GameObjectSprite;
+	private messageContainer: Container;
 	private messageText: Text;
 	private messageOnScreenDelay: number = 0;
 	private readonly messageOnScreenDelayDefault: number = 20;
 
 	constructor(scene: Container) {
 
+		this.messageContainer = new Container();
+
 		this.messageAuthor = new GameObjectSprite(Texture.from("./images/character_maleAdventurer_talk.png"));
-		this.messageAuthor.width = 192;
-		this.messageAuthor.height = 256;
-		scene.addChild(this.messageAuthor);
+		this.messageAuthor.width = 192 / 1.5;
+		this.messageAuthor.height = 256 / 1.5;
+		this.messageAuthor.x = 0;
+		this.messageAuthor.y = 0;
+		this.messageAuthor.anchor.set(0.5);
+
+		this.messageContainer.addChild(this.messageAuthor);
+
+
 
 		this.messageText = new Text("", {
 			fontFamily: "gameplay",
@@ -24,21 +33,21 @@ export class OnScreenMessage {
 			fill: "#ffffff",
 			fontSize: 30
 		});
+		this.messageText.x = this.messageAuthor.width / 2;
+		this.messageContainer.addChild(this.messageText);
 
 		this.disableRendering();
-		scene.addChild(this.messageText);
+		scene.addChild(this.messageContainer);
 	}
 
 	disableRendering() {
-		this.isAnimating = false;
-		this.messageText.renderable = false;
-		this.messageAuthor.renderable = false;
+		this.isAnimating = false;		
+		this.messageContainer.renderable = false;
 	}
 
 	enableRendering() {
-		this.isAnimating = true;
-		this.messageText.renderable = true;
-		this.messageAuthor.renderable = true;
+		this.isAnimating = true;		
+		this.messageContainer.renderable = true;
 	}
 
 	reset() {
@@ -53,16 +62,14 @@ export class OnScreenMessage {
 		return this.messageOnScreenDelay <= 0;;
 	}
 
-	setTitle(title: string) {
+	setTitle(title: string, icon: Texture = Texture.from("./images/character_maleAdventurer_talk.png")) {
 		this.messageText.text = title;
+		this.messageAuthor.setTexture(icon);
 	}
 
 	reposition(x: number, y: number) {
-		this.messageText.x = x - this.messageText.width / 2;
-		this.messageText.y = y - this.messageText.height / 2;
-
-		this.messageAuthor.x = x - this.messageAuthor.width * 3;
-		this.messageAuthor.y = y * 2 - this.messageAuthor.height + 50;
+		this.messageContainer.x = x - this.messageContainer.width / 2;
+		this.messageContainer.y = y /*- this.messageContainer.height / 2*/;
 	}
 
 	getText(): string {

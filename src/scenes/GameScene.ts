@@ -773,7 +773,7 @@ export class GameScene extends Container implements IScene {
 				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
 
 				sprite.width = this.sideWalkWidth;
-				sprite.height = this.sideWalkHeight;				
+				sprite.height = this.sideWalkHeight;
 
 				gameObject.addChild(sprite);
 			}
@@ -798,7 +798,7 @@ export class GameScene extends Container implements IScene {
 				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
 
 				sprite.width = this.sideWalkWidth;
-				sprite.height = this.sideWalkHeight;				
+				sprite.height = this.sideWalkHeight;
 
 				gameObject.addChild(sprite);
 			}
@@ -1006,7 +1006,7 @@ export class GameScene extends Container implements IScene {
 				default: break;
 			}
 
-			sprite.anchor.set(0.5, 0.5);			
+			sprite.anchor.set(0.5, 0.5);
 
 			gameObject.addChild(sprite);
 
@@ -3543,13 +3543,13 @@ export class GameScene extends Container implements IScene {
 		if (this.onScreenMessage.isAnimating == false) {
 			this.onScreenMessage.setTitle(title);
 			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height / 2);
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
 			this.onScreenMessage.enableRendering();
 		}
 		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
 			this.onScreenMessage.setTitle(title);
 			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height / 2);
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
 		}
 	}
 
