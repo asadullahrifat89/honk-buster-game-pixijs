@@ -957,8 +957,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region VehicleEnemys	
 
-	private vehicleEnemySizeWidth: number = 242;
-	private vehicleEnemySizeHeight: number = 242;
+	private vehicleEnemySizeWidth: number = 260;
+	private vehicleEnemySizeHeight: number = 260;
 
 	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
 
@@ -1138,8 +1138,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region VehicleBosss	
 
-	private vehicleBossSizeWidth: number = 242;
-	private vehicleBossSizeHeight: number = 242;
+	private vehicleBossSizeWidth: number = this.vehicleEnemySizeWidth;
+	private vehicleBossSizeHeight: number = this.vehicleEnemySizeHeight;
 
 	private vehicleBossGameObjects: Array<VehicleBoss> = [];
 
