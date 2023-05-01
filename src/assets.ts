@@ -17,7 +17,6 @@ export const manifest: ResolverManifest = {
 				"resume_button": "./images/resume_button.png",
 				"quit_button": "./images/quit_button.png",
 
-
 				"bang_1": "./images/bang_1.png",
 				"bang_2": "./images/bang_2.png",
 
@@ -28,9 +27,9 @@ export const manifest: ResolverManifest = {
 				"blast_1": "./images/blast_1.png",
 				"blast_2": "./images/blast_2.png",
 
-				"cloud_1": "./images/cloud_1.png",
-				"cloud_2": "./images/cloud_2.png",
-				"cloud_3": "./images/cloud_3.png",
+				//"cloud_1": "./images/cloud_1.png",
+				//"cloud_2": "./images/cloud_2.png",
+				//"cloud_3": "./images/cloud_3.png",
 
 				"cover_image": "./images/cover_image.png",
 
@@ -75,7 +74,7 @@ export const manifest: ResolverManifest = {
 				"player_balloon_1_idle": "./images/player_balloon_1_idle.png",
 				"player_balloon_1_win": "./images/player_balloon_1_win.png",
 
-				"player_chopper_1_attack": "./images/player_chopper_1_idle.png",
+				"player_chopper_1_attack": "./images/player_chopper_1_attack.png",
 				"player_chopper_1_hit": "./images/player_chopper_1_hit.png",
 				"player_chopper_1_idle": "./images/player_chopper_1_idle.png",
 				"player_chopper_1_win": "./images/player_chopper_1_win.png",

@@ -381,7 +381,7 @@ export abstract class Constants {
 
 		new ConstructTemplate(ConstructType.PLAYER_RIDE, this.imagessDirectory + "player_1_character.png"),
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, this.imagessDirectory + "player_chopper_1_idle.png"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, this.imagessDirectory + "player_chopper_1_idle.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, this.imagessDirectory + "player_chopper_1_attack.png"),
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, this.imagessDirectory + "player_chopper_1_win.png"),
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, this.imagessDirectory + "player_chopper_1_hit.png"),
 
