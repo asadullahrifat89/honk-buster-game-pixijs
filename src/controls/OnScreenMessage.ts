@@ -32,7 +32,7 @@ export class OnScreenMessage {
 			fontFamily: "gameplay",
 			align: "center",
 			fill: "#2f3a5a",
-			fontSize: 24
+			fontSize: 23
 		});
 		this.messageText.x = this.messageAuthor.width / 1.5;
 		this.messageText.y = 5;
