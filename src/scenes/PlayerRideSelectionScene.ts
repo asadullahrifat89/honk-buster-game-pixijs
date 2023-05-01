@@ -1,5 +1,5 @@
 ﻿import { Container, Graphics, Text, Texture } from "pixi.js";
-import { GameScene } from "./GameScene";
+import { PlayerHonkBombSelectionScene } from "./PlayerHonkBombSelectionScene";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -11,7 +11,7 @@ import { SoundManager } from "../managers/SoundManager";
 import { GrayscaleFilter } from "@pixi/filter-grayscale";
 
 
-export class PlayerHonkBombSelectionScene extends Container implements IScene {
+export class PlayerRideSelectionScene extends Container implements IScene {
 
 	private sceneContainer: GameObjectContainer;
 	private bg_container: GameObjectContainer;
@@ -38,7 +38,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 
 		this.sceneContainer.addChild(this.bg_container);
 
-		const title = new Text("Select Honk Buster", {
+		const title = new Text("Choose a Ride", {
 			fontFamily: "gameplay",
 			fontSize: 35,
 			align: "center",
@@ -48,30 +48,30 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		title.y = (this.sceneContainer.height / 2 - title.height / 2) - 120;
 		this.sceneContainer.addChild(title);
 
-		const player_1_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("cracker_1"));
-		player_1_sprite.width = 300 / 2;
-		player_1_sprite.height = 300 / 2;
+		const player_1_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_1"));
+		player_1_sprite.width = 256 / 1.5;
+		player_1_sprite.height = 256 / 1.5;
 		player_1_sprite.x = 0;
 		player_1_sprite.y = 0;
 		const player_1_button = new Button(player_1_sprite, () => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			player_2_sprite.filters = [new GrayscaleFilter()];
 			player_1_sprite.filters = null;
-			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 0;
+			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 0;
 		});
 		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width, this.sceneContainer.height / 2 - player_1_sprite.height / 2 + 10);
 		this.sceneContainer.addChild(player_1_button);
 
-		const player_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("trash_1"));
-		player_2_sprite.width = 300 / 2;
-		player_2_sprite.height = 300 / 2;
+		const player_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_2"));
+		player_2_sprite.width = 256 / 1.5;
+		player_2_sprite.height = 256 / 1.5;
 		player_2_sprite.x = 0;
 		player_2_sprite.y = 0;
 		const player_2_button = new Button(player_2_sprite, () => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			player_1_sprite.filters = [new GrayscaleFilter()];
 			player_2_sprite.filters = null;
-			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 1;
+			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 1;
 		});
 		player_2_button.setPosition(this.sceneContainer.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2 + 10);
 		this.sceneContainer.addChild(player_2_button);
@@ -80,7 +80,8 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 
 			if (player_1_sprite.filters || player_2_sprite.filters) {
 				SoundManager.play(SoundType.OPTION_SELECT);
-				SceneManager.isNavigating = true;
+				this.removeChild(this.sceneContainer);
+				SceneManager.changeScene(new PlayerHonkBombSelectionScene());
 			}
 			else {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
@@ -92,17 +93,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 	}
 
 	public update(_framesPassed: number) {
-		if (SceneManager.isNavigating) {
-			this.sceneContainer.alpha -= 0.06;
-
-			if (this.sceneContainer.alpha <= 0) {
-				this.removeChild(this.sceneContainer);
-				SceneManager.changeScene(new GameScene());
-			}
-		}
-		else {
-			this.bg_container.hover();
-		}
+		this.bg_container.hover();
 	}
 
 	public resize(scale: number): void {

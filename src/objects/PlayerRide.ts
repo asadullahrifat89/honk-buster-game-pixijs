@@ -47,7 +47,7 @@ export class PlayerRide extends GameObjectContainer {
 		super(speed);
 	}
 
-	reset() {		
+	reset() {
 		this.health = this.hitPoint * 10;
 		this.movementDirection = MovementDirection.None;
 		this.movementStopDelay = this.movementStopDelayDefault;
@@ -59,32 +59,26 @@ export class PlayerRide extends GameObjectContainer {
 		this.setPosition((Constants.DEFAULT_GAME_VIEW_WIDTH / 2 - this.width / 2), (Constants.DEFAULT_GAME_VIEW_HEIGHT / 2 - this.height / 2));
 	}
 
-	setPlayerTemplate(playerTemplate: PlayerRideTemplate) {
+	setPlayerRideTemplate(rideTemplate: PlayerRideTemplate) {
 
 		let playerIdleUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_RIDE_IDLE).map(x => x.uri);
 		let playerWinUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_RIDE_WIN).map(x => x.uri);
 		let playerHitUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_RIDE_HIT).map(x => x.uri);
 		let playerAttackUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_RIDE_ATTACK).map(x => x.uri);
 
-		switch (playerTemplate) {
-			case PlayerRideTemplate.Balloon: {
-
+		switch (rideTemplate) {
+			case PlayerRideTemplate.BALLOON: {
 				this.playerIdleTexture = Texture.from(playerIdleUris[0]);
 				this.playerWinTexture = Texture.from(playerWinUris[0]);
 				this.playerHitTexture = Texture.from(playerHitUris[0]);
 				this.playerAttackTexture = Texture.from(playerAttackUris[0]);
-
-				break;
-			}
-			case PlayerRideTemplate.Chopper: {
-
+			} break;
+			case PlayerRideTemplate.CHOPPER: {
 				this.playerIdleTexture = Texture.from(playerIdleUris[1]);
 				this.playerWinTexture = Texture.from(playerWinUris[1]);
 				this.playerHitTexture = Texture.from(playerHitUris[1]);
 				this.playerAttackTexture = Texture.from(playerAttackUris[1]);
-
-				break;
-			}
+			} break;
 			default: break;
 		}
 

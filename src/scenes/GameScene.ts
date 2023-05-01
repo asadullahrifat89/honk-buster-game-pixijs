@@ -107,7 +107,7 @@ export class GameScene extends Container implements IScene {
 		this.talkIcon = Texture.from("./images/character_maleAdventurer_talk.png");
 		this.interactIcon = Texture.from("./images/character_maleAdventurer_interact.png");
 
-		this.playerCharacterTemplate = Constants.SELECTED_CHARACTER_TEMPLATE;
+		this.playerRideTemplate = Constants.SELECTED_PLAYER_RIDE_TEMPLATE;
 		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
 
 		let colors: number[] = [0x1e2a36, 0x4187ab]
@@ -2820,7 +2820,7 @@ export class GameScene extends Container implements IScene {
 
 	private playerBalloonSizeWidth: number = 150;
 	private playerBalloonSizeHeight: number = 150;
-	private playerCharacterTemplate: number = 0;
+	private playerRideTemplate: number = 0;
 
 	private player: PlayerRide = new PlayerRide(Constants.DEFAULT_CONSTRUCT_SPEED);
 
@@ -2841,7 +2841,7 @@ export class GameScene extends Container implements IScene {
 
 		this.player.addChild(sprite);
 
-		this.player.setPlayerTemplate(this.playerCharacterTemplate);
+		this.player.setPlayerRideTemplate(this.playerRideTemplate);
 
 		this.gameContainer.addChild(this.player);
 
@@ -2912,8 +2912,6 @@ export class GameScene extends Container implements IScene {
 			this.player.looseHealth();
 			this.player.setHitStance();
 			this.playerHealthBar.setValue(this.player.health);
-
-			//TODO: game over
 
 			if (this.player.isDead()) {
 				this.gameOver();

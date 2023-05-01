@@ -9,7 +9,6 @@ export class Button extends Container {
 		super();
 
 		this.buttonFilter = new ColorMatrixFilter();
-		//this.buttonFilter.sepia(false);
 		this.buttonFilter.saturate(1);
 
 		this.filters = null;
@@ -47,13 +46,11 @@ export class Button extends Container {
 		this.y = y;
 	}
 
-	onButtonOver(_e: FederatedPointerEvent) {		
+	onButtonOver(_e: FederatedPointerEvent) {
 		this.filters = [this.buttonFilter];
-		//this.scale.set(1.1);
 	}
 
-	onButtonOut(_e: FederatedPointerEvent) {	
-		this.filters = null;
-		//this.scale.set(1);
+	onButtonOut(_e: FederatedPointerEvent) {
+		this.filters?.pop();
 	}
 }
