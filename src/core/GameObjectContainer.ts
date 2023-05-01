@@ -1,5 +1,5 @@
 import { Container, Rectangle, Texture } from 'pixi.js';
-import { Constants, RotationDirection } from './Constants';
+import { Constants, RotationDirection } from '../Constants';
 import { GameObjectSprite } from './GameObjectSprite';
 
 export class GameObjectContainer extends Container {

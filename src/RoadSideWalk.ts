@@ -1,5 +1,5 @@
 ﻿import { Constants, ConstructType } from './Constants';
-import { GameObjectContainer } from './GameObjectContainer';
+import { GameObjectContainer } from './core/GameObjectContainer';
 
 
 export class RoadSideWalk extends GameObjectContainer {

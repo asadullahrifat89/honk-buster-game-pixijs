@@ -1,6 +1,6 @@
 import { Texture } from "pixi.js";
 import { ConstructTemplate } from "./ConstructTemplate";
-import { GameObjectContainer } from "./GameObjectContainer";
+import { GameObjectContainer } from "./core/GameObjectContainer";
 import { SoundTemplate } from "./SoundTemplate";
 
 //#region Enums

@@ -1,5 +1,5 @@
 ﻿import { Graphics } from 'pixi.js';
-import { GameObjectContainer } from './GameObjectContainer';
+import { GameObjectContainer } from './core/GameObjectContainer';
 
 
 export class CastShadow extends GameObjectContainer {

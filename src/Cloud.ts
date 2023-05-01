@@ -1,5 +1,5 @@
 ﻿import { Constants } from './Constants';
-import { GameObjectContainer } from './GameObjectContainer';
+import { GameObjectContainer } from './core/GameObjectContainer';
 
 
 export class Cloud extends GameObjectContainer {

@@ -1,7 +1,7 @@
 ﻿import { ProgressBar } from "@pixi/ui";
 import { Container, Graphics, Texture } from "pixi.js";
-import { GameObjectContainer } from "../GameObjectContainer";
-import { GameObjectSprite } from "../GameObjectSprite";
+import { GameObjectContainer } from "../core/GameObjectContainer";
+import { GameObjectSprite } from "../core/GameObjectSprite";
 
 
 export class HealthBar extends Container {
@@ -24,31 +24,9 @@ export class HealthBar extends Container {
 
 		this.progressBar = new ProgressBar();
 		this.progressBar.width = 58;
-		this.progressBar.height = 10;
+		this.progressBar.height = 10;		
 
-		//let progressBarBackgroundContainer = new Container();
-		//progressBarBackgroundContainer.width = 60;
-		//progressBarBackgroundContainer.height = 10;
-
-		//let healthBar_bg_sprite = new GameObjectSprite(Texture.from('healthBar_bg.png'));
-		//healthBar_bg_sprite.width = 60;
-		//healthBar_bg_sprite.height = 10;
-		//progressBarBackgroundContainer.addChild(healthBar_bg_sprite);
-
-		/*this.progressBar.setBackground(progressBarBackgroundContainer);*/
-
-		this.progressBar.setBackground(new Graphics().beginFill(0xd9e2e9).lineStyle(3, 0xffffff).drawRoundedRect(0, 0, 58, 20, 2).endFill());
-
-		//let progressBarForegroundContainer = new Container();
-		//progressBarForegroundContainer.width = 60;
-		//progressBarForegroundContainer.height = 10;
-
-		//let healthBar_sprite = new GameObjectSprite(Texture.from('healthBar.png'));
-		//healthBar_sprite.width = 60;
-		//healthBar_sprite.height = 10;
-		//progressBarForegroundContainer.addChild(healthBar_sprite);
-
-		/*this.progressBar.setFill(progressBarForegroundContainer);*/
+		this.progressBar.setBackground(new Graphics().beginFill(0xd9e2e9).lineStyle(3, 0xffffff).drawRoundedRect(0, 0, 58, 20, 2).endFill());	
 
 		this.progressBar.setFill(new Graphics().beginFill(0xf73e3e).lineStyle(3, 0xffffff).drawRoundedRect(0, 0, 58, 20, 2).endFill());
 

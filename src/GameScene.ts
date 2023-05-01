@@ -1,7 +1,7 @@
 import { BlurFilter, Container, Graphics, Texture } from "pixi.js";
 import { IScene } from "./IScene";
-import { GameObjectSprite } from './GameObjectSprite';
-import { GameObjectContainer } from './GameObjectContainer';
+import { GameObjectSprite } from './core/GameObjectSprite';
+import { GameObjectContainer } from './core/GameObjectContainer';
 import { Constants, ConstructType, PlayerHonkBombTemplate, PowerUpType, RotationDirection, SoundType } from './Constants';
 import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";

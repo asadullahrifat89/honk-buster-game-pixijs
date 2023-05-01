@@ -1,6 +1,6 @@
 ﻿import { Rectangle } from 'pixi.js';
 import { Constants } from './Constants';
-import { GameObjectContainer } from './GameObjectContainer';
+import { GameObjectContainer } from './core/GameObjectContainer';
 import { SceneManager } from './managers/SceneManager';
 
 

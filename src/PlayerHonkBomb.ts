@@ -1,5 +1,5 @@
 ﻿import { Constants, ConstructType, PlayerHonkBombTemplate, SoundType } from './Constants';
-import { GameObjectContainer } from './GameObjectContainer';
+import { GameObjectContainer } from './core/GameObjectContainer';
 import { SoundManager } from './managers/SoundManager';
 
 

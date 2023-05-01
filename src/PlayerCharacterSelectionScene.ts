@@ -1,8 +1,8 @@
 ﻿import { Container, Graphics, Text, BlurFilter, Texture } from "pixi.js";
 import { Button } from "./controls/Button";
 import { Constants, ConstructType, SoundType } from "./Constants";
-import { GameObjectContainer } from "./GameObjectContainer";
-import { GameObjectSprite } from "./GameObjectSprite";
+import { GameObjectContainer } from "./core/GameObjectContainer";
+import { GameObjectSprite } from "./core/GameObjectSprite";
 import { IScene } from "./IScene";
 import { PlayerHonkBombSelectionScene } from "./PlayerHonkBombSelectionScene";
 import { SceneManager } from "./managers/SceneManager";
