@@ -183,64 +183,64 @@ export class GameController extends Container {
 		});
 
 		this.setJoystickPosition();
-		this.addChild(this.joystick);		
+		this.addChild(this.joystick);
 	}
 
-    private onJoystickChange(data: JoystickChangeEvent) {
-        this.power = data.power;
+	private onJoystickChange(data: JoystickChangeEvent) {
+		this.power = data.power;
 
-        switch (data.direction) {
-            case Direction.TOP: {
-                this.isMoveUp = true;
-                this.isMoveLeft = false;
-                this.isMoveDown = false;
-                this.isMoveRight = false;
-            } break;
-            case Direction.BOTTOM: {
-                this.isMoveUp = false;
-                this.isMoveLeft = false;
-                this.isMoveDown = true;
-                this.isMoveRight = false;
-            } break;
-            case Direction.LEFT: {
-                this.isMoveUp = false;
-                this.isMoveLeft = true;
-                this.isMoveDown = false;
-                this.isMoveRight = false;
-            } break;
-            case Direction.RIGHT: {
-                this.isMoveUp = false;
-                this.isMoveLeft = false;
-                this.isMoveDown = false;
-                this.isMoveRight = true;
-            } break;
-            case Direction.TOP_LEFT: {
-                this.isMoveUp = true;
-                this.isMoveLeft = true;
-                this.isMoveDown = false;
-                this.isMoveRight = false;
-            } break;
-            case Direction.TOP_RIGHT: {
-                this.isMoveUp = true;
-                this.isMoveLeft = false;
-                this.isMoveDown = false;
-                this.isMoveRight = true;
-            } break;
-            case Direction.BOTTOM_LEFT: {
-                this.isMoveUp = false;
-                this.isMoveLeft = true;
-                this.isMoveDown = true;
-                this.isMoveRight = false;
-            } break;
-            case Direction.BOTTOM_RIGHT: {
-                this.isMoveUp = false;
-                this.isMoveLeft = false;
-                this.isMoveDown = true;
-                this.isMoveRight = true;
-            } break;
-            default:
-        }
-    }
+		switch (data.direction) {
+			case Direction.TOP: {
+				this.isMoveUp = true;
+				this.isMoveLeft = false;
+				this.isMoveDown = false;
+				this.isMoveRight = false;
+			} break;
+			case Direction.BOTTOM: {
+				this.isMoveUp = false;
+				this.isMoveLeft = false;
+				this.isMoveDown = true;
+				this.isMoveRight = false;
+			} break;
+			case Direction.LEFT: {
+				this.isMoveUp = false;
+				this.isMoveLeft = true;
+				this.isMoveDown = false;
+				this.isMoveRight = false;
+			} break;
+			case Direction.RIGHT: {
+				this.isMoveUp = false;
+				this.isMoveLeft = false;
+				this.isMoveDown = false;
+				this.isMoveRight = true;
+			} break;
+			case Direction.TOP_LEFT: {
+				this.isMoveUp = true;
+				this.isMoveLeft = true;
+				this.isMoveDown = false;
+				this.isMoveRight = false;
+			} break;
+			case Direction.TOP_RIGHT: {
+				this.isMoveUp = true;
+				this.isMoveLeft = false;
+				this.isMoveDown = false;
+				this.isMoveRight = true;
+			} break;
+			case Direction.BOTTOM_LEFT: {
+				this.isMoveUp = false;
+				this.isMoveLeft = true;
+				this.isMoveDown = true;
+				this.isMoveRight = false;
+			} break;
+			case Direction.BOTTOM_RIGHT: {
+				this.isMoveUp = false;
+				this.isMoveLeft = false;
+				this.isMoveDown = true;
+				this.isMoveRight = true;
+			} break;
+			default:
+		}
+	}
 
 	public pauseGame() {
 		this.isPaused = true;
@@ -337,12 +337,12 @@ export class GameController extends Container {
 
 	private setPauseButtonPosition() {
 		this.pauseButton.x = SceneManager.width - this.pauseButton.width * 1.1;
-		this.pauseButton.y = this.pauseButton.height / 2.2;
+		this.pauseButton.y = this.pauseButton.height / 2.1;
 	}
 
 	private setQuitButtonPosition() {
 		this.quitButton.x = SceneManager.width - this.quitButton.width * 1.1;
-		this.quitButton.y = this.quitButton.height / 2.2 + 60;
+		this.quitButton.y = this.quitButton.height / 2.1 + 60;
 	}
 
 	private setAttackButtonPosition() {
