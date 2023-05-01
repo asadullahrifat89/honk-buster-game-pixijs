@@ -4,7 +4,7 @@ import { GameObjectContainer } from "../core/GameObjectContainer";
 
 export class MessageBubble extends GameObjectContainer {
 
-	private source: GameObjectContainer = new GameObjectContainer();
+	public source: GameObjectContainer = new GameObjectContainer();
 	private messageContainer: Container;
 	private messageGraphics: Graphics;
 	private messageText: Text;

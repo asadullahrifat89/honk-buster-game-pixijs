@@ -269,7 +269,7 @@ export class GameScene extends Container implements IScene {
 				gameObject.depleteOnScreenDelay();
 				gameObject.move();
 
-				if (gameObject.isDepleted()) {
+				if (gameObject.isDepleted() || gameObject.source.isAnimating == false) {
 					gameObject.disableRendering();
 				}
 			});
@@ -308,37 +308,51 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region BossTaunts
+	//#region Taunts
 
-	private bossTauntDelay: number = 15
+	private tauntDelay: number = 15
+	private ufoEnemyTaunts: string[] = ["Let the humans honk!", "We want more honks!", "We will stop you!", "You can't beat us!'.", "The city is ours!"];
 	private vehicleBossTaunts: string[] = ["Catch me if you can!", "Too slow!", "You're no match for me!", "Let's see how you do.", "I am the boss!"];
 	private ufoBossTaunts: string[] = ["You have met your doom.", "My logic is undeniable.", "You can't beat me!", "Ha! ha! ha! ha! ha!", "I am the boss!"];
 	private zombieBossTaunts: string[] = ["You belong to the dead!", "I have arisen!", "You shall meet your grave", "Darkness awaits you!", "I am the boss!"];
 	private mafiaBossTaunts: string[] = ["You are in big trouble now!", "Hah! crawl back to your hole!", "You're no match for me!", "You will go down!", "I am the boss!"];
 
-	private generateBossTaunts(source: GameObjectContainer) {
-		this.bossTauntDelay -= 0.1;
+	private generateTaunts(source: GameObjectContainer) {
 
-		if (this.bossTauntDelay <= 0) {
+		if (this.anyBossExists() || this.ufoEnemyExists()) {
 
-			let message: string = "";
+			this.tauntDelay -= 0.1;
 
-			if (this.vehicleBossExists())
-				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.vehicleBossTaunts.length - 1)];
-			else if (this.ufoBossExists()) {
-				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.ufoBossTaunts.length - 1)];
+			if (this.tauntDelay <= 0) {
+
+				let message: string = "";
+
+				if (this.ufoEnemyExists()) {
+					message = this.ufoEnemyTaunts[Constants.getRandomNumber(0, this.ufoEnemyTaunts.length - 1)];
+					this.tauntDelay = Constants.getRandomNumber(25, 40);
+				}
+				else if (this.vehicleBossExists()) {
+					message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.vehicleBossTaunts.length - 1)];
+					this.tauntDelay = Constants.getRandomNumber(15, 30);
+				}
+				else if (this.ufoBossExists()) {
+					message = this.ufoBossTaunts[Constants.getRandomNumber(0, this.ufoBossTaunts.length - 1)];
+					this.tauntDelay = Constants.getRandomNumber(15, 30);
+				}
+				else if (this.zombieBossExists()) {
+					message = this.zombieBossTaunts[Constants.getRandomNumber(0, this.zombieBossTaunts.length - 1)];
+					this.tauntDelay = Constants.getRandomNumber(20, 35);
+				}
+				else if (this.mafiaBossExists()) {
+					message = this.mafiaBossTaunts[Constants.getRandomNumber(0, this.mafiaBossTaunts.length - 1)];
+					this.tauntDelay = Constants.getRandomNumber(15, 35);
+				}
+
+				this.generateMessageBubble(source, message);
+				//this.generateOnScreenMessage(message, this.bossHealthBar.getIcon());
+
+
 			}
-			else if (this.zombieBossExists()) {
-				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.zombieBossTaunts.length - 1)];
-			}
-			else if (this.mafiaBossExists()) {
-				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.mafiaBossTaunts.length - 1)];
-			}
-
-			this.generateMessageBubble(source, message);
-			//this.generateOnScreenMessage(message, this.bossHealthBar.getIcon());
-
-			this.bossTauntDelay = Constants.getRandomNumber(15, 30);
 		}
 	}
 
@@ -1390,7 +1404,7 @@ export class GameScene extends Container implements IScene {
 						this.generateHonk(gameObject);
 					}
 
-					this.generateBossTaunts(gameObject);
+					this.generateTaunts(gameObject);
 				}
 				else {
 					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false || this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 1.8))) {
@@ -1629,6 +1643,8 @@ export class GameScene extends Container implements IScene {
 					if (!this.anyBossExists() && ufoEnemy.attack()) {
 						this.generateUfoEnemyRockets(ufoEnemy);
 					}
+
+					this.generateTaunts(gameObject);
 				}
 
 				if (gameObject.hasShrinked() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
@@ -1838,7 +1854,7 @@ export class GameScene extends Container implements IScene {
 						this.loosePlayerHealth();
 					}
 
-					this.generateBossTaunts(gameObject);
+					this.generateTaunts(gameObject);
 				}
 				else {
 
@@ -2226,7 +2242,7 @@ export class GameScene extends Container implements IScene {
 						this.loosePlayerHealth();
 					}
 
-					this.generateBossTaunts(gameObject);
+					this.generateTaunts(gameObject);
 				}
 				else {
 
@@ -2458,7 +2474,7 @@ export class GameScene extends Container implements IScene {
 						this.loosePlayerHealth();
 					}
 
-					this.generateBossTaunts(gameObject);
+					this.generateTaunts(gameObject);
 				}
 				else {
 
@@ -3618,7 +3634,7 @@ export class GameScene extends Container implements IScene {
 									this.powerUpMeter.setMaximumValue(20);
 									this.powerUpMeter.setValue(20);
 
-									this.generateOnScreenMessage("Bylls Eye +20", this.cheerIcon);
+									this.generateOnScreenMessage("Bull's' Eye +20", this.cheerIcon);
 								}
 								break;
 							case PowerUpType.ARMOR:
