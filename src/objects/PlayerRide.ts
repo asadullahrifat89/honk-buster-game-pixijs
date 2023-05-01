@@ -213,7 +213,7 @@ export class PlayerRide extends GameObjectContainer {
 		{
 			this.health -= this.hitPoint;
 			this.alpha = 0.7;
-			this.healthLossRecoveryDelay = 8;
+			this.healthLossRecoveryDelay = 5;
 
 			SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
 		}
