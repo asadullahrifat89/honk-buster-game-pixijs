@@ -163,51 +163,7 @@ export class GameScene extends Container implements IScene {
 		this.mafiaBossCheckpoint = new GameCheckpoint(this.mafiaBossReleasePoint);
 		this.ufoEnemyCheckpoint = new GameCheckpoint(this.ufoEnemyReleasePoint);
 
-		this.spawnRoadMarks();
-
-		this.spawnSideWalksTop();
-		//this.spawnHedgesTop();
-		//this.spawnLightBillboardsTop();
-		this.spawnTreesTop();
-		this.spawnLampsTop();
-
-		this.spawnVehicleEnemys();
-		this.spawnVehicleBosss();
-		this.spawnHonks();
-		this.spawnVehicleBossRockets();
-
-		this.spawnSideWalksBottom();
-		//this.spawnHedgesBottom();
-		//this.spawnLampsBottom();
-
-		this.spawnPlayerHonkBombs();
-		this.spawnPlayerHonkBombExplosions();
-
-		this.spawnTreesBottom();
-		//this.spawnLightBillboardsBottom();
-
-		this.spawnPlayerRockets();
-		this.spawnPlayerRocketBullsEyes();
-		this.spawnPlayerBalloon();
-
-		this.spawnUfoBossRockets();
-		this.spawnUfoBossRocketSeekings();
-		this.spawnUfoBosss();
-
-		this.spawnZombieBosss();
-		this.spawnZombieBossRocketBlocks();
-
-		this.spawnMafiaBosss();
-		this.spawnMafiaBossRockets();
-		this.spawnMafiaBossRocketBullsEyes();
-
-		this.spawnUfoEnemyRockets();
-		this.spawnUfoEnemys();
-
-		this.spawnHealthPickups();
-		this.spawnPowerUpPickups();
-
-		//this.spawnClouds();
+		this.spawnGameObjects();
 
 		this.generatePlayerBalloon();
 
@@ -237,10 +193,10 @@ export class GameScene extends Container implements IScene {
 		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.6, true);
 		SoundManager.play(SoundType.GAME_START);
 
-		this.sceneContainer.alpha = 0;
+		//this.sceneContainer.alpha = 0;
 
 		// progress the frames a little bit to avoid blank scene
-		for (var i = 0; i < 320; i++) {
+		for (var i = 0; i < 350; i++) {
 			this.updateFrame();
 		}
 
@@ -251,7 +207,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	//#endregion
+	//#endregion	
 
 	//#region CastShadow
 
@@ -1322,7 +1278,7 @@ export class GameScene extends Container implements IScene {
 
 		if (gameObject) {
 
-			gameObject.pop();			
+			gameObject.pop();
 
 			if (vehicleBoss.isDead()) {
 				vehicleBoss.moveDownRight();
@@ -3655,9 +3611,9 @@ export class GameScene extends Container implements IScene {
 
 	public update(_framesPassed: number) {
 
-		if (this.sceneContainer.alpha < 1) {
-			this.sceneContainer.alpha += 0.02;
-		}
+		//if (this.sceneContainer.alpha < 1) {
+		//	this.sceneContainer.alpha += 0.02;
+		//}
 
 		this.updateFrame();
 	}
@@ -3694,6 +3650,55 @@ export class GameScene extends Container implements IScene {
 		this.gameLevel++;
 		this.generateOnScreenMessage("LEVEL " + this.gameLevel.toString() + " COMPLETE");
 		SoundManager.play(SoundType.LEVEL_UP);
+	}
+
+	private spawnGameObjects() {
+
+		this.spawnRoadMarks();
+
+		this.spawnSideWalksTop();
+		//this.spawnHedgesTop();
+		//this.spawnLightBillboardsTop();
+		this.spawnTreesTop();
+		this.spawnLampsTop();
+
+		this.spawnVehicleEnemys();
+		this.spawnVehicleBosss();
+		this.spawnHonks();
+		this.spawnVehicleBossRockets();
+
+		this.spawnSideWalksBottom();
+		//this.spawnHedgesBottom();
+		//this.spawnLampsBottom();
+		this.spawnPlayerHonkBombs();
+		this.spawnPlayerHonkBombExplosions();
+
+		this.spawnTreesBottom();
+		//this.spawnLightBillboardsBottom();
+		this.spawnPlayerRockets();
+		this.spawnPlayerRocketBullsEyes();
+		this.spawnPlayerBalloon();
+
+		this.spawnUfoBossRockets();
+		this.spawnUfoBossRocketSeekings();
+		this.spawnUfoBosss();
+
+		this.spawnZombieBosss();
+		this.spawnZombieBossRocketBlocks();
+
+		this.spawnMafiaBosss();
+		this.spawnMafiaBossRockets();
+		this.spawnMafiaBossRocketBullsEyes();
+
+		this.spawnUfoEnemyRockets();
+		this.spawnUfoEnemys();
+
+		this.spawnHealthPickups();
+		this.spawnPowerUpPickups();
+
+		//this.spawnUnderCityTop();
+
+		//this.spawnClouds();
 	}
 
 	private generateGameObjects() {

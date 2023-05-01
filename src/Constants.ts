@@ -146,7 +146,7 @@ export enum ConstructType {
 	COLLECTABLE_PICKUP,
 	FLOATING_NUMBER,
 
-	TITLE_SCREEN
+	TITLE_SCREEN,
 }
 
 export enum SoundType {
