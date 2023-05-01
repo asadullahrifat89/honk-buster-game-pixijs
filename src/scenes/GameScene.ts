@@ -26,7 +26,7 @@ import { Honk } from "../objects/Honk";
 import { MafiaBoss } from "../objects/MafiaBoss";
 import { MafiaBossRocket } from "../objects/MafiaBossRocket";
 import { MafiaBossRocketBullsEye } from "../objects/MafiaBossRocketBullsEye";
-import { PlayerBalloon } from "../objects/PlayerBalloon";
+import { PlayerRide } from "../objects/PlayerRide";
 import { PlayerHonkBomb } from "../objects/PlayerHonkBomb";
 import { PlayerHonkBombExplosion } from "../objects/PlayerHonkBombExplosion";
 import { PlayerRocket } from "../objects/PlayerRocket";
@@ -2816,13 +2816,13 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion	
 
-	//#region PlayerBalloon
+	//#region PlayerRide
 
 	private playerBalloonSizeWidth: number = 150;
 	private playerBalloonSizeHeight: number = 150;
 	private playerCharacterTemplate: number = 0;
 
-	private player: PlayerBalloon = new PlayerBalloon(Constants.DEFAULT_CONSTRUCT_SPEED);
+	private player: PlayerRide = new PlayerRide(Constants.DEFAULT_CONSTRUCT_SPEED);
 
 	spawnPlayerBalloon() {
 
@@ -2831,7 +2831,7 @@ export class GameScene extends Container implements IScene {
 		//this._player.width = this.playerBalloonSizeWidth;
 		//this._player.height = this.playerBalloonSizeHeight;
 
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_BALLOON_IDLE));
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_RIDE_IDLE));
 
 		sprite.x = 0;
 		sprite.y = 0;

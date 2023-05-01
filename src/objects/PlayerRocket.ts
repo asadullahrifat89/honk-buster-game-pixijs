@@ -1,6 +1,6 @@
 ﻿import { Constants, ConstructType, SoundType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
-import { PlayerBalloon } from './PlayerBalloon';
+import { PlayerRide } from './PlayerRide';
 import { SoundManager } from '../managers/SoundManager';
 
 
@@ -32,7 +32,7 @@ export class PlayerRocket extends GameObjectContainer {
 		SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
 	}
 
-	reposition(source: PlayerBalloon) {
+	reposition(source: PlayerRide) {
 		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 15);
 	}
 

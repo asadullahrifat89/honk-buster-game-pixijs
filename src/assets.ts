@@ -72,6 +72,11 @@ export const manifest: ResolverManifest = {
 				"player_balloon_1_idle": "./images/player_balloon_1_idle.png",
 				"player_balloon_1_win": "./images/player_balloon_1_win.png",
 
+				"player_chopper_1_attack": "./images/player_chopper_1_idle.png",
+				"player_chopper_1_hit": "./images/player_chopper_1_hit.png",
+				"player_chopper_1_idle": "./images/player_chopper_1_idle.png",
+				"player_chopper_1_win": "./images/player_chopper_1_win.png",
+
 				"player_balloon_2_attack": "./images/player_balloon_2_attack.png",
 				"player_balloon_2_hit": "./images/player_balloon_2_hit.png",
 				"player_balloon_2_idle": "./images/player_balloon_2_idle.png",
