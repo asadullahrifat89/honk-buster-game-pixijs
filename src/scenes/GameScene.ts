@@ -64,8 +64,8 @@ export class GameScene extends Container implements IScene {
 	private readonly ufoBossReleasePoint_increase: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
 
-	//TODO: set defaults _zombieBossReleasePoint = 75
-	private readonly zombieBossReleasePoint: number = 75; // first appearance
+	//TODO: set defaults _zombieBossReleasePoint = 85
+	private readonly zombieBossReleasePoint: number = 85; // first appearance
 	private readonly zombieBossReleasePoint_increase: number = 15;
 	private readonly zombieBossCheckpoint: GameCheckpoint;
 
