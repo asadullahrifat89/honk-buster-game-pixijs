@@ -73,6 +73,7 @@ export class GameTitleScene extends Container implements IScene {
 			if (this.sceneContainer.alpha <= 0) {
 				this.removeChild(this.sceneContainer);
 				SceneManager.changeScene(new PlayerCharacterSelectionScene());
+				SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.5, true);
 			}
 		}
 		else {

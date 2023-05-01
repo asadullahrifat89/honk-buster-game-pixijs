@@ -165,10 +165,6 @@ export class GameScene extends Container implements IScene {
 
 		this.setGameController();
 
-		SoundManager.play(SoundType.AMBIENCE, 0.4, true);
-		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.6, true);
-		SoundManager.play(SoundType.GAME_START);
-
 		// progress the frames a little bit to avoid blank scene
 		for (var i = 0; i < 350; i++) {
 			this.updateFrame();
@@ -185,6 +181,10 @@ export class GameScene extends Container implements IScene {
 			case 1: { SoundManager.play(SoundType.CHOPPER_HOVERING, 0.1, true); } break;
 			default:
 		}
+
+		SoundManager.play(SoundType.AMBIENCE, 0.4, true);
+		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.4, true);
+		SoundManager.play(SoundType.GAME_START);
 	}
 
 	//#endregion	
@@ -2283,7 +2283,7 @@ export class GameScene extends Container implements IScene {
 				this.generateOnScreenMessage("Stop the crazy honker!", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
 			}
 		}
 	}
@@ -2506,7 +2506,7 @@ export class GameScene extends Container implements IScene {
 				this.generateOnScreenMessage("Shoot the cyborg. Avoid the eye balls!", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
 
@@ -2895,7 +2895,7 @@ export class GameScene extends Container implements IScene {
 				this.generateOnScreenMessage("Shoot the zombie. Avoid the cubes!", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
 
@@ -3128,7 +3128,7 @@ export class GameScene extends Container implements IScene {
 				this.generateOnScreenMessage("Shoot the mafia. Avoid the bowling balls.", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
 
@@ -3530,6 +3530,8 @@ export class GameScene extends Container implements IScene {
 
 						this.player.gainhealth();
 						this.playerHealthBar.setValue(this.player.health);
+
+						this.generateOnScreenMessage("Health +10", gameObject.getGameObjectSprite().getTexture());
 					}
 				}
 
