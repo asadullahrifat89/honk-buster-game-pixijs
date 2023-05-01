@@ -1394,7 +1394,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 1.5);
+			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 1.4);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
@@ -3655,7 +3655,7 @@ export class GameScene extends Container implements IScene {
 	public update(_framesPassed: number) {
 
 		if (this.sceneContainer.alpha < 1) {
-			this.sceneContainer.alpha += 0.009;
+			this.sceneContainer.alpha += 0.02;
 		}
 
 		this.updateFrame();

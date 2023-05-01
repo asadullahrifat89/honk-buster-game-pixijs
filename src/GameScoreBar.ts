@@ -27,6 +27,7 @@ export class GameScoreBar {
 		this.scoreContainer.addChild(graphics);
 
 		this.scoreText.x = 10;
+		this.scoreText.y = 0.5;
 
 		this.scoreContainer.addChild(this.scoreText);
 

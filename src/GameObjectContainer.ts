@@ -14,12 +14,8 @@ export class GameObjectContainer extends Container {
 	private hoverSpeed: number = 0.3;
 
 	private dillyDallyDelay: number = 0;
-	private readonly dillyDallyDelayDefault: number = 55;
+	private dillyDallyDelayDefault: number = 55;
 	private dillyDallySpeed: number = 0.2;
-
-	private vibrateDelay: number = 0;
-	private readonly vibrateDelayDefault: number = 8;
-	private readonly vibrateSpeed: number = 0.3;
 
 	public expandSpeed: number = 0.07;
 
@@ -51,6 +47,7 @@ export class GameObjectContainer extends Container {
 	constructor(speed: number) {
 		super();
 		this.speed = speed;
+		this.cullable = true;
 	}
 
 	public getTop(): number {
@@ -222,23 +219,10 @@ export class GameObjectContainer extends Container {
 			else {
 				this.x = (this.x - this.dillyDallySpeed);
 
-				if (this.dillyDallyDelay <= this.dillyDallyDelayDefault * -1)
+				if (this.dillyDallyDelay <= this.dillyDallyDelayDefault * -1) {
 					this.dillyDallyDelay = this.dillyDallyDelayDefault;
+				}
 			}
-		}
-	}
-
-	vibrate() {
-		this.vibrateDelay--;
-
-		if (this.vibrateDelay >= 0) {
-			this.y += this.vibrateSpeed;
-		}
-		else {
-			this.y -= this.vibrateSpeed;
-
-			if (this.vibrateDelay <= this.vibrateDelayDefault * -1)
-				this.vibrateDelay = this.vibrateDelayDefault;
 		}
 	}
 
