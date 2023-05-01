@@ -59,8 +59,9 @@ export class HealthBar extends Container {
 		this.maximumHealth = value;
 	}
 
-	setIcon(texture: Texture) {
-		this.iconContainer.setTexture(texture);
+	setIcon(icon: Texture) {
+		this.icon = icon;
+		this.iconContainer.setTexture(icon);
 	}
 
 	setValue(value: number) {

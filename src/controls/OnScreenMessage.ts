@@ -15,8 +15,8 @@ export class OnScreenMessage {
 
 	constructor(scene: Container) {
 		this.messageAuthor = new GameObjectSprite(Texture.from("./images/character_maleAdventurer_talk.png"));
-		this.messageAuthor.width = 256 / 1.5;
-		this.messageAuthor.height = 256 / 1.5;
+		this.messageAuthor.width = 256 / 2;
+		this.messageAuthor.height = 256 / 2;
 		this.messageAuthor.x = 0;
 		this.messageAuthor.y = 0;
 		this.messageAuthor.anchor.set(0.5);
@@ -36,10 +36,11 @@ export class OnScreenMessage {
 		});
 		this.messageText.x = this.messageAuthor.width / 1.5;
 		this.messageText.y = 5;
-		this.messageContainer.addChild(this.messageText);
+		this.messageContainer.addChild(this.messageText);		
+
+		scene.addChild(this.messageContainer);
 
 		this.disableRendering();
-		scene.addChild(this.messageContainer);
 	}
 
 	disableRendering() {

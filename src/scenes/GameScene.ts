@@ -278,6 +278,72 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region OnScreenMessage
+
+	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("./images/character_maleAdventurer_talk.png")) {
+		if (this.onScreenMessage.isAnimating == false) {
+			this.onScreenMessage.setContent(title, icon);
+			this.onScreenMessage.reset();
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+			this.onScreenMessage.enableRendering();
+		}
+		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
+			this.onScreenMessage.setContent(title, icon);
+			this.onScreenMessage.reset();
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+		}
+	}
+
+	private animateOnScreenMessage() {
+
+		if (this.onScreenMessage.isAnimating == true) {
+
+			this.onScreenMessage.depleteOnScreenDelay();
+
+			if (this.onScreenMessage.isDepleted()) {
+				this.onScreenMessage.disableRendering();
+			}
+		}
+	}
+
+	//#endregion
+
+	//#region BossTaunts
+
+	private bossTauntDelay: number = 15
+	private vehicleBossTaunts: string[] = ["Catch me if you can!", "Too slow!", "You're no match for me!", "Let's see how you do.", "I am the boss!"];
+	private ufoBossTaunts: string[] = ["You have met your doom.", "My logic is undeniable.", "You can't beat me!", "Ha! ha! ha! ha! ha!", "I am the boss!"];
+	private zombieBossTaunts: string[] = ["You belong to the dead!", "I have arisen!", "You shall meet your grave", "Darkness awaits you!", "I am the boss!"];
+	private mafiaBossTaunts: string[] = ["You are in big trouble now!", "Hah! crawl back to your hole!", "You're no match for me!", "You will go down!", "I am the boss!"];
+
+	private generateBossTaunts(source: GameObjectContainer) {
+		this.bossTauntDelay -= 0.1;
+
+		if (this.bossTauntDelay <= 0) {
+
+			let message: string = "";
+
+			if (this.vehicleBossExists())
+				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.vehicleBossTaunts.length - 1)];
+			else if (this.ufoBossExists()) {
+				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.ufoBossTaunts.length - 1)];
+			}
+			else if (this.zombieBossExists()) {
+				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.zombieBossTaunts.length - 1)];
+			}
+			else if (this.mafiaBossExists()) {
+				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.mafiaBossTaunts.length - 1)];
+			}
+
+			this.generateMessageBubble(source, message);
+			this.generateOnScreenMessage(message, this.bossHealthBar.getIcon());
+
+			this.bossTauntDelay = Constants.getRandomNumber(15, 30);
+		}
+	}
+
+	//#endregion
+
 	//#region RoadMarks
 
 	private roadMarkXyAdjustment: number = 890;
@@ -3612,70 +3678,6 @@ export class GameScene extends Container implements IScene {
 
 	private repositionPowerUpMeter() {
 		this.powerUpMeter.reposition((SceneManager.width) - 305, 10);
-	}
-
-	//#endregion
-
-	//#region OnScreenMessage
-
-	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("./images/character_maleAdventurer_talk.png")) {
-		if (this.onScreenMessage.isAnimating == false) {
-			this.onScreenMessage.setContent(title, icon);
-			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
-			this.onScreenMessage.enableRendering();
-		}
-		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
-			this.onScreenMessage.setContent(title, icon);
-			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
-		}
-	}
-
-	private animateOnScreenMessage() {
-		if (this.onScreenMessage.isAnimating == true) {
-			this.onScreenMessage.depleteOnScreenDelay();
-
-			if (this.onScreenMessage.isDepleted()) {
-				this.onScreenMessage.disableRendering();
-			}
-		}
-	}
-
-	//#endregion
-
-	//#region BossTaunts
-
-	private bossTauntDelay: number = 15
-	private vehicleBossTaunts: string[] = ["Catch me if you can!", "Too slow!", "You're no match for me!", "Let's see how you do.", "I am the boss!"];
-	private ufoBossTaunts: string[] = ["You have met your doom.", "My logic is undeniable.", "You can't beat me!", "Ha! ha! ha! ha! ha!", "I am the boss!"];
-	private zombieBossTaunts: string[] = ["You belong to the dead!", "I have arisen!", "You shall meet your grave", "Darkness awaits you!", "I am the boss!"];
-	private mafiaBossTaunts: string[] = ["You are in big trouble now!", "Hah! crawl back to your hole!", "You're no match for me!", "You will go down!", "I am the boss!"];
-
-	private generateBossTaunts(source: GameObjectContainer) {
-		this.bossTauntDelay -= 0.1;
-
-		if (this.bossTauntDelay <= 0) {
-
-			let message: string = "";
-
-			if (this.vehicleBossExists())
-				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.vehicleBossTaunts.length - 1)];
-			else if (this.ufoBossExists()) {
-				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.ufoBossTaunts.length - 1)];
-			}
-			else if (this.zombieBossExists()) {
-				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.zombieBossTaunts.length - 1)];
-			}
-			else if (this.mafiaBossExists()) {
-				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.mafiaBossTaunts.length - 1)];
-			}
-
-			this.generateMessageBubble(source, message);
-			//this.generateOnScreenMessage(message, this.bossHealthBar.getIcon());
-
-			this.bossTauntDelay = Constants.getRandomNumber(15, 30);
-		}
 	}
 
 	//#endregion
