@@ -356,9 +356,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_10.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_11.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_12.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_13.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_14.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_15.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_13.png"),		
 
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_1.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_2.png"),
