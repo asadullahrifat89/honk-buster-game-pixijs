@@ -1,5 +1,5 @@
 ﻿import { SoundType } from "../Constants";
-import { SoundObjectPlayer } from "../SoundObjectPlayer";
+import { SoundObjectPlayer } from "../core/SoundObjectPlayer";
 
 
 export class SoundManager {
