@@ -3530,6 +3530,8 @@ export class GameScene extends Container implements IScene {
 
 						this.player.gainhealth();
 						this.playerHealthBar.setValue(this.player.health);
+
+						this.generateOnScreenMessage("Health +10", gameObject.getGameObjectSprite().getTexture());
 					}
 				}
 
