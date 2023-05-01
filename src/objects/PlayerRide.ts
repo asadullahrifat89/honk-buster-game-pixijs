@@ -1,15 +1,15 @@
 ﻿import { Texture } from 'pixi.js';
-import { Constants, ConstructType, MovementDirection, PlayerBalloonStance, PlayerBalloonTemplate, RotationDirection, SoundType } from '../Constants';
+import { Constants, ConstructType, MovementDirection, PlayerRideStance, PlayerRideTemplate, RotationDirection, SoundType } from '../Constants';
 import { GameController } from '../controls/GameController';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { SoundManager } from '../managers/SoundManager';
 
 
-export class PlayerBalloon extends GameObjectContainer {
+export class PlayerRide extends GameObjectContainer {
 
 	//#region Properties
 
-	public playerBalloonStance: PlayerBalloonStance = PlayerBalloonStance.Idle;
+	public playerBalloonStance: PlayerRideStance = PlayerRideStance.Idle;
 
 	private movementStopDelay: number = 0;
 	private readonly movementStopSpeedLoss: number = 0.5;
@@ -34,10 +34,10 @@ export class PlayerBalloon extends GameObjectContainer {
 	private healthLossRecoveryDelay: number = 0;
 	private healthLossOpacityEffect: number = 0;
 
-	private playerIdleTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_BALLOON_IDLE);
-	private playerWinTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_BALLOON_WIN);
-	private playerHitTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_BALLOON_HIT);
-	private playerAttackTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_BALLOON_ATTACK);
+	private playerIdleTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_IDLE);
+	private playerWinTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_WIN);
+	private playerHitTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_HIT);
+	private playerAttackTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_ATTACK);
 
 	//#endregion
 
@@ -47,7 +47,7 @@ export class PlayerBalloon extends GameObjectContainer {
 		super(speed);
 	}
 
-	reset() {		
+	reset() {
 		this.health = this.hitPoint * 10;
 		this.movementDirection = MovementDirection.None;
 		this.movementStopDelay = this.movementStopDelayDefault;
@@ -59,32 +59,26 @@ export class PlayerBalloon extends GameObjectContainer {
 		this.setPosition((Constants.DEFAULT_GAME_VIEW_WIDTH / 2 - this.width / 2), (Constants.DEFAULT_GAME_VIEW_HEIGHT / 2 - this.height / 2));
 	}
 
-	setPlayerTemplate(playerTemplate: PlayerBalloonTemplate) {
+	setPlayerRideTemplate(rideTemplate: PlayerRideTemplate) {
 
-		let playerIdleUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_BALLOON_IDLE).map(x => x.uri);
-		let playerWinUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_BALLOON_WIN).map(x => x.uri);
-		let playerHitUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_BALLOON_HIT).map(x => x.uri);
-		let playerAttackUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_BALLOON_ATTACK).map(x => x.uri);
+		let playerIdleUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_RIDE_IDLE).map(x => x.uri);
+		let playerWinUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_RIDE_WIN).map(x => x.uri);
+		let playerHitUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_RIDE_HIT).map(x => x.uri);
+		let playerAttackUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_RIDE_ATTACK).map(x => x.uri);
 
-		switch (playerTemplate) {
-			case PlayerBalloonTemplate.Blue: {
-
+		switch (rideTemplate) {
+			case PlayerRideTemplate.BALLOON: {
 				this.playerIdleTexture = Texture.from(playerIdleUris[0]);
 				this.playerWinTexture = Texture.from(playerWinUris[0]);
 				this.playerHitTexture = Texture.from(playerHitUris[0]);
 				this.playerAttackTexture = Texture.from(playerAttackUris[0]);
-
-				break;
-			}
-			case PlayerBalloonTemplate.Red: {
-
+			} break;
+			case PlayerRideTemplate.CHOPPER: {
 				this.playerIdleTexture = Texture.from(playerIdleUris[1]);
 				this.playerWinTexture = Texture.from(playerWinUris[1]);
 				this.playerHitTexture = Texture.from(playerHitUris[1]);
 				this.playerAttackTexture = Texture.from(playerAttackUris[1]);
-
-				break;
-			}
+			} break;
 			default: break;
 		}
 
@@ -92,25 +86,25 @@ export class PlayerBalloon extends GameObjectContainer {
 	}
 
 	setIdleStance() {
-		this.playerBalloonStance = PlayerBalloonStance.Idle;
+		this.playerBalloonStance = PlayerRideStance.Idle;
 		this.setTexture(this.playerIdleTexture);
 	}
 
 	setAttackStance() {
-		this.playerBalloonStance = PlayerBalloonStance.Attack;
+		this.playerBalloonStance = PlayerRideStance.Attack;
 		this.setTexture(this.playerAttackTexture);
 		this.attackStanceDelay = this.attackStanceDelayDefault;
 	}
 
 	setWinStance() {
-		this.playerBalloonStance = PlayerBalloonStance.Win;
+		this.playerBalloonStance = PlayerRideStance.Win;
 		this.setTexture(this.playerWinTexture);
 		this.winStanceDelay = this.winStanceDelayDefault;
 	}
 
 	setHitStance() {
-		if (this.playerBalloonStance != PlayerBalloonStance.Win) {
-			this.playerBalloonStance = PlayerBalloonStance.Hit;
+		if (this.playerBalloonStance != PlayerRideStance.Win) {
+			this.playerBalloonStance = PlayerRideStance.Hit;
 			this.setTexture(this.playerHitTexture);
 			this.hitStanceDelay = this.hitStanceDelayDefault;
 		}
@@ -219,7 +213,7 @@ export class PlayerBalloon extends GameObjectContainer {
 		{
 			this.health -= this.hitPoint;
 			this.alpha = 0.7;
-			this.healthLossRecoveryDelay = 8;
+			this.healthLossRecoveryDelay = 5;
 
 			SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
 		}

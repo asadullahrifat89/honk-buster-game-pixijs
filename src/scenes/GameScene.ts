@@ -1,6 +1,6 @@
 import { BlurFilter, Container, Graphics, Texture } from "pixi.js";
 import { GameObjectContainer } from '../core/GameObjectContainer';
-import { Constants, ConstructType, PlayerHonkBombTemplate, PowerUpType, RotationDirection, SoundType } from '../Constants';
+import { Constants, ConstructType, PlayerHonkBombTemplate, PlayerRideTemplate, PowerUpType, RotationDirection, SoundType } from '../Constants';
 import { GameOverScene } from "./GameOverScene";
 import { IScene } from "../managers/IScene";
 import { GameController } from "../controls/GameController";
@@ -26,7 +26,7 @@ import { Honk } from "../objects/Honk";
 import { MafiaBoss } from "../objects/MafiaBoss";
 import { MafiaBossRocket } from "../objects/MafiaBossRocket";
 import { MafiaBossRocketBullsEye } from "../objects/MafiaBossRocketBullsEye";
-import { PlayerBalloon } from "../objects/PlayerBalloon";
+import { PlayerRide } from "../objects/PlayerRide";
 import { PlayerHonkBomb } from "../objects/PlayerHonkBomb";
 import { PlayerHonkBombExplosion } from "../objects/PlayerHonkBombExplosion";
 import { PlayerRocket } from "../objects/PlayerRocket";
@@ -107,7 +107,7 @@ export class GameScene extends Container implements IScene {
 		this.talkIcon = Texture.from("./images/character_maleAdventurer_talk.png");
 		this.interactIcon = Texture.from("./images/character_maleAdventurer_interact.png");
 
-		this.playerCharacterTemplate = Constants.SELECTED_CHARACTER_TEMPLATE;
+		this.playerRideTemplate = Constants.SELECTED_PLAYER_RIDE_TEMPLATE;
 		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
 
 		let colors: number[] = [0x1e2a36, 0x4187ab]
@@ -177,6 +177,12 @@ export class GameScene extends Container implements IScene {
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
 			case 0: { this.generateOnScreenMessage("Drop crackers on 'em honkers!", this.talkIcon); } break;
 			case 1: { this.generateOnScreenMessage("Drop trash cans on 'em honkers!", this.talkIcon); } break;
+			default:
+		}
+
+		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
+			case 0: { } break;
+			case 1: { SoundManager.play(SoundType.CHOPPER_HOVERING, 0.1, true); } break;
 			default:
 		}
 	}
@@ -1028,7 +1034,7 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region Clouds	
+	//#region Clouds
 
 	//private cloudSizeWidth: number = 512 / 2;
 	//private cloudSizeHeight: number = 350 / 2;
@@ -1106,1745 +1112,34 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region VehicleEnemys	
+	//#region PlayerRide
 
-	private vehicleEnemySizeWidth: number = 260;
-	private vehicleEnemySizeHeight: number = 260;
+	private playerRideSizeWidth: number = 150;
+	private playerRideSizeHeight: number = 150;
+	private playerRideTemplate: number = 0;
 
-	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
-
-	private vehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private vehicleEnemyPopDelay: number = 15;
-
-	private spawnVehicleEnemys() {
-
-		for (let j = 0; j < 10; j++) {
-
-			const gameObject: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.vehicleType = Constants.getRandomNumber(0, 1);
-
-			gameObject.disableRendering();
-
-			var uri: string = "";
-			switch (gameObject.vehicleType) {
-				case 0: {
-					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
-				} break;
-				case 1: {
-					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
-				} break;
-				default: break;
-			}
-
-			const texture = Texture.from(uri);
-			const sprite: GameObjectSprite = new GameObjectSprite(texture);
-
-			sprite.x = 0;
-			sprite.y = 0;
-
-			switch (gameObject.vehicleType) {
-				case 0: {
-					sprite.width = this.vehicleEnemySizeWidth / 1.2;
-					sprite.height = this.vehicleEnemySizeHeight / 1.2;
-				} break;
-				case 1: {
-					sprite.width = this.vehicleEnemySizeWidth;
-					sprite.height = this.vehicleEnemySizeHeight;
-				} break;
-				default: break;
-			}
-
-			sprite.anchor.set(0.5, 0.5);
-
-			gameObject.addChild(sprite);
-
-			this.vehicleEnemyGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-		}
-	}
-
-	private generateVehicleEnemys() {
-
-		if (!this.vehicleBossExists() && !this.ufoEnemyExists()) {
-			this.vehicleEnemyPopDelay -= 0.1;
-
-			if (this.vehicleEnemyPopDelay < 0) {
-
-				var gameObject = this.vehicleEnemyGameObjects.find(x => x.isAnimating == false);
-
-				if (gameObject) {
-
-					gameObject.reset();
-
-					let sprite = gameObject.getGameObjectSprite();
-
-					switch (gameObject.vehicleType) {
-						case 0: {
-							sprite.width = this.vehicleEnemySizeWidth / 1.2;
-							sprite.height = this.vehicleEnemySizeHeight / 1.2;
-						} break;
-						case 1: {
-							sprite.width = this.vehicleEnemySizeWidth;
-							sprite.height = this.vehicleEnemySizeHeight;
-						} break;
-						default: break;
-					}
-
-					if (this.anyInAirBossExists())
-						gameObject.repositionReverse();
-					else
-						gameObject.reposition();
-
-					gameObject.enableRendering();
-
-					this.vehicleEnemyPopDelay = this.vehicleEnemyPopDelayDefault;
-				}
-			}
-		}
-	}
-
-	private animateVehicleEnemys() {
-
-		var animatingVehicleEnemys = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingVehicleEnemys) {
-
-			animatingVehicleEnemys.forEach(gameObject => {
-
-				gameObject.pop();
-				gameObject.dillyDally();
-
-				if (this.anyInAirBossExists()) { // when in air bosses appear, stop the stage transition, and make the vehicles move forward
-					gameObject.moveUpLeft();
-					gameObject.moveUpLeft(); // move with double speed
-				}
-				else {
-					gameObject.moveDownRight();
-				}
-
-				// prevent overlapping				
-
-				var vehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
-
-				if (vehicles) {
-
-					vehicles.forEach(collidingVehicle => {
-
-						if (Constants.checkCollision(collidingVehicle, gameObject)) {
-
-							if (collidingVehicle.speed > gameObject.speed) // colliding vehicle is faster
-							{
-								gameObject.speed = collidingVehicle.speed;
-							}
-							else if (gameObject.speed > collidingVehicle.speed) // current vehicle is faster
-							{
-								collidingVehicle.speed = gameObject.speed;
-							}
-						}
-					});
-				}
-
-				// generate honk
-
-				let vehicleEnemy = gameObject as VehicleEnemy;
-
-				if (vehicleEnemy) {
-
-					if (vehicleEnemy.honk() && !this.ufoEnemyExists() && !this.anyInAirBossExists()) {
-						this.generateHonk(gameObject);
-					}
-				}
-
-				// recycle vehicle
-
-				if (this.anyInAirBossExists()) {
-					if (gameObject.getRight() < 0 || gameObject.getBottom() < 0) {
-						gameObject.disableRendering();
-					}
-				}
-				else {
-					if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-						gameObject.disableRendering();
-					}
-				}
-			});
-		}
-	}
-
-	private looseVehicleEnemyhealth(vehicleEnemy: VehicleEnemy) {
-
-		vehicleEnemy.setPopping();
-		vehicleEnemy.looseHealth();
-
-		if (vehicleEnemy.willHonk) {
-
-			if (vehicleEnemy.isDead()) {
-				vehicleEnemy.setBlast();
-				this.gameScoreBar.gainScore(2);
-				let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
-				let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
-
-				this.generateMessageBubble(vehicleEnemy, soundTemplate.subTitle);
-			}
-		}
-	}
-
-	//#endregion
-
-	//#region VehicleBosss	
-
-	private vehicleBossSizeWidth: number = this.vehicleEnemySizeWidth;
-	private vehicleBossSizeHeight: number = this.vehicleEnemySizeHeight;
-
-	private vehicleBossGameObjects: Array<VehicleBoss> = [];
-
-	private spawnVehicleBosss() {
-		const gameObject: VehicleBoss = new VehicleBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
-		gameObject.vehicleType = Constants.getRandomNumber(0, 1);
-		gameObject.disableRendering();
-
-		var uri: string = "";
-		switch (gameObject.vehicleType) {
-			case 0: {
-				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
-			} break;
-			case 1: {
-				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
-			} break;
-			default: break;
-		}
-
-		const texture = Texture.from(uri);
-		const sprite: GameObjectSprite = new GameObjectSprite(texture);
-
-		sprite.x = 0;
-		sprite.y = 0;
-
-		switch (gameObject.vehicleType) {
-			case 0: {
-				sprite.width = this.vehicleBossSizeWidth / 1.2;
-				sprite.height = this.vehicleBossSizeHeight / 1.2;
-			} break;
-			case 1: {
-				sprite.width = this.vehicleBossSizeWidth;
-				sprite.height = this.vehicleBossSizeHeight;
-			} break;
-			default: break;
-		}
-
-		sprite.anchor.set(0.5, 0.5);
-
-		gameObject.addChild(sprite);
-
-		this.vehicleBossGameObjects.push(gameObject);
-		this.gameContainer.addChild(gameObject);
-	}
-
-	private generateVehicleBoss() {
-
-		if (this.vehicleBossCheckpoint.shouldRelease(this.gameScoreBar.getScore()) && !this.vehicleBossExists()) {
-
-			var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == false);
-
-			if (gameObject) {
-				gameObject.reset();
-				gameObject.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
-
-				let sprite = gameObject.getGameObjectSprite();
-
-				switch (gameObject.vehicleType) {
-					case 0: {
-						sprite.width = this.vehicleBossSizeWidth / 1.2;
-						sprite.height = this.vehicleBossSizeHeight / 1.2;
-					} break;
-					case 1: {
-						sprite.width = this.vehicleBossSizeWidth;
-						sprite.height = this.vehicleBossSizeHeight;
-					} break;
-					default: break;
-				}
-
-				gameObject.reposition();
-				gameObject.enableRendering();
-
-				this.vehicleBossCheckpoint.increaseThreasholdLimit(this.vehicleBossReleasePoint_increase, this.gameScoreBar.getScore());
-
-				this.bossHealthBar.setMaximumValue(gameObject.health);
-				this.bossHealthBar.setValue(gameObject.health);
-				this.bossHealthBar.setIcon(gameObject.getGameObjectSprite().getTexture());
-
-				this.generateOnScreenMessage("Stop the crazy honker!", this.interactIcon);
-
-				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
-			}
-		}
-	}
-
-	private animateVehicleBoss() {
-
-		var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
-		let vehicleBoss: VehicleBoss = gameObject as VehicleBoss;
-
-		if (gameObject) {
-
-			gameObject.pop();
-
-			if (vehicleBoss.isDead()) {
-				vehicleBoss.moveDownRight();
-			}
-			else {
-				gameObject.dillyDally();
-
-				if (vehicleBoss.isAttacking) {
-
-					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling);
-
-					if (vehicleBoss.honk()) {
-						this.generateHonk(gameObject);
-					}
-
-					this.generateTaunts(gameObject);
-				}
-				else {
-					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false || this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 1.8))) {
-						vehicleBoss.isAttacking = true;
-					}
-				}
-			}
-
-			if (vehicleBoss.isDead() && gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-				gameObject.disableRendering();
-			}
-		}
-	}
-
-	private looseVehicleBosshealth(vehicleBoss: VehicleBoss) {
-
-		vehicleBoss.setPopping();
-		vehicleBoss.looseHealth();
-
-		this.bossHealthBar.setValue(vehicleBoss.health);
-
-		if (vehicleBoss.isDead()) {
-
-			this.player.setWinStance();
-			this.gameScoreBar.gainScore(3);
-			this.levelUp();
-
-			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
-			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
-
-			this.generateMessageBubble(vehicleBoss, "I'll be back!");
-		}
-	}
-
-	private vehicleBossExists(): boolean {
-		var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
-
-		if (gameObject)
-			return true;
-		else
-			return false;
-	}
-
-	//#endregion
-
-	//#region VehicleBossRockets
-
-	private vehicleBossRocketSizeWidth: number = 90;
-	private vehicleBossRocketSizeHeight: number = 90;
-
-	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
-
-	private vehicleBossRocketPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private vehicleBossRocketPopDelay: number = 0;
-
-	spawnVehicleBossRockets() {
-
-		for (let j = 0; j < 3; j++) {
-
-			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 1.4);
-			gameObject.disableRendering();
-
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
-
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.vehicleBossRocketSizeWidth;
-			sprite.height = this.vehicleBossRocketSizeHeight;
-
-			sprite.anchor.set(0.5, 0.5);
-			gameObject.addChild(sprite);
-
-			this.vehicleBossRocketGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-
-			this.spawnCastShadow(gameObject);
-
-			this.spawnCastShadow(gameObject);
-		}
-	}
-
-	generateVehicleBossRockets() {
-
-		let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
-		if (vehicleBoss) {
-
-			this.vehicleBossRocketPopDelay -= 0.1;
-
-			if (this.vehicleBossRocketPopDelay < 0) {
-
-				let vehicleBossRocket = this.vehicleBossRocketGameObjects.find(x => x.isAnimating == false);
-
-				if (vehicleBossRocket) {
-					vehicleBossRocket.reset();
-					vehicleBossRocket.reposition(vehicleBoss);
-					vehicleBossRocket.setPopping();
-					vehicleBossRocket.enableRendering();
-				}
-
-				this.vehicleBossRocketPopDelay = this.vehicleBossRocketPopDelayDefault;
-			}
-		}
-	}
-
-	animateVehicleBossRockets() {
-
-		let animatingVehicleBossRockets = this.vehicleBossRocketGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingVehicleBossRockets) {
-
-			animatingVehicleBossRockets.forEach(gameObject => {
-				gameObject.moveUpRight();
-
-				if (gameObject.isBlasting) {
-					gameObject.expand();
-					gameObject.fade();
-				}
-				else {
-
-					gameObject.pop();
-					gameObject.dillyDally();
-
-					if (Constants.checkCloseCollision(gameObject, this.player)) {
-						gameObject.setBlast();
-						this.loosePlayerHealth();
-					}
-
-					if (gameObject.autoBlast())
-						gameObject.setBlast();
-				}
-
-				if (gameObject.hasFaded()) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
-
-	//#endregion
-
-	//#region UfoEnemys	
-
-	private ufoEnemySizeWidth: number = 165;
-	private ufoEnemySizeHeight: number = 165;
-
-	private ufoEnemyGameObjects: Array<UfoEnemy> = [];
-
-	private ufoEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private ufoEnemyPopDelay: number = 0;
-
-	private spawnUfoEnemys() {
-
-		for (let j = 0; j < 7; j++) {
-
-			const gameObject: UfoEnemy = new UfoEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
-
-			const texture = Constants.getRandomTexture(ConstructType.UFO_ENEMY);
-			const sprite: GameObjectSprite = new GameObjectSprite(texture);
-
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.ufoEnemySizeWidth;
-			sprite.height = this.ufoEnemySizeHeight;
-
-			sprite.anchor.set(0.5, 0.5);
-
-			gameObject.addChild(sprite);
-
-			this.ufoEnemyGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-
-			this.spawnCastShadow(gameObject);
-		}
-	}
-
-	private generateUfoEnemys() {
-
-		if (!this.anyBossExists() && this.ufoEnemyCheckpoint.shouldRelease(this.gameScoreBar.getScore())) {
-
-			this.ufoEnemyPopDelay -= 0.1;
-
-			if (this.ufoEnemyPopDelay < 0) {
-
-				var gameObject = this.ufoEnemyGameObjects.find(x => x.isAnimating == false);
-
-				if (gameObject) {
-
-					var ufoEnemy = gameObject as UfoEnemy;
-					ufoEnemy.reset();
-					ufoEnemy.reposition();
-
-					gameObject.enableRendering();
-
-					this.ufoEnemyPopDelay = this.ufoEnemyPopDelayDefault;
-
-					if (!this.ufoEnemyFleetAppeared) {
-
-						this.generateOnScreenMessage("Shoot the ufos!");
-						this.ufoEnemyFleetAppeared = true;
-						SoundManager.play(SoundType.UFO_ENEMY_ENTRY);
-						SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.6, true);
-					}
-				}
-			}
-		}
-	}
-
-	private animateUfoEnemys() {
-
-		var animatingUfoEnemys = this.ufoEnemyGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingUfoEnemys) {
-
-			animatingUfoEnemys.forEach(gameObject => {
-				if (gameObject.isDead()) {
-					gameObject.shrink();
-				}
-				else {
-					gameObject.pop();
-					gameObject.hover();
-					gameObject.moveDownRight();
-				}
-
-				let ufoEnemy = gameObject as UfoEnemy;
-
-				if (ufoEnemy) {
-
-					// generate honk
-
-					if (!this.anyBossExists() && ufoEnemy.honk()) {
-						this.generateHonk(gameObject);
-					}
-
-					// fire orbs
-
-					if (!this.anyBossExists() && ufoEnemy.attack()) {
-						this.generateUfoEnemyRockets(ufoEnemy);
-					}
-
-					this.generateTaunts(gameObject);
-				}
-
-				if (gameObject.hasShrinked() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
-
-	private looseUfoEnemyhealth(ufoEnemy: UfoEnemy) {
-
-		ufoEnemy.setPopping();
-		ufoEnemy.looseHealth();
-
-		if (ufoEnemy.isDead()) {
-			this.gameScoreBar.gainScore(2);
-
-			this.ufoEnemyKillCount++;
-
-			if (this.ufoEnemyKillCount > this.ufoEnemyKillCount_limit) // after killing limited enemies increase the threadhold limit
-			{
-				this.ufoEnemyCheckpoint.increaseThreasholdLimit(this.ufoEnemyReleasePoint_increase, this.gameScoreBar.getScore());
-				this.ufoEnemyKillCount = 0;
-				this.ufoEnemyFleetAppeared = false;
-
-				this.levelUp();
-
-				SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-			}
-		}
-	}
-
-	private ufoEnemyExists(): boolean {
-		var gameObject = this.ufoEnemyGameObjects.find(x => x.isAnimating == true);
-
-		if (gameObject)
-			return true;
-		else
-			return false;
-	}
-
-	//#endregion
-
-	//#region UfoEnemyRockets
-
-	private ufoEnemyRocketSizeWidth: number = 85;
-	private ufoEnemyRocketSizeHeight: number = 85;
-
-	private ufoEnemyRocketGameObjects: Array<UfoEnemyRocket> = [];
-
-	spawnUfoEnemyRockets() {
-
-		for (let j = 0; j < 7; j++) {
-
-			const gameObject: UfoEnemyRocket = new UfoEnemyRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
-			gameObject.disableRendering();
-
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY_ROCKET));
-
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.ufoEnemyRocketSizeWidth;
-			sprite.height = this.ufoEnemyRocketSizeHeight;
-
-			sprite.anchor.set(0.5, 0.5);
-			gameObject.addChild(sprite);
-
-			this.ufoEnemyRocketGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-
-			this.spawnCastShadow(gameObject);
-		}
-	}
-
-	generateUfoEnemyRockets(ufoEnemy: UfoEnemy) {
-
-		let ufoEnemyRocket = this.ufoEnemyRocketGameObjects.find(x => x.isAnimating == false);
-
-		if (ufoEnemyRocket) {
-			ufoEnemyRocket.reset();
-			ufoEnemyRocket.reposition(ufoEnemy);
-			ufoEnemyRocket.setPopping();
-			ufoEnemyRocket.enableRendering();
-		}
-	}
-
-	animateUfoEnemyRockets() {
-
-		let animatingUfoEnemyRockets = this.ufoEnemyRocketGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingUfoEnemyRockets) {
-
-			animatingUfoEnemyRockets.forEach(gameObject => {
-
-				let ufoEnemyRocket = gameObject as UfoEnemyRocket;
-				ufoEnemyRocket.moveDownRight();
-
-				if (gameObject.isBlasting) {
-					gameObject.expand();
-					gameObject.fade();
-				}
-				else {
-
-					gameObject.pop();
-					gameObject.hover();
-
-					if (Constants.checkCloseCollision(gameObject, this.player)) {
-						gameObject.setBlast();
-						this.loosePlayerHealth();
-					}
-
-					if (gameObject.autoBlast())
-						gameObject.setBlast();
-				}
-
-				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
-
-	//#endregion
-
-	//#region UfoBosss	
-
-	private ufoBossSizeWidth: number = 200;
-	private ufoBossSizeHeight: number = 200;
-
-	private ufoBossGameObjects: Array<UfoBoss> = [];
-
-	private spawnUfoBosss() {
-		const gameObject: UfoBoss = new UfoBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
-		gameObject.disableRendering();
-
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_IDLE));
-
-		sprite.x = 0;
-		sprite.y = 0;
-		sprite.width = this.ufoBossSizeWidth;
-		sprite.height = this.ufoBossSizeHeight;
-
-		sprite.anchor.set(0.5, 0.5);
-
-		gameObject.addChild(sprite);
-
-		this.ufoBossGameObjects.push(gameObject);
-		this.gameContainer.addChild(gameObject);
-
-		this.spawnCastShadow(gameObject);
-	}
-
-	private generateUfoBoss() {
-
-		if (this.ufoBossCheckpoint.shouldRelease(this.gameScoreBar.getScore()) && !this.ufoBossExists()) {
-
-			var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == false);
-
-			if (gameObject) {
-
-				var ufoBoss = gameObject as UfoBoss;
-				ufoBoss.setPosition(0, ufoBoss.height * -1);
-				ufoBoss.reset();
-				ufoBoss.health = this.ufoBossCheckpoint.getReleasePointDifference() * 1.5;
-
-				gameObject.enableRendering();
-
-				this.ufoBossCheckpoint.increaseThreasholdLimit(this.ufoBossReleasePoint_increase, this.gameScoreBar.getScore());
-
-				this.bossHealthBar.setMaximumValue(ufoBoss.health);
-				this.bossHealthBar.setValue(ufoBoss.health);
-				this.bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
-
-				this.generateOnScreenMessage("Shoot the cyborg. Avoid the eye balls!", this.interactIcon);
-
-				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
-				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
-				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
-
-				//this.switchToNightMode();
-			}
-		}
-	}
-
-	private animateUfoBoss() {
-
-		var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == true);
-		let ufoBoss: UfoBoss = gameObject as UfoBoss;
-
-		if (gameObject) {
-
-			if (ufoBoss.isDead()) {
-				ufoBoss.shrink();
-			}
-			else {
-				gameObject.pop();
-				gameObject.hover();
-				ufoBoss.depleteHitStance();
-				ufoBoss.depleteWinStance();
-
-				if (ufoBoss.isAttacking) {
-
-					ufoBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling, this.player.getCloseBounds());
-
-					if (Constants.checkCloseCollision(this.player, ufoBoss)) {
-						this.loosePlayerHealth();
-					}
-
-					this.generateTaunts(gameObject);
-				}
-				else {
-
-					ufoBoss.moveDownRight();
-
-					if (ufoBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 3)) // bring UfoBoss to a suitable distance from player and then start attacking
-					{
-						ufoBoss.isAttacking = true;
-					}
-				}
-			}
-
-			if (ufoBoss.hasShrinked()) {
-				gameObject.disableRendering();
-			}
-		}
-	}
-
-	private looseUfoBosshealth(ufoBoss: UfoBoss) {
-
-		ufoBoss.setPopping();
-		ufoBoss.looseHealth();
-		ufoBoss.setHitStance();
-
-		this.bossHealthBar.setValue(ufoBoss.health);
-
-		if (ufoBoss.isDead()) {
-
-			this.player.setWinStance();
-			this.gameScoreBar.gainScore(3);
-			this.levelUp();
-
-			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
-			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
-			SoundManager.play(SoundType.UFO_BOSS_DEAD);
-			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-
-			this.generateMessageBubble(ufoBoss, "My systems can not fail!");
-		}
-	}
-
-	private ufoBossExists(): boolean {
-		var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == true);
-
-		if (gameObject)
-			return true;
-		else
-			return false;
-	}
-
-	//#endregion
-
-	//#region UfoBossRockets
-
-	private ufoBossRocketSizeWidth: number = 90;
-	private ufoBossRocketSizeHeight: number = 90;
-
-	private ufoBossRocketGameObjects: Array<UfoBossRocket> = [];
-
-	private ufoBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private ufoBossRocketPopDelay: number = 0;
-
-	spawnUfoBossRockets() {
-
-		for (let j = 0; j < 3; j++) {
-
-			const gameObject: UfoBossRocket = new UfoBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
-			gameObject.disableRendering();
-
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET));
-
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.ufoBossRocketSizeWidth;
-			sprite.height = this.ufoBossRocketSizeHeight;
-
-			sprite.anchor.set(0.5, 0.5);
-			gameObject.addChild(sprite);
-
-			this.ufoBossRocketGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-
-			this.spawnCastShadow(gameObject);
-		}
-	}
-
-	generateUfoBossRockets() {
-
-		let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
-		if (ufoBoss) {
-
-			this.ufoBossRocketPopDelay -= 0.1;
-
-			if (this.ufoBossRocketPopDelay < 0) {
-
-				let ufoBossRocket = this.ufoBossRocketGameObjects.find(x => x.isAnimating == false);
-
-				if (ufoBossRocket) {
-					ufoBossRocket.reset();
-					ufoBossRocket.reposition(ufoBoss);
-					ufoBossRocket.setPopping();
-					ufoBossRocket.enableRendering();
-
-					this.setBossRocketDirection(ufoBoss, ufoBossRocket, this.player);
-				}
-
-				this.ufoBossRocketPopDelay = this.ufoBossRocketPopDelayDefault;
-			}
-		}
-	}
-
-	animateUfoBossRockets() {
-
-		let animatingUfoBossRockets = this.ufoBossRocketGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingUfoBossRockets) {
-
-			animatingUfoBossRockets.forEach(gameObject => {
-
-				let ufoBossRocket = gameObject as UfoBossRocket;
-
-				if (ufoBossRocket.awaitMoveDownLeft) {
-					ufoBossRocket.moveDownLeft();
-				}
-				else if (ufoBossRocket.awaitMoveUpRight) {
-					ufoBossRocket.moveUpRight();
-				}
-				else if (ufoBossRocket.awaitMoveUpLeft) {
-					ufoBossRocket.moveUpLeft();
-				}
-				else if (ufoBossRocket.awaitMoveDownRight) {
-					ufoBossRocket.moveDownRight();
-				}
-
-				if (gameObject.isBlasting) {
-					gameObject.expand();
-					gameObject.fade();
-				}
-				else {
-
-					gameObject.pop();
-					gameObject.hover();
-
-					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
-					if (Constants.checkCloseCollision(gameObject, this.player)) {
-						gameObject.setBlast();
-						this.loosePlayerHealth();
-						ufoBoss?.setWinStance();
-					}
-
-					if (gameObject.autoBlast())
-						gameObject.setBlast();
-				}
-
-				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
-
-	setBossRocketDirection(source: GameObjectContainer, rocket: GameObjectContainer, rocketTarget: GameObjectContainer) {
-
-		// rocket target is on the bottom right side of the UfoBoss
-		if (rocketTarget.getTop() > source.getTop() && rocketTarget.getLeft() > source.getLeft()) {
-			rocket.awaitMoveDownRight = true;
-			rocket.setRotation(33);
-		}
-		// rocket target is on the bottom left side of the UfoBoss
-		else if (rocketTarget.getTop() > source.getTop() && rocketTarget.getLeft() < source.getLeft()) {
-			rocket.awaitMoveDownLeft = true;
-			rocket.setRotation(-213);
-		}
-		// if rocket target is on the top left side of the UfoBoss
-		else if (rocketTarget.getTop() < source.getTop() && rocketTarget.getLeft() < source.getLeft()) {
-			rocket.awaitMoveUpLeft = true;
-			rocket.setRotation(213);
-		}
-		// if rocket target is on the top right side of the UfoBoss
-		else if (rocketTarget.getTop() < source.getTop() && rocketTarget.getLeft() > source.getLeft()) {
-			rocket.awaitMoveUpRight = true;
-			rocket.setRotation(-33);
-		}
-		else {
-			rocket.awaitMoveDownRight = true;
-			rocket.setRotation(33);
-		}
-	}
-
-	//#endregion
-
-	//#region UfoBossRocketSeekings
-
-	private ufoBossRocketSeekingSizeWidth: number = 90;
-	private ufoBossRocketSeekingSizeHeight: number = 90;
-
-	private ufoBossRocketSeekingGameObjects: Array<UfoBossRocketSeeking> = [];
-
-	private ufoBossRocketSeekingPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private ufoBossRocketSeekingPopDelay: number = 0;
-
-	spawnUfoBossRocketSeekings() {
-
-		for (let j = 0; j < 2; j++) {
-
-			const gameObject: UfoBossRocketSeeking = new UfoBossRocketSeeking(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
-
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET_SEEKING));
-
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.ufoBossRocketSeekingSizeWidth;
-			sprite.height = this.ufoBossRocketSeekingSizeHeight;
-
-			sprite.anchor.set(0.5, 0.5);
-			gameObject.addChild(sprite);
-
-			this.ufoBossRocketSeekingGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-
-			this.spawnCastShadow(gameObject);
-		}
-	}
-
-	generateUfoBossRocketSeekings() {
-
-		let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
-		if (ufoBoss) {
-
-			if (this.ufoBossRocketSeekingGameObjects.every(x => x.isAnimating == false)) {
-
-				this.ufoBossRocketSeekingPopDelay -= 0.1;
-
-				if (this.ufoBossRocketSeekingPopDelay < 0) {
-
-					let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == false);
-
-					if (ufoBossRocketSeeking) {
-						ufoBossRocketSeeking.reset();
-						ufoBossRocketSeeking.reposition(ufoBoss);
-						ufoBossRocketSeeking.setPopping();
-						ufoBossRocketSeeking.enableRendering();
-					}
-
-					this.ufoBossRocketSeekingPopDelay = this.ufoBossRocketSeekingPopDelayDefault;
-				}
-			}
-		}
-	}
-
-	animateUfoBossRocketSeekings() {
-
-		let animatingUfoBossRocketSeekings = this.ufoBossRocketSeekingGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingUfoBossRocketSeekings) {
-
-			animatingUfoBossRocketSeekings.forEach(gameObject => {
-
-				let ufoBossRocketSeeking = gameObject as UfoBossRocketSeeking;
-
-				if (gameObject.isBlasting) {
-					gameObject.expand();
-					gameObject.fade();
-					gameObject.moveDownRight();
-				}
-				else {
-
-					gameObject.pop();
-
-					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
-					if (ufoBoss) {
-						ufoBossRocketSeeking.seek(this.player.getCloseBounds());
-
-						if (Constants.checkCloseCollision(gameObject, this.player)) {
-							gameObject.setBlast();
-							this.loosePlayerHealth();
-							ufoBoss.setWinStance();
-						}
-						else {
-							if (gameObject.autoBlast())
-								gameObject.setBlast();
-						}
-					}
-					else {
-						gameObject.setBlast();
-					}
-				}
-
-				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
-
-	//#endregion
-
-	//#region ZombieBosss	
-
-	private zombieBossSizeWidth: number = 200;
-	private zombieBossSizeHeight: number = 200;
-
-	private zombieBossGameObjects: Array<ZombieBoss> = [];
-
-	private spawnZombieBosss() {
-		const gameObject: ZombieBoss = new ZombieBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
-		gameObject.disableRendering();
-
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_IDLE));
-
-		sprite.x = 0;
-		sprite.y = 0;
-		sprite.width = this.zombieBossSizeWidth;
-		sprite.height = this.zombieBossSizeHeight;
-
-		sprite.anchor.set(0.5, 0.5);
-
-		gameObject.addChild(sprite);
-
-		this.zombieBossGameObjects.push(gameObject);
-		this.gameContainer.addChild(gameObject);
-
-		this.spawnCastShadow(gameObject);
-	}
-
-	private generateZombieBoss() {
-
-		if (this.zombieBossCheckpoint.shouldRelease(this.gameScoreBar.getScore()) && !this.zombieBossExists()) {
-
-			var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == false);
-
-			if (gameObject) {
-
-				var zombieBoss = gameObject as ZombieBoss;
-				zombieBoss.setPosition(0, zombieBoss.height * -1);
-				zombieBoss.reset();
-				zombieBoss.health = this.zombieBossCheckpoint.getReleasePointDifference() * 1.5;
-
-				gameObject.enableRendering();
-
-				this.zombieBossCheckpoint.increaseThreasholdLimit(this.zombieBossReleasePoint_increase, this.gameScoreBar.getScore());
-
-				this.bossHealthBar.setMaximumValue(zombieBoss.health);
-				this.bossHealthBar.setValue(zombieBoss.health);
-				this.bossHealthBar.setIcon(zombieBoss.getGameObjectSprite().getTexture());
-
-				this.generateOnScreenMessage("Shoot the zombie. Avoid the cubes!", this.interactIcon);
-
-				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
-				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
-				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
-
-				//this.switchToNightMode();
-			}
-		}
-	}
-
-	private animateZombieBoss() {
-
-		var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == true);
-		let zombieBoss: ZombieBoss = gameObject as ZombieBoss;
-
-		if (gameObject) {
-
-			if (zombieBoss.isDead()) {
-				zombieBoss.shrink();
-			}
-			else {
-				gameObject.pop();
-				gameObject.hover();
-				zombieBoss.depleteHitStance();
-				zombieBoss.depleteWinStance();
-
-				if (zombieBoss.isAttacking) {
-
-					zombieBoss.moveUpRightDownLeft(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling);
-
-					if (Constants.checkCloseCollision(this.player, zombieBoss)) {
-						this.loosePlayerHealth();
-					}
-
-					this.generateTaunts(gameObject);
-				}
-				else {
-
-					zombieBoss.moveDownRight();
-
-					if (zombieBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 3)) // bring ZombieBoss to a suitable distance from player and then start attacking
-					{
-						zombieBoss.isAttacking = true;
-					}
-				}
-			}
-
-			if (zombieBoss.hasShrinked()) {
-				gameObject.disableRendering();
-			}
-		}
-	}
-
-	private looseZombieBosshealth(zombieBoss: ZombieBoss) {
-
-		zombieBoss.setPopping();
-		zombieBoss.looseHealth();
-		zombieBoss.setHitStance();
-
-		this.bossHealthBar.setValue(zombieBoss.health);
-
-		if (zombieBoss.isDead()) {
-
-			this.player.setWinStance();
-			this.gameScoreBar.gainScore(3);
-			this.levelUp();
-
-			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
-			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
-			SoundManager.play(SoundType.UFO_BOSS_DEAD);
-			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-
-			this.generateMessageBubble(zombieBoss, "You can't kill the undead!");
-		}
-	}
-
-	private zombieBossExists(): boolean {
-		var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == true);
-
-		if (gameObject)
-			return true;
-		else
-			return false;
-	}
-
-	//#endregion
-
-	//#region ZombieBossRocketBlocks
-
-	private zombieBossRocketBlockSizeWidth: number = 130 * 1.1;
-	private zombieBossRocketBlockSizeHeight: number = 150 * 1.1;
-
-	private zombieBossRocketBlockGameObjects: Array<ZombieBossRocketBlock> = [];
-
-	private zombieBossRocketBlockPopDelayDefault: number = 8 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private zombieBossRocketBlockPopDelay: number = 0;
-
-	spawnZombieBossRocketBlocks() {
-
-		for (let j = 0; j < 5; j++) {
-
-			const gameObject: ZombieBossRocketBlock = new ZombieBossRocketBlock(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
-
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK));
-
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.zombieBossRocketBlockSizeWidth;
-			sprite.height = this.zombieBossRocketBlockSizeHeight;
-
-			sprite.anchor.set(0.5, 0.5);
-			gameObject.addChild(sprite);
-
-			this.zombieBossRocketBlockGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-
-			this.spawnCastShadow(gameObject);
-		}
-	}
-
-	generateZombieBossRocketBlocks() {
-
-		let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
-		if (zombieBoss) {
-
-			this.zombieBossRocketBlockPopDelay -= 0.1;
-
-			if (this.zombieBossRocketBlockPopDelay < 0) {
-
-				let zombieBossRocketBlock = this.zombieBossRocketBlockGameObjects.find(x => x.isAnimating == false);
-
-				if (zombieBossRocketBlock) {
-					zombieBossRocketBlock.reset();
-					zombieBossRocketBlock.reposition();
-					zombieBossRocketBlock.setPopping();
-					zombieBossRocketBlock.enableRendering();
-				}
-
-				this.zombieBossRocketBlockPopDelay = this.zombieBossRocketBlockPopDelayDefault;
-			}
-		}
-	}
-
-	animateZombieBossRocketBlocks() {
-
-		let animatingZombieBossRocketBlocks = this.zombieBossRocketBlockGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingZombieBossRocketBlocks) {
-
-			animatingZombieBossRocketBlocks.forEach(gameObject => {
-				gameObject.moveDownRight();
-
-				if (gameObject.isBlasting) {
-					gameObject.expand();
-					gameObject.fade();
-				}
-				else {
-
-					gameObject.pop();
-					gameObject.hover();
-
-					if (Constants.checkCloseCollision(gameObject, this.player)) {
-						gameObject.setBlast();
-						this.loosePlayerHealth();
-					}
-
-					if (gameObject.autoBlast())
-						gameObject.setBlast();
-				}
-
-				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
-
-	//#endregion
-
-	//#region MafiaBosss	
-
-	private mafiaBossSizeWidth: number = 200;
-	private mafiaBossSizeHeight: number = 200;
-
-	private mafiaBossGameObjects: Array<MafiaBoss> = [];
-
-	private spawnMafiaBosss() {
-		const gameObject: MafiaBoss = new MafiaBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
-		gameObject.disableRendering();
-
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_IDLE));
-
-		sprite.x = 0;
-		sprite.y = 0;
-		sprite.width = this.mafiaBossSizeWidth;
-		sprite.height = this.mafiaBossSizeHeight;
-
-		sprite.anchor.set(0.5, 0.5);
-
-		gameObject.addChild(sprite);
-
-		this.mafiaBossGameObjects.push(gameObject);
-		this.gameContainer.addChild(gameObject);
-
-		this.spawnCastShadow(gameObject);
-	}
-
-	private generateMafiaBoss() {
-
-		if (this.mafiaBossCheckpoint.shouldRelease(this.gameScoreBar.getScore()) && !this.mafiaBossExists()) {
-
-			var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == false);
-
-			if (gameObject) {
-
-				var mafiaBoss = gameObject as MafiaBoss;
-				mafiaBoss.setPosition(0, mafiaBoss.height * -1);
-				mafiaBoss.reset();
-				mafiaBoss.health = this.mafiaBossCheckpoint.getReleasePointDifference() * 1.5;
-
-				gameObject.enableRendering();
-
-				this.mafiaBossCheckpoint.increaseThreasholdLimit(this.mafiaBossReleasePoint_increase, this.gameScoreBar.getScore());
-
-				this.bossHealthBar.setMaximumValue(mafiaBoss.health);
-				this.bossHealthBar.setValue(mafiaBoss.health);
-				this.bossHealthBar.setIcon(mafiaBoss.getGameObjectSprite().getTexture());
-
-				this.generateOnScreenMessage("Shoot the mafia. Avoid the bowling balls.", this.interactIcon);
-
-				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
-				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
-				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
-
-				//this.switchToNightMode();
-			}
-		}
-	}
-
-	private animateMafiaBoss() {
-
-		var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
-		let mafiaBoss: MafiaBoss = gameObject as MafiaBoss;
-
-		if (gameObject) {
-
-			if (mafiaBoss.isDead()) {
-				mafiaBoss.shrink();
-			}
-			else {
-				gameObject.pop();
-				gameObject.hover();
-				mafiaBoss.depleteHitStance();
-				mafiaBoss.depleteWinStance();
-
-				if (mafiaBoss.isAttacking) {
-
-					mafiaBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling, this.player.getCloseBounds());
-
-					if (Constants.checkCloseCollision(this.player, mafiaBoss)) {
-						this.loosePlayerHealth();
-					}
-
-					this.generateTaunts(gameObject);
-				}
-				else {
-
-					mafiaBoss.moveDownRight();
-
-					if (mafiaBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 3)) // bring MafiaBoss to a suitable distance from player and then start attacking
-					{
-						mafiaBoss.isAttacking = true;
-					}
-				}
-			}
-
-			if (mafiaBoss.hasShrinked()) {
-				gameObject.disableRendering();
-			}
-		}
-	}
-
-	private looseMafiaBosshealth(mafiaBoss: MafiaBoss) {
-
-		mafiaBoss.setPopping();
-		mafiaBoss.looseHealth();
-		mafiaBoss.setHitStance();
-
-		this.bossHealthBar.setValue(mafiaBoss.health);
-
-		if (mafiaBoss.isDead()) {
-
-			this.player.setWinStance();
-			this.gameScoreBar.gainScore(3);
-			this.levelUp();
-
-			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
-			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
-			SoundManager.play(SoundType.UFO_BOSS_DEAD);
-			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-
-			this.generateMessageBubble(mafiaBoss, "Next time, hotshot!");
-		}
-	}
-
-	private mafiaBossExists(): boolean {
-		var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
-
-		if (gameObject)
-			return true;
-		else
-			return false;
-	}
-
-	//#endregion
-
-	//#region MafiaBossRockets
-
-	private mafiaBossRocketSizeWidth: number = 90;
-	private mafiaBossRocketSizeHeight: number = 90;
-
-	private mafiaBossRocketGameObjects: Array<MafiaBossRocket> = [];
-
-	private mafiaBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private mafiaBossRocketPopDelay: number = 0;
-
-	spawnMafiaBossRockets() {
-
-		for (let j = 0; j < 3; j++) {
-
-			const gameObject: MafiaBossRocket = new MafiaBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
-			gameObject.disableRendering();
-
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET));
-
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.mafiaBossRocketSizeWidth;
-			sprite.height = this.mafiaBossRocketSizeHeight;
-
-			sprite.anchor.set(0.5, 0.5);
-			gameObject.addChild(sprite);
-
-			this.mafiaBossRocketGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-
-			this.spawnCastShadow(gameObject);
-		}
-	}
-
-	generateMafiaBossRockets() {
-
-		let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
-		if (mafiaBoss) {
-
-			this.mafiaBossRocketPopDelay -= 0.1;
-
-			if (this.mafiaBossRocketPopDelay < 0) {
-
-				let mafiaBossRocket = this.mafiaBossRocketGameObjects.find(x => x.isAnimating == false);
-
-				if (mafiaBossRocket) {
-					mafiaBossRocket.reset();
-					mafiaBossRocket.reposition(mafiaBoss);
-					mafiaBossRocket.setPopping();
-					mafiaBossRocket.enableRendering();
-
-					this.setBossRocketDirection(mafiaBoss, mafiaBossRocket, this.player);
-				}
-
-				this.mafiaBossRocketPopDelay = this.mafiaBossRocketPopDelayDefault;
-			}
-		}
-	}
-
-	animateMafiaBossRockets() {
-
-		let animatingMafiaBossRockets = this.mafiaBossRocketGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingMafiaBossRockets) {
-
-			animatingMafiaBossRockets.forEach(gameObject => {
-
-				let mafiaBossRocket = gameObject as MafiaBossRocket;
-
-				if (mafiaBossRocket.awaitMoveDownLeft) {
-					mafiaBossRocket.moveDownLeft();
-				}
-				else if (mafiaBossRocket.awaitMoveUpRight) {
-					mafiaBossRocket.moveUpRight();
-				}
-				else if (mafiaBossRocket.awaitMoveUpLeft) {
-					mafiaBossRocket.moveUpLeft();
-				}
-				else if (mafiaBossRocket.awaitMoveDownRight) {
-					mafiaBossRocket.moveDownRight();
-				}
-
-				if (gameObject.isBlasting) {
-					gameObject.expand();
-					gameObject.fade();
-				}
-				else {
-
-					gameObject.pop();
-					gameObject.hover();
-
-					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
-					if (Constants.checkCloseCollision(gameObject, this.player)) {
-						gameObject.setBlast();
-						this.loosePlayerHealth();
-						mafiaBoss?.setWinStance();
-					}
-
-					if (gameObject.autoBlast())
-						gameObject.setBlast();
-				}
-
-				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
-
-	//#endregion
-
-	//#region MafiaBossRocketBullsEyes
-
-	private mafiaBossRocketBullsEyeSizeWidth: number = 90;
-	private mafiaBossRocketBullsEyeSizeHeight: number = 90;
-
-	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossRocketBullsEye> = [];
-
-	private mafiaBossRocketBullsEyePopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private mafiaBossRocketBullsEyePopDelay: number = 0;
-
-	spawnMafiaBossRocketBullsEyes() {
-
-		for (let j = 0; j < 3; j++) {
-
-			const gameObject: MafiaBossRocketBullsEye = new MafiaBossRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
-
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE));
-
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.mafiaBossRocketBullsEyeSizeWidth;
-			sprite.height = this.mafiaBossRocketBullsEyeSizeHeight;
-
-			sprite.anchor.set(0.5, 0.5);
-			gameObject.addChild(sprite);
-
-			this.mafiaBossRocketBullsEyeGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-
-			this.spawnCastShadow(gameObject);
-		}
-	}
-
-	generateMafiaBossRocketBullsEyes() {
-
-		let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
-		if (mafiaBoss) {
-
-			this.mafiaBossRocketBullsEyePopDelay -= 0.1;
-
-			if (this.mafiaBossRocketBullsEyePopDelay < 0) {
-
-				let mafiaBossRocketBullsEye = this.mafiaBossRocketBullsEyeGameObjects.find(x => x.isAnimating == false);
-
-				if (mafiaBossRocketBullsEye) {
-					mafiaBossRocketBullsEye.reset();
-					mafiaBossRocketBullsEye.reposition(mafiaBoss);
-					mafiaBossRocketBullsEye.setPopping();
-					mafiaBossRocketBullsEye.setTarget(this.player.getCloseBounds());
-					mafiaBossRocketBullsEye.enableRendering();
-				}
-
-				this.mafiaBossRocketBullsEyePopDelay = this.mafiaBossRocketBullsEyePopDelayDefault;
-			}
-		}
-	}
-
-	animateMafiaBossRocketBullsEyes() {
-
-		let animatingMafiaBossRocketBullsEyes = this.mafiaBossRocketBullsEyeGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingMafiaBossRocketBullsEyes) {
-
-			animatingMafiaBossRocketBullsEyes.forEach(gameObject => {
-
-				let mafiaBossRocketBullsEye = gameObject as MafiaBossRocketBullsEye;
-
-				if (gameObject.isBlasting) {
-					gameObject.expand();
-					gameObject.fade();
-					gameObject.moveDownRight();
-				}
-				else {
-
-					gameObject.pop();
-					gameObject.rotate(RotationDirection.Forward, 0, 2.5);
-
-					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
-					if (mafiaBoss) {
-						mafiaBossRocketBullsEye.move();
-
-						if (Constants.checkCloseCollision(gameObject, this.player)) {
-							gameObject.setBlast();
-							this.loosePlayerHealth();
-							mafiaBoss.setWinStance();
-						}
-						else {
-							if (gameObject.autoBlast())
-								gameObject.setBlast();
-						}
-					}
-					else {
-						gameObject.setBlast();
-					}
-				}
-
-				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
-
-	//#endregion
-
-	//#region Honks	
-
-	private roadHonkSizeWidth: number = 125;
-	private roadHonkSizeHeight: number = 125;
-
-	private roadHonkGameObjects: Array<GameObjectContainer> = [];
-
-	private spawnHonks() {
-
-		for (let j = 0; j < 5; j++) {
-
-			const gameObject: Honk = new Honk(0);
-			gameObject.disableRendering();
-
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HONK));
-
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.roadHonkSizeWidth;
-			sprite.height = this.roadHonkSizeHeight;
-
-			sprite.anchor.set(0.5, 0.5);
-
-			gameObject.addChild(sprite);
-
-			this.roadHonkGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-		}
-	}
-
-	private generateHonk(source: GameObjectContainer) {
-
-		if (source.getLeft() > 0 && source.getTop() > 0) {
-			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
-
-			if (gameObject) {
-
-				var honk = gameObject as Honk;
-				honk.reset();
-				honk.reposition(source);
-				honk.setPopping();
-
-				gameObject.enableRendering();
-			}
-		}
-	}
-
-	private animateHonks() {
-
-		var animatingHonks = this.roadHonkGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingHonks) {
-
-			animatingHonks.forEach(gameObject => {
-				gameObject.pop();
-				gameObject.fade();
-
-				if (gameObject.hasFaded()) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
-
-	//#endregion	
-
-	//#region PlayerBalloon
-
-	private playerBalloonSizeWidth: number = 150;
-	private playerBalloonSizeHeight: number = 150;
-	private playerCharacterTemplate: number = 0;
-
-	private player: PlayerBalloon = new PlayerBalloon(Constants.DEFAULT_CONSTRUCT_SPEED);
+	private player: PlayerRide = new PlayerRide(0);
 
 	spawnPlayerBalloon() {
 
-		this.player.disableRendering();
+		switch (this.playerRideTemplate) {
+			case PlayerRideTemplate.BALLOON: { this.player = new PlayerRide(Constants.DEFAULT_CONSTRUCT_SPEED); } break;
+			case PlayerRideTemplate.CHOPPER: { this.player = new PlayerRide(Constants.DEFAULT_CONSTRUCT_SPEED + 2); } break;
+			default: break;
+		}
 
-		//this._player.width = this.playerBalloonSizeWidth;
-		//this._player.height = this.playerBalloonSizeHeight;
-
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_BALLOON_IDLE));
-
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_RIDE_IDLE));
 		sprite.x = 0;
 		sprite.y = 0;
-		sprite.width = this.playerBalloonSizeWidth;
-		sprite.height = this.playerBalloonSizeHeight;
+		sprite.width = this.playerRideSizeWidth;
+		sprite.height = this.playerRideSizeHeight;
 		sprite.anchor.set(0.5, 0.5);
 
 		this.player.addChild(sprite);
-
-		this.player.setPlayerTemplate(this.playerCharacterTemplate);
+		this.player.setPlayerRideTemplate(this.playerRideTemplate);
+		this.player.disableRendering();
 
 		this.gameContainer.addChild(this.player);
-
 		this.spawnCastShadow(this.player);
 	}
 
@@ -2857,7 +1152,11 @@ export class GameScene extends Container implements IScene {
 	animatePlayerBalloon() {
 		this.player.pop();
 		this.player.hover();
-		this.player.dillyDally();
+
+		if (this.playerRideTemplate == PlayerRideTemplate.BALLOON) {
+			this.player.dillyDally();
+		}
+
 		this.player.depleteAttackStance();
 		this.player.depleteWinStance();
 		this.player.depleteHitStance();
@@ -2912,8 +1211,6 @@ export class GameScene extends Container implements IScene {
 			this.player.looseHealth();
 			this.player.setHitStance();
 			this.playerHealthBar.setValue(this.player.health);
-
-			//TODO: game over
 
 			if (this.player.isDead()) {
 				this.gameOver();
@@ -3425,6 +1722,1720 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region VehicleEnemys	
+
+	private vehicleEnemySizeWidth: number = 260;
+	private vehicleEnemySizeHeight: number = 260;
+
+	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
+
+	private vehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private vehicleEnemyPopDelay: number = 15;
+
+	private spawnVehicleEnemys() {
+
+		for (let j = 0; j < 10; j++) {
+
+			const gameObject: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.vehicleType = Constants.getRandomNumber(0, 1);
+
+			gameObject.disableRendering();
+
+			var uri: string = "";
+			switch (gameObject.vehicleType) {
+				case 0: {
+					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
+				} break;
+				case 1: {
+					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
+				} break;
+				default: break;
+			}
+
+			const texture = Texture.from(uri);
+			const sprite: GameObjectSprite = new GameObjectSprite(texture);
+
+			sprite.x = 0;
+			sprite.y = 0;
+
+			switch (gameObject.vehicleType) {
+				case 0: {
+					sprite.width = this.vehicleEnemySizeWidth / 1.2;
+					sprite.height = this.vehicleEnemySizeHeight / 1.2;
+				} break;
+				case 1: {
+					sprite.width = this.vehicleEnemySizeWidth;
+					sprite.height = this.vehicleEnemySizeHeight;
+				} break;
+				default: break;
+			}
+
+			sprite.anchor.set(0.5, 0.5);
+
+			gameObject.addChild(sprite);
+
+			this.vehicleEnemyGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+		}
+	}
+
+	private generateVehicleEnemys() {
+
+		if (!this.vehicleBossExists() && !this.ufoEnemyExists()) {
+			this.vehicleEnemyPopDelay -= 0.1;
+
+			if (this.vehicleEnemyPopDelay < 0) {
+
+				var gameObject = this.vehicleEnemyGameObjects.find(x => x.isAnimating == false);
+
+				if (gameObject) {
+
+					gameObject.reset();
+
+					let sprite = gameObject.getGameObjectSprite();
+
+					switch (gameObject.vehicleType) {
+						case 0: {
+							sprite.width = this.vehicleEnemySizeWidth / 1.2;
+							sprite.height = this.vehicleEnemySizeHeight / 1.2;
+						} break;
+						case 1: {
+							sprite.width = this.vehicleEnemySizeWidth;
+							sprite.height = this.vehicleEnemySizeHeight;
+						} break;
+						default: break;
+					}
+
+					if (this.anyInAirBossExists())
+						gameObject.repositionReverse();
+					else
+						gameObject.reposition();
+
+					gameObject.enableRendering();
+
+					this.vehicleEnemyPopDelay = this.vehicleEnemyPopDelayDefault;
+				}
+			}
+		}
+	}
+
+	private animateVehicleEnemys() {
+
+		var animatingVehicleEnemys = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingVehicleEnemys) {
+
+			animatingVehicleEnemys.forEach(gameObject => {
+
+				gameObject.pop();
+				gameObject.dillyDally();
+
+				if (this.anyInAirBossExists()) { // when in air bosses appear, stop the stage transition, and make the vehicles move forward
+					gameObject.moveUpLeft();
+					gameObject.moveUpLeft(); // move with double speed
+				}
+				else {
+					gameObject.moveDownRight();
+				}
+
+				// prevent overlapping				
+
+				var vehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
+
+				if (vehicles) {
+
+					vehicles.forEach(collidingVehicle => {
+
+						if (Constants.checkCollision(collidingVehicle, gameObject)) {
+
+							if (collidingVehicle.speed > gameObject.speed) // colliding vehicle is faster
+							{
+								gameObject.speed = collidingVehicle.speed;
+							}
+							else if (gameObject.speed > collidingVehicle.speed) // current vehicle is faster
+							{
+								collidingVehicle.speed = gameObject.speed;
+							}
+						}
+					});
+				}
+
+				// generate honk
+
+				let vehicleEnemy = gameObject as VehicleEnemy;
+
+				if (vehicleEnemy) {
+
+					if (vehicleEnemy.honk() && !this.ufoEnemyExists() && !this.anyInAirBossExists()) {
+						this.generateHonk(gameObject);
+					}
+				}
+
+				// recycle vehicle
+
+				if (this.anyInAirBossExists()) {
+					if (gameObject.getRight() < 0 || gameObject.getBottom() < 0) {
+						gameObject.disableRendering();
+					}
+				}
+				else {
+					if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+						gameObject.disableRendering();
+					}
+				}
+			});
+		}
+	}
+
+	private looseVehicleEnemyhealth(vehicleEnemy: VehicleEnemy) {
+
+		vehicleEnemy.setPopping();
+		vehicleEnemy.looseHealth();
+
+		if (vehicleEnemy.willHonk) {
+
+			if (vehicleEnemy.isDead()) {
+				vehicleEnemy.setBlast();
+				this.gameScoreBar.gainScore(2);
+				let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
+				let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
+
+				this.generateMessageBubble(vehicleEnemy, soundTemplate.subTitle);
+			}
+		}
+	}
+
+	//#endregion
+
+	//#region Honks	
+
+	private roadHonkSizeWidth: number = 125;
+	private roadHonkSizeHeight: number = 125;
+
+	private roadHonkGameObjects: Array<GameObjectContainer> = [];
+
+	private spawnHonks() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: Honk = new Honk(0);
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HONK));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.roadHonkSizeWidth;
+			sprite.height = this.roadHonkSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+
+			gameObject.addChild(sprite);
+
+			this.roadHonkGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+		}
+	}
+
+	private generateHonk(source: GameObjectContainer) {
+
+		if (source.getLeft() > 0 && source.getTop() > 0) {
+			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				var honk = gameObject as Honk;
+				honk.reset();
+				honk.reposition(source);
+				honk.setPopping();
+
+				gameObject.enableRendering();
+			}
+		}
+	}
+
+	private animateHonks() {
+
+		var animatingHonks = this.roadHonkGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingHonks) {
+
+			animatingHonks.forEach(gameObject => {
+				gameObject.pop();
+				gameObject.fade();
+
+				if (gameObject.hasFaded()) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion		
+
+	//#region UfoEnemys	
+
+	private ufoEnemySizeWidth: number = 165;
+	private ufoEnemySizeHeight: number = 165;
+
+	private ufoEnemyGameObjects: Array<UfoEnemy> = [];
+
+	private ufoEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private ufoEnemyPopDelay: number = 0;
+
+	private spawnUfoEnemys() {
+
+		for (let j = 0; j < 7; j++) {
+
+			const gameObject: UfoEnemy = new UfoEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+
+			const texture = Constants.getRandomTexture(ConstructType.UFO_ENEMY);
+			const sprite: GameObjectSprite = new GameObjectSprite(texture);
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.ufoEnemySizeWidth;
+			sprite.height = this.ufoEnemySizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+
+			gameObject.addChild(sprite);
+
+			this.ufoEnemyGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
+		}
+	}
+
+	private generateUfoEnemys() {
+
+		if (!this.anyBossExists() && this.ufoEnemyCheckpoint.shouldRelease(this.gameScoreBar.getScore())) {
+
+			this.ufoEnemyPopDelay -= 0.1;
+
+			if (this.ufoEnemyPopDelay < 0) {
+
+				var gameObject = this.ufoEnemyGameObjects.find(x => x.isAnimating == false);
+
+				if (gameObject) {
+
+					var ufoEnemy = gameObject as UfoEnemy;
+					ufoEnemy.reset();
+					ufoEnemy.reposition();
+
+					gameObject.enableRendering();
+
+					this.ufoEnemyPopDelay = this.ufoEnemyPopDelayDefault;
+
+					if (!this.ufoEnemyFleetAppeared) {
+
+						this.generateOnScreenMessage("Shoot the ufos!");
+						this.ufoEnemyFleetAppeared = true;
+						SoundManager.play(SoundType.UFO_ENEMY_ENTRY);
+						SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.6, true);
+					}
+				}
+			}
+		}
+	}
+
+	private animateUfoEnemys() {
+
+		var animatingUfoEnemys = this.ufoEnemyGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingUfoEnemys) {
+
+			animatingUfoEnemys.forEach(gameObject => {
+				if (gameObject.isDead()) {
+					gameObject.shrink();
+				}
+				else {
+					gameObject.pop();
+					gameObject.hover();
+					gameObject.moveDownRight();
+				}
+
+				let ufoEnemy = gameObject as UfoEnemy;
+
+				if (ufoEnemy) {
+
+					// generate honk
+
+					if (!this.anyBossExists() && ufoEnemy.honk()) {
+						this.generateHonk(gameObject);
+					}
+
+					// fire orbs
+
+					if (!this.anyBossExists() && ufoEnemy.attack()) {
+						this.generateUfoEnemyRockets(ufoEnemy);
+					}
+
+					this.generateTaunts(gameObject);
+				}
+
+				if (gameObject.hasShrinked() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	private looseUfoEnemyhealth(ufoEnemy: UfoEnemy) {
+
+		ufoEnemy.setPopping();
+		ufoEnemy.looseHealth();
+
+		if (ufoEnemy.isDead()) {
+			this.gameScoreBar.gainScore(2);
+
+			this.ufoEnemyKillCount++;
+
+			if (this.ufoEnemyKillCount > this.ufoEnemyKillCount_limit) // after killing limited enemies increase the threadhold limit
+			{
+				this.ufoEnemyCheckpoint.increaseThreasholdLimit(this.ufoEnemyReleasePoint_increase, this.gameScoreBar.getScore());
+				this.ufoEnemyKillCount = 0;
+				this.ufoEnemyFleetAppeared = false;
+
+				this.levelUp();
+
+				SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+			}
+		}
+	}
+
+	private ufoEnemyExists(): boolean {
+		var gameObject = this.ufoEnemyGameObjects.find(x => x.isAnimating == true);
+
+		if (gameObject)
+			return true;
+		else
+			return false;
+	}
+
+	//#endregion
+
+	//#region UfoEnemyRockets
+
+	private ufoEnemyRocketSizeWidth: number = 85;
+	private ufoEnemyRocketSizeHeight: number = 85;
+
+	private ufoEnemyRocketGameObjects: Array<UfoEnemyRocket> = [];
+
+	spawnUfoEnemyRockets() {
+
+		for (let j = 0; j < 7; j++) {
+
+			const gameObject: UfoEnemyRocket = new UfoEnemyRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY_ROCKET));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.ufoEnemyRocketSizeWidth;
+			sprite.height = this.ufoEnemyRocketSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.ufoEnemyRocketGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
+		}
+	}
+
+	generateUfoEnemyRockets(ufoEnemy: UfoEnemy) {
+
+		let ufoEnemyRocket = this.ufoEnemyRocketGameObjects.find(x => x.isAnimating == false);
+
+		if (ufoEnemyRocket) {
+			ufoEnemyRocket.reset();
+			ufoEnemyRocket.reposition(ufoEnemy);
+			ufoEnemyRocket.setPopping();
+			ufoEnemyRocket.enableRendering();
+		}
+	}
+
+	animateUfoEnemyRockets() {
+
+		let animatingUfoEnemyRockets = this.ufoEnemyRocketGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingUfoEnemyRockets) {
+
+			animatingUfoEnemyRockets.forEach(gameObject => {
+
+				let ufoEnemyRocket = gameObject as UfoEnemyRocket;
+				ufoEnemyRocket.moveDownRight();
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.hover();
+
+					if (Constants.checkCloseCollision(gameObject, this.player)) {
+						gameObject.setBlast();
+						this.loosePlayerHealth();
+					}
+
+					if (gameObject.autoBlast())
+						gameObject.setBlast();
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region VehicleBosss	
+
+	private vehicleBossSizeWidth: number = this.vehicleEnemySizeWidth;
+	private vehicleBossSizeHeight: number = this.vehicleEnemySizeHeight;
+
+	private vehicleBossGameObjects: Array<VehicleBoss> = [];
+
+	private spawnVehicleBosss() {
+		const gameObject: VehicleBoss = new VehicleBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
+		gameObject.vehicleType = Constants.getRandomNumber(0, 1);
+		gameObject.disableRendering();
+
+		var uri: string = "";
+		switch (gameObject.vehicleType) {
+			case 0: {
+				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
+			} break;
+			case 1: {
+				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
+			} break;
+			default: break;
+		}
+
+		const texture = Texture.from(uri);
+		const sprite: GameObjectSprite = new GameObjectSprite(texture);
+
+		sprite.x = 0;
+		sprite.y = 0;
+
+		switch (gameObject.vehicleType) {
+			case 0: {
+				sprite.width = this.vehicleBossSizeWidth / 1.2;
+				sprite.height = this.vehicleBossSizeHeight / 1.2;
+			} break;
+			case 1: {
+				sprite.width = this.vehicleBossSizeWidth;
+				sprite.height = this.vehicleBossSizeHeight;
+			} break;
+			default: break;
+		}
+
+		sprite.anchor.set(0.5, 0.5);
+
+		gameObject.addChild(sprite);
+
+		this.vehicleBossGameObjects.push(gameObject);
+		this.gameContainer.addChild(gameObject);
+	}
+
+	private generateVehicleBoss() {
+
+		if (this.vehicleBossCheckpoint.shouldRelease(this.gameScoreBar.getScore()) && !this.vehicleBossExists()) {
+
+			var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+				gameObject.reset();
+				gameObject.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
+
+				let sprite = gameObject.getGameObjectSprite();
+
+				switch (gameObject.vehicleType) {
+					case 0: {
+						sprite.width = this.vehicleBossSizeWidth / 1.2;
+						sprite.height = this.vehicleBossSizeHeight / 1.2;
+					} break;
+					case 1: {
+						sprite.width = this.vehicleBossSizeWidth;
+						sprite.height = this.vehicleBossSizeHeight;
+					} break;
+					default: break;
+				}
+
+				gameObject.reposition();
+				gameObject.enableRendering();
+
+				this.vehicleBossCheckpoint.increaseThreasholdLimit(this.vehicleBossReleasePoint_increase, this.gameScoreBar.getScore());
+
+				this.bossHealthBar.setMaximumValue(gameObject.health);
+				this.bossHealthBar.setValue(gameObject.health);
+				this.bossHealthBar.setIcon(gameObject.getGameObjectSprite().getTexture());
+
+				this.generateOnScreenMessage("Stop the crazy honker!", this.interactIcon);
+
+				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
+			}
+		}
+	}
+
+	private animateVehicleBoss() {
+
+		var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
+		let vehicleBoss: VehicleBoss = gameObject as VehicleBoss;
+
+		if (gameObject) {
+
+			gameObject.pop();
+
+			if (vehicleBoss.isDead()) {
+				vehicleBoss.moveDownRight();
+			}
+			else {
+				gameObject.dillyDally();
+				gameObject.recoverFromHealthLoss();
+
+				if (vehicleBoss.isAttacking) {
+
+					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling);
+
+					if (vehicleBoss.honk()) {
+						this.generateHonk(gameObject);
+					}
+
+					this.generateTaunts(gameObject);
+				}
+				else {
+					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false || this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 1.8))) {
+						vehicleBoss.isAttacking = true;
+					}
+				}
+			}
+
+			if (vehicleBoss.isDead() && gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				gameObject.disableRendering();
+			}
+		}
+	}
+
+	private looseVehicleBosshealth(vehicleBoss: VehicleBoss) {
+
+		vehicleBoss.setPopping();
+		vehicleBoss.looseHealth();
+
+		this.bossHealthBar.setValue(vehicleBoss.health);
+
+		if (vehicleBoss.isDead()) {
+
+			this.player.setWinStance();
+			this.gameScoreBar.gainScore(3);
+			this.levelUp();
+
+			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
+
+			this.generateMessageBubble(vehicleBoss, "I'll be back!");
+		}
+	}
+
+	private vehicleBossExists(): boolean {
+		var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
+
+		if (gameObject)
+			return true;
+		else
+			return false;
+	}
+
+	//#endregion
+
+	//#region VehicleBossRockets
+
+	private vehicleBossRocketSizeWidth: number = 90;
+	private vehicleBossRocketSizeHeight: number = 90;
+
+	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
+
+	private vehicleBossRocketPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private vehicleBossRocketPopDelay: number = 0;
+
+	spawnVehicleBossRockets() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 1.4);
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.vehicleBossRocketSizeWidth;
+			sprite.height = this.vehicleBossRocketSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.vehicleBossRocketGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
+
+			this.spawnCastShadow(gameObject);
+		}
+	}
+
+	generateVehicleBossRockets() {
+
+		let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (vehicleBoss) {
+
+			this.vehicleBossRocketPopDelay -= 0.1;
+
+			if (this.vehicleBossRocketPopDelay < 0) {
+
+				let vehicleBossRocket = this.vehicleBossRocketGameObjects.find(x => x.isAnimating == false);
+
+				if (vehicleBossRocket) {
+					vehicleBossRocket.reset();
+					vehicleBossRocket.reposition(vehicleBoss);
+					vehicleBossRocket.setPopping();
+					vehicleBossRocket.enableRendering();
+				}
+
+				this.vehicleBossRocketPopDelay = this.vehicleBossRocketPopDelayDefault;
+			}
+		}
+	}
+
+	animateVehicleBossRockets() {
+
+		let animatingVehicleBossRockets = this.vehicleBossRocketGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingVehicleBossRockets) {
+
+			animatingVehicleBossRockets.forEach(gameObject => {
+				gameObject.moveUpRight();
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.dillyDally();
+
+					if (Constants.checkCloseCollision(gameObject, this.player)) {
+						gameObject.setBlast();
+						this.loosePlayerHealth();
+					}
+
+					if (gameObject.autoBlast())
+						gameObject.setBlast();
+				}
+
+				if (gameObject.hasFaded()) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region UfoBosss	
+
+	private ufoBossSizeWidth: number = 200;
+	private ufoBossSizeHeight: number = 200;
+
+	private ufoBossGameObjects: Array<UfoBoss> = [];
+
+	private spawnUfoBosss() {
+		const gameObject: UfoBoss = new UfoBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
+		gameObject.disableRendering();
+
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_IDLE));
+
+		sprite.x = 0;
+		sprite.y = 0;
+		sprite.width = this.ufoBossSizeWidth;
+		sprite.height = this.ufoBossSizeHeight;
+
+		sprite.anchor.set(0.5, 0.5);
+
+		gameObject.addChild(sprite);
+
+		this.ufoBossGameObjects.push(gameObject);
+		this.gameContainer.addChild(gameObject);
+
+		this.spawnCastShadow(gameObject);
+	}
+
+	private generateUfoBoss() {
+
+		if (this.ufoBossCheckpoint.shouldRelease(this.gameScoreBar.getScore()) && !this.ufoBossExists()) {
+
+			var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				var ufoBoss = gameObject as UfoBoss;
+				ufoBoss.setPosition(0, ufoBoss.height * -1);
+				ufoBoss.reset();
+				ufoBoss.health = this.ufoBossCheckpoint.getReleasePointDifference() * 1.5;
+
+				gameObject.enableRendering();
+
+				this.ufoBossCheckpoint.increaseThreasholdLimit(this.ufoBossReleasePoint_increase, this.gameScoreBar.getScore());
+
+				this.bossHealthBar.setMaximumValue(ufoBoss.health);
+				this.bossHealthBar.setValue(ufoBoss.health);
+				this.bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
+
+				this.generateOnScreenMessage("Shoot the cyborg. Avoid the eye balls!", this.interactIcon);
+
+				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
+				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
+				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
+
+				//this.switchToNightMode();
+			}
+		}
+	}
+
+	private animateUfoBoss() {
+
+		var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == true);
+		let ufoBoss: UfoBoss = gameObject as UfoBoss;
+
+		if (gameObject) {
+
+			if (ufoBoss.isDead()) {
+				ufoBoss.shrink();
+			}
+			else {
+				gameObject.pop();
+				gameObject.hover();
+				ufoBoss.depleteHitStance();
+				ufoBoss.depleteWinStance();
+				ufoBoss.recoverFromHealthLoss();
+
+				if (ufoBoss.isAttacking) {
+
+					ufoBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling, this.player.getCloseBounds());
+
+					if (Constants.checkCloseCollision(this.player, ufoBoss)) {
+						this.loosePlayerHealth();
+					}
+
+					this.generateTaunts(gameObject);
+				}
+				else {
+
+					ufoBoss.moveDownRight();
+
+					if (ufoBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 3)) // bring UfoBoss to a suitable distance from player and then start attacking
+					{
+						ufoBoss.isAttacking = true;
+					}
+				}
+			}
+
+			if (ufoBoss.hasShrinked()) {
+				gameObject.disableRendering();
+			}
+		}
+	}
+
+	private looseUfoBosshealth(ufoBoss: UfoBoss) {
+
+		ufoBoss.setPopping();
+		ufoBoss.looseHealth();
+		ufoBoss.setHitStance();
+
+		this.bossHealthBar.setValue(ufoBoss.health);
+
+		if (ufoBoss.isDead()) {
+
+			this.player.setWinStance();
+			this.gameScoreBar.gainScore(3);
+			this.levelUp();
+
+			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.UFO_BOSS_DEAD);
+			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+
+			this.generateMessageBubble(ufoBoss, "My systems can not fail!");
+		}
+	}
+
+	private ufoBossExists(): boolean {
+		var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == true);
+
+		if (gameObject)
+			return true;
+		else
+			return false;
+	}
+
+	//#endregion
+
+	//#region UfoBossRockets
+
+	private ufoBossRocketSizeWidth: number = 90;
+	private ufoBossRocketSizeHeight: number = 90;
+
+	private ufoBossRocketGameObjects: Array<UfoBossRocket> = [];
+
+	private ufoBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private ufoBossRocketPopDelay: number = 0;
+
+	spawnUfoBossRockets() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: UfoBossRocket = new UfoBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.ufoBossRocketSizeWidth;
+			sprite.height = this.ufoBossRocketSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.ufoBossRocketGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
+		}
+	}
+
+	generateUfoBossRockets() {
+
+		let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (ufoBoss) {
+
+			this.ufoBossRocketPopDelay -= 0.1;
+
+			if (this.ufoBossRocketPopDelay < 0) {
+
+				let ufoBossRocket = this.ufoBossRocketGameObjects.find(x => x.isAnimating == false);
+
+				if (ufoBossRocket) {
+					ufoBossRocket.reset();
+					ufoBossRocket.reposition(ufoBoss);
+					ufoBossRocket.setPopping();
+					ufoBossRocket.enableRendering();
+
+					this.setBossRocketDirection(ufoBoss, ufoBossRocket, this.player);
+				}
+
+				this.ufoBossRocketPopDelay = this.ufoBossRocketPopDelayDefault;
+			}
+		}
+	}
+
+	animateUfoBossRockets() {
+
+		let animatingUfoBossRockets = this.ufoBossRocketGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingUfoBossRockets) {
+
+			animatingUfoBossRockets.forEach(gameObject => {
+
+				let ufoBossRocket = gameObject as UfoBossRocket;
+
+				if (ufoBossRocket.awaitMoveDownLeft) {
+					ufoBossRocket.moveDownLeft();
+				}
+				else if (ufoBossRocket.awaitMoveUpRight) {
+					ufoBossRocket.moveUpRight();
+				}
+				else if (ufoBossRocket.awaitMoveUpLeft) {
+					ufoBossRocket.moveUpLeft();
+				}
+				else if (ufoBossRocket.awaitMoveDownRight) {
+					ufoBossRocket.moveDownRight();
+				}
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.hover();
+
+					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+					if (Constants.checkCloseCollision(gameObject, this.player)) {
+						gameObject.setBlast();
+						this.loosePlayerHealth();
+						ufoBoss?.setWinStance();
+					}
+
+					if (gameObject.autoBlast())
+						gameObject.setBlast();
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	setBossRocketDirection(source: GameObjectContainer, rocket: GameObjectContainer, rocketTarget: GameObjectContainer) {
+
+		// rocket target is on the bottom right side of the UfoBoss
+		if (rocketTarget.getTop() > source.getTop() && rocketTarget.getLeft() > source.getLeft()) {
+			rocket.awaitMoveDownRight = true;
+			rocket.setRotation(33);
+		}
+		// rocket target is on the bottom left side of the UfoBoss
+		else if (rocketTarget.getTop() > source.getTop() && rocketTarget.getLeft() < source.getLeft()) {
+			rocket.awaitMoveDownLeft = true;
+			rocket.setRotation(-213);
+		}
+		// if rocket target is on the top left side of the UfoBoss
+		else if (rocketTarget.getTop() < source.getTop() && rocketTarget.getLeft() < source.getLeft()) {
+			rocket.awaitMoveUpLeft = true;
+			rocket.setRotation(213);
+		}
+		// if rocket target is on the top right side of the UfoBoss
+		else if (rocketTarget.getTop() < source.getTop() && rocketTarget.getLeft() > source.getLeft()) {
+			rocket.awaitMoveUpRight = true;
+			rocket.setRotation(-33);
+		}
+		else {
+			rocket.awaitMoveDownRight = true;
+			rocket.setRotation(33);
+		}
+	}
+
+	//#endregion
+
+	//#region UfoBossRocketSeekings
+
+	private ufoBossRocketSeekingSizeWidth: number = 90;
+	private ufoBossRocketSeekingSizeHeight: number = 90;
+
+	private ufoBossRocketSeekingGameObjects: Array<UfoBossRocketSeeking> = [];
+
+	private ufoBossRocketSeekingPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private ufoBossRocketSeekingPopDelay: number = 0;
+
+	spawnUfoBossRocketSeekings() {
+
+		for (let j = 0; j < 2; j++) {
+
+			const gameObject: UfoBossRocketSeeking = new UfoBossRocketSeeking(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET_SEEKING));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.ufoBossRocketSeekingSizeWidth;
+			sprite.height = this.ufoBossRocketSeekingSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.ufoBossRocketSeekingGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
+		}
+	}
+
+	generateUfoBossRocketSeekings() {
+
+		let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (ufoBoss) {
+
+			if (this.ufoBossRocketSeekingGameObjects.every(x => x.isAnimating == false)) {
+
+				this.ufoBossRocketSeekingPopDelay -= 0.1;
+
+				if (this.ufoBossRocketSeekingPopDelay < 0) {
+
+					let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == false);
+
+					if (ufoBossRocketSeeking) {
+						ufoBossRocketSeeking.reset();
+						ufoBossRocketSeeking.reposition(ufoBoss);
+						ufoBossRocketSeeking.setPopping();
+						ufoBossRocketSeeking.enableRendering();
+					}
+
+					this.ufoBossRocketSeekingPopDelay = this.ufoBossRocketSeekingPopDelayDefault;
+				}
+			}
+		}
+	}
+
+	animateUfoBossRocketSeekings() {
+
+		let animatingUfoBossRocketSeekings = this.ufoBossRocketSeekingGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingUfoBossRocketSeekings) {
+
+			animatingUfoBossRocketSeekings.forEach(gameObject => {
+
+				let ufoBossRocketSeeking = gameObject as UfoBossRocketSeeking;
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+					gameObject.moveDownRight();
+				}
+				else {
+
+					gameObject.pop();
+
+					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+					if (ufoBoss) {
+						ufoBossRocketSeeking.seek(this.player.getCloseBounds());
+
+						if (Constants.checkCloseCollision(gameObject, this.player)) {
+							gameObject.setBlast();
+							this.loosePlayerHealth();
+							ufoBoss.setWinStance();
+						}
+						else {
+							if (gameObject.autoBlast())
+								gameObject.setBlast();
+						}
+					}
+					else {
+						gameObject.setBlast();
+					}
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region ZombieBosss	
+
+	private zombieBossSizeWidth: number = 200;
+	private zombieBossSizeHeight: number = 200;
+
+	private zombieBossGameObjects: Array<ZombieBoss> = [];
+
+	private spawnZombieBosss() {
+		const gameObject: ZombieBoss = new ZombieBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
+		gameObject.disableRendering();
+
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_IDLE));
+
+		sprite.x = 0;
+		sprite.y = 0;
+		sprite.width = this.zombieBossSizeWidth;
+		sprite.height = this.zombieBossSizeHeight;
+
+		sprite.anchor.set(0.5, 0.5);
+
+		gameObject.addChild(sprite);
+
+		this.zombieBossGameObjects.push(gameObject);
+		this.gameContainer.addChild(gameObject);
+
+		this.spawnCastShadow(gameObject);
+	}
+
+	private generateZombieBoss() {
+
+		if (this.zombieBossCheckpoint.shouldRelease(this.gameScoreBar.getScore()) && !this.zombieBossExists()) {
+
+			var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				var zombieBoss = gameObject as ZombieBoss;
+				zombieBoss.setPosition(0, zombieBoss.height * -1);
+				zombieBoss.reset();
+				zombieBoss.health = this.zombieBossCheckpoint.getReleasePointDifference() * 1.5;
+
+				gameObject.enableRendering();
+
+				this.zombieBossCheckpoint.increaseThreasholdLimit(this.zombieBossReleasePoint_increase, this.gameScoreBar.getScore());
+
+				this.bossHealthBar.setMaximumValue(zombieBoss.health);
+				this.bossHealthBar.setValue(zombieBoss.health);
+				this.bossHealthBar.setIcon(zombieBoss.getGameObjectSprite().getTexture());
+
+				this.generateOnScreenMessage("Shoot the zombie. Avoid the cubes!", this.interactIcon);
+
+				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
+				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
+				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
+
+				//this.switchToNightMode();
+			}
+		}
+	}
+
+	private animateZombieBoss() {
+
+		var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == true);
+		let zombieBoss: ZombieBoss = gameObject as ZombieBoss;
+
+		if (gameObject) {
+
+			if (zombieBoss.isDead()) {
+				zombieBoss.shrink();
+			}
+			else {
+				gameObject.pop();
+				gameObject.hover();
+				zombieBoss.depleteHitStance();
+				zombieBoss.depleteWinStance();
+				zombieBoss.recoverFromHealthLoss();
+
+				if (zombieBoss.isAttacking) {
+
+					zombieBoss.moveUpRightDownLeft(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling);
+
+					if (Constants.checkCloseCollision(this.player, zombieBoss)) {
+						this.loosePlayerHealth();
+					}
+
+					this.generateTaunts(gameObject);
+				}
+				else {
+
+					zombieBoss.moveDownRight();
+
+					if (zombieBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 3)) // bring ZombieBoss to a suitable distance from player and then start attacking
+					{
+						zombieBoss.isAttacking = true;
+					}
+				}
+			}
+
+			if (zombieBoss.hasShrinked()) {
+				gameObject.disableRendering();
+			}
+		}
+	}
+
+	private looseZombieBosshealth(zombieBoss: ZombieBoss) {
+
+		zombieBoss.setPopping();
+		zombieBoss.looseHealth();
+		zombieBoss.setHitStance();
+
+		this.bossHealthBar.setValue(zombieBoss.health);
+
+		if (zombieBoss.isDead()) {
+
+			this.player.setWinStance();
+			this.gameScoreBar.gainScore(3);
+			this.levelUp();
+
+			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.UFO_BOSS_DEAD);
+			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+
+			this.generateMessageBubble(zombieBoss, "You can't kill the undead!");
+		}
+	}
+
+	private zombieBossExists(): boolean {
+		var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == true);
+
+		if (gameObject)
+			return true;
+		else
+			return false;
+	}
+
+	//#endregion
+
+	//#region ZombieBossRocketBlocks
+
+	private zombieBossRocketBlockSizeWidth: number = 130 * 1.1;
+	private zombieBossRocketBlockSizeHeight: number = 150 * 1.1;
+
+	private zombieBossRocketBlockGameObjects: Array<ZombieBossRocketBlock> = [];
+
+	private zombieBossRocketBlockPopDelayDefault: number = 8 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private zombieBossRocketBlockPopDelay: number = 0;
+
+	spawnZombieBossRocketBlocks() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: ZombieBossRocketBlock = new ZombieBossRocketBlock(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.zombieBossRocketBlockSizeWidth;
+			sprite.height = this.zombieBossRocketBlockSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.zombieBossRocketBlockGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
+		}
+	}
+
+	generateZombieBossRocketBlocks() {
+
+		let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (zombieBoss) {
+
+			this.zombieBossRocketBlockPopDelay -= 0.1;
+
+			if (this.zombieBossRocketBlockPopDelay < 0) {
+
+				let zombieBossRocketBlock = this.zombieBossRocketBlockGameObjects.find(x => x.isAnimating == false);
+
+				if (zombieBossRocketBlock) {
+					zombieBossRocketBlock.reset();
+					zombieBossRocketBlock.reposition();
+					zombieBossRocketBlock.setPopping();
+					zombieBossRocketBlock.enableRendering();
+				}
+
+				this.zombieBossRocketBlockPopDelay = this.zombieBossRocketBlockPopDelayDefault;
+			}
+		}
+	}
+
+	animateZombieBossRocketBlocks() {
+
+		let animatingZombieBossRocketBlocks = this.zombieBossRocketBlockGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingZombieBossRocketBlocks) {
+
+			animatingZombieBossRocketBlocks.forEach(gameObject => {
+				gameObject.moveDownRight();
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.hover();
+
+					if (Constants.checkCloseCollision(gameObject, this.player)) {
+						gameObject.setBlast();
+						this.loosePlayerHealth();
+					}
+
+					if (gameObject.autoBlast())
+						gameObject.setBlast();
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region MafiaBosss	
+
+	private mafiaBossSizeWidth: number = 200;
+	private mafiaBossSizeHeight: number = 200;
+
+	private mafiaBossGameObjects: Array<MafiaBoss> = [];
+
+	private spawnMafiaBosss() {
+		const gameObject: MafiaBoss = new MafiaBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
+		gameObject.disableRendering();
+
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_IDLE));
+
+		sprite.x = 0;
+		sprite.y = 0;
+		sprite.width = this.mafiaBossSizeWidth;
+		sprite.height = this.mafiaBossSizeHeight;
+
+		sprite.anchor.set(0.5, 0.5);
+
+		gameObject.addChild(sprite);
+
+		this.mafiaBossGameObjects.push(gameObject);
+		this.gameContainer.addChild(gameObject);
+
+		this.spawnCastShadow(gameObject);
+	}
+
+	private generateMafiaBoss() {
+
+		if (this.mafiaBossCheckpoint.shouldRelease(this.gameScoreBar.getScore()) && !this.mafiaBossExists()) {
+
+			var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				var mafiaBoss = gameObject as MafiaBoss;
+				mafiaBoss.setPosition(0, mafiaBoss.height * -1);
+				mafiaBoss.reset();
+				mafiaBoss.health = this.mafiaBossCheckpoint.getReleasePointDifference() * 1.5;
+
+				gameObject.enableRendering();
+
+				this.mafiaBossCheckpoint.increaseThreasholdLimit(this.mafiaBossReleasePoint_increase, this.gameScoreBar.getScore());
+
+				this.bossHealthBar.setMaximumValue(mafiaBoss.health);
+				this.bossHealthBar.setValue(mafiaBoss.health);
+				this.bossHealthBar.setIcon(mafiaBoss.getGameObjectSprite().getTexture());
+
+				this.generateOnScreenMessage("Shoot the mafia. Avoid the bowling balls.", this.interactIcon);
+
+				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
+				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
+				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
+
+				//this.switchToNightMode();
+			}
+		}
+	}
+
+	private animateMafiaBoss() {
+
+		var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
+		let mafiaBoss: MafiaBoss = gameObject as MafiaBoss;
+
+		if (gameObject) {
+
+			if (mafiaBoss.isDead()) {
+				mafiaBoss.shrink();
+			}
+			else {
+				gameObject.pop();
+				gameObject.hover();
+				mafiaBoss.depleteHitStance();
+				mafiaBoss.depleteWinStance();
+				mafiaBoss.recoverFromHealthLoss();
+
+				if (mafiaBoss.isAttacking) {
+
+					mafiaBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling, this.player.getCloseBounds());
+
+					if (Constants.checkCloseCollision(this.player, mafiaBoss)) {
+						this.loosePlayerHealth();
+					}
+
+					this.generateTaunts(gameObject);
+				}
+				else {
+
+					mafiaBoss.moveDownRight();
+
+					if (mafiaBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 3)) // bring MafiaBoss to a suitable distance from player and then start attacking
+					{
+						mafiaBoss.isAttacking = true;
+					}
+				}
+			}
+
+			if (mafiaBoss.hasShrinked()) {
+				gameObject.disableRendering();
+			}
+		}
+	}
+
+	private looseMafiaBosshealth(mafiaBoss: MafiaBoss) {
+
+		mafiaBoss.setPopping();
+		mafiaBoss.looseHealth();
+		mafiaBoss.setHitStance();
+
+		this.bossHealthBar.setValue(mafiaBoss.health);
+
+		if (mafiaBoss.isDead()) {
+
+			this.player.setWinStance();
+			this.gameScoreBar.gainScore(3);
+			this.levelUp();
+
+			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
+			SoundManager.play(SoundType.UFO_BOSS_DEAD);
+			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+
+			this.generateMessageBubble(mafiaBoss, "Next time, hotshot!");
+		}
+	}
+
+	private mafiaBossExists(): boolean {
+		var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
+
+		if (gameObject)
+			return true;
+		else
+			return false;
+	}
+
+	//#endregion
+
+	//#region MafiaBossRockets
+
+	private mafiaBossRocketSizeWidth: number = 90;
+	private mafiaBossRocketSizeHeight: number = 90;
+
+	private mafiaBossRocketGameObjects: Array<MafiaBossRocket> = [];
+
+	private mafiaBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private mafiaBossRocketPopDelay: number = 0;
+
+	spawnMafiaBossRockets() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: MafiaBossRocket = new MafiaBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.mafiaBossRocketSizeWidth;
+			sprite.height = this.mafiaBossRocketSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.mafiaBossRocketGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
+		}
+	}
+
+	generateMafiaBossRockets() {
+
+		let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (mafiaBoss) {
+
+			this.mafiaBossRocketPopDelay -= 0.1;
+
+			if (this.mafiaBossRocketPopDelay < 0) {
+
+				let mafiaBossRocket = this.mafiaBossRocketGameObjects.find(x => x.isAnimating == false);
+
+				if (mafiaBossRocket) {
+					mafiaBossRocket.reset();
+					mafiaBossRocket.reposition(mafiaBoss);
+					mafiaBossRocket.setPopping();
+					mafiaBossRocket.enableRendering();
+
+					this.setBossRocketDirection(mafiaBoss, mafiaBossRocket, this.player);
+				}
+
+				this.mafiaBossRocketPopDelay = this.mafiaBossRocketPopDelayDefault;
+			}
+		}
+	}
+
+	animateMafiaBossRockets() {
+
+		let animatingMafiaBossRockets = this.mafiaBossRocketGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingMafiaBossRockets) {
+
+			animatingMafiaBossRockets.forEach(gameObject => {
+
+				let mafiaBossRocket = gameObject as MafiaBossRocket;
+
+				if (mafiaBossRocket.awaitMoveDownLeft) {
+					mafiaBossRocket.moveDownLeft();
+				}
+				else if (mafiaBossRocket.awaitMoveUpRight) {
+					mafiaBossRocket.moveUpRight();
+				}
+				else if (mafiaBossRocket.awaitMoveUpLeft) {
+					mafiaBossRocket.moveUpLeft();
+				}
+				else if (mafiaBossRocket.awaitMoveDownRight) {
+					mafiaBossRocket.moveDownRight();
+				}
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.hover();
+
+					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+					if (Constants.checkCloseCollision(gameObject, this.player)) {
+						gameObject.setBlast();
+						this.loosePlayerHealth();
+						mafiaBoss?.setWinStance();
+					}
+
+					if (gameObject.autoBlast())
+						gameObject.setBlast();
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region MafiaBossRocketBullsEyes
+
+	private mafiaBossRocketBullsEyeSizeWidth: number = 90;
+	private mafiaBossRocketBullsEyeSizeHeight: number = 90;
+
+	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossRocketBullsEye> = [];
+
+	private mafiaBossRocketBullsEyePopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private mafiaBossRocketBullsEyePopDelay: number = 0;
+
+	spawnMafiaBossRocketBullsEyes() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: MafiaBossRocketBullsEye = new MafiaBossRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.mafiaBossRocketBullsEyeSizeWidth;
+			sprite.height = this.mafiaBossRocketBullsEyeSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.mafiaBossRocketBullsEyeGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+
+			this.spawnCastShadow(gameObject);
+		}
+	}
+
+	generateMafiaBossRocketBullsEyes() {
+
+		let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+		if (mafiaBoss) {
+
+			this.mafiaBossRocketBullsEyePopDelay -= 0.1;
+
+			if (this.mafiaBossRocketBullsEyePopDelay < 0) {
+
+				let mafiaBossRocketBullsEye = this.mafiaBossRocketBullsEyeGameObjects.find(x => x.isAnimating == false);
+
+				if (mafiaBossRocketBullsEye) {
+					mafiaBossRocketBullsEye.reset();
+					mafiaBossRocketBullsEye.reposition(mafiaBoss);
+					mafiaBossRocketBullsEye.setPopping();
+					mafiaBossRocketBullsEye.setTarget(this.player.getCloseBounds());
+					mafiaBossRocketBullsEye.enableRendering();
+				}
+
+				this.mafiaBossRocketBullsEyePopDelay = this.mafiaBossRocketBullsEyePopDelayDefault;
+			}
+		}
+	}
+
+	animateMafiaBossRocketBullsEyes() {
+
+		let animatingMafiaBossRocketBullsEyes = this.mafiaBossRocketBullsEyeGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingMafiaBossRocketBullsEyes) {
+
+			animatingMafiaBossRocketBullsEyes.forEach(gameObject => {
+
+				let mafiaBossRocketBullsEye = gameObject as MafiaBossRocketBullsEye;
+
+				if (gameObject.isBlasting) {
+					gameObject.expand();
+					gameObject.fade();
+					gameObject.moveDownRight();
+				}
+				else {
+
+					gameObject.pop();
+					gameObject.rotate(RotationDirection.Forward, 0, 2.5);
+
+					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+
+					if (mafiaBoss) {
+						mafiaBossRocketBullsEye.move();
+
+						if (Constants.checkCloseCollision(gameObject, this.player)) {
+							gameObject.setBlast();
+							this.loosePlayerHealth();
+							mafiaBoss.setWinStance();
+						}
+						else {
+							if (gameObject.autoBlast())
+								gameObject.setBlast();
+						}
+					}
+					else {
+						gameObject.setBlast();
+					}
+				}
+
+				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
 	//#region HealthPickups	
 
 	private healthPickupSizeWidth: number = 327 / 3;
@@ -3914,6 +3925,12 @@ export class GameScene extends Container implements IScene {
 
 		SoundManager.resume(SoundType.AMBIENCE);
 
+		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
+			case 0: { } break;
+			case 1: { SoundManager.resume(SoundType.CHOPPER_HOVERING); } break;
+			default:
+		}
+
 		if (this.onScreenMessage.isAnimating == true && this.onScreenMessage.getText() == "Game paused") {
 			this.onScreenMessage.disableRendering();
 		}
@@ -3935,6 +3952,12 @@ export class GameScene extends Container implements IScene {
 
 		if (this.ufoEnemyExists()) {
 			SoundManager.pause(SoundType.UFO_BOSS_HOVERING);
+		}
+
+		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
+			case 0: { } break;
+			case 1: { SoundManager.pause(SoundType.CHOPPER_HOVERING); } break;
+			default:
 		}
 
 		SoundManager.pause(SoundType.AMBIENCE);

@@ -1,5 +1,4 @@
 ﻿import { Container, Graphics, Text, BlurFilter, Texture } from "pixi.js";
-import { PlayerHonkBombSelectionScene } from "./PlayerHonkBombSelectionScene";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -8,6 +7,8 @@ import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
+import { PlayerRideSelectionScene } from "./PlayerRideSelectionScene";
+import { GrayscaleFilter } from "@pixi/filter-grayscale";
 
 
 export class PlayerCharacterSelectionScene extends Container implements IScene {
@@ -30,7 +31,6 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 		bg_sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
 		bg_sprite.alpha = 0.4;
-		/*bg_sprite.filters = [new BlurFilter()];*/
 
 		this.bg_container = new GameObjectContainer();
 		this.bg_container.setHoverSpeed(0.2);
@@ -55,9 +55,9 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 		player_1_sprite.y = 0;
 		const player_1_button = new Button(player_1_sprite, () => {
 			SoundManager.play(SoundType.OPTION_SELECT);
-			player_2_sprite.filters = [new BlurFilter()];
+			player_2_sprite.filters = [new BlurFilter(), new GrayscaleFilter()];
 			player_1_sprite.filters = null;
-			Constants.SELECTED_CHARACTER_TEMPLATE = 0;
+			Constants.SELECTED_PLAYER_CHARACTER_TEMPLATE = 0;
 		});
 		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width, this.sceneContainer.height / 2 - player_1_sprite.height / 2 + 10);
 		this.sceneContainer.addChild(player_1_button);
@@ -67,12 +67,16 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 		player_2_sprite.height = 256 / 1.5;
 		player_2_sprite.x = 0;
 		player_2_sprite.y = 0;
+		player_2_sprite.filters = [new GrayscaleFilter()]; // TODO: remove it after character 2 ride set creation
 		const player_2_button = new Button(player_2_sprite, () => {
-			SoundManager.play(SoundType.OPTION_SELECT);
-			player_1_sprite.filters = [new BlurFilter()];
-			player_2_sprite.filters = null;
-			Constants.SELECTED_CHARACTER_TEMPLATE = 1;
-		});
+
+			//SoundManager.play(SoundType.OPTION_SELECT);
+			//player_1_sprite.filters = [new BlurFilter()];
+			//player_2_sprite.filters = null;
+			//Constants.SELECTED_PLAYER_CHARACTER_TEMPLATE = 1;
+
+			SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
+		});		
 		player_2_button.setPosition(this.sceneContainer.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2 + 10);
 		this.sceneContainer.addChild(player_2_button);
 
@@ -81,7 +85,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 			if (player_1_sprite.filters || player_2_sprite.filters) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.sceneContainer);
-				SceneManager.changeScene(new PlayerHonkBombSelectionScene());
+				SceneManager.changeScene(new PlayerRideSelectionScene());
 			}
 			else {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);

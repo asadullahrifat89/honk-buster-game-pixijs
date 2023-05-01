@@ -17,7 +17,6 @@ export const manifest: ResolverManifest = {
 				"resume_button": "./images/resume_button.png",
 				"quit_button": "./images/quit_button.png",
 
-
 				"bang_1": "./images/bang_1.png",
 				"bang_2": "./images/bang_2.png",
 
@@ -28,9 +27,9 @@ export const manifest: ResolverManifest = {
 				"blast_1": "./images/blast_1.png",
 				"blast_2": "./images/blast_2.png",
 
-				"cloud_1": "./images/cloud_1.png",
-				"cloud_2": "./images/cloud_2.png",
-				"cloud_3": "./images/cloud_3.png",
+				//"cloud_1": "./images/cloud_1.png",
+				//"cloud_2": "./images/cloud_2.png",
+				//"cloud_3": "./images/cloud_3.png",
 
 				"cover_image": "./images/cover_image.png",
 
@@ -67,10 +66,18 @@ export const manifest: ResolverManifest = {
 				"player_1_character": "./images/player_1_character.png",
 				"player_2_character": "./images/player_2_character.png",
 
+				"player_ride_1": "./images/player_ride_1.png",
+				"player_ride_2": "./images/player_ride_2.png",
+
 				"player_balloon_1_attack": "./images/player_balloon_1_attack.png",
 				"player_balloon_1_hit": "./images/player_balloon_1_hit.png",
 				"player_balloon_1_idle": "./images/player_balloon_1_idle.png",
 				"player_balloon_1_win": "./images/player_balloon_1_win.png",
+
+				"player_chopper_1_attack": "./images/player_chopper_1_attack.png",
+				"player_chopper_1_hit": "./images/player_chopper_1_hit.png",
+				"player_chopper_1_idle": "./images/player_chopper_1_idle.png",
+				"player_chopper_1_win": "./images/player_chopper_1_win.png",
 
 				"player_balloon_2_attack": "./images/player_balloon_2_attack.png",
 				"player_balloon_2_hit": "./images/player_balloon_2_hit.png",
@@ -173,6 +180,8 @@ export const manifest: ResolverManifest = {
 				"car_honk_1": "./sounds/car_honk_1.mp3",
 				"car_honk_2": "./sounds/car_honk_2.mp3",
 				"car_honk_3": "./sounds/car_honk_3.mp3",
+
+				"chopper_hovering": "./sounds/chopper_hovering.mp3",
 
 				"cracker_blast_1": "./sounds/cracker_blast_1.mp3",
 				"cracker_blast_2": "./sounds/cracker_blast_2.mp3",

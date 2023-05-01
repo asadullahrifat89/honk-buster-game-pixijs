@@ -53,16 +53,16 @@ export enum MovementDirection {
 	Left,
 }
 
-export enum PlayerBalloonStance {
+export enum PlayerRideStance {
 	Idle,
 	Attack,
 	Hit,
 	Win,
 }
 
-export enum PlayerBalloonTemplate {
-	Blue,
-	Red,
+export enum PlayerRideTemplate {
+	BALLOON,
+	CHOPPER,
 }
 
 export enum PlayerHonkBombTemplate {
@@ -74,11 +74,11 @@ export enum ConstructType {
 	NONE,
 	GAME_COVER_IMAGE,
 
-	PLAYER_BALLOON,
-	PLAYER_BALLOON_IDLE,
-	PLAYER_BALLOON_ATTACK,
-	PLAYER_BALLOON_WIN,
-	PLAYER_BALLOON_HIT,
+	PLAYER_RIDE,
+	PLAYER_RIDE_IDLE,
+	PLAYER_RIDE_ATTACK,
+	PLAYER_RIDE_WIN,
+	PLAYER_RIDE_HIT,	
 
 	PLAYER_ROCKET,
 	PLAYER_ROCKET_SEEKING,
@@ -159,6 +159,8 @@ export enum SoundType {
 	CRACKER_DROP,
 	CRACKER_BLAST,
 
+	CHOPPER_HOVERING,
+
 	TRASH_CAN_HIT,
 
 	ROCKET_LAUNCH,
@@ -206,14 +208,18 @@ export abstract class Constants {
 	public static DEFAULT_BLAST_SHRINK_SCALE: number = 0.8;
 	public static DEFAULT_DROP_SHADOW_DISTANCE: number = 40;
 
-	public static SELECTED_CHARACTER_TEMPLATE: number = 0;
+	public static SELECTED_PLAYER_CHARACTER_TEMPLATE: number = 0;
+	public static SELECTED_PLAYER_RIDE_TEMPLATE: number = 0;
 	public static SELECTED_HONK_BUSTER_TEMPLATE: number = 0;
+
 	public static GAME_SCORE: number = 0;
 
 	private static soundsDirectory = "sounds/";
 	private static imagessDirectory = "images/";
 
 	public static SOUND_TEMPLATES: (SoundTemplate)[] = [
+
+		new SoundTemplate(SoundType.CHOPPER_HOVERING, this.soundsDirectory + "chopper_hovering.mp3"),
 
 		new SoundTemplate(SoundType.CRACKER_DROP, this.soundsDirectory + "cracker_drop_1.mp3"),
 		new SoundTemplate(SoundType.CRACKER_DROP, this.soundsDirectory + "cracker_drop_2.mp3"),
@@ -367,16 +373,23 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.HONK, this.imagessDirectory + "honk_2.png"),
 		new ConstructTemplate(ConstructType.HONK, this.imagessDirectory + "honk_3.png"),
 
-		new ConstructTemplate(ConstructType.PLAYER_BALLOON, this.imagessDirectory + "player_1_character.png"),
-		new ConstructTemplate(ConstructType.PLAYER_BALLOON_IDLE, this.imagessDirectory + "player_balloon_1_idle.png"),
-		new ConstructTemplate(ConstructType.PLAYER_BALLOON_ATTACK, this.imagessDirectory + "player_balloon_1_attack.png"),
-		new ConstructTemplate(ConstructType.PLAYER_BALLOON_WIN, this.imagessDirectory + "player_balloon_1_win.png"),
-		new ConstructTemplate(ConstructType.PLAYER_BALLOON_HIT, this.imagessDirectory + "player_balloon_1_hit.png"),
-		new ConstructTemplate(ConstructType.PLAYER_BALLOON, this.imagessDirectory + "player_2_character.png"),
-		new ConstructTemplate(ConstructType.PLAYER_BALLOON_IDLE, this.imagessDirectory + "player_balloon_2_idle.png"),
-		new ConstructTemplate(ConstructType.PLAYER_BALLOON_ATTACK, this.imagessDirectory + "player_balloon_2_attack.png"),
-		new ConstructTemplate(ConstructType.PLAYER_BALLOON_WIN, this.imagessDirectory + "player_balloon_2_win.png"),
-		new ConstructTemplate(ConstructType.PLAYER_BALLOON_HIT, this.imagessDirectory + "player_balloon_2_hit.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE, this.imagessDirectory + "player_1_character.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, this.imagessDirectory + "player_balloon_1_idle.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, this.imagessDirectory + "player_balloon_1_attack.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, this.imagessDirectory + "player_balloon_1_win.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, this.imagessDirectory + "player_balloon_1_hit.png"),
+
+		new ConstructTemplate(ConstructType.PLAYER_RIDE, this.imagessDirectory + "player_1_character.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, this.imagessDirectory + "player_chopper_1_idle.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, this.imagessDirectory + "player_chopper_1_attack.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, this.imagessDirectory + "player_chopper_1_win.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, this.imagessDirectory + "player_chopper_1_hit.png"),
+
+		new ConstructTemplate(ConstructType.PLAYER_RIDE, this.imagessDirectory + "player_2_character.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, this.imagessDirectory + "player_balloon_2_idle.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, this.imagessDirectory + "player_balloon_2_attack.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, this.imagessDirectory + "player_balloon_2_win.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, this.imagessDirectory + "player_balloon_2_hit.png"),
 
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "cracker_1.png"),
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "cracker_2.png"),
