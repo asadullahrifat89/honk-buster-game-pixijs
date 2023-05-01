@@ -1068,30 +1068,29 @@ export class GameScene extends Container implements IScene {
 					gameObject.moveUpLeft(); // move with double speed
 				}
 				else {
-
-					if (this.vehicleBossExists()) { // when vehicle boss appears, the vehicles should back up
-						gameObject.moveDownRight();
-						gameObject.moveDownRight(); // move with double speed
-					}
-					else {
-						gameObject.moveDownRight();
-					}
+					gameObject.moveDownRight();
 				}
 
-				// prevent overlapping
+				// prevent overlapping				
 
-				var collidingVehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCollision(x, gameObject));
+				var vehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
 
-				if (collidingVehicleEnemy) {
+				if (vehicles) {
 
-					if (collidingVehicleEnemy.speed > gameObject.speed) // colliding vehicle is faster
-					{
-						gameObject.speed = collidingVehicleEnemy.speed;
-					}
-					else if (gameObject.speed > collidingVehicleEnemy.speed) // current vehicle is faster
-					{
-						collidingVehicleEnemy.speed = gameObject.speed;
-					}
+					vehicles.forEach(collidingVehicle => {
+
+						if (Constants.checkCollision(collidingVehicle, gameObject)) {
+
+							if (collidingVehicle.speed > gameObject.speed) // colliding vehicle is faster
+							{
+								gameObject.speed = collidingVehicle.speed;
+							}
+							else if (gameObject.speed > collidingVehicle.speed) // current vehicle is faster
+							{
+								collidingVehicle.speed = gameObject.speed;
+							}
+						}
+					});
 				}
 
 				// generate honk
