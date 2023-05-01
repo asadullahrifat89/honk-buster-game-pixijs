@@ -460,8 +460,15 @@ export abstract class Constants {
 
 	static getRandomUri(constructType: ConstructType): string {
 
-		const treeTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == constructType);
-		const uri = treeTemplates[this.getRandomNumber(0, treeTemplates.length - 1)].uri;
+		const templates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == constructType);
+		let uri: string = "";
+
+		if (templates.length > 1) {
+			uri = templates[this.getRandomNumber(0, templates.length - 1)].uri;
+		}
+		else {
+			uri = templates[0].uri;
+		}
 
 		return uri;
 	}
@@ -475,8 +482,8 @@ export abstract class Constants {
 
 	static getRandomUriFromUris(uris: string[]): string {
 
-		const treeTemplates = uris;
-		const uri = treeTemplates[this.getRandomNumber(0, treeTemplates.length - 1)];
+		const templates = uris;
+		const uri = templates[this.getRandomNumber(0, templates.length - 1)];
 
 		return uri;
 	}
