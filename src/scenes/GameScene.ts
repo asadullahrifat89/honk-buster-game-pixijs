@@ -42,7 +42,7 @@ export class GameScene extends Container implements IScene {
 	//#region Properties
 
 	private gameController: GameController;
-	private sceneContainer: Container = new Container();
+	private gameContainer: Container;
 	private gameScoreBar: GameScoreBar;
 
 	private onScreenMessage: OnScreenMessage;
@@ -92,9 +92,14 @@ export class GameScene extends Container implements IScene {
 	constructor() {
 		super();
 
-		this.roadBackgroundDay = new Graphics().beginFill(0x4187ab, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+		this.playerTemplate = Constants.SELECTED_PLAYER_TEMPLATE;
+		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
 
+		this.roadBackgroundDay = new Graphics().beginFill(0x4187ab, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 		this.addChildAt(this.roadBackgroundDay, 0);
+
+		this.gameContainer = new Container();
+		this.addChild(this.gameContainer);
 
 		this.gameController = new GameController({
 			onPause: (isPaused) => {
@@ -109,13 +114,6 @@ export class GameScene extends Container implements IScene {
 				this.gameOver();
 			}
 		});
-
-		//this.sceneContainer.filters = [new BlurFilter(2)];
-
-		this.playerTemplate = Constants.SELECTED_PLAYER_TEMPLATE;
-		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
-
-		this.addChild(this.sceneContainer);
 
 		this.vehicleBossCheckpoint = new GameCheckpoint(this.vehicleBossReleasePoint);
 		this.ufoBossCheckpoint = new GameCheckpoint(this.ufoBossReleasePoint);
@@ -153,8 +151,6 @@ export class GameScene extends Container implements IScene {
 		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.6, true);
 		SoundManager.play(SoundType.GAME_START);
 
-		//this.sceneContainer.alpha = 0;
-
 		// progress the frames a little bit to avoid blank scene
 		for (var i = 0; i < 350; i++) {
 			this.updateFrame();
@@ -179,7 +175,7 @@ export class GameScene extends Container implements IScene {
 		gameObject.disableRendering();
 
 		this.castShadowGameObjects.push(gameObject);
-		this.sceneContainer.addChild(gameObject);
+		this.gameContainer.addChild(gameObject);
 	}
 
 	animateCastShadows() {
@@ -243,7 +239,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.roadMarksGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 		}
 	}
 
@@ -317,7 +313,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.treeTopGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 		}
 	}
 
@@ -341,7 +337,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.treeBottomGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 		}
 	}
 
@@ -575,7 +571,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.lampTopGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 		}
 	}
 
@@ -780,7 +776,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.sideWalkTopGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 		}
 	}
 
@@ -805,7 +801,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.sideWalkBottomGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 		}
 	}
 
@@ -1012,7 +1008,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.vehicleEnemyGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 		}
 	}
 
@@ -1187,7 +1183,7 @@ export class GameScene extends Container implements IScene {
 		gameObject.addChild(sprite);
 
 		this.vehicleBossGameObjects.push(gameObject);
-		this.sceneContainer.addChild(gameObject);
+		this.gameContainer.addChild(gameObject);
 	}
 
 	private generateVehicleBoss() {
@@ -1325,7 +1321,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.vehicleBossRocketGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 
@@ -1423,7 +1419,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.ufoEnemyGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -1560,7 +1556,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.ufoEnemyRocketGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -1639,7 +1635,7 @@ export class GameScene extends Container implements IScene {
 		gameObject.addChild(sprite);
 
 		this.ufoBossGameObjects.push(gameObject);
-		this.sceneContainer.addChild(gameObject);
+		this.gameContainer.addChild(gameObject);
 
 		this.spawnCastShadow(gameObject);
 	}
@@ -1780,7 +1776,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.ufoBossRocketGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -1921,7 +1917,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.ufoBossRocketSeekingGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2025,7 +2021,7 @@ export class GameScene extends Container implements IScene {
 		gameObject.addChild(sprite);
 
 		this.zombieBossGameObjects.push(gameObject);
-		this.sceneContainer.addChild(gameObject);
+		this.gameContainer.addChild(gameObject);
 
 		this.spawnCastShadow(gameObject);
 	}
@@ -2166,7 +2162,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.zombieBossRocketBlockGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2255,7 +2251,7 @@ export class GameScene extends Container implements IScene {
 		gameObject.addChild(sprite);
 
 		this.mafiaBossGameObjects.push(gameObject);
-		this.sceneContainer.addChild(gameObject);
+		this.gameContainer.addChild(gameObject);
 
 		this.spawnCastShadow(gameObject);
 	}
@@ -2396,7 +2392,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.mafiaBossRocketGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2509,7 +2505,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.mafiaBossRocketBullsEyeGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2615,7 +2611,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.roadHonkGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 		}
 	}
 
@@ -2682,7 +2678,7 @@ export class GameScene extends Container implements IScene {
 
 		this.player.setPlayerTemplate(this.playerTemplate);
 
-		this.sceneContainer.addChild(this.player);
+		this.gameContainer.addChild(this.player);
 
 		this.spawnCastShadow(this.player);
 	}
@@ -2790,7 +2786,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.setHonkBombTemplate(this.playerHonkBusterTemplate);
 
 			this.playerHonkBombGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2900,7 +2896,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.PlayerHonkBombExplosionGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 		}
 	}
 
@@ -2965,7 +2961,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.playerRocketGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3148,7 +3144,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.playerRocketBullsEyeGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3292,7 +3288,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.healthPickupGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3398,7 +3394,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.powerUpPickupGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.gameContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3570,11 +3566,6 @@ export class GameScene extends Container implements IScene {
 	//#region Scene
 
 	public update(_framesPassed: number) {
-
-		//if (this.sceneContainer.alpha < 1) {
-		//	this.sceneContainer.alpha += 0.02;
-		//}
-
 		this.updateFrame();
 	}
 
@@ -3584,7 +3575,7 @@ export class GameScene extends Container implements IScene {
 			this.gameController.pauseGame();
 		}
 		else {
-			this.sceneContainer.scale.set(scale);
+			this.gameContainer.scale.set(scale);
 			this.repositionGameScoreBar();
 			this.repositionPlayerHealthBar();
 			this.repositionBossHealthBar();
@@ -3787,7 +3778,7 @@ export class GameScene extends Container implements IScene {
 			this.onScreenMessage.disableRendering();
 		}
 
-		this.sceneContainer.filters = null;
+		this.gameContainer.filters = null;
 	}
 
 	private pauseGame() {
@@ -3810,7 +3801,7 @@ export class GameScene extends Container implements IScene {
 
 		this.generateOnScreenMessage("Game paused");
 
-		this.sceneContainer.filters = [new BlurFilter()];
+		this.gameContainer.filters = [new BlurFilter()];
 	}
 
 	private gameOver() {
@@ -3820,7 +3811,7 @@ export class GameScene extends Container implements IScene {
 		SoundManager.stop(SoundType.AMBIENCE);
 
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
-		this.removeChild(this.sceneContainer);
+		this.removeChild(this.gameContainer);
 		SceneManager.changeScene(new GameOverScene());
 	}
 

@@ -19,7 +19,7 @@ export class GameTitleScene extends Container implements IScene {
 	constructor() {
 		super();
 
-		this.sceneContainer = new GameObjectContainer(0);
+		this.sceneContainer = new GameObjectContainer();
 		this.sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		this.sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
 		this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);		
@@ -31,7 +31,7 @@ export class GameTitleScene extends Container implements IScene {
 		bg_sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
 
-		this.bg_container = new GameObjectContainer(0);
+		this.bg_container = new GameObjectContainer();
 		this.bg_container.setHoverSpeed(0.2);
 		this.bg_container.addChild(bg_sprite);
 

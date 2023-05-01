@@ -4,7 +4,7 @@ import { GameObjectContainer } from '../core/GameObjectContainer';
 
 export class CastShadow extends GameObjectContainer {
 
-	public source: GameObjectContainer = new GameObjectContainer(0);
+	public source: GameObjectContainer = new GameObjectContainer();
 
 	constructor(source: GameObjectContainer, width: number, height: number) {
 

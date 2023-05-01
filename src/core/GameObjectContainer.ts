@@ -44,7 +44,7 @@ export class GameObjectContainer extends Container {
 
 	//#region Methods
 
-	constructor(speed: number) {
+	constructor(speed: number = 0) {
 		super();
 		this.speed = speed;
 		this.cullable = true;
