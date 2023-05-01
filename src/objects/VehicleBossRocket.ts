@@ -17,6 +17,7 @@ export class VehicleBossRocket extends GameObjectContainer {
 	reset() {
 		this.alpha = 1;
 		this.scale.set(1);
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 1.4;
 
 		this.isBlasting = false;
 		this.setTexture(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));

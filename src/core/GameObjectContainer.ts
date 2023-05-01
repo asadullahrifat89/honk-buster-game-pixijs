@@ -71,8 +71,8 @@ export class GameObjectContainer extends Container {
 	}
 
 	disableRendering() {
-		this.x = -1500;
-		this.y = -1500;
+		//this.x = -1500;
+		//this.y = -1500;
 		this.renderable = false;
 		this.isAnimating = false;
 	}
