@@ -82,6 +82,8 @@ export class GameScene extends Container implements IScene {
 
 	private gameLevel: number = 0;
 	private roadBackgroundDay: Graphics;
+	private gamePauseIcon: Texture;
+	private gameHintIcon: Texture;
 
 	//#endregion
 
@@ -91,6 +93,9 @@ export class GameScene extends Container implements IScene {
 
 	constructor() {
 		super();
+
+		this.gamePauseIcon = Texture.from("./images/character_maleAdventurer_behindBack.png");
+		this.gameHintIcon = Texture.from("./images/character_maleAdventurer_talk.png");
 
 		this.playerCharacterTemplate = Constants.SELECTED_CHARACTER_TEMPLATE;
 		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
@@ -160,8 +165,8 @@ export class GameScene extends Container implements IScene {
 		}
 
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
-			case 0: { this.generateOnScreenMessage("Drop crackers on the honkers"); } break;
-			case 1: { this.generateOnScreenMessage("Drop garbage on the honkers"); } break;
+			case 0: { this.generateOnScreenMessage("Drop crackers on the honkers", this.gameHintIcon); } break;
+			case 1: { this.generateOnScreenMessage("Drop garbage on the honkers", this.gameHintIcon); } break;
 			default:
 		}
 	}
@@ -3539,15 +3544,15 @@ export class GameScene extends Container implements IScene {
 
 	//#region OnScreenMessage
 
-	private generateOnScreenMessage(title: string) {
+	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("./images/character_maleAdventurer_talk.png")) {
 		if (this.onScreenMessage.isAnimating == false) {
-			this.onScreenMessage.setTitle(title);
+			this.onScreenMessage.setTitle(title, icon);
 			this.onScreenMessage.reset();
 			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
 			this.onScreenMessage.enableRendering();
 		}
 		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
-			this.onScreenMessage.setTitle(title);
+			this.onScreenMessage.setTitle(title, icon);
 			this.onScreenMessage.reset();
 			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
 		}
@@ -3801,7 +3806,7 @@ export class GameScene extends Container implements IScene {
 
 		SoundManager.pause(SoundType.AMBIENCE);
 
-		this.generateOnScreenMessage("Game paused");
+		this.generateOnScreenMessage("Game paused", this.gamePauseIcon);
 
 		this.gameContainer.filters = [new BlurFilter()];
 	}
