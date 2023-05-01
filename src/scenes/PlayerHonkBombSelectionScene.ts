@@ -50,8 +50,8 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		this.sceneContainer.addChild(title);
 
 		const player_1_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("cracker_1"));
-		player_1_sprite.width = 329 / 2;
-		player_1_sprite.height = 329 / 2;
+		player_1_sprite.width = 300 / 2;
+		player_1_sprite.height = 300 / 2;
 		player_1_sprite.x = 0;
 		player_1_sprite.y = 0;
 		const player_1_button = new Button(player_1_sprite, () => {
@@ -60,12 +60,12 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 			player_1_sprite.filters = null;
 			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 0;
 		});
-		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width, this.sceneContainer.height / 2 - player_1_sprite.height / 2);
+		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width, this.sceneContainer.height / 2 - player_1_sprite.height / 2 + 10);
 		this.sceneContainer.addChild(player_1_button);
 
 		const player_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("trash_1"));
-		player_2_sprite.width = 329 / 2;
-		player_2_sprite.height = 329 / 2;
+		player_2_sprite.width = 300 / 2;
+		player_2_sprite.height = 300 / 2;
 		player_2_sprite.x = 0;
 		player_2_sprite.y = 0;
 		const player_2_button = new Button(player_2_sprite, () => {
@@ -74,7 +74,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 			player_2_sprite.filters = null;
 			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 1;
 		});
-		player_2_button.setPosition(this.sceneContainer.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2);
+		player_2_button.setPosition(this.sceneContainer.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2 + 10);
 		this.sceneContainer.addChild(player_2_button);
 
 		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), () => {
@@ -86,7 +86,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 			else {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
 			}
-			
+
 		}, "Select");
 		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height - button.height * 2);
 		this.sceneContainer.addChild(button);
@@ -115,7 +115,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		else {
 			this.sceneContainer.scale.set(scale);
 			this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);
-		}		
+		}
 	}
 }
 

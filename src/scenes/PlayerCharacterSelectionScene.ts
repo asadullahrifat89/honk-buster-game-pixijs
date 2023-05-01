@@ -59,7 +59,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 			player_1_sprite.filters = null;
 			Constants.SELECTED_CHARACTER_TEMPLATE = 0;
 		});
-		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width, this.sceneContainer.height / 2 - player_1_sprite.height / 2);
+		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width, this.sceneContainer.height / 2 - player_1_sprite.height / 2 + 10);
 		this.sceneContainer.addChild(player_1_button);
 
 		const player_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_2_character"));
@@ -73,7 +73,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 			player_2_sprite.filters = null;
 			Constants.SELECTED_CHARACTER_TEMPLATE = 1;
 		});
-		player_2_button.setPosition(this.sceneContainer.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2);
+		player_2_button.setPosition(this.sceneContainer.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2 + 10);
 		this.sceneContainer.addChild(player_2_button);
 
 		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), () => {
