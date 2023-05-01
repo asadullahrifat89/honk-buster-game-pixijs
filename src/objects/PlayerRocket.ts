@@ -18,7 +18,7 @@ export class PlayerRocket extends GameObjectContainer {
 		this.setTexture(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET));
 		this.scale.set(1);
 
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 2;
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 3;
 		this.isBlasting = false;
 
 		this.awaitMoveDownLeft = false;
