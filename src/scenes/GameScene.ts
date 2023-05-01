@@ -336,7 +336,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.generateMessageBubble(source, message);
-			this.generateOnScreenMessage(message, this.bossHealthBar.getIcon());
+			//this.generateOnScreenMessage(message, this.bossHealthBar.getIcon());
 
 			this.bossTauntDelay = Constants.getRandomNumber(15, 30);
 		}
@@ -3921,7 +3921,7 @@ export class GameScene extends Container implements IScene {
 
 		SoundManager.pause(SoundType.AMBIENCE);
 
-		this.generateOnScreenMessage("Game paused.", this.behindBackIcon);
+		this.generateOnScreenMessage("Game paused", this.behindBackIcon);
 
 		this.gameContainer.filters = [new BlurFilter()];
 	}

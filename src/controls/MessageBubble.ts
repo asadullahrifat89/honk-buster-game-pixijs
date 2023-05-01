@@ -23,7 +23,7 @@ export class MessageBubble extends GameObjectContainer {
 			fontFamily: "gameplay",
 			align: "center",
 			fill: "#2f3a5a",
-			fontSize: 20
+			fontSize: 22
 		});
 		this.messageText.x = 10;
 		this.messageText.y = 5;
