@@ -1,5 +1,5 @@
 ﻿import { Container, Graphics, Text, BlurFilter, Texture } from "pixi.js";
-import { Button } from "./Button";
+import { Button } from "./controls/Button";
 import { Constants, ConstructType, SoundType } from "./Constants";
 import { GameObjectContainer } from "./GameObjectContainer";
 import { GameObjectSprite } from "./GameObjectSprite";

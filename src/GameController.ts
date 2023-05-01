@@ -1,5 +1,5 @@
 ﻿import { Container, Texture } from 'pixi.js';
-import { Button } from './Button';
+import { Button } from "./controls/Button";
 import { SoundType } from './Constants';
 import { GameObjectSprite } from './GameObjectSprite';
 import { Direction, Joystick } from './Joystick';
