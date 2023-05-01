@@ -1,7 +1,7 @@
 ﻿import { ProgressBar } from "@pixi/ui";
 import { Container, Graphics, Texture } from "pixi.js";
-import { GameObjectContainer } from "./GameObjectContainer";
-import { GameObjectSprite } from "./GameObjectSprite";
+import { GameObjectContainer } from "../GameObjectContainer";
+import { GameObjectSprite } from "../GameObjectSprite";
 
 
 export class HealthBar extends Container {
