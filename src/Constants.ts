@@ -159,6 +159,8 @@ export enum SoundType {
 	CRACKER_DROP,
 	CRACKER_BLAST,
 
+	CHOPPER_HOVERING,
+
 	TRASH_CAN_HIT,
 
 	ROCKET_LAUNCH,
@@ -216,6 +218,8 @@ export abstract class Constants {
 	private static imagessDirectory = "images/";
 
 	public static SOUND_TEMPLATES: (SoundTemplate)[] = [
+
+		new SoundTemplate(SoundType.CHOPPER_HOVERING, this.soundsDirectory + "chopper_hovering.mp3"),
 
 		new SoundTemplate(SoundType.CRACKER_DROP, this.soundsDirectory + "cracker_drop_1.mp3"),
 		new SoundTemplate(SoundType.CRACKER_DROP, this.soundsDirectory + "cracker_drop_2.mp3"),
