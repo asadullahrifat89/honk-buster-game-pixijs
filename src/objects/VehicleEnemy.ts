@@ -1,7 +1,6 @@
-﻿import { Constants, ConstructType, SoundType } from '../Constants';
+﻿import { Constants, ConstructType } from '../Constants';
 import { VehicleBase } from './VehicleBase';
 import { GrayscaleFilter } from '@pixi/filter-grayscale';
-import { SoundManager } from '../managers/SoundManager';
 import { Texture } from 'pixi.js';
 
 export class VehicleEnemy extends VehicleBase {
@@ -40,7 +39,7 @@ export class VehicleEnemy extends VehicleBase {
 			this.health = this.hitPoint * Constants.getRandomNumber(0, 1);
 			this.setHonkDelay();
 			this.setDillyDallySpeed(Constants.getRandomNumber(0.1, 0.3));
-		}		
+		}
 	}
 
 	looseHealth() {
@@ -52,7 +51,6 @@ export class VehicleEnemy extends VehicleBase {
 		this.speed = this.speed * 1.4;
 		this.filters = [this.grayScaleFilter];
 		this.setDillyDallySpeed(0);
-		SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
 	}
 }
 

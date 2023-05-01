@@ -16,7 +16,7 @@ export class SoundObjectPlayer {
 		return this.soundObjects.some(x => x.isPlaying());
 	}
 
-	play() {
+	play(): number {
 		this.soundObjects.forEach(audioObject => {
 			if (audioObject.isPlaying() && audioObject.isLooping())
 				audioObject.stop();
@@ -27,6 +27,8 @@ export class SoundObjectPlayer {
 
 		if (audioObject)
 			audioObject.play();
+
+		return index;
 	}
 
 	pause() {

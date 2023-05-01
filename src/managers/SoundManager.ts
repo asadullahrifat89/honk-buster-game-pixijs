@@ -14,16 +14,16 @@ export class SoundManager {
 		}
 	}
 
-	public static play(soundType: SoundType, volume: number = 1, loop: boolean = false) {
+	public static play(soundType: SoundType, volume: number = 1, loop: boolean = false): number {
 		var soundObjectPlayer = this.soundObjectPlayers.find(x => x.soundType == soundType);
 
 		if (soundObjectPlayer) {
-			soundObjectPlayer.play();
+			return soundObjectPlayer.play();
 		}
 		else {
 			let soundObjectPlayer = new SoundObjectPlayer(soundType, volume, loop);
 			this.soundObjectPlayers.push(soundObjectPlayer);
-			soundObjectPlayer.play();
+			return soundObjectPlayer.play();
 		}
 	}
 

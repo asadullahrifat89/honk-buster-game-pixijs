@@ -4,7 +4,7 @@ import { Constants, ConstructType, PlayerHonkBombTemplate, PowerUpType, Rotation
 import { GameOverScene } from "./GameOverScene";
 import { IScene } from "../managers/IScene";
 import { GameController } from "../controls/GameController";
-import { OnScreenMessage } from "../core/OnScreenMessage";
+import { OnScreenMessage } from "../controls/OnScreenMessage";
 import { GameScoreBar } from "../controls/GameScoreBar";
 import { GameCheckpoint } from "../core/GameCheckpoint";
 import { HealthBar } from "../controls/HealthBar";
@@ -34,6 +34,8 @@ import { PlayerRocketBullsEye } from "../objects/PlayerRocketBullsEye";
 import { PowerUpPickup } from "../objects/PowerUpPickup";
 import { ZombieBoss } from "../objects/ZombieBoss";
 import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
+import { SoundTemplate } from "../core/SoundTemplate";
+import { MessageBubble } from "../controls/MessageBubble";
 
 
 
@@ -82,6 +84,12 @@ export class GameScene extends Container implements IScene {
 
 	private gameLevel: number = 0;
 	private roadBackgroundDay: Graphics;
+	private behindBackIcon: Texture;
+	private talkIcon: Texture;
+	private cheerIcon: Texture;
+	private interactIcon: Texture;
+
+	private honkBustReactions: SoundTemplate[] = [];
 
 	//#endregion
 
@@ -91,6 +99,13 @@ export class GameScene extends Container implements IScene {
 
 	constructor() {
 		super();
+
+		this.honkBustReactions = Constants.SOUND_TEMPLATES.filter(x => x.soundType == SoundType.HONK_BUST_REACTION);
+
+		this.behindBackIcon = Texture.from("./images/character_maleAdventurer_behindBack.png");
+		this.cheerIcon = Texture.from("./images/character_maleAdventurer_cheer0.png");
+		this.talkIcon = Texture.from("./images/character_maleAdventurer_talk.png");
+		this.interactIcon = Texture.from("./images/character_maleAdventurer_interact.png");
 
 		this.playerCharacterTemplate = Constants.SELECTED_CHARACTER_TEMPLATE;
 		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
@@ -160,8 +175,8 @@ export class GameScene extends Container implements IScene {
 		}
 
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
-			case 0: { this.generateOnScreenMessage("Drop crackers on the honkers"); } break;
-			case 1: { this.generateOnScreenMessage("Drop garbage on the honkers"); } break;
+			case 0: { this.generateOnScreenMessage("Drop crackers on 'em honkers!", this.talkIcon); } break;
+			case 1: { this.generateOnScreenMessage("Drop trash cans on 'em honkers!", this.talkIcon); } break;
 			default:
 		}
 	}
@@ -205,6 +220,125 @@ export class GameScene extends Container implements IScene {
 				if (dropShadow.isAnimating)
 					dropShadow.disableRendering();
 			});
+		}
+	}
+
+	//#endregion
+
+	//#region MessageBubbles
+
+	private messageBubbleGameObjects: Array<MessageBubble> = [];
+
+	private spawnMessageBubbles() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: MessageBubble = new MessageBubble(0);
+			gameObject.disableRendering();
+
+			this.messageBubbleGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+		}
+	}
+
+	private generateMessageBubble(source: GameObjectContainer, message: string) {
+
+		if (source.getLeft() > 0 && source.getTop() > 0) {
+			var gameObject = this.messageBubbleGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				var messageBubble = gameObject as MessageBubble;
+				messageBubble.reset();
+				messageBubble.reposition(source, message);
+				messageBubble.setPopping();
+
+				gameObject.enableRendering();
+			}
+		}
+	}
+
+	private animateMessageBubbles() {
+
+		var animatingMessageBubbles = this.messageBubbleGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingMessageBubbles) {
+
+			animatingMessageBubbles.forEach(gameObject => {
+				gameObject.pop();
+				gameObject.depleteOnScreenDelay();
+				gameObject.move();
+
+				if (gameObject.isDepleted()) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region OnScreenMessage
+
+	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("./images/character_maleAdventurer_talk.png")) {
+		if (this.onScreenMessage.isAnimating == false) {
+			this.onScreenMessage.setContent(title, icon);
+			this.onScreenMessage.reset();
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+			this.onScreenMessage.enableRendering();
+		}
+		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
+			this.onScreenMessage.setContent(title, icon);
+			this.onScreenMessage.reset();
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+		}
+	}
+
+	private animateOnScreenMessage() {
+
+		if (this.onScreenMessage.isAnimating == true) {
+
+			this.onScreenMessage.depleteOnScreenDelay();
+
+			if (this.onScreenMessage.isDepleted()) {
+				this.onScreenMessage.disableRendering();
+			}
+		}
+	}
+
+	//#endregion
+
+	//#region BossTaunts
+
+	private bossTauntDelay: number = 15
+	private vehicleBossTaunts: string[] = ["Catch me if you can!", "Too slow!", "You're no match for me!", "Let's see how you do.", "I am the boss!"];
+	private ufoBossTaunts: string[] = ["You have met your doom.", "My logic is undeniable.", "You can't beat me!", "Ha! ha! ha! ha! ha!", "I am the boss!"];
+	private zombieBossTaunts: string[] = ["You belong to the dead!", "I have arisen!", "You shall meet your grave", "Darkness awaits you!", "I am the boss!"];
+	private mafiaBossTaunts: string[] = ["You are in big trouble now!", "Hah! crawl back to your hole!", "You're no match for me!", "You will go down!", "I am the boss!"];
+
+	private generateBossTaunts(source: GameObjectContainer) {
+		this.bossTauntDelay -= 0.1;
+
+		if (this.bossTauntDelay <= 0) {
+
+			let message: string = "";
+
+			if (this.vehicleBossExists())
+				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.vehicleBossTaunts.length - 1)];
+			else if (this.ufoBossExists()) {
+				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.ufoBossTaunts.length - 1)];
+			}
+			else if (this.zombieBossExists()) {
+				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.zombieBossTaunts.length - 1)];
+			}
+			else if (this.mafiaBossExists()) {
+				message = this.vehicleBossTaunts[Constants.getRandomNumber(0, this.mafiaBossTaunts.length - 1)];
+			}
+
+			this.generateMessageBubble(source, message);
+			this.generateOnScreenMessage(message, this.bossHealthBar.getIcon());
+
+			this.bossTauntDelay = Constants.getRandomNumber(15, 30);
 		}
 	}
 
@@ -773,7 +907,7 @@ export class GameScene extends Container implements IScene {
 				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
 
 				sprite.width = this.sideWalkWidth;
-				sprite.height = this.sideWalkHeight;				
+				sprite.height = this.sideWalkHeight;
 
 				gameObject.addChild(sprite);
 			}
@@ -798,7 +932,7 @@ export class GameScene extends Container implements IScene {
 				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
 
 				sprite.width = this.sideWalkWidth;
-				sprite.height = this.sideWalkHeight;				
+				sprite.height = this.sideWalkHeight;
 
 				gameObject.addChild(sprite);
 			}
@@ -1006,7 +1140,7 @@ export class GameScene extends Container implements IScene {
 				default: break;
 			}
 
-			sprite.anchor.set(0.5, 0.5);			
+			sprite.anchor.set(0.5, 0.5);
 
 			gameObject.addChild(sprite);
 
@@ -1133,6 +1267,10 @@ export class GameScene extends Container implements IScene {
 			if (vehicleEnemy.isDead()) {
 				vehicleEnemy.setBlast();
 				this.gameScoreBar.gainScore(2);
+				let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
+				let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
+
+				this.generateMessageBubble(vehicleEnemy, soundTemplate.subTitle);
 			}
 		}
 	}
@@ -1221,7 +1359,7 @@ export class GameScene extends Container implements IScene {
 				this.bossHealthBar.setValue(gameObject.health);
 				this.bossHealthBar.setIcon(gameObject.getGameObjectSprite().getTexture());
 
-				this.generateOnScreenMessage("Crazy Honker Arrived");
+				this.generateOnScreenMessage("Stop the crazy honker!", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
@@ -1252,6 +1390,7 @@ export class GameScene extends Container implements IScene {
 						this.generateHonk(gameObject);
 					}
 
+					this.generateBossTaunts(gameObject);
 				}
 				else {
 					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false || this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 1.8))) {
@@ -1449,7 +1588,7 @@ export class GameScene extends Container implements IScene {
 
 					if (!this.ufoEnemyFleetAppeared) {
 
-						this.generateOnScreenMessage("Beware of UFO Fleet");
+						this.generateOnScreenMessage("Shoot the ufos!");
 						this.ufoEnemyFleetAppeared = true;
 						SoundManager.play(SoundType.UFO_ENEMY_ENTRY);
 						SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.6, true);
@@ -1663,7 +1802,7 @@ export class GameScene extends Container implements IScene {
 				this.bossHealthBar.setValue(ufoBoss.health);
 				this.bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
 
-				this.generateOnScreenMessage("Scarlet Saucer Arrived");
+				this.generateOnScreenMessage("Shoot the cyborg. Avoid the eye balls!", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
@@ -1698,6 +1837,8 @@ export class GameScene extends Container implements IScene {
 					if (Constants.checkCloseCollision(this.player, ufoBoss)) {
 						this.loosePlayerHealth();
 					}
+
+					this.generateBossTaunts(gameObject);
 				}
 				else {
 
@@ -2049,7 +2190,7 @@ export class GameScene extends Container implements IScene {
 				this.bossHealthBar.setValue(zombieBoss.health);
 				this.bossHealthBar.setIcon(zombieBoss.getGameObjectSprite().getTexture());
 
-				this.generateOnScreenMessage("Zombie Blocks Arrived");
+				this.generateOnScreenMessage("Shoot the zombie. Avoid the cubes!", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
@@ -2084,6 +2225,8 @@ export class GameScene extends Container implements IScene {
 					if (Constants.checkCloseCollision(this.player, zombieBoss)) {
 						this.loosePlayerHealth();
 					}
+
+					this.generateBossTaunts(gameObject);
 				}
 				else {
 
@@ -2279,7 +2422,7 @@ export class GameScene extends Container implements IScene {
 				this.bossHealthBar.setValue(mafiaBoss.health);
 				this.bossHealthBar.setIcon(mafiaBoss.getGameObjectSprite().getTexture());
 
-				this.generateOnScreenMessage("Beware of Crimson Mafia");
+				this.generateOnScreenMessage("Shoot the mafia. Avoid the bowling balls.", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
@@ -2314,6 +2457,8 @@ export class GameScene extends Container implements IScene {
 					if (Constants.checkCloseCollision(this.player, mafiaBoss)) {
 						this.loosePlayerHealth();
 					}
+
+					this.generateBossTaunts(gameObject);
 				}
 				else {
 
@@ -3473,7 +3618,7 @@ export class GameScene extends Container implements IScene {
 									this.powerUpMeter.setMaximumValue(20);
 									this.powerUpMeter.setValue(20);
 
-									this.generateOnScreenMessage("Bylls Eye +20");
+									this.generateOnScreenMessage("Bylls Eye +20", this.cheerIcon);
 								}
 								break;
 							case PowerUpType.ARMOR:
@@ -3481,7 +3626,7 @@ export class GameScene extends Container implements IScene {
 									this.powerUpMeter.setMaximumValue(10);
 									this.powerUpMeter.setValue(10);
 
-									this.generateOnScreenMessage("Armor +10");
+									this.generateOnScreenMessage("Armor +10", this.cheerIcon);
 								}
 								break;
 							default:
@@ -3537,34 +3682,6 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region OnScreenMessage
-
-	private generateOnScreenMessage(title: string) {
-		if (this.onScreenMessage.isAnimating == false) {
-			this.onScreenMessage.setTitle(title);
-			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height / 2);
-			this.onScreenMessage.enableRendering();
-		}
-		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
-			this.onScreenMessage.setTitle(title);
-			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height / 2);
-		}
-	}
-
-	private animateOnScreenMessage() {
-		if (this.onScreenMessage.isAnimating == true) {
-			this.onScreenMessage.depleteOnScreenDelay();
-
-			if (this.onScreenMessage.isDepleted()) {
-				this.onScreenMessage.disableRendering();
-			}
-		}
-	}
-
-	//#endregion
-
 	//#region Scene
 
 	public update(_framesPassed: number) {
@@ -3601,7 +3718,7 @@ export class GameScene extends Container implements IScene {
 
 	private levelUp() {
 		this.gameLevel++;
-		this.generateOnScreenMessage("LEVEL " + this.gameLevel.toString() + " COMPLETE");
+		this.generateOnScreenMessage("Level " + this.gameLevel.toString() + " Complete", this.cheerIcon);
 		SoundManager.play(SoundType.LEVEL_UP);
 	}
 
@@ -3648,6 +3765,8 @@ export class GameScene extends Container implements IScene {
 
 		this.spawnHealthPickups();
 		this.spawnPowerUpPickups();
+
+		this.spawnMessageBubbles();
 
 		//this.spawnUnderCityTop();
 
@@ -3748,6 +3867,7 @@ export class GameScene extends Container implements IScene {
 
 		//this.animateClouds();
 		this.animateOnScreenMessage();
+		this.animateMessageBubbles();
 	}
 
 	private anyBossExists(): boolean {
@@ -3801,7 +3921,7 @@ export class GameScene extends Container implements IScene {
 
 		SoundManager.pause(SoundType.AMBIENCE);
 
-		this.generateOnScreenMessage("Game paused");
+		this.generateOnScreenMessage("Game paused.", this.behindBackIcon);
 
 		this.gameContainer.filters = [new BlurFilter()];
 	}
