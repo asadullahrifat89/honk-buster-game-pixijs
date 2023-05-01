@@ -1,7 +1,7 @@
 import type { ResolverManifest } from "pixi.js";
 
 export const manifest: ResolverManifest = {
-	bundles: [		
+	bundles: [
 		{
 			name: "fontsBundle",
 			assets: {
@@ -43,13 +43,13 @@ export const manifest: ResolverManifest = {
 				"enemy_3": "./images/enemy_3.png",
 				"enemy_4": "./images/enemy_4.png",
 
-				"enemy_bomb": "./images/enemy_bomb.png",				
+				"enemy_bomb": "./images/enemy_bomb.png",
 
 				"health_pickup": "./images/health_pickup.png",
 
 				"honk_1": "./images/honk_1.png",
 				"honk_2": "./images/honk_2.png",
-				"honk_3": "./images/honk_3.png",				
+				"honk_3": "./images/honk_3.png",
 
 				"joystick": "./images/joystick.png",
 				"joystick_handle": "./images/joystick_handle.png",
@@ -147,7 +147,7 @@ export const manifest: ResolverManifest = {
 				"vehicle_small_10": "./images/vehicle_small_10.png",
 				"vehicle_small_11": "./images/vehicle_small_11.png",
 				"vehicle_small_12": "./images/vehicle_small_12.png",
-				"vehicle_small_13": "./images/vehicle_small_13.png",				
+				"vehicle_small_13": "./images/vehicle_small_13.png",
 
 				"zombie_boss_1_hit": "./images/zombie_boss_1_hit.png",
 				"zombie_boss_1_idle": "./images/zombie_boss_1_idle.png",
@@ -161,32 +161,44 @@ export const manifest: ResolverManifest = {
 		{
 			name: "soundsBundle",
 			assets: {
-				"option_select": "./sounds/option_select.mp3",
 
-				"game_over": "./sounds/game_over.mp3",
-				"game_pause": "./sounds/game_pause.mp3",
-				"game_start": "./sounds/game_start.mp3",
+				"ambience_1": "./sounds/ambience_1.mp3",
+				"ambience_2": "./sounds/ambience_2.mp3",
+				"ambience_3": "./sounds/ambience_3.mp3",
 
-				"level_up": "./sounds/level_up.mp3",
-
-				"power_up_pickup_1": "./sounds/power_up_pickup_1.mp3",
-				"health_pickup_1": "./sounds/health_pickup_1.mp3",
+				"boss_background_music_1": "./sounds/boss_background_music_1.mp3",
+				"boss_background_music_2": "./sounds/boss_background_music_2.mp3",
+				"boss_background_music_3": "./sounds/boss_background_music_3.mp3",
 
 				"car_honk_1": "./sounds/car_honk_1.mp3",
 				"car_honk_2": "./sounds/car_honk_2.mp3",
 				"car_honk_3": "./sounds/car_honk_3.mp3",
-
-				"cracker_drop_1": "./sounds/cracker_drop_1.mp3",
-				"cracker_drop_2": "./sounds/cracker_drop_2.mp3",
 
 				"cracker_blast_1": "./sounds/cracker_blast_1.mp3",
 				"cracker_blast_2": "./sounds/cracker_blast_2.mp3",
 				"cracker_blast_3": "./sounds/cracker_blast_3.mp3",
 				"cracker_blast_4": "./sounds/cracker_blast_4.mp3",
 
-				"trashcan_hit_1": "./sounds/trashcan_hit_1.mp3",
-				"trashcan_hit_2": "./sounds/trashcan_hit_2.mp3",
-				"trashcan_hit_3": "./sounds/trashcan_hit_3.mp3",				
+				"cracker_drop_1": "./sounds/cracker_drop_1.mp3",
+				"cracker_drop_2": "./sounds/cracker_drop_2.mp3",
+
+				"game_background_music_1": "./sounds/game_background_music_1.mp3",
+				"game_background_music_2": "./sounds/game_background_music_2.mp3",
+				"game_background_music_3": "./sounds/game_background_music_3.mp3",
+
+				"game_over": "./sounds/game_over.mp3",
+				"game_pause": "./sounds/game_pause.mp3",
+				"game_start": "./sounds/game_start.mp3",
+
+				"health_pickup_1": "./sounds/health_pickup_1.mp3",
+
+				"level_up": "./sounds/level_up.mp3",
+
+				"option_select": "./sounds/option_select.mp3",
+				"orb_launch": "./sounds/orb_launch.mp3",
+
+				"player_health_loss_1": "./sounds/player_health_loss_1.mp3",
+				"power_up_pickup_1": "./sounds/power_up_pickup_1.mp3",
 
 				"rocket_blast_1": "./sounds/rocket_blast_1.mp3",
 				"rocket_blast_2": "./sounds/rocket_blast_2.mp3",
@@ -196,11 +208,12 @@ export const manifest: ResolverManifest = {
 				"rocket_launch_2": "./sounds/rocket_launch_2.mp3",
 				"rocket_launch_3": "./sounds/rocket_launch_3.mp3",
 
-				"orb_launch": "./sounds/orb_launch.mp3",
+				"seeker_rocket_launch_1": "./sounds/seeker_rocket_launch_1.mp3",
+				"seeker_rocket_launch_2": "./sounds/seeker_rocket_launch_2.mp3",
 
-				"ambience_1": "./sounds/ambience_1.mp3",
-				"ambience_2": "./sounds/ambience_2.mp3",
-				"ambience_3": "./sounds/ambience_3.mp3",	
+				"trashcan_hit_1": "./sounds/trashcan_hit_1.mp3",
+				"trashcan_hit_2": "./sounds/trashcan_hit_2.mp3",
+				"trashcan_hit_3": "./sounds/trashcan_hit_3.mp3",
 
 				"ufo_boss_dead_1": "./sounds/ufo_boss_dead_1.mp3",
 				"ufo_boss_dead_2": "./sounds/ufo_boss_dead_2.mp3",
