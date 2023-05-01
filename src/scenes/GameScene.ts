@@ -42,7 +42,7 @@ export class GameScene extends Container implements IScene {
 	//#region Properties
 
 	private gameController: GameController;
-	private gameContainer: Container;
+	private gameContainer: GameObjectContainer;
 	private gameScoreBar: GameScoreBar;
 
 	private onScreenMessage: OnScreenMessage;
@@ -98,7 +98,7 @@ export class GameScene extends Container implements IScene {
 		this.roadBackgroundDay = new Graphics().beginFill(0x4187ab, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 		this.addChildAt(this.roadBackgroundDay, 0);
 
-		this.gameContainer = new Container();
+		this.gameContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
 		this.addChild(this.gameContainer);
 
 		this.gameController = new GameController({
