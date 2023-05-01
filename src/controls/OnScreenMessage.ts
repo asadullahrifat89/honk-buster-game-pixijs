@@ -1,5 +1,5 @@
 ﻿import { Container, Graphics, Text, Texture } from "pixi.js";
-import { GameObjectSprite } from "./GameObjectSprite";
+import { GameObjectSprite } from "../core/GameObjectSprite";
 
 
 export class OnScreenMessage {
@@ -15,7 +15,7 @@ export class OnScreenMessage {
 
 	constructor(scene: Container) {
 		this.messageAuthor = new GameObjectSprite(Texture.from("./images/character_maleAdventurer_talk.png"));
-		this.messageAuthor.width = 192 / 1.5;
+		this.messageAuthor.width = 256 / 1.5;
 		this.messageAuthor.height = 256 / 1.5;
 		this.messageAuthor.x = 0;
 		this.messageAuthor.y = 0;
@@ -31,7 +31,7 @@ export class OnScreenMessage {
 		this.messageText = new Text("", {
 			fontFamily: "gameplay",
 			align: "center",
-			fill: "#ffffff",
+			fill: "#2f3a5a",
 			fontSize: 24
 		});
 		this.messageText.x = this.messageAuthor.width / 1.5;
@@ -84,7 +84,7 @@ export class OnScreenMessage {
 	}
 
 	private drawMessageGraphics(): Graphics {
-		return new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0x2f3a5a).drawRoundedRect(0, 0, this.messageText.width + 25, 40, 4).endFill();
+		return new Graphics().beginFill(0xffffff).lineStyle(4, 0x2f3a5a).drawRoundedRect(0, 0, this.messageText.width + 25, 40, 4).endFill();
 	}
 }
 

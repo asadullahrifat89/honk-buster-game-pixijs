@@ -9,7 +9,7 @@ export class MessageBubble extends GameObjectContainer {
 	private messageGraphics: Graphics;
 	private messageText: Text;
 	private messageOnScreenDelay: number = 0;
-	private readonly messageOnScreenDelayDefault: number = 10;
+	private readonly messageOnScreenDelayDefault: number = 15;
 
 	constructor(speed: number) {
 		super(speed);
@@ -22,7 +22,7 @@ export class MessageBubble extends GameObjectContainer {
 		this.messageText = new Text("", {
 			fontFamily: "gameplay",
 			align: "center",
-			fill: "#ffffff",
+			fill: "#2f3a5a",
 			fontSize: 19
 		});
 		this.messageText.x = 10;
@@ -51,14 +51,14 @@ export class MessageBubble extends GameObjectContainer {
 		this.messageGraphics = this.drawMessageGraphics();
 		this.messageContainer.addChildAt(this.messageGraphics, 0);
 
-		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 40);
+		this.move();
 	}
 
 	move() {
-		this.setPosition(this.source.x, this.source.y - this.messageContainer.height);
+		this.setPosition(this.source.x + this.source.width / 2, this.source.y - this.messageContainer.height);
 	}
 
 	private drawMessageGraphics(): Graphics {
-		return new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0x2f3a5a).drawRoundedRect(0, 0, this.messageText.width + 25, 35, 4).endFill();
+		return new Graphics().beginFill(0xffffff).lineStyle(4, 0x2f3a5a).drawRoundedRect(0, 0, this.messageText.width + 25, 35, 4).endFill();
 	}
 }

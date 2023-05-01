@@ -10,12 +10,14 @@ export class HealthBar extends Container {
 	private iconContainer: GameObjectContainer;
 	private maximumHealth: number = 0;
 	private value: number = 100;
+	private icon: Texture;
 
 	public tag: any;
 
 	constructor(icon: Texture, scene: Container) {
 		super();
 
+		this.icon = icon;
 		this.width = 100;
 		this.height = 30;
 
@@ -24,9 +26,9 @@ export class HealthBar extends Container {
 
 		this.progressBar = new ProgressBar();
 		this.progressBar.width = 58;
-		this.progressBar.height = 10;		
+		this.progressBar.height = 10;
 
-		this.progressBar.setBackground(new Graphics().beginFill(0xd9e2e9).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 0, 58, 20, 2).endFill());	
+		this.progressBar.setBackground(new Graphics().beginFill(0xd9e2e9).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 0, 58, 20, 2).endFill());
 
 		this.progressBar.setFill(new Graphics().beginFill(0xf73e3e).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 0, 58, 20, 2).endFill());
 
@@ -77,6 +79,10 @@ export class HealthBar extends Container {
 
 	getValue(): number {
 		return this.value;
+	}
+
+	getIcon(): Texture {
+		return this.icon;
 	}
 
 	getProgress(): number {
