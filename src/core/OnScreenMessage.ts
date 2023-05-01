@@ -26,7 +26,7 @@ export class OnScreenMessage {
 
 		this.messageContainer.addChild(this.messageAuthor);
 
-		this.messageGraphics = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0x2f3a5a).drawRoundedRect(0, 0, 250, 40, 4).endFill();
+		this.messageGraphics = new Graphics();
 		this.messageGraphics.x = this.messageAuthor.width / 1.8;
 		this.messageContainer.addChild(this.messageGraphics);
 
@@ -71,7 +71,7 @@ export class OnScreenMessage {
 		this.messageAuthor.setTexture(icon);
 
 		this.messageContainer.removeChild(this.messageGraphics);
-		this.messageGraphics = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0x2f3a5a).drawRoundedRect(0, 0, this.messageText.width + 25, 40, 4).endFill();
+		this.messageGraphics = this.drawMessageGraphics();
 		this.messageGraphics.x = this.messageAuthor.width / 1.8;
 		this.messageContainer.addChildAt(this.messageGraphics, 0);
 	}
@@ -83,5 +83,9 @@ export class OnScreenMessage {
 
 	getText(): string {
 		return this.messageText.text;
+	}
+
+	private drawMessageGraphics(): Graphics {
+		return new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0x2f3a5a).drawRoundedRect(0, 0, this.messageText.width + 25, 40, 4).endFill();
 	}
 }
