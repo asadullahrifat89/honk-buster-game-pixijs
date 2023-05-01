@@ -1,6 +1,6 @@
 ﻿import { Constants, ConstructType, PlayerHonkBombTemplate, SoundType } from './Constants';
 import { GameObjectContainer } from './GameObjectContainer';
-import { SoundManager } from './SoundManager';
+import { SoundManager } from './managers/SoundManager';
 
 
 export class PlayerHonkBomb extends GameObjectContainer {

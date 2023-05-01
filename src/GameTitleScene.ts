@@ -6,8 +6,8 @@ import { GameObjectSprite } from "./GameObjectSprite";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "./IScene";
 import { PlayerCharacterSelectionScene } from "./PlayerCharacterSelectionScene";
-import { SceneManager } from "./SceneManager";
-import { SoundManager } from "./SoundManager";
+import { SceneManager } from "./managers/SceneManager";
+import { SoundManager } from "./managers/SoundManager";
 
 
 export class GameTitleScene extends Container implements IScene {

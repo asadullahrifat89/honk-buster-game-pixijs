@@ -1,7 +1,7 @@
 ﻿import { Constants, ConstructType, SoundType } from './Constants';
 import { GameObjectContainer } from './GameObjectContainer';
-import { SceneManager } from './SceneManager';
-import { SoundManager } from './SoundManager';
+import { SceneManager } from './managers/SceneManager';
+import { SoundManager } from './managers/SoundManager';
 
 
 export class ZombieBossRocketBlock extends GameObjectContainer {

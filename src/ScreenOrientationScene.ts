@@ -1,6 +1,6 @@
 ﻿import { Container, Text } from "pixi.js";
 import { IScene } from "./IScene";
-import { SceneManager } from "./SceneManager";
+import { SceneManager } from "./managers/SceneManager";
 import { GameTitleScene } from "./GameTitleScene";
 
 

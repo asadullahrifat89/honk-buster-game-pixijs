@@ -6,8 +6,8 @@ import { GameObjectSprite } from "./GameObjectSprite";
 import { GameScene } from "./GameScene";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "./IScene";
-import { SceneManager } from "./SceneManager";
-import { SoundManager } from "./SoundManager";
+import { SceneManager } from "./managers/SceneManager";
+import { SoundManager } from "./managers/SoundManager";
 
 
 export class PlayerHonkBombSelectionScene extends Container implements IScene {

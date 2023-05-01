@@ -1,7 +1,7 @@
 import { Container, Graphics, Assets, Text } from "pixi.js";
 import { manifest } from "./assets";
 import { IScene } from "./IScene";
-import { SceneManager } from "./SceneManager";
+import { SceneManager } from "./managers/SceneManager";
 import { GameTitleScene } from "./GameTitleScene";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 

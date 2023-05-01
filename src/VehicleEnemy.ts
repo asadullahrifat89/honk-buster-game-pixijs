@@ -1,7 +1,7 @@
 ﻿import { Constants, ConstructType, SoundType } from './Constants';
 import { VehicleBase } from './VehicleBase';
 import { GrayscaleFilter } from '@pixi/filter-grayscale';
-import { SoundManager } from './SoundManager';
+import { SoundManager } from './managers/SoundManager';
 import { Texture } from 'pixi.js';
 
 export class VehicleEnemy extends VehicleBase {

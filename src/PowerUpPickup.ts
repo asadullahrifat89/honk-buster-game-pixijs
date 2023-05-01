@@ -1,6 +1,6 @@
 ﻿import { Constants, ConstructType, PowerUpType, SoundType } from './Constants';
 import { GameObjectContainer } from './GameObjectContainer';
-import { SoundManager } from './SoundManager';
+import { SoundManager } from './managers/SoundManager';
 
 
 export class PowerUpPickup extends GameObjectContainer {

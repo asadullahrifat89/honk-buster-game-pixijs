@@ -1,6 +1,6 @@
 ﻿import { SoundType } from './Constants';
 import { GameObjectContainer } from './GameObjectContainer';
-import { SoundManager } from './SoundManager';
+import { SoundManager } from './managers/SoundManager';
 
 
 export class HealthPickup extends GameObjectContainer {

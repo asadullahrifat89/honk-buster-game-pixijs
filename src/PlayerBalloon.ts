@@ -2,7 +2,7 @@
 import { Constants, ConstructType, MovementDirection, PlayerBalloonStance, PlayerBalloonTemplate, RotationDirection, SoundType } from './Constants';
 import { GameController } from './GameController';
 import { GameObjectContainer } from './GameObjectContainer';
-import { SoundManager } from './SoundManager';
+import { SoundManager } from './managers/SoundManager';
 
 
 export class PlayerBalloon extends GameObjectContainer {

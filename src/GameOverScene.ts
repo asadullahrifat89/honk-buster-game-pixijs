@@ -5,9 +5,9 @@ import { GameObjectContainer } from "./GameObjectContainer";
 import { GameObjectSprite } from "./GameObjectSprite";
 import { IScene } from "./IScene";
 import { PlayerCharacterSelectionScene } from "./PlayerCharacterSelectionScene";
-import { SceneManager } from "./SceneManager";
+import { SceneManager } from "./managers/SceneManager";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
-import { SoundManager } from "./SoundManager";
+import { SoundManager } from "./managers/SoundManager";
 
 
 export class GameOverScene extends Container implements IScene {

@@ -1,5 +1,5 @@
 import { Application } from "pixi.js";
-import { IScene } from "./IScene";
+import { IScene } from "../IScene";
 
 export class SceneManager {
 

@@ -3,8 +3,8 @@ import { Button } from './Button';
 import { SoundType } from './Constants';
 import { GameObjectSprite } from './GameObjectSprite';
 import { Direction, Joystick } from './Joystick';
-import { SceneManager } from './SceneManager';
-import { SoundManager } from './SoundManager';
+import { SceneManager } from './managers/SceneManager';
+import { SoundManager } from './managers/SoundManager';
 
 export interface GameControllerSettings {
 	onPause?: (isPaused: boolean) => void;

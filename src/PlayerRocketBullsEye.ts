@@ -2,7 +2,7 @@
 import { Constants, ConstructType, SoundType } from './Constants';
 import { GameObjectContainer } from './GameObjectContainer';
 import { SeekingRocketBase } from './SeekingRocketBase';
-import { SoundManager } from './SoundManager';
+import { SoundManager } from './managers/SoundManager';
 
 
 export class PlayerRocketBullsEye extends SeekingRocketBase {
