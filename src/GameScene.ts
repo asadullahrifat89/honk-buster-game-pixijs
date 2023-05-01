@@ -10,7 +10,7 @@ import { GameController } from "./GameController";
 import { SceneManager } from "./managers/SceneManager";
 import { PlayerHonkBomb } from "./PlayerHonkBomb";
 import { GameScoreBar } from "./controls/GameScoreBar";
-import { GameCheckpoint } from "./GameCheckpoint";
+import { GameCheckpoint } from "./core/GameCheckpoint";
 import { VehicleBoss } from "./VehicleBoss";
 import { OnScreenMessage } from "./OnScreenMessage";
 import { VehicleBossRocket } from "./VehicleBossRocket";
