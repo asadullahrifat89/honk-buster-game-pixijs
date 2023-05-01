@@ -34,7 +34,8 @@ import { PlayerRocketBullsEye } from "../objects/PlayerRocketBullsEye";
 import { PowerUpPickup } from "../objects/PowerUpPickup";
 import { ZombieBoss } from "../objects/ZombieBoss";
 import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
-import { MessageBubble } from "../core/MessageBubble";
+import { SoundTemplate } from "../core/SoundTemplate";
+import { MessageBubble } from "../controls/MessageBubble";
 
 
 
@@ -88,6 +89,8 @@ export class GameScene extends Container implements IScene {
 	private cheerIcon: Texture;
 	private interactIcon: Texture;
 
+	private honkBustReactions: SoundTemplate[] = [];
+
 	//#endregion
 
 	//#region Methods
@@ -96,6 +99,8 @@ export class GameScene extends Container implements IScene {
 
 	constructor() {
 		super();
+
+		this.honkBustReactions = Constants.SOUND_TEMPLATES.filter(x => x.soundType == SoundType.HONK_BUST_REACTION);
 
 		this.behindBackIcon = Texture.from("./images/character_maleAdventurer_behindBack.png");
 		this.cheerIcon = Texture.from("./images/character_maleAdventurer_cheer0.png");
@@ -220,7 +225,7 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region MessageBubble
+	//#region MessageBubbles
 
 	private messageBubbleGameObjects: Array<MessageBubble> = [];
 
@@ -1196,7 +1201,10 @@ export class GameScene extends Container implements IScene {
 			if (vehicleEnemy.isDead()) {
 				vehicleEnemy.setBlast();
 				this.gameScoreBar.gainScore(2);
-				this.generateMessageBubble(vehicleEnemy, "Oh no!");
+				let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
+				let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
+
+				this.generateMessageBubble(vehicleEnemy, soundTemplate.subTitle);
 			}
 		}
 	}

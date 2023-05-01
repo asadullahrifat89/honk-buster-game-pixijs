@@ -1,15 +1,15 @@
 ﻿import { Container, Graphics, Text } from "pixi.js";
-import { GameObjectContainer } from "./GameObjectContainer";
+import { GameObjectContainer } from "../core/GameObjectContainer";
 
 
 export class MessageBubble extends GameObjectContainer {
 
-	public source: GameObjectContainer = new GameObjectContainer();
+	private source: GameObjectContainer = new GameObjectContainer();
 	private messageContainer: Container;
 	private messageGraphics: Graphics;
 	private messageText: Text;
 	private messageOnScreenDelay: number = 0;
-	private readonly messageOnScreenDelayDefault: number = 20;
+	private readonly messageOnScreenDelayDefault: number = 10;
 
 	constructor(speed: number) {
 		super(speed);
