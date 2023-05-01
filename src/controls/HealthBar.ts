@@ -13,7 +13,7 @@ export class HealthBar extends Container {
 
 	public tag: any;
 
-	constructor(texture: Texture, scene: Container) {
+	constructor(icon: Texture, scene: Container) {
 		super();
 
 		this.width = 100;
@@ -26,9 +26,9 @@ export class HealthBar extends Container {
 		this.progressBar.width = 58;
 		this.progressBar.height = 10;		
 
-		this.progressBar.setBackground(new Graphics().beginFill(0xd9e2e9).lineStyle(3, 0xffffff).drawRoundedRect(0, 0, 58, 20, 2).endFill());	
+		this.progressBar.setBackground(new Graphics().beginFill(0xd9e2e9).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 0, 58, 20, 2).endFill());	
 
-		this.progressBar.setFill(new Graphics().beginFill(0xf73e3e).lineStyle(3, 0xffffff).drawRoundedRect(0, 0, 58, 20, 2).endFill());
+		this.progressBar.setFill(new Graphics().beginFill(0xf73e3e).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 0, 58, 20, 2).endFill());
 
 		this.progressBar.progress = 0;
 		this.progressBar.x = 37;
@@ -37,7 +37,7 @@ export class HealthBar extends Container {
 
 		this.iconContainer = new GameObjectContainer();
 
-		let iconSprite: GameObjectSprite = new GameObjectSprite(texture);
+		let iconSprite: GameObjectSprite = new GameObjectSprite(icon);
 		iconSprite.width = 33;
 		iconSprite.height = 33;
 		iconSprite.x = 0;

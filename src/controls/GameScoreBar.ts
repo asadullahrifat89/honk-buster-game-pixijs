@@ -23,7 +23,7 @@ export class GameScoreBar {
 
 		this.scoreContainer = new Container();
 
-		const graphics = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 2.5, 80, 30, 3).endFill();
+		const graphics = new Graphics().beginFill(0x5FC4F8).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 2.5, 80, 30, 3).endFill();
 		this.scoreContainer.addChild(graphics);
 
 		this.scoreText.x = 10;
