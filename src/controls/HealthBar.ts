@@ -40,7 +40,7 @@ export class HealthBar extends Container {
 		let iconSprite: GameObjectSprite = new GameObjectSprite(texture);
 		iconSprite.width = 33;
 		iconSprite.height = 33;
-		iconSprite.x = 1;
+		iconSprite.x = 0;
 		iconSprite.y = 2;
 		this.iconContainer.addChild(iconSprite);
 
