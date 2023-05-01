@@ -34,6 +34,7 @@ import { PlayerRocketBullsEye } from "../objects/PlayerRocketBullsEye";
 import { PowerUpPickup } from "../objects/PowerUpPickup";
 import { ZombieBoss } from "../objects/ZombieBoss";
 import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
+import { MessageBubble } from "../core/MessageBubble";
 
 
 
@@ -98,7 +99,7 @@ export class GameScene extends Container implements IScene {
 
 		this.behindBackIcon = Texture.from("./images/character_maleAdventurer_behindBack.png");
 		this.cheerIcon = Texture.from("./images/character_maleAdventurer_cheer0.png");
-		this.talkIcon = Texture.from("./images/character_maleAdventurer_talk.png");		
+		this.talkIcon = Texture.from("./images/character_maleAdventurer_talk.png");
 		this.interactIcon = Texture.from("./images/character_maleAdventurer_interact.png");
 
 		this.playerCharacterTemplate = Constants.SELECTED_CHARACTER_TEMPLATE;
@@ -213,6 +214,59 @@ export class GameScene extends Container implements IScene {
 			nonAnimatingCastShadows.forEach(dropShadow => {
 				if (dropShadow.isAnimating)
 					dropShadow.disableRendering();
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region MessageBubble
+
+	private messageBubbleGameObjects: Array<MessageBubble> = [];
+
+	private spawnMessageBubbles() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: MessageBubble = new MessageBubble(0);
+			gameObject.disableRendering();
+
+			this.messageBubbleGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+		}
+	}
+
+	private generateMessageBubble(source: GameObjectContainer, message: string) {
+
+		if (source.getLeft() > 0 && source.getTop() > 0) {
+			var gameObject = this.messageBubbleGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+
+				var messageBubble = gameObject as MessageBubble;
+				messageBubble.reset();
+				messageBubble.reposition(source, message);
+				messageBubble.setPopping();
+
+				gameObject.enableRendering();
+			}
+		}
+	}
+
+	private animateMessageBubbles() {
+
+		var animatingMessageBubbles = this.messageBubbleGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingMessageBubbles) {
+
+			animatingMessageBubbles.forEach(gameObject => {
+				gameObject.pop();
+				gameObject.depleteOnScreenDelay();
+				gameObject.move();
+
+				if (gameObject.isDepleted()) {
+					gameObject.disableRendering();
+				}
 			});
 		}
 	}
@@ -1142,6 +1196,7 @@ export class GameScene extends Container implements IScene {
 			if (vehicleEnemy.isDead()) {
 				vehicleEnemy.setBlast();
 				this.gameScoreBar.gainScore(2);
+				this.generateMessageBubble(vehicleEnemy, "Oh no!");
 			}
 		}
 	}
@@ -1231,6 +1286,7 @@ export class GameScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(gameObject.getGameObjectSprite().getTexture());
 
 				this.generateOnScreenMessage("Stop the crazy honker!", this.interactIcon);
+				this.generateMessageBubble(gameObject, "Catch me if you can!");
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.8, true);
@@ -3658,6 +3714,8 @@ export class GameScene extends Container implements IScene {
 		this.spawnHealthPickups();
 		this.spawnPowerUpPickups();
 
+		this.spawnMessageBubbles();
+
 		//this.spawnUnderCityTop();
 
 		//this.spawnClouds();
@@ -3757,6 +3815,7 @@ export class GameScene extends Container implements IScene {
 
 		//this.animateClouds();
 		this.animateOnScreenMessage();
+		this.animateMessageBubbles();
 	}
 
 	private anyBossExists(): boolean {
