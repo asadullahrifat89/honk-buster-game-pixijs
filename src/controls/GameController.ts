@@ -1,10 +1,10 @@
 ﻿import { Container, Texture } from 'pixi.js';
-import { Button } from "./controls/Button";
-import { SoundType } from './Constants';
-import { GameObjectSprite } from './core/GameObjectSprite';
+import { SoundType } from '../Constants';
+import { GameObjectSprite } from '../core/GameObjectSprite';
+import { SceneManager } from '../managers/SceneManager';
+import { SoundManager } from '../managers/SoundManager';
+import { Button } from './Button';
 import { Direction, Joystick } from './Joystick';
-import { SceneManager } from './managers/SceneManager';
-import { SoundManager } from './managers/SoundManager';
 
 export interface GameControllerSettings {
 	onPause?: (isPaused: boolean) => void;

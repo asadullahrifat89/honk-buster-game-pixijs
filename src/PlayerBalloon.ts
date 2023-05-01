@@ -1,6 +1,6 @@
 ﻿import { Texture } from 'pixi.js';
 import { Constants, ConstructType, MovementDirection, PlayerBalloonStance, PlayerBalloonTemplate, RotationDirection, SoundType } from './Constants';
-import { GameController } from './GameController';
+import { GameController } from './controls/GameController';
 import { GameObjectContainer } from './core/GameObjectContainer';
 import { SoundManager } from './managers/SoundManager';
 

@@ -6,7 +6,7 @@ import { Constants, ConstructType, PlayerHonkBombTemplate, PowerUpType, Rotation
 import { VehicleEnemy } from "./VehicleEnemy";
 import { Honk } from "./Honk";
 import { PlayerBalloon } from "./PlayerBalloon";
-import { GameController } from "./GameController";
+import { GameController } from "./controls/GameController";
 import { SceneManager } from "./managers/SceneManager";
 import { PlayerHonkBomb } from "./PlayerHonkBomb";
 import { GameScoreBar } from "./controls/GameScoreBar";
