@@ -1,6 +1,6 @@
 import { BlurFilter, Container, Graphics, Texture } from "pixi.js";
 import { GameObjectContainer } from '../core/GameObjectContainer';
-import { Constants, ConstructType, PlayerHonkBombTemplate, PowerUpType, RotationDirection, SoundType } from '../Constants';
+import { Constants, ConstructType, PlayerHonkBombTemplate, PlayerRideTemplate, PowerUpType, RotationDirection, SoundType } from '../Constants';
 import { GameOverScene } from "./GameOverScene";
 import { IScene } from "../managers/IScene";
 import { GameController } from "../controls/GameController";
@@ -177,6 +177,12 @@ export class GameScene extends Container implements IScene {
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
 			case 0: { this.generateOnScreenMessage("Drop crackers on 'em honkers!", this.talkIcon); } break;
 			case 1: { this.generateOnScreenMessage("Drop trash cans on 'em honkers!", this.talkIcon); } break;
+			default:
+		}
+
+		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
+			case 0: { } break;
+			case 1: { SoundManager.play(SoundType.CHOPPER_HOVERING, 0.1, true); } break;
 			default:
 		}
 	}
@@ -2818,33 +2824,32 @@ export class GameScene extends Container implements IScene {
 
 	//#region PlayerRide
 
-	private playerBalloonSizeWidth: number = 150;
-	private playerBalloonSizeHeight: number = 150;
+	private playerRideSizeWidth: number = 150;
+	private playerRideSizeHeight: number = 150;
 	private playerRideTemplate: number = 0;
 
-	private player: PlayerRide = new PlayerRide(Constants.DEFAULT_CONSTRUCT_SPEED);
+	private player: PlayerRide = new PlayerRide(0);
 
 	spawnPlayerBalloon() {
 
-		this.player.disableRendering();
-
-		//this._player.width = this.playerBalloonSizeWidth;
-		//this._player.height = this.playerBalloonSizeHeight;
+		switch (this.playerRideTemplate) {
+			case PlayerRideTemplate.BALLOON: { this.player = new PlayerRide(Constants.DEFAULT_CONSTRUCT_SPEED); } break;
+			case PlayerRideTemplate.CHOPPER: { this.player = new PlayerRide(Constants.DEFAULT_CONSTRUCT_SPEED + 2); } break;
+			default: break;
+		}
 
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_RIDE_IDLE));
-
 		sprite.x = 0;
 		sprite.y = 0;
-		sprite.width = this.playerBalloonSizeWidth;
-		sprite.height = this.playerBalloonSizeHeight;
+		sprite.width = this.playerRideSizeWidth;
+		sprite.height = this.playerRideSizeHeight;
 		sprite.anchor.set(0.5, 0.5);
 
 		this.player.addChild(sprite);
-
 		this.player.setPlayerRideTemplate(this.playerRideTemplate);
+		this.player.disableRendering();
 
 		this.gameContainer.addChild(this.player);
-
 		this.spawnCastShadow(this.player);
 	}
 
@@ -2857,7 +2862,11 @@ export class GameScene extends Container implements IScene {
 	animatePlayerBalloon() {
 		this.player.pop();
 		this.player.hover();
-		this.player.dillyDally();
+
+		if (this.playerRideTemplate == PlayerRideTemplate.BALLOON) {
+			this.player.dillyDally();
+		}
+
 		this.player.depleteAttackStance();
 		this.player.depleteWinStance();
 		this.player.depleteHitStance();
@@ -3912,6 +3921,12 @@ export class GameScene extends Container implements IScene {
 
 		SoundManager.resume(SoundType.AMBIENCE);
 
+		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
+			case 0: { } break;
+			case 1: { SoundManager.resume(SoundType.CHOPPER_HOVERING); } break;
+			default:
+		}
+
 		if (this.onScreenMessage.isAnimating == true && this.onScreenMessage.getText() == "Game paused") {
 			this.onScreenMessage.disableRendering();
 		}
@@ -3933,6 +3948,12 @@ export class GameScene extends Container implements IScene {
 
 		if (this.ufoEnemyExists()) {
 			SoundManager.pause(SoundType.UFO_BOSS_HOVERING);
+		}
+
+		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
+			case 0: { } break;
+			case 1: { SoundManager.pause(SoundType.CHOPPER_HOVERING); } break;
+			default:
 		}
 
 		SoundManager.pause(SoundType.AMBIENCE);
