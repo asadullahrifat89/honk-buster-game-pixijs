@@ -3550,13 +3550,13 @@ export class GameScene extends Container implements IScene {
 
 	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("./images/character_maleAdventurer_talk.png")) {
 		if (this.onScreenMessage.isAnimating == false) {
-			this.onScreenMessage.setTitle(title, icon);
+			this.onScreenMessage.setContent(title, icon);
 			this.onScreenMessage.reset();
 			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
 			this.onScreenMessage.enableRendering();
 		}
 		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
-			this.onScreenMessage.setTitle(title, icon);
+			this.onScreenMessage.setContent(title, icon);
 			this.onScreenMessage.reset();
 			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
 		}

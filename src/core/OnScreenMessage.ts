@@ -14,9 +14,6 @@ export class OnScreenMessage {
 	private readonly messageOnScreenDelayDefault: number = 20;
 
 	constructor(scene: Container) {
-
-		this.messageContainer = new Container();
-
 		this.messageAuthor = new GameObjectSprite(Texture.from("./images/character_maleAdventurer_talk.png"));
 		this.messageAuthor.width = 192 / 1.5;
 		this.messageAuthor.height = 256 / 1.5;
@@ -24,6 +21,7 @@ export class OnScreenMessage {
 		this.messageAuthor.y = 0;
 		this.messageAuthor.anchor.set(0.5);
 
+		this.messageContainer = new Container();
 		this.messageContainer.addChild(this.messageAuthor);
 
 		this.messageGraphics = new Graphics();
@@ -66,8 +64,8 @@ export class OnScreenMessage {
 		return this.messageOnScreenDelay <= 0;;
 	}
 
-	setTitle(title: string, icon: Texture) {
-		this.messageText.text = title;
+	setContent(message: string, icon: Texture) {
+		this.messageText.text = message;
 		this.messageAuthor.setTexture(icon);
 
 		this.messageContainer.removeChild(this.messageGraphics);
@@ -89,3 +87,4 @@ export class OnScreenMessage {
 		return new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0x2f3a5a).drawRoundedRect(0, 0, this.messageText.width + 25, 40, 4).endFill();
 	}
 }
+
