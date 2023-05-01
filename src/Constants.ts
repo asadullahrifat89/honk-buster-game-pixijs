@@ -206,7 +206,7 @@ export abstract class Constants {
 	public static DEFAULT_BLAST_SHRINK_SCALE: number = 0.8;
 	public static DEFAULT_DROP_SHADOW_DISTANCE: number = 40;
 
-	public static SELECTED_PLAYER_TEMPLATE: number = 0;
+	public static SELECTED_CHARACTER_TEMPLATE: number = 0;
 	public static SELECTED_HONK_BUSTER_TEMPLATE: number = 0;
 	public static GAME_SCORE: number = 0;
 
@@ -356,9 +356,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_10.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_11.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_12.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_13.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_14.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_15.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_13.png"),		
 
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_1.png"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_2.png"),

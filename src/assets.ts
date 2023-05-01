@@ -147,9 +147,7 @@ export const manifest: ResolverManifest = {
 				"vehicle_small_10": "./images/vehicle_small_10.png",
 				"vehicle_small_11": "./images/vehicle_small_11.png",
 				"vehicle_small_12": "./images/vehicle_small_12.png",
-				"vehicle_small_13": "./images/vehicle_small_13.png",
-				"vehicle_small_14": "./images/vehicle_small_14.png",
-				"vehicle_small_15": "./images/vehicle_small_15.png",
+				"vehicle_small_13": "./images/vehicle_small_13.png",				
 
 				"zombie_boss_1_hit": "./images/zombie_boss_1_hit.png",
 				"zombie_boss_1_idle": "./images/zombie_boss_1_idle.png",

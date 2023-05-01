@@ -92,10 +92,13 @@ export class GameScene extends Container implements IScene {
 	constructor() {
 		super();
 
-		this.playerTemplate = Constants.SELECTED_PLAYER_TEMPLATE;
+		this.playerCharacterTemplate = Constants.SELECTED_CHARACTER_TEMPLATE;
 		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
 
-		this.roadBackgroundDay = new Graphics().beginFill(0x4187ab, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+		let colors: number[] = [0x1e2a36, 0x4187ab]
+		let color = colors[Constants.getRandomNumber(0, 1)];
+		this.roadBackgroundDay = new Graphics().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+
 		this.addChildAt(this.roadBackgroundDay, 0);
 
 		this.gameContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
@@ -770,7 +773,7 @@ export class GameScene extends Container implements IScene {
 				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
 
 				sprite.width = this.sideWalkWidth;
-				sprite.height = this.sideWalkHeight;
+				sprite.height = this.sideWalkHeight;				
 
 				gameObject.addChild(sprite);
 			}
@@ -795,7 +798,7 @@ export class GameScene extends Container implements IScene {
 				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
 
 				sprite.width = this.sideWalkWidth;
-				sprite.height = this.sideWalkHeight;
+				sprite.height = this.sideWalkHeight;				
 
 				gameObject.addChild(sprite);
 			}
@@ -957,8 +960,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region VehicleEnemys	
 
-	private vehicleEnemySizeWidth: number = 242;
-	private vehicleEnemySizeHeight: number = 242;
+	private vehicleEnemySizeWidth: number = 260;
+	private vehicleEnemySizeHeight: number = 260;
 
 	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
 
@@ -1003,7 +1006,7 @@ export class GameScene extends Container implements IScene {
 				default: break;
 			}
 
-			sprite.anchor.set(0.5, 0.5);
+			sprite.anchor.set(0.5, 0.5);			
 
 			gameObject.addChild(sprite);
 
@@ -1138,8 +1141,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region VehicleBosss	
 
-	private vehicleBossSizeWidth: number = 242;
-	private vehicleBossSizeHeight: number = 242;
+	private vehicleBossSizeWidth: number = this.vehicleEnemySizeWidth;
+	private vehicleBossSizeHeight: number = this.vehicleEnemySizeHeight;
 
 	private vehicleBossGameObjects: Array<VehicleBoss> = [];
 
@@ -2654,7 +2657,7 @@ export class GameScene extends Container implements IScene {
 
 	private playerBalloonSizeWidth: number = 150;
 	private playerBalloonSizeHeight: number = 150;
-	private playerTemplate: number = 0;
+	private playerCharacterTemplate: number = 0;
 
 	private player: PlayerBalloon = new PlayerBalloon(Constants.DEFAULT_CONSTRUCT_SPEED);
 
@@ -2675,7 +2678,7 @@ export class GameScene extends Container implements IScene {
 
 		this.player.addChild(sprite);
 
-		this.player.setPlayerTemplate(this.playerTemplate);
+		this.player.setPlayerTemplate(this.playerCharacterTemplate);
 
 		this.gameContainer.addChild(this.player);
 

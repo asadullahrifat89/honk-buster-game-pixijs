@@ -4,7 +4,7 @@ import { GameObjectSprite } from '../core/GameObjectSprite';
 import { SceneManager } from '../managers/SceneManager';
 import { SoundManager } from '../managers/SoundManager';
 import { Button } from './Button';
-import { Direction, Joystick } from './Joystick';
+import { Direction, Joystick, JoystickChangeEvent } from './Joystick';
 
 export interface GameControllerSettings {
 	onPause?: (isPaused: boolean) => void;
@@ -66,9 +66,13 @@ export class GameController extends Container {
 			}
 		});
 
+		let glowSpriteSize = 85;
+
+		// pause button
+
 		const pauseButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
-		pauseButtonSpritebg.height = 100;
-		pauseButtonSpritebg.width = 100;
+		pauseButtonSpritebg.height = glowSpriteSize;
+		pauseButtonSpritebg.width = glowSpriteSize;
 
 		this.pauseButtonSprite = new GameObjectSprite(Texture.from("pause_button"));
 		this.pauseButtonSprite.height = 50;
@@ -89,9 +93,11 @@ export class GameController extends Container {
 		this.setPauseButtonPosition();
 		this.addChild(this.pauseButton);
 
+		// quit button
+
 		const quitButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
-		quitButtonSpritebg.height = 100;
-		quitButtonSpritebg.width = 100;
+		quitButtonSpritebg.height = glowSpriteSize;
+		quitButtonSpritebg.width = glowSpriteSize;
 
 		const quitButtonSprite = new GameObjectSprite(Texture.from("quit_button"));
 		quitButtonSprite.height = 50;
@@ -110,6 +116,31 @@ export class GameController extends Container {
 		this.quitButton.renderable = false;
 		this.addChild(this.quitButton);
 
+		// attack button
+
+		const attackButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
+		attackButtonSpritebg.height = 110;
+		attackButtonSpritebg.width = 110;
+
+		const attackButtonSprite: GameObjectSprite = new GameObjectSprite(Texture.from("attack_button"));
+		attackButtonSprite.height = 65;
+		attackButtonSprite.width = 65;
+		attackButtonSprite.x = attackButtonSpritebg.width / 2 - attackButtonSprite.width / 2;
+		attackButtonSprite.y = attackButtonSpritebg.height / 2 - attackButtonSprite.height / 2;
+
+		const attackButtonGraphics = new Container();
+		attackButtonGraphics.addChild(attackButtonSpritebg);
+		attackButtonGraphics.addChild(attackButtonSprite);
+
+		this.attackButton = new Button(attackButtonGraphics, () => {
+			if (!this.isPaused) {
+				this.isAttacking = true;
+			}
+		});
+		this.setAttackButtonPosition();
+		this.addChild(this.attackButton);
+
+		// joystick thumb
 		const joystickOuterSprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick"));
 		joystickOuterSprite.height = 278;
 		joystickOuterSprite.width = 278;
@@ -129,59 +160,7 @@ export class GameController extends Container {
 
 			onChange: (data) => {
 				if (!this.isPaused) {
-					this.power = data.power;
-
-					switch (data.direction) {
-						case Direction.TOP: {
-							this.isMoveUp = true;
-							this.isMoveLeft = false;
-							this.isMoveDown = false;
-							this.isMoveRight = false;
-						} break;
-						case Direction.BOTTOM: {
-							this.isMoveUp = false;
-							this.isMoveLeft = false;
-							this.isMoveDown = true;
-							this.isMoveRight = false;
-						} break;
-						case Direction.LEFT: {
-							this.isMoveUp = false;
-							this.isMoveLeft = true;
-							this.isMoveDown = false;
-							this.isMoveRight = false;
-						} break;
-						case Direction.RIGHT: {
-							this.isMoveUp = false;
-							this.isMoveLeft = false;
-							this.isMoveDown = false;
-							this.isMoveRight = true;
-						} break;
-						case Direction.TOP_LEFT: {
-							this.isMoveUp = true;
-							this.isMoveLeft = true;
-							this.isMoveDown = false;
-							this.isMoveRight = false;
-						} break;
-						case Direction.TOP_RIGHT: {
-							this.isMoveUp = true;
-							this.isMoveLeft = false;
-							this.isMoveDown = false;
-							this.isMoveRight = true;
-						} break;
-						case Direction.BOTTOM_LEFT: {
-							this.isMoveUp = false;
-							this.isMoveLeft = true;
-							this.isMoveDown = true;
-							this.isMoveRight = false;
-						} break;
-						case Direction.BOTTOM_RIGHT: {
-							this.isMoveUp = false;
-							this.isMoveLeft = false;
-							this.isMoveDown = true;
-							this.isMoveRight = true;
-						} break;
-						default:
-					}
+					this.onJoystickChange(data);
 				}
 
 				//console.log(data.direction);
@@ -205,28 +184,62 @@ export class GameController extends Container {
 
 		this.setJoystickPosition();
 		this.addChild(this.joystick);
+	}
 
-		const attackButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
-		attackButtonSpritebg.height = 125;
-		attackButtonSpritebg.width = 125;
+	private onJoystickChange(data: JoystickChangeEvent) {
+		this.power = data.power;
 
-		const attackButtonSprite: GameObjectSprite = new GameObjectSprite(Texture.from("attack_button"));
-		attackButtonSprite.height = 65;
-		attackButtonSprite.width = 65;
-		attackButtonSprite.x = attackButtonSpritebg.width / 2 - attackButtonSprite.width / 2;
-		attackButtonSprite.y = attackButtonSpritebg.height / 2 - attackButtonSprite.height / 2;
-
-		const attackButtonGraphics = new Container();
-		attackButtonGraphics.addChild(attackButtonSpritebg);
-		attackButtonGraphics.addChild(attackButtonSprite);
-
-		this.attackButton = new Button(attackButtonGraphics, () => {
-			if (!this.isPaused) {
-				this.isAttacking = true;
-			}
-		});
-		this.setAttackButtonPosition();
-		this.addChild(this.attackButton);
+		switch (data.direction) {
+			case Direction.TOP: {
+				this.isMoveUp = true;
+				this.isMoveLeft = false;
+				this.isMoveDown = false;
+				this.isMoveRight = false;
+			} break;
+			case Direction.BOTTOM: {
+				this.isMoveUp = false;
+				this.isMoveLeft = false;
+				this.isMoveDown = true;
+				this.isMoveRight = false;
+			} break;
+			case Direction.LEFT: {
+				this.isMoveUp = false;
+				this.isMoveLeft = true;
+				this.isMoveDown = false;
+				this.isMoveRight = false;
+			} break;
+			case Direction.RIGHT: {
+				this.isMoveUp = false;
+				this.isMoveLeft = false;
+				this.isMoveDown = false;
+				this.isMoveRight = true;
+			} break;
+			case Direction.TOP_LEFT: {
+				this.isMoveUp = true;
+				this.isMoveLeft = true;
+				this.isMoveDown = false;
+				this.isMoveRight = false;
+			} break;
+			case Direction.TOP_RIGHT: {
+				this.isMoveUp = true;
+				this.isMoveLeft = false;
+				this.isMoveDown = false;
+				this.isMoveRight = true;
+			} break;
+			case Direction.BOTTOM_LEFT: {
+				this.isMoveUp = false;
+				this.isMoveLeft = true;
+				this.isMoveDown = true;
+				this.isMoveRight = false;
+			} break;
+			case Direction.BOTTOM_RIGHT: {
+				this.isMoveUp = false;
+				this.isMoveLeft = false;
+				this.isMoveDown = true;
+				this.isMoveRight = true;
+			} break;
+			default:
+		}
 	}
 
 	public pauseGame() {
@@ -324,12 +337,12 @@ export class GameController extends Container {
 
 	private setPauseButtonPosition() {
 		this.pauseButton.x = SceneManager.width - this.pauseButton.width * 1.1;
-		this.pauseButton.y = this.pauseButton.height / 2.2;
+		this.pauseButton.y = this.pauseButton.height / 2.1;
 	}
 
 	private setQuitButtonPosition() {
 		this.quitButton.x = SceneManager.width - this.quitButton.width * 1.1;
-		this.quitButton.y = this.quitButton.height / 2.2 + 60;
+		this.quitButton.y = this.quitButton.height / 2.1 + 60;
 	}
 
 	private setAttackButtonPosition() {
