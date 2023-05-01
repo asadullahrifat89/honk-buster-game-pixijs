@@ -99,50 +99,10 @@ export class GameScene extends Container implements IScene {
 		this.gameController = new GameController({
 			onPause: (isPaused) => {
 				if (isPaused) {
-					if (this.anyBossExists()) {
-						SoundManager.pause(SoundType.BOSS_BACKGROUND_MUSIC);
-
-						if (this.anyInAirBossExists()) {
-							SoundManager.pause(SoundType.UFO_BOSS_HOVERING);
-						}
-					}
-					else {
-						SoundManager.pause(SoundType.GAME_BACKGROUND_MUSIC);
-					}
-
-					if (this.ufoEnemyExists()) {
-						SoundManager.pause(SoundType.UFO_BOSS_HOVERING);
-					}
-
-					SoundManager.pause(SoundType.AMBIENCE);
-
-					this.generateOnScreenMessage("Game paused");
-
-					this.sceneContainer.filters = [new BlurFilter()];
+					this.pauseGame();
 				}
 				else {
-					if (this.anyBossExists()) {
-						SoundManager.resume(SoundType.BOSS_BACKGROUND_MUSIC);
-
-						if (this.anyInAirBossExists()) {
-							SoundManager.resume(SoundType.UFO_BOSS_HOVERING);
-						}
-					}
-					else {
-						SoundManager.resume(SoundType.GAME_BACKGROUND_MUSIC);
-					}
-
-					if (this.ufoEnemyExists()) {
-						SoundManager.resume(SoundType.UFO_BOSS_HOVERING);
-					}
-
-					SoundManager.resume(SoundType.AMBIENCE);
-
-					if (this.onScreenMessage.isAnimating == true && this.onScreenMessage.getText() == "Game paused") {
-						this.onScreenMessage.disableRendering();
-					}
-
-					this.sceneContainer.filters = null;
+					this.resumeGame();
 				}
 			},
 			onQuit: () => {
@@ -3803,6 +3763,54 @@ export class GameScene extends Container implements IScene {
 
 	private anyInAirBossExists(): boolean {
 		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
+	}
+
+	private resumeGame() {
+		if (this.anyBossExists()) {
+			SoundManager.resume(SoundType.BOSS_BACKGROUND_MUSIC);
+
+			if (this.anyInAirBossExists()) {
+				SoundManager.resume(SoundType.UFO_BOSS_HOVERING);
+			}
+		}
+		else {
+			SoundManager.resume(SoundType.GAME_BACKGROUND_MUSIC);
+		}
+
+		if (this.ufoEnemyExists()) {
+			SoundManager.resume(SoundType.UFO_BOSS_HOVERING);
+		}
+
+		SoundManager.resume(SoundType.AMBIENCE);
+
+		if (this.onScreenMessage.isAnimating == true && this.onScreenMessage.getText() == "Game paused") {
+			this.onScreenMessage.disableRendering();
+		}
+
+		this.sceneContainer.filters = null;
+	}
+
+	private pauseGame() {
+		if (this.anyBossExists()) {
+			SoundManager.pause(SoundType.BOSS_BACKGROUND_MUSIC);
+
+			if (this.anyInAirBossExists()) {
+				SoundManager.pause(SoundType.UFO_BOSS_HOVERING);
+			}
+		}
+		else {
+			SoundManager.pause(SoundType.GAME_BACKGROUND_MUSIC);
+		}
+
+		if (this.ufoEnemyExists()) {
+			SoundManager.pause(SoundType.UFO_BOSS_HOVERING);
+		}
+
+		SoundManager.pause(SoundType.AMBIENCE);
+
+		this.generateOnScreenMessage("Game paused");
+
+		this.sceneContainer.filters = [new BlurFilter()];
 	}
 
 	private gameOver() {
