@@ -1434,6 +1434,8 @@ export class GameScene extends Container implements IScene {
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
+
+			this.generateMessageBubble(vehicleBoss, "I'll be back!");
 		}
 	}
 
@@ -1892,7 +1894,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 
-			//this.switchToDayMode();
+			this.generateMessageBubble(ufoBoss, "My systems can not fail!");
 		}
 	}
 
@@ -2280,7 +2282,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 
-			//this.switchToDayMode();
+			this.generateMessageBubble(zombieBoss, "You can't kill the undead!");
 		}
 	}
 
@@ -2512,7 +2514,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 
-			//this.switchToDayMode();
+			this.generateMessageBubble(mafiaBoss, "Next time, hotshot!");
 		}
 	}
 
@@ -3634,7 +3636,7 @@ export class GameScene extends Container implements IScene {
 									this.powerUpMeter.setMaximumValue(20);
 									this.powerUpMeter.setValue(20);
 
-									this.generateOnScreenMessage("Bull's' Eye +20", this.cheerIcon);
+									this.generateOnScreenMessage("Bull's' Eye +20", this.powerUpMeter.getIcon());
 								}
 								break;
 							case PowerUpType.ARMOR:
@@ -3642,7 +3644,7 @@ export class GameScene extends Container implements IScene {
 									this.powerUpMeter.setMaximumValue(10);
 									this.powerUpMeter.setValue(10);
 
-									this.generateOnScreenMessage("Armor +10", this.cheerIcon);
+									this.generateOnScreenMessage("Armor +10", this.powerUpMeter.getIcon());
 								}
 								break;
 							default:
