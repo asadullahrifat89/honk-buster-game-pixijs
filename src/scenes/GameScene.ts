@@ -165,8 +165,8 @@ export class GameScene extends Container implements IScene {
 		}
 
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
-			case 0: { this.generateOnScreenMessage("Drop crackers on the honkers", this.gameHintIcon); } break;
-			case 1: { this.generateOnScreenMessage("Drop garbage on the honkers", this.gameHintIcon); } break;
+			case 0: { this.generateOnScreenMessage("Drop crackers on 'em honkers!", this.gameHintIcon); } break;
+			case 1: { this.generateOnScreenMessage("Drop trash cans on 'em honkers!", this.gameHintIcon); } break;
 			default:
 		}
 	}

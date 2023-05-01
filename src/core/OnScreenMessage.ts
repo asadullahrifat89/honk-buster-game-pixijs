@@ -26,7 +26,7 @@ export class OnScreenMessage {
 
 		this.messageContainer.addChild(this.messageAuthor);
 
-		this.messageGraphics = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill();
+		this.messageGraphics = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0x2f3a5a).drawRoundedRect(0, 0, 250, 40, 4).endFill();
 		this.messageGraphics.x = this.messageAuthor.width / 1.8;
 		this.messageContainer.addChild(this.messageGraphics);
 
@@ -34,7 +34,7 @@ export class OnScreenMessage {
 			fontFamily: "gameplay",
 			align: "center",
 			fill: "#ffffff",
-			fontSize: 30
+			fontSize: 24
 		});
 		this.messageText.x = this.messageAuthor.width / 1.5;
 		this.messageText.y = 5;
@@ -71,14 +71,14 @@ export class OnScreenMessage {
 		this.messageAuthor.setTexture(icon);
 
 		this.messageContainer.removeChild(this.messageGraphics);
-		this.messageGraphics = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, this.messageText.width + 25, 50, 10).endFill();
+		this.messageGraphics = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0x2f3a5a).drawRoundedRect(0, 0, this.messageText.width + 25, 40, 4).endFill();
 		this.messageGraphics.x = this.messageAuthor.width / 1.8;
 		this.messageContainer.addChildAt(this.messageGraphics, 0);
 	}
 
 	reposition(x: number, y: number) {
 		this.messageContainer.x = x - this.messageContainer.width / 2;
-		this.messageContainer.y = y /*- this.messageContainer.height / 2*/;
+		this.messageContainer.y = y - 15;
 	}
 
 	getText(): string {
