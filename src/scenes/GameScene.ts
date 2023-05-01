@@ -773,7 +773,7 @@ export class GameScene extends Container implements IScene {
 				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
 
 				sprite.width = this.sideWalkWidth;
-				sprite.height = this.sideWalkHeight;
+				sprite.height = this.sideWalkHeight;				
 
 				gameObject.addChild(sprite);
 			}
@@ -798,7 +798,7 @@ export class GameScene extends Container implements IScene {
 				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
 
 				sprite.width = this.sideWalkWidth;
-				sprite.height = this.sideWalkHeight;
+				sprite.height = this.sideWalkHeight;				
 
 				gameObject.addChild(sprite);
 			}
@@ -1006,7 +1006,7 @@ export class GameScene extends Container implements IScene {
 				default: break;
 			}
 
-			sprite.anchor.set(0.5, 0.5);
+			sprite.anchor.set(0.5, 0.5);			
 
 			gameObject.addChild(sprite);
 
