@@ -163,59 +163,59 @@ export const manifest: ResolverManifest = {
 		{
 			name: "soundsBundle",
 			assets: {
-				"option_select": "./option_select.mp3",
+				"option_select": "./sounds/option_select.mp3",
 
-				"game_over": "./game_over.mp3",
-				"game_pause": "./game_pause.mp3",
-				"game_start": "./game_start.mp3",
+				"game_over": "./sounds/game_over.mp3",
+				"game_pause": "./sounds/game_pause.mp3",
+				"game_start": "./sounds/game_start.mp3",
 
-				"level_up": "./level_up.mp3",
+				"level_up": "./sounds/level_up.mp3",
 
-				"power_up_pickup_1": "./power_up_pickup_1.mp3",
-				"health_pickup_1": "./health_pickup_1.mp3",
+				"power_up_pickup_1": "./sounds/power_up_pickup_1.mp3",
+				"health_pickup_1": "./sounds/health_pickup_1.mp3",
 
-				"car_honk_1": "./car_honk_1.mp3",
-				"car_honk_2": "./car_honk_2.mp3",
-				"car_honk_3": "./car_honk_3.mp3",
+				"car_honk_1": "./sounds/car_honk_1.mp3",
+				"car_honk_2": "./sounds/car_honk_2.mp3",
+				"car_honk_3": "./sounds/car_honk_3.mp3",
 
-				"cracker_drop_1": "./cracker_drop_1.mp3",
-				"cracker_drop_2": "./cracker_drop_2.mp3",
+				"cracker_drop_1": "./sounds/cracker_drop_1.mp3",
+				"cracker_drop_2": "./sounds/cracker_drop_2.mp3",
 
-				"cracker_blast_1": "./cracker_blast_1.mp3",
-				"cracker_blast_2": "./cracker_blast_2.mp3",
-				"cracker_blast_3": "./cracker_blast_3.mp3",
-				"cracker_blast_4": "./cracker_blast_4.mp3",
+				"cracker_blast_1": "./sounds/cracker_blast_1.mp3",
+				"cracker_blast_2": "./sounds/cracker_blast_2.mp3",
+				"cracker_blast_3": "./sounds/cracker_blast_3.mp3",
+				"cracker_blast_4": "./sounds/cracker_blast_4.mp3",
 
-				"trashcan_hit_1": "./trashcan_hit_1.mp3",
-				"trashcan_hit_2": "./trashcan_hit_2.mp3",
-				"trashcan_hit_3": "./trashcan_hit_3.mp3",				
+				"trashcan_hit_1": "./sounds/trashcan_hit_1.mp3",
+				"trashcan_hit_2": "./sounds/trashcan_hit_2.mp3",
+				"trashcan_hit_3": "./sounds/trashcan_hit_3.mp3",				
 
-				"rocket_blast_1": "./rocket_blast_1.mp3",
-				"rocket_blast_2": "./rocket_blast_2.mp3",
-				"rocket_blast_3": "./rocket_blast_3.mp3",
+				"rocket_blast_1": "./sounds/rocket_blast_1.mp3",
+				"rocket_blast_2": "./sounds/rocket_blast_2.mp3",
+				"rocket_blast_3": "./sounds/rocket_blast_3.mp3",
 
-				"rocket_launch_1": "./rocket_launch_1.mp3",
-				"rocket_launch_2": "./rocket_launch_2.mp3",
-				"rocket_launch_3": "./rocket_launch_3.mp3",
+				"rocket_launch_1": "./sounds/rocket_launch_1.mp3",
+				"rocket_launch_2": "./sounds/rocket_launch_2.mp3",
+				"rocket_launch_3": "./sounds/rocket_launch_3.mp3",
 
-				"orb_launch": "./orb_launch.mp3",
+				"orb_launch": "./sounds/orb_launch.mp3",
 
-				"ambience_1": "./ambience_1.mp3",
-				"ambience_2": "./ambience_2.mp3",
-				"ambience_3": "./ambience_3.mp3",	
+				"ambience_1": "./sounds/ambience_1.mp3",
+				"ambience_2": "./sounds/ambience_2.mp3",
+				"ambience_3": "./sounds/ambience_3.mp3",	
 
-				"ufo_boss_dead_1": "./ufo_boss_dead_1.mp3",
-				"ufo_boss_dead_2": "./ufo_boss_dead_2.mp3",
+				"ufo_boss_dead_1": "./sounds/ufo_boss_dead_1.mp3",
+				"ufo_boss_dead_2": "./sounds/ufo_boss_dead_2.mp3",
 
-				"ufo_boss_entry_1": "./ufo_boss_entry_1.mp3",
-				"ufo_boss_entry_2": "./ufo_boss_entry_2.mp3",
+				"ufo_boss_entry_1": "./sounds/ufo_boss_entry_1.mp3",
+				"ufo_boss_entry_2": "./sounds/ufo_boss_entry_2.mp3",
 
-				"ufo_boss_hovering_1": "./ufo_boss_hovering_1.mp3",
-				"ufo_boss_hovering_2": "./ufo_boss_hovering_2.mp3",
-				"ufo_boss_hovering_3": "./ufo_boss_hovering_3.mp3",
+				"ufo_boss_hovering_1": "./sounds/ufo_boss_hovering_1.mp3",
+				"ufo_boss_hovering_2": "./sounds/ufo_boss_hovering_2.mp3",
+				"ufo_boss_hovering_3": "./sounds/ufo_boss_hovering_3.mp3",
 
-				"ufo_enemy_entry_1": "./ufo_enemy_entry_1.mp3",
-				"ufo_enemy_entry_2": "./ufo_enemy_entry_2.mp3",
+				"ufo_enemy_entry_1": "./sounds/ufo_enemy_entry_1.mp3",
+				"ufo_enemy_entry_2": "./sounds/ufo_enemy_entry_2.mp3",
 			},
 		},
 	]
