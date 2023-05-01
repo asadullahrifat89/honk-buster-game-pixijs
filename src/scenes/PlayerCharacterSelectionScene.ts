@@ -57,7 +57,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			player_2_sprite.filters = [new BlurFilter()];
 			player_1_sprite.filters = null;
-			Constants.SELECTED_PLAYER_TEMPLATE = 0;
+			Constants.SELECTED_CHARACTER_TEMPLATE = 0;
 		});
 		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width, this.sceneContainer.height / 2 - player_1_sprite.height / 2);
 		this.sceneContainer.addChild(player_1_button);
@@ -71,7 +71,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			player_1_sprite.filters = [new BlurFilter()];
 			player_2_sprite.filters = null;
-			Constants.SELECTED_PLAYER_TEMPLATE = 1;
+			Constants.SELECTED_CHARACTER_TEMPLATE = 1;
 		});
 		player_2_button.setPosition(this.sceneContainer.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2);
 		this.sceneContainer.addChild(player_2_button);

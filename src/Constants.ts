@@ -206,7 +206,7 @@ export abstract class Constants {
 	public static DEFAULT_BLAST_SHRINK_SCALE: number = 0.8;
 	public static DEFAULT_DROP_SHADOW_DISTANCE: number = 40;
 
-	public static SELECTED_PLAYER_TEMPLATE: number = 0;
+	public static SELECTED_CHARACTER_TEMPLATE: number = 0;
 	public static SELECTED_HONK_BUSTER_TEMPLATE: number = 0;
 	public static GAME_SCORE: number = 0;
 
