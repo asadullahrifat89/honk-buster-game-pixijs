@@ -45,6 +45,7 @@ export const manifest: ResolverManifest = {
 				"enemy_4": "./images/enemy_4.png",
 
 				"enemy_bomb": "./images/enemy_bomb.png",
+
 				"explosion_1": "./images/explosion_1.png",
 
 				"health_pickup": "./images/health_pickup.png",
