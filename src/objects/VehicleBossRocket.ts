@@ -31,10 +31,9 @@ export class VehicleBossRocket extends GameObjectContainer {
 	}
 
 	setBlast() {
-		this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
-		this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
+		// this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
+		// this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
 		this.isBlasting = true;
-
 		SoundManager.play(SoundType.ROCKET_BLAST);
 	}
 

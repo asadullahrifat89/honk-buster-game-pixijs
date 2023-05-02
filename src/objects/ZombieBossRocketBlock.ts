@@ -39,8 +39,8 @@ export class ZombieBossRocketBlock extends GameObjectContainer {
 
     setBlast() {
         this.speed = Constants.DEFAULT_CONSTRUCT_SPEED - 1;
-        this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE - 0.2);
-        this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
+        // this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE - 0.2);
+        // this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
         this.isBlasting = true;
 
         SoundManager.play(SoundType.ROCKET_BLAST);

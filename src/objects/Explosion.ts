@@ -72,7 +72,7 @@ function getExplosionAnimation(): AnimatedSprite {
 	let animation = new AnimatedSprite(spritesheet.animations.frames);
 
 	// set the animation speed 
-	animation.animationSpeed = 0.3;
+	animation.animationSpeed = 0.2;
 	animation.loop = false;
 	animation.anchor.set(0.5);
 
