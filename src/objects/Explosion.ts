@@ -1,4 +1,5 @@
 ﻿import { AnimatedSprite, BaseTexture, Spritesheet, SpriteSheetJson } from 'pixi.js';
+import { Constants, ExplosionType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 
 
@@ -6,9 +7,9 @@ export class Explosion extends GameObjectContainer {
 
 	private explosionAnimation: AnimatedSprite;
 
-	constructor(speed: number) {
+	constructor(speed: number, explosionType: ExplosionType = ExplosionType.DEFAULT_EXPLOSION) {
 		super(speed);
-		this.explosionAnimation = getExplosionAnimation();
+		this.explosionAnimation = this.getExplosionAnimation(explosionType);
 		this.addChild(this.explosionAnimation);
 	}
 
@@ -27,55 +28,29 @@ export class Explosion extends GameObjectContainer {
 		this.explosionAnimation.stop();
 		super.disableRendering();
 	}
-}
 
-function getExplosionAnimation(): AnimatedSprite {
-
-	const spriteWidth: number = 138;
-	const spriteHeight: number = 138;
-
-	// explosion 1
-	const atlasData: SpriteSheetJson = {
-		frames: {
-			frame0: {
-				frame: { x: spriteWidth * 0, y: 0, w: spriteWidth, h: spriteHeight },
-				sourceSize: { w: spriteWidth, h: spriteHeight },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame1: {
-				frame: { x: spriteWidth * 1, y: 0, w: spriteWidth, h: spriteHeight },
-				sourceSize: { w: spriteWidth, h: spriteHeight },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame2: {
-				frame: { x: spriteWidth * 2, y: 0, w: spriteWidth, h: spriteHeight },
-				sourceSize: { w: spriteWidth, h: spriteHeight },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame3: {
-				frame: { x: spriteWidth * 3, y: 0, w: spriteWidth, h: spriteHeight },
-				sourceSize: { w: spriteWidth, h: spriteHeight },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-		},
-		meta: {
-			image: './images/explosion_1.png',
-			scale: "1",
-		},
-		animations: {
-			frames: ["frame0", "frame1", "frame2", "frame3"]
+	private getExplosionAnimation(explosionType: ExplosionType): AnimatedSprite {
+		switch (explosionType) {
+			case ExplosionType.DEFAULT_EXPLOSION: {				
+				const atlasData: SpriteSheetJson = Constants.DEFAULT_EXPLOSION_SPRITE_SHEET_JSON;
+				return this.getAnimationSprite(atlasData, 0.2);
+			} break;
+			case ExplosionType.SMOKE_EXPLOSION: {
+				const atlasData: SpriteSheetJson = Constants.SMOKE_EXPLOSION_SPRITE_SHEET_JSON;
+				return this.getAnimationSprite(atlasData, 0.3);
+			} break;
 		}
-	};
+	}
 
-	// Create the SpriteSheet from data and image
-	const spritesheet: Spritesheet = new Spritesheet(BaseTexture.from(atlasData.meta.image), atlasData);
-	spritesheet.parse();
+	private getAnimationSprite(atlasData: SpriteSheetJson, animationSpeed: number, loop: boolean = false): AnimatedSprite {		
+		const spritesheet: Spritesheet = new Spritesheet(BaseTexture.from(atlasData.meta.image), atlasData);
+		spritesheet.parse();
 
-	let animation = new AnimatedSprite(spritesheet.animations.frames);
-	animation.animationSpeed = 0.2;
-	animation.loop = false;
-	animation.anchor.set(0.5);
-
-	// spritesheet is ready to use!
-	return animation;
+		let animation = new AnimatedSprite(spritesheet.animations.frames);
+		animation.animationSpeed = animationSpeed;
+		animation.loop = loop;
+		animation.anchor.set(0.5);
+		
+		return animation;
+	}
 }

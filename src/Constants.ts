@@ -1,9 +1,14 @@
-import { Texture } from "pixi.js";
+import { SpriteSheetJson, Texture } from "pixi.js";
 import { ConstructTemplate } from "./core/ConstructTemplate";
 import { GameObjectContainer } from "./core/GameObjectContainer";
 import { SoundTemplate } from "./core/SoundTemplate";
 
 //#region Enums
+
+export enum ExplosionType {
+	DEFAULT_EXPLOSION,
+	SMOKE_EXPLOSION,
+}
 
 export enum PowerUpType {
 	//SEEKING_SNITCH,
@@ -147,7 +152,7 @@ export enum ConstructType {
 	FLOATING_NUMBER,
 
 	TITLE_SCREEN,
-	CHOPPER_BLADES,
+	CHOPPER_BLADES,	
 }
 
 export enum SoundType {
@@ -463,6 +468,106 @@ export abstract class Constants {
 
 		new ConstructTemplate(ConstructType.GAME_COVER_IMAGE, this.imagessDirectory + "cover_image.png"),
 	];
+
+	private static DEFAULT_EXPLOSION_SPRITE_WIDTH = 138;
+	private static DEFAULT_EXPLOSION_SPRITE_HEIGHT = 138;
+
+	public static DEFAULT_EXPLOSION_SPRITE_SHEET_JSON: SpriteSheetJson = {
+		meta: {
+			image: './images/explosion_1.png',
+			scale: "1",
+		},
+		frames: {
+			frame0: {
+				frame: { x: this.DEFAULT_EXPLOSION_SPRITE_WIDTH * 0, y: 0, w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame1: {
+				frame: { x: this.DEFAULT_EXPLOSION_SPRITE_WIDTH * 1, y: 0, w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame2: {
+				frame: { x: this.DEFAULT_EXPLOSION_SPRITE_WIDTH * 2, y: 0, w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame3: {
+				frame: { x: this.DEFAULT_EXPLOSION_SPRITE_WIDTH * 3, y: 0, w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+		},
+		animations: {
+			frames: ["frame0", "frame1", "frame2", "frame3"]
+		}
+	};
+
+	private static SMOKE_EXPLOSION_SPRITE_WIDTH = 128;
+	private static SMOKE_EXPLOSION_SPRITE_HEIGHT = 128;
+
+	public static SMOKE_EXPLOSION_SPRITE_SHEET_JSON: SpriteSheetJson = {
+		meta: {
+			image: './images/explosion_2.png',
+			scale: "1",
+		},
+		frames: {
+			frame0: {
+				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 0, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame1: {
+				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 1, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame2: {
+				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 2, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame3: {
+				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 3, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame4: {
+				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 4, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame5: {
+				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 5, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame6: {
+				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 6, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame7: {
+				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 7, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame8: {
+				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 8, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame9: {
+				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 9, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+		},
+		animations: {
+			frames: ["frame0", "frame1", "frame2", "frame3", "frame4", "frame5", "frame6", "frame7", "frame8", "frame9"]
+		}
+	};
 
 	//#endregion
 
