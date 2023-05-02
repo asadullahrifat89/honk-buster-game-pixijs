@@ -3974,6 +3974,7 @@ export class GameScene extends Container implements IScene {
 		SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 		SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 		SoundManager.stop(SoundType.AMBIENCE);
+		SoundManager.stop(SoundType.CHOPPER_HOVERING);
 
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
 		this.removeChild(this.gameContainer);
