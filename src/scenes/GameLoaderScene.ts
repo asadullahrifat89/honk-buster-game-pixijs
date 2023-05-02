@@ -45,7 +45,7 @@ export class GameLoaderScene extends Container implements IScene {
 		this.addChild(this.loaderBar);
 
 		this.changeOrienationText = new Text("Pls Change Screen Orientation", {
-			fontFamily: "gameplay",
+			fontFamily: "gamefont",
 			fontSize: 18,
 			align: "center",
 			fill: "#ffffff",

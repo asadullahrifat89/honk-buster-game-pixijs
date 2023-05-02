@@ -38,7 +38,7 @@ export class GameTitleScene extends Container implements IScene {
 		this.sceneContainer.addChild(this.bg_container);
 
 		const title = new Text("Honk Busters", {
-			fontFamily: "gameplay",
+			fontFamily: "gamefont",
 			align: "center",
 			fill: "#ffffff",
 			fontSize: 45
@@ -48,7 +48,7 @@ export class GameTitleScene extends Container implements IScene {
 		this.sceneContainer.addChild(title);
 
 		const subTitle = new Text("Help the kids bust honking cars & aliens", {
-			fontFamily: "gameplay",
+			fontFamily: "gamefont",
 			align: "center",
 			fill: "#ffffff",
 			fontSize: 24,
