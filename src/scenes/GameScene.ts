@@ -46,6 +46,7 @@ export class GameScene extends Container implements IScene {
 	private gameController: GameController;
 	private gameContainer: GameObjectContainer;
 	private gameScoreBar: GameScoreBar;
+	private gameLevelBar: GameScoreBar;
 
 	private onScreenMessage: OnScreenMessage;
 
@@ -145,6 +146,9 @@ export class GameScene extends Container implements IScene {
 
 		this.gameScoreBar = new GameScoreBar(this);
 		this.repositionGameScoreBar();
+
+		this.gameLevelBar = new GameScoreBar(this);
+		this.repositionGameLevelBar();
 
 		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this);
 		this.playerHealthBar.setMaximumValue(this.player.health);
@@ -3693,10 +3697,14 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region GameScoreBar
+	//#region ScoreBars
 
 	private repositionGameScoreBar() {
 		this.gameScoreBar.reposition((SceneManager.width) / 2, 10);
+	}
+
+	private repositionGameLevelBar() {
+		this.gameLevelBar.reposition((SceneManager.width) / 2 + 100, 10);
 	}
 
 	//#endregion
@@ -3749,12 +3757,6 @@ export class GameScene extends Container implements IScene {
 			this.gameController.update();
 			this.animatePlayerBalloon();
 		}
-	}
-
-	private levelUp() {
-		this.gameLevel++;
-		this.generateOnScreenMessage("Level " + this.gameLevel.toString() + " Complete", this.cheerIcon);
-		SoundManager.play(SoundType.LEVEL_UP);
 	}
 
 	private spawnGameObjects() {
@@ -3903,6 +3905,13 @@ export class GameScene extends Container implements IScene {
 		//this.animateClouds();
 		this.animateOnScreenMessage();
 		this.animateMessageBubbles();
+	}
+
+	private levelUp() {
+		this.gameLevel++;
+		this.gameLevelBar.gainScore(1);
+		this.generateOnScreenMessage("Level " + this.gameLevel.toString() + " Complete", this.cheerIcon);
+		SoundManager.play(SoundType.LEVEL_UP);
 	}
 
 	private anyBossExists(): boolean {
