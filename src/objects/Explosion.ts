@@ -30,7 +30,8 @@ export class Explosion extends GameObjectContainer {
 }
 
 function getExplosionAnimation(): AnimatedSprite {
-	// Create object to store sprite sheet data
+
+	// explosion 1
 	const atlasData: SpriteSheetJson = {
 		frames: {
 			frame0: {
