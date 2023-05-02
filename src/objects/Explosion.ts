@@ -56,7 +56,7 @@ function getExplosionAnimation(): AnimatedSprite {
 			},
 		},
 		meta: {
-			image: './images/explosion.png',
+			image: './images/explosion_1.png',
 			scale: "1",
 		},
 		animations: {
@@ -64,14 +64,77 @@ function getExplosionAnimation(): AnimatedSprite {
 		}
 	};
 
+	// explosion 2
+	//const atlasData: SpriteSheetJson = {
+	//	frames: {
+	//		frame0: {
+	//			frame: { x: 283.33 * 0, y: 237.5 * 0, w: 283.33, h: 237.5 },
+	//			sourceSize: { w: 283.33, h: 237.5 },
+	//			spriteSourceSize: { x: 0, y: 0 }
+	//		},
+	//		frame1: {
+	//			frame: { x: 283.33 * 1, y: 237.5 * 0, w: 283.33, h: 237.5 },
+	//			sourceSize: { w: 283.33, h: 237.5 },
+	//			spriteSourceSize: { x: 0, y: 0 }
+	//		},
+	//		frame2: {
+	//			frame: { x: 283.33 * 2, y: 237.5 * 0, w: 283.33, h: 237.5 },
+	//			sourceSize: { w: 283.33, h: 237.5 },
+	//			spriteSourceSize: { x: 0, y: 0 }
+	//		},	
+
+	//		//frame3: {
+	//		//	frame: { x: 283.33 * 0, y: 237.5 * 1, w: 283.33, h: 237.5 },
+	//		//	sourceSize: { w: 283.33, h: 237.5 },
+	//		//	spriteSourceSize: { x: 0, y: 0 }
+	//		//},
+	//		//frame4: {
+	//		//	frame: { x: 283.33 * 1, y: 237.5 * 1, w: 283.33, h: 237.5 },
+	//		//	sourceSize: { w: 283.33, h: 237.5 },
+	//		//	spriteSourceSize: { x: 0, y: 0 }
+	//		//},
+	//		//frame5: {
+	//		//	frame: { x: 283.33 * 2, y: 237.5 * 1, w: 283.33, h: 237.5 },
+	//		//	sourceSize: { w: 283.33, h: 237.5 },
+	//		//	spriteSourceSize: { x: 0, y: 0 }
+	//		//},
+
+	//		//frame6: {
+	//		//	frame: { x: 283.33 * 0, y: 237.5 * 2, w: 283.33, h: 237.5 },
+	//		//	sourceSize: { w: 283.33, h: 237.5 },
+	//		//	spriteSourceSize: { x: 0, y: 0 }
+	//		//},
+	//		//frame7: {
+	//		//	frame: { x: 283.33 * 1, y: 237.5 * 2, w: 283.33, h: 237.5 },
+	//		//	sourceSize: { w: 283.33, h: 237.5 },
+	//		//	spriteSourceSize: { x: 0, y: 0 }
+	//		//},
+	//		//frame8: {
+	//		//	frame: { x: 283.33 * 2, y: 237.5 * 2, w: 283.33, h: 237.5 },
+	//		//	sourceSize: { w: 283.33, h: 237.5 },
+	//		//	spriteSourceSize: { x: 0, y: 0 }
+	//		//},
+
+	//		//frame9: {
+	//		//	frame: { x: 283.33 * 1, y: 237.5 * 3, w: 283.33, h: 237.5 },
+	//		//	sourceSize: { w: 283.33, h: 237.5 },
+	//		//	spriteSourceSize: { x: 0, y: 0 }
+	//		//},
+	//	},
+	//	meta: {
+	//		image: './images/explosion_2.png',
+	//		scale: "1",
+	//	},
+	//	animations: {
+	//		frames: ["frame0", "frame1", "frame2", /*"frame3", "frame4", "frame5", "frame6", "frame7", "frame8", "frame9"*/]
+	//	}
+	//};
+
 	// Create the SpriteSheet from data and image
 	const spritesheet: Spritesheet = new Spritesheet(BaseTexture.from(atlasData.meta.image), atlasData);
-
 	spritesheet.parse();
 
 	let animation = new AnimatedSprite(spritesheet.animations.frames);
-
-	// set the animation speed 
 	animation.animationSpeed = 0.2;
 	animation.loop = false;
 	animation.anchor.set(0.5);
