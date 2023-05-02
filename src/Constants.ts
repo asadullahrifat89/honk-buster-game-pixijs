@@ -570,9 +570,8 @@ export abstract class Constants {
 		}
 	};
 
-	private static puffWidth_0 = 63.625;
-	//private static puffWidth_1 = 69.14;
-	private static puffHeight = 66;
+	private static puffWidth = 44;
+	private static puffHeight = 44;
 
 	public static PUFF_EXPLOSION_SPRITE_SHEET_JSON: SpriteSheetJson = {
 		meta: {
@@ -581,48 +580,23 @@ export abstract class Constants {
 		},
 		frames: {
 			frame0: {
-				frame: { x: this.puffWidth_0 * 0, y: 0, w: this.puffWidth_0, h: this.puffHeight },
-				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
+				frame: { x: this.puffWidth * 0, y: 0, w: this.puffWidth, h: this.puffHeight },
+				sourceSize: { w: this.puffWidth, h: this.puffHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame1: {
-				frame: { x: this.puffWidth_0 * 1, y: 0, w: this.puffWidth_0, h: this.puffHeight },
-				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
+				frame: { x: this.puffWidth * 1, y: 0, w: this.puffWidth, h: this.puffHeight },
+				sourceSize: { w: this.puffWidth, h: this.puffHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame2: {
-				frame: { x: this.puffWidth_0 * 2, y: 0, w: this.puffWidth_0, h: this.puffHeight },
-				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
+				frame: { x: this.puffWidth * 2, y: 0, w: this.puffWidth, h: this.puffHeight },
+				sourceSize: { w: this.puffWidth, h: this.puffHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
-			frame3: {
-				frame: { x: this.puffWidth_0 * 3, y: 0, w: this.puffWidth_0, h: this.puffHeight },
-				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame4: {
-				frame: { x: this.puffWidth_0 * 4, y: 0, w: this.puffWidth_0, h: this.puffHeight },
-				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame5: {
-				frame: { x: this.puffWidth_0 * 5, y: 0, w: this.puffWidth_0, h: this.puffHeight },
-				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame6: {
-				frame: { x: this.puffWidth_0 * 6, y: 0, w: this.puffWidth_0, h: this.puffHeight },
-				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame7: {
-				frame: { x: this.puffWidth_0 * 7, y: 0, w: this.puffWidth_0, h: this.puffHeight },
-				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
-				spriteSourceSize: { x: 0, y: 0 }
-			},		
 		},
 		animations: {
-			frames: ["frame0", "frame1", "frame2", "frame3", "frame4", "frame5", "frame6", "frame7"],
+			frames: ["frame0", "frame1", "frame2"],
 		}
 	};
 

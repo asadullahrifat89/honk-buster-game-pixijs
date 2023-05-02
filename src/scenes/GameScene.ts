@@ -1169,7 +1169,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 10; j++) {
 
-			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2, ExplosionType.PUFF_EXPLOSION);
+			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED + 2, ExplosionType.PUFF_EXPLOSION);
 			gameObject.disableRendering();
 
 			this.puffExplosionGameObjects.push(gameObject);
@@ -1192,9 +1192,10 @@ export class GameScene extends Container implements IScene {
 		var animatingHonkBombs = this.puffExplosionGameObjects.filter(x => x.isAnimating == true);
 		if (animatingHonkBombs) {
 			animatingHonkBombs.forEach(gameObject => {
-				gameObject.pop();				
+				gameObject.pop();
+				gameObject.expand();
 				gameObject.fade();
-				//gameObject.moveDownRight();
+				gameObject.moveUpLeft();
 
 				if (gameObject.hasFaded() || gameObject.getRight() < 0 || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
@@ -3898,8 +3899,6 @@ export class GameScene extends Container implements IScene {
 		//this.spawnLampsBottom();
 		this.spawnPlayerHonkBombs();
 		this.spawnSmokeExplosions();
-		this.spawnPuffExplosions();
-		this.spawnRingExplosions();
 
 		this.spawnTreesBottom();
 		//this.spawnLightBillboardsBottom();
@@ -3920,6 +3919,9 @@ export class GameScene extends Container implements IScene {
 
 		this.spawnUfoEnemyRockets();
 		this.spawnUfoEnemys();
+
+		this.spawnPuffExplosions();
+		this.spawnRingExplosions();
 
 		this.spawnHealthPickups();
 		this.spawnPowerUpPickups();
@@ -3999,7 +4001,7 @@ export class GameScene extends Container implements IScene {
 			//this.animateLampsBottom();
 		}
 
-		this.animatePlayerHonkBombs();		
+		this.animatePlayerHonkBombs();
 		this.animatePuffExplosions();
 		this.animateSmokeExplosions();
 		this.animateRingExplosions();
