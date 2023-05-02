@@ -1118,21 +1118,25 @@ export class GameScene extends Container implements IScene {
 	private playerRideSizeHeight: number = 150;
 	private playerRideTemplate: number = 0;
 
-	private player: PlayerRide = new PlayerRide(0);
+	private player: PlayerRide = new PlayerRide();
 
 	spawnPlayerBalloon() {
-
-		switch (this.playerRideTemplate) {
-			case PlayerRideTemplate.BALLOON: { this.player = new PlayerRide(Constants.DEFAULT_CONSTRUCT_SPEED); } break;
-			case PlayerRideTemplate.CHOPPER: { this.player = new PlayerRide(Constants.DEFAULT_CONSTRUCT_SPEED + 2); } break;
-			default: break;
-		}
-
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_RIDE_IDLE));
 		sprite.x = 0;
 		sprite.y = 0;
-		sprite.width = this.playerRideSizeWidth;
-		sprite.height = this.playerRideSizeHeight;
+
+		switch (this.playerRideTemplate) {
+			case PlayerRideTemplate.BALLOON: {
+				sprite.width = this.playerRideSizeWidth * 1.3;
+				sprite.height = this.playerRideSizeHeight * 1.3;
+			} break;
+			case PlayerRideTemplate.CHOPPER: {
+				sprite.width = this.playerRideSizeWidth * 1.2;
+				sprite.height = this.playerRideSizeHeight * 1.2;
+			} break;
+			default: break;
+		}
+
 		sprite.anchor.set(0.5, 0.5);
 
 		this.player.addChild(sprite);
