@@ -28,7 +28,7 @@ import { MafiaBossRocket } from "../objects/MafiaBossRocket";
 import { MafiaBossRocketBullsEye } from "../objects/MafiaBossRocketBullsEye";
 import { PlayerRide } from "../objects/PlayerRide";
 import { PlayerHonkBomb } from "../objects/PlayerHonkBomb";
-import { PlayerHonkBombExplosion } from "../objects/PlayerHonkBombExplosion";
+import { Explosion } from "../objects/Explosion";
 import { PlayerRocket } from "../objects/PlayerRocket";
 import { PlayerRocketBullsEye } from "../objects/PlayerRocketBullsEye";
 import { PowerUpPickup } from "../objects/PowerUpPickup";
@@ -1315,7 +1315,7 @@ export class GameScene extends Container implements IScene {
 
 						if (playerHonkBomb.awaitBlast()) {
 
-							this.generatePlayerHonkBombExplosion(playerHonkBomb);
+							this.generateExplosion(playerHonkBomb);
 
 							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
 
@@ -1341,58 +1341,55 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region PlayerHonkBombExplosions
+	//#region Explosions
 
-	private PlayerHonkBombExplosionSizeWidth: number = 130;
-	private PlayerHonkBombExplosionSizeHeight: number = 130;
+	private explosionSizeWidth: number = 130;
+	private explosionSizeHeight: number = 130;
 
-	private PlayerHonkBombExplosionGameObjects: Array<GameObjectContainer> = [];
+	private explosionGameObjects: Array<Explosion> = [];
 
-	spawnPlayerHonkBombExplosions() {
+	spawnExplosions() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: PlayerHonkBombExplosion = new PlayerHonkBombExplosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2);
+			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.BLAST));
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.PlayerHonkBombExplosionSizeWidth;
-			sprite.height = this.PlayerHonkBombExplosionSizeHeight;
+			sprite.width = this.explosionSizeWidth;
+			sprite.height = this.explosionSizeHeight;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
-			this.PlayerHonkBombExplosionGameObjects.push(gameObject);
+			this.explosionGameObjects.push(gameObject);
 			this.gameContainer.addChild(gameObject);
 		}
 	}
 
-	generatePlayerHonkBombExplosion(source: GameObjectContainer) {
+	generateExplosion(source: GameObjectContainer) {
 
-		var gameObject = this.PlayerHonkBombExplosionGameObjects.find(x => x.isAnimating == false);
+		var gameObject = this.explosionGameObjects.find(x => x.isAnimating == false);
 
 		if (gameObject) {
-
-			var PlayerHonkBombExplosion = gameObject as PlayerHonkBombExplosion;
-			PlayerHonkBombExplosion.reset(this.playerHonkBusterTemplate);
-			PlayerHonkBombExplosion.reposition(source);
-			PlayerHonkBombExplosion.setPopping();
+			gameObject.reset(this.playerHonkBusterTemplate);
+			gameObject.reposition(source);
+			gameObject.setPopping();
 
 			gameObject.enableRendering();
 		}
 	}
 
-	animatePlayerHonkBombExplosions() {
+	animateExplosions() {
 
-		var animatingHonkBombs = this.PlayerHonkBombExplosionGameObjects.filter(x => x.isAnimating == true);
+		var animatingHonkBombs = this.explosionGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingHonkBombs) {
 
 			animatingHonkBombs.forEach(gameObject => {
-
 				gameObject.pop();
 				gameObject.fade();
 				gameObject.moveDownRight();
@@ -3778,7 +3775,7 @@ export class GameScene extends Container implements IScene {
 		//this.spawnHedgesBottom();
 		//this.spawnLampsBottom();
 		this.spawnPlayerHonkBombs();
-		this.spawnPlayerHonkBombExplosions();
+		this.spawnExplosions();
 
 		this.spawnTreesBottom();
 		//this.spawnLightBillboardsBottom();
@@ -3879,7 +3876,7 @@ export class GameScene extends Container implements IScene {
 		}
 
 		this.animatePlayerHonkBombs();
-		this.animatePlayerHonkBombExplosions();
+		this.animateExplosions();
 		this.animatePlayerRockets();
 		this.animatePlayerRocketBullsEyes();
 

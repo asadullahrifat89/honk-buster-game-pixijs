@@ -3,7 +3,7 @@ import { GameObjectContainer } from '../core/GameObjectContainer';
 import { SoundManager } from '../managers/SoundManager';
 
 
-export class PlayerHonkBombExplosion extends GameObjectContainer {
+export class Explosion extends GameObjectContainer {
 
 	constructor(speed: number) {
 		super(speed);
