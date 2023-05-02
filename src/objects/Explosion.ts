@@ -1,6 +1,5 @@
-﻿import { Constants, ConstructType, PlayerHonkBombTemplate, SoundType } from '../Constants';
+﻿import { Constants, ConstructType, PlayerHonkBombTemplate } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
-import { SoundManager } from '../managers/SoundManager';
 
 
 export class Explosion extends GameObjectContainer {
@@ -15,8 +14,7 @@ export class Explosion extends GameObjectContainer {
 			case PlayerHonkBombTemplate.Cracker: { this.setTexture(Constants.getRandomTexture(ConstructType.BLAST)); } break;
 			case PlayerHonkBombTemplate.TrashCan: { this.setTexture(Constants.getRandomTexture(ConstructType.BANG)); } break;
 			default:
-		}
-		SoundManager.play(SoundType.HONK, 0.5);
+		}		
 	}
 
 	reposition(source: GameObjectContainer) {		

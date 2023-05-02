@@ -1917,7 +1917,7 @@ export class GameScene extends Container implements IScene {
 	private roadHonkSizeWidth: number = 125;
 	private roadHonkSizeHeight: number = 125;
 
-	private roadHonkGameObjects: Array<GameObjectContainer> = [];
+	private roadHonkGameObjects: Array<Honk> = [];
 
 	private spawnHonks() {
 
@@ -1948,12 +1948,9 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-
-				var honk = gameObject as Honk;
-				honk.reset();
-				honk.reposition(source);
-				honk.setPopping();
-
+				gameObject.reset();
+				gameObject.reposition(source);
+				gameObject.setPopping();
 				gameObject.enableRendering();
 			}
 		}
