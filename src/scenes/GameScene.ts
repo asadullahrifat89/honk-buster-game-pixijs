@@ -1167,7 +1167,7 @@ export class GameScene extends Container implements IScene {
 
 	spawnSmokeExplosions() {
 
-		for (let j = 0; j < 3; j++) {
+		for (let j = 0; j < 4; j++) {
 
 			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2, ExplosionType.SMOKE_EXPLOSION);
 			gameObject.disableRendering();
