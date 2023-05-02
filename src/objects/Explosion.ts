@@ -9,12 +9,12 @@ export class Explosion extends GameObjectContainer {
 	constructor(speed: number) {
 		super(speed);
 		this.explosionAnimation = getExplosionAnimation();
-		this.addChild(this.explosionAnimation);		
+		this.addChild(this.explosionAnimation);
 	}
 
 	reset() {
 		this.alpha = 1.0;
-		this.explosionAnimation.stop();		
+		this.explosionAnimation.stop();
 	}
 
 	reposition(source: GameObjectContainer) {
@@ -58,10 +58,9 @@ function getExplosionAnimation(): AnimatedSprite {
 			image: './images/explosion.png',
 			scale: "1",
 		},
-		//animations: {
-		//	frame: ['frame0', 'frame1', 'frame2', 'frame3'] // array of frames by name
-		//}
-		animations: { frames: ["frame0", "frame1", "frame2", "frame3"] }
+		animations: {
+			frames: ["frame0", "frame1", "frame2", "frame3"]
+		}
 	};
 
 	// Create the SpriteSheet from data and image
