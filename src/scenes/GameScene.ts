@@ -1368,10 +1368,9 @@ export class GameScene extends Container implements IScene {
 		var gameObject = this.explosionGameObjects.find(x => x.isAnimating == false);
 
 		if (gameObject) {
-			gameObject.reset(this.playerHonkBusterTemplate);
+			gameObject.reset();
 			gameObject.reposition(source);
 			gameObject.setPopping();
-
 			gameObject.enableRendering();
 		}
 	}

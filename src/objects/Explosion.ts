@@ -1,5 +1,4 @@
 ﻿import { AnimatedSprite, BaseTexture, Spritesheet, SpriteSheetJson } from 'pixi.js';
-import { PlayerHonkBombTemplate } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 
 
@@ -9,12 +8,11 @@ export class Explosion extends GameObjectContainer {
 
 	constructor(speed: number) {
 		super(speed);
-
 		this.explosionAnimation = getExplosionAnimation();
 		this.addChild(this.explosionAnimation);		
 	}
 
-	reset(_playerHonkBombTemplate: PlayerHonkBombTemplate) {
+	reset() {
 		this.alpha = 1.0;
 		this.explosionAnimation.stop();		
 	}
