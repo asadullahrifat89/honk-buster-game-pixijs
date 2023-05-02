@@ -41,7 +41,8 @@ export class PlayerRide extends GameObjectContainer {
 	private playerHitTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_HIT);
 	private playerAttackTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_ATTACK);
 
-	private chopperDelay: number = 10;
+	private chopperBladesHoverDelay: number = 10;	
+	private chopperBladesOpacityEffect: number = 0;
 	private chopperBladesTexture: Texture = Constants.getRandomTexture(ConstructType.CHOPPER_BLADES);
 	private chopperBladesSprite: GameObjectSprite = new GameObjectSprite(this.chopperBladesTexture);
 
@@ -266,7 +267,7 @@ export class PlayerRide extends GameObjectContainer {
 		}
 		else {
 			this.stopMovement();
-		}		
+		}
 
 		this.animateChopperBlades();
 	}
@@ -274,17 +275,30 @@ export class PlayerRide extends GameObjectContainer {
 	private animateChopperBlades() {
 		if (this.playerRideTemplate == PlayerRideTemplate.CHOPPER) {
 
-			this.chopperDelay--;
+			this.chopperBladesHoverDelay--;
 
-			if (this.chopperDelay >= 0) {
+			if (this.chopperBladesHoverDelay >= 0) {
 				this.chopperBladesSprite.y += 0.5;
 			}
 			else {
 				this.chopperBladesSprite.y -= 0.5;
 
-				if (this.chopperDelay <= -10) {
-					this.chopperDelay = 10;
+				if (this.chopperBladesHoverDelay <= -10) {
+					this.chopperBladesHoverDelay = 10;
 				}
+			}
+
+			this.chopperBladesOpacityEffect++; // blinking effect
+
+			if (this.chopperBladesOpacityEffect > 2) {
+				if (this.chopperBladesSprite.alpha != 1) {
+					this.chopperBladesSprite.alpha = 1;
+				}
+				else {
+					this.chopperBladesSprite.alpha = 0.2;
+				}
+
+				this.chopperBladesOpacityEffect = 0;
 			}
 		}
 	}
