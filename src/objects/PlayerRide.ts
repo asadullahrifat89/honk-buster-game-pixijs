@@ -41,7 +41,7 @@ export class PlayerRide extends GameObjectContainer {
 	private playerHitTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_HIT);
 	private playerAttackTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_ATTACK);
 
-	private chopperBladesHoverDelay: number = 10;	
+	private chopperBladesHoverDelay: number = 10;
 	private chopperBladesOpacityEffect: number = 0;
 	private chopperBladesTexture: Texture = Constants.getRandomTexture(ConstructType.CHOPPER_BLADES);
 	private chopperBladesSprite: GameObjectSprite = new GameObjectSprite(this.chopperBladesTexture);
@@ -50,8 +50,8 @@ export class PlayerRide extends GameObjectContainer {
 
 	//#region Methods
 
-	constructor(speed: number) {
-		super(speed);
+	constructor() {
+		super();
 	}
 
 	reset() {
@@ -228,7 +228,15 @@ export class PlayerRide extends GameObjectContainer {
 
 	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
 
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * controller.power;
+		switch (this.playerRideTemplate) {
+			case PlayerRideTemplate.BALLOON: {
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * controller.power;
+			} break;
+			case PlayerRideTemplate.CHOPPER: {
+				this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 2) * controller.power; // chopper grants extra speed
+			} break;
+			default: break;
+		}
 
 		let halfHeight = this.height / 2;
 		let halfWidth = this.width / 2;
