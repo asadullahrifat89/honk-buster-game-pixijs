@@ -112,7 +112,7 @@ export class GameScene extends Container implements IScene {
 		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
 
 		let colors: number[] = [0x1e2a36, 0x4187ab]
-		let color = colors[Constants.getRandomNumber(0, 1)];
+		let color = colors[Constants.getRandomNumber(0, colors.length - 1)];
 		this.roadBackgroundDay = new Graphics().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 
 		this.addChildAt(this.roadBackgroundDay, 0);
