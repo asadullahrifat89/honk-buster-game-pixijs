@@ -4,9 +4,11 @@ export class GameScoreBar {
 
 	private scoreContainer: Container;
 	private scoreText: Text;
+	private scoreGraphics: Graphics;
 	private score: number = 0;
+	private prefix: string = "";
 
-	constructor(scene: Container) {
+	constructor(scene: Container, prefix: string = "", score: number = 0) {
 
 		//BitmapFont.from("gameplay", {
 		//	fill: "#2f3a5a",
@@ -20,22 +22,22 @@ export class GameScoreBar {
 		//	fontSize: 26,
 		//	align: "center",
 		//});
+		this.prefix = prefix;
+		this.score = score;
+		this.scoreContainer = new Container();
 
-		this.scoreText = new Text("0", {
+		this.scoreText = new Text(this.prefix + this.score.toString(), {
 			fontFamily: "gameplay",
 			align: "center",
 			fill: "#2f3a5a",
 			fontSize: 26,
 		});
-
-		this.scoreContainer = new Container();
-
-		const graphics = new Graphics().beginFill(0xffffff).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 2.5, 80, 30, 3).endFill();
-		this.scoreContainer.addChild(graphics);
-
 		this.scoreText.x = 10;
-		this.scoreText.y = 0.5;
+		this.scoreText.y = 2.5;
 
+		this.scoreGraphics = this.drawScoreGraphics();
+
+		this.scoreContainer.addChild(this.scoreGraphics);
 		this.scoreContainer.addChild(this.scoreText);
 
 		scene.addChild(this.scoreContainer);
@@ -44,27 +46,36 @@ export class GameScoreBar {
 	reposition(x: number, y: number) {
 		this.scoreContainer.x = x - this.scoreContainer.width / 2;
 		this.scoreContainer.y = y;
-	}
-
-	reset() {
-		this.score = 0;
-		this.scoreText.text = this.score.toString();
-	}
+	}	
 
 	gainScore(score: number) {
 		this.score += score;
-		this.scoreText.text = this.score.toString();
+		this.scoreText.text = this.prefix + this.score.toString();
+
+		this.resetGraphics();
 	}
 
 	looseScore(score: number) {
 		if (this.score > 1) {
 			this.score -= score;
-			this.scoreText.text = this.score.toString();
+			this.scoreText.text = this.prefix +this.score.toString();
+
+			this.resetGraphics();
 		}
 	}
 
+    private resetGraphics() {
+        this.scoreContainer.removeChild(this.scoreGraphics);
+        this.scoreGraphics = this.drawScoreGraphics();
+        this.scoreContainer.addChildAt(this.scoreGraphics, 0);
+    }
+
 	getScore(): number {
 		return this.score;
+	}
+
+	private drawScoreGraphics(): Graphics {
+		return new Graphics().beginFill(0xffffff).lineStyle(4, 0x2f3a5a).drawRoundedRect(0, 0, this.scoreText.width + 20, 35, 4).endFill();
 	}
 }
 
