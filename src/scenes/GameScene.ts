@@ -1,6 +1,6 @@
 import { BlurFilter, Container, Graphics, Texture } from "pixi.js";
 import { GameObjectContainer } from '../core/GameObjectContainer';
-import { Constants, ConstructType, PlayerHonkBombTemplate, PlayerRideTemplate, PowerUpType, RotationDirection, SoundType } from '../Constants';
+import { Constants, ConstructType, ExplosionType, PlayerHonkBombTemplate, PlayerRideTemplate, PowerUpType, RotationDirection, SoundType } from '../Constants';
 import { GameOverScene } from "./GameOverScene";
 import { IScene } from "../managers/IScene";
 import { GameController } from "../controls/GameController";
@@ -1117,30 +1117,24 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region Explosions
+	//#region FireExplosions	
 
-	//private explosionSizeWidth: number = 138;
-	//private explosionSizeHeight: number = 138
+	private fireExplosionGameObjects: Array<Explosion> = [];
 
-	private explosionGameObjects: Array<Explosion> = [];
-
-	spawnExplosions() {
+	spawnFireExplosions() {
 
 		for (let j = 0; j < 10; j++) {
 
-			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2);
+			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2, ExplosionType.DEFAULT_EXPLOSION);
 			gameObject.disableRendering();
 
-			//gameObject.width = this.explosionSizeWidth;
-			//gameObject.height = this.explosionSizeHeight;
-
-			this.explosionGameObjects.push(gameObject);
+			this.fireExplosionGameObjects.push(gameObject);
 			this.gameContainer.addChild(gameObject);
 		}
 	}
 
-	generateExplosion(source: GameObjectContainer) {
-		var gameObject = this.explosionGameObjects.find(x => x.isAnimating == false);
+	generateFireExplosion(source: GameObjectContainer) {
+		var gameObject = this.fireExplosionGameObjects.find(x => x.isAnimating == false);
 
 		if (gameObject) {
 			gameObject.reset();
@@ -1150,8 +1144,52 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	animateExplosions() {
-		var animatingHonkBombs = this.explosionGameObjects.filter(x => x.isAnimating == true);
+	animateFireExplosions() {
+		var animatingHonkBombs = this.fireExplosionGameObjects.filter(x => x.isAnimating == true);
+		if (animatingHonkBombs) {
+			animatingHonkBombs.forEach(gameObject => {
+				gameObject.pop();
+				gameObject.fade();
+				gameObject.moveDownRight();
+
+				if (gameObject.hasFaded() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region SmokeExplosions	
+
+	private smokeExplosionGameObjects: Array<Explosion> = [];
+
+	spawnSmokeExplosions() {
+
+		for (let j = 0; j < 4; j++) {
+
+			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2, ExplosionType.SMOKE_EXPLOSION);
+			gameObject.disableRendering();
+
+			this.smokeExplosionGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+		}
+	}
+
+	generateSmokeExplosion(source: GameObjectContainer) {
+		var gameObject = this.smokeExplosionGameObjects.find(x => x.isAnimating == false);
+
+		if (gameObject) {
+			gameObject.reset();
+			gameObject.reposition(source);
+			gameObject.setPopping();
+			gameObject.enableRendering();
+		}
+	}
+
+	animateSmokeExplosions() {
+		var animatingHonkBombs = this.smokeExplosionGameObjects.filter(x => x.isAnimating == true);
 		if (animatingHonkBombs) {
 			animatingHonkBombs.forEach(gameObject => {
 				gameObject.pop();
@@ -1366,7 +1404,7 @@ export class GameScene extends Container implements IScene {
 
 						if (playerHonkBomb.awaitBlast()) {
 
-							this.generateExplosion(playerHonkBomb);
+							this.generateSmokeExplosion(playerHonkBomb);
 
 							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
 
@@ -1511,37 +1549,37 @@ export class GameScene extends Container implements IScene {
 						if (ufoBossRocketSeeking) {
 							playerRocket.setBlast();
 							ufoBossRocketSeeking.setBlast();
-							this.generateExplosion(playerRocket);
+							this.generateFireExplosion(playerRocket);
 						}
 						else if (ufoEnemy) {
 							playerRocket.setBlast();
 							this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
-							this.generateExplosion(playerRocket);
+							this.generateFireExplosion(playerRocket);
 						}
 						else if (ufoBoss) {
 							playerRocket.setBlast();
 							this.looseUfoBosshealth(ufoBoss as UfoBoss);
-							this.generateExplosion(playerRocket);
+							this.generateFireExplosion(playerRocket);
 						}
 						else if (zombieBossRocketBlock) {
 							playerRocket.setBlast();
 							zombieBossRocketBlock.looseHealth();
-							this.generateExplosion(playerRocket);
+							this.generateFireExplosion(playerRocket);
 						}
 						else if (zombieBoss) {
 							playerRocket.setBlast();
 							this.looseZombieBosshealth(zombieBoss as ZombieBoss);
-							this.generateExplosion(playerRocket);
+							this.generateFireExplosion(playerRocket);
 						}
 						else if (mafiaBoss) {
 							playerRocket.setBlast();
 							this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
-							this.generateExplosion(playerRocket);
+							this.generateFireExplosion(playerRocket);
 						}
 
 						if (playerRocket.autoBlast()) {
 							playerRocket.setBlast();
-							this.generateExplosion(playerRocket);
+							this.generateFireExplosion(playerRocket);
 						}
 					}
 				}
@@ -1689,37 +1727,37 @@ export class GameScene extends Container implements IScene {
 					if (ufoBossRocketSeeking) {
 						playerRocket.setBlast();
 						ufoBossRocketSeeking.setBlast();
-						this.generateExplosion(playerRocket);
+						this.generateFireExplosion(playerRocket);
 					}
 					else if (ufoBoss) {
 						playerRocket.setBlast();
 						this.looseUfoBosshealth(ufoBoss as UfoBoss);
-						this.generateExplosion(playerRocket);
+						this.generateFireExplosion(playerRocket);
 					}
 					else if (ufoEnemy) {
 						playerRocket.setBlast();
 						this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
-						this.generateExplosion(playerRocket);
+						this.generateFireExplosion(playerRocket);
 					}
 					else if (zombieBossRocketBlock) {
 						playerRocket.setBlast();
 						zombieBossRocketBlock.looseHealth();
-						this.generateExplosion(playerRocket);
+						this.generateFireExplosion(playerRocket);
 					}
 					else if (zombieBoss) {
 						playerRocket.setBlast();
 						this.looseZombieBosshealth(zombieBoss as ZombieBoss);
-						this.generateExplosion(playerRocket);
+						this.generateFireExplosion(playerRocket);
 					}
 					else if (mafiaBoss) {
 						playerRocket.setBlast();
 						this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
-						this.generateExplosion(playerRocket);
+						this.generateFireExplosion(playerRocket);
 					}
 
 					if (playerRocket.autoBlast()) {
 						playerRocket.setBlast();
-						this.generateExplosion(playerRocket);
+						this.generateFireExplosion(playerRocket);
 					}
 				}
 
@@ -2190,12 +2228,12 @@ export class GameScene extends Container implements IScene {
 					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
-						this.generateExplosion(gameObject);
+						this.generateFireExplosion(gameObject);
 					}
 
 					if (gameObject.autoBlast()) {
 						gameObject.setBlast();
-						this.generateExplosion(gameObject);
+						this.generateFireExplosion(gameObject);
 					}
 				}
 
@@ -2449,12 +2487,12 @@ export class GameScene extends Container implements IScene {
 					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
-						this.generateExplosion(gameObject);
+						this.generateFireExplosion(gameObject);
 					}
 
 					if (gameObject.autoBlast()) {
 						gameObject.setBlast();
-						this.generateExplosion(gameObject);
+						this.generateFireExplosion(gameObject);
 					}
 				}
 
@@ -2704,12 +2742,12 @@ export class GameScene extends Container implements IScene {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
 						ufoBoss?.setWinStance();
-						this.generateExplosion(gameObject);
+						this.generateFireExplosion(gameObject);
 					}
 
 					if (gameObject.autoBlast()) {
 						gameObject.setBlast();
-						this.generateExplosion(gameObject);
+						this.generateFireExplosion(gameObject);
 					}
 				}
 
@@ -2839,12 +2877,12 @@ export class GameScene extends Container implements IScene {
 							gameObject.setBlast();
 							this.loosePlayerHealth();
 							ufoBoss.setWinStance();
-							this.generateExplosion(gameObject);
+							this.generateFireExplosion(gameObject);
 						}
 						else {
 							if (gameObject.autoBlast()) {
 								gameObject.setBlast();
-								this.generateExplosion(gameObject);
+								this.generateFireExplosion(gameObject);
 							}
 						}
 					}
@@ -3080,11 +3118,11 @@ export class GameScene extends Container implements IScene {
 					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
-						this.generateExplosion(gameObject);
+						this.generateFireExplosion(gameObject);
 					}
 
 					if (gameObject.autoBlast()) {
-						this.generateExplosion(gameObject);
+						this.generateFireExplosion(gameObject);
 						gameObject.setBlast();
 					}
 				}
@@ -3335,12 +3373,12 @@ export class GameScene extends Container implements IScene {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
 						mafiaBoss?.setWinStance();
-						this.generateExplosion(gameObject);
+						this.generateFireExplosion(gameObject);
 					}
 
 					if (gameObject.autoBlast()) {
 						gameObject.setBlast();
-						this.generateExplosion(gameObject);
+						this.generateFireExplosion(gameObject);
 					}
 				}
 
@@ -3441,12 +3479,12 @@ export class GameScene extends Container implements IScene {
 							gameObject.setBlast();
 							this.loosePlayerHealth();
 							mafiaBoss.setWinStance();
-							this.generateExplosion(gameObject);
+							this.generateFireExplosion(gameObject);
 						}
 						else {
 							if (gameObject.autoBlast()) {
 								gameObject.setBlast();
-								this.generateExplosion(gameObject);
+								this.generateFireExplosion(gameObject);
 							}
 						}
 					}
@@ -3803,7 +3841,8 @@ export class GameScene extends Container implements IScene {
 		//this.spawnHedgesBottom();
 		//this.spawnLampsBottom();
 		this.spawnPlayerHonkBombs();
-		this.spawnExplosions();
+		this.spawnSmokeExplosions();
+		this.spawnFireExplosions();
 
 		this.spawnTreesBottom();
 		//this.spawnLightBillboardsBottom();
@@ -3904,7 +3943,8 @@ export class GameScene extends Container implements IScene {
 		}
 
 		this.animatePlayerHonkBombs();
-		this.animateExplosions();
+		this.animateFireExplosions();
+		this.animateSmokeExplosions();
 		this.animatePlayerRockets();
 		this.animatePlayerRocketBullsEyes();
 
