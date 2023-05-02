@@ -1350,7 +1350,7 @@ export class GameScene extends Container implements IScene {
 
 	spawnExplosions() {
 
-		for (let j = 0; j < 3; j++) {
+		for (let j = 0; j < 10; j++) {
 
 			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2);
 			gameObject.disableRendering();
