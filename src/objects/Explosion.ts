@@ -5,33 +5,28 @@ import { GameObjectContainer } from '../core/GameObjectContainer';
 
 export class Explosion extends GameObjectContainer {
 
-	private explisionAnimation: AnimatedSprite;
+	private explosionAnimation: AnimatedSprite;
 
 	constructor(speed: number) {
 		super(speed);
 
-		this.explisionAnimation = getExplosionAnimation();
-		this.addChild(this.explisionAnimation);
+		this.explosionAnimation = getExplosionAnimation();
+		this.addChild(this.explosionAnimation);		
 	}
 
 	reset(_playerHonkBombTemplate: PlayerHonkBombTemplate) {
 		this.alpha = 1.0;
-		this.explisionAnimation.stop();
-		//switch (playerHonkBombTemplate) {
-		//	case PlayerHonkBombTemplate.Cracker: { this.setTexture(Constants.getRandomTexture(ConstructType.BLAST)); } break;
-		//	case PlayerHonkBombTemplate.TrashCan: { this.setTexture(Constants.getRandomTexture(ConstructType.BANG)); } break;
-		//	default:
-		//}
+		this.explosionAnimation.stop();		
 	}
 
 	reposition(source: GameObjectContainer) {
 		this.x = source.x;
 		this.y = source.y;
-		this.explisionAnimation.gotoAndPlay(0);
+		this.explosionAnimation.gotoAndPlay(0);
 	}
 
 	override disableRendering() {
-		this.explisionAnimation.stop();
+		this.explosionAnimation.stop();
 		super.disableRendering();
 	}
 }
@@ -76,13 +71,13 @@ function getExplosionAnimation(): AnimatedSprite {
 
 	spritesheet.parse();
 
-	let anim = new AnimatedSprite(spritesheet.animations.frames);
+	let animation = new AnimatedSprite(spritesheet.animations.frames);
 
 	// set the animation speed 
-	anim.animationSpeed = 0.3;
-	anim.loop = false;
-	anim.anchor.set(0.5);
+	animation.animationSpeed = 0.3;
+	animation.loop = false;
+	animation.anchor.set(0.5);
 
 	// spritesheet is ready to use!
-	return anim;
+	return animation;
 }
