@@ -26,10 +26,8 @@ export class Button extends Container {
 
 		if (text != "") {
 			const buttonText = new Text(text, buttonTextStyle);
-
 			buttonText.x = this.width / 2 - buttonText.width / 2;
-			buttonText.y = (this.height / 2 - buttonText.height / 2);
-
+			buttonText.y = (this.height / 2 - buttonText.height / 2) - 3;
 			this.addChild(buttonText);
 		}
 

@@ -1,4 +1,5 @@
 import { Text, Container, Graphics } from "pixi.js";
+import { Constants } from "../Constants";
 
 export class GameScoreBar {
 
@@ -22,6 +23,7 @@ export class GameScoreBar {
 		//	fontSize: 26,
 		//	align: "center",
 		//});
+
 		this.prefix = prefix;
 		this.score = score;
 		this.scoreContainer = new Container();
@@ -29,7 +31,7 @@ export class GameScoreBar {
 		this.scoreText = new Text(this.prefix + this.score.toString(), {
 			fontFamily: "gamefont",
 			align: "center",
-			fill: "#2f3a5a",
+			fill: Constants.MESSAGE_BOX_TEXT_COLOR,
 			fontSize: 26,
 		});
 		this.scoreText.x = 10;
@@ -44,7 +46,7 @@ export class GameScoreBar {
 	}
 
 	reposition(x: number, y: number) {
-		this.scoreContainer.x = x - this.scoreContainer.width / 2;
+		this.scoreContainer.x = x;
 		this.scoreContainer.y = y;
 	}	
 
@@ -75,7 +77,7 @@ export class GameScoreBar {
 	}
 
 	private drawScoreGraphics(): Graphics {
-		return new Graphics().beginFill(0xffffff).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 0, this.scoreText.width + 20, 35, 4).endFill();
+		return new Graphics().beginFill(0xffffff).lineStyle(3, Constants.MESSAGE_BOX_BORDER_COLOR).drawRoundedRect(0, 0, this.scoreText.width + 20, 35, 4).endFill();
 	}
 }
 
