@@ -37,16 +37,11 @@ export class PlayerRocket extends GameObjectContainer {
 	}
 
 	setBlast() {
-
-		this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
-		this.angle = 0;
-
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED - 1;
-
-		this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
-
+		// this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
+		// this.angle = 0;
+		// this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED - 1;		
 		this.isBlasting = true;
-
 		SoundManager.play(SoundType.ROCKET_BLAST);
 	}
 

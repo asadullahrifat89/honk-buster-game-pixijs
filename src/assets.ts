@@ -15,7 +15,7 @@ export const manifest: ResolverManifest = {
 				"attack_button": "./images/attack_button.png",
 				"pause_button": "./images/pause_button.png",
 				"resume_button": "./images/resume_button.png",
-				"quit_button": "./images/quit_button.png",
+				"quit_button": "./images/quit_button.png",				
 
 				"bang_1": "./images/bang_1.png",
 				"bang_2": "./images/bang_2.png",
@@ -45,6 +45,7 @@ export const manifest: ResolverManifest = {
 				"enemy_4": "./images/enemy_4.png",
 
 				"enemy_bomb": "./images/enemy_bomb.png",
+				"explosion": "./images/explosion.png",
 
 				"health_pickup": "./images/health_pickup.png",
 

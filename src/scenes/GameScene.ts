@@ -28,7 +28,7 @@ import { MafiaBossRocket } from "../objects/MafiaBossRocket";
 import { MafiaBossRocketBullsEye } from "../objects/MafiaBossRocketBullsEye";
 import { PlayerRide } from "../objects/PlayerRide";
 import { PlayerHonkBomb } from "../objects/PlayerHonkBomb";
-import { PlayerHonkBombExplosion } from "../objects/PlayerHonkBombExplosion";
+import { Explosion } from "../objects/Explosion";
 import { PlayerRocket } from "../objects/PlayerRocket";
 import { PlayerRocketBullsEye } from "../objects/PlayerRocketBullsEye";
 import { PowerUpPickup } from "../objects/PowerUpPickup";
@@ -1116,6 +1116,56 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region Explosions
+
+	private explosionSizeWidth: number = 138;
+	private explosionSizeHeight: number = 138
+
+	private explosionGameObjects: Array<Explosion> = [];
+
+	spawnExplosions() {
+
+		for (let j = 0; j < 10; j++) {
+
+			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2);
+			gameObject.disableRendering();
+
+			gameObject.width = this.explosionSizeWidth;
+			gameObject.height = this.explosionSizeHeight;
+
+			this.explosionGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+		}
+	}
+
+	generateExplosion(source: GameObjectContainer) {
+		var gameObject = this.explosionGameObjects.find(x => x.isAnimating == false);
+
+		if (gameObject) {
+			gameObject.reset();
+			gameObject.reposition(source);
+			gameObject.setPopping();
+			gameObject.enableRendering();
+		}
+	}
+
+	animateExplosions() {
+		var animatingHonkBombs = this.explosionGameObjects.filter(x => x.isAnimating == true);
+		if (animatingHonkBombs) {
+			animatingHonkBombs.forEach(gameObject => {
+				gameObject.pop();
+				gameObject.fade();
+				gameObject.moveDownRight();
+
+				if (gameObject.hasFaded() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
 	//#region PlayerRide
 
 	private playerRideSizeWidth: number = 150;
@@ -1315,7 +1365,7 @@ export class GameScene extends Container implements IScene {
 
 						if (playerHonkBomb.awaitBlast()) {
 
-							this.generatePlayerHonkBombExplosion(playerHonkBomb);
+							this.generateExplosion(playerHonkBomb);
 
 							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
 
@@ -1333,71 +1383,6 @@ export class GameScene extends Container implements IScene {
 				}
 
 				if (gameObject.hasFaded() || gameObject.hasShrinked() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
-
-	//#endregion
-
-	//#region PlayerHonkBombExplosions
-
-	private PlayerHonkBombExplosionSizeWidth: number = 130;
-	private PlayerHonkBombExplosionSizeHeight: number = 130;
-
-	private PlayerHonkBombExplosionGameObjects: Array<GameObjectContainer> = [];
-
-	spawnPlayerHonkBombExplosions() {
-
-		for (let j = 0; j < 3; j++) {
-
-			const gameObject: PlayerHonkBombExplosion = new PlayerHonkBombExplosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2);
-			gameObject.disableRendering();
-
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.BLAST));
-
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.PlayerHonkBombExplosionSizeWidth;
-			sprite.height = this.PlayerHonkBombExplosionSizeHeight;
-
-			sprite.anchor.set(0.5, 0.5);
-			gameObject.addChild(sprite);
-
-			this.PlayerHonkBombExplosionGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-		}
-	}
-
-	generatePlayerHonkBombExplosion(source: GameObjectContainer) {
-
-		var gameObject = this.PlayerHonkBombExplosionGameObjects.find(x => x.isAnimating == false);
-
-		if (gameObject) {
-
-			var PlayerHonkBombExplosion = gameObject as PlayerHonkBombExplosion;
-			PlayerHonkBombExplosion.reset(this.playerHonkBusterTemplate);
-			PlayerHonkBombExplosion.reposition(source);
-			PlayerHonkBombExplosion.setPopping();
-
-			gameObject.enableRendering();
-		}
-	}
-
-	animatePlayerHonkBombExplosions() {
-
-		var animatingHonkBombs = this.PlayerHonkBombExplosionGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingHonkBombs) {
-
-			animatingHonkBombs.forEach(gameObject => {
-
-				gameObject.pop();
-				gameObject.fade();
-				gameObject.moveDownRight();
-
-				if (gameObject.hasFaded() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
@@ -1505,7 +1490,7 @@ export class GameScene extends Container implements IScene {
 					}
 
 					if (playerRocket.isBlasting) {
-						playerRocket.expand();
+						playerRocket.shrink();
 						playerRocket.fade();
 					}
 					else {
@@ -1525,30 +1510,38 @@ export class GameScene extends Container implements IScene {
 						if (ufoBossRocketSeeking) {
 							playerRocket.setBlast();
 							ufoBossRocketSeeking.setBlast();
+							this.generateExplosion(playerRocket);
 						}
 						else if (ufoEnemy) {
 							playerRocket.setBlast();
 							this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
+							this.generateExplosion(playerRocket);
 						}
 						else if (ufoBoss) {
 							playerRocket.setBlast();
 							this.looseUfoBosshealth(ufoBoss as UfoBoss);
+							this.generateExplosion(playerRocket);
 						}
 						else if (zombieBossRocketBlock) {
 							playerRocket.setBlast();
 							zombieBossRocketBlock.looseHealth();
+							this.generateExplosion(playerRocket);
 						}
 						else if (zombieBoss) {
 							playerRocket.setBlast();
 							this.looseZombieBosshealth(zombieBoss as ZombieBoss);
+							this.generateExplosion(playerRocket);
 						}
 						else if (mafiaBoss) {
 							playerRocket.setBlast();
 							this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
+							this.generateExplosion(playerRocket);
 						}
 
-						if (playerRocket.autoBlast())
+						if (playerRocket.autoBlast()) {
 							playerRocket.setBlast();
+							this.generateExplosion(playerRocket);
+						}
 					}
 				}
 
@@ -1672,7 +1665,7 @@ export class GameScene extends Container implements IScene {
 				let playerRocket = gameObject as PlayerRocketBullsEye;
 
 				if (gameObject.isBlasting) {
-					gameObject.expand();
+					gameObject.shrink();
 					gameObject.fade();
 					gameObject.moveDownRight();
 				}
@@ -1695,30 +1688,38 @@ export class GameScene extends Container implements IScene {
 					if (ufoBossRocketSeeking) {
 						playerRocket.setBlast();
 						ufoBossRocketSeeking.setBlast();
+						this.generateExplosion(playerRocket);
 					}
 					else if (ufoBoss) {
 						playerRocket.setBlast();
 						this.looseUfoBosshealth(ufoBoss as UfoBoss);
+						this.generateExplosion(playerRocket);
 					}
 					else if (ufoEnemy) {
 						playerRocket.setBlast();
 						this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
+						this.generateExplosion(playerRocket);
 					}
 					else if (zombieBossRocketBlock) {
 						playerRocket.setBlast();
 						zombieBossRocketBlock.looseHealth();
+						this.generateExplosion(playerRocket);
 					}
 					else if (zombieBoss) {
 						playerRocket.setBlast();
 						this.looseZombieBosshealth(zombieBoss as ZombieBoss);
+						this.generateExplosion(playerRocket);
 					}
 					else if (mafiaBoss) {
 						playerRocket.setBlast();
 						this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
+						this.generateExplosion(playerRocket);
 					}
 
-					if (playerRocket.autoBlast())
+					if (playerRocket.autoBlast()) {
 						playerRocket.setBlast();
+						this.generateExplosion(playerRocket);
+					}
 				}
 
 				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
@@ -1920,7 +1921,7 @@ export class GameScene extends Container implements IScene {
 	private roadHonkSizeWidth: number = 125;
 	private roadHonkSizeHeight: number = 125;
 
-	private roadHonkGameObjects: Array<GameObjectContainer> = [];
+	private roadHonkGameObjects: Array<Honk> = [];
 
 	private spawnHonks() {
 
@@ -1951,12 +1952,9 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-
-				var honk = gameObject as Honk;
-				honk.reset();
-				honk.reposition(source);
-				honk.setPopping();
-
+				gameObject.reset();
+				gameObject.reposition(source);
+				gameObject.setPopping();
 				gameObject.enableRendering();
 			}
 		}
@@ -2180,7 +2178,7 @@ export class GameScene extends Container implements IScene {
 				ufoEnemyRocket.moveDownRight();
 
 				if (gameObject.isBlasting) {
-					gameObject.expand();
+					gameObject.shrink();
 					gameObject.fade();
 				}
 				else {
@@ -2191,10 +2189,13 @@ export class GameScene extends Container implements IScene {
 					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
+						this.generateExplosion(gameObject);
 					}
 
-					if (gameObject.autoBlast())
+					if (gameObject.autoBlast()) {
 						gameObject.setBlast();
+						this.generateExplosion(gameObject);
+					}
 				}
 
 				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
@@ -2436,7 +2437,7 @@ export class GameScene extends Container implements IScene {
 				gameObject.moveUpRight();
 
 				if (gameObject.isBlasting) {
-					gameObject.expand();
+					gameObject.shrink();
 					gameObject.fade();
 				}
 				else {
@@ -2447,10 +2448,13 @@ export class GameScene extends Container implements IScene {
 					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
+						this.generateExplosion(gameObject);
 					}
 
-					if (gameObject.autoBlast())
+					if (gameObject.autoBlast()) {
 						gameObject.setBlast();
+						this.generateExplosion(gameObject);
+					}
 				}
 
 				if (gameObject.hasFaded()) {
@@ -2685,7 +2689,7 @@ export class GameScene extends Container implements IScene {
 				}
 
 				if (gameObject.isBlasting) {
-					gameObject.expand();
+					gameObject.shrink();
 					gameObject.fade();
 				}
 				else {
@@ -2699,10 +2703,13 @@ export class GameScene extends Container implements IScene {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
 						ufoBoss?.setWinStance();
+						this.generateExplosion(gameObject);
 					}
 
-					if (gameObject.autoBlast())
+					if (gameObject.autoBlast()) {
 						gameObject.setBlast();
+						this.generateExplosion(gameObject);
+					}
 				}
 
 				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
@@ -2814,7 +2821,7 @@ export class GameScene extends Container implements IScene {
 				let ufoBossRocketSeeking = gameObject as UfoBossRocketSeeking;
 
 				if (gameObject.isBlasting) {
-					gameObject.expand();
+					gameObject.shrink();
 					gameObject.fade();
 					gameObject.moveDownRight();
 				}
@@ -2831,10 +2838,13 @@ export class GameScene extends Container implements IScene {
 							gameObject.setBlast();
 							this.loosePlayerHealth();
 							ufoBoss.setWinStance();
+							this.generateExplosion(gameObject);
 						}
 						else {
-							if (gameObject.autoBlast())
+							if (gameObject.autoBlast()) {
 								gameObject.setBlast();
+								this.generateExplosion(gameObject);
+							}
 						}
 					}
 					else {
@@ -3058,7 +3068,7 @@ export class GameScene extends Container implements IScene {
 				gameObject.moveDownRight();
 
 				if (gameObject.isBlasting) {
-					gameObject.expand();
+					gameObject.shrink();
 					gameObject.fade();
 				}
 				else {
@@ -3069,10 +3079,13 @@ export class GameScene extends Container implements IScene {
 					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
+						this.generateExplosion(gameObject);
 					}
 
-					if (gameObject.autoBlast())
+					if (gameObject.autoBlast()) {
+						this.generateExplosion(gameObject);
 						gameObject.setBlast();
+					}
 				}
 
 				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
@@ -3307,7 +3320,7 @@ export class GameScene extends Container implements IScene {
 				}
 
 				if (gameObject.isBlasting) {
-					gameObject.expand();
+					gameObject.shrink();
 					gameObject.fade();
 				}
 				else {
@@ -3321,10 +3334,13 @@ export class GameScene extends Container implements IScene {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
 						mafiaBoss?.setWinStance();
+						this.generateExplosion(gameObject);
 					}
 
-					if (gameObject.autoBlast())
+					if (gameObject.autoBlast()) {
 						gameObject.setBlast();
+						this.generateExplosion(gameObject);
+					}
 				}
 
 				if (gameObject.hasFaded() || gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getRight() < 0 || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
@@ -3406,7 +3422,7 @@ export class GameScene extends Container implements IScene {
 				let mafiaBossRocketBullsEye = gameObject as MafiaBossRocketBullsEye;
 
 				if (gameObject.isBlasting) {
-					gameObject.expand();
+					gameObject.shrink();
 					gameObject.fade();
 					gameObject.moveDownRight();
 				}
@@ -3424,10 +3440,13 @@ export class GameScene extends Container implements IScene {
 							gameObject.setBlast();
 							this.loosePlayerHealth();
 							mafiaBoss.setWinStance();
+							this.generateExplosion(gameObject);
 						}
 						else {
-							if (gameObject.autoBlast())
+							if (gameObject.autoBlast()) {
 								gameObject.setBlast();
+								this.generateExplosion(gameObject);
+							}
 						}
 					}
 					else {
@@ -3778,7 +3797,7 @@ export class GameScene extends Container implements IScene {
 		//this.spawnHedgesBottom();
 		//this.spawnLampsBottom();
 		this.spawnPlayerHonkBombs();
-		this.spawnPlayerHonkBombExplosions();
+		this.spawnExplosions();
 
 		this.spawnTreesBottom();
 		//this.spawnLightBillboardsBottom();
@@ -3879,7 +3898,7 @@ export class GameScene extends Container implements IScene {
 		}
 
 		this.animatePlayerHonkBombs();
-		this.animatePlayerHonkBombExplosions();
+		this.animateExplosions();
 		this.animatePlayerRockets();
 		this.animatePlayerRocketBullsEyes();
 
