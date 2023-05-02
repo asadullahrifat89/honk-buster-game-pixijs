@@ -147,6 +147,7 @@ export enum ConstructType {
 	FLOATING_NUMBER,
 
 	TITLE_SCREEN,
+	CHOPPER_BLADES,
 }
 
 export enum SoundType {
@@ -398,6 +399,8 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "trash_1.png"),
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "trash_2.png"),
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "trash_3.png"),
+
+		new ConstructTemplate(ConstructType.CHOPPER_BLADES, this.imagessDirectory + "chopper_blades.png"),
 
 		new ConstructTemplate(ConstructType.BANG, this.imagessDirectory + "bang_1.png"),
 		new ConstructTemplate(ConstructType.BANG, this.imagessDirectory + "bang_2.png"),

@@ -123,12 +123,16 @@ export class GameObjectContainer extends Container {
 		this.y += this.speed / 2;
 	}
 
-	getGameObjectSprite(): GameObjectSprite {
+	getSprite(): GameObjectSprite {
 		return this.children[0] as GameObjectSprite;
 	}
 
+	getSpriteAt(index: number): GameObjectSprite {
+		return this.children[index] as GameObjectSprite;
+	}
+
 	setTexture(texture: Texture) {
-		let child = this.getGameObjectSprite();
+		let child = this.getSprite();
 
 		if (child) {
 			child.setTexture(texture);
@@ -142,6 +146,16 @@ export class GameObjectContainer extends Container {
 			sprite.anchor.set(0.5, 0.5);
 			this.addChild(sprite);
 		}
+	}
+
+	addTexture(texture: Texture) {
+		let sprite = new GameObjectSprite(texture);
+		sprite.x = 0;
+		sprite.y = 0;
+		sprite.height = this.height;
+		sprite.width = this.width;
+		sprite.anchor.set(0.5, 0.5);
+		this.addChild(sprite);
 	}
 
 	setPopping() {
