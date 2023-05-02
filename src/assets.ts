@@ -33,6 +33,8 @@ export const manifest: ResolverManifest = {
 
 				"cover_image": "./images/cover_image.png",
 
+				"chopper_blades": "./images/chopper_blades.png",
+
 				"cracker_1": "./images/cracker_1.png",
 				"cracker_2": "./images/cracker_2.png",
 				"cracker_3": "./images/cracker_3.png",

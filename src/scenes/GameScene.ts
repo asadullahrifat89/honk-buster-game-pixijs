@@ -1792,7 +1792,7 @@ export class GameScene extends Container implements IScene {
 
 					gameObject.reset();
 
-					let sprite = gameObject.getGameObjectSprite();
+					let sprite = gameObject.getSprite();
 
 					switch (gameObject.vehicleType) {
 						case 0: {
@@ -2257,7 +2257,7 @@ export class GameScene extends Container implements IScene {
 				gameObject.reset();
 				gameObject.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
 
-				let sprite = gameObject.getGameObjectSprite();
+				let sprite = gameObject.getSprite();
 
 				switch (gameObject.vehicleType) {
 					case 0: {
@@ -2278,7 +2278,7 @@ export class GameScene extends Container implements IScene {
 
 				this.bossHealthBar.setMaximumValue(gameObject.health);
 				this.bossHealthBar.setValue(gameObject.health);
-				this.bossHealthBar.setIcon(gameObject.getGameObjectSprite().getTexture());
+				this.bossHealthBar.setIcon(gameObject.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Stop the crazy honker!", this.interactIcon);
 
@@ -2501,7 +2501,7 @@ export class GameScene extends Container implements IScene {
 
 				this.bossHealthBar.setMaximumValue(ufoBoss.health);
 				this.bossHealthBar.setValue(ufoBoss.health);
-				this.bossHealthBar.setIcon(ufoBoss.getGameObjectSprite().getTexture());
+				this.bossHealthBar.setIcon(ufoBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Shoot the cyborg. Avoid the eye balls!", this.interactIcon);
 
@@ -2890,7 +2890,7 @@ export class GameScene extends Container implements IScene {
 
 				this.bossHealthBar.setMaximumValue(zombieBoss.health);
 				this.bossHealthBar.setValue(zombieBoss.health);
-				this.bossHealthBar.setIcon(zombieBoss.getGameObjectSprite().getTexture());
+				this.bossHealthBar.setIcon(zombieBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Shoot the zombie. Avoid the cubes!", this.interactIcon);
 
@@ -3123,7 +3123,7 @@ export class GameScene extends Container implements IScene {
 
 				this.bossHealthBar.setMaximumValue(mafiaBoss.health);
 				this.bossHealthBar.setValue(mafiaBoss.health);
-				this.bossHealthBar.setIcon(mafiaBoss.getGameObjectSprite().getTexture());
+				this.bossHealthBar.setIcon(mafiaBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Shoot the mafia. Avoid the bowling balls.", this.interactIcon);
 
@@ -3531,7 +3531,7 @@ export class GameScene extends Container implements IScene {
 						this.player.gainhealth();
 						this.playerHealthBar.setValue(this.player.health);
 
-						this.generateOnScreenMessage("Health +10", gameObject.getGameObjectSprite().getTexture());
+						this.generateOnScreenMessage("Health +10", gameObject.getSprite().getTexture());
 					}
 				}
 
@@ -3641,7 +3641,7 @@ export class GameScene extends Container implements IScene {
 						gameObject.pickedUp();
 
 						this.powerUpMeter.tag = gameObject.powerUpType;
-						this.powerUpMeter.setIcon(gameObject.getGameObjectSprite().getTexture());
+						this.powerUpMeter.setIcon(gameObject.getSprite().getTexture());
 
 						switch (gameObject.powerUpType) {
 							case PowerUpType.BULLS_EYE: // if bulls eye powerup, allow using a single shot of 20 bombs
