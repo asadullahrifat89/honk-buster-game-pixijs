@@ -212,9 +212,9 @@ export abstract class Constants {
 	public static SELECTED_PLAYER_CHARACTER_TEMPLATE: number = 0;
 	public static SELECTED_PLAYER_RIDE_TEMPLATE: number = 0;
 	public static SELECTED_HONK_BUSTER_TEMPLATE: number = 0;
+
 	//public static MESSAGE_BOX_LINE_COLOR: number = 0x2f3a5a;
 	//public static MESSAGE_BOX_TEXT_COLOR: string = "#2f3a5a";
-
 	public static MESSAGE_BOX_BORDER_COLOR: number = 0x000000;
 	public static MESSAGE_BOX_TEXT_COLOR: string = "#000000";
 

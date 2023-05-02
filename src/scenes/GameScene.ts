@@ -1355,15 +1355,18 @@ export class GameScene extends Container implements IScene {
 			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.BLAST));
+			//const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.BLAST));
 
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.explosionSizeWidth;
-			sprite.height = this.explosionSizeHeight;
+			//sprite.x = 0;
+			//sprite.y = 0;
+			//sprite.width = this.explosionSizeWidth;
+			//sprite.height = this.explosionSizeHeight;
 
-			sprite.anchor.set(0.5, 0.5);
-			gameObject.addChild(sprite);
+			//sprite.anchor.set(0.5, 0.5);
+			//gameObject.addChild(sprite);
+
+			gameObject.width = this.explosionSizeWidth;
+			gameObject.height = this.explosionSizeHeight;
 
 			this.explosionGameObjects.push(gameObject);
 			this.gameContainer.addChild(gameObject);
