@@ -8,7 +8,7 @@ import { SoundTemplate } from "./core/SoundTemplate";
 export enum ExplosionType {
 	RING_EXPLOSION,
 	SMOKE_EXPLOSION,
-	PUFF_EXPLOSION,
+	FLASH_EXPLOSION,
 }
 
 export enum PowerUpType {
@@ -573,7 +573,7 @@ export abstract class Constants {
 	private static puffWidth = 44;
 	private static puffHeight = 44;
 
-	public static PUFF_EXPLOSION_SPRITE_SHEET_JSON: SpriteSheetJson = {
+	public static FLASH_EXPLOSION_SPRITE_SHEET_JSON: SpriteSheetJson = {
 		meta: {
 			image: './images/explosion_3.png',
 			scale: "1",

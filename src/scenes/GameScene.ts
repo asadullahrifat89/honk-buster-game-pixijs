@@ -1161,24 +1161,24 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region PuffExplosions	
+	//#region FlashExplosions
 
-	private puffExplosionGameObjects: Array<Explosion> = [];
+	private flashExplosionGameObjects: Array<Explosion> = [];
 
-	spawnPuffExplosions() {
+	spawnFlashExplosions() {
 
 		for (let j = 0; j < 10; j++) {
 
-			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED + 2, ExplosionType.PUFF_EXPLOSION);
+			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED + 2, ExplosionType.FLASH_EXPLOSION);
 			gameObject.disableRendering();
 
-			this.puffExplosionGameObjects.push(gameObject);
+			this.flashExplosionGameObjects.push(gameObject);
 			this.gameContainer.addChild(gameObject);
 		}
 	}
 
-	generatePuffExplosion(source: GameObjectContainer) {
-		var gameObject = this.puffExplosionGameObjects.find(x => x.isAnimating == false);
+	generateFlashExplosion(source: GameObjectContainer) {
+		var gameObject = this.flashExplosionGameObjects.find(x => x.isAnimating == false);
 
 		if (gameObject) {
 			gameObject.reset();
@@ -1188,14 +1188,12 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	animatePuffExplosions() {
-		var animatingHonkBombs = this.puffExplosionGameObjects.filter(x => x.isAnimating == true);
+	animateFlashExplosions() {
+		var animatingHonkBombs = this.flashExplosionGameObjects.filter(x => x.isAnimating == true);
 		if (animatingHonkBombs) {
 			animatingHonkBombs.forEach(gameObject => {
-				gameObject.pop();
-				gameObject.expand();
-				gameObject.fade();
-				gameObject.moveUpLeft();
+				gameObject.pop();				
+				gameObject.fade();				
 
 				if (gameObject.hasFaded() || gameObject.getRight() < 0 || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
@@ -1595,37 +1593,37 @@ export class GameScene extends Container implements IScene {
 							playerRocket.setBlast();
 							ufoBossRocketSeeking.setBlast();
 							this.generateRingExplosion(playerRocket);
-							this.generatePuffExplosion(ufoBossRocketSeeking);
+							this.generateFlashExplosion(playerRocket);
 						}
 						else if (ufoEnemy) {
 							playerRocket.setBlast();
 							this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
 							this.generateRingExplosion(playerRocket);
-							this.generatePuffExplosion(ufoEnemy);
+							this.generateFlashExplosion(playerRocket);
 						}
 						else if (ufoBoss) {
 							playerRocket.setBlast();
 							this.looseUfoBosshealth(ufoBoss as UfoBoss);
 							this.generateRingExplosion(playerRocket);
-							this.generatePuffExplosion(ufoBoss);
+							this.generateFlashExplosion(playerRocket);
 						}
 						else if (zombieBossRocketBlock) {
 							playerRocket.setBlast();
 							zombieBossRocketBlock.looseHealth();
 							this.generateRingExplosion(playerRocket);
-							this.generatePuffExplosion(zombieBossRocketBlock);
+							this.generateFlashExplosion(playerRocket);
 						}
 						else if (zombieBoss) {
 							playerRocket.setBlast();
 							this.looseZombieBosshealth(zombieBoss as ZombieBoss);
 							this.generateRingExplosion(playerRocket);
-							this.generatePuffExplosion(zombieBoss);
+							this.generateFlashExplosion(playerRocket);
 						}
 						else if (mafiaBoss) {
 							playerRocket.setBlast();
 							this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
 							this.generateRingExplosion(playerRocket);
-							this.generatePuffExplosion(mafiaBoss);
+							this.generateFlashExplosion(playerRocket);
 						}
 
 						if (playerRocket.autoBlast()) {
@@ -1779,37 +1777,37 @@ export class GameScene extends Container implements IScene {
 						playerRocket.setBlast();
 						ufoBossRocketSeeking.setBlast();
 						this.generateRingExplosion(playerRocket);
-						this.generatePuffExplosion(ufoBossRocketSeeking);
+						this.generateFlashExplosion(playerRocket);
 					}
 					else if (ufoBoss) {
 						playerRocket.setBlast();
 						this.looseUfoBosshealth(ufoBoss as UfoBoss);
 						this.generateRingExplosion(playerRocket);
-						this.generatePuffExplosion(ufoBoss);
+						this.generateFlashExplosion(playerRocket);
 					}
 					else if (ufoEnemy) {
 						playerRocket.setBlast();
 						this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
 						this.generateRingExplosion(playerRocket);
-						this.generatePuffExplosion(ufoEnemy);
+						this.generateFlashExplosion(playerRocket);
 					}
 					else if (zombieBossRocketBlock) {
 						playerRocket.setBlast();
 						zombieBossRocketBlock.looseHealth();
 						this.generateRingExplosion(playerRocket);
-						this.generatePuffExplosion(zombieBossRocketBlock);
+						this.generateFlashExplosion(playerRocket);
 					}
 					else if (zombieBoss) {
 						playerRocket.setBlast();
 						this.looseZombieBosshealth(zombieBoss as ZombieBoss);
 						this.generateRingExplosion(playerRocket);
-						this.generatePuffExplosion(zombieBoss);
+						this.generateFlashExplosion(playerRocket);
 					}
 					else if (mafiaBoss) {
 						playerRocket.setBlast();
 						this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
 						this.generateRingExplosion(playerRocket);
-						this.generatePuffExplosion(mafiaBoss);
+						this.generateFlashExplosion(playerRocket);
 					}
 
 					if (playerRocket.autoBlast()) {
@@ -3920,7 +3918,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnUfoEnemyRockets();
 		this.spawnUfoEnemys();
 
-		this.spawnPuffExplosions();
+		this.spawnFlashExplosions();
 		this.spawnRingExplosions();
 
 		this.spawnHealthPickups();
@@ -4002,7 +4000,7 @@ export class GameScene extends Container implements IScene {
 		}
 
 		this.animatePlayerHonkBombs();
-		this.animatePuffExplosions();
+		this.animateFlashExplosions();
 		this.animateSmokeExplosions();
 		this.animateRingExplosions();
 		this.animatePlayerRockets();
