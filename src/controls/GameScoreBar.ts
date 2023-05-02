@@ -46,7 +46,7 @@ export class GameScoreBar {
 	}
 
 	reposition(x: number, y: number) {
-		this.scoreContainer.x = x - this.scoreContainer.width / 2;
+		this.scoreContainer.x = x;
 		this.scoreContainer.y = y;
 	}	
 
