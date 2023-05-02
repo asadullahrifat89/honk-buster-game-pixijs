@@ -20,7 +20,7 @@ export class MessageBubble extends GameObjectContainer {
 		this.messageContainer.addChild(this.messageGraphics);
 
 		this.messageText = new Text("", {
-			fontFamily: "gameplay",
+			fontFamily: "gamefont",
 			align: "center",
 			fill: "#2f3a5a",
 			fontSize: 22
@@ -59,6 +59,6 @@ export class MessageBubble extends GameObjectContainer {
 	}
 
 	private drawMessageGraphics(): Graphics {
-		return new Graphics().beginFill(0xffffff).lineStyle(4, 0x2f3a5a).drawRoundedRect(0, 0, this.messageText.width + 20, 35, 4).endFill();
+		return new Graphics().beginFill(0xffffff).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 0, this.messageText.width + 20, 35, 4).endFill();
 	}
 }

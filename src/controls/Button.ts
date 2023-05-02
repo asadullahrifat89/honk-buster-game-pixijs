@@ -14,7 +14,7 @@ export class Button extends Container {
 		this.filters = null;
 
 		const buttonTextStyle: TextStyle = new TextStyle({
-			fontFamily: "gameplay",
+			fontFamily: "gamefont",
 			align: "center",
 			fill: "#ffffff",
 			fontSize: 26

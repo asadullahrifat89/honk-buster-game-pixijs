@@ -26,15 +26,12 @@ export class HealthBar extends Container {
 
 		this.progressBar = new ProgressBar();
 		this.progressBar.width = 58;
-		this.progressBar.height = 10;
-
-		this.progressBar.setBackground(new Graphics().beginFill(0xd9e2e9).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 0, 58, 20, 2).endFill());
-
-		this.progressBar.setFill(new Graphics().beginFill(0xf73e3e).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 0, 58, 20, 2).endFill());
-
-		this.progressBar.progress = 0;
+		this.progressBar.height = 10;				
 		this.progressBar.x = 37;
 		this.progressBar.y = 7;
+		this.progressBar.setBackground(new Graphics().beginFill(0xd9e2e9).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 0, 58, 20, 2).endFill());
+		this.progressBar.setFill(new Graphics().beginFill(0xf73e3e).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 0, 58, 20, 2).endFill());
+		this.progressBar.progress = 0;
 		this.addChild(this.progressBar);
 
 		this.iconContainer = new GameObjectContainer();

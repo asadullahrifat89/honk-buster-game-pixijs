@@ -29,7 +29,7 @@ export class OnScreenMessage {
 		this.messageContainer.addChild(this.messageGraphics);
 
 		this.messageText = new Text("", {
-			fontFamily: "gameplay",
+			fontFamily: "gamefont",
 			align: "center",
 			fill: "#2f3a5a",
 			fontSize: 23
