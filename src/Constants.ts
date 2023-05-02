@@ -470,33 +470,33 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.GAME_COVER_IMAGE, this.imagessDirectory + "cover_image.png"),
 	];
 
-	private static DEFAULT_EXPLOSION_SPRITE_WIDTH = 138;
-	private static DEFAULT_EXPLOSION_SPRITE_HEIGHT = 138;
+	private static ringWidth = 138;
+	private static ringHeight = 138;
 
-	public static DEFAULT_EXPLOSION_SPRITE_SHEET_JSON: SpriteSheetJson = {
+	public static RING_EXPLOSION_SPRITE_SHEET_JSON: SpriteSheetJson = {
 		meta: {
 			image: './images/explosion_1.png',
 			scale: "1",
 		},
 		frames: {
 			frame0: {
-				frame: { x: this.DEFAULT_EXPLOSION_SPRITE_WIDTH * 0, y: 0, w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.ringWidth * 0, y: 0, w: this.ringWidth, h: this.ringHeight },
+				sourceSize: { w: this.ringWidth, h: this.ringHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame1: {
-				frame: { x: this.DEFAULT_EXPLOSION_SPRITE_WIDTH * 1, y: 0, w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.ringWidth * 1, y: 0, w: this.ringWidth, h: this.ringHeight },
+				sourceSize: { w: this.ringWidth, h: this.ringHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame2: {
-				frame: { x: this.DEFAULT_EXPLOSION_SPRITE_WIDTH * 2, y: 0, w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.ringWidth * 2, y: 0, w: this.ringWidth, h: this.ringHeight },
+				sourceSize: { w: this.ringWidth, h: this.ringHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame3: {
-				frame: { x: this.DEFAULT_EXPLOSION_SPRITE_WIDTH * 3, y: 0, w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.DEFAULT_EXPLOSION_SPRITE_WIDTH, h: this.DEFAULT_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.ringWidth * 3, y: 0, w: this.ringWidth, h: this.ringHeight },
+				sourceSize: { w: this.ringWidth, h: this.ringHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 		},
@@ -505,8 +505,8 @@ export abstract class Constants {
 		}
 	};
 
-	private static SMOKE_EXPLOSION_SPRITE_WIDTH = 128;
-	private static SMOKE_EXPLOSION_SPRITE_HEIGHT = 128;
+	private static smokeWidth = 128;
+	private static smokeHeight = 128;
 
 	public static SMOKE_EXPLOSION_SPRITE_SHEET_JSON: SpriteSheetJson = {
 		meta: {
@@ -515,53 +515,53 @@ export abstract class Constants {
 		},
 		frames: {
 			frame0: {
-				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 0, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.smokeWidth * 0, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame1: {
-				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 1, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.smokeWidth * 1, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame2: {
-				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 2, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.smokeWidth * 2, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame3: {
-				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 3, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.smokeWidth * 3, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame4: {
-				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 4, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.smokeWidth * 4, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame5: {
-				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 5, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.smokeWidth * 5, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame6: {
-				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 6, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.smokeWidth * 6, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame7: {
-				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 7, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.smokeWidth * 7, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame8: {
-				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 8, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.smokeWidth * 8, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame9: {
-				frame: { x: this.SMOKE_EXPLOSION_SPRITE_WIDTH * 9, y: 0, w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.SMOKE_EXPLOSION_SPRITE_WIDTH, h: this.SMOKE_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.smokeWidth * 9, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 		},
@@ -570,99 +570,59 @@ export abstract class Constants {
 		}
 	};
 
-	private static PUFF_EXPLOSION_SPRITE_WIDTH = 60.5;
-	private static PUFF_EXPLOSION_SPRITE_HEIGHT = 65.5;
+	private static puffWidth_0 = 63.625;
+	//private static puffWidth_1 = 69.14;
+	private static puffHeight = 66;
 
 	public static PUFF_EXPLOSION_SPRITE_SHEET_JSON: SpriteSheetJson = {
 		meta: {
-			image: './images/explosion_1.png',
+			image: './images/explosion_3.png',
 			scale: "1",
 		},
 		frames: {
 			frame0: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 0, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.puffWidth_0 * 0, y: 0, w: this.puffWidth_0, h: this.puffHeight },
+				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame1: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 1, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.puffWidth_0 * 1, y: 0, w: this.puffWidth_0, h: this.puffHeight },
+				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame2: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 2, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.puffWidth_0 * 2, y: 0, w: this.puffWidth_0, h: this.puffHeight },
+				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame3: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 3, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.puffWidth_0 * 3, y: 0, w: this.puffWidth_0, h: this.puffHeight },
+				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame4: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 4, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.puffWidth_0 * 4, y: 0, w: this.puffWidth_0, h: this.puffHeight },
+				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame5: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 5, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.puffWidth_0 * 5, y: 0, w: this.puffWidth_0, h: this.puffHeight },
+				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame6: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 6, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.puffWidth_0 * 6, y: 0, w: this.puffWidth_0, h: this.puffHeight },
+				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame7: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 7, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				frame: { x: this.puffWidth_0 * 7, y: 0, w: this.puffWidth_0, h: this.puffHeight },
+				sourceSize: { w: this.puffWidth_0, h: this.puffHeight },
 				spriteSourceSize: { x: 0, y: 0 }
-			},
-
-			frame8: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 0, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame9: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 1, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame10: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 2, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame11: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 3, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame12: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 4, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame13: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 5, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame14: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 6, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
-			frame15: {
-				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 7, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
-				spriteSourceSize: { x: 0, y: 0 }
-			},
+			},		
 		},
 		animations: {
-			frames: ["frame0", "frame1", "frame2", "frame3", "frame4", "frame5", "frame6", "frame7", "frame8", "frame9", "frame10", "frame11", "frame12", "frame13", "frame14", "frame15"],
+			frames: ["frame0", "frame1", "frame2", "frame3", "frame4", "frame5", "frame6", "frame7"],
 		}
 	};
 

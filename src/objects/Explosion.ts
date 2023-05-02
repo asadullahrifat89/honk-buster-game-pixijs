@@ -32,7 +32,7 @@ export class Explosion extends GameObjectContainer {
 	private getExplosionAnimation(explosionType: ExplosionType): AnimatedSprite {
 		switch (explosionType) {
 			case ExplosionType.RING_EXPLOSION: {				
-				const atlasData: SpriteSheetJson = Constants.DEFAULT_EXPLOSION_SPRITE_SHEET_JSON;
+				const atlasData: SpriteSheetJson = Constants.RING_EXPLOSION_SPRITE_SHEET_JSON;
 				return this.getAnimationSprite(atlasData, 0.2);
 			} break;
 			case ExplosionType.SMOKE_EXPLOSION: {

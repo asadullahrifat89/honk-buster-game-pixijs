@@ -56,7 +56,7 @@ export class GameScene extends Container implements IScene {
 	private readonly vehicleBossCheckpoint: GameCheckpoint;
 
 	//TODO: set defaults _ufoEnemyReleasePoint = 35
-	private readonly ufoEnemyReleasePoint: number = 35; // first appearance
+	private readonly ufoEnemyReleasePoint: number = 5; // first appearance
 	private readonly ufoEnemyReleasePoint_increase: number = 5;
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
@@ -1161,6 +1161,50 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region PuffExplosions	
+
+	private puffExplosionGameObjects: Array<Explosion> = [];
+
+	spawnPuffExplosions() {
+
+		for (let j = 0; j < 10; j++) {
+
+			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2, ExplosionType.PUFF_EXPLOSION);
+			gameObject.disableRendering();
+
+			this.puffExplosionGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+		}
+	}
+
+	generatePuffExplosion(source: GameObjectContainer) {
+		var gameObject = this.puffExplosionGameObjects.find(x => x.isAnimating == false);
+
+		if (gameObject) {
+			gameObject.reset();
+			gameObject.reposition(source);
+			gameObject.setPopping();
+			gameObject.enableRendering();
+		}
+	}
+
+	animatePuffExplosions() {
+		var animatingHonkBombs = this.puffExplosionGameObjects.filter(x => x.isAnimating == true);
+		if (animatingHonkBombs) {
+			animatingHonkBombs.forEach(gameObject => {
+				gameObject.pop();				
+				gameObject.fade();
+				//gameObject.moveDownRight();
+
+				if (gameObject.hasFaded() || gameObject.getRight() < 0 || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
 	//#region SmokeExplosions	
 
 	private smokeExplosionGameObjects: Array<Explosion> = [];
@@ -1550,31 +1594,37 @@ export class GameScene extends Container implements IScene {
 							playerRocket.setBlast();
 							ufoBossRocketSeeking.setBlast();
 							this.generateRingExplosion(playerRocket);
+							this.generatePuffExplosion(ufoBossRocketSeeking);
 						}
 						else if (ufoEnemy) {
 							playerRocket.setBlast();
 							this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
 							this.generateRingExplosion(playerRocket);
+							this.generatePuffExplosion(ufoEnemy);
 						}
 						else if (ufoBoss) {
 							playerRocket.setBlast();
 							this.looseUfoBosshealth(ufoBoss as UfoBoss);
 							this.generateRingExplosion(playerRocket);
+							this.generatePuffExplosion(ufoBoss);
 						}
 						else if (zombieBossRocketBlock) {
 							playerRocket.setBlast();
 							zombieBossRocketBlock.looseHealth();
 							this.generateRingExplosion(playerRocket);
+							this.generatePuffExplosion(zombieBossRocketBlock);
 						}
 						else if (zombieBoss) {
 							playerRocket.setBlast();
 							this.looseZombieBosshealth(zombieBoss as ZombieBoss);
 							this.generateRingExplosion(playerRocket);
+							this.generatePuffExplosion(zombieBoss);
 						}
 						else if (mafiaBoss) {
 							playerRocket.setBlast();
 							this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
 							this.generateRingExplosion(playerRocket);
+							this.generatePuffExplosion(mafiaBoss);
 						}
 
 						if (playerRocket.autoBlast()) {
@@ -1728,31 +1778,37 @@ export class GameScene extends Container implements IScene {
 						playerRocket.setBlast();
 						ufoBossRocketSeeking.setBlast();
 						this.generateRingExplosion(playerRocket);
+						this.generatePuffExplosion(ufoBossRocketSeeking);
 					}
 					else if (ufoBoss) {
 						playerRocket.setBlast();
 						this.looseUfoBosshealth(ufoBoss as UfoBoss);
 						this.generateRingExplosion(playerRocket);
+						this.generatePuffExplosion(ufoBoss);
 					}
 					else if (ufoEnemy) {
 						playerRocket.setBlast();
 						this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
 						this.generateRingExplosion(playerRocket);
+						this.generatePuffExplosion(ufoEnemy);
 					}
 					else if (zombieBossRocketBlock) {
 						playerRocket.setBlast();
 						zombieBossRocketBlock.looseHealth();
 						this.generateRingExplosion(playerRocket);
+						this.generatePuffExplosion(zombieBossRocketBlock);
 					}
 					else if (zombieBoss) {
 						playerRocket.setBlast();
 						this.looseZombieBosshealth(zombieBoss as ZombieBoss);
 						this.generateRingExplosion(playerRocket);
+						this.generatePuffExplosion(zombieBoss);
 					}
 					else if (mafiaBoss) {
 						playerRocket.setBlast();
 						this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
 						this.generateRingExplosion(playerRocket);
+						this.generatePuffExplosion(mafiaBoss);
 					}
 
 					if (playerRocket.autoBlast()) {
@@ -3842,6 +3898,7 @@ export class GameScene extends Container implements IScene {
 		//this.spawnLampsBottom();
 		this.spawnPlayerHonkBombs();
 		this.spawnSmokeExplosions();
+		this.spawnPuffExplosions();
 		this.spawnRingExplosions();
 
 		this.spawnTreesBottom();
@@ -3942,9 +3999,10 @@ export class GameScene extends Container implements IScene {
 			//this.animateLampsBottom();
 		}
 
-		this.animatePlayerHonkBombs();
-		this.animateRingExplosions();
+		this.animatePlayerHonkBombs();		
+		this.animatePuffExplosions();
 		this.animateSmokeExplosions();
+		this.animateRingExplosions();
 		this.animatePlayerRockets();
 		this.animatePlayerRocketBullsEyes();
 
