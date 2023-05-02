@@ -275,7 +275,7 @@ export class PlayerRide extends GameObjectContainer {
 	private animateChopperBlades() {
 		if (this.playerRideTemplate == PlayerRideTemplate.CHOPPER) {
 
-			this.chopperBladesHoverDelay--;
+			this.chopperBladesHoverDelay--; // chopper blades hover effect
 
 			if (this.chopperBladesHoverDelay >= 0) {
 				this.chopperBladesSprite.y += 0.5;
@@ -288,7 +288,7 @@ export class PlayerRide extends GameObjectContainer {
 				}
 			}
 
-			this.chopperBladesOpacityEffect++; // blinking effect
+			this.chopperBladesOpacityEffect++; // chopper blades blinking effect
 
 			if (this.chopperBladesOpacityEffect > 2) {
 				if (this.chopperBladesSprite.alpha != 1) {
