@@ -1,4 +1,5 @@
 ﻿import { Container, Graphics, Text } from "pixi.js";
+import { Constants } from "../Constants";
 import { GameObjectContainer } from "../core/GameObjectContainer";
 
 
@@ -22,7 +23,7 @@ export class MessageBubble extends GameObjectContainer {
 		this.messageText = new Text("", {
 			fontFamily: "gamefont",
 			align: "center",
-			fill: "#2f3a5a",
+			fill: Constants.MESSAGE_BOX_TEXT_COLOR,
 			fontSize: 22
 		});
 		this.messageText.x = 10;
@@ -59,6 +60,6 @@ export class MessageBubble extends GameObjectContainer {
 	}
 
 	private drawMessageGraphics(): Graphics {
-		return new Graphics().beginFill(0xffffff).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 0, this.messageText.width + 20, 35, 4).endFill();
+		return new Graphics().beginFill(0xffffff).lineStyle(3, Constants.MESSAGE_BOX_BORDER_COLOR).drawRoundedRect(0, 0, this.messageText.width + 20, 35, 4).endFill();
 	}
 }
