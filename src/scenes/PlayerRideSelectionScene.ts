@@ -87,7 +87,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
 			}
 
-		}, "Select");
+		}, "Next");
 		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height - button.height * 2);
 		this.sceneContainer.addChild(button);
 	}

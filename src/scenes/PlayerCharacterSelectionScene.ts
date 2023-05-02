@@ -38,7 +38,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 
 		this.sceneContainer.addChild(this.bg_container);
 
-		const title = new Text("Select Character", {
+		const title = new Text("Select a Character", {
 			fontFamily: "gameplay",
 			fontSize: 35,
 			align: "center",
@@ -91,7 +91,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
 			}
 
-		}, "Select");
+		}, "Next");
 		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height - button.height * 2);
 		this.sceneContainer.addChild(button);
 	}
