@@ -119,6 +119,7 @@ export class GameScene extends Container implements IScene {
 
 		this.gameContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
 		this.addChild(this.gameContainer);
+		this.gameContainer.alpha = 0;
 
 		this.gameController = new GameController({
 			onPause: (isPaused) => {
@@ -1118,8 +1119,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region Explosions
 
-	private explosionSizeWidth: number = 138;
-	private explosionSizeHeight: number = 138
+	//private explosionSizeWidth: number = 138;
+	//private explosionSizeHeight: number = 138
 
 	private explosionGameObjects: Array<Explosion> = [];
 
@@ -1130,8 +1131,8 @@ export class GameScene extends Container implements IScene {
 			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2);
 			gameObject.disableRendering();
 
-			gameObject.width = this.explosionSizeWidth;
-			gameObject.height = this.explosionSizeHeight;
+			//gameObject.width = this.explosionSizeWidth;
+			//gameObject.height = this.explosionSizeHeight;
 
 			this.explosionGameObjects.push(gameObject);
 			this.gameContainer.addChild(gameObject);
@@ -3747,6 +3748,11 @@ export class GameScene extends Container implements IScene {
 	//#region Scene
 
 	public update(_framesPassed: number) {
+
+		if (this.gameContainer.alpha < 1) {
+			this.gameContainer.alpha += 0.02;
+		}
+
 		this.updateFrame();
 	}
 

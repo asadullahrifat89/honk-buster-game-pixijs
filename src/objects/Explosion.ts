@@ -30,32 +30,36 @@ export class Explosion extends GameObjectContainer {
 }
 
 function getExplosionAnimation(): AnimatedSprite {
-	// Create object to store sprite sheet data
+
+	const spriteWidth: number = 138;
+	const spriteHeight: number = 138;
+
+	// explosion 1
 	const atlasData: SpriteSheetJson = {
 		frames: {
 			frame0: {
-				frame: { x: 138 * 0, y: 0, w: 138, h: 138 },
-				sourceSize: { w: 138, h: 138 },
+				frame: { x: spriteWidth * 0, y: 0, w: spriteWidth, h: spriteHeight },
+				sourceSize: { w: spriteWidth, h: spriteHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame1: {
-				frame: { x: 138 * 1, y: 0, w: 138, h: 138 },
-				sourceSize: { w: 138, h: 138 },
+				frame: { x: spriteWidth * 1, y: 0, w: spriteWidth, h: spriteHeight },
+				sourceSize: { w: spriteWidth, h: spriteHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame2: {
-				frame: { x: 138 * 2, y: 0, w: 138, h: 138 },
-				sourceSize: { w: 138, h: 138 },
+				frame: { x: spriteWidth * 2, y: 0, w: spriteWidth, h: spriteHeight },
+				sourceSize: { w: spriteWidth, h: spriteHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 			frame3: {
-				frame: { x: 138 * 3, y: 0, w: 138, h: 138 },
-				sourceSize: { w: 138, h: 138 },
+				frame: { x: spriteWidth * 3, y: 0, w: spriteWidth, h: spriteHeight },
+				sourceSize: { w: spriteWidth, h: spriteHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
 		},
 		meta: {
-			image: './images/explosion.png',
+			image: './images/explosion_1.png',
 			scale: "1",
 		},
 		animations: {
@@ -65,12 +69,9 @@ function getExplosionAnimation(): AnimatedSprite {
 
 	// Create the SpriteSheet from data and image
 	const spritesheet: Spritesheet = new Spritesheet(BaseTexture.from(atlasData.meta.image), atlasData);
-
 	spritesheet.parse();
 
 	let animation = new AnimatedSprite(spritesheet.animations.frames);
-
-	// set the animation speed 
 	animation.animationSpeed = 0.2;
 	animation.loop = false;
 	animation.anchor.set(0.5);
