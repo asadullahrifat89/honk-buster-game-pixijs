@@ -7,7 +7,7 @@ export class Explosion extends GameObjectContainer {
 
 	private explosionAnimation: AnimatedSprite;
 
-	constructor(speed: number, explosionType: ExplosionType = ExplosionType.DEFAULT_EXPLOSION) {
+	constructor(speed: number, explosionType: ExplosionType = ExplosionType.RING_EXPLOSION) {
 		super(speed);
 		this.explosionAnimation = this.getExplosionAnimation(explosionType);
 		this.addChild(this.explosionAnimation);
@@ -31,12 +31,16 @@ export class Explosion extends GameObjectContainer {
 
 	private getExplosionAnimation(explosionType: ExplosionType): AnimatedSprite {
 		switch (explosionType) {
-			case ExplosionType.DEFAULT_EXPLOSION: {				
+			case ExplosionType.RING_EXPLOSION: {				
 				const atlasData: SpriteSheetJson = Constants.DEFAULT_EXPLOSION_SPRITE_SHEET_JSON;
 				return this.getAnimationSprite(atlasData, 0.2);
 			} break;
 			case ExplosionType.SMOKE_EXPLOSION: {
 				const atlasData: SpriteSheetJson = Constants.SMOKE_EXPLOSION_SPRITE_SHEET_JSON;
+				return this.getAnimationSprite(atlasData, 0.3);
+			} break;
+			case ExplosionType.PUFF_EXPLOSION: {
+				const atlasData: SpriteSheetJson = Constants.PUFF_EXPLOSION_SPRITE_SHEET_JSON;
 				return this.getAnimationSprite(atlasData, 0.3);
 			} break;
 		}

@@ -6,8 +6,9 @@ import { SoundTemplate } from "./core/SoundTemplate";
 //#region Enums
 
 export enum ExplosionType {
-	DEFAULT_EXPLOSION,
+	RING_EXPLOSION,
 	SMOKE_EXPLOSION,
+	PUFF_EXPLOSION,
 }
 
 export enum PowerUpType {
@@ -83,7 +84,7 @@ export enum ConstructType {
 	PLAYER_RIDE_IDLE,
 	PLAYER_RIDE_ATTACK,
 	PLAYER_RIDE_WIN,
-	PLAYER_RIDE_HIT,	
+	PLAYER_RIDE_HIT,
 
 	PLAYER_ROCKET,
 	PLAYER_ROCKET_SEEKING,
@@ -152,7 +153,7 @@ export enum ConstructType {
 	FLOATING_NUMBER,
 
 	TITLE_SCREEN,
-	CHOPPER_BLADES,	
+	CHOPPER_BLADES,
 }
 
 export enum SoundType {
@@ -566,6 +567,102 @@ export abstract class Constants {
 		},
 		animations: {
 			frames: ["frame0", "frame1", "frame2", "frame3", "frame4", "frame5", "frame6", "frame7", "frame8", "frame9"]
+		}
+	};
+
+	private static PUFF_EXPLOSION_SPRITE_WIDTH = 60.5;
+	private static PUFF_EXPLOSION_SPRITE_HEIGHT = 65.5;
+
+	public static PUFF_EXPLOSION_SPRITE_SHEET_JSON: SpriteSheetJson = {
+		meta: {
+			image: './images/explosion_1.png',
+			scale: "1",
+		},
+		frames: {
+			frame0: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 0, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame1: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 1, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame2: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 2, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame3: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 3, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame4: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 4, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame5: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 5, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame6: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 6, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame7: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 7, y: 0, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+
+			frame8: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 0, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame9: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 1, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame10: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 2, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame11: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 3, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame12: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 4, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame13: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 5, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame14: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 6, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame15: {
+				frame: { x: this.PUFF_EXPLOSION_SPRITE_WIDTH * 7, y: this.PUFF_EXPLOSION_SPRITE_WIDTH, w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				sourceSize: { w: this.PUFF_EXPLOSION_SPRITE_WIDTH, h: this.PUFF_EXPLOSION_SPRITE_HEIGHT },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+		},
+		animations: {
+			frames: ["frame0", "frame1", "frame2", "frame3", "frame4", "frame5", "frame6", "frame7", "frame8", "frame9", "frame10", "frame11", "frame12", "frame13", "frame14", "frame15"],
 		}
 	};
 
