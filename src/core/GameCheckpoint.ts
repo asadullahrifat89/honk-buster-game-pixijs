@@ -1,29 +1,29 @@
 ﻿
 export class GameCheckpoint {
 
-    private threasholdLimit: number = 0;
+    private limit: number = 0;
     private lastReleasePoint: number = 0;
 
-    constructor(threasholdLimit: number) {
-        this.threasholdLimit = threasholdLimit;
+    constructor(limit: number) {
+        this.limit = limit;
     }
 
     getReleasePointDifference() {
-        return this.threasholdLimit;
+        return this.limit;
     }
 
     shouldRelease(currentPoint: number): boolean {
-        var release = currentPoint - this.lastReleasePoint > this.threasholdLimit;
+        var release = currentPoint - this.lastReleasePoint > this.limit;
         return release;
     }
 
-    increaseThreasholdLimit(increment: number, currentPoint: number) {
+    increaseLimit(limit: number, currentPoint: number) {
         this.lastReleasePoint = currentPoint;
-        this.threasholdLimit += increment;
+        this.limit += limit;
     }
 
     reset(value: number) {
-        this.threasholdLimit = value;
+        this.limit = value;
         this.lastReleasePoint = 0;
     }
 }
