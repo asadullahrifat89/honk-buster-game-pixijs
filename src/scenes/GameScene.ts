@@ -144,10 +144,10 @@ export class GameScene extends Container implements IScene {
 
 		this.generatePlayerBalloon();
 
-		this.gameScoreBar = new GameScoreBar(this);
+		this.gameScoreBar = new GameScoreBar(this, "Score ");
 		this.repositionGameScoreBar();
 
-		this.gameLevelBar = new GameScoreBar(this);
+		this.gameLevelBar = new GameScoreBar(this, "Lvl ", 1);
 		this.repositionGameLevelBar();
 
 		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this);
@@ -3704,7 +3704,7 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private repositionGameLevelBar() {
-		this.gameLevelBar.reposition((SceneManager.width) / 2 + 100, 10);
+		this.gameLevelBar.reposition((SceneManager.width) / 2 - 120, 10);
 	}
 
 	//#endregion

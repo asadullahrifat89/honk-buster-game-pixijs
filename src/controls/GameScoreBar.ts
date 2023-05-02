@@ -6,8 +6,9 @@ export class GameScoreBar {
 	private scoreText: Text;
 	private scoreGraphics: Graphics;
 	private score: number = 0;
+	private prefix: string = "";
 
-	constructor(scene: Container) {
+	constructor(scene: Container, prefix: string = "", score: number = 0) {
 
 		//BitmapFont.from("gameplay", {
 		//	fill: "#2f3a5a",
@@ -21,10 +22,11 @@ export class GameScoreBar {
 		//	fontSize: 26,
 		//	align: "center",
 		//});
-
+		this.prefix = prefix;
+		this.score = score;
 		this.scoreContainer = new Container();
 
-		this.scoreText = new Text("0", {
+		this.scoreText = new Text(this.prefix + this.score.toString(), {
 			fontFamily: "gameplay",
 			align: "center",
 			fill: "#2f3a5a",
@@ -35,7 +37,7 @@ export class GameScoreBar {
 
 		this.scoreGraphics = this.drawScoreGraphics();
 
-		this.scoreContainer.addChild(this.scoreGraphics);		
+		this.scoreContainer.addChild(this.scoreGraphics);
 		this.scoreContainer.addChild(this.scoreText);
 
 		scene.addChild(this.scoreContainer);
@@ -44,32 +46,29 @@ export class GameScoreBar {
 	reposition(x: number, y: number) {
 		this.scoreContainer.x = x - this.scoreContainer.width / 2;
 		this.scoreContainer.y = y;
-	}
-
-	reset() {
-		this.score = 0;
-		this.scoreText.text = this.score.toString();
-	}
+	}	
 
 	gainScore(score: number) {
 		this.score += score;
-		this.scoreText.text = this.score.toString();
+		this.scoreText.text = this.prefix + this.score.toString();
 
-		this.scoreContainer.removeChild(this.scoreGraphics);
-		this.scoreGraphics = this.drawScoreGraphics();
-		this.scoreContainer.addChildAt(this.scoreGraphics, 0);
+		this.resetGraphics();
 	}
 
 	looseScore(score: number) {
 		if (this.score > 1) {
 			this.score -= score;
-			this.scoreText.text = this.score.toString();
+			this.scoreText.text = this.prefix +this.score.toString();
 
-			this.scoreContainer.removeChild(this.scoreGraphics);
-			this.scoreGraphics = this.drawScoreGraphics();
-			this.scoreContainer.addChildAt(this.scoreGraphics, 0);
+			this.resetGraphics();
 		}
 	}
+
+    private resetGraphics() {
+        this.scoreContainer.removeChild(this.scoreGraphics);
+        this.scoreGraphics = this.drawScoreGraphics();
+        this.scoreContainer.addChildAt(this.scoreGraphics, 0);
+    }
 
 	getScore(): number {
 		return this.score;
