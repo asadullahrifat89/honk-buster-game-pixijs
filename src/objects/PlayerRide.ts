@@ -41,6 +41,7 @@ export class PlayerRide extends GameObjectContainer {
 	private playerHitTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_HIT);
 	private playerAttackTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_ATTACK);
 
+	private chopperDelay: number = 10;
 	private chopperBladesTexture: Texture = Constants.getRandomTexture(ConstructType.CHOPPER_BLADES);
 	private chopperBladesSprite: GameObjectSprite = new GameObjectSprite(this.chopperBladesTexture);
 
@@ -265,14 +266,10 @@ export class PlayerRide extends GameObjectContainer {
 		}
 		else {
 			this.stopMovement();
-		}
-
-		//TODO: animate chopper blade
+		}		
 
 		this.animateChopperBlades();
 	}
-
-	private chopperDelay: number = 10;
 
 	private animateChopperBlades() {
 		if (this.playerRideTemplate == PlayerRideTemplate.CHOPPER) {
