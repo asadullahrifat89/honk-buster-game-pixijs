@@ -75,7 +75,7 @@ export class GameScoreBar {
 	}
 
 	private drawScoreGraphics(): Graphics {
-		return new Graphics().beginFill(0xffffff).lineStyle(4, 0x2f3a5a).drawRoundedRect(0, 0, this.scoreText.width + 20, 35, 4).endFill();
+		return new Graphics().beginFill(0xffffff).lineStyle(3, 0x2f3a5a).drawRoundedRect(0, 0, this.scoreText.width + 20, 35, 4).endFill();
 	}
 }
 
