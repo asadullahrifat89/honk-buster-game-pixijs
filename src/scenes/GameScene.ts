@@ -1158,14 +1158,17 @@ export class GameScene extends Container implements IScene {
 						playerHonkBomb.fade();
 
 						switch (playerHonkBomb.playerHonkBombTemplate) {
-							case PlayerHonkBombTemplate.Cracker: {
+							case PlayerHonkBombTemplate.BOMB: {
 								playerHonkBomb.shrink();
+								playerHonkBomb.moveDownLeft();
+								playerHonkBomb.rotate(RotationDirection.Backward, 0, 0.5);
 							} break;
-							case PlayerHonkBombTemplate.TrashCan: {
+							case PlayerHonkBombTemplate.TRASH: {
+								playerHonkBomb.shrink();
 								playerHonkBomb.moveUpRight();
 								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
 							} break;
-							case PlayerHonkBombTemplate.Barrel: {
+							case PlayerHonkBombTemplate.JUNK: {
 								playerHonkBomb.moveUpRight();
 								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
 							} break;
@@ -1174,7 +1177,7 @@ export class GameScene extends Container implements IScene {
 					}
 					else {
 						switch (playerHonkBomb.playerHonkBombTemplate) {
-							case PlayerHonkBombTemplate.Cracker: {
+							case PlayerHonkBombTemplate.BOMB: {
 
 								playerHonkBomb.move();
 								playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
@@ -1196,7 +1199,7 @@ export class GameScene extends Container implements IScene {
 									}
 								}
 							} break;
-							case PlayerHonkBombTemplate.TrashCan: {
+							case PlayerHonkBombTemplate.TRASH: {
 
 								playerHonkBomb.move();
 
@@ -1217,7 +1220,7 @@ export class GameScene extends Container implements IScene {
 									}
 								}
 							} break;
-							case PlayerHonkBombTemplate.Barrel: {
+							case PlayerHonkBombTemplate.JUNK: {
 
 								if (playerHonkBomb.isDropped) {
 									playerHonkBomb.moveDownRight();

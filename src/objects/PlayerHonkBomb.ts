@@ -5,7 +5,7 @@ import { SoundManager } from '../managers/SoundManager';
 
 export class PlayerHonkBomb extends GameObjectContainer {
 
-	public playerHonkBombTemplate: PlayerHonkBombTemplate = PlayerHonkBombTemplate.Cracker;
+	public playerHonkBombTemplate: PlayerHonkBombTemplate = PlayerHonkBombTemplate.BOMB;
 	private playerHonkBombUris: string[] = [];
 
 	private blastDelay: number = 0;
@@ -45,13 +45,13 @@ export class PlayerHonkBomb extends GameObjectContainer {
 		this.playerHonkBombTemplate = honkBombTemplate;
 
 		switch (this.playerHonkBombTemplate) {
-			case PlayerHonkBombTemplate.Cracker: {
+			case PlayerHonkBombTemplate.BOMB: {
 				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("cracker")).map(x => x.uri);
 			} break;
-			case PlayerHonkBombTemplate.TrashCan: {
+			case PlayerHonkBombTemplate.TRASH: {
 				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("trash")).map(x => x.uri);
 			} break;
-			case PlayerHonkBombTemplate.Barrel: {
+			case PlayerHonkBombTemplate.JUNK: {
 				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("barrel")).map(x => x.uri);
 			} break;
 		}
@@ -87,7 +87,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 
 	setDrop() {
 		switch (this.playerHonkBombTemplate) {			
-			case PlayerHonkBombTemplate.Barrel: {
+			case PlayerHonkBombTemplate.JUNK: {
 				//this.angle = 0;
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 			} break;
@@ -97,23 +97,23 @@ export class PlayerHonkBomb extends GameObjectContainer {
 
 	setBlast() {
 		switch (this.playerHonkBombTemplate) {
-			case PlayerHonkBombTemplate.Cracker: { SoundManager.play(SoundType.CRACKER_BLAST, 0.8); } break;
-			case PlayerHonkBombTemplate.TrashCan: { SoundManager.play(SoundType.TRASH_CAN_HIT); } break;
-			case PlayerHonkBombTemplate.Barrel: { SoundManager.play(SoundType.BARREL_BREAK); } break;
+			case PlayerHonkBombTemplate.BOMB: { SoundManager.play(SoundType.CRACKER_BLAST, 0.8); } break;
+			case PlayerHonkBombTemplate.TRASH: { SoundManager.play(SoundType.TRASH_CAN_HIT); } break;
+			case PlayerHonkBombTemplate.JUNK: { SoundManager.play(SoundType.BARREL_BREAK); } break;
 			default: break;
 		}
 
 		this.isBlasting = true;
 
 		switch (this.playerHonkBombTemplate) {
-			case PlayerHonkBombTemplate.Cracker: {
+			case PlayerHonkBombTemplate.BOMB: {
 				this.angle = 0;
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 2;
 			} break;
-			case PlayerHonkBombTemplate.TrashCan: {
+			case PlayerHonkBombTemplate.TRASH: {
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 1.5;
 			} break;
-			case PlayerHonkBombTemplate.Barrel: {
+			case PlayerHonkBombTemplate.JUNK: {
 				this.angle = 0;
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 			} break;
