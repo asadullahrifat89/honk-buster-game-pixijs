@@ -14,7 +14,7 @@ export class VehicleBase extends GameObjectContainer {
 	reposition() {
 		var xOrYlane = Constants.getRandomNumber(0, 1); // generate top and left corner lane wise vehicles
 		var lane = Constants.getRandomNumber(0, 1); // generate number of lanes based of screen height
-		var randomY = Constants.getRandomNumber(-5, 5);
+		var randomY = Constants.getRandomNumber(-3, 3);
 
 		switch (xOrYlane) {
 			case 0:
