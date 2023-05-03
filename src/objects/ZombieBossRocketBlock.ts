@@ -7,7 +7,7 @@ import { SoundManager } from '../managers/SoundManager';
 export class ZombieBossRocketBlock extends GameObjectContainer {
 
     private autoBlastDelay: number = 0;
-    private readonly autoBlastDelayDefault: number = 9;
+    private readonly autoBlastDelayDefault: number = 15;
 
     constructor(speed: number) {
         super(speed);

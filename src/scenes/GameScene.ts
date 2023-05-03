@@ -172,14 +172,14 @@ export class GameScene extends Container implements IScene {
 		}
 
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
-			case 0: { this.generateOnScreenMessage("Drop crackers on 'em honkers!", this.talkIcon); } break;
-			case 1: { this.generateOnScreenMessage("Drop trash cans on 'em honkers!", this.talkIcon); } break;
-			default:
+			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: { this.generateOnScreenMessage("Drop granades on honkers!", this.talkIcon); } break;
+			case PlayerHonkBombTemplate.TRASH_BOMB: { this.generateOnScreenMessage("Drop trash bags on honkers!", this.talkIcon); } break;
+			case PlayerHonkBombTemplate.STICKY_BOMB: { this.generateOnScreenMessage("Drop sticky bombs on honkers!", this.talkIcon); } break;			
 		}
 
 		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
-			case 0: { } break;
-			case 1: { SoundManager.play(SoundType.CHOPPER_HOVERING, 0.1, true); } break;
+			case PlayerRideTemplate.BALLOON: { } break;
+			case PlayerRideTemplate.CHOPPER: { SoundManager.play(SoundType.CHOPPER_HOVERING, 0.1, true); } break;
 			default:
 		}
 
@@ -1162,7 +1162,6 @@ export class GameScene extends Container implements IScene {
 
 						switch (playerHonkBomb.playerHonkBombTemplate) {
 							case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
-
 								if (playerHonkBomb.awaitMoveDownLeft) {
 									playerHonkBomb.moveDownLeft();
 									playerHonkBomb.rotate(RotationDirection.Backward, 0, 15);
@@ -1184,20 +1183,17 @@ export class GameScene extends Container implements IScene {
 								}
 							} break;
 							case PlayerHonkBombTemplate.TRASH_BOMB: {
-								playerHonkBomb.shrink();
-
 								if (playerHonkBomb.awaitMoveUpRight) {
 									playerHonkBomb.moveUpRight();
 									playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
 								}
-								else if (playerHonkBomb.awaitMoveUpLeft) {
-									playerHonkBomb.moveUpLeft();
+								else if (playerHonkBomb.awaitMoveUp) {
+									playerHonkBomb.moveUp();
 									playerHonkBomb.rotate(RotationDirection.Backward, 0, 0.5);
 								}
 
 							} break;
 							case PlayerHonkBombTemplate.STICKY_BOMB: {
-
 								if (playerHonkBomb.awaitMoveUpRight) {
 									playerHonkBomb.moveUpRight();
 									playerHonkBomb.moveUpRight();
@@ -1265,7 +1261,7 @@ export class GameScene extends Container implements IScene {
 									let randomDir = Constants.getRandomNumber(0, 1);
 
 									switch (randomDir) {
-										case 0: { playerHonkBomb.awaitMoveUpLeft = true; } break;
+										case 0: { playerHonkBomb.awaitMoveUp = true; } break;
 										case 1: { playerHonkBomb.awaitMoveUpRight = true; } break;
 										default: break;
 									}
@@ -2940,8 +2936,8 @@ export class GameScene extends Container implements IScene {
 
 	//#region ZombieBossRocketBlocks
 
-	private zombieBossRocketBlockSizeWidth: number = 130 * 1.1;
-	private zombieBossRocketBlockSizeHeight: number = 150 * 1.1;
+	private zombieBossRocketBlockSizeWidth: number = 256 / 2;
+	private zombieBossRocketBlockSizeHeight: number = 256 / 2;
 
 	private zombieBossRocketBlockGameObjects: Array<ZombieBossRocketBlock> = [];
 
