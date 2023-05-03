@@ -12,7 +12,7 @@ export class ScreenOrientationScene extends Container implements IScene {
         super();
 
         this.changeOrienationText = new Text("Pls Change Screen Orientation", {
-            fontFamily: "gamefont",
+            fontFamily: "diloworld",
             fontSize: 18,
             align: "center",
             fill: "#ffffff",

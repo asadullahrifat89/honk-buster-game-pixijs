@@ -39,7 +39,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		this.sceneContainer.addChild(this.bg_container);
 
 		const title = new Text("Choose a Ride", {
-			fontFamily: "gamefont",
+			fontFamily: "diloworld",
 			fontSize: 35,
 			align: "center",
 			fill: "#ffffff",

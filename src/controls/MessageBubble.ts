@@ -21,7 +21,7 @@ export class MessageBubble extends GameObjectContainer {
 		this.messageContainer.addChild(this.messageGraphics);
 
 		this.messageText = new Text("", {
-			fontFamily: "gamefont",
+			fontFamily: "diloworld",
 			align: "center",
 			fill: Constants.MESSAGE_BOX_TEXT_COLOR,
 			fontSize: 22
