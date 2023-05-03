@@ -38,7 +38,6 @@ import { SoundTemplate } from "../core/SoundTemplate";
 import { MessageBubble } from "../controls/MessageBubble";
 
 
-
 export class GameScene extends Container implements IScene {
 
 	//#region Properties
@@ -168,7 +167,7 @@ export class GameScene extends Container implements IScene {
 
 		// progress the frames a little bit to avoid blank scene
 		for (var i = 0; i < 350; i++) {
-			this.updateFrame();
+			this.processFrame();
 		}
 
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
@@ -188,7 +187,7 @@ export class GameScene extends Container implements IScene {
 		SoundManager.play(SoundType.GAME_START);
 	}
 
-	//#endregion	
+	//#endregion
 
 	//#region CastShadow
 
@@ -225,6 +224,69 @@ export class GameScene extends Container implements IScene {
 			nonAnimatingCastShadows.forEach(dropShadow => {
 				if (dropShadow.isAnimating)
 					dropShadow.disableRendering();
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region Honks	
+
+	private roadHonkSizeWidth: number = 125;
+	private roadHonkSizeHeight: number = 125;
+
+	private roadHonkGameObjects: Array<Honk> = [];
+
+	private spawnHonks() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: Honk = new Honk(0);
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HONK));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.roadHonkSizeWidth;
+			sprite.height = this.roadHonkSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+
+			gameObject.addChild(sprite);
+
+			this.roadHonkGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+		}
+	}
+
+	private generateHonk(source: GameObjectContainer) {
+
+		if (source.getLeft() > 0 && source.getTop() > 0) {
+			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+				gameObject.reset();
+				gameObject.reposition(source);
+				gameObject.setPopping();
+				gameObject.enableRendering();
+			}
+		}
+	}
+
+	private animateHonks() {
+
+		var animatingHonks = this.roadHonkGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingHonks) {
+
+			animatingHonks.forEach(gameObject => {
+				gameObject.pop();
+				gameObject.fade();
+
+				if (gameObject.hasFaded()) {
+					gameObject.disableRendering();
+				}
 			});
 		}
 	}
@@ -284,36 +346,6 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region OnScreenMessage
-
-	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("./images/character_maleAdventurer_talk.png")) {
-		if (this.onScreenMessage.isAnimating == false) {
-			this.onScreenMessage.setContent(title, icon);
-			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
-			this.onScreenMessage.enableRendering();
-		}
-		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
-			this.onScreenMessage.setContent(title, icon);
-			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
-		}
-	}
-
-	private animateOnScreenMessage() {
-
-		if (this.onScreenMessage.isAnimating == true) {
-
-			this.onScreenMessage.depleteOnScreenDelay();
-
-			if (this.onScreenMessage.isDepleted()) {
-				this.onScreenMessage.disableRendering();
-			}
-		}
-	}
-
-	//#endregion
-
 	//#region Taunts
 
 	private tauntDelay: number = 15
@@ -363,6 +395,8 @@ export class GameScene extends Container implements IScene {
 	}
 
 	//#endregion
+
+	//#region Environment
 
 	//#region RoadMarks
 
@@ -849,7 +883,11 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region RingExplosions	
+	//#endregion
+
+	//#region Explosions
+
+	//#region RingExplosions
 
 	private ringExplosionGameObjects: Array<Explosion> = [];
 
@@ -979,6 +1017,10 @@ export class GameScene extends Container implements IScene {
 	}
 
 	//#endregion
+
+	//#endregion
+
+	//#region Player
 
 	//#region PlayerRide
 
@@ -1672,253 +1714,9 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region VehicleEnemys	
+	//#endregion	
 
-	private vehicleEnemySizeWidth: number = 260;
-	private vehicleEnemySizeHeight: number = 260;
-
-	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
-
-	private vehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private vehicleEnemyPopDelay: number = 15;
-
-	private spawnVehicleEnemys() {
-
-		for (let j = 0; j < 10; j++) {
-
-			const gameObject: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.vehicleType = Constants.getRandomNumber(ConstructType.VEHICLE_ENEMY_SMALL, ConstructType.VEHICLE_ENEMY_LARGE);
-
-			gameObject.disableRendering();
-
-			var uri: string = "";
-			switch (gameObject.vehicleType) {
-				case ConstructType.VEHICLE_ENEMY_SMALL: {
-					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
-				} break;
-				case ConstructType.VEHICLE_ENEMY_LARGE: {
-					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
-				} break;
-				default: break;
-			}
-
-			const texture = Texture.from(uri);
-			const sprite: GameObjectSprite = new GameObjectSprite(texture);
-
-			sprite.x = 0;
-			sprite.y = 0;
-
-			switch (gameObject.vehicleType) {
-				case ConstructType.VEHICLE_ENEMY_SMALL: {
-					sprite.width = this.vehicleEnemySizeWidth / 1.2;
-					sprite.height = this.vehicleEnemySizeHeight / 1.2;
-				} break;
-				case ConstructType.VEHICLE_ENEMY_LARGE: {
-					sprite.width = this.vehicleEnemySizeWidth;
-					sprite.height = this.vehicleEnemySizeHeight;
-				} break;
-				default: break;
-			}
-
-			sprite.anchor.set(0.5, 0.5);
-
-			gameObject.addChild(sprite);
-
-			this.vehicleEnemyGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-		}
-	}
-
-	private generateVehicleEnemys() {
-
-		if (!this.vehicleBossExists() && !this.ufoEnemyExists()) {
-			this.vehicleEnemyPopDelay -= 0.1;
-
-			if (this.vehicleEnemyPopDelay < 0) {
-
-				var gameObject = this.vehicleEnemyGameObjects.find(x => x.isAnimating == false);
-
-				if (gameObject) {
-
-					gameObject.reset();
-
-					let sprite = gameObject.getSprite();
-
-					switch (gameObject.vehicleType) {
-						case ConstructType.VEHICLE_ENEMY_SMALL: {
-							sprite.width = this.vehicleEnemySizeWidth / 1.2;
-							sprite.height = this.vehicleEnemySizeHeight / 1.2;
-						} break;
-						case ConstructType.VEHICLE_ENEMY_LARGE: {
-							sprite.width = this.vehicleEnemySizeWidth;
-							sprite.height = this.vehicleEnemySizeHeight;
-						} break;
-						default: break;
-					}
-
-					if (this.anyInAirBossExists())
-						gameObject.repositionReverse();
-					else
-						gameObject.reposition();
-
-					gameObject.enableRendering();
-
-					this.vehicleEnemyPopDelay = this.vehicleEnemyPopDelayDefault;
-				}
-			}
-		}
-	}
-
-	private animateVehicleEnemys() {
-
-		var animatingVehicleEnemys = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingVehicleEnemys) {
-
-			animatingVehicleEnemys.forEach(gameObject => {
-
-				gameObject.pop();
-				gameObject.dillyDally();
-
-				if (this.anyInAirBossExists()) { // when in air bosses appear, stop the stage transition, and make the vehicles move forward
-					gameObject.moveUpLeft();
-					gameObject.moveUpLeft(); // move with double speed
-				}
-				else {
-					gameObject.moveDownRight();
-				}
-
-				// prevent overlapping				
-
-				var vehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
-
-				if (vehicles) {
-
-					vehicles.forEach(collidingVehicle => {
-
-						if (Constants.checkCollision(collidingVehicle, gameObject)) {
-
-							if (collidingVehicle.speed > gameObject.speed) // colliding vehicle is faster
-							{
-								gameObject.speed = collidingVehicle.speed;
-							}
-							else if (gameObject.speed > collidingVehicle.speed) // current vehicle is faster
-							{
-								collidingVehicle.speed = gameObject.speed;
-							}
-						}
-					});
-				}
-
-				// generate honk
-
-				let vehicleEnemy = gameObject as VehicleEnemy;
-
-				if (vehicleEnemy) {
-
-					if (vehicleEnemy.honk() && !this.ufoEnemyExists() && !this.anyInAirBossExists()) {
-						this.generateHonk(gameObject);
-					}
-				}
-
-				// recycle vehicle
-
-				if (this.anyInAirBossExists()) {
-					if (gameObject.getRight() < 0 || gameObject.getBottom() < 0) {
-						gameObject.disableRendering();
-					}
-				}
-				else {
-					if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-						gameObject.disableRendering();
-					}
-				}
-			});
-		}
-	}
-
-	private looseVehicleEnemyhealth(vehicleEnemy: VehicleEnemy) {
-
-		vehicleEnemy.setPopping();
-		vehicleEnemy.looseHealth();
-
-		if (vehicleEnemy.willHonk) {
-
-			if (vehicleEnemy.isDead()) {
-				vehicleEnemy.setBlast();
-				this.gameScoreBar.gainScore(2);
-				let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
-				let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
-
-				this.generateMessageBubble(vehicleEnemy, soundTemplate.subTitle);
-			}
-		}
-	}
-
-	//#endregion
-
-	//#region Honks	
-
-	private roadHonkSizeWidth: number = 125;
-	private roadHonkSizeHeight: number = 125;
-
-	private roadHonkGameObjects: Array<Honk> = [];
-
-	private spawnHonks() {
-
-		for (let j = 0; j < 5; j++) {
-
-			const gameObject: Honk = new Honk(0);
-			gameObject.disableRendering();
-
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HONK));
-
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.roadHonkSizeWidth;
-			sprite.height = this.roadHonkSizeHeight;
-
-			sprite.anchor.set(0.5, 0.5);
-
-			gameObject.addChild(sprite);
-
-			this.roadHonkGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-		}
-	}
-
-	private generateHonk(source: GameObjectContainer) {
-
-		if (source.getLeft() > 0 && source.getTop() > 0) {
-			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
-
-			if (gameObject) {
-				gameObject.reset();
-				gameObject.reposition(source);
-				gameObject.setPopping();
-				gameObject.enableRendering();
-			}
-		}
-	}
-
-	private animateHonks() {
-
-		var animatingHonks = this.roadHonkGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingHonks) {
-
-			animatingHonks.forEach(gameObject => {
-				gameObject.pop();
-				gameObject.fade();
-
-				if (gameObject.hasFaded()) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
-
-	//#endregion		
+	//#region UfoEnemys
 
 	//#region UfoEnemys	
 
@@ -2144,6 +1942,207 @@ export class GameScene extends Container implements IScene {
 	}
 
 	//#endregion
+
+	//#endregion
+
+	//#region VehicleEnemys	
+
+	private vehicleEnemySizeWidth: number = 260;
+	private vehicleEnemySizeHeight: number = 260;
+
+	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
+
+	private vehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private vehicleEnemyPopDelay: number = 15;
+
+	private spawnVehicleEnemys() {
+
+		for (let j = 0; j < 10; j++) {
+
+			const gameObject: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.vehicleType = Constants.getRandomNumber(ConstructType.VEHICLE_ENEMY_SMALL, ConstructType.VEHICLE_ENEMY_LARGE);
+
+			gameObject.disableRendering();
+
+			var uri: string = "";
+			switch (gameObject.vehicleType) {
+				case ConstructType.VEHICLE_ENEMY_SMALL: {
+					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
+				} break;
+				case ConstructType.VEHICLE_ENEMY_LARGE: {
+					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
+				} break;
+				default: break;
+			}
+
+			const texture = Texture.from(uri);
+			const sprite: GameObjectSprite = new GameObjectSprite(texture);
+
+			sprite.x = 0;
+			sprite.y = 0;
+
+			switch (gameObject.vehicleType) {
+				case ConstructType.VEHICLE_ENEMY_SMALL: {
+					sprite.width = this.vehicleEnemySizeWidth / 1.2;
+					sprite.height = this.vehicleEnemySizeHeight / 1.2;
+				} break;
+				case ConstructType.VEHICLE_ENEMY_LARGE: {
+					sprite.width = this.vehicleEnemySizeWidth;
+					sprite.height = this.vehicleEnemySizeHeight;
+				} break;
+				default: break;
+			}
+
+			sprite.anchor.set(0.5, 0.5);
+
+			gameObject.addChild(sprite);
+
+			this.vehicleEnemyGameObjects.push(gameObject);
+			this.gameContainer.addChild(gameObject);
+		}
+	}
+
+	private generateVehicleEnemys() {
+
+		if (!this.vehicleBossExists() && !this.ufoEnemyExists()) {
+			this.vehicleEnemyPopDelay -= 0.1;
+
+			if (this.vehicleEnemyPopDelay < 0) {
+
+				var gameObject = this.vehicleEnemyGameObjects.find(x => x.isAnimating == false);
+
+				if (gameObject) {
+
+					gameObject.reset();
+
+					let sprite = gameObject.getSprite();
+
+					switch (gameObject.vehicleType) {
+						case ConstructType.VEHICLE_ENEMY_SMALL: {
+							sprite.width = this.vehicleEnemySizeWidth / 1.2;
+							sprite.height = this.vehicleEnemySizeHeight / 1.2;
+						} break;
+						case ConstructType.VEHICLE_ENEMY_LARGE: {
+							sprite.width = this.vehicleEnemySizeWidth;
+							sprite.height = this.vehicleEnemySizeHeight;
+						} break;
+						default: break;
+					}
+
+					if (this.anyInAirBossExists())
+						gameObject.repositionReverse();
+					else
+						gameObject.reposition();
+
+					gameObject.enableRendering();
+
+					this.vehicleEnemyPopDelay = this.vehicleEnemyPopDelayDefault;
+				}
+			}
+		}
+	}
+
+	private animateVehicleEnemys() {
+
+		var animatingVehicleEnemys = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingVehicleEnemys) {
+
+			animatingVehicleEnemys.forEach(gameObject => {
+
+				gameObject.pop();
+				gameObject.dillyDally();
+
+				if (this.anyInAirBossExists()) { // when in air bosses appear, stop the stage transition, and make the vehicles move forward
+					gameObject.moveUpLeft();
+					gameObject.moveUpLeft(); // move with double speed
+				}
+				else {
+					gameObject.moveDownRight();
+				}
+
+				// prevent overlapping				
+
+				var vehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
+
+				if (vehicles) {
+
+					vehicles.forEach(collidingVehicle => {
+
+						if (Constants.checkCollision(collidingVehicle, gameObject)) {
+
+							if (collidingVehicle.speed > gameObject.speed) // colliding vehicle is faster
+							{
+								gameObject.speed = collidingVehicle.speed;
+							}
+							else if (gameObject.speed > collidingVehicle.speed) // current vehicle is faster
+							{
+								collidingVehicle.speed = gameObject.speed;
+							}
+						}
+					});
+				}
+
+				// generate honk
+
+				let vehicleEnemy = gameObject as VehicleEnemy;
+
+				if (vehicleEnemy) {
+
+					if (vehicleEnemy.honk() && !this.ufoEnemyExists() && !this.anyInAirBossExists()) {
+						this.generateHonk(gameObject);
+					}
+				}
+
+				// recycle vehicle
+
+				if (this.anyInAirBossExists()) {
+					if (gameObject.getRight() < 0 || gameObject.getBottom() < 0) {
+						gameObject.disableRendering();
+					}
+				}
+				else {
+					if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+						gameObject.disableRendering();
+					}
+				}
+			});
+		}
+	}
+
+	private looseVehicleEnemyhealth(vehicleEnemy: VehicleEnemy) {
+
+		vehicleEnemy.setPopping();
+		vehicleEnemy.looseHealth();
+
+		if (vehicleEnemy.willHonk) {
+
+			if (vehicleEnemy.isDead()) {
+				vehicleEnemy.setBlast();
+				this.gameScoreBar.gainScore(2);
+				let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
+				let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
+
+				this.generateMessageBubble(vehicleEnemy, soundTemplate.subTitle);
+			}
+		}
+	}
+
+	//#endregion
+
+	//#region Bosss
+
+	private anyBossExists(): boolean {
+		return (this.ufoBossExists() || this.vehicleBossExists() || this.zombieBossExists() || this.mafiaBossExists());
+	}
+
+	private anyInAirBossExists(): boolean {
+		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
+	}
+
+	//#endregion
+
+	//#region VehicleBosss
 
 	//#region VehicleBosss
 
@@ -2376,7 +2375,11 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region UfoBosss	
+	//#endregion
+
+	//#region UfoBosss
+
+	//#region UfoBosss
 
 	private ufoBossSizeWidth: number = 200;
 	private ufoBossSizeHeight: number = 200;
@@ -2769,6 +2772,10 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#endregion
+
+	//#region ZombieBosss
+
 	//#region ZombieBosss	
 
 	private zombieBossSizeWidth: number = 200;
@@ -3003,7 +3010,11 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region MafiaBosss	
+	//#endregion
+
+	//#region MafiaBosss
+
+	//#region MafiaBosss
 
 	private mafiaBossSizeWidth: number = 200;
 	private mafiaBossSizeHeight: number = 200;
@@ -3367,6 +3378,10 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#endregion
+
+	//#region Pickups
+
 	//#region HealthPickups	
 
 	private healthPickupSizeWidth: number = 327 / 3;
@@ -3612,6 +3627,8 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#endregion
+
 	//#region GameController
 
 	setGameController() {
@@ -3619,6 +3636,8 @@ export class GameScene extends Container implements IScene {
 	}
 
 	//#endregion
+
+	//#region HUD
 
 	//#region ScoreBars
 
@@ -3648,6 +3667,38 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region OnScreenMessage
+
+	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("./images/character_maleAdventurer_talk.png")) {
+		if (this.onScreenMessage.isAnimating == false) {
+			this.onScreenMessage.setContent(title, icon);
+			this.onScreenMessage.reset();
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+			this.onScreenMessage.enableRendering();
+		}
+		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
+			this.onScreenMessage.setContent(title, icon);
+			this.onScreenMessage.reset();
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+		}
+	}
+
+	private animateOnScreenMessage() {
+
+		if (this.onScreenMessage.isAnimating == true) {
+
+			this.onScreenMessage.depleteOnScreenDelay();
+
+			if (this.onScreenMessage.isDepleted()) {
+				this.onScreenMessage.disableRendering();
+			}
+		}
+	}
+
+	//#endregion
+
+	//#endregion
+
 	//#region Scene
 
 	public update(_framesPassed: number) {
@@ -3656,7 +3707,7 @@ export class GameScene extends Container implements IScene {
 			this.gameContainer.alpha += 0.02;
 		}
 
-		this.updateFrame();
+		this.processFrame();
 	}
 
 	public resize(scale: number): void {
@@ -3677,7 +3728,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private updateFrame() {
+	private processFrame() {
 		if (!this.gameController.isPaused) {
 			this.generateGameObjects();
 			this.animateGameObjects();
@@ -3835,21 +3886,6 @@ export class GameScene extends Container implements IScene {
 		this.animateMessageBubbles();
 	}
 
-	private levelUp() {
-		this.gameLevel++;
-		this.gameLevelBar.gainScore(1);
-		this.generateOnScreenMessage("Level " + this.gameLevel.toString() + " Complete", this.cheerIcon);
-		SoundManager.play(SoundType.LEVEL_UP);
-	}
-
-	private anyBossExists(): boolean {
-		return (this.ufoBossExists() || this.vehicleBossExists() || this.zombieBossExists() || this.mafiaBossExists());
-	}
-
-	private anyInAirBossExists(): boolean {
-		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
-	}
-
 	private resumeGame() {
 		if (this.anyBossExists()) {
 			SoundManager.resume(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -3920,6 +3956,13 @@ export class GameScene extends Container implements IScene {
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
 		this.removeChild(this.gameContainer);
 		SceneManager.changeScene(new GameOverScene());
+	}
+
+	private levelUp() {
+		this.gameLevel++;
+		this.gameLevelBar.gainScore(1);
+		this.generateOnScreenMessage("Level " + this.gameLevel.toString() + " Complete", this.cheerIcon);
+		SoundManager.play(SoundType.LEVEL_UP);
 	}
 
 	//#endregion
