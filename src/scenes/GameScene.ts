@@ -1430,18 +1430,39 @@ export class GameScene extends Container implements IScene {
 								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
 							} break;
 							case PlayerHonkBombTemplate.Barrel: {
-								playerHonkBomb.shrink();
+								playerHonkBomb.moveUpRight();
+								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
 							} break;
 							default: break;
 						}
 					}
 					else {
 						switch (playerHonkBomb.playerHonkBombTemplate) {
-							case PlayerHonkBombTemplate.Cracker:
-							case PlayerHonkBombTemplate.TrashCan: {
+							case PlayerHonkBombTemplate.Cracker: {
 
 								playerHonkBomb.move();
 								playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
+
+								if (playerHonkBomb.awaitBlast()) {
+
+									this.generateSmokeExplosion(playerHonkBomb);
+
+									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
+
+									if (vehicleEnemy) {
+										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
+									}
+
+									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
+
+									if (vehicleBoss) {
+										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
+									}
+								}
+							} break;
+							case PlayerHonkBombTemplate.TrashCan: {
+
+								playerHonkBomb.move();								
 
 								if (playerHonkBomb.awaitBlast()) {
 
@@ -1482,8 +1503,7 @@ export class GameScene extends Container implements IScene {
 									}
 								}
 								else {
-									playerHonkBomb.move();
-									playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
+									playerHonkBomb.move();									
 									playerHonkBomb.awaitDrop();
 								}
 							} break;
