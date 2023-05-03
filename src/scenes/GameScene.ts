@@ -480,198 +480,198 @@ export class GameScene extends Container implements IScene {
 
 	//#region Trees
 
-	private treeXyAdjustment: number = 90;
+	//private treeXyAdjustment: number = 90;
 
-	private treeSizeWidth: number = 340;
-	private treeSizeHeight: number = 340;
+	//private treeSizeWidth: number = 340;
+	//private treeSizeHeight: number = 340;
 
-	private treeBottomGameObjects: Array<GameObjectContainer> = [];
-	private treeTopGameObjects: Array<GameObjectContainer> = [];
+	//private treeTopGameObjects: Array<GameObjectContainer> = [];
+	//private treeBottomGameObjects: Array<GameObjectContainer> = [];
 
-	private treePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private treePopDelayTop: number = 17.5;
-	private treePopDelayBottom: number = 16;
+	//private treePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	//private treePopDelayTop: number = 17.5;
+	//private treePopDelayBottom: number = 16;
 
-	private spawnTreesTop() {
+	//private spawnTreesTop() {
 
-		for (let j = 0; j < 3; j++) {
+	//	for (let j = 0; j < 3; j++) {
 
-			const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+	//		for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
+	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
 
-				sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
-				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
-				sprite.width = this.treeSizeWidth;
-				sprite.height = this.treeSizeHeight;
+	//			sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
+	//			sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
+	//			sprite.width = this.treeSizeWidth;
+	//			sprite.height = this.treeSizeHeight;
 
-				gameObject.addChild(sprite);
-			}
+	//			gameObject.addChild(sprite);
+	//		}
 
-			this.treeTopGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.treeTopGameObjects.push(gameObject);
+	//		this.sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private spawnTreesBottom() {
+	//private spawnTreesBottom() {
 
-		for (let j = 0; j < 3; j++) {
+	//	for (let j = 0; j < 3; j++) {
 
-			const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+	//		for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
+	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
 
-				sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
-				sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
-				sprite.width = this.treeSizeWidth;
-				sprite.height = this.treeSizeHeight;
+	//			sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
+	//			sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
+	//			sprite.width = this.treeSizeWidth;
+	//			sprite.height = this.treeSizeHeight;
 
-				gameObject.addChild(sprite);
-			}
+	//			gameObject.addChild(sprite);
+	//		}
 
-			this.treeBottomGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.treeBottomGameObjects.push(gameObject);
+	//		this.sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private generateTreesTop() {
-		this.treePopDelayTop -= 0.1;
+	//private generateTreesTop() {
+	//	this.treePopDelayTop -= 0.1;
 
-		if (this.treePopDelayTop < 0) {
+	//	if (this.treePopDelayTop < 0) {
 
-			var gameObject = this.treeTopGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.treeTopGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.setPosition(-1090, gameObject.height * -1);
-				gameObject.enableRendering();
-				this.treePopDelayTop = this.treePopDelayDefault;
-			}
-		}
-	}
+	//		if (gameObject) {
+	//			gameObject.setPosition(-1090, gameObject.height * -1);
+	//			gameObject.enableRendering();
+	//			this.treePopDelayTop = this.treePopDelayDefault;
+	//		}
+	//	}
+	//}
 
-	private generateTreesBottom() {
-		this.treePopDelayBottom -= 0.1;
+	//private generateTreesBottom() {
+	//	this.treePopDelayBottom -= 0.1;
 
-		if (this.treePopDelayBottom < 0) {
+	//	if (this.treePopDelayBottom < 0) {
 
-			var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.setPosition(gameObject.width * -1, -770);
-				gameObject.enableRendering();
-				this.treePopDelayBottom = this.treePopDelayDefault;
-			}
-		}
-	}
+	//		if (gameObject) {
+	//			gameObject.setPosition(gameObject.width * -1, -770);
+	//			gameObject.enableRendering();
+	//			this.treePopDelayBottom = this.treePopDelayDefault;
+	//		}
+	//	}
+	//}
 
-	private animateTreesTop() {
+	//private animateTreesTop() {
 
-		var animatingTrees = this.treeTopGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingTrees = this.treeTopGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingTrees) {
+	//	if (animatingTrees) {
 
-			animatingTrees.forEach(gameObject => {
-				gameObject.moveDownRight();
+	//		animatingTrees.forEach(gameObject => {
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x - gameObject.width / 2 > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
+	//			if (gameObject.x - gameObject.width / 2 > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
+	//			}
+	//		});
+	//	}
+	//}
 
-	private animateTreesBottom() {
+	//private animateTreesBottom() {
 
-		var animatingTrees = this.treeBottomGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingTrees = this.treeBottomGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingTrees) {
+	//	if (animatingTrees) {
 
-			animatingTrees.forEach(gameObject => {
-				gameObject.moveDownRight();
+	//		animatingTrees.forEach(gameObject => {
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x - gameObject.width / 2 > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height / 2 > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
+	//			if (gameObject.x - gameObject.width / 2 > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height / 2 > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
+	//			}
+	//		});
+	//	}
+	//}
 
 	//#endregion
 
 	//#region Lamps
 
-	private lampXyAdjustment: number = 197;
+	//private lampXyAdjustment: number = 197;
 
-	private lampSizeWidth: number = 750;
-	private lampSizeHeight: number = 750;
+	//private lampSizeWidth: number = 750;
+	//private lampSizeHeight: number = 750;
 
-	private lampTopGameObjects: Array<GameObjectContainer> = [];
+	//private lampTopGameObjects: Array<GameObjectContainer> = [];
 
-	private lampPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private lampPopDelayTop: number = 7;
+	//private lampPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	//private lampPopDelayTop: number = 7;
 
-	private spawnLampsTop() {
+	//private spawnLampsTop() {
 
-		for (let j = 0; j < 5; j++) {
+	//	for (let j = 0; j < 5; j++) {
 
-			const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+	//		for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
+	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
 
-				sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i));
-				sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i));
-				sprite.width = this.lampSizeWidth;
-				sprite.height = this.lampSizeHeight;
+	//			sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i));
+	//			sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i));
+	//			sprite.width = this.lampSizeWidth;
+	//			sprite.height = this.lampSizeHeight;
 
-				gameObject.addChild(sprite);
-			}
+	//			gameObject.addChild(sprite);
+	//		}
 
-			this.lampTopGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.lampTopGameObjects.push(gameObject);
+	//		this.sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private generateLampsTop() {
+	//private generateLampsTop() {
 
-		this.lampPopDelayTop -= 0.1;
+	//	this.lampPopDelayTop -= 0.1;
 
-		if (this.lampPopDelayTop < 0) {
+	//	if (this.lampPopDelayTop < 0) {
 
-			var gameObject = this.lampTopGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.lampTopGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.setPosition((gameObject.width * -1), (gameObject.height * -1) - 280);
-				gameObject.enableRendering();
-				this.lampPopDelayTop = this.lampPopDelayDefault;
-			}
-		}
-	}
+	//		if (gameObject) {
+	//			gameObject.setPosition((gameObject.width * -1), (gameObject.height * -1) - 280);
+	//			gameObject.enableRendering();
+	//			this.lampPopDelayTop = this.lampPopDelayDefault;
+	//		}
+	//	}
+	//}
 
-	private animateLampsTop() {
+	//private animateLampsTop() {
 
-		var animatingLamps = this.lampTopGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingLamps = this.lampTopGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingLamps) {
+	//	if (animatingLamps) {
 
-			animatingLamps.forEach(gameObject => {
-				gameObject.moveDownRight();
+	//		animatingLamps.forEach(gameObject => {
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+	//			if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
 
-				}
-			});
-		}
-	}
+	//			}
+	//		});
+	//	}
+	//}
 
 	//#endregion
 
@@ -3749,8 +3749,8 @@ export class GameScene extends Container implements IScene {
 		this.spawnRoadMarks();
 
 		this.spawnSideWalksTop();
-		this.spawnTreesTop();
-		this.spawnLampsTop();
+		//this.spawnTreesTop();
+		//this.spawnLampsTop();
 
 		this.spawnVehicleEnemys();
 		this.spawnVehicleBosss();
@@ -3762,7 +3762,7 @@ export class GameScene extends Container implements IScene {
 
 		this.spawnSmokeExplosions();
 		this.spawnPlayerHonkBombs();
-		this.spawnTreesBottom();
+		//this.spawnTreesBottom();
 
 		this.spawnPlayerRockets();
 		this.spawnPlayerRocketBullsEyes();
@@ -3798,10 +3798,8 @@ export class GameScene extends Container implements IScene {
 		if (!this.anyInAirBossExists()) {
 			this.generateRoadMarks();
 			this.generateSideWalksTop();
-			//this.generateLightBillboardsTop();
-			//this.generateHedgesTop();
-			this.generateTreesTop();
-			this.generateLampsTop();
+			//this.generateTreesTop();
+			//this.generateLampsTop();
 		}
 
 		this.generateVehicleEnemys();
@@ -3828,9 +3826,7 @@ export class GameScene extends Container implements IScene {
 
 		if (!this.anyInAirBossExists()) {
 			this.generateSideWalksBottom();
-			//this.generateHedgesBottom();
-			//this.generateLightBillboardsBottom();
-			this.generateTreesBottom();
+			//this.generateTreesBottom();
 			//this.generateLampsBottom();
 		}
 	}
@@ -3841,10 +3837,8 @@ export class GameScene extends Container implements IScene {
 			this.animateRoadMarks();
 
 			this.animateSideWalksTop();
-			//this.animateHedgesTop();
-			this.animateTreesTop();
-			//this.animateLightBillboardsTop();
-			this.animateLampsTop();
+			//this.animateTreesTop();			
+			//this.animateLampsTop();
 		}
 
 		this.animateVehicleEnemys();
@@ -3854,11 +3848,8 @@ export class GameScene extends Container implements IScene {
 		this.animateHonks();
 
 		if (!this.anyInAirBossExists()) {
-			this.animateSideWalksBottom();
-			//this.animateHedgesBottom();
-			this.animateTreesBottom();
-			//this.animateLightBillboardsBottom();
-			//this.animateLampsBottom();
+			this.animateSideWalksBottom();			
+			//this.animateTreesBottom();
 		}
 
 		this.animatePlayerHonkBombs();
