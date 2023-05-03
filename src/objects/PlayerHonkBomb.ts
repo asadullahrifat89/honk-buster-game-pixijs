@@ -87,8 +87,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 
 	setDrop() {
 		switch (this.playerHonkBombTemplate) {			
-			case PlayerHonkBombTemplate.JUNK: {
-				//this.angle = 0;
+			case PlayerHonkBombTemplate.JUNK: {				
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 			} break;
 			default: break;
