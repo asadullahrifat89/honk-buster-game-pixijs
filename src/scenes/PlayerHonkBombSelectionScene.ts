@@ -48,7 +48,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		title.y = (this.sceneContainer.height / 2 - title.height / 2) - 120;
 		this.sceneContainer.addChild(title);
 
-		const player_1_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("cracker_1"));
+		const player_1_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_cracker_1"));
 		player_1_sprite.width = 300 / 2;
 		player_1_sprite.height = 300 / 2;
 		player_1_sprite.x = 0;
@@ -62,7 +62,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width, this.sceneContainer.height / 2 - player_1_sprite.height / 2 + 10);
 		this.sceneContainer.addChild(player_1_button);
 
-		const player_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("trash_1"));
+		const player_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_trash_1"));
 		player_2_sprite.width = 300 / 2;
 		player_2_sprite.height = 300 / 2;
 		player_2_sprite.x = 0;

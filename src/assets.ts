@@ -15,7 +15,7 @@ export const manifest: ResolverManifest = {
 				"attack_button": "./images/attack_button.png",
 				"pause_button": "./images/pause_button.png",
 				"resume_button": "./images/resume_button.png",
-				"quit_button": "./images/quit_button.png",				
+				"quit_button": "./images/quit_button.png",
 
 				"bang_1": "./images/bang_1.png",
 				"bang_2": "./images/bang_2.png",
@@ -35,9 +35,9 @@ export const manifest: ResolverManifest = {
 
 				"chopper_blades": "./images/chopper_blades.png",
 
-				"cracker_1": "./images/cracker_1.png",
-				"cracker_2": "./images/cracker_2.png",
-				"cracker_3": "./images/cracker_3.png",
+				"player_honk_bomb_cracker_1": "./images/player_honk_bomb_cracker_1.png",
+				"player_honk_bomb_cracker_2": "./images/player_honk_bomb_cracker_2.png",
+				"player_honk_bomb_cracker_3": "./images/player_honk_bomb_cracker_3.png",
 
 				"enemy_1": "./images/enemy_1.png",
 				"enemy_2": "./images/enemy_2.png",
@@ -115,16 +115,11 @@ export const manifest: ResolverManifest = {
 				//"road_side_light_billboard_3": "./images/road_side_light_billboard_3.png",
 
 				"road_side_walk_top_1": "./images/road_side_walk_top_1.png",
-				//"road_side_walk_top_2": "./images/road_side_walk_top_2.png",
-				//"road_side_walk_top_3": "./images/road_side_walk_top_3.png",	
-
 				"road_side_walk_bottom_1": "./images/road_side_walk_bottom_1.png",
-				//"road_side_walk_bottom_2": "./images/road_side_walk_bottom_2.png",
-				//"road_side_walk_bottom_3": "./images/road_side_walk_bottom_3.png",	
 
-				"trash_1": "./images/trash_1.png",
-				"trash_2": "./images/trash_2.png",
-				"trash_3": "./images/trash_3.png",
+				"player_honk_bomb_trash_1": "./images/player_honk_bomb_trash_1.png",
+				"player_honk_bomb_trash_2": "./images/player_honk_bomb_trash_2.png",
+				"player_honk_bomb_trash_3": "./images/player_honk_bomb_trash_3.png",
 
 				"tree_1": "./images/tree_1.png",
 				"tree_2": "./images/tree_2.png",
