@@ -286,10 +286,10 @@ export class PlayerRide extends GameObjectContainer {
 			this.chopperBladesHoverDelay--; // chopper blades hover effect
 
 			if (this.chopperBladesHoverDelay >= 0) {
-				this.chopperBladesSprite.y += 0.5;
+				this.chopperBladesSprite.y += 0.4;
 			}
 			else {
-				this.chopperBladesSprite.y -= 0.5;
+				this.chopperBladesSprite.y -= 0.4;
 
 				if (this.chopperBladesHoverDelay <= -10) {
 					this.chopperBladesHoverDelay = 10;
@@ -300,10 +300,10 @@ export class PlayerRide extends GameObjectContainer {
 
 			if (this.chopperBladesOpacityEffect > 2) {
 				if (this.chopperBladesSprite.alpha != 1) {
-					this.chopperBladesSprite.alpha = 1;
+					this.chopperBladesSprite.alpha = 1;					
 				}
 				else {
-					this.chopperBladesSprite.alpha = 0.2;
+					this.chopperBladesSprite.alpha = 0.3;					
 				}
 
 				this.chopperBladesOpacityEffect = 0;
