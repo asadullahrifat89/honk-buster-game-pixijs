@@ -1183,7 +1183,14 @@ export class GameScene extends Container implements IScene {
 								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
 							} break;
 							case PlayerHonkBombTemplate.STICKY_BOMB: {
-								playerHonkBomb.moveUpRight();
+
+								if (playerHonkBomb.awaitMoveUpRight) {
+									playerHonkBomb.moveUpRight();
+								}
+								else if (playerHonkBomb.awaitMoveDownLeft) {
+									playerHonkBomb.moveDownLeft();
+								}
+
 								playerHonkBomb.rotate(RotationDirection.Forward, 0, 10);
 							} break;
 							default: break;
@@ -1194,7 +1201,19 @@ export class GameScene extends Container implements IScene {
 							case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
 								playerHonkBomb.move();
 
-								if (playerHonkBomb.awaitBlast()) {
+								if (playerHonkBomb.awaitBlast()) {									
+
+									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
+
+									if (vehicleEnemy) {
+										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
+									}
+
+									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
+
+									if (vehicleBoss) {
+										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
+									}
 
 									let randomDir = Constants.getRandomNumber(0, 3);
 
@@ -1209,18 +1228,6 @@ export class GameScene extends Container implements IScene {
 									this.generateSmokeExplosion(playerHonkBomb);
 									this.generateFlashExplosion(playerHonkBomb);
 									this.generateRingExplosion(playerHonkBomb);
-
-									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
-
-									if (vehicleEnemy) {
-										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
-									}
-
-									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
-
-									if (vehicleBoss) {
-										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
-									}
 								}
 							} break;
 							case PlayerHonkBombTemplate.TRASH_BOMB: {
@@ -1253,8 +1260,6 @@ export class GameScene extends Container implements IScene {
 									if (vehicleEnemy) {
 										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
 										playerHonkBomb.setBlast();
-										this.generateSmokeExplosion(playerHonkBomb);
-										this.generateRingExplosion(playerHonkBomb);
 									}
 
 									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
@@ -1262,6 +1267,17 @@ export class GameScene extends Container implements IScene {
 									if (vehicleBoss) {
 										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
 										playerHonkBomb.setBlast();
+									}
+
+									if (vehicleEnemy || vehicleBoss) {
+										let randomDir = Constants.getRandomNumber(0, 1);
+
+										switch (randomDir) {
+											case 0: { playerHonkBomb.awaitMoveDownLeft = true; } break;
+											case 1: { playerHonkBomb.awaitMoveUpRight = true; } break;
+											default: break;
+										}
+
 										this.generateSmokeExplosion(playerHonkBomb);
 										this.generateRingExplosion(playerHonkBomb);
 									}
@@ -3705,9 +3721,9 @@ export class GameScene extends Container implements IScene {
 		this.spawnSideWalksBottom();
 
 		this.spawnSmokeExplosions();
-
-		this.spawnTreesBottom();
 		this.spawnPlayerHonkBombs();
+		this.spawnTreesBottom();
+		
 		this.spawnPlayerRockets();
 		this.spawnPlayerRocketBullsEyes();
 		this.spawnPlayerBalloon();
