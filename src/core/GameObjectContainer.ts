@@ -26,6 +26,7 @@ export class GameObjectContainer extends Container {
 
 	public isAwaitingPop: boolean = false;
 	public isBlasting: boolean = false;
+	public isDropped: boolean = false;
 
 	public awaitMoveUp: boolean = false;
 	public awaitMoveDown: boolean = false;
@@ -38,7 +39,7 @@ export class GameObjectContainer extends Container {
 
 	public castShadowDistance: number = Constants.DEFAULT_DROP_SHADOW_DISTANCE;
 	public gravitatesUp: boolean = false;
-	public gravitatesDown: boolean = false;
+	public gravitatesDown: boolean = false;	
 
 	//#endregion
 

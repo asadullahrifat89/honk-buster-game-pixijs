@@ -12,9 +12,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 	private readonly blastDelayDefault: number = 25;
 
 	private dropDelay: number = 0;
-	private readonly dropDelayDefault: number = 25;
-
-	public dropped: boolean = false;
+	private readonly dropDelayDefault: number = 25;	
 
 	constructor(speed: number) {
 		super(speed);
@@ -30,7 +28,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 		this.blastDelay = this.blastDelayDefault;
 		this.dropDelay = this.dropDelayDefault;
 		this.speed = 4;
-		this.dropped = false;
+		this.isDropped = false;
 
 		SoundManager.play(SoundType.CRACKER_DROP, 0.5);
 	}
@@ -80,7 +78,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 		if (this.dropDelay <= 0) {
 
 			this.setDrop();
-			this.dropped = true;
+			this.isDropped = true;
 			return true;
 		}
 
