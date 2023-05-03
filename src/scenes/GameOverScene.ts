@@ -24,13 +24,13 @@ export class GameOverScene extends Container implements IScene {
 		this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);		
 		this.addChild(this.uiContainer);
 
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
-		sprite.x = 0;
-		sprite.y = 0;
-		sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
-		sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
-		sprite.filters = [new BlurFilter()];
-		this.uiContainer.addChild(sprite);
+		const bg_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
+		bg_sprite.x = 0;
+		bg_sprite.y = 0;
+		bg_sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
+		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
+		bg_sprite.filters = [new BlurFilter()];
+		this.uiContainer.addChild(bg_sprite);
 
 		const title = new Text("Game Over", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
