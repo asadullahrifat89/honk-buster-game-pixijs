@@ -1157,8 +1157,24 @@ export class GameScene extends Container implements IScene {
 						playerHonkBomb.fade();
 
 						switch (playerHonkBomb.playerHonkBombTemplate) {
-							case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {								
-								playerHonkBomb.moveDownLeft();
+							case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
+
+								if (playerHonkBomb.awaitMoveDownLeft) {
+									playerHonkBomb.moveDownLeft();
+								}
+								else if (playerHonkBomb.awaitMoveDownRight) {
+									playerHonkBomb.moveDownRight();
+									playerHonkBomb.moveDownRight();
+									playerHonkBomb.moveDownRight();
+								}
+								else if (playerHonkBomb.awaitMoveUpLeft) {
+									playerHonkBomb.moveUpLeft();
+								}
+								else if (playerHonkBomb.awaitMoveUpRight) {
+									playerHonkBomb.moveUpRight();
+									playerHonkBomb.moveUpRight();
+								}
+
 								playerHonkBomb.rotate(RotationDirection.Backward, 0, 15);
 							} break;
 							case PlayerHonkBombTemplate.TRASH_BOMB: {
@@ -1176,9 +1192,19 @@ export class GameScene extends Container implements IScene {
 					else {
 						switch (playerHonkBomb.playerHonkBombTemplate) {
 							case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
-								playerHonkBomb.move();								
+								playerHonkBomb.move();
 
 								if (playerHonkBomb.awaitBlast()) {
+
+									let randomDir = Constants.getRandomNumber(0, 3);
+
+									switch (randomDir) {
+										case 0: { playerHonkBomb.awaitMoveDownLeft = true; } break;
+										case 1: { playerHonkBomb.awaitMoveDownRight = true; } break;
+										case 2: { playerHonkBomb.awaitMoveUpLeft = true; } break;
+										case 3: { playerHonkBomb.awaitMoveUpRight = true; } break;
+										default: break;
+									}
 
 									this.generateSmokeExplosion(playerHonkBomb);
 									this.generateFlashExplosion(playerHonkBomb);
@@ -1202,7 +1228,7 @@ export class GameScene extends Container implements IScene {
 
 								if (playerHonkBomb.awaitBlast()) {
 
-									this.generateSmokeExplosion(playerHonkBomb);									
+									this.generateSmokeExplosion(playerHonkBomb);
 
 									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
 
