@@ -473,7 +473,7 @@ export abstract class Constants {
 	private static ringWidth = 138;
 	private static ringHeight = 138;
 
-	public static RING_EXPLOSION_SPRITE_SHEET_JSON: SpriteSheetJson = {
+	public static RING_EXPLOSION_JSON: SpriteSheetJson = {
 		meta: {
 			image: './images/explosion_1.png',
 			scale: "1",
@@ -508,7 +508,7 @@ export abstract class Constants {
 	private static smokeWidth = 128;
 	private static smokeHeight = 128;
 
-	public static SMOKE_EXPLOSION_SPRITE_SHEET_JSON: SpriteSheetJson = {
+	public static SMOKE_EXPLOSION_JSON: SpriteSheetJson = {
 		meta: {
 			image: './images/explosion_2.png',
 			scale: "1",
@@ -573,7 +573,7 @@ export abstract class Constants {
 	private static puffWidth = 44;
 	private static puffHeight = 44;
 
-	public static FLASH_EXPLOSION_SPRITE_SHEET_JSON: SpriteSheetJson = {
+	public static FLASH_EXPLOSION_JSON: SpriteSheetJson = {
 		meta: {
 			image: './images/explosion_3.png',
 			scale: "1",
