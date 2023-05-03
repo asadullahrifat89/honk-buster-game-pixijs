@@ -5,10 +5,14 @@ import { SoundManager } from '../managers/SoundManager';
 
 export class PlayerHonkBomb extends GameObjectContainer {
 
-	public playerHonkBombTemplate: PlayerHonkBombTemplate = PlayerHonkBombTemplate.Cracker;
+	public playerHonkBombTemplate: PlayerHonkBombTemplate = PlayerHonkBombTemplate.EXPLOSIVE_BOMB;
 	private playerHonkBombUris: string[] = [];
+
 	private blastDelay: number = 0;
 	private readonly blastDelayDefault: number = 25;
+
+	private dropDelay: number = 0;
+	private readonly dropDelayDefault: number = 25;
 
 	constructor(speed: number) {
 		super(speed);
@@ -22,7 +26,14 @@ export class PlayerHonkBomb extends GameObjectContainer {
 		this.scale.set(1);
 		this.angle = 0;
 		this.blastDelay = this.blastDelayDefault;
+		this.dropDelay = this.dropDelayDefault;
 		this.speed = 4;
+		this.isDropped = false;
+
+		this.awaitMoveDownLeft = false;
+		this.awaitMoveDownRight = false;
+		this.awaitMoveUpLeft = false;
+		this.awaitMoveUpRight = false;
 
 		SoundManager.play(SoundType.CRACKER_DROP, 0.5);
 	}
@@ -39,20 +50,21 @@ export class PlayerHonkBomb extends GameObjectContainer {
 		this.playerHonkBombTemplate = honkBombTemplate;
 
 		switch (this.playerHonkBombTemplate) {
-			case PlayerHonkBombTemplate.Cracker: {
-				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("cracker")).map(x => x.uri);
+			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
+				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("explosive")).map(x => x.uri);
 			} break;
-			case PlayerHonkBombTemplate.TrashCan: {
+			case PlayerHonkBombTemplate.TRASH_BOMB: {
 				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("trash")).map(x => x.uri);
 			} break;
-			default: break;
+			case PlayerHonkBombTemplate.STICKY_BOMB: {
+				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("sticky")).map(x => x.uri);
+			} break;
 		}
 
 		this.setTexture(Constants.getRandomTextureFromUris(this.playerHonkBombUris));
 	}
 
 	awaitBlast(): boolean {
-
 		this.blastDelay--;
 
 		if (this.blastDelay <= 0) {
@@ -65,23 +77,49 @@ export class PlayerHonkBomb extends GameObjectContainer {
 		return false;
 	}
 
-	setBlast() {
+	awaitDrop(): boolean {
+		this.dropDelay--;
 
+		if (this.dropDelay <= 0) {
+
+			this.setDrop();
+			this.isDropped = true;
+			return true;
+		}
+
+		return false;
+	}
+
+	setDrop() {
 		switch (this.playerHonkBombTemplate) {
-			case 0: { SoundManager.play(SoundType.CRACKER_BLAST, 0.8); } break;
-			case 1: { SoundManager.play(SoundType.TRASH_CAN_HIT); } break;
+			case PlayerHonkBombTemplate.STICKY_BOMB: {
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
+			} break;
+			default: break;
+		}
+	}
+
+	setBlast() {
+		switch (this.playerHonkBombTemplate) {
+			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: { SoundManager.play(SoundType.CRACKER_BLAST, 0.8); } break;
+			case PlayerHonkBombTemplate.TRASH_BOMB: { SoundManager.play(SoundType.TRASH_CAN_HIT); } break;
+			case PlayerHonkBombTemplate.STICKY_BOMB: { SoundManager.play(SoundType.BARREL_BREAK); } break;
 			default: break;
 		}
 
 		this.isBlasting = true;
 
 		switch (this.playerHonkBombTemplate) {
-			case PlayerHonkBombTemplate.Cracker: {
+			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
 				this.angle = 0;
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 2;
 			} break;
-			case PlayerHonkBombTemplate.TrashCan: {
+			case PlayerHonkBombTemplate.TRASH_BOMB: {
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 1.5;
+			} break;
+			case PlayerHonkBombTemplate.STICKY_BOMB: {
+				this.angle = 0;
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 3;
 			} break;
 			default: break;
 		}

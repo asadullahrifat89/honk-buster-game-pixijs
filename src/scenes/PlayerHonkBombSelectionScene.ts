@@ -48,37 +48,54 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		title.y = (this.sceneContainer.height / 2 - title.height / 2) - 120;
 		this.sceneContainer.addChild(title);
 
-		const player_1_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("cracker_1"));
+		const player_1_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_explosive_1"));
 		player_1_sprite.width = 300 / 2;
 		player_1_sprite.height = 300 / 2;
 		player_1_sprite.x = 0;
 		player_1_sprite.y = 0;
 		const player_1_button = new Button(player_1_sprite, () => {
 			SoundManager.play(SoundType.OPTION_SELECT);
-			player_2_sprite.filters = [new GrayscaleFilter()];
 			player_1_sprite.filters = null;
+			player_2_sprite.filters = [new GrayscaleFilter()];
+			player_3_sprite.filters = [new GrayscaleFilter()];
 			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 0;
 		});
-		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width, this.sceneContainer.height / 2 - player_1_sprite.height / 2 + 10);
+		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width * 2, this.sceneContainer.height / 2 - player_1_sprite.height / 2 + 10);
 		this.sceneContainer.addChild(player_1_button);
 
-		const player_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("trash_1"));
+		const player_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_trash_1"));
 		player_2_sprite.width = 300 / 2;
 		player_2_sprite.height = 300 / 2;
 		player_2_sprite.x = 0;
 		player_2_sprite.y = 0;
 		const player_2_button = new Button(player_2_sprite, () => {
 			SoundManager.play(SoundType.OPTION_SELECT);
-			player_1_sprite.filters = [new GrayscaleFilter()];
 			player_2_sprite.filters = null;
+			player_1_sprite.filters = [new GrayscaleFilter()];
+			player_3_sprite.filters = [new GrayscaleFilter()];
 			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 1;
 		});
-		player_2_button.setPosition(this.sceneContainer.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2 + 10);
+		player_2_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2 + 10);
 		this.sceneContainer.addChild(player_2_button);
+
+		const player_3_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_sticky_2"));
+		player_3_sprite.width = 300 / 2;
+		player_3_sprite.height = 300 / 2;
+		player_3_sprite.x = 0;
+		player_3_sprite.y = 0;
+		const player_3_button = new Button(player_3_sprite, () => {
+			SoundManager.play(SoundType.OPTION_SELECT);
+			player_3_sprite.filters = null;
+			player_1_sprite.filters = [new GrayscaleFilter()];
+			player_2_sprite.filters = [new GrayscaleFilter()];
+			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 2;
+		});
+		player_3_button.setPosition(this.sceneContainer.width / 2 + player_3_sprite.width, this.sceneContainer.height / 2 - player_3_sprite.height / 2 + 10);
+		this.sceneContainer.addChild(player_3_button);
 
 		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), () => {
 
-			if (player_1_sprite.filters || player_2_sprite.filters) {
+			if (player_1_sprite.filters || player_2_sprite.filters || player_3_sprite.filters) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				SceneManager.isNavigating = true;
 			}

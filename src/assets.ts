@@ -15,14 +15,10 @@ export const manifest: ResolverManifest = {
 				"attack_button": "./images/attack_button.png",
 				"pause_button": "./images/pause_button.png",
 				"resume_button": "./images/resume_button.png",
-				"quit_button": "./images/quit_button.png",				
+				"quit_button": "./images/quit_button.png",
 
 				"bang_1": "./images/bang_1.png",
-				"bang_2": "./images/bang_2.png",
-
-				//"billboard_1": "./images/billboard_1.png",
-				//"billboard_2": "./images/billboard_2.png",
-				//"billboard_3": "./images/billboard_3.png",
+				"bang_2": "./images/bang_2.png",				
 
 				"blast_1": "./images/blast_1.png",
 				"blast_2": "./images/blast_2.png",
@@ -34,10 +30,6 @@ export const manifest: ResolverManifest = {
 				"cover_image": "./images/cover_image.png",
 
 				"chopper_blades": "./images/chopper_blades.png",
-
-				"cracker_1": "./images/cracker_1.png",
-				"cracker_2": "./images/cracker_2.png",
-				"cracker_3": "./images/cracker_3.png",
 
 				"enemy_1": "./images/enemy_1.png",
 				"enemy_2": "./images/enemy_2.png",
@@ -103,28 +95,21 @@ export const manifest: ResolverManifest = {
 				"powerup_pickup_bulls_eye": "./images/powerup_pickup_bulls_eye.png",
 				"powerup_pickup_seeking_snitch": "./images/powerup_pickup_seeking_snitch.png",
 
+				"player_honk_bomb_sticky_1": "./images/player_honk_bomb_sticky_1.png",
+				"player_honk_bomb_sticky_2": "./images/player_honk_bomb_sticky_2.png",				
+
+				"player_honk_bomb_explosive_1": "./images/player_honk_bomb_explosive_1.png",
+				"player_honk_bomb_explosive_2": "./images/player_honk_bomb_explosive_2.png",				
+
+				"player_honk_bomb_trash_1": "./images/player_honk_bomb_trash_1.png",
+				"player_honk_bomb_trash_2": "./images/player_honk_bomb_trash_2.png",				
+
 				"road_marks": "./images/road_marks.png",
 
-				//"road_side_hedge_1": "./images/road_side_hedge_1.png",
-
-				"road_side_lamp_1": "./images/road_side_lamp_1.png",
-				//"road_side_lamp_2": "./images/road_side_lamp_2.png",
-
-				//"road_side_light_billboard_1": "./images/road_side_light_billboard_1.png",
-				//"road_side_light_billboard_2": "./images/road_side_light_billboard_2.png",
-				//"road_side_light_billboard_3": "./images/road_side_light_billboard_3.png",
+				"road_side_lamp_1": "./images/road_side_lamp_1.png",			
 
 				"road_side_walk_top_1": "./images/road_side_walk_top_1.png",
-				//"road_side_walk_top_2": "./images/road_side_walk_top_2.png",
-				//"road_side_walk_top_3": "./images/road_side_walk_top_3.png",	
-
 				"road_side_walk_bottom_1": "./images/road_side_walk_bottom_1.png",
-				//"road_side_walk_bottom_2": "./images/road_side_walk_bottom_2.png",
-				//"road_side_walk_bottom_3": "./images/road_side_walk_bottom_3.png",	
-
-				"trash_1": "./images/trash_1.png",
-				"trash_2": "./images/trash_2.png",
-				"trash_3": "./images/trash_3.png",
 
 				"tree_1": "./images/tree_1.png",
 				"tree_2": "./images/tree_2.png",
@@ -178,6 +163,10 @@ export const manifest: ResolverManifest = {
 				"ambience_1": "./sounds/ambience_1.mp3",
 				"ambience_2": "./sounds/ambience_2.mp3",
 				"ambience_3": "./sounds/ambience_3.mp3",
+
+				"barrel_break_1": "./sounds/barrel_break_1.mp3",
+				"barrel_break_2": "./sounds/barrel_break_2.mp3",
+				"barrel_break_3": "./sounds/barrel_break_3.mp3",
 
 				"boss_background_music_1": "./sounds/boss_background_music_1.mp3",
 				"boss_background_music_2": "./sounds/boss_background_music_2.mp3",

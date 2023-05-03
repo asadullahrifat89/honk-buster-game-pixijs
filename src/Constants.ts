@@ -72,8 +72,9 @@ export enum PlayerRideTemplate {
 }
 
 export enum PlayerHonkBombTemplate {
-	Cracker,
-	TrashCan,
+	EXPLOSIVE_BOMB,
+	TRASH_BOMB,
+	STICKY_BOMB,
 }
 
 export enum ConstructType {
@@ -198,7 +199,9 @@ export enum SoundType {
 	ORB_LAUNCH,
 
 	LEVEL_UP,
-	OPTION_SELECT
+	OPTION_SELECT,
+
+	BARREL_BREAK,
 }
 
 //#endregion
@@ -244,6 +247,10 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.TRASH_CAN_HIT, this.soundsDirectory + "trashcan_hit_1.mp3"),
 		new SoundTemplate(SoundType.TRASH_CAN_HIT, this.soundsDirectory + "trashcan_hit_2.mp3"),
 		new SoundTemplate(SoundType.TRASH_CAN_HIT, this.soundsDirectory + "trashcan_hit_3.mp3"),
+
+		new SoundTemplate(SoundType.BARREL_BREAK, this.soundsDirectory + "barrel_break_1.mp3"),
+		new SoundTemplate(SoundType.BARREL_BREAK, this.soundsDirectory + "barrel_break_2.mp3"),
+		new SoundTemplate(SoundType.BARREL_BREAK, this.soundsDirectory + "barrel_break_3.mp3"),
 
 		new SoundTemplate(SoundType.ROCKET_LAUNCH, this.soundsDirectory + "rocket_launch_1.mp3"),
 		new SoundTemplate(SoundType.ROCKET_LAUNCH, this.soundsDirectory + "rocket_launch_2.mp3"),
@@ -402,14 +409,15 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, this.imagessDirectory + "player_balloon_2_attack.png"),
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, this.imagessDirectory + "player_balloon_2_win.png"),
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, this.imagessDirectory + "player_balloon_2_hit.png"),
+		
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_explosive_1.png"),		
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_explosive_2.png"),
 
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "cracker_1.png"),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "cracker_2.png"),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "cracker_3.png"),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_1.png"),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_2.png"),		
 
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "trash_1.png"),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "trash_2.png"),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "trash_3.png"),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_sticky_1.png"),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_sticky_2.png"),		
 
 		new ConstructTemplate(ConstructType.CHOPPER_BLADES, this.imagessDirectory + "chopper_blades.png"),
 

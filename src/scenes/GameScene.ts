@@ -54,19 +54,19 @@ export class GameScene extends Container implements IScene {
 	private readonly vehicleBossReleasePoint: number = 25; // 25
 	private readonly vehicleBossReleaseLimit: number = 15;
 	private readonly vehicleBossCheckpoint: GameCheckpoint;
-		
+
 	private readonly ufoEnemyReleasePoint: number = 35; // 35
 	private readonly ufoEnemyReleaseLimit: number = 5;
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
-		
+
 	private readonly ufoBossReleasePoint: number = 50; // 50
 	private readonly ufoBossReleaseLimit: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
-		
+
 	private readonly zombieBossReleasePoint: number = 85; // 85
 	private readonly zombieBossReleaseLimit: number = 15;
 	private readonly zombieBossCheckpoint: GameCheckpoint;
-	
+
 	private readonly mafiaBossReleasePoint: number = 100; // 100
 	private readonly mafiaBossReleaseLimit: number = 15;
 	private readonly mafiaBossCheckpoint: GameCheckpoint;
@@ -214,12 +214,11 @@ export class GameScene extends Container implements IScene {
 					dropShadow.reset();
 					dropShadow.enableRendering();
 				}
-
 				dropShadow.move();
 			});
 		}
 
-		var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false || x.source.isBlasting || x.source.isDead());
+		var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false || x.source.isBlasting || x.source.isDropped || x.source.isDead());
 
 		if (nonAnimatingCastShadows) {
 
@@ -565,138 +564,6 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region Hedges
-
-	//private hedgeXyAdjustment: number = 30.5;
-
-	//private hedgeSizeWidth: number = 450;
-	//private hedgeSizeHeight: number = 450;
-
-	//private hedgeBottomGameObjects: Array<GameObjectContainer> = [];
-	//private hedgeTopGameObjects: Array<GameObjectContainer> = [];
-
-	//private hedgePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	//private hedgePopDelayTop: number = 0;
-	//private hedgePopDelayBottom: number = 0;
-
-	//private spawnHedgesTop() {
-
-	//	for (let j = 0; j < 5; j++) {
-
-	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-	//		gameObject.disableRendering();
-
-	//		for (let i = 0; i < 5; i++) {
-
-	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
-
-	//			sprite.x = this.hedgeSizeWidth * i - (this.hedgeXyAdjustment * i);
-	//			sprite.y = (this.hedgeSizeHeight / 2) * i - ((this.hedgeXyAdjustment / 2) * i);
-	//			sprite.width = this.hedgeSizeWidth;
-	//			sprite.height = this.hedgeSizeHeight;
-
-	//			gameObject.addChild(sprite);
-	//		}
-
-	//		this.hedgeTopGameObjects.push(gameObject);
-	//		this.sceneContainer.addChild(gameObject);
-	//	}
-	//}
-
-	//private spawnHedgesBottom() {
-
-	//	for (let j = 0; j < 5; j++) {
-
-	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-	//		gameObject.disableRendering();
-
-	//		for (let i = 0; i < 5; i++) {
-
-	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_HEDGE));
-
-	//			sprite.x = this.hedgeSizeWidth * i - (this.hedgeXyAdjustment * i);
-	//			sprite.y = (this.hedgeSizeHeight / 2) * i - ((this.hedgeXyAdjustment / 2) * i);
-	//			sprite.width = this.hedgeSizeWidth;
-	//			sprite.height = this.hedgeSizeHeight;
-
-	//			gameObject.addChild(sprite);
-	//		}
-
-	//		this.hedgeBottomGameObjects.push(gameObject);
-	//		this.sceneContainer.addChild(gameObject);
-	//	}
-	//}
-
-	//private generateHedgesTop() {
-
-	//	this.hedgePopDelayTop -= 0.1;
-
-	//	if (this.hedgePopDelayTop < 0) {
-
-	//		var gameObject = this.hedgeTopGameObjects.find(x => x.isAnimating == false);
-
-	//		if (gameObject) {
-	//			gameObject.setPosition(-1430, gameObject.height * -1);
-	//			gameObject.enableRendering();
-	//			this.hedgePopDelayTop = this.hedgePopDelayDefault;
-	//		}
-	//	}
-	//}
-
-	//private generateHedgesBottom() {
-
-	//	this.hedgePopDelayBottom -= 0.1;
-
-	//	if (this.hedgePopDelayBottom < 0) {
-
-	//		var gameObject = this.hedgeBottomGameObjects.find(x => x.isAnimating == false);
-
-	//		if (gameObject) {
-	//			gameObject.setPosition(gameObject.width * -1, -710);
-	//			gameObject.enableRendering();
-	//			this.hedgePopDelayBottom = this.hedgePopDelayDefault;
-
-	//			// console.log("Hedge bottom gameObject popped.");
-	//		}
-	//	}
-	//}
-
-	//private animateHedgesTop() {
-
-	//	var animatingHedges = this.hedgeTopGameObjects.filter(x => x.isAnimating == true);
-
-	//	if (animatingHedges) {
-
-	//		animatingHedges.forEach(gameObject => {
-	//			gameObject.moveDownRight();
-
-	//			if (gameObject.x - this.hedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-	//				gameObject.disableRendering();
-
-	//			}
-	//		});
-	//	}
-	//}
-
-	//private animateHedgesBottom() {
-
-	//	var animatingHedges = this.hedgeBottomGameObjects.filter(x => x.isAnimating == true);
-
-	//	if (animatingHedges) {
-
-	//		animatingHedges.forEach(gameObject => {
-	//			gameObject.moveDownRight();
-
-	//			if (gameObject.x - this.hedgeSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-	//				gameObject.disableRendering();
-
-	//			}
-	//		});
-	//	}
-	//}
-
-	//#endregion
-
 	//#region Lamps
 
 	private lampXyAdjustment: number = 197;
@@ -765,137 +632,6 @@ export class GameScene extends Container implements IScene {
 			});
 		}
 	}
-
-	//#endregion
-
-	//#region LightBillboards
-
-	//private lightBillboardXyAdjustment: number = 31.5;
-	//private lightBillboardXyDistance = 250;
-
-	//private lightBillboardSizeWidth: number = 128;
-	//private lightBillboardSizeHeight: number = 128;
-
-	//private lightBillboardBottomGameObjects: Array<GameObjectContainer> = [];
-	//private lightBillboardTopGameObjects: Array<GameObjectContainer> = [];
-
-	//private lightBillboardPopDelayDefault: number = 57 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	//private lightBillboardPopDelayTop: number = 0;
-	//private lightBillboardPopDelayBottom: number = 0;
-
-	//private spawnLightBillboardsTop() {
-
-	//	for (let j = 0; j < 5; j++) {
-
-	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-	//		gameObject.disableRendering();
-
-	//		for (let i = 0; i < 5; i++) {
-
-	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
-
-	//			sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
-	//			sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
-	//			sprite.width = this.lightBillboardSizeWidth;
-	//			sprite.height = this.lightBillboardSizeHeight;
-
-	//			gameObject.addChild(sprite);
-	//		}
-
-	//		this.lightBillboardTopGameObjects.push(gameObject);
-	//		this.sceneContainer.addChild(gameObject);
-	//	}
-	//}
-
-	//private spawnLightBillboardsBottom() {
-
-	//	for (let j = 0; j < 5; j++) {
-
-	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-	//		gameObject.disableRendering();
-
-	//		for (let i = 0; i < 5; i++) {
-
-	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD));
-
-	//			sprite.x = (this.lightBillboardSizeWidth * i - (this.lightBillboardXyAdjustment * i)) + (this.lightBillboardXyDistance * i);
-	//			sprite.y = ((this.lightBillboardSizeHeight / 2) * i - ((this.lightBillboardXyAdjustment / 2) * i)) + (this.lightBillboardXyDistance / 2 * i);
-	//			sprite.width = this.lightBillboardSizeWidth;
-	//			sprite.height = this.lightBillboardSizeHeight;
-
-	//			gameObject.addChild(sprite);
-	//		}
-
-	//		this.lightBillboardBottomGameObjects.push(gameObject);
-	//		this.sceneContainer.addChild(gameObject);
-	//	}
-	//}
-
-	//private generateLightBillboardsTop() {
-
-	//	this.lightBillboardPopDelayTop -= 0.1;
-
-	//	if (this.lightBillboardPopDelayTop < 0) {
-
-	//		var gameObject = this.lightBillboardTopGameObjects.find(x => x.isAnimating == false);
-
-	//		if (gameObject) {
-	//			gameObject.setPosition(-380, gameObject.height * -1.1);
-	//			gameObject.enableRendering();
-	//			this.lightBillboardPopDelayTop = this.lightBillboardPopDelayDefault;
-	//		}
-	//	}
-	//}
-
-	//private generateLightBillboardsBottom() {
-
-	//	this.lightBillboardPopDelayBottom -= 0.1;
-
-	//	if (this.lightBillboardPopDelayBottom < 0) {
-
-	//		var gameObject = this.lightBillboardBottomGameObjects.find(x => x.isAnimating == false);
-
-	//		if (gameObject) {
-	//			gameObject.setPosition(gameObject.width * -1, -180);
-	//			gameObject.enableRendering();
-	//			this.lightBillboardPopDelayBottom = this.lightBillboardPopDelayDefault;
-	//		}
-	//	}
-	//}
-
-	//private animateLightBillboardsTop() {
-
-	//	var animatingLightBillboards = this.lightBillboardTopGameObjects.filter(x => x.isAnimating == true);
-
-	//	if (animatingLightBillboards) {
-
-	//		animatingLightBillboards.forEach(gameObject => {
-	//			gameObject.moveDownRight();
-
-	//			if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-	//				gameObject.disableRendering();
-
-	//			}
-	//		});
-	//	}
-	//}
-
-	//private animateLightBillboardsBottom() {
-
-	//	var animatingLightBillboards = this.lightBillboardBottomGameObjects.filter(x => x.isAnimating == true);
-
-	//	if (animatingLightBillboards) {
-
-	//		animatingLightBillboards.forEach(gameObject => {
-	//			gameObject.moveDownRight();
-
-	//			if (gameObject.x - this.lightBillboardSizeWidth > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-	//				gameObject.disableRendering();
-
-	//			}
-	//		});
-	//	}
-	//}
 
 	//#endregion
 
@@ -1188,8 +924,8 @@ export class GameScene extends Container implements IScene {
 		var animatingHonkBombs = this.flashExplosionGameObjects.filter(x => x.isAnimating == true);
 		if (animatingHonkBombs) {
 			animatingHonkBombs.forEach(gameObject => {
-				gameObject.pop();				
-				gameObject.fade();				
+				gameObject.pop();
+				gameObject.fade();
 
 				if (gameObject.hasFaded() || gameObject.getRight() < 0 || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getBottom() < 0 || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
@@ -1358,10 +1094,10 @@ export class GameScene extends Container implements IScene {
 
 	//#region PlayerHonkBombs
 
-	private playerHonkBombSizeWidth: number = 50;
-	private playerHonkBombSizeHeight: number = 50;
+	private playerHonkBombSizeWidth: number = 70;
+	private playerHonkBombSizeHeight: number = 70;
 
-	private playerHonkBombGameObjects: Array<GameObjectContainer> = [];
+	private playerHonkBombGameObjects: Array<PlayerHonkBomb> = [];
 	private playerHonkBusterTemplate: number = 0;
 
 	spawnPlayerHonkBombs() {
@@ -1395,11 +1131,9 @@ export class GameScene extends Container implements IScene {
 		var gameObject = this.playerHonkBombGameObjects.find(x => x.isAnimating == false);
 
 		if (gameObject) {
-
-			var playerHonkBomb = gameObject as PlayerHonkBomb;
-			playerHonkBomb.reset();
-			playerHonkBomb.reposition(this.player);
-			playerHonkBomb.setPopping();
+			gameObject.reset();
+			gameObject.reposition(this.player);
+			gameObject.setPopping();
 
 			gameObject.enableRendering();
 
@@ -1413,55 +1147,172 @@ export class GameScene extends Container implements IScene {
 
 		if (animatingHonkBombs) {
 
-			animatingHonkBombs.forEach(gameObject => {
+			animatingHonkBombs.forEach(playerHonkBomb => {
 
-				gameObject.pop();
-
-				var playerHonkBomb = gameObject as PlayerHonkBomb;
+				playerHonkBomb.pop();
 
 				if (playerHonkBomb) {
 
 					if (playerHonkBomb.isBlasting) {
-
 						playerHonkBomb.fade();
 
 						switch (playerHonkBomb.playerHonkBombTemplate) {
-							case PlayerHonkBombTemplate.Cracker: {
+							case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
+
+								if (playerHonkBomb.awaitMoveDownLeft) {
+									playerHonkBomb.moveDownLeft();
+									playerHonkBomb.rotate(RotationDirection.Backward, 0, 15);
+								}
+								else if (playerHonkBomb.awaitMoveDownRight) {
+									playerHonkBomb.moveDownRight();
+									playerHonkBomb.moveDownRight();
+									playerHonkBomb.moveDownRight();
+									playerHonkBomb.rotate(RotationDirection.Forward, 0, 15);
+								}
+								else if (playerHonkBomb.awaitMoveUpLeft) {
+									playerHonkBomb.moveUpLeft();
+									playerHonkBomb.rotate(RotationDirection.Backward, 0, 15);
+								}
+								else if (playerHonkBomb.awaitMoveUpRight) {
+									playerHonkBomb.moveUpRight();
+									playerHonkBomb.moveUpRight();
+									playerHonkBomb.rotate(RotationDirection.Forward, 0, 15);
+								}
+							} break;
+							case PlayerHonkBombTemplate.TRASH_BOMB: {
 								playerHonkBomb.shrink();
+
+								if (playerHonkBomb.awaitMoveUpRight) {
+									playerHonkBomb.moveUpRight();
+									playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
+								}
+								else if (playerHonkBomb.awaitMoveUpLeft) {
+									playerHonkBomb.moveUpLeft();
+									playerHonkBomb.rotate(RotationDirection.Backward, 0, 0.5);
+								}
+
 							} break;
-							case PlayerHonkBombTemplate.TrashCan: {
-								playerHonkBomb.moveUpRight();
-								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
+							case PlayerHonkBombTemplate.STICKY_BOMB: {
+
+								if (playerHonkBomb.awaitMoveUpRight) {
+									playerHonkBomb.moveUpRight();
+									playerHonkBomb.moveUpRight();
+									playerHonkBomb.rotate(RotationDirection.Forward, 0, 10);
+								}
+								else if (playerHonkBomb.awaitMoveDownLeft) {
+									playerHonkBomb.moveDownLeft();
+									playerHonkBomb.rotate(RotationDirection.Backward, 0, 10);
+								}
 							} break;
-							default:
+							default: break;
 						}
 					}
 					else {
+						switch (playerHonkBomb.playerHonkBombTemplate) {
+							case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
+								playerHonkBomb.move();
 
-						playerHonkBomb.move();
-						playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
+								if (playerHonkBomb.awaitBlast()) {
 
-						if (playerHonkBomb.awaitBlast()) {
+									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
 
-							this.generateSmokeExplosion(playerHonkBomb);
+									if (vehicleEnemy) {
+										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
+									}
 
-							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
+									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
 
-							if (vehicleEnemy) {
-								this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
-							}
+									if (vehicleBoss) {
+										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
+									}
 
-							let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
+									let randomDir = Constants.getRandomNumber(0, 3);
 
-							if (vehicleBoss) {
-								this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
-							}
+									switch (randomDir) {
+										case 0: { playerHonkBomb.awaitMoveDownLeft = true; } break;
+										case 1: { playerHonkBomb.awaitMoveDownRight = true; } break;
+										case 2: { playerHonkBomb.awaitMoveUpLeft = true; } break;
+										case 3: { playerHonkBomb.awaitMoveUpRight = true; } break;
+										default: break;
+									}
+
+									this.generateSmokeExplosion(playerHonkBomb);
+									this.generateFlashExplosion(playerHonkBomb);
+									this.generateRingExplosion(playerHonkBomb);
+								}
+							} break;
+							case PlayerHonkBombTemplate.TRASH_BOMB: {
+								playerHonkBomb.move();
+
+								if (playerHonkBomb.awaitBlast()) {
+
+									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
+
+									if (vehicleEnemy) {
+										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
+									}
+
+									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
+
+									if (vehicleBoss) {
+										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
+									}
+
+									let randomDir = Constants.getRandomNumber(0, 1);
+
+									switch (randomDir) {
+										case 0: { playerHonkBomb.awaitMoveUpLeft = true; } break;
+										case 1: { playerHonkBomb.awaitMoveUpRight = true; } break;
+										default: break;
+									}
+
+									this.generateSmokeExplosion(playerHonkBomb);
+								}
+							} break;
+							case PlayerHonkBombTemplate.STICKY_BOMB: {
+
+								if (playerHonkBomb.isDropped) {
+									playerHonkBomb.moveDownRight();
+
+									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
+
+									if (vehicleEnemy) {
+										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
+										playerHonkBomb.setBlast();
+									}
+
+									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
+
+									if (vehicleBoss) {
+										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
+										playerHonkBomb.setBlast();
+									}
+
+									if (vehicleEnemy || vehicleBoss) {
+										let randomDir = Constants.getRandomNumber(0, 1);
+
+										switch (randomDir) {
+											case 0: { playerHonkBomb.awaitMoveDownLeft = true; } break;
+											case 1: { playerHonkBomb.awaitMoveUpRight = true; } break;
+											default: break;
+										}
+
+										this.generateSmokeExplosion(playerHonkBomb);
+										this.generateRingExplosion(playerHonkBomb);
+									}
+								}
+								else {
+									playerHonkBomb.move();
+									playerHonkBomb.awaitDrop();
+								}
+							} break;
+							default: break;
 						}
 					}
 				}
 
-				if (gameObject.hasFaded() || gameObject.hasShrinked() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+				if (playerHonkBomb.hasFaded() || playerHonkBomb.hasShrinked() || playerHonkBomb.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || playerHonkBomb.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					playerHonkBomb.disableRendering();
 				}
 			});
 		}
@@ -3877,24 +3728,21 @@ export class GameScene extends Container implements IScene {
 		this.spawnRoadMarks();
 
 		this.spawnSideWalksTop();
-		//this.spawnHedgesTop();
-		//this.spawnLightBillboardsTop();
 		this.spawnTreesTop();
 		this.spawnLampsTop();
 
 		this.spawnVehicleEnemys();
 		this.spawnVehicleBosss();
+
 		this.spawnHonks();
 		this.spawnVehicleBossRockets();
 
 		this.spawnSideWalksBottom();
-		//this.spawnHedgesBottom();
-		//this.spawnLampsBottom();
-		this.spawnPlayerHonkBombs();
-		this.spawnSmokeExplosions();
 
+		this.spawnSmokeExplosions();
+		this.spawnPlayerHonkBombs();
 		this.spawnTreesBottom();
-		//this.spawnLightBillboardsBottom();
+
 		this.spawnPlayerRockets();
 		this.spawnPlayerRocketBullsEyes();
 		this.spawnPlayerBalloon();
@@ -3920,8 +3768,6 @@ export class GameScene extends Container implements IScene {
 		this.spawnPowerUpPickups();
 
 		this.spawnMessageBubbles();
-
-		//this.spawnUnderCityTop();
 
 		//this.spawnClouds();
 	}
