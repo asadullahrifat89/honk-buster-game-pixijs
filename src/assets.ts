@@ -99,13 +99,13 @@ export const manifest: ResolverManifest = {
 				"powerup_pickup_bulls_eye": "./images/powerup_pickup_bulls_eye.png",
 				"powerup_pickup_seeking_snitch": "./images/powerup_pickup_seeking_snitch.png",
 
-				"player_honk_bomb_cracker_1": "./images/player_honk_bomb_cracker_1.png",
-				"player_honk_bomb_cracker_2": "./images/player_honk_bomb_cracker_2.png",
-				"player_honk_bomb_cracker_3": "./images/player_honk_bomb_cracker_3.png",
+				"player_honk_bomb_sticky_1": "./images/player_honk_bomb_sticky_1.png",
+				"player_honk_bomb_sticky_2": "./images/player_honk_bomb_sticky_2.png",
+				//"player_honk_bomb_sticky_3": "./images/player_honk_bomb_sticky_3.png",
 
 				"player_honk_bomb_explosive_1": "./images/player_honk_bomb_explosive_1.png",
 				"player_honk_bomb_explosive_2": "./images/player_honk_bomb_explosive_2.png",
-				"player_honk_bomb_explosive_3": "./images/player_honk_bomb_explosive_3.png",
+				//"player_honk_bomb_explosive_3": "./images/player_honk_bomb_explosive_3.png",
 
 				"player_honk_bomb_trash_1": "./images/player_honk_bomb_trash_1.png",
 				"player_honk_bomb_trash_2": "./images/player_honk_bomb_trash_2.png",

@@ -5,7 +5,7 @@ import { SoundManager } from '../managers/SoundManager';
 
 export class PlayerHonkBomb extends GameObjectContainer {
 
-	public playerHonkBombTemplate: PlayerHonkBombTemplate = PlayerHonkBombTemplate.FLASH_BOMB;
+	public playerHonkBombTemplate: PlayerHonkBombTemplate = PlayerHonkBombTemplate.EXPLOSIVE_BOMB;
 	private playerHonkBombUris: string[] = [];
 
 	private blastDelay: number = 0;
@@ -45,14 +45,14 @@ export class PlayerHonkBomb extends GameObjectContainer {
 		this.playerHonkBombTemplate = honkBombTemplate;
 
 		switch (this.playerHonkBombTemplate) {
-			case PlayerHonkBombTemplate.FLASH_BOMB: {
+			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
 				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("explosive")).map(x => x.uri);
 			} break;
 			case PlayerHonkBombTemplate.TRASH_BOMB: {
 				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("trash")).map(x => x.uri);
 			} break;
 			case PlayerHonkBombTemplate.STICKY_BOMB: {
-				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("barrel")).map(x => x.uri);
+				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("sticky")).map(x => x.uri);
 			} break;
 		}
 
@@ -96,7 +96,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 
 	setBlast() {
 		switch (this.playerHonkBombTemplate) {
-			case PlayerHonkBombTemplate.FLASH_BOMB: { SoundManager.play(SoundType.CRACKER_BLAST, 0.8); } break;
+			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: { SoundManager.play(SoundType.CRACKER_BLAST, 0.8); } break;
 			case PlayerHonkBombTemplate.TRASH_BOMB: { SoundManager.play(SoundType.TRASH_CAN_HIT); } break;
 			case PlayerHonkBombTemplate.STICKY_BOMB: { SoundManager.play(SoundType.BARREL_BREAK); } break;
 			default: break;
@@ -105,7 +105,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 		this.isBlasting = true;
 
 		switch (this.playerHonkBombTemplate) {
-			case PlayerHonkBombTemplate.FLASH_BOMB: {
+			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
 				this.angle = 0;
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 2;
 			} break;

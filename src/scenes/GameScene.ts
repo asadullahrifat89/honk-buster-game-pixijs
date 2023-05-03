@@ -1157,10 +1157,9 @@ export class GameScene extends Container implements IScene {
 						playerHonkBomb.fade();
 
 						switch (playerHonkBomb.playerHonkBombTemplate) {
-							case PlayerHonkBombTemplate.FLASH_BOMB: {
-								playerHonkBomb.shrink();
+							case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {								
 								playerHonkBomb.moveDownLeft();
-								playerHonkBomb.rotate(RotationDirection.Backward, 0, 0.5);
+								playerHonkBomb.rotate(RotationDirection.Backward, 0, 15);
 							} break;
 							case PlayerHonkBombTemplate.TRASH_BOMB: {
 								playerHonkBomb.shrink();
@@ -1169,14 +1168,14 @@ export class GameScene extends Container implements IScene {
 							} break;
 							case PlayerHonkBombTemplate.STICKY_BOMB: {
 								playerHonkBomb.moveUpRight();
-								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
+								playerHonkBomb.rotate(RotationDirection.Forward, 0, 10);
 							} break;
 							default: break;
 						}
 					}
 					else {
 						switch (playerHonkBomb.playerHonkBombTemplate) {
-							case PlayerHonkBombTemplate.FLASH_BOMB: {
+							case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
 								playerHonkBomb.move();								
 
 								if (playerHonkBomb.awaitBlast()) {
@@ -1203,7 +1202,7 @@ export class GameScene extends Container implements IScene {
 
 								if (playerHonkBomb.awaitBlast()) {
 
-									this.generateSmokeExplosion(playerHonkBomb);
+									this.generateSmokeExplosion(playerHonkBomb);									
 
 									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
 
@@ -1229,6 +1228,7 @@ export class GameScene extends Container implements IScene {
 										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
 										playerHonkBomb.setBlast();
 										this.generateSmokeExplosion(playerHonkBomb);
+										this.generateRingExplosion(playerHonkBomb);
 									}
 
 									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
@@ -1237,6 +1237,7 @@ export class GameScene extends Container implements IScene {
 										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
 										playerHonkBomb.setBlast();
 										this.generateSmokeExplosion(playerHonkBomb);
+										this.generateRingExplosion(playerHonkBomb);
 									}
 								}
 								else {
