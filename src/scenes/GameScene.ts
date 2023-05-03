@@ -1162,7 +1162,6 @@ export class GameScene extends Container implements IScene {
 
 						switch (playerHonkBomb.playerHonkBombTemplate) {
 							case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
-
 								if (playerHonkBomb.awaitMoveDownLeft) {
 									playerHonkBomb.moveDownLeft();
 									playerHonkBomb.rotate(RotationDirection.Backward, 0, 15);
@@ -1184,8 +1183,6 @@ export class GameScene extends Container implements IScene {
 								}
 							} break;
 							case PlayerHonkBombTemplate.TRASH_BOMB: {
-								playerHonkBomb.shrink();
-
 								if (playerHonkBomb.awaitMoveUpRight) {
 									playerHonkBomb.moveUpRight();
 									playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
@@ -1197,7 +1194,6 @@ export class GameScene extends Container implements IScene {
 
 							} break;
 							case PlayerHonkBombTemplate.STICKY_BOMB: {
-
 								if (playerHonkBomb.awaitMoveUpRight) {
 									playerHonkBomb.moveUpRight();
 									playerHonkBomb.moveUpRight();
