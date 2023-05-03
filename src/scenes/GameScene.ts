@@ -77,16 +77,18 @@ export class GameScene extends Container implements IScene {
 
 	private playerHealthBar: HealthBar;
 	private bossHealthBar: HealthBar;
-	private powerUpMeter: HealthBar;
+	private powerUpBar: HealthBar;
 
 	private gameLevel: number = 0;
-	private roadBackgroundDay: Graphics;
+	private stageColors: number[] = [0x1e2a36, 0x4187ab];
+	private stageColor: Graphics;
+
 	private behindBackIcon: Texture;
 	private talkIcon: Texture;
 	private cheerIcon: Texture;
 	private interactIcon: Texture;
 
-	private honkBustReactions: SoundTemplate[] = [];
+	private honkBustReactions: SoundTemplate[] = [];	
 
 	//#endregion
 
@@ -99,24 +101,64 @@ export class GameScene extends Container implements IScene {
 
 		this.honkBustReactions = Constants.SOUND_TEMPLATES.filter(x => x.soundType == SoundType.HONK_BUST_REACTION);
 
+		// get textures for on screen message icons
 		this.behindBackIcon = Texture.from("./images/character_maleAdventurer_behindBack.png");
 		this.cheerIcon = Texture.from("./images/character_maleAdventurer_cheer0.png");
 		this.talkIcon = Texture.from("./images/character_maleAdventurer_talk.png");
 		this.interactIcon = Texture.from("./images/character_maleAdventurer_interact.png");
 
+		// set the selected ride and bomb templates
 		this.playerRideTemplate = Constants.SELECTED_PLAYER_RIDE_TEMPLATE;
 		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
 
-		let colors: number[] = [0x1e2a36, 0x4187ab]
-		let color = colors[Constants.getRandomNumber(0, colors.length - 1)];
-		this.roadBackgroundDay = new Graphics().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+		// set the background color of the scene		
+		let color = this.stageColors[Constants.getRandomNumber(0, this.stageColors.length - 1)];
 
-		this.addChildAt(this.roadBackgroundDay, 0);
+		this.stageColor = new Graphics().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+		this.addChildAt(this.stageColor, 0);
 
+		// create the scene container
 		this.sceneContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
 		this.addChild(this.sceneContainer);
-		this.sceneContainer.alpha = 0;
+		this.sceneContainer.alpha = 0;	
 
+		// set the check points
+		this.vehicleBossCheckpoint = new GameCheckpoint(this.vehicleBossReleasePoint);
+		this.ufoBossCheckpoint = new GameCheckpoint(this.ufoBossReleasePoint);
+		this.zombieBossCheckpoint = new GameCheckpoint(this.zombieBossReleasePoint);
+		this.mafiaBossCheckpoint = new GameCheckpoint(this.mafiaBossReleasePoint);
+		this.ufoEnemyCheckpoint = new GameCheckpoint(this.ufoEnemyReleasePoint);
+
+		// spawn the game objects
+		this.spawnGameObjects();
+		this.generatePlayerBalloon();
+
+		// set the game score bar
+		this.gameScoreBar = new GameScoreBar(this, "Score ");
+		this.repositionGameScoreBar();
+
+		// set the game level bar
+		this.gameLevelBar = new GameScoreBar(this, "Lvl ", 1);
+		this.repositionGameLevelBar();
+
+		// set health bars
+		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this);
+		this.playerHealthBar.setMaximumValue(this.player.health);
+		this.playerHealthBar.setValue(this.player.health);
+		this.repositionPlayerHealthBar();
+
+		this.bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
+		this.bossHealthBar.setMaximumValue(100);
+		this.bossHealthBar.setValue(0);
+		this.repositionBossHealthBar();
+
+		// set power up bar
+		this.powerUpBar = new HealthBar(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR), this);
+		this.powerUpBar.setMaximumValue(100);
+		this.powerUpBar.setValue(0);
+		this.repositionPowerUpBar();
+
+		// set the game controller
 		this.gameController = new GameController({
 			onPause: (isPaused) => {
 				if (isPaused) {
@@ -130,59 +172,31 @@ export class GameScene extends Container implements IScene {
 				this.gameOver();
 			}
 		});
+		this.addChild(this.gameController);
 
-		this.vehicleBossCheckpoint = new GameCheckpoint(this.vehicleBossReleasePoint);
-		this.ufoBossCheckpoint = new GameCheckpoint(this.ufoBossReleasePoint);
-		this.zombieBossCheckpoint = new GameCheckpoint(this.zombieBossReleasePoint);
-		this.mafiaBossCheckpoint = new GameCheckpoint(this.mafiaBossReleasePoint);
-		this.ufoEnemyCheckpoint = new GameCheckpoint(this.ufoEnemyReleasePoint);
-
-		this.spawnGameObjects();
-
-		this.generatePlayerBalloon();
-
-		this.gameScoreBar = new GameScoreBar(this, "Score ");
-		this.repositionGameScoreBar();
-
-		this.gameLevelBar = new GameScoreBar(this, "Lvl ", 1);
-		this.repositionGameLevelBar();
-
-		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this);
-		this.playerHealthBar.setMaximumValue(this.player.health);
-		this.playerHealthBar.setValue(this.player.health);
-		this.repositionPlayerHealthBar();
-
-		this.bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
-		this.bossHealthBar.setMaximumValue(100);
-		this.bossHealthBar.setValue(0);
-		this.repositionBossHealthBar();
-
-		this.powerUpMeter = new HealthBar(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR), this);
-		this.powerUpMeter.setMaximumValue(100);
-		this.powerUpMeter.setValue(0);
-		this.repositionPowerUpMeter();
-
+		// set the on screen message layer
 		this.onScreenMessage = new OnScreenMessage(this);
-
-		this.setGameController();
 
 		// progress the frames a little bit to avoid blank scene
 		for (var i = 0; i < 350; i++) {
 			this.processFrame();
 		}
 
+		// show message in the beginning
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
 			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: { this.generateOnScreenMessage("Drop granades on honkers!", this.talkIcon); } break;
 			case PlayerHonkBombTemplate.TRASH_BOMB: { this.generateOnScreenMessage("Drop trash bags on honkers!", this.talkIcon); } break;
 			case PlayerHonkBombTemplate.STICKY_BOMB: { this.generateOnScreenMessage("Drop sticky bombs on honkers!", this.talkIcon); } break;
 		}
 
+		// start hovering sound for player ride
 		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
 			case PlayerRideTemplate.BALLOON: { } break;
 			case PlayerRideTemplate.CHOPPER: { SoundManager.play(SoundType.CHOPPER_HOVERING, 0.1, true); } break;
 			default:
 		}
 
+		// start bacground sounds
 		SoundManager.play(SoundType.AMBIENCE, 0.4, true);
 		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.4, true);
 		SoundManager.play(SoundType.GAME_START);
@@ -1090,9 +1104,9 @@ export class GameScene extends Container implements IScene {
 
 			if (this.anyInAirBossExists() || this.ufoEnemyExists()) {
 
-				if (this.powerUpMeter.hasHealth()) {
+				if (this.powerUpBar.hasHealth()) {
 
-					switch (this.powerUpMeter.tag) {
+					switch (this.powerUpBar.tag) {
 						case PowerUpType.BULLS_EYE:
 							{
 								this.generatePlayerRocketBullsEye();
@@ -1122,7 +1136,7 @@ export class GameScene extends Container implements IScene {
 	loosePlayerHealth() {
 		this.player.setPopping();
 
-		if (this.powerUpMeter.hasHealth() && this.powerUpMeter.tag == PowerUpType.ARMOR) {
+		if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.ARMOR) {
 			this.depletePowerUp();
 		}
 		else {
@@ -1627,7 +1641,7 @@ export class GameScene extends Container implements IScene {
 
 			playerRocketBullsEye.enableRendering();
 
-			if (this.powerUpMeter.hasHealth() && this.powerUpMeter.tag == PowerUpType.BULLS_EYE)
+			if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.BULLS_EYE)
 				this.depletePowerUp();
 		}
 	}
@@ -3527,7 +3541,7 @@ export class GameScene extends Container implements IScene {
 
 	private generatePowerUpPickups() {
 
-		if ((this.anyInAirBossExists() || this.ufoEnemyExists()) && !this.powerUpMeter.hasHealth()) {
+		if ((this.anyInAirBossExists() || this.ufoEnemyExists()) && !this.powerUpBar.hasHealth()) {
 			this.powerUpPickupPopDelay -= 0.1;
 
 			if (this.powerUpPickupPopDelay < 0) {
@@ -3587,24 +3601,24 @@ export class GameScene extends Container implements IScene {
 					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.pickedUp();
 
-						this.powerUpMeter.tag = gameObject.powerUpType;
-						this.powerUpMeter.setIcon(gameObject.getSprite().getTexture());
+						this.powerUpBar.tag = gameObject.powerUpType;
+						this.powerUpBar.setIcon(gameObject.getSprite().getTexture());
 
 						switch (gameObject.powerUpType) {
 							case PowerUpType.BULLS_EYE: // if bulls eye powerup, allow using a single shot of 20 bombs
 								{
-									this.powerUpMeter.setMaximumValue(20);
-									this.powerUpMeter.setValue(20);
+									this.powerUpBar.setMaximumValue(20);
+									this.powerUpBar.setValue(20);
 
-									this.generateOnScreenMessage("Bull's' Eye +20", this.powerUpMeter.getIcon());
+									this.generateOnScreenMessage("Bull's' Eye +20", this.powerUpBar.getIcon());
 								}
 								break;
 							case PowerUpType.ARMOR:
 								{
-									this.powerUpMeter.setMaximumValue(10);
-									this.powerUpMeter.setValue(10);
+									this.powerUpBar.setMaximumValue(10);
+									this.powerUpBar.setValue(10);
 
-									this.generateOnScreenMessage("Armor +10", this.powerUpMeter.getIcon());
+									this.generateOnScreenMessage("Armor +10", this.powerUpBar.getIcon());
 								}
 								break;
 							default:
@@ -3622,8 +3636,8 @@ export class GameScene extends Container implements IScene {
 
 	private depletePowerUp() {
 		// use up the power up
-		if (this.powerUpMeter.hasHealth())
-			this.powerUpMeter.setValue(this.powerUpMeter.getValue() - 1);
+		if (this.powerUpBar.hasHealth())
+			this.powerUpBar.setValue(this.powerUpBar.getValue() - 1);
 	}
 
 	//#endregion
@@ -3633,7 +3647,7 @@ export class GameScene extends Container implements IScene {
 	//#region GameController
 
 	setGameController() {
-		this.addChild(this.gameController);
+		
 	}
 
 	//#endregion
@@ -3662,8 +3676,8 @@ export class GameScene extends Container implements IScene {
 		this.bossHealthBar.reposition((SceneManager.width) - 205, 10);
 	}
 
-	private repositionPowerUpMeter() {
-		this.powerUpMeter.reposition((SceneManager.width) - 305, 10);
+	private repositionPowerUpBar() {
+		this.powerUpBar.reposition((SceneManager.width) - 305, 10);
 	}
 
 	//#endregion
@@ -3721,11 +3735,11 @@ export class GameScene extends Container implements IScene {
 			this.repositionGameScoreBar();
 			this.repositionPlayerHealthBar();
 			this.repositionBossHealthBar();
-			this.repositionPowerUpMeter();
+			this.repositionPowerUpBar();
 			this.gameController.resize();
 
-			this.roadBackgroundDay.width = SceneManager.width;
-			this.roadBackgroundDay.height = SceneManager.height;
+			this.stageColor.width = SceneManager.width;
+			this.stageColor.height = SceneManager.height;
 		}
 	}
 
