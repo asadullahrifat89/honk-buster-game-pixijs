@@ -26,14 +26,11 @@ export class ScreenOrientationScene extends Container implements IScene {
     }
 
     resize(_scale: number): void {
-
         // check if screen orientation is in correct mode
         if (SceneManager.width < SceneManager.height) {
-
             this.changeOrienationText.alpha = 1;
         }
         else {
-
             SceneManager.changeScene(new GameTitleScene());
         }
     }
