@@ -38,15 +38,15 @@ import { SoundTemplate } from "../core/SoundTemplate";
 import { MessageBubble } from "../controls/MessageBubble";
 
 
-
 export class GameScene extends Container implements IScene {
 
 	//#region Properties
 
-	private gameController: GameController;
-	private gameContainer: GameObjectContainer;
+	private gameController: GameController;	
 	private gameScoreBar: GameScoreBar;
 	private gameLevelBar: GameScoreBar;
+
+	private sceneContainer: GameObjectContainer;
 
 	private onScreenMessage: OnScreenMessage;
 
@@ -113,9 +113,9 @@ export class GameScene extends Container implements IScene {
 
 		this.addChildAt(this.roadBackgroundDay, 0);
 
-		this.gameContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-		this.addChild(this.gameContainer);
-		this.gameContainer.alpha = 0;
+		this.sceneContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
+		this.addChild(this.sceneContainer);
+		this.sceneContainer.alpha = 0;
 
 		this.gameController = new GameController({
 			onPause: (isPaused) => {
@@ -168,13 +168,13 @@ export class GameScene extends Container implements IScene {
 
 		// progress the frames a little bit to avoid blank scene
 		for (var i = 0; i < 350; i++) {
-			this.updateFrame();
+			this.processFrame();
 		}
 
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
 			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: { this.generateOnScreenMessage("Drop granades on honkers!", this.talkIcon); } break;
 			case PlayerHonkBombTemplate.TRASH_BOMB: { this.generateOnScreenMessage("Drop trash bags on honkers!", this.talkIcon); } break;
-			case PlayerHonkBombTemplate.STICKY_BOMB: { this.generateOnScreenMessage("Drop sticky bombs on honkers!", this.talkIcon); } break;			
+			case PlayerHonkBombTemplate.STICKY_BOMB: { this.generateOnScreenMessage("Drop sticky bombs on honkers!", this.talkIcon); } break;
 		}
 
 		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
@@ -188,7 +188,7 @@ export class GameScene extends Container implements IScene {
 		SoundManager.play(SoundType.GAME_START);
 	}
 
-	//#endregion	
+	//#endregion
 
 	//#region CastShadow
 
@@ -200,7 +200,7 @@ export class GameScene extends Container implements IScene {
 		gameObject.disableRendering();
 
 		this.castShadowGameObjects.push(gameObject);
-		this.gameContainer.addChild(gameObject);
+		this.sceneContainer.addChild(gameObject);
 	}
 
 	animateCastShadows() {
@@ -231,6 +231,69 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region Honks	
+
+	private roadHonkSizeWidth: number = 125;
+	private roadHonkSizeHeight: number = 125;
+
+	private roadHonkGameObjects: Array<Honk> = [];
+
+	private spawnHonks() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: Honk = new Honk(0);
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HONK));
+
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.roadHonkSizeWidth;
+			sprite.height = this.roadHonkSizeHeight;
+
+			sprite.anchor.set(0.5, 0.5);
+
+			gameObject.addChild(sprite);
+
+			this.roadHonkGameObjects.push(gameObject);
+			this.sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private generateHonk(source: GameObjectContainer) {
+
+		if (source.getLeft() > 0 && source.getTop() > 0) {
+			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+				gameObject.reset();
+				gameObject.reposition(source);
+				gameObject.setPopping();
+				gameObject.enableRendering();
+			}
+		}
+	}
+
+	private animateHonks() {
+
+		var animatingHonks = this.roadHonkGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingHonks) {
+
+			animatingHonks.forEach(gameObject => {
+				gameObject.pop();
+				gameObject.fade();
+
+				if (gameObject.hasFaded()) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
 	//#region MessageBubbles
 
 	private messageBubbleGameObjects: Array<MessageBubble> = [];
@@ -243,7 +306,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.disableRendering();
 
 			this.messageBubbleGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -279,36 +342,6 @@ export class GameScene extends Container implements IScene {
 					gameObject.disableRendering();
 				}
 			});
-		}
-	}
-
-	//#endregion
-
-	//#region OnScreenMessage
-
-	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("./images/character_maleAdventurer_talk.png")) {
-		if (this.onScreenMessage.isAnimating == false) {
-			this.onScreenMessage.setContent(title, icon);
-			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
-			this.onScreenMessage.enableRendering();
-		}
-		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
-			this.onScreenMessage.setContent(title, icon);
-			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
-		}
-	}
-
-	private animateOnScreenMessage() {
-
-		if (this.onScreenMessage.isAnimating == true) {
-
-			this.onScreenMessage.depleteOnScreenDelay();
-
-			if (this.onScreenMessage.isDepleted()) {
-				this.onScreenMessage.disableRendering();
-			}
 		}
 	}
 
@@ -364,6 +397,8 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region Environment
+
 	//#region RoadMarks
 
 	private roadMarkXyAdjustment: number = 890;
@@ -396,7 +431,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.roadMarksGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -470,7 +505,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.treeTopGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -494,7 +529,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.treeBottomGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -596,7 +631,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.lampTopGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -670,7 +705,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.sideWalkTopGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -695,7 +730,7 @@ export class GameScene extends Container implements IScene {
 			}
 
 			this.sideWalkBottomGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -849,7 +884,11 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region RingExplosions	
+	//#endregion
+
+	//#region Explosions
+
+	//#region RingExplosions
 
 	private ringExplosionGameObjects: Array<Explosion> = [];
 
@@ -861,7 +900,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.disableRendering();
 
 			this.ringExplosionGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -905,7 +944,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.disableRendering();
 
 			this.flashExplosionGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -948,7 +987,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.disableRendering();
 
 			this.smokeExplosionGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
@@ -979,6 +1018,10 @@ export class GameScene extends Container implements IScene {
 	}
 
 	//#endregion
+
+	//#endregion
+
+	//#region Player
 
 	//#region PlayerRide
 
@@ -1015,7 +1058,7 @@ export class GameScene extends Container implements IScene {
 		this.player.setPlayerRideTemplate(this.playerRideTemplate);
 		this.player.disableRendering();
 
-		this.gameContainer.addChild(this.player);
+		this.sceneContainer.addChild(this.player);
 		this.spawnCastShadow(this.player);
 	}
 
@@ -1124,7 +1167,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.setHonkBombTemplate(this.playerHonkBusterTemplate);
 
 			this.playerHonkBombGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -1345,7 +1388,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.playerRocketGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -1542,7 +1585,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.playerRocketBullsEyeGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -1672,253 +1715,9 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region VehicleEnemys	
+	//#endregion	
 
-	private vehicleEnemySizeWidth: number = 260;
-	private vehicleEnemySizeHeight: number = 260;
-
-	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
-
-	private vehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private vehicleEnemyPopDelay: number = 15;
-
-	private spawnVehicleEnemys() {
-
-		for (let j = 0; j < 10; j++) {
-
-			const gameObject: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.vehicleType = Constants.getRandomNumber(0, 1);
-
-			gameObject.disableRendering();
-
-			var uri: string = "";
-			switch (gameObject.vehicleType) {
-				case 0: {
-					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
-				} break;
-				case 1: {
-					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
-				} break;
-				default: break;
-			}
-
-			const texture = Texture.from(uri);
-			const sprite: GameObjectSprite = new GameObjectSprite(texture);
-
-			sprite.x = 0;
-			sprite.y = 0;
-
-			switch (gameObject.vehicleType) {
-				case 0: {
-					sprite.width = this.vehicleEnemySizeWidth / 1.2;
-					sprite.height = this.vehicleEnemySizeHeight / 1.2;
-				} break;
-				case 1: {
-					sprite.width = this.vehicleEnemySizeWidth;
-					sprite.height = this.vehicleEnemySizeHeight;
-				} break;
-				default: break;
-			}
-
-			sprite.anchor.set(0.5, 0.5);
-
-			gameObject.addChild(sprite);
-
-			this.vehicleEnemyGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-		}
-	}
-
-	private generateVehicleEnemys() {
-
-		if (!this.vehicleBossExists() && !this.ufoEnemyExists()) {
-			this.vehicleEnemyPopDelay -= 0.1;
-
-			if (this.vehicleEnemyPopDelay < 0) {
-
-				var gameObject = this.vehicleEnemyGameObjects.find(x => x.isAnimating == false);
-
-				if (gameObject) {
-
-					gameObject.reset();
-
-					let sprite = gameObject.getSprite();
-
-					switch (gameObject.vehicleType) {
-						case 0: {
-							sprite.width = this.vehicleEnemySizeWidth / 1.2;
-							sprite.height = this.vehicleEnemySizeHeight / 1.2;
-						} break;
-						case 1: {
-							sprite.width = this.vehicleEnemySizeWidth;
-							sprite.height = this.vehicleEnemySizeHeight;
-						} break;
-						default: break;
-					}
-
-					if (this.anyInAirBossExists())
-						gameObject.repositionReverse();
-					else
-						gameObject.reposition();
-
-					gameObject.enableRendering();
-
-					this.vehicleEnemyPopDelay = this.vehicleEnemyPopDelayDefault;
-				}
-			}
-		}
-	}
-
-	private animateVehicleEnemys() {
-
-		var animatingVehicleEnemys = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingVehicleEnemys) {
-
-			animatingVehicleEnemys.forEach(gameObject => {
-
-				gameObject.pop();
-				gameObject.dillyDally();
-
-				if (this.anyInAirBossExists()) { // when in air bosses appear, stop the stage transition, and make the vehicles move forward
-					gameObject.moveUpLeft();
-					gameObject.moveUpLeft(); // move with double speed
-				}
-				else {
-					gameObject.moveDownRight();
-				}
-
-				// prevent overlapping				
-
-				var vehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
-
-				if (vehicles) {
-
-					vehicles.forEach(collidingVehicle => {
-
-						if (Constants.checkCollision(collidingVehicle, gameObject)) {
-
-							if (collidingVehicle.speed > gameObject.speed) // colliding vehicle is faster
-							{
-								gameObject.speed = collidingVehicle.speed;
-							}
-							else if (gameObject.speed > collidingVehicle.speed) // current vehicle is faster
-							{
-								collidingVehicle.speed = gameObject.speed;
-							}
-						}
-					});
-				}
-
-				// generate honk
-
-				let vehicleEnemy = gameObject as VehicleEnemy;
-
-				if (vehicleEnemy) {
-
-					if (vehicleEnemy.honk() && !this.ufoEnemyExists() && !this.anyInAirBossExists()) {
-						this.generateHonk(gameObject);
-					}
-				}
-
-				// recycle vehicle
-
-				if (this.anyInAirBossExists()) {
-					if (gameObject.getRight() < 0 || gameObject.getBottom() < 0) {
-						gameObject.disableRendering();
-					}
-				}
-				else {
-					if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-						gameObject.disableRendering();
-					}
-				}
-			});
-		}
-	}
-
-	private looseVehicleEnemyhealth(vehicleEnemy: VehicleEnemy) {
-
-		vehicleEnemy.setPopping();
-		vehicleEnemy.looseHealth();
-
-		if (vehicleEnemy.willHonk) {
-
-			if (vehicleEnemy.isDead()) {
-				vehicleEnemy.setBlast();
-				this.gameScoreBar.gainScore(2);
-				let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
-				let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
-
-				this.generateMessageBubble(vehicleEnemy, soundTemplate.subTitle);
-			}
-		}
-	}
-
-	//#endregion
-
-	//#region Honks	
-
-	private roadHonkSizeWidth: number = 125;
-	private roadHonkSizeHeight: number = 125;
-
-	private roadHonkGameObjects: Array<Honk> = [];
-
-	private spawnHonks() {
-
-		for (let j = 0; j < 5; j++) {
-
-			const gameObject: Honk = new Honk(0);
-			gameObject.disableRendering();
-
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HONK));
-
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.roadHonkSizeWidth;
-			sprite.height = this.roadHonkSizeHeight;
-
-			sprite.anchor.set(0.5, 0.5);
-
-			gameObject.addChild(sprite);
-
-			this.roadHonkGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
-		}
-	}
-
-	private generateHonk(source: GameObjectContainer) {
-
-		if (source.getLeft() > 0 && source.getTop() > 0) {
-			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
-
-			if (gameObject) {
-				gameObject.reset();
-				gameObject.reposition(source);
-				gameObject.setPopping();
-				gameObject.enableRendering();
-			}
-		}
-	}
-
-	private animateHonks() {
-
-		var animatingHonks = this.roadHonkGameObjects.filter(x => x.isAnimating == true);
-
-		if (animatingHonks) {
-
-			animatingHonks.forEach(gameObject => {
-				gameObject.pop();
-				gameObject.fade();
-
-				if (gameObject.hasFaded()) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
-
-	//#endregion		
+	//#region UfoEnemys
 
 	//#region UfoEnemys	
 
@@ -1937,20 +1736,18 @@ export class GameScene extends Container implements IScene {
 			const gameObject: UfoEnemy = new UfoEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const texture = Constants.getRandomTexture(ConstructType.UFO_ENEMY);
-			const sprite: GameObjectSprite = new GameObjectSprite(texture);
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY));
 
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.ufoEnemySizeWidth;
 			sprite.height = this.ufoEnemySizeHeight;
-
 			sprite.anchor.set(0.5, 0.5);
 
 			gameObject.addChild(sprite);
 
 			this.ufoEnemyGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2088,7 +1885,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.ufoEnemyRocketGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2147,53 +1944,226 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region VehicleBosss	
+	//#endregion
 
-	private vehicleBossSizeWidth: number = this.vehicleEnemySizeWidth;
-	private vehicleBossSizeHeight: number = this.vehicleEnemySizeHeight;
+	//#region VehicleEnemys	
+
+	private vehicleEnemySizeWidth: number = 260;
+	private vehicleEnemySizeHeight: number = 260;
+
+	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
+
+	private vehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private vehicleEnemyPopDelay: number = 15;
+
+	private spawnVehicleEnemys() {
+
+		for (let j = 0; j < 10; j++) {
+
+			const gameObject: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
+			gameObject.vehicleType = Constants.getRandomNumber(ConstructType.VEHICLE_ENEMY_SMALL, ConstructType.VEHICLE_ENEMY_LARGE);
+
+			gameObject.disableRendering();
+
+			var uri: string = "";
+			switch (gameObject.vehicleType) {
+				case ConstructType.VEHICLE_ENEMY_SMALL: {
+					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
+				} break;
+				case ConstructType.VEHICLE_ENEMY_LARGE: {
+					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
+				} break;
+				default: break;
+			}
+
+			const texture = Texture.from(uri);
+			const sprite: GameObjectSprite = new GameObjectSprite(texture);
+
+			sprite.x = 0;
+			sprite.y = 0;
+
+			switch (gameObject.vehicleType) {
+				case ConstructType.VEHICLE_ENEMY_SMALL: {
+					sprite.width = this.vehicleEnemySizeWidth / 1.2;
+					sprite.height = this.vehicleEnemySizeHeight / 1.2;
+				} break;
+				case ConstructType.VEHICLE_ENEMY_LARGE: {
+					sprite.width = this.vehicleEnemySizeWidth;
+					sprite.height = this.vehicleEnemySizeHeight;
+				} break;
+				default: break;
+			}
+
+			sprite.anchor.set(0.5, 0.5);
+
+			gameObject.addChild(sprite);
+
+			this.vehicleEnemyGameObjects.push(gameObject);
+			this.sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private generateVehicleEnemys() {
+
+		if (!this.vehicleBossExists() && !this.ufoEnemyExists()) {
+			this.vehicleEnemyPopDelay -= 0.1;
+
+			if (this.vehicleEnemyPopDelay < 0) {
+
+				var gameObject = this.vehicleEnemyGameObjects.find(x => x.isAnimating == false);
+
+				if (gameObject) {
+
+					gameObject.reset();
+
+					let sprite = gameObject.getSprite();
+
+					switch (gameObject.vehicleType) {
+						case ConstructType.VEHICLE_ENEMY_SMALL: {
+							sprite.width = this.vehicleEnemySizeWidth / 1.2;
+							sprite.height = this.vehicleEnemySizeHeight / 1.2;
+						} break;
+						case ConstructType.VEHICLE_ENEMY_LARGE: {
+							sprite.width = this.vehicleEnemySizeWidth;
+							sprite.height = this.vehicleEnemySizeHeight;
+						} break;
+						default: break;
+					}
+
+					if (this.anyInAirBossExists())
+						gameObject.repositionReverse();
+					else
+						gameObject.reposition();
+
+					gameObject.enableRendering();
+
+					this.vehicleEnemyPopDelay = this.vehicleEnemyPopDelayDefault;
+				}
+			}
+		}
+	}
+
+	private animateVehicleEnemys() {
+
+		var animatingVehicleEnemys = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingVehicleEnemys) {
+
+			animatingVehicleEnemys.forEach(gameObject => {
+
+				gameObject.pop();
+				gameObject.dillyDally();
+
+				if (this.anyInAirBossExists()) { // when in air bosses appear, stop the stage transition, and make the vehicles move forward
+					gameObject.moveUpLeft();
+					gameObject.moveUpLeft(); // move with double speed
+				}
+				else {
+					gameObject.moveDownRight();
+				}
+
+				// prevent overlapping				
+
+				var vehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
+
+				if (vehicles) {
+
+					vehicles.forEach(collidingVehicle => {
+
+						if (Constants.checkCollision(collidingVehicle, gameObject)) {
+
+							if (collidingVehicle.speed > gameObject.speed) // colliding vehicle is faster
+							{
+								gameObject.speed = collidingVehicle.speed;
+							}
+							else if (gameObject.speed > collidingVehicle.speed) // current vehicle is faster
+							{
+								collidingVehicle.speed = gameObject.speed;
+							}
+						}
+					});
+				}
+
+				// generate honk
+
+				let vehicleEnemy = gameObject as VehicleEnemy;
+
+				if (vehicleEnemy) {
+
+					if (vehicleEnemy.honk() && !this.ufoEnemyExists() && !this.anyInAirBossExists()) {
+						this.generateHonk(gameObject);
+					}
+				}
+
+				// recycle vehicle
+
+				if (this.anyInAirBossExists()) {
+					if (gameObject.getRight() < 0 || gameObject.getBottom() < 0) {
+						gameObject.disableRendering();
+					}
+				}
+				else {
+					if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+						gameObject.disableRendering();
+					}
+				}
+			});
+		}
+	}
+
+	private looseVehicleEnemyhealth(vehicleEnemy: VehicleEnemy) {
+
+		vehicleEnemy.setPopping();
+		vehicleEnemy.looseHealth();
+
+		if (vehicleEnemy.willHonk) {
+
+			if (vehicleEnemy.isDead()) {
+				vehicleEnemy.setBlast();
+				this.gameScoreBar.gainScore(2);
+				let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
+				let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
+
+				this.generateMessageBubble(vehicleEnemy, soundTemplate.subTitle);
+			}
+		}
+	}
+
+	//#endregion
+
+	//#region Bosss
+
+	private anyBossExists(): boolean {
+		return (this.ufoBossExists() || this.vehicleBossExists() || this.zombieBossExists() || this.mafiaBossExists());
+	}
+
+	private anyInAirBossExists(): boolean {
+		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
+	}
+
+	//#endregion
+
+	//#region VehicleBosss
+
+	//#region VehicleBosss
 
 	private vehicleBossGameObjects: Array<VehicleBoss> = [];
 
 	private spawnVehicleBosss() {
 		const gameObject: VehicleBoss = new VehicleBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
-		gameObject.vehicleType = Constants.getRandomNumber(0, 1);
 		gameObject.disableRendering();
 
-		var uri: string = "";
-		switch (gameObject.vehicleType) {
-			case 0: {
-				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
-			} break;
-			case 1: {
-				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
-			} break;
-			default: break;
-		}
-
-		const texture = Texture.from(uri);
-		const sprite: GameObjectSprite = new GameObjectSprite(texture);
-
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS));
 		sprite.x = 0;
 		sprite.y = 0;
-
-		switch (gameObject.vehicleType) {
-			case 0: {
-				sprite.width = this.vehicleBossSizeWidth / 1.2;
-				sprite.height = this.vehicleBossSizeHeight / 1.2;
-			} break;
-			case 1: {
-				sprite.width = this.vehicleBossSizeWidth;
-				sprite.height = this.vehicleBossSizeHeight;
-			} break;
-			default: break;
-		}
-
+		sprite.width = this.vehicleEnemySizeWidth / 1.2;
+		sprite.height = this.vehicleEnemySizeHeight / 1.2;
 		sprite.anchor.set(0.5, 0.5);
 
 		gameObject.addChild(sprite);
 
 		this.vehicleBossGameObjects.push(gameObject);
-		this.gameContainer.addChild(gameObject);
+		this.sceneContainer.addChild(gameObject);
 	}
 
 	private generateVehicleBoss() {
@@ -2204,23 +2174,14 @@ export class GameScene extends Container implements IScene {
 
 			if (gameObject) {
 				gameObject.reset();
-				gameObject.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
 
 				let sprite = gameObject.getSprite();
 
-				switch (gameObject.vehicleType) {
-					case 0: {
-						sprite.width = this.vehicleBossSizeWidth / 1.2;
-						sprite.height = this.vehicleBossSizeHeight / 1.2;
-					} break;
-					case 1: {
-						sprite.width = this.vehicleBossSizeWidth;
-						sprite.height = this.vehicleBossSizeHeight;
-					} break;
-					default: break;
-				}
+				sprite.width = this.vehicleEnemySizeWidth / 1.2;
+				sprite.height = this.vehicleEnemySizeHeight / 1.2;
 
 				gameObject.reposition();
+				gameObject.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
 				gameObject.enableRendering();
 
 				this.vehicleBossCheckpoint.increaseLimit(this.vehicleBossReleaseLimit, this.gameScoreBar.getScore());
@@ -2229,7 +2190,7 @@ export class GameScene extends Container implements IScene {
 				this.bossHealthBar.setValue(gameObject.health);
 				this.bossHealthBar.setIcon(gameObject.getSprite().getTexture());
 
-				this.generateOnScreenMessage("Stop the crazy honker!", this.interactIcon);
+				this.generateOnScreenMessage("Beat the hotrod, Avoid the rockets!", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -2250,11 +2211,11 @@ export class GameScene extends Container implements IScene {
 				vehicleBoss.moveDownRight();
 			}
 			else {
+
 				gameObject.dillyDally();
 				gameObject.recoverFromHealthLoss();
 
 				if (vehicleBoss.isAttacking) {
-
 					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling);
 
 					if (vehicleBoss.honk()) {
@@ -2264,7 +2225,9 @@ export class GameScene extends Container implements IScene {
 					this.generateTaunts(gameObject);
 				}
 				else {
-					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false || this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 1.8))) {
+					// when all vehicles are out of view or have passed to the bottom right corner
+					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false ||
+						this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > ((Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling) / 3) * 2))) {
 						vehicleBoss.isAttacking = true;
 					}
 				}
@@ -2319,7 +2282,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 1.4);
+			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED * 1.1);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
@@ -2333,7 +2296,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.vehicleBossRocketGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 
@@ -2374,6 +2337,10 @@ export class GameScene extends Container implements IScene {
 			animatingVehicleBossRockets.forEach(gameObject => {
 				gameObject.moveUpRight();
 
+				if (gameObject.speed > 0) {
+					gameObject.speed -= 0.1; // showly decrease the speed;
+				}
+
 				if (gameObject.isBlasting) {
 					gameObject.shrink();
 					gameObject.fade();
@@ -2386,12 +2353,17 @@ export class GameScene extends Container implements IScene {
 					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
+
 						this.generateRingExplosion(gameObject);
+						this.generateSmokeExplosion(gameObject);
+						this.generateFlashExplosion(gameObject);
 					}
 
 					if (gameObject.autoBlast()) {
 						gameObject.setBlast();
+
 						this.generateRingExplosion(gameObject);
+						this.generateSmokeExplosion(gameObject);
 					}
 				}
 
@@ -2404,7 +2376,11 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region UfoBosss	
+	//#endregion
+
+	//#region UfoBosss
+
+	//#region UfoBosss
 
 	private ufoBossSizeWidth: number = 200;
 	private ufoBossSizeHeight: number = 200;
@@ -2427,7 +2403,7 @@ export class GameScene extends Container implements IScene {
 		gameObject.addChild(sprite);
 
 		this.ufoBossGameObjects.push(gameObject);
-		this.gameContainer.addChild(gameObject);
+		this.sceneContainer.addChild(gameObject);
 
 		this.spawnCastShadow(gameObject);
 	}
@@ -2569,7 +2545,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.ufoBossRocketGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2713,7 +2689,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.ufoBossRocketSeekingGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -2797,6 +2773,10 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#endregion
+
+	//#region ZombieBosss
+
 	//#region ZombieBosss	
 
 	private zombieBossSizeWidth: number = 200;
@@ -2820,7 +2800,7 @@ export class GameScene extends Container implements IScene {
 		gameObject.addChild(sprite);
 
 		this.zombieBossGameObjects.push(gameObject);
-		this.gameContainer.addChild(gameObject);
+		this.sceneContainer.addChild(gameObject);
 
 		this.spawnCastShadow(gameObject);
 	}
@@ -2962,7 +2942,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.zombieBossRocketBlockGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3031,7 +3011,11 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region MafiaBosss	
+	//#endregion
+
+	//#region MafiaBosss
+
+	//#region MafiaBosss
 
 	private mafiaBossSizeWidth: number = 200;
 	private mafiaBossSizeHeight: number = 200;
@@ -3054,7 +3038,7 @@ export class GameScene extends Container implements IScene {
 		gameObject.addChild(sprite);
 
 		this.mafiaBossGameObjects.push(gameObject);
-		this.gameContainer.addChild(gameObject);
+		this.sceneContainer.addChild(gameObject);
 
 		this.spawnCastShadow(gameObject);
 	}
@@ -3196,7 +3180,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.mafiaBossRocketGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3312,7 +3296,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.mafiaBossRocketBullsEyeGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3395,6 +3379,10 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#endregion
+
+	//#region Pickups
+
 	//#region HealthPickups	
 
 	private healthPickupSizeWidth: number = 327 / 3;
@@ -3423,7 +3411,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.healthPickupGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3531,7 +3519,7 @@ export class GameScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			this.powerUpPickupGameObjects.push(gameObject);
-			this.gameContainer.addChild(gameObject);
+			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
@@ -3640,6 +3628,8 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#endregion
+
 	//#region GameController
 
 	setGameController() {
@@ -3647,6 +3637,8 @@ export class GameScene extends Container implements IScene {
 	}
 
 	//#endregion
+
+	//#region HUD
 
 	//#region ScoreBars
 
@@ -3676,15 +3668,47 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
+	//#region OnScreenMessage
+
+	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("./images/character_maleAdventurer_talk.png")) {
+		if (this.onScreenMessage.isAnimating == false) {
+			this.onScreenMessage.setContent(title, icon);
+			this.onScreenMessage.reset();
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+			this.onScreenMessage.enableRendering();
+		}
+		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
+			this.onScreenMessage.setContent(title, icon);
+			this.onScreenMessage.reset();
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+		}
+	}
+
+	private animateOnScreenMessage() {
+
+		if (this.onScreenMessage.isAnimating == true) {
+
+			this.onScreenMessage.depleteOnScreenDelay();
+
+			if (this.onScreenMessage.isDepleted()) {
+				this.onScreenMessage.disableRendering();
+			}
+		}
+	}
+
+	//#endregion
+
+	//#endregion
+
 	//#region Scene
 
 	public update(_framesPassed: number) {
 
-		if (this.gameContainer.alpha < 1) {
-			this.gameContainer.alpha += 0.02;
+		if (this.sceneContainer.alpha < 1) {
+			this.sceneContainer.alpha += 0.02;
 		}
 
-		this.updateFrame();
+		this.processFrame();
 	}
 
 	public resize(scale: number): void {
@@ -3693,7 +3717,7 @@ export class GameScene extends Container implements IScene {
 			this.gameController.pauseGame();
 		}
 		else {
-			this.gameContainer.scale.set(scale);
+			this.sceneContainer.scale.set(scale);
 			this.repositionGameScoreBar();
 			this.repositionPlayerHealthBar();
 			this.repositionBossHealthBar();
@@ -3705,7 +3729,7 @@ export class GameScene extends Container implements IScene {
 		}
 	}
 
-	private updateFrame() {
+	private processFrame() {
 		if (!this.gameController.isPaused) {
 			this.generateGameObjects();
 			this.animateGameObjects();
@@ -3863,21 +3887,6 @@ export class GameScene extends Container implements IScene {
 		this.animateMessageBubbles();
 	}
 
-	private levelUp() {
-		this.gameLevel++;
-		this.gameLevelBar.gainScore(1);
-		this.generateOnScreenMessage("Level " + this.gameLevel.toString() + " Complete", this.cheerIcon);
-		SoundManager.play(SoundType.LEVEL_UP);
-	}
-
-	private anyBossExists(): boolean {
-		return (this.ufoBossExists() || this.vehicleBossExists() || this.zombieBossExists() || this.mafiaBossExists());
-	}
-
-	private anyInAirBossExists(): boolean {
-		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
-	}
-
 	private resumeGame() {
 		if (this.anyBossExists()) {
 			SoundManager.resume(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -3906,7 +3915,7 @@ export class GameScene extends Container implements IScene {
 			this.onScreenMessage.disableRendering();
 		}
 
-		this.gameContainer.filters = null;
+		this.sceneContainer.filters = null;
 	}
 
 	private pauseGame() {
@@ -3935,7 +3944,7 @@ export class GameScene extends Container implements IScene {
 
 		this.generateOnScreenMessage("Game paused", this.behindBackIcon);
 
-		this.gameContainer.filters = [new BlurFilter()];
+		this.sceneContainer.filters = [new BlurFilter()];
 	}
 
 	private gameOver() {
@@ -3946,8 +3955,15 @@ export class GameScene extends Container implements IScene {
 		SoundManager.stop(SoundType.CHOPPER_HOVERING);
 
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
-		this.removeChild(this.gameContainer);
+		this.removeChild(this.sceneContainer);
 		SceneManager.changeScene(new GameOverScene());
+	}
+
+	private levelUp() {
+		this.gameLevel++;
+		this.gameLevelBar.gainScore(1);
+		this.generateOnScreenMessage("Level " + this.gameLevel.toString() + " Complete", this.cheerIcon);
+		SoundManager.play(SoundType.LEVEL_UP);
 	}
 
 	//#endregion

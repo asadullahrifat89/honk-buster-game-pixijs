@@ -33,7 +33,7 @@ export class ZombieBoss extends UfoBossBase {
 		this.randomizeMovementPattern();
 	}
 
-	randomizeMovementPattern() {
+	private randomizeMovementPattern() {
 		this.changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
 		this.movementDirection = MovementDirection.None;
 		this.speed = Constants.getRandomNumber(Constants.DEFAULT_CONSTRUCT_SPEED / 2, Constants.DEFAULT_CONSTRUCT_SPEED + 1);

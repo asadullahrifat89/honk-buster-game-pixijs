@@ -34,7 +34,7 @@ export class UfoBoss extends UfoBossBase {
 		this.randomizeMovementPattern();
 	}
 
-	randomizeMovementPattern() {
+	private randomizeMovementPattern() {
 		this.changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
 		this.movementDirection = MovementDirection.None;
 		this.movementPattern = Constants.getRandomNumber(0, 5);
@@ -91,7 +91,7 @@ export class UfoBoss extends UfoBossBase {
 		super.seekPlayer(target);
 	}	
 
-	moveInIsometricSquares(sceneWidth: number, sceneHeight: number) {
+	private moveInIsometricSquares(sceneWidth: number, sceneHeight: number) {
 		this.changeMovementPatternDelay -= 0.1;
 
 		if (this.changeMovementPatternDelay < 0) {
@@ -146,7 +146,7 @@ export class UfoBoss extends UfoBossBase {
 		return false;
 	}
 
-	moveUpRightDownLeft(sceneWidth: number, sceneHeight: number) {
+	private moveUpRightDownLeft(sceneWidth: number, sceneHeight: number) {
 		this.changeMovementPatternDelay -= 0.1;
 
 		if (this.changeMovementPatternDelay < 0) {
@@ -183,7 +183,7 @@ export class UfoBoss extends UfoBossBase {
 		return false;
 	}
 
-	moveUpLeftDownRight(sceneWidth: number, sceneHeight: number) {
+	private moveUpLeftDownRight(sceneWidth: number, sceneHeight: number) {
 		this.changeMovementPatternDelay -= 0.1;
 
 		if (this.changeMovementPatternDelay < 0) {
@@ -220,7 +220,7 @@ export class UfoBoss extends UfoBossBase {
 		return false;
 	}
 
-	moveRightLeft(sceneWidth: number) {
+	private moveRightLeft(sceneWidth: number) {
 		this.changeMovementPatternDelay -= 0.1;
 
 		if (this.changeMovementPatternDelay < 0) {
@@ -257,7 +257,7 @@ export class UfoBoss extends UfoBossBase {
 		return false;
 	}
 
-	moveUpDown(sceneHeight: number) {
+	private moveUpDown(sceneHeight: number) {
 		this.changeMovementPatternDelay -= 0.1;
 
 		if (this.changeMovementPatternDelay < 0) {

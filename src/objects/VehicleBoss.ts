@@ -1,5 +1,4 @@
-﻿import { Texture } from 'pixi.js';
-import { Constants, ConstructType, MovementDirection } from '../Constants';
+﻿import { Constants, ConstructType, MovementDirection } from '../Constants';
 import { VehicleBossBase } from './VehicleBossBase';
 
 
@@ -7,7 +6,6 @@ export class VehicleBoss extends VehicleBossBase {
 
 	private movementDirection: MovementDirection = MovementDirection.None;
 	private changeMovementPatternDelay: number = 0;
-	public vehicleType: number = 0;
 
 	constructor(speed: number) {
 		super(speed);
@@ -15,34 +13,11 @@ export class VehicleBoss extends VehicleBossBase {
 
 	override reset() {
 		super.reset();
-		this.setDillyDallySpeed(0.3);
-		this.vehicleType = Constants.getRandomNumber(0, 1);
-
-		let uri: string = "";
-		switch (this.vehicleType) {
-			case 0: {
-				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
-				break;
-			}
-			case 1: {
-				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
-				break;
-			}
-			default: break;
-		}
-
-		const texture = Texture.from(uri);
-		this.setTexture(texture);
-
+		this.setDillyDallySpeed(0.1);
+		this.setTexture(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS));
 		this.setHonkDelay();
 		this.scale.set(1);
 		this.randomizeMovementPattern();
-	}
-
-	randomizeMovementPattern() {
-		this.speed = Constants.getRandomNumber(Constants.DEFAULT_CONSTRUCT_SPEED, Constants.DEFAULT_CONSTRUCT_SPEED + 2);
-		this.changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
-		this.movementDirection = MovementDirection.None;
 	}
 
 	move(
@@ -51,8 +26,13 @@ export class VehicleBoss extends VehicleBossBase {
 		this.moveUpLeftDownRight(sceneWidth, sceneHeight);
 	}
 
-	moveUpLeftDownRight(sceneWidth: number, sceneHeight: number) {
+	private randomizeMovementPattern() {
+		this.speed = Constants.getRandomNumber(Constants.DEFAULT_CONSTRUCT_SPEED, Constants.DEFAULT_CONSTRUCT_SPEED + 2);
+		this.changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
+		this.movementDirection = MovementDirection.None;
+	}	
 
+	private moveUpLeftDownRight(sceneWidth: number, sceneHeight: number) {
 		this.changeMovementPatternDelay -= 0.1;
 
 		if (this.changeMovementPatternDelay < 0) {

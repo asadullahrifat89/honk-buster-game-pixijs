@@ -113,6 +113,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
 				this.angle = 0;
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 2;
+				this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
 			} break;
 			case PlayerHonkBombTemplate.TRASH_BOMB: {
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 1.5;
@@ -120,6 +121,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 			case PlayerHonkBombTemplate.STICKY_BOMB: {
 				this.angle = 0;
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 3;
+				this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
 			} break;
 			default: break;
 		}

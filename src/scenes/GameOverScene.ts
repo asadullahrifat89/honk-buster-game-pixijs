@@ -13,16 +13,16 @@ import { ScreenOrientationScene } from "./ScreenOrientationScene";
 
 export class GameOverScene extends Container implements IScene {
 
-	private sceneContainer: GameObjectContainer;
+	private uiContainer: GameObjectContainer;
 
 	constructor() {
 		super();
 
-		this.sceneContainer = new GameObjectContainer();
-		this.sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
-		this.sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
-		this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);		
-		this.addChild(this.sceneContainer);
+		this.uiContainer = new GameObjectContainer();
+		this.uiContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
+		this.uiContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
+		this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);		
+		this.addChild(this.uiContainer);
 
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
 		sprite.x = 0;
@@ -30,7 +30,7 @@ export class GameOverScene extends Container implements IScene {
 		sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
 		sprite.filters = [new BlurFilter()];
-		this.sceneContainer.addChild(sprite);
+		this.uiContainer.addChild(sprite);
 
 		const title = new Text("Game Over", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
@@ -38,9 +38,9 @@ export class GameOverScene extends Container implements IScene {
 			align: "center",
 			fill: "#ffffff",
 		});
-		title.x = this.sceneContainer.width / 2 - title.width / 2;
-		title.y = (this.sceneContainer.height / 2 - title.height / 2) - 120;
-		this.sceneContainer.addChild(title);
+		title.x = this.uiContainer.width / 2 - title.width / 2;
+		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
+		this.uiContainer.addChild(title);
 
 		const subTitle = new Text("Score " + Constants.GAME_SCORE, {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
@@ -48,17 +48,17 @@ export class GameOverScene extends Container implements IScene {
 			align: "center",
 			fill: "#ffffff",
 		});
-		subTitle.x = this.sceneContainer.width / 2 - subTitle.width / 2;
-		subTitle.y = (this.sceneContainer.height / 2 - subTitle.height / 2) - 60;
-		this.sceneContainer.addChild(subTitle);
+		subTitle.x = this.uiContainer.width / 2 - subTitle.width / 2;
+		subTitle.y = (this.uiContainer.height / 2 - subTitle.height / 2) - 60;
+		this.uiContainer.addChild(subTitle);
 
 		const button = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
-			this.removeChild(this.sceneContainer);
+			this.removeChild(this.uiContainer);
 			SceneManager.changeScene(new PlayerCharacterSelectionScene());
 		}).setText("Play Again");
-		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height - button.height * 2);
-		this.sceneContainer.addChild(button);
+		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
+		this.uiContainer.addChild(button);
 
 		SoundManager.play(SoundType.GAME_OVER);
 	}
@@ -69,12 +69,12 @@ export class GameOverScene extends Container implements IScene {
 	public resize(scale: number): void {
 
 		if (SceneManager.width < SceneManager.height) {
-			this.removeChild(this.sceneContainer);
+			this.removeChild(this.uiContainer);
 			SceneManager.changeScene(new ScreenOrientationScene());
 		}
 		else {
-			this.sceneContainer.scale.set(scale);
-			this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);
+			this.uiContainer.scale.set(scale);
+			this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
 		}		
 	}
 }

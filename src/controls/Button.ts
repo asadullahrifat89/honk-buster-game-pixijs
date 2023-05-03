@@ -54,7 +54,7 @@ export class Button extends Container {
 		this.addChild(this.buttonText);
 
 		return this;
-	}	
+	}
 
 	setPosition(x: number, y: number): Button {
 		this.x = x;

@@ -17,15 +17,15 @@ export class VehicleEnemy extends VehicleBase {
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
 		this.filters = null;
 
-		this.vehicleType = Constants.getRandomNumber(0, 1);
+		this.vehicleType = Constants.getRandomNumber(ConstructType.VEHICLE_ENEMY_SMALL, ConstructType.VEHICLE_ENEMY_LARGE);
 
 		let uri: string = "";
 		switch (this.vehicleType) {
-			case 0: {
+			case ConstructType.VEHICLE_ENEMY_SMALL: {
 				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
 				break;
 			}
-			case 1: {
+			case ConstructType.VEHICLE_ENEMY_LARGE: {
 				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
 				break;
 			}
@@ -53,4 +53,3 @@ export class VehicleEnemy extends VehicleBase {
 		this.setDillyDallySpeed(0);
 	}
 }
-

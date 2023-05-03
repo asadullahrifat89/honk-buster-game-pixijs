@@ -13,17 +13,17 @@ import { GrayscaleFilter } from "@pixi/filter-grayscale";
 
 export class PlayerHonkBombSelectionScene extends Container implements IScene {
 
-	private sceneContainer: GameObjectContainer;
+	private uiContainer: GameObjectContainer;
 	private bg_container: GameObjectContainer;
 
 	constructor() {
 		super();
 
-		this.sceneContainer = new GameObjectContainer();
-		this.sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
-		this.sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
-		this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);
-		this.addChild(this.sceneContainer);
+		this.uiContainer = new GameObjectContainer();
+		this.uiContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
+		this.uiContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
+		this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
+		this.addChild(this.uiContainer);
 
 		const bg_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
 		bg_sprite.x = 0;
@@ -36,7 +36,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		this.bg_container.setHoverSpeed(0.2);
 		this.bg_container.addChild(bg_sprite);
 
-		this.sceneContainer.addChild(this.bg_container);
+		this.uiContainer.addChild(this.bg_container);
 
 		const title = new Text("Select a Bomb", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
@@ -44,9 +44,9 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 			align: "center",
 			fill: "#ffffff",
 		});
-		title.x = this.sceneContainer.width / 2 - title.width / 2;
-		title.y = (this.sceneContainer.height / 2 - title.height / 2) - 120;
-		this.sceneContainer.addChild(title);
+		title.x = this.uiContainer.width / 2 - title.width / 2;
+		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
+		this.uiContainer.addChild(title);
 
 		const player_1_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_explosive_1"));
 		player_1_sprite.width = 256 / 2;
@@ -60,8 +60,8 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 			player_3_sprite.filters = [new GrayscaleFilter()];
 			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 0;
 		}).setBackground(player_1_sprite);
-		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width * 2, this.sceneContainer.height / 2 - player_1_sprite.height / 2 + 10);
-		this.sceneContainer.addChild(player_1_button);
+		player_1_button.setPosition(this.uiContainer.width / 2 - player_1_sprite.width * 2, this.uiContainer.height / 2 - player_1_sprite.height / 2 + 10);
+		this.uiContainer.addChild(player_1_button);
 
 		const player_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_trash_1"));
 		player_2_sprite.width = 256 / 2;
@@ -75,8 +75,8 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 			player_3_sprite.filters = [new GrayscaleFilter()];
 			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 1;
 		}).setBackground(player_2_sprite);
-		player_2_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2 + 10);
-		this.sceneContainer.addChild(player_2_button);
+		player_2_button.setPosition(this.uiContainer.width / 2 - player_1_sprite.width / 2, this.uiContainer.height / 2 - player_2_sprite.height / 2 + 10);
+		this.uiContainer.addChild(player_2_button);
 
 		const player_3_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_sticky_2"));
 		player_3_sprite.width = 256 / 2;
@@ -90,8 +90,8 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 			player_2_sprite.filters = [new GrayscaleFilter()];
 			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 2;
 		}).setBackground(player_3_sprite);
-		player_3_button.setPosition(this.sceneContainer.width / 2 + player_3_sprite.width, this.sceneContainer.height / 2 - player_3_sprite.height / 2 + 10);
-		this.sceneContainer.addChild(player_3_button);
+		player_3_button.setPosition(this.uiContainer.width / 2 + player_3_sprite.width, this.uiContainer.height / 2 - player_3_sprite.height / 2 + 10);
+		this.uiContainer.addChild(player_3_button);
 
 		const button = new Button(() => {
 
@@ -104,16 +104,16 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 			}
 
 		}).setText("Begin");
-		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height - button.height * 2);
-		this.sceneContainer.addChild(button);
+		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
+		this.uiContainer.addChild(button);
 	}
 
 	public update(_framesPassed: number) {
 		if (SceneManager.isNavigating) {
-			this.sceneContainer.alpha -= 0.06;
+			this.uiContainer.alpha -= 0.06;
 
-			if (this.sceneContainer.alpha <= 0) {
-				this.removeChild(this.sceneContainer);
+			if (this.uiContainer.alpha <= 0) {
+				this.removeChild(this.uiContainer);
 				SceneManager.changeScene(new GameScene());
 			}
 		}
@@ -125,12 +125,12 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 	public resize(scale: number): void {
 
 		if (SceneManager.width < SceneManager.height) {
-			this.removeChild(this.sceneContainer);
+			this.removeChild(this.uiContainer);
 			SceneManager.changeScene(new ScreenOrientationScene());
 		}
 		else {
-			this.sceneContainer.scale.set(scale);
-			this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);
+			this.uiContainer.scale.set(scale);
+			this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
 		}
 	}
 }
