@@ -84,12 +84,12 @@ export class GameController extends Container {
 		pauseButtonGraphics.addChild(pauseButtonSpritebg);
 		pauseButtonGraphics.addChild(this.pauseButtonSprite);
 
-		this.pauseButton = new Button(pauseButtonGraphics, () => {
+		this.pauseButton = new Button(() => {
 			if (this.isPaused)
 				this.resumeGame();
 			else
 				this.pauseGame();
-		});
+		}).setBackground(pauseButtonGraphics);
 		this.setPauseButtonPosition();
 		this.addChild(this.pauseButton);
 
@@ -109,9 +109,9 @@ export class GameController extends Container {
 		quitButtonGraphics.addChild(quitButtonSpritebg);
 		quitButtonGraphics.addChild(quitButtonSprite);
 
-		this.quitButton = new Button(quitButtonGraphics, () => {
+		this.quitButton = new Button(() => {
 			this.quitGame();
-		});
+		}).setBackground(quitButtonGraphics);
 		this.setQuitButtonPosition();
 		this.quitButton.renderable = false;
 		this.addChild(this.quitButton);
@@ -132,11 +132,11 @@ export class GameController extends Container {
 		attackButtonGraphics.addChild(attackButtonSpritebg);
 		attackButtonGraphics.addChild(attackButtonSprite);
 
-		this.attackButton = new Button(attackButtonGraphics, () => {
+		this.attackButton = new Button(() => {
 			if (!this.isPaused) {
 				this.isAttacking = true;
 			}
-		});
+		}).setBackground(attackButtonGraphics);
 		this.setAttackButtonPosition();
 		this.addChild(this.attackButton);
 

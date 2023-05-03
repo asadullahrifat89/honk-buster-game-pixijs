@@ -30,13 +30,15 @@ export class Button extends Container {
 		this.cursor = 'pointer';
 	}
 
-	setBackground(content: DisplayObject = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill()) {
+	setBackground(content: DisplayObject = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill()): Button {
 		this.removeChild(this.buttonBackground);
 		this.buttonBackground = content;
 		this.addChild(this.buttonBackground);
+
+		return this;
 	}
 
-	setText(text: string, fontSize: number = 26, fill: string = "#ffffff", align: TextStyleAlign = 'center') {
+	setText(text: string, fontSize: number = 26, fill: string = "#ffffff", align: TextStyleAlign = 'center'): Button {
 		this.removeChild(this.buttonText);
 
 		const buttonTextStyle: TextStyle = new TextStyle({
@@ -50,11 +52,15 @@ export class Button extends Container {
 		this.buttonText.x = this.width / 2 - this.buttonText.width / 2;
 		this.buttonText.y = (this.height / 2 - this.buttonText.height / 2) - 3;
 		this.addChild(this.buttonText);
+
+		return this;
 	}	
 
-	setPosition(x: number, y: number) {
+	setPosition(x: number, y: number): Button {
 		this.x = x;
 		this.y = y;
+
+		return this;
 	}
 
 	onButtonOver(_e: FederatedPointerEvent) {

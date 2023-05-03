@@ -1,4 +1,4 @@
-﻿import { Container, Graphics, Text } from "pixi.js";
+﻿import { Container, Text } from "pixi.js";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { PlayerCharacterSelectionScene } from "./PlayerCharacterSelectionScene";
 import { IScene } from "../managers/IScene";
@@ -57,10 +57,10 @@ export class GameTitleScene extends Container implements IScene {
 		subTitle.y = (this.sceneContainer.height / 2 - subTitle.height / 2) - 65;
 		this.sceneContainer.addChild(subTitle);
 
-		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), () => {
+		const button = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			SceneManager.isNavigating = true;
-		}, "New Game");
+		}).setText("New Game");
 		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height / 2 - button.height / 2);
 		this.sceneContainer.addChild(button);
 	}

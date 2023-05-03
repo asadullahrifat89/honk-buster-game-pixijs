@@ -1,4 +1,4 @@
-﻿import { Container, Graphics, Text, BlurFilter, Texture } from "pixi.js";
+﻿import { Container, Text, BlurFilter, Texture } from "pixi.js";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -53,12 +53,12 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 		player_1_sprite.height = 256 / 1.5;
 		player_1_sprite.x = 0;
 		player_1_sprite.y = 0;
-		const player_1_button = new Button(player_1_sprite, () => {
+		const player_1_button = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			player_2_sprite.filters = [new BlurFilter(), new GrayscaleFilter()];
 			player_1_sprite.filters = null;
 			Constants.SELECTED_PLAYER_CHARACTER_TEMPLATE = 0;
-		});
+		}).setBackground(player_1_sprite);
 		player_1_button.setPosition(this.sceneContainer.width / 2 - player_1_sprite.width, this.sceneContainer.height / 2 - player_1_sprite.height / 2 + 10);
 		this.sceneContainer.addChild(player_1_button);
 
@@ -68,7 +68,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 		player_2_sprite.x = 0;
 		player_2_sprite.y = 0;
 		player_2_sprite.filters = [new GrayscaleFilter()]; // TODO: remove it after character 2 ride set creation
-		const player_2_button = new Button(player_2_sprite, () => {
+		const player_2_button = new Button(() => {
 
 			//SoundManager.play(SoundType.OPTION_SELECT);
 			//player_1_sprite.filters = [new BlurFilter()];
@@ -76,11 +76,11 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 			//Constants.SELECTED_PLAYER_CHARACTER_TEMPLATE = 1;
 
 			SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
-		});		
+		}).setBackground(player_2_sprite);		
 		player_2_button.setPosition(this.sceneContainer.width / 2, this.sceneContainer.height / 2 - player_2_sprite.height / 2 + 10);
 		this.sceneContainer.addChild(player_2_button);
 
-		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), () => {
+		const button = new Button(() => {
 
 			if (player_1_sprite.filters || player_2_sprite.filters) {
 				SoundManager.play(SoundType.OPTION_SELECT);
@@ -91,7 +91,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
 			}
 
-		}, "Next");
+		}).setText("Next");
 		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height - button.height * 2);
 		this.sceneContainer.addChild(button);
 	}
