@@ -7,7 +7,8 @@ export const manifest: ResolverManifest = {
 			assets: {
 				"stitchnschool": "./stitchnschool.ttf",
 				"diloworld": "./diloworld.ttf",
-				"jackpot": "./jackpot.ttf"
+				"jackpot": "./jackpot.ttf",
+				"emilio": "./emilio.ttf"
 			},
 		},
 		{
