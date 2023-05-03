@@ -35,10 +35,6 @@ export const manifest: ResolverManifest = {
 
 				"chopper_blades": "./images/chopper_blades.png",
 
-				"player_honk_bomb_cracker_1": "./images/player_honk_bomb_cracker_1.png",
-				"player_honk_bomb_cracker_2": "./images/player_honk_bomb_cracker_2.png",
-				"player_honk_bomb_cracker_3": "./images/player_honk_bomb_cracker_3.png",
-
 				"enemy_1": "./images/enemy_1.png",
 				"enemy_2": "./images/enemy_2.png",
 				"enemy_3": "./images/enemy_3.png",
@@ -103,12 +99,19 @@ export const manifest: ResolverManifest = {
 				"powerup_pickup_bulls_eye": "./images/powerup_pickup_bulls_eye.png",
 				"powerup_pickup_seeking_snitch": "./images/powerup_pickup_seeking_snitch.png",
 
+				"player_honk_bomb_cracker_1": "./images/player_honk_bomb_cracker_1.png",
+				"player_honk_bomb_cracker_2": "./images/player_honk_bomb_cracker_2.png",
+				"player_honk_bomb_cracker_3": "./images/player_honk_bomb_cracker_3.png",
+
+				"player_honk_bomb_trash_1": "./images/player_honk_bomb_trash_1.png",
+				"player_honk_bomb_trash_2": "./images/player_honk_bomb_trash_2.png",
+				"player_honk_bomb_trash_3": "./images/player_honk_bomb_trash_3.png",
+
 				"road_marks": "./images/road_marks.png",
 
 				//"road_side_hedge_1": "./images/road_side_hedge_1.png",
 
 				"road_side_lamp_1": "./images/road_side_lamp_1.png",
-				//"road_side_lamp_2": "./images/road_side_lamp_2.png",
 
 				//"road_side_light_billboard_1": "./images/road_side_light_billboard_1.png",
 				//"road_side_light_billboard_2": "./images/road_side_light_billboard_2.png",
@@ -116,10 +119,6 @@ export const manifest: ResolverManifest = {
 
 				"road_side_walk_top_1": "./images/road_side_walk_top_1.png",
 				"road_side_walk_bottom_1": "./images/road_side_walk_bottom_1.png",
-
-				"player_honk_bomb_trash_1": "./images/player_honk_bomb_trash_1.png",
-				"player_honk_bomb_trash_2": "./images/player_honk_bomb_trash_2.png",
-				"player_honk_bomb_trash_3": "./images/player_honk_bomb_trash_3.png",
 
 				"tree_1": "./images/tree_1.png",
 				"tree_2": "./images/tree_2.png",
