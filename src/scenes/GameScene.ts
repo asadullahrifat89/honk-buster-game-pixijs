@@ -480,10 +480,10 @@ export class GameScene extends Container implements IScene {
 
 	//#region Trees
 
-	private treeXyAdjustment: number = 100;
+	private treeXyAdjustment: number = 90;
 
-	private treeSizeWidth: number = 260;
-	private treeSizeHeight: number = 260;
+	private treeSizeWidth: number = 270;
+	private treeSizeHeight: number = 270;
 
 	private treeBottomGameObjects: Array<GameObjectContainer> = [];
 	private treeTopGameObjects: Array<GameObjectContainer> = [];
@@ -549,7 +549,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.treeTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition(-710, gameObject.height * -1);
+				gameObject.setPosition(-780, gameObject.height * -1);
 				gameObject.enableRendering();
 				this.treePopDelayTop = this.treePopDelayDefault;
 			}
