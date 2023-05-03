@@ -7,7 +7,7 @@ import { VehicleBoss } from './VehicleBoss';
 export class VehicleBossRocket extends GameObjectContainer {
 
 	private autoBlastDelay: number = 0;
-	private readonly autoBlastDelayDefault: number = 9;
+	private readonly autoBlastDelayDefault: number = 8;
 
 	constructor(speed: number) {
 		super(speed);
@@ -17,7 +17,7 @@ export class VehicleBossRocket extends GameObjectContainer {
 	reset() {
 		this.alpha = 1;
 		this.scale.set(1);
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 1.4;
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * 1.1;
 
 		this.isBlasting = false;
 		this.setTexture(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));

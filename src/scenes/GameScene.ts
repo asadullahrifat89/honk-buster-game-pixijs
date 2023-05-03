@@ -51,7 +51,7 @@ export class GameScene extends Container implements IScene {
 	private onScreenMessage: OnScreenMessage;
 
 	//TODO: do yourself a favor, reset these to the default values after testing
-	private readonly vehicleBossReleasePoint: number = 25; // 25
+	private readonly vehicleBossReleasePoint: number = 5; // 25
 	private readonly vehicleBossReleaseLimit: number = 15;
 	private readonly vehicleBossCheckpoint: GameCheckpoint;
 
@@ -174,7 +174,7 @@ export class GameScene extends Container implements IScene {
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
 			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: { this.generateOnScreenMessage("Drop granades on honkers!", this.talkIcon); } break;
 			case PlayerHonkBombTemplate.TRASH_BOMB: { this.generateOnScreenMessage("Drop trash bags on honkers!", this.talkIcon); } break;
-			case PlayerHonkBombTemplate.STICKY_BOMB: { this.generateOnScreenMessage("Drop sticky bombs on honkers!", this.talkIcon); } break;			
+			case PlayerHonkBombTemplate.STICKY_BOMB: { this.generateOnScreenMessage("Drop sticky bombs on honkers!", this.talkIcon); } break;
 		}
 
 		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
@@ -1937,14 +1937,12 @@ export class GameScene extends Container implements IScene {
 			const gameObject: UfoEnemy = new UfoEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const texture = Constants.getRandomTexture(ConstructType.UFO_ENEMY);
-			const sprite: GameObjectSprite = new GameObjectSprite(texture);
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY));
 
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.ufoEnemySizeWidth;
 			sprite.height = this.ufoEnemySizeHeight;
-
 			sprite.anchor.set(0.5, 0.5);
 
 			gameObject.addChild(sprite);
@@ -2156,38 +2154,13 @@ export class GameScene extends Container implements IScene {
 
 	private spawnVehicleBosss() {
 		const gameObject: VehicleBoss = new VehicleBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
-		gameObject.vehicleType = Constants.getRandomNumber(0, 1);
 		gameObject.disableRendering();
 
-		var uri: string = "";
-		switch (gameObject.vehicleType) {
-			case 0: {
-				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
-			} break;
-			case 1: {
-				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
-			} break;
-			default: break;
-		}
-
-		const texture = Texture.from(uri);
-		const sprite: GameObjectSprite = new GameObjectSprite(texture);
-
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS));
 		sprite.x = 0;
 		sprite.y = 0;
-
-		switch (gameObject.vehicleType) {
-			case 0: {
-				sprite.width = this.vehicleBossSizeWidth / 1.2;
-				sprite.height = this.vehicleBossSizeHeight / 1.2;
-			} break;
-			case 1: {
-				sprite.width = this.vehicleBossSizeWidth;
-				sprite.height = this.vehicleBossSizeHeight;
-			} break;
-			default: break;
-		}
-
+		sprite.width = this.vehicleBossSizeWidth / 1.2;
+		sprite.height = this.vehicleBossSizeHeight / 1.2;
 		sprite.anchor.set(0.5, 0.5);
 
 		gameObject.addChild(sprite);
@@ -2205,21 +2178,6 @@ export class GameScene extends Container implements IScene {
 			if (gameObject) {
 				gameObject.reset();
 				gameObject.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
-
-				let sprite = gameObject.getSprite();
-
-				switch (gameObject.vehicleType) {
-					case 0: {
-						sprite.width = this.vehicleBossSizeWidth / 1.2;
-						sprite.height = this.vehicleBossSizeHeight / 1.2;
-					} break;
-					case 1: {
-						sprite.width = this.vehicleBossSizeWidth;
-						sprite.height = this.vehicleBossSizeHeight;
-					} break;
-					default: break;
-				}
-
 				gameObject.reposition();
 				gameObject.enableRendering();
 
@@ -2229,7 +2187,7 @@ export class GameScene extends Container implements IScene {
 				this.bossHealthBar.setValue(gameObject.health);
 				this.bossHealthBar.setIcon(gameObject.getSprite().getTexture());
 
-				this.generateOnScreenMessage("Stop the crazy honker!", this.interactIcon);
+				this.generateOnScreenMessage("Beat the hotrod, Avoid the rockets!", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -2264,7 +2222,7 @@ export class GameScene extends Container implements IScene {
 					this.generateTaunts(gameObject);
 				}
 				else {
-					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false || this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 1.8))) {
+					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false || this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling) / 1.8))) {
 						vehicleBoss.isAttacking = true;
 					}
 				}
@@ -2319,7 +2277,7 @@ export class GameScene extends Container implements IScene {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 1.4);
+			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED * 1.1);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
@@ -2373,6 +2331,10 @@ export class GameScene extends Container implements IScene {
 
 			animatingVehicleBossRockets.forEach(gameObject => {
 				gameObject.moveUpRight();
+
+				if (gameObject.speed > 0) {
+					gameObject.speed -= 0.1; // showly decrease the speed;
+				}
 
 				if (gameObject.isBlasting) {
 					gameObject.shrink();
