@@ -1745,11 +1745,11 @@ export class GameScene extends Container implements IScene {
 					let sprite = gameObject.getSprite();
 
 					switch (gameObject.vehicleType) {
-						case 0: {
+						case ConstructType.VEHICLE_ENEMY_SMALL: {
 							sprite.width = this.vehicleEnemySizeWidth / 1.2;
 							sprite.height = this.vehicleEnemySizeHeight / 1.2;
 						} break;
-						case 1: {
+						case ConstructType.VEHICLE_ENEMY_LARGE: {
 							sprite.width = this.vehicleEnemySizeWidth;
 							sprite.height = this.vehicleEnemySizeHeight;
 						} break;
@@ -2145,10 +2145,7 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region VehicleBosss	
-
-	private vehicleBossSizeWidth: number = this.vehicleEnemySizeWidth;
-	private vehicleBossSizeHeight: number = this.vehicleEnemySizeHeight;
+	//#region VehicleBosss
 
 	private vehicleBossGameObjects: Array<VehicleBoss> = [];
 
@@ -2159,8 +2156,8 @@ export class GameScene extends Container implements IScene {
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS));
 		sprite.x = 0;
 		sprite.y = 0;
-		sprite.width = this.vehicleBossSizeWidth / 1.2;
-		sprite.height = this.vehicleBossSizeHeight / 1.2;
+		sprite.width = this.vehicleEnemySizeWidth / 1.2;
+		sprite.height = this.vehicleEnemySizeHeight / 1.2;
 		sprite.anchor.set(0.5, 0.5);
 
 		gameObject.addChild(sprite);
@@ -2177,6 +2174,12 @@ export class GameScene extends Container implements IScene {
 
 			if (gameObject) {
 				gameObject.reset();
+
+				let sprite = gameObject.getSprite();
+
+				sprite.width = this.vehicleEnemySizeWidth / 1.2;
+				sprite.height = this.vehicleEnemySizeHeight / 1.2;
+
 				gameObject.reposition();
 				gameObject.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
 				gameObject.enableRendering();
