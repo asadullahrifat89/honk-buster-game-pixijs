@@ -609,7 +609,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.lampTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition((gameObject.width * -1), (gameObject.height * -1) - 276);
+				gameObject.setPosition((gameObject.width * -1), (gameObject.height * -1) - 280);
 				gameObject.enableRendering();
 				this.lampPopDelayTop = this.lampPopDelayDefault;
 			}
@@ -637,7 +637,7 @@ export class GameScene extends Container implements IScene {
 
 	//#region SideWalks
 
-	private sideWalkXyAdjustment: number = 190;
+	private sideWalkXyAdjustment: number = 192;
 
 	private sideWalkWidth: number = 750;
 	private sideWalkHeight: number = 750;
@@ -2290,7 +2290,7 @@ export class GameScene extends Container implements IScene {
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
-			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);			
+			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 		}
 	}
 
@@ -2526,7 +2526,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
-			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);			
+			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 		}
 	}
 

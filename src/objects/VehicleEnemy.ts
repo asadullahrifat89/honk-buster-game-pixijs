@@ -38,7 +38,7 @@ export class VehicleEnemy extends VehicleBase {
 		if (this.willHonk) {
 			this.health = this.hitPoint * Constants.getRandomNumber(0, 1);
 			this.setHonkDelay();
-			this.setDillyDallySpeed(Constants.getRandomNumber(0.1, 0.3));
+			this.setDillyDallySpeed(Constants.getRandomNumber(0.1, 0.2));
 		}
 	}
 
