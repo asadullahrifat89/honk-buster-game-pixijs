@@ -115,7 +115,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 2;
 			} break;
 			case PlayerHonkBombTemplate.TRASH_BOMB: {
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 2;
 			} break;
 			case PlayerHonkBombTemplate.STICKY_BOMB: {
 				this.angle = 0;

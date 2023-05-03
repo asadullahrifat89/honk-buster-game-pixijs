@@ -1187,8 +1187,8 @@ export class GameScene extends Container implements IScene {
 									playerHonkBomb.moveUpRight();
 									playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
 								}
-								else if (playerHonkBomb.awaitMoveUpLeft) {
-									playerHonkBomb.moveUpLeft();
+								else if (playerHonkBomb.awaitMoveUp) {
+									playerHonkBomb.moveUp();
 									playerHonkBomb.rotate(RotationDirection.Backward, 0, 0.5);
 								}
 
@@ -1261,7 +1261,7 @@ export class GameScene extends Container implements IScene {
 									let randomDir = Constants.getRandomNumber(0, 1);
 
 									switch (randomDir) {
-										case 0: { playerHonkBomb.awaitMoveUpLeft = true; } break;
+										case 0: { playerHonkBomb.awaitMoveUp = true; } break;
 										case 1: { playerHonkBomb.awaitMoveUpRight = true; } break;
 										default: break;
 									}
