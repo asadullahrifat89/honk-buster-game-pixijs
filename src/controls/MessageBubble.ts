@@ -21,10 +21,10 @@ export class MessageBubble extends GameObjectContainer {
 		this.messageContainer.addChild(this.messageGraphics);
 
 		this.messageText = new Text("", {
-			fontFamily: "gamefont",
+			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: Constants.MESSAGE_BOX_TEXT_COLOR,
-			fontSize: 22
+			fontSize: 26
 		});
 		this.messageText.x = 10;
 		this.messageText.y = 5;

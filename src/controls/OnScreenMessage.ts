@@ -30,13 +30,13 @@ export class OnScreenMessage {
 		this.messageContainer.addChild(this.messageGraphics);
 
 		this.messageText = new Text("", {
-			fontFamily: "gamefont",
+			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: Constants.MESSAGE_BOX_TEXT_COLOR,
 			fontSize: 23
 		});
 		this.messageText.x = this.messageAuthor.width / 1.5;
-		this.messageText.y = 5;
+		this.messageText.y = 8;
 		this.messageContainer.addChild(this.messageText);
 
 		scene.addChild(this.messageContainer);

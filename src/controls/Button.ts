@@ -1,35 +1,26 @@
-﻿import { ColorMatrixFilter, Container, DisplayObject, FederatedPointerEvent, Text, TextStyle } from "pixi.js";
+﻿import { ColorMatrixFilter, Container, DisplayObject, FederatedPointerEvent, Graphics, Text, TextStyle, TextStyleAlign } from "pixi.js";
+import { Constants } from "../Constants";
 
 
 export class Button extends Container {
 
 	private buttonFilter: ColorMatrixFilter;
+	private buttonText: Text;
+	private buttonBackground: DisplayObject;
 
-	constructor(background: DisplayObject, onPressed: any, text: string = "") {
+	constructor(onPressed: any) {
 		super();
+		this.interactive = true;
+		this.filters = null;
 
 		this.buttonFilter = new ColorMatrixFilter();
 		this.buttonFilter.saturate(1);
 
-		this.filters = null;
+		// add the button background
+		this.buttonBackground = this.getDefaultGraphics();
+		this.addChild(this.buttonBackground);
 
-		const buttonTextStyle: TextStyle = new TextStyle({
-			fontFamily: "gamefont",
-			align: "center",
-			fill: "#ffffff",
-			fontSize: 26
-		});
-
-		this.interactive = true;
-
-		this.addChild(background);
-
-		if (text != "") {
-			const buttonText = new Text(text, buttonTextStyle);
-			buttonText.x = this.width / 2 - buttonText.width / 2;
-			buttonText.y = (this.height / 2 - buttonText.height / 2) - 3;
-			this.addChild(buttonText);
-		}
+		this.buttonText = new Text(); // this is not added yet
 
 		this.on("pointertap", onPressed, this);
 		this.on('pointerover', this.onButtonOver, this);
@@ -39,9 +30,37 @@ export class Button extends Container {
 		this.cursor = 'pointer';
 	}
 
-	setPosition(x: number, y: number) {
+	setBackground(content: DisplayObject = this.getDefaultGraphics()): Button {
+		this.removeChild(this.buttonBackground);
+		this.buttonBackground = content;
+		this.addChild(this.buttonBackground);
+
+		return this;
+	}
+
+	setText(text: string, fontSize: number = 26, fill: string = "#ffffff", align: TextStyleAlign = 'center'): Button {
+		this.removeChild(this.buttonText);
+
+		const buttonTextStyle: TextStyle = new TextStyle({
+			fontFamily: Constants.GAME_DEFAULT_FONT,
+			align: align,
+			fill: fill,
+			fontSize: fontSize
+		});
+
+		this.buttonText = new Text(text, buttonTextStyle);
+		this.buttonText.x = this.width / 2 - this.buttonText.width / 2;
+		this.buttonText.y = (this.height / 2 - this.buttonText.height / 2);
+		this.addChild(this.buttonText);
+
+		return this;
+	}	
+
+	setPosition(x: number, y: number): Button {
 		this.x = x;
 		this.y = y;
+
+		return this;
 	}
 
 	onButtonOver(_e: FederatedPointerEvent) {
@@ -50,5 +69,9 @@ export class Button extends Container {
 
 	onButtonOut(_e: FederatedPointerEvent) {
 		this.filters?.pop();
+	}
+
+	private getDefaultGraphics(): Graphics {
+		return new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill();
 	}
 }

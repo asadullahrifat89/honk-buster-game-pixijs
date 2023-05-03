@@ -222,12 +222,13 @@ export abstract class Constants {
 	public static SELECTED_PLAYER_RIDE_TEMPLATE: number = 0;
 	public static SELECTED_HONK_BUSTER_TEMPLATE: number = 0;
 
-	//public static MESSAGE_BOX_LINE_COLOR: number = 0x2f3a5a;
-	//public static MESSAGE_BOX_TEXT_COLOR: string = "#2f3a5a";
 	public static MESSAGE_BOX_BORDER_COLOR: number = 0x000000;
 	public static MESSAGE_BOX_TEXT_COLOR: string = "#000000";
 
 	public static GAME_SCORE: number = 0;
+
+	public static GAME_TITLE_FONT = "stitchnschool";
+	public static GAME_DEFAULT_FONT = "emilio";
 
 	private static soundsDirectory = "sounds/";
 	private static imagessDirectory = "images/";

@@ -2,6 +2,7 @@
 import { IScene } from "../managers/IScene";
 import { SceneManager } from "../managers/SceneManager";
 import { GameTitleScene } from "./GameTitleScene";
+import { Constants } from "../Constants";
 
 
 export class ScreenOrientationScene extends Container implements IScene {
@@ -12,7 +13,7 @@ export class ScreenOrientationScene extends Container implements IScene {
         super();
 
         this.changeOrienationText = new Text("Pls Change Screen Orientation", {
-            fontFamily: "gamefont",
+            fontFamily: Constants.GAME_DEFAULT_FONT,
             fontSize: 18,
             align: "center",
             fill: "#ffffff",

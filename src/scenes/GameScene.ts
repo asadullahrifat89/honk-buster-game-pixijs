@@ -2290,9 +2290,7 @@ export class GameScene extends Container implements IScene {
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
-			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
-
-			this.generateMessageBubble(vehicleBoss, "I'll be back!");
+			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);			
 		}
 	}
 
@@ -2528,9 +2526,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
-			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-
-			this.generateMessageBubble(ufoBoss, "My systems can not fail!");
+			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);			
 		}
 	}
 
@@ -2924,8 +2920,6 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-
-			this.generateMessageBubble(zombieBoss, "You can't kill the undead!");
 		}
 	}
 
@@ -3160,8 +3154,6 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-
-			this.generateMessageBubble(mafiaBoss, "Next time, hotshot!");
 		}
 	}
 

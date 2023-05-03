@@ -1,4 +1,4 @@
-﻿import { Container, Graphics, Text, BlurFilter } from "pixi.js";
+﻿import { Container, Text, BlurFilter } from "pixi.js";
 import { Constants, ConstructType, SoundType } from "../Constants";
 import { Button } from "../controls/Button";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -21,8 +21,7 @@ export class GameOverScene extends Container implements IScene {
 		this.sceneContainer = new GameObjectContainer();
 		this.sceneContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		this.sceneContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
-		this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);
-		//this.sceneContainer.filters = [new DropShadowFilter()];
+		this.sceneContainer.setPosition(SceneManager.width / 2 - this.sceneContainer.width / 2, SceneManager.height / 2 - this.sceneContainer.height / 2);		
 		this.addChild(this.sceneContainer);
 
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
@@ -34,7 +33,7 @@ export class GameOverScene extends Container implements IScene {
 		this.sceneContainer.addChild(sprite);
 
 		const title = new Text("Game Over", {
-			fontFamily: "gamefont",
+			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 35,
 			align: "center",
 			fill: "#ffffff",
@@ -44,7 +43,7 @@ export class GameOverScene extends Container implements IScene {
 		this.sceneContainer.addChild(title);
 
 		const subTitle = new Text("Score " + Constants.GAME_SCORE, {
-			fontFamily: "gamefont",
+			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 32,
 			align: "center",
 			fill: "#ffffff",
@@ -53,11 +52,11 @@ export class GameOverScene extends Container implements IScene {
 		subTitle.y = (this.sceneContainer.height / 2 - subTitle.height / 2) - 60;
 		this.sceneContainer.addChild(subTitle);
 
-		const button = new Button(new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill(), () => {
+		const button = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.sceneContainer);
 			SceneManager.changeScene(new PlayerCharacterSelectionScene());
-		}, "Play Again");
+		}).setText("Play Again");
 		button.setPosition(this.sceneContainer.width / 2 - button.width / 2, this.sceneContainer.height - button.height * 2);
 		this.sceneContainer.addChild(button);
 
