@@ -410,9 +410,13 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, this.imagessDirectory + "player_balloon_2_win.png"),
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, this.imagessDirectory + "player_balloon_2_hit.png"),
 
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_cracker_1.png"),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_cracker_2.png"),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_cracker_3.png"),
+		//new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_cracker_1.png"),
+		//new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_cracker_2.png"),
+		//new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_cracker_3.png"),
+
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_explosive_1.png"),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_explosive_2.png"),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_explosive_3.png"),
 
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_1.png"),
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_2.png"),

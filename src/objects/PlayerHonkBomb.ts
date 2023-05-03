@@ -46,7 +46,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 
 		switch (this.playerHonkBombTemplate) {
 			case PlayerHonkBombTemplate.FLASH_BOMB: {
-				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("cracker")).map(x => x.uri);
+				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("explosive")).map(x => x.uri);
 			} break;
 			case PlayerHonkBombTemplate.TRASH_BOMB: {
 				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("trash")).map(x => x.uri);

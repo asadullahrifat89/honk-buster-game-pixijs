@@ -103,6 +103,10 @@ export const manifest: ResolverManifest = {
 				"player_honk_bomb_cracker_2": "./images/player_honk_bomb_cracker_2.png",
 				"player_honk_bomb_cracker_3": "./images/player_honk_bomb_cracker_3.png",
 
+				"player_honk_bomb_explosive_1": "./images/player_honk_bomb_explosive_1.png",
+				"player_honk_bomb_explosive_2": "./images/player_honk_bomb_explosive_2.png",
+				"player_honk_bomb_explosive_3": "./images/player_honk_bomb_explosive_3.png",
+
 				"player_honk_bomb_trash_1": "./images/player_honk_bomb_trash_1.png",
 				"player_honk_bomb_trash_2": "./images/player_honk_bomb_trash_2.png",
 				"player_honk_bomb_trash_3": "./images/player_honk_bomb_trash_3.png",
