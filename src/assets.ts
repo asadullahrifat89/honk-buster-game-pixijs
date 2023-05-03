@@ -128,7 +128,8 @@ export const manifest: ResolverManifest = {
 
 				"ufo_boss_rocket_seeking": "./images/ufo_boss_rocket_seeking.png",
 
-				"vehicle_boss_rocket": "./images/vehicle_boss_rocket.png",
+				"vehicle_boss_rocket_1": "./images/vehicle_boss_rocket_1.png",
+				"vehicle_boss_rocket_2": "./images/vehicle_boss_rocket_2.png",
 
 				"vehicle_boss_1": "./images/vehicle_boss_1.png",
 				"vehicle_boss_2": "./images/vehicle_boss_2.png",

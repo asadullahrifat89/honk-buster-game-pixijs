@@ -34,7 +34,7 @@ export class MafiaBoss extends UfoBossBase {
 		this.randomizeMovementPattern();
 	}
 
-	randomizeMovementPattern() {
+	private randomizeMovementPattern() {
 		this.changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
 		this.movementDirection = MovementDirection.None;
 		this.movementPattern = Constants.getRandomNumber(0, 3);
@@ -91,7 +91,7 @@ export class MafiaBoss extends UfoBossBase {
 		super.seekPlayer(target);
 	}	
 
-	moveRightLeft(sceneWidth: number) {
+	private moveRightLeft(sceneWidth: number) {
 		this.changeMovementPatternDelay -= 0.1;
 
 		if (this.changeMovementPatternDelay < 0) {
@@ -128,7 +128,7 @@ export class MafiaBoss extends UfoBossBase {
 		return false;
 	}
 
-	moveUpDown(sceneHeight: number) {
+	private moveUpDown(sceneHeight: number) {
 		this.changeMovementPatternDelay -= 0.1;
 
 		if (this.changeMovementPatternDelay < 0) {
@@ -165,7 +165,7 @@ export class MafiaBoss extends UfoBossBase {
 		return false;
 	}
 
-	moveInRectangularSquares(sceneWidth: number, sceneHeight: number) {
+	private moveInRectangularSquares(sceneWidth: number, sceneHeight: number) {
 		this.changeMovementPatternDelay -= 0.1;
 
 		if (this.changeMovementPatternDelay < 0) {

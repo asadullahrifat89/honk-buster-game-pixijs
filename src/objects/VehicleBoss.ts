@@ -15,16 +15,9 @@ export class VehicleBoss extends VehicleBossBase {
 		super.reset();
 		this.setDillyDallySpeed(0.1);
 		this.setTexture(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS));
-
 		this.setHonkDelay();
 		this.scale.set(1);
 		this.randomizeMovementPattern();
-	}
-
-	randomizeMovementPattern() {
-		this.speed = Constants.getRandomNumber(Constants.DEFAULT_CONSTRUCT_SPEED, Constants.DEFAULT_CONSTRUCT_SPEED + 2);
-		this.changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
-		this.movementDirection = MovementDirection.None;
 	}
 
 	move(
@@ -33,8 +26,13 @@ export class VehicleBoss extends VehicleBossBase {
 		this.moveUpLeftDownRight(sceneWidth, sceneHeight);
 	}
 
-	moveUpLeftDownRight(sceneWidth: number, sceneHeight: number) {
+	private randomizeMovementPattern() {
+		this.speed = Constants.getRandomNumber(Constants.DEFAULT_CONSTRUCT_SPEED, Constants.DEFAULT_CONSTRUCT_SPEED + 2);
+		this.changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
+		this.movementDirection = MovementDirection.None;
+	}	
 
+	private moveUpLeftDownRight(sceneWidth: number, sceneHeight: number) {
 		this.changeMovementPatternDelay -= 0.1;
 
 		if (this.changeMovementPatternDelay < 0) {

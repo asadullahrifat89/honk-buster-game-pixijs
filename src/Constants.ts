@@ -432,7 +432,8 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.BLAST, this.imagessDirectory + "blast_1.png"),
 		new ConstructTemplate(ConstructType.BLAST, this.imagessDirectory + "blast_2.png"),
 
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, this.imagessDirectory + "vehicle_boss_rocket.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, this.imagessDirectory + "vehicle_boss_rocket_1.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, this.imagessDirectory + "vehicle_boss_rocket_2.png"),
 
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_1.png"),
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_2.png"),

@@ -1687,16 +1687,16 @@ export class GameScene extends Container implements IScene {
 		for (let j = 0; j < 10; j++) {
 
 			const gameObject: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.vehicleType = Constants.getRandomNumber(0, 1);
+			gameObject.vehicleType = Constants.getRandomNumber(ConstructType.VEHICLE_ENEMY_SMALL, ConstructType.VEHICLE_ENEMY_LARGE);
 
 			gameObject.disableRendering();
 
 			var uri: string = "";
 			switch (gameObject.vehicleType) {
-				case 0: {
+				case ConstructType.VEHICLE_ENEMY_SMALL: {
 					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
 				} break;
-				case 1: {
+				case ConstructType.VEHICLE_ENEMY_LARGE: {
 					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
 				} break;
 				default: break;
@@ -1709,11 +1709,11 @@ export class GameScene extends Container implements IScene {
 			sprite.y = 0;
 
 			switch (gameObject.vehicleType) {
-				case 0: {
+				case ConstructType.VEHICLE_ENEMY_SMALL: {
 					sprite.width = this.vehicleEnemySizeWidth / 1.2;
 					sprite.height = this.vehicleEnemySizeHeight / 1.2;
 				} break;
-				case 1: {
+				case ConstructType.VEHICLE_ENEMY_LARGE: {
 					sprite.width = this.vehicleEnemySizeWidth;
 					sprite.height = this.vehicleEnemySizeHeight;
 				} break;
@@ -2177,8 +2177,8 @@ export class GameScene extends Container implements IScene {
 
 			if (gameObject) {
 				gameObject.reset();
-				gameObject.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
 				gameObject.reposition();
+				gameObject.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
 				gameObject.enableRendering();
 
 				this.vehicleBossCheckpoint.increaseLimit(this.vehicleBossReleaseLimit, this.gameScoreBar.getScore());
@@ -2208,11 +2208,11 @@ export class GameScene extends Container implements IScene {
 				vehicleBoss.moveDownRight();
 			}
 			else {
+
 				gameObject.dillyDally();
 				gameObject.recoverFromHealthLoss();
 
 				if (vehicleBoss.isAttacking) {
-
 					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling);
 
 					if (vehicleBoss.honk()) {
@@ -2222,7 +2222,9 @@ export class GameScene extends Container implements IScene {
 					this.generateTaunts(gameObject);
 				}
 				else {
-					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false || this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling) / 1.8))) {
+					// when all vehicles are out of view or have passed to the bottom right corner
+					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false ||
+						this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > ((Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling) / 3) * 2))) {
 						vehicleBoss.isAttacking = true;
 					}
 				}
@@ -2348,12 +2350,17 @@ export class GameScene extends Container implements IScene {
 					if (Constants.checkCloseCollision(gameObject, this.player)) {
 						gameObject.setBlast();
 						this.loosePlayerHealth();
+
 						this.generateRingExplosion(gameObject);
+						this.generateSmokeExplosion(gameObject);
+						this.generateFlashExplosion(gameObject);
 					}
 
 					if (gameObject.autoBlast()) {
 						gameObject.setBlast();
+
 						this.generateRingExplosion(gameObject);
+						this.generateSmokeExplosion(gameObject);
 					}
 				}
 
