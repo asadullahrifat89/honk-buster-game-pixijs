@@ -103,7 +103,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 		switch (this.playerHonkBombTemplate) {
 			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: { SoundManager.play(SoundType.CRACKER_BLAST, 0.8); } break;
 			case PlayerHonkBombTemplate.TRASH_BOMB: { SoundManager.play(SoundType.TRASH_CAN_HIT); } break;
-			case PlayerHonkBombTemplate.STICKY_BOMB: { SoundManager.play(SoundType.BARREL_BREAK); } break;
+			case PlayerHonkBombTemplate.STICKY_BOMB: { SoundManager.play(SoundType.ROCKET_BLAST, 0.8); } break;
 			default: break;
 		}
 
