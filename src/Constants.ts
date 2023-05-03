@@ -229,6 +229,9 @@ export abstract class Constants {
 
 	public static GAME_SCORE: number = 0;
 
+	public static GAME_TITLE_FONT = "stitchnschool";
+	public static GAME_DEFAULT_FONT = "diloworld";
+
 	private static soundsDirectory = "sounds/";
 	private static imagessDirectory = "images/";
 

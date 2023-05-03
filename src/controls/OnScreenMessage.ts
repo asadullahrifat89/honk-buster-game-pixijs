@@ -30,7 +30,7 @@ export class OnScreenMessage {
 		this.messageContainer.addChild(this.messageGraphics);
 
 		this.messageText = new Text("", {
-			fontFamily: "diloworld",
+			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: Constants.MESSAGE_BOX_TEXT_COLOR,
 			fontSize: 23

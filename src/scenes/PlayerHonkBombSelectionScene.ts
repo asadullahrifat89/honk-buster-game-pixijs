@@ -39,7 +39,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		this.sceneContainer.addChild(this.bg_container);
 
 		const title = new Text("Select your droppings", {
-			fontFamily: "diloworld",
+			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 35,
 			align: "center",
 			fill: "#ffffff",

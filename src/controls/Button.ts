@@ -1,4 +1,5 @@
 ﻿import { ColorMatrixFilter, Container, DisplayObject, FederatedPointerEvent, Text, TextStyle } from "pixi.js";
+import { Constants } from "../Constants";
 
 
 export class Button extends Container {
@@ -14,7 +15,7 @@ export class Button extends Container {
 		this.filters = null;
 
 		const buttonTextStyle: TextStyle = new TextStyle({
-			fontFamily: "diloworld",
+			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: "#ffffff",
 			fontSize: 26

@@ -34,7 +34,7 @@ export class GameOverScene extends Container implements IScene {
 		this.sceneContainer.addChild(sprite);
 
 		const title = new Text("Game Over", {
-			fontFamily: "diloworld",
+			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 35,
 			align: "center",
 			fill: "#ffffff",
@@ -44,7 +44,7 @@ export class GameOverScene extends Container implements IScene {
 		this.sceneContainer.addChild(title);
 
 		const subTitle = new Text("Score " + Constants.GAME_SCORE, {
-			fontFamily: "diloworld",
+			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 32,
 			align: "center",
 			fill: "#ffffff",

@@ -11,15 +11,15 @@ export class GameScoreBar {
 
 	constructor(scene: Container, prefix: string = "", score: number = 0) {
 
-		//BitmapFont.from("diloworld", {
+		//BitmapFont.from(GAME_DEFAULT_FONT, {
 		//	fill: "#2f3a5a",
-		//	fontFamily: "diloworld",
+		//	fontFamily: Constants.GAME_DEFAULT_FONT,
 		//	fontSize: 26,
 		//	align: "center",
 		//});
 
 		//this.scoreText = new BitmapText("o", {
-		//	fontName: "diloworld",
+		//	fontName: GAME_DEFAULT_FONT,
 		//	fontSize: 26,
 		//	align: "center",
 		//});
@@ -29,7 +29,7 @@ export class GameScoreBar {
 		this.scoreContainer = new Container();
 
 		this.scoreText = new Text(this.prefix + this.score.toString(), {
-			fontFamily: "diloworld",
+			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: Constants.MESSAGE_BOX_TEXT_COLOR,
 			fontSize: 26,

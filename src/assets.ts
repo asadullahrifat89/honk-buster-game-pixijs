@@ -5,6 +5,7 @@ export const manifest: ResolverManifest = {
 		{
 			name: "fontsBundle",
 			assets: {
+				"stitchnschool": "./stitchnschool.ttf",
 				"diloworld": "./diloworld.ttf",
 				"jackpot": "./jackpot.ttf"
 			},
