@@ -72,9 +72,9 @@ export enum PlayerRideTemplate {
 }
 
 export enum PlayerHonkBombTemplate {
-	BOMB,
-	TRASH,
-	JUNK,
+	FLASH_BOMB,
+	TRASH_BOMB,
+	STICKY_BOMB,
 }
 
 export enum ConstructType {

@@ -1158,17 +1158,17 @@ export class GameScene extends Container implements IScene {
 						playerHonkBomb.fade();
 
 						switch (playerHonkBomb.playerHonkBombTemplate) {
-							case PlayerHonkBombTemplate.BOMB: {
+							case PlayerHonkBombTemplate.FLASH_BOMB: {
 								playerHonkBomb.shrink();
 								playerHonkBomb.moveDownLeft();
 								playerHonkBomb.rotate(RotationDirection.Backward, 0, 0.5);
 							} break;
-							case PlayerHonkBombTemplate.TRASH: {
+							case PlayerHonkBombTemplate.TRASH_BOMB: {
 								playerHonkBomb.shrink();
 								playerHonkBomb.moveUpRight();
 								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
 							} break;
-							case PlayerHonkBombTemplate.JUNK: {
+							case PlayerHonkBombTemplate.STICKY_BOMB: {
 								playerHonkBomb.moveUpRight();
 								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
 							} break;
@@ -1177,7 +1177,7 @@ export class GameScene extends Container implements IScene {
 					}
 					else {
 						switch (playerHonkBomb.playerHonkBombTemplate) {
-							case PlayerHonkBombTemplate.BOMB: {
+							case PlayerHonkBombTemplate.FLASH_BOMB: {
 
 								playerHonkBomb.move();
 								playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
@@ -1199,7 +1199,7 @@ export class GameScene extends Container implements IScene {
 									}
 								}
 							} break;
-							case PlayerHonkBombTemplate.TRASH: {
+							case PlayerHonkBombTemplate.TRASH_BOMB: {
 
 								playerHonkBomb.move();
 
@@ -1220,7 +1220,7 @@ export class GameScene extends Container implements IScene {
 									}
 								}
 							} break;
-							case PlayerHonkBombTemplate.JUNK: {
+							case PlayerHonkBombTemplate.STICKY_BOMB: {
 
 								if (playerHonkBomb.isDropped) {
 									playerHonkBomb.moveDownRight();
