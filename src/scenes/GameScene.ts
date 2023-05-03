@@ -1154,7 +1154,6 @@ export class GameScene extends Container implements IScene {
 				if (playerHonkBomb) {
 
 					if (playerHonkBomb.isBlasting) {
-
 						playerHonkBomb.fade();
 
 						switch (playerHonkBomb.playerHonkBombTemplate) {
@@ -1178,13 +1177,13 @@ export class GameScene extends Container implements IScene {
 					else {
 						switch (playerHonkBomb.playerHonkBombTemplate) {
 							case PlayerHonkBombTemplate.FLASH_BOMB: {
-
-								playerHonkBomb.move();
-								playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
+								playerHonkBomb.move();								
 
 								if (playerHonkBomb.awaitBlast()) {
 
 									this.generateSmokeExplosion(playerHonkBomb);
+									this.generateFlashExplosion(playerHonkBomb);
+									this.generateRingExplosion(playerHonkBomb);
 
 									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
 
@@ -1200,7 +1199,6 @@ export class GameScene extends Container implements IScene {
 								}
 							} break;
 							case PlayerHonkBombTemplate.TRASH_BOMB: {
-
 								playerHonkBomb.move();
 
 								if (playerHonkBomb.awaitBlast()) {
