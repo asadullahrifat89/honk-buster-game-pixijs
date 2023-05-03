@@ -1,5 +1,5 @@
-import { Container, Graphics, Assets } from "pixi.js";
 import { manifest } from "../assets";
+import { Container, Graphics, Assets } from "pixi.js";
 import { IScene } from "../managers/IScene";
 import { SceneManager } from "../managers/SceneManager";
 import { GameTitleScene } from "./GameTitleScene";
