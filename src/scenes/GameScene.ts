@@ -982,8 +982,12 @@ export class GameScene extends Container implements IScene {
 
 	//#region PlayerRide
 
-	private playerRideSizeWidth: number = 150;
-	private playerRideSizeHeight: number = 150;
+	private playerRideSizeWidth_CHOPPER: number = 512 / 3;
+	private playerRideSizeHeight_CHOPPER: number = 512 / 3;
+
+	private playerRideSizeWidth_BALLOON: number = 600 / 3;
+	private playerRideSizeHeight_BALLOON: number = 600 / 3;
+
 	private playerRideTemplate: number = 0;
 
 	private player: PlayerRide = new PlayerRide();
@@ -995,12 +999,12 @@ export class GameScene extends Container implements IScene {
 
 		switch (this.playerRideTemplate) {
 			case PlayerRideTemplate.BALLOON: {
-				sprite.width = this.playerRideSizeWidth * 1.3;
-				sprite.height = this.playerRideSizeHeight * 1.3;
+				sprite.width = this.playerRideSizeWidth_BALLOON;
+				sprite.height = this.playerRideSizeHeight_BALLOON;
 			} break;
 			case PlayerRideTemplate.CHOPPER: {
-				sprite.width = this.playerRideSizeWidth * 1.2;
-				sprite.height = this.playerRideSizeHeight * 1.2;
+				sprite.width = this.playerRideSizeWidth_CHOPPER;
+				sprite.height = this.playerRideSizeHeight_CHOPPER;
 			} break;
 			default: break;
 		}
