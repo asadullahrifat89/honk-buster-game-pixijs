@@ -49,8 +49,8 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		this.sceneContainer.addChild(title);
 
 		const player_1_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_1"));
-		player_1_sprite.width = 256 / 1.5;
-		player_1_sprite.height = 256 / 1.5;
+		player_1_sprite.width = 256 / 2;
+		player_1_sprite.height = 256 / 2;
 		player_1_sprite.x = 0;
 		player_1_sprite.y = 0;
 		const player_1_button = new Button(() => {
@@ -63,8 +63,8 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		this.sceneContainer.addChild(player_1_button);
 
 		const player_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_2"));
-		player_2_sprite.width = 256 / 1.5;
-		player_2_sprite.height = 256 / 1.5;
+		player_2_sprite.width = 256 / 2;
+		player_2_sprite.height = 256 / 2;
 		player_2_sprite.x = 0;
 		player_2_sprite.y = 0;
 		const player_2_button = new Button(() => {
