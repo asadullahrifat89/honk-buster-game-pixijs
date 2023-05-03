@@ -1161,37 +1161,48 @@ export class GameScene extends Container implements IScene {
 
 								if (playerHonkBomb.awaitMoveDownLeft) {
 									playerHonkBomb.moveDownLeft();
+									playerHonkBomb.rotate(RotationDirection.Backward, 0, 15);
 								}
 								else if (playerHonkBomb.awaitMoveDownRight) {
 									playerHonkBomb.moveDownRight();
 									playerHonkBomb.moveDownRight();
 									playerHonkBomb.moveDownRight();
+									playerHonkBomb.rotate(RotationDirection.Forward, 0, 15);
 								}
 								else if (playerHonkBomb.awaitMoveUpLeft) {
 									playerHonkBomb.moveUpLeft();
+									playerHonkBomb.rotate(RotationDirection.Backward, 0, 15);
 								}
 								else if (playerHonkBomb.awaitMoveUpRight) {
 									playerHonkBomb.moveUpRight();
 									playerHonkBomb.moveUpRight();
+									playerHonkBomb.rotate(RotationDirection.Forward, 0, 15);
 								}
-
-								playerHonkBomb.rotate(RotationDirection.Backward, 0, 15);
 							} break;
 							case PlayerHonkBombTemplate.TRASH_BOMB: {
 								playerHonkBomb.shrink();
-								playerHonkBomb.moveUpRight();
-								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
+
+								if (playerHonkBomb.awaitMoveUpRight) {
+									playerHonkBomb.moveUpRight();
+									playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
+								}
+								else if (playerHonkBomb.awaitMoveUpLeft) {
+									playerHonkBomb.moveUpLeft();
+									playerHonkBomb.rotate(RotationDirection.Backward, 0, 0.5);
+								}
+
 							} break;
 							case PlayerHonkBombTemplate.STICKY_BOMB: {
 
 								if (playerHonkBomb.awaitMoveUpRight) {
 									playerHonkBomb.moveUpRight();
+									playerHonkBomb.moveUpRight();
+									playerHonkBomb.rotate(RotationDirection.Forward, 0, 10);
 								}
 								else if (playerHonkBomb.awaitMoveDownLeft) {
 									playerHonkBomb.moveDownLeft();
+									playerHonkBomb.rotate(RotationDirection.Backward, 0, 10);
 								}
-
-								playerHonkBomb.rotate(RotationDirection.Forward, 0, 10);
 							} break;
 							default: break;
 						}
@@ -1201,7 +1212,7 @@ export class GameScene extends Container implements IScene {
 							case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
 								playerHonkBomb.move();
 
-								if (playerHonkBomb.awaitBlast()) {									
+								if (playerHonkBomb.awaitBlast()) {
 
 									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
 
@@ -1235,8 +1246,6 @@ export class GameScene extends Container implements IScene {
 
 								if (playerHonkBomb.awaitBlast()) {
 
-									this.generateSmokeExplosion(playerHonkBomb);
-
 									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
 
 									if (vehicleEnemy) {
@@ -1248,6 +1257,16 @@ export class GameScene extends Container implements IScene {
 									if (vehicleBoss) {
 										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
 									}
+
+									let randomDir = Constants.getRandomNumber(0, 1);
+
+									switch (randomDir) {
+										case 0: { playerHonkBomb.awaitMoveUpLeft = true; } break;
+										case 1: { playerHonkBomb.awaitMoveUpRight = true; } break;
+										default: break;
+									}
+
+									this.generateSmokeExplosion(playerHonkBomb);
 								}
 							} break;
 							case PlayerHonkBombTemplate.STICKY_BOMB: {
@@ -3723,7 +3742,7 @@ export class GameScene extends Container implements IScene {
 		this.spawnSmokeExplosions();
 		this.spawnPlayerHonkBombs();
 		this.spawnTreesBottom();
-		
+
 		this.spawnPlayerRockets();
 		this.spawnPlayerRocketBullsEyes();
 		this.spawnPlayerBalloon();

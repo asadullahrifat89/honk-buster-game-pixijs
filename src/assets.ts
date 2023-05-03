@@ -18,11 +18,7 @@ export const manifest: ResolverManifest = {
 				"quit_button": "./images/quit_button.png",
 
 				"bang_1": "./images/bang_1.png",
-				"bang_2": "./images/bang_2.png",
-
-				//"billboard_1": "./images/billboard_1.png",
-				//"billboard_2": "./images/billboard_2.png",
-				//"billboard_3": "./images/billboard_3.png",
+				"bang_2": "./images/bang_2.png",				
 
 				"blast_1": "./images/blast_1.png",
 				"blast_2": "./images/blast_2.png",
@@ -100,30 +96,17 @@ export const manifest: ResolverManifest = {
 				"powerup_pickup_seeking_snitch": "./images/powerup_pickup_seeking_snitch.png",
 
 				"player_honk_bomb_sticky_1": "./images/player_honk_bomb_sticky_1.png",
-				"player_honk_bomb_sticky_2": "./images/player_honk_bomb_sticky_2.png",
-				//"player_honk_bomb_sticky_3": "./images/player_honk_bomb_sticky_3.png",
+				"player_honk_bomb_sticky_2": "./images/player_honk_bomb_sticky_2.png",				
 
 				"player_honk_bomb_explosive_1": "./images/player_honk_bomb_explosive_1.png",
-				"player_honk_bomb_explosive_2": "./images/player_honk_bomb_explosive_2.png",
-				//"player_honk_bomb_explosive_3": "./images/player_honk_bomb_explosive_3.png",
+				"player_honk_bomb_explosive_2": "./images/player_honk_bomb_explosive_2.png",				
 
 				"player_honk_bomb_trash_1": "./images/player_honk_bomb_trash_1.png",
-				"player_honk_bomb_trash_2": "./images/player_honk_bomb_trash_2.png",
-				"player_honk_bomb_trash_3": "./images/player_honk_bomb_trash_3.png",
-
-				"player_honk_bomb_barrel_1": "./images/player_honk_bomb_barrel_1.png",
-				"player_honk_bomb_barrel_2": "./images/player_honk_bomb_barrel_2.png",
-				"player_honk_bomb_barrel_3": "./images/player_honk_bomb_barrel_3.png",
+				"player_honk_bomb_trash_2": "./images/player_honk_bomb_trash_2.png",				
 
 				"road_marks": "./images/road_marks.png",
 
-				//"road_side_hedge_1": "./images/road_side_hedge_1.png",
-
-				"road_side_lamp_1": "./images/road_side_lamp_1.png",
-
-				//"road_side_light_billboard_1": "./images/road_side_light_billboard_1.png",
-				//"road_side_light_billboard_2": "./images/road_side_light_billboard_2.png",
-				//"road_side_light_billboard_3": "./images/road_side_light_billboard_3.png",
+				"road_side_lamp_1": "./images/road_side_lamp_1.png",			
 
 				"road_side_walk_top_1": "./images/road_side_walk_top_1.png",
 				"road_side_walk_bottom_1": "./images/road_side_walk_bottom_1.png",
