@@ -549,7 +549,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.treeTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition(-780, gameObject.height * -1);
+				gameObject.setPosition(-790, gameObject.height * -1);
 				gameObject.enableRendering();
 				this.treePopDelayTop = this.treePopDelayDefault;
 			}
@@ -565,7 +565,7 @@ export class GameScene extends Container implements IScene {
 			var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				gameObject.setPosition(gameObject.width * -1, -580);
+				gameObject.setPosition(gameObject.width * -1, -570);
 				gameObject.enableRendering();
 				this.treePopDelayBottom = this.treePopDelayDefault;
 			}
