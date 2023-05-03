@@ -47,11 +47,11 @@ export class GameTitleScene extends Container implements IScene {
 		title.y = (this.sceneContainer.height / 2 - title.height / 2) - 120;
 		this.sceneContainer.addChild(title);
 
-		const subTitle = new Text("A journey though honks", {
+		const subTitle = new Text("A honk pollution busting saga", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: "#ffffff",
-			fontSize: 24,
+			fontSize: 19,
 		});
 		subTitle.x = this.sceneContainer.width / 2 - subTitle.width / 2;
 		subTitle.y = (this.sceneContainer.height / 2 - subTitle.height / 2) - 65;
