@@ -10,7 +10,6 @@ export class GameScoreBar {
 	private prefix: string = "";
 
 	constructor(scene: Container, prefix: string = "", score: number = 0) {
-
 		//BitmapFont.from(GAME_DEFAULT_FONT, {
 		//	fill: "#2f3a5a",
 		//	fontFamily: Constants.GAME_DEFAULT_FONT,
@@ -35,7 +34,7 @@ export class GameScoreBar {
 			fontSize: 26,
 		});
 		this.scoreText.x = 10;
-		this.scoreText.y = 2.5;
+		this.scoreText.y = 5;
 
 		this.scoreGraphics = this.drawScoreGraphics();
 
