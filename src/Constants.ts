@@ -199,7 +199,9 @@ export enum SoundType {
 	ORB_LAUNCH,
 
 	LEVEL_UP,
-	OPTION_SELECT
+	OPTION_SELECT,
+
+	BARREL_BREAK,
 }
 
 //#endregion
@@ -245,6 +247,10 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.TRASH_CAN_HIT, this.soundsDirectory + "trashcan_hit_1.mp3"),
 		new SoundTemplate(SoundType.TRASH_CAN_HIT, this.soundsDirectory + "trashcan_hit_2.mp3"),
 		new SoundTemplate(SoundType.TRASH_CAN_HIT, this.soundsDirectory + "trashcan_hit_3.mp3"),
+
+		new SoundTemplate(SoundType.BARREL_BREAK, this.soundsDirectory + "barrel_break_1.mp3"),
+		new SoundTemplate(SoundType.BARREL_BREAK, this.soundsDirectory + "barrel_break_2.mp3"),
+		new SoundTemplate(SoundType.BARREL_BREAK, this.soundsDirectory + "barrel_break_3.mp3"),
 
 		new SoundTemplate(SoundType.ROCKET_LAUNCH, this.soundsDirectory + "rocket_launch_1.mp3"),
 		new SoundTemplate(SoundType.ROCKET_LAUNCH, this.soundsDirectory + "rocket_launch_2.mp3"),

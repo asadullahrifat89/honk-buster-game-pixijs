@@ -177,6 +177,10 @@ export const manifest: ResolverManifest = {
 				"ambience_2": "./sounds/ambience_2.mp3",
 				"ambience_3": "./sounds/ambience_3.mp3",
 
+				"barrel_break_1": "./sounds/barrel_break_1.mp3",
+				"barrel_break_2": "./sounds/barrel_break_2.mp3",
+				"barrel_break_3": "./sounds/barrel_break_3.mp3",
+
 				"boss_background_music_1": "./sounds/boss_background_music_1.mp3",
 				"boss_background_music_2": "./sounds/boss_background_music_2.mp3",
 				"boss_background_music_3": "./sounds/boss_background_music_3.mp3",

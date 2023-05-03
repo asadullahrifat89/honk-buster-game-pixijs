@@ -1358,10 +1358,10 @@ export class GameScene extends Container implements IScene {
 
 	//#region PlayerHonkBombs
 
-	private playerHonkBombSizeWidth: number = 50;
-	private playerHonkBombSizeHeight: number = 50;
+	private playerHonkBombSizeWidth: number = 70;
+	private playerHonkBombSizeHeight: number = 70;
 
-	private playerHonkBombGameObjects: Array<GameObjectContainer> = [];
+	private playerHonkBombGameObjects: Array<PlayerHonkBomb> = [];
 	private playerHonkBusterTemplate: number = 0;
 
 	spawnPlayerHonkBombs() {
@@ -1394,12 +1394,10 @@ export class GameScene extends Container implements IScene {
 
 		var gameObject = this.playerHonkBombGameObjects.find(x => x.isAnimating == false);
 
-		if (gameObject) {
-
-			var playerHonkBomb = gameObject as PlayerHonkBomb;
-			playerHonkBomb.reset();
-			playerHonkBomb.reposition(this.player);
-			playerHonkBomb.setPopping();
+		if (gameObject) {			
+			gameObject.reset();
+			gameObject.reposition(this.player);
+			gameObject.setPopping();
 
 			gameObject.enableRendering();
 
@@ -1413,11 +1411,9 @@ export class GameScene extends Container implements IScene {
 
 		if (animatingHonkBombs) {
 
-			animatingHonkBombs.forEach(gameObject => {
+			animatingHonkBombs.forEach(playerHonkBomb => {
 
-				gameObject.pop();
-
-				var playerHonkBomb = gameObject as PlayerHonkBomb;
+				playerHonkBomb.pop();				
 
 				if (playerHonkBomb) {
 
@@ -1433,35 +1429,71 @@ export class GameScene extends Container implements IScene {
 								playerHonkBomb.moveUpRight();
 								playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
 							} break;
-							default:
+							case PlayerHonkBombTemplate.Barrel: {
+								playerHonkBomb.shrink();
+							} break;
+							default: break;
 						}
 					}
 					else {
+						switch (playerHonkBomb.playerHonkBombTemplate) {
+							case PlayerHonkBombTemplate.Cracker:
+							case PlayerHonkBombTemplate.TrashCan: {
 
-						playerHonkBomb.move();
-						playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
+								playerHonkBomb.move();
+								playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
 
-						if (playerHonkBomb.awaitBlast()) {
+								if (playerHonkBomb.awaitBlast()) {
 
-							this.generateSmokeExplosion(playerHonkBomb);
+									this.generateSmokeExplosion(playerHonkBomb);
 
-							let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
+									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
 
-							if (vehicleEnemy) {
-								this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
-							}
+									if (vehicleEnemy) {
+										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
+									}
 
-							let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
+									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
 
-							if (vehicleBoss) {
-								this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
-							}
-						}
+									if (vehicleBoss) {
+										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
+									}
+								}
+							} break;
+							case PlayerHonkBombTemplate.Barrel: {
+
+								if (playerHonkBomb.dropped) {
+									playerHonkBomb.moveDownRight();
+
+									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
+
+									if (vehicleEnemy) {
+										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
+										playerHonkBomb.setBlast();
+										this.generateSmokeExplosion(playerHonkBomb);
+									}
+
+									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
+
+									if (vehicleBoss) {
+										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
+										playerHonkBomb.setBlast();
+										this.generateSmokeExplosion(playerHonkBomb);
+									}
+								}
+								else {
+									playerHonkBomb.move();
+									playerHonkBomb.rotate(RotationDirection.Forward, 0, 5);
+									playerHonkBomb.awaitDrop();
+								}
+							} break;
+							default: break;
+						}						
 					}
 				}
 
-				if (gameObject.hasFaded() || gameObject.hasShrinked() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+				if (playerHonkBomb.hasFaded() || playerHonkBomb.hasShrinked() || playerHonkBomb.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || playerHonkBomb.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					playerHonkBomb.disableRendering();
 				}
 			});
 		}
