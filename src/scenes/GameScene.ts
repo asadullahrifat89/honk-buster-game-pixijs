@@ -541,7 +541,6 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private generateTreesTop() {
-
 		this.treePopDelayTop -= 0.1;
 
 		if (this.treePopDelayTop < 0) {
@@ -557,7 +556,6 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private generateTreesBottom() {
-
 		this.treePopDelayBottom -= 0.1;
 
 		if (this.treePopDelayBottom < 0) {
