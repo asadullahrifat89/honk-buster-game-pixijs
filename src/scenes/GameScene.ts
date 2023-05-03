@@ -51,7 +51,7 @@ export class GameScene extends Container implements IScene {
 	private onScreenMessage: OnScreenMessage;
 
 	//TODO: do yourself a favor, reset these to the default values after testing
-	private readonly vehicleBossReleasePoint: number = 5; // 25
+	private readonly vehicleBossReleasePoint: number = 25; // 25
 	private readonly vehicleBossReleaseLimit: number = 15;
 	private readonly vehicleBossCheckpoint: GameCheckpoint;
 
