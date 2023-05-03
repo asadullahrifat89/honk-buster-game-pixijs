@@ -20,7 +20,7 @@ export class GameLoaderScene extends Container implements IScene {
 		const loaderBarWidth = SceneManager.width * 0.8; // just an auxiliar variable
 
 		// the fill of the bar.
-		this.loaderBarFill = new Graphics().beginFill(0x5fc4f8, 1).drawRoundedRect(0, 0, loaderBarWidth, 50, 5).endFill();		
+		this.loaderBarFill = new Graphics().beginFill(0x321d21, 1).drawRoundedRect(0, 0, loaderBarWidth, 50, 5).endFill();		
 		this.loaderBarFill.scale.x = 0; // we draw the filled bar and with scale we set the %
 
 		// The border of the bar.
