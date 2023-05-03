@@ -1,50 +1,42 @@
 ﻿import { ProgressBar } from "@pixi/ui";
 import { Container, Graphics, Texture } from "pixi.js";
-import { Constants } from "../Constants";
 import { GameObjectContainer } from "../core/GameObjectContainer";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 
 
 export class HealthBar extends Container {
 
+	private maximum: number = 0;
+	private value: number = 0;
+
 	private progressBar: ProgressBar;
-	private iconContainer: GameObjectContainer;
-	private maximumHealth: number = 0;
-	private value: number = 100;
-	private icon: Texture;
+	private iconContainer: GameObjectContainer;	
+	private iconTexture: Texture;
 
 	public tag: any;
 
-	constructor(icon: Texture, scene: Container) {
+	constructor(icon: Texture, scene: Container, foreground: number = 0xf73e3e, background: number = 0xd9e2e9) {
 		super();
 
-		this.icon = icon;
-		this.width = 100;
-		this.height = 30;
-
-		//const graphics = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 100, 35, 3).endFill();
-		//this.addChild(graphics);
+		this.iconTexture = icon;
 
 		this.progressBar = new ProgressBar();
 		this.progressBar.width = 58;
-		this.progressBar.height = 10;				
-		this.progressBar.x = 37;
-		this.progressBar.y = 7;
-		this.progressBar.setBackground(new Graphics().beginFill(0xd9e2e9).lineStyle(3, Constants.MESSAGE_BOX_BORDER_COLOR).drawRoundedRect(0, 0, 58, 20, 2).endFill());
-		this.progressBar.setFill(new Graphics().beginFill(0xf73e3e).lineStyle(3, Constants.MESSAGE_BOX_BORDER_COLOR).drawRoundedRect(0, 0, 58, 20, 2).endFill());
+		this.progressBar.height = 10;
+		this.progressBar.x = 30;
+		this.progressBar.y = 10;
+		this.progressBar.setBackground(new Graphics().beginFill(background).drawRoundedRect(0, 0, 58, 22, 3).endFill());
+		this.progressBar.setFill(new Graphics().beginFill(foreground).drawRoundedRect(0, 0, 58, 22, 3).endFill());
 		this.progressBar.progress = 0;
 		this.addChild(this.progressBar);
 
 		this.iconContainer = new GameObjectContainer();
+		this.addChild(this.iconContainer);
 
 		let iconSprite: GameObjectSprite = new GameObjectSprite(icon);
-		iconSprite.width = 33;
-		iconSprite.height = 33;
-		iconSprite.x = 0;
-		iconSprite.y = 2;
+		iconSprite.width = 40;
+		iconSprite.height = 40;
 		this.iconContainer.addChild(iconSprite);
-
-		this.addChild(this.iconContainer);
 
 		scene.addChild(this);
 	}
@@ -53,27 +45,31 @@ export class HealthBar extends Container {
 		return this.progressBar.progress > 0;
 	}
 
-	setMaximumValue(value: number) {
-		this.maximumHealth = value;
+	setMaximumValue(value: number): HealthBar {
+		this.maximum = value;
+		return this;
 	}
 
-	setIcon(icon: Texture) {
-		this.icon = icon;
+	setIcon(icon: Texture): HealthBar {
+		this.iconTexture = icon;
 		this.iconContainer.setTexture(icon);
+		return this;
 	}
 
-	setValue(value: number) {
-		if (this.maximumHealth == 0)
-			this.maximumHealth = 100;
+	setValue(value: number): HealthBar {
+		if (this.maximum == 0)
+			this.maximum = 100;
 
 		this.value = value;
 
-		this.progressBar.progress = this.value / this.maximumHealth * 100;
+		this.progressBar.progress = this.value / this.maximum * 100;
 
 		if (this.value > 0)
 			this.alpha = 1;
 		else
 			this.alpha = 0;
+
+		return this;
 	}
 
 	getValue(): number {
@@ -81,7 +77,7 @@ export class HealthBar extends Container {
 	}
 
 	getIcon(): Texture {
-		return this.icon;
+		return this.iconTexture;
 	}
 
 	getProgress(): number {

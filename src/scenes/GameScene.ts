@@ -42,7 +42,7 @@ export class GameScene extends Container implements IScene {
 
 	//#region Properties
 
-	private gameController: GameController;	
+	private gameController: GameController;
 	private gameScoreBar: GameScoreBar;
 	private gameLevelBar: GameScoreBar;
 
@@ -88,7 +88,7 @@ export class GameScene extends Container implements IScene {
 	private cheerIcon: Texture;
 	private interactIcon: Texture;
 
-	private honkBustReactions: SoundTemplate[] = [];	
+	private honkBustReactions: SoundTemplate[] = [];
 
 	//#endregion
 
@@ -120,7 +120,7 @@ export class GameScene extends Container implements IScene {
 		// create the scene container
 		this.sceneContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
 		this.addChild(this.sceneContainer);
-		this.sceneContainer.alpha = 0;	
+		this.sceneContainer.alpha = 0;
 
 		// set the check points
 		this.vehicleBossCheckpoint = new GameCheckpoint(this.vehicleBossReleasePoint);
@@ -142,20 +142,13 @@ export class GameScene extends Container implements IScene {
 		this.repositionGameLevelBar();
 
 		// set health bars
-		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this);
-		this.playerHealthBar.setMaximumValue(this.player.health);
-		this.playerHealthBar.setValue(this.player.health);
+		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this).setMaximumValue(this.player.health).setValue(this.player.health);
 		this.repositionPlayerHealthBar();
-
-		this.bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_ENEMY_LARGE), this);
-		this.bossHealthBar.setMaximumValue(100);
-		this.bossHealthBar.setValue(0);
+		this.bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS), this, 0x7200ff).setMaximumValue(100).setValue(0);
 		this.repositionBossHealthBar();
 
 		// set power up bar
-		this.powerUpBar = new HealthBar(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR), this);
-		this.powerUpBar.setMaximumValue(100);
-		this.powerUpBar.setValue(0);
+		this.powerUpBar = new HealthBar(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR), this, 0xffaa00).setMaximumValue(100).setValue(0);
 		this.repositionPowerUpBar();
 
 		// set the game controller
@@ -3647,7 +3640,7 @@ export class GameScene extends Container implements IScene {
 	//#region GameController
 
 	setGameController() {
-		
+
 	}
 
 	//#endregion
