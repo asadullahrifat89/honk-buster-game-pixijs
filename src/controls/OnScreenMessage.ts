@@ -36,7 +36,7 @@ export class OnScreenMessage {
 			fontSize: 23
 		});
 		this.messageText.x = this.messageAuthor.width / 1.5;
-		this.messageText.y = 5;
+		this.messageText.y = 8;
 		this.messageContainer.addChild(this.messageText);
 
 		scene.addChild(this.messageContainer);

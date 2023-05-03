@@ -17,7 +17,7 @@ export class Button extends Container {
 		this.buttonFilter.saturate(1);
 
 		// add the button background
-		this.buttonBackground = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill();
+		this.buttonBackground = this.getDefaultGraphics();
 		this.addChild(this.buttonBackground);
 
 		this.buttonText = new Text(); // this is not added yet
@@ -30,7 +30,7 @@ export class Button extends Container {
 		this.cursor = 'pointer';
 	}
 
-	setBackground(content: DisplayObject = new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill()): Button {
+	setBackground(content: DisplayObject = this.getDefaultGraphics()): Button {
 		this.removeChild(this.buttonBackground);
 		this.buttonBackground = content;
 		this.addChild(this.buttonBackground);
@@ -50,7 +50,7 @@ export class Button extends Container {
 
 		this.buttonText = new Text(text, buttonTextStyle);
 		this.buttonText.x = this.width / 2 - this.buttonText.width / 2;
-		this.buttonText.y = (this.height / 2 - this.buttonText.height / 2) - 3;
+		this.buttonText.y = (this.height / 2 - this.buttonText.height / 2);
 		this.addChild(this.buttonText);
 
 		return this;
@@ -69,5 +69,9 @@ export class Button extends Container {
 
 	onButtonOut(_e: FederatedPointerEvent) {
 		this.filters?.pop();
+	}
+
+	private getDefaultGraphics(): Graphics {
+		return new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill();
 	}
 }
