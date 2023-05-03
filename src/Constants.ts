@@ -74,6 +74,7 @@ export enum PlayerRideTemplate {
 export enum PlayerHonkBombTemplate {
 	Cracker,
 	TrashCan,
+	Barrel,
 }
 
 export enum ConstructType {
@@ -410,6 +411,10 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_1.png"),
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_2.png"),
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_3.png"),
+
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_barrel_1.png"),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_barrel_2.png"),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_barrel_3.png"),
 
 		new ConstructTemplate(ConstructType.CHOPPER_BLADES, this.imagessDirectory + "chopper_blades.png"),
 
