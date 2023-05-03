@@ -1,16 +1,18 @@
-﻿import { AnimatedSprite, BaseTexture, Spritesheet, SpriteSheetJson } from 'pixi.js';
+﻿import { AnimatedSprite, BaseTexture, Spritesheet, SpriteSheetJson, Texture } from 'pixi.js';
 import { Constants, ExplosionType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 
 
 export class Explosion extends GameObjectContainer {
 
-	private explosionAnimation: AnimatedSprite;
+	private explosionAnimation: AnimatedSprite = new AnimatedSprite([Texture.from("./images/explosion_1.png")]);
 
 	constructor(speed: number, explosionType: ExplosionType = ExplosionType.RING_EXPLOSION) {
 		super(speed);
-		this.explosionAnimation = this.getExplosionAnimation(explosionType);
-		this.addChild(this.explosionAnimation);
+		this.loadExplosionAnimation(explosionType).then((animatedSprite: AnimatedSprite) => {
+			this.explosionAnimation = animatedSprite;
+			this.addChild(this.explosionAnimation);
+		});
 	}
 
 	reset() {
@@ -29,32 +31,32 @@ export class Explosion extends GameObjectContainer {
 		super.disableRendering();
 	}
 
-	private getExplosionAnimation(explosionType: ExplosionType): AnimatedSprite {
+	private async loadExplosionAnimation(explosionType: ExplosionType): Promise<AnimatedSprite> {
 		switch (explosionType) {
-			case ExplosionType.RING_EXPLOSION: {				
-				const atlasData: SpriteSheetJson = Constants.RING_EXPLOSION_SPRITE_SHEET_JSON;
-				return this.getAnimationSprite(atlasData, 0.2);
+			case ExplosionType.RING_EXPLOSION: {
+				const atlasData: SpriteSheetJson = Constants.RING_EXPLOSION_JSON;
+				return await this.loadAnimationSprite(atlasData, 0.2);
 			} break;
 			case ExplosionType.SMOKE_EXPLOSION: {
-				const atlasData: SpriteSheetJson = Constants.SMOKE_EXPLOSION_SPRITE_SHEET_JSON;
-				return this.getAnimationSprite(atlasData, 0.3);
+				const atlasData: SpriteSheetJson = Constants.SMOKE_EXPLOSION_JSON;
+				return await this.loadAnimationSprite(atlasData);
 			} break;
 			case ExplosionType.FLASH_EXPLOSION: {
-				const atlasData: SpriteSheetJson = Constants.FLASH_EXPLOSION_SPRITE_SHEET_JSON;
-				return this.getAnimationSprite(atlasData, 0.3);
+				const atlasData: SpriteSheetJson = Constants.FLASH_EXPLOSION_JSON;
+				return await this.loadAnimationSprite(atlasData);
 			} break;
 		}
 	}
 
-	private getAnimationSprite(atlasData: SpriteSheetJson, animationSpeed: number, loop: boolean = false): AnimatedSprite {		
+	private async loadAnimationSprite(atlasData: SpriteSheetJson, animationSpeed: number = 0.3, loop: boolean = false): Promise<AnimatedSprite> {
 		const spritesheet: Spritesheet = new Spritesheet(BaseTexture.from(atlasData.meta.image), atlasData);
-		spritesheet.parse();
+		await spritesheet.parse();
 
 		let animation = new AnimatedSprite(spritesheet.animations.frames);
 		animation.animationSpeed = animationSpeed;
 		animation.loop = loop;
 		animation.anchor.set(0.5);
-		
+
 		return animation;
 	}
 }
