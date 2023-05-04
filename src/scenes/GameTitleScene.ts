@@ -10,7 +10,6 @@ import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
 
 
-
 export class GameTitleScene extends Container implements IScene {
 
 	private uiContainer: GameObjectContainer;
@@ -22,7 +21,7 @@ export class GameTitleScene extends Container implements IScene {
 		this.uiContainer = new GameObjectContainer();
 		this.uiContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		this.uiContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
-		this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);		
+		this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
 		this.addChild(this.uiContainer);
 
 		const bg_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
@@ -34,9 +33,9 @@ export class GameTitleScene extends Container implements IScene {
 		this.bg_container = new GameObjectContainer();
 		this.bg_container.setHoverSpeed(0.2);
 		this.bg_container.addChild(bg_sprite);
-
 		this.uiContainer.addChild(this.bg_container);
 
+		// title
 		const title = new Text("HONK BUSTERS", {
 			fontFamily: Constants.GAME_TITLE_FONT,
 			align: "center",
@@ -47,6 +46,7 @@ export class GameTitleScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
+		// tag line
 		const subTitle = new Text("A honk pollution fighting saga", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
@@ -57,12 +57,39 @@ export class GameTitleScene extends Container implements IScene {
 		subTitle.y = (this.uiContainer.height / 2 - subTitle.height / 2) - 65;
 		this.uiContainer.addChild(subTitle);
 
-		const button = new Button(() => {
+		// new game button
+		const newGameButton = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
+			Constants.HOW_TO_PLAY_MODE = false;
 			SceneManager.isNavigating = true;
 		}).setText("New Game");
-		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height / 2 - button.height / 2);
-		this.uiContainer.addChild(button);
+		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, this.uiContainer.height / 2 - newGameButton.height / 2);
+		this.uiContainer.addChild(newGameButton);
+
+		// how to play button
+		//const howToPlayButtonButton = new Button(() => {
+		//	SoundManager.play(SoundType.OPTION_SELECT);
+		//	this.removeChild(this.uiContainer);		
+
+		//	Constants.HOW_TO_PLAY_MODE = true;
+		//	Constants.SELECTED_HONK_BUSTER_TEMPLATE = Constants.getRandomNumber(PlayerHonkBombTemplate.EXPLOSIVE_BOMB, PlayerHonkBombTemplate.STICKY_BOMB);
+		//	Constants.SELECTED_PLAYER_RIDE_TEMPLATE = Constants.getRandomNumber(PlayerRideTemplate.BALLOON, PlayerRideTemplate.CHOPPER);
+
+		//	SceneManager.changeScene(new GameScene());
+
+		//}).setText("How To Play");
+		//howToPlayButtonButton.setPosition(this.uiContainer.width / 2 - howToPlayButtonButton.width / 2, this.uiContainer.height / 2 - (howToPlayButtonButton.height / 2) + 65);
+		//this.uiContainer.addChild(howToPlayButtonButton);
+
+		const bottomline = new Text("- Made with ❤️ & PixiJS -", {
+			fontFamily: "diloworld",
+			align: "center",
+			fill: "#ffffff",
+			fontSize: 18,
+		});
+		bottomline.x = this.uiContainer.width / 2 - bottomline.width / 2;
+		bottomline.y = (this.uiContainer.height / 2 - bottomline.height / 2) + 250;
+		this.uiContainer.addChild(bottomline);
 	}
 
 	public update(_framesPassed: number) {
@@ -90,7 +117,8 @@ export class GameTitleScene extends Container implements IScene {
 		else {
 			this.uiContainer.scale.set(scale);
 			this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
-		}		
+		}
 	}
 }
+
 

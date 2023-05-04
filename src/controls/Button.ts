@@ -72,6 +72,6 @@ export class Button extends Container {
 	}
 
 	private getDefaultGraphics(): Graphics {
-		return new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 10).endFill();
+		return new Graphics().beginFill(0x5FC4F8).lineStyle(4, 0xffffff).drawRoundedRect(0, 0, 250, 50, 5).endFill();
 	}
 }
