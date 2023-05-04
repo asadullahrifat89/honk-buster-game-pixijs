@@ -8,7 +8,6 @@ import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
-import { GameInstructionsScene } from "./GameInstructionsScene";
 
 
 export class GameTitleScene extends Container implements IScene {
@@ -61,19 +60,26 @@ export class GameTitleScene extends Container implements IScene {
 		// new game button
 		const newGameButton = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
+			Constants.HOW_TO_PLAY_MODE = false;
 			SceneManager.isNavigating = true;
 		}).setText("New Game");
 		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, this.uiContainer.height / 2 - newGameButton.height / 2);
 		this.uiContainer.addChild(newGameButton);
 
 		// how to play button
-		const howToPlayButtonButton = new Button(() => {
-			SoundManager.play(SoundType.OPTION_SELECT);
-			this.removeChild(this.uiContainer);
-			SceneManager.changeScene(new GameInstructionsScene());
-		}).setText("How To Play");
-		howToPlayButtonButton.setPosition(this.uiContainer.width / 2 - howToPlayButtonButton.width / 2, this.uiContainer.height / 2 - (howToPlayButtonButton.height / 2) + 65);
-		this.uiContainer.addChild(howToPlayButtonButton);
+		//const howToPlayButtonButton = new Button(() => {
+		//	SoundManager.play(SoundType.OPTION_SELECT);
+		//	this.removeChild(this.uiContainer);		
+
+		//	Constants.HOW_TO_PLAY_MODE = true;
+		//	Constants.SELECTED_HONK_BUSTER_TEMPLATE = Constants.getRandomNumber(PlayerHonkBombTemplate.EXPLOSIVE_BOMB, PlayerHonkBombTemplate.STICKY_BOMB);
+		//	Constants.SELECTED_PLAYER_RIDE_TEMPLATE = Constants.getRandomNumber(PlayerRideTemplate.BALLOON, PlayerRideTemplate.CHOPPER);
+
+		//	SceneManager.changeScene(new GameScene());
+
+		//}).setText("How To Play");
+		//howToPlayButtonButton.setPosition(this.uiContainer.width / 2 - howToPlayButtonButton.width / 2, this.uiContainer.height / 2 - (howToPlayButtonButton.height / 2) + 65);
+		//this.uiContainer.addChild(howToPlayButtonButton);
 
 		const bottomline = new Text("- Made with ❤️ & PixiJS -", {
 			fontFamily: "diloworld",
