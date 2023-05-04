@@ -67,14 +67,14 @@ export class GameTitleScene extends Container implements IScene {
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height / 2 - button.height / 2);
 		this.uiContainer.addChild(button);
 
-		const bottomline = new Text("- An Indie Game -", {
+		const bottomline = new Text("- Made with ❤️ & PixiJS -", {
 			fontFamily: "diloworld",
 			align: "center",
 			fill: "#ffffff",
 			fontSize: 18,
 		});
 		bottomline.x = this.uiContainer.width / 2 - bottomline.width / 2;
-		bottomline.y = (this.uiContainer.height / 2 - bottomline.height / 2) + 120;
+		bottomline.y = (this.uiContainer.height / 2 - bottomline.height / 2) + 250;
 		this.uiContainer.addChild(bottomline);
 	}
 
