@@ -37,6 +37,7 @@ export class GameTitleScene extends Container implements IScene {
 
 		this.uiContainer.addChild(this.bg_container);
 
+		// title
 		const title = new Text("HONK BUSTERS", {
 			fontFamily: Constants.GAME_TITLE_FONT,
 			align: "center",
@@ -47,6 +48,7 @@ export class GameTitleScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
+		// tag line
 		const subTitle = new Text("A honk pollution fighting saga", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
@@ -57,12 +59,23 @@ export class GameTitleScene extends Container implements IScene {
 		subTitle.y = (this.uiContainer.height / 2 - subTitle.height / 2) - 65;
 		this.uiContainer.addChild(subTitle);
 
+		// new game button
 		const button = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			SceneManager.isNavigating = true;
 		}).setText("New Game");
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height / 2 - button.height / 2);
 		this.uiContainer.addChild(button);
+
+		const bottomline = new Text("- An Indie Game -", {
+			fontFamily: "diloworld",
+			align: "center",
+			fill: "#ffffff",
+			fontSize: 18,
+		});
+		bottomline.x = this.uiContainer.width / 2 - bottomline.width / 2;
+		bottomline.y = (this.uiContainer.height / 2 - bottomline.height / 2) + 120;
+		this.uiContainer.addChild(bottomline);
 	}
 
 	public update(_framesPassed: number) {
