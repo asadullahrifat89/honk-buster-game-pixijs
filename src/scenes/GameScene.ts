@@ -83,7 +83,7 @@ export class GameScene extends Container implements IScene {
 	private talkIcon: Texture;
 	private cheerIcon: Texture;
 	private interactIcon: Texture;
-	
+
 	private gameLevel: number = 0;
 
 	//#endregion
@@ -360,7 +360,6 @@ export class GameScene extends Container implements IScene {
 	private mafiaBossTaunts: string[] = ["You are in big trouble now!", "Hah! crawl back to your hole!", "You're no match for me!", "You will go down!", "I am the boss!"];
 
 	private generateTaunts(source: GameObjectContainer) {
-
 		if (this.anyBossExists() || this.ufoEnemyExists()) {
 
 			this.tauntDelay -= 0.1;
@@ -391,9 +390,6 @@ export class GameScene extends Container implements IScene {
 				}
 
 				this.generateMessageBubble(source, message);
-				//this.generateOnScreenMessage(message, this.bossHealthBar.getIcon());
-
-
 			}
 		}
 	}
@@ -2161,7 +2157,7 @@ export class GameScene extends Container implements IScene {
 
 			if (this.bossExplosionDelay < 0) {
 
-				//TODO: get all the bosses and check
+				// get all the bosses and check
 
 				let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
 				let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true);
@@ -2275,7 +2271,7 @@ export class GameScene extends Container implements IScene {
 				}
 				else {
 					vehicleBoss.moveDownRight(); // move down right after exploding
-				}				
+				}
 			}
 			else {
 
@@ -2322,9 +2318,10 @@ export class GameScene extends Container implements IScene {
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 
+			this.generateMessageBubble(vehicleBoss, "I'll be back!");
 			this.setBossExplosion();
 		}
-	}   
+	}
 
 	private vehicleBossExists(): boolean {
 		var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
@@ -2521,14 +2518,14 @@ export class GameScene extends Container implements IScene {
 
 			if (ufoBoss.isDead()) {
 
-				if (this.isBossExploding()) {					
+				if (this.isBossExploding()) {
 					gameObject.hover();
 				}
 				else {
 					gameObject.shrink();
 				}
 			}
-			else {				
+			else {
 				gameObject.hover();
 				ufoBoss.depleteHitStance();
 				ufoBoss.depleteWinStance();
@@ -2559,7 +2556,7 @@ export class GameScene extends Container implements IScene {
 				gameObject.disableRendering();
 			}
 		}
-	}   
+	}
 
 	private looseUfoBosshealth(ufoBoss: UfoBoss) {
 
@@ -2580,6 +2577,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 
+			this.generateMessageBubble(ufoBoss, "I'll reboot and revert!");
 			this.setBossExplosion();
 		}
 	}
@@ -2934,7 +2932,7 @@ export class GameScene extends Container implements IScene {
 					gameObject.shrink();
 				}
 			}
-			else {				
+			else {
 				gameObject.hover();
 				zombieBoss.depleteHitStance();
 				zombieBoss.depleteWinStance();
@@ -2987,6 +2985,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 
 			this.setBossExplosion();
+			this.generateMessageBubble(zombieBoss, "I'll return from the dead!");
 		}
 	}
 
@@ -3179,9 +3178,9 @@ export class GameScene extends Container implements IScene {
 				}
 				else {
 					gameObject.shrink();
-				}				
+				}
 			}
-			else {				
+			else {
 				gameObject.hover();
 				mafiaBoss.depleteHitStance();
 				mafiaBoss.depleteWinStance();
@@ -3234,6 +3233,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 
 			this.setBossExplosion();
+			this.generateMessageBubble(mafiaBoss, "See you next time, kid!");
 		}
 	}
 
@@ -3937,7 +3937,7 @@ export class GameScene extends Container implements IScene {
 		this.animateVehicleBoss();
 		this.animateVehicleBossRockets();
 
-		this.animateHonks();		
+		this.animateHonks();
 
 		this.animatePlayerHonkBombs();
 		this.animateFlashExplosions();
