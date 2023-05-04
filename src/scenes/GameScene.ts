@@ -407,7 +407,7 @@ export class GameScene extends Container implements IScene {
 
 	private roadMarksGameObjects: Array<GameObjectContainer> = [];
 
-	private roadMarkPopDelayDefault: number = 84.5 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private readonly roadMarkPopDelayDefault: number = 84.5 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadMarkPopDelay: number = 0;
 
 	private spawnRoadMarks() {
@@ -677,7 +677,7 @@ export class GameScene extends Container implements IScene {
 	private sideWalkTopGameObjects: Array<RoadSideWalk> = [];
 	private sideWalkBottomGameObjects: Array<RoadSideWalk> = [];
 
-	private sideWalkPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private readonly sideWalkPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private sideWalkPopDelayTop: number = 12;
 	private sideWalkPopDelayBottom: number = 16;
 
@@ -1011,6 +1011,118 @@ export class GameScene extends Container implements IScene {
 					gameObject.disableRendering();
 				}
 			});
+		}
+	}
+
+	//#endregion
+
+	//#region BossDeathExplosions
+
+	private bossDeathExplosionDuration: number = 0;
+	private readonly bossDeathExplosionDurationDefault: number = 10;
+		
+	private bossDeathExplosionDelay: number = 0;
+	private readonly bossDeathExplosionDelayDefault: number = 2 / Constants.DEFAULT_CONSTRUCT_DELTA;
+
+	private generateBossDeathExplosions() {
+
+		if (this.isBossDeathExploding() && this.anyBossExists()) {
+
+			this.bossDeathExplosionDuration -= 0.1;
+			this.bossDeathExplosionDelay -= 0.1;
+
+			if (this.bossDeathExplosionDelay < 0) {
+
+				// get all the bosses and check
+
+				let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
+				let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true);
+				let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true);
+				let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
+
+				let anyBoss;
+
+				if (vehicleBoss) {
+					anyBoss = vehicleBoss;
+				}
+				else if (ufoBoss) {
+					anyBoss = ufoBoss;
+				}
+				else if (zombieBoss) {
+					anyBoss = zombieBoss;
+				}
+				else if (mafiaBoss) {
+					anyBoss = mafiaBoss;
+				}
+
+				if (anyBoss) {
+					this.generateFlashExplosion(anyBoss);
+					this.generateRingExplosion(anyBoss);
+					this.generateSmokeExplosion(anyBoss);
+				}
+
+				this.bossDeathExplosionDelay = this.bossDeathExplosionDelayDefault;
+			}
+		}
+	}
+
+	private isBossDeathExploding() {
+		return this.bossDeathExplosionDuration > 0;
+	}
+
+	private setBossDeathExplosion() {
+		this.bossDeathExplosionDuration = this.bossDeathExplosionDurationDefault;
+	}
+
+	//#endregion
+
+	//#region BossDamageImpactExplosions
+
+	private bossDamageImpactExplosionDelay: number = 0;
+	private readonly bossDamageImpactExplosionDelayDefault: number = 7 / Constants.DEFAULT_CONSTRUCT_DELTA;
+
+	private generateBossLowHealthExplosions() {
+
+		let healthProgress = this.bossHealthBar.getProgress();
+
+		if (this.anyBossExists() && healthProgress > 0 && healthProgress <= 50) {
+
+			this.bossDamageImpactExplosionDelay -= 0.1;
+
+			if (this.bossDamageImpactExplosionDelay < 0) {
+
+				// get all the bosses and check
+
+				let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
+				let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true);
+				let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true);
+				let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
+
+				let anyBoss;
+
+				if (vehicleBoss) {
+					anyBoss = vehicleBoss;
+				}
+				else if (ufoBoss) {
+					anyBoss = ufoBoss;
+				}
+				else if (zombieBoss) {
+					anyBoss = zombieBoss;
+				}
+				else if (mafiaBoss) {
+					anyBoss = mafiaBoss;
+				}
+
+				if (anyBoss) {
+					this.generateSmokeExplosion(anyBoss); // generate smoke at 50
+
+					if (healthProgress <= 30) {
+						this.generateRingExplosion(anyBoss); // generate fire at 30
+					}
+				}
+
+				this.bossDamageImpactExplosionDelay = this.bossDamageImpactExplosionDelayDefault;
+			}
 		}
 	}
 
@@ -1727,7 +1839,7 @@ export class GameScene extends Container implements IScene {
 
 	private ufoEnemyGameObjects: Array<UfoEnemy> = [];
 
-	private ufoEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private readonly ufoEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private ufoEnemyPopDelay: number = 0;
 
 	private spawnUfoEnemys() {
@@ -1954,7 +2066,7 @@ export class GameScene extends Container implements IScene {
 
 	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
 
-	private vehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private readonly vehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private vehicleEnemyPopDelay: number = 15;
 
 	private spawnVehicleEnemys() {
@@ -2140,109 +2252,7 @@ export class GameScene extends Container implements IScene {
 
 	private anyInAirBossExists(): boolean {
 		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
-	}
-
-	private bossExplosionDuration: number = 0;
-	private bossExplosionDurationDefault: number = 10;
-
-	private bossExplosionDelayDefault: number = 2 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private bossExplosionDelay: number = 0;
-
-	private generateBossDeathExplosions() {
-
-		if (this.isBossExploding() && this.anyBossExists()) {
-
-			this.bossExplosionDuration -= 0.1;
-			this.bossExplosionDelay -= 0.1;
-
-			if (this.bossExplosionDelay < 0) {
-
-				// get all the bosses and check
-
-				let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
-				let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true);
-				let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true);
-				let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
-
-				let anyBoss;
-
-				if (vehicleBoss) {
-					anyBoss = vehicleBoss;
-				}
-				else if (ufoBoss) {
-					anyBoss = ufoBoss;
-				}
-				else if (zombieBoss) {
-					anyBoss = zombieBoss;
-				}
-				else if (mafiaBoss) {
-					anyBoss = mafiaBoss;
-				}
-
-				if (anyBoss) {
-					this.generateFlashExplosion(anyBoss);
-					this.generateRingExplosion(anyBoss);
-					this.generateSmokeExplosion(anyBoss);
-				}
-
-				this.bossExplosionDelay = this.bossExplosionDelayDefault;
-			}
-		}
-	}
-
-	private isBossExploding() {
-		return this.bossExplosionDuration > 0;
-	}
-
-	private setBossExplosion() {
-		this.bossExplosionDuration = this.bossExplosionDurationDefault;
-	}
-
-	private bossDamageImpactExplosionDelay: number = 0;
-	private bossDamageImpactExplosionDelayDefault: number = 5 / Constants.DEFAULT_CONSTRUCT_DELTA;
-
-	private generateBossLowHealthExplosions() {
-
-		if (this.anyBossExists() && this.bossHealthBar.getProgress() <= 50) {
-
-			this.bossDamageImpactExplosionDelay -= 0.1;
-
-			if (this.bossDamageImpactExplosionDelay < 0) {
-
-				// get all the bosses and check
-
-				let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
-				let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true);
-				let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true);
-				let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
-
-				let anyBoss;
-
-				if (vehicleBoss) {
-					anyBoss = vehicleBoss;
-				}
-				else if (ufoBoss) {
-					anyBoss = ufoBoss;
-				}
-				else if (zombieBoss) {
-					anyBoss = zombieBoss;
-				}
-				else if (mafiaBoss) {
-					anyBoss = mafiaBoss;
-				}
-
-				if (anyBoss) {
-					this.generateSmokeExplosion(anyBoss); // generate smoke at 50
-
-					if (this.bossHealthBar.getProgress() <= 30) {
-						this.generateRingExplosion(anyBoss); // generate fire at 30
-					}
-				}
-
-				this.bossDamageImpactExplosionDelay = this.bossDamageImpactExplosionDelayDefault;
-			}
-		}
-	}
+	}	
 
 	//#endregion
 
@@ -2312,9 +2322,9 @@ export class GameScene extends Container implements IScene {
 
 			if (vehicleBoss.isDead()) {
 
-				if (!this.isBossExploding()) {
+				if (!this.isBossDeathExploding()) {
 					vehicleBoss.moveDownRight(); // move down right after exploding
-				}				
+				}
 			}
 			else {
 				gameObject.dillyDally();
@@ -2361,7 +2371,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 
 			this.generateMessageBubble(vehicleBoss, "I'll be back!");
-			this.setBossExplosion();
+			this.setBossDeathExplosion();
 		}
 	}
 
@@ -2383,7 +2393,7 @@ export class GameScene extends Container implements IScene {
 
 	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
 
-	private vehicleBossRocketPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private readonly vehicleBossRocketPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private vehicleBossRocketPopDelay: number = 0;
 
 	spawnVehicleBossRockets() {
@@ -2560,7 +2570,7 @@ export class GameScene extends Container implements IScene {
 
 			if (ufoBoss.isDead()) {
 
-				if (this.isBossExploding()) {
+				if (this.isBossDeathExploding()) {
 					gameObject.hover();
 				}
 				else {
@@ -2620,7 +2630,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 
 			this.generateMessageBubble(ufoBoss, "I'll reboot and revert!");
-			this.setBossExplosion();
+			this.setBossDeathExplosion();
 		}
 	}
 
@@ -2642,7 +2652,7 @@ export class GameScene extends Container implements IScene {
 
 	private ufoBossRocketGameObjects: Array<UfoBossRocket> = [];
 
-	private ufoBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private readonly ufoBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private ufoBossRocketPopDelay: number = 0;
 
 	spawnUfoBossRockets() {
@@ -2786,7 +2796,7 @@ export class GameScene extends Container implements IScene {
 
 	private ufoBossRocketSeekingGameObjects: Array<UfoBossRocketSeeking> = [];
 
-	private ufoBossRocketSeekingPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private readonly ufoBossRocketSeekingPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private ufoBossRocketSeekingPopDelay: number = 0;
 
 	spawnUfoBossRocketSeekings() {
@@ -2967,7 +2977,7 @@ export class GameScene extends Container implements IScene {
 
 			if (zombieBoss.isDead()) {
 
-				if (this.isBossExploding()) {
+				if (this.isBossDeathExploding()) {
 					gameObject.hover();
 				}
 				else {
@@ -3026,7 +3036,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 
-			this.setBossExplosion();
+			this.setBossDeathExplosion();
 			this.generateMessageBubble(zombieBoss, "I'll return from the dead!");
 		}
 	}
@@ -3049,7 +3059,7 @@ export class GameScene extends Container implements IScene {
 
 	private zombieBossRocketBlockGameObjects: Array<ZombieBossRocketBlock> = [];
 
-	private zombieBossRocketBlockPopDelayDefault: number = 8 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private readonly zombieBossRocketBlockPopDelayDefault: number = 8 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private zombieBossRocketBlockPopDelay: number = 0;
 
 	spawnZombieBossRocketBlocks() {
@@ -3215,7 +3225,7 @@ export class GameScene extends Container implements IScene {
 
 			if (mafiaBoss.isDead()) {
 
-				if (this.isBossExploding()) {
+				if (this.isBossDeathExploding()) {
 					gameObject.hover();
 				}
 				else {
@@ -3274,7 +3284,7 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
 
-			this.setBossExplosion();
+			this.setBossDeathExplosion();
 			this.generateMessageBubble(mafiaBoss, "See you next time, kid!");
 		}
 	}
@@ -3297,7 +3307,7 @@ export class GameScene extends Container implements IScene {
 
 	private mafiaBossRocketGameObjects: Array<MafiaBossRocket> = [];
 
-	private mafiaBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private readonly mafiaBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private mafiaBossRocketPopDelay: number = 0;
 
 	spawnMafiaBossRockets() {
@@ -3413,7 +3423,7 @@ export class GameScene extends Container implements IScene {
 
 	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossRocketBullsEye> = [];
 
-	private mafiaBossRocketBullsEyePopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private readonly mafiaBossRocketBullsEyePopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private mafiaBossRocketBullsEyePopDelay: number = 0;
 
 	spawnMafiaBossRocketBullsEyes() {
@@ -3528,7 +3538,7 @@ export class GameScene extends Container implements IScene {
 
 	private healthPickupGameObjects: Array<HealthPickup> = [];
 
-	private healthPickupPopDelayDefault: number = 130 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private readonly healthPickupPopDelayDefault: number = 130 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private healthPickupPopDelay: number = 0;
 
 	private spawnHealthPickups() {
@@ -3636,7 +3646,7 @@ export class GameScene extends Container implements IScene {
 
 	private powerUpPickupGameObjects: Array<PowerUpPickup> = [];
 
-	private powerUpPickupPopDelayDefault: number = 130 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private readonly powerUpPickupPopDelayDefault: number = 130 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private powerUpPickupPopDelay: number = 0;
 
 	private spawnPowerUpPickups() {
@@ -3928,7 +3938,7 @@ export class GameScene extends Container implements IScene {
 
 	private generateGameObjects() {
 
-		if (!this.anyInAirBossExists() && !this.isBossExploding()) {
+		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
 			this.generateRoadMarks();
 			this.generateSideWalksTop();
 			//this.generateTreesTop();
@@ -3957,7 +3967,7 @@ export class GameScene extends Container implements IScene {
 
 		//this.generateClouds();
 
-		if (!this.anyInAirBossExists() && !this.isBossExploding()) {
+		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
 			this.generateSideWalksBottom();
 			//this.generateTreesBottom();
 			//this.generateLampsBottom();
@@ -3969,7 +3979,7 @@ export class GameScene extends Container implements IScene {
 
 	private animateGameObjects() {
 
-		if (!this.anyInAirBossExists() && !this.isBossExploding()) {
+		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
 			this.animateRoadMarks();
 			this.animateSideWalksTop();
 			//this.animateTreesTop();			
@@ -4008,7 +4018,7 @@ export class GameScene extends Container implements IScene {
 
 		this.animateCastShadows();
 
-		if (!this.anyInAirBossExists() && !this.isBossExploding()) {
+		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
 			this.animateSideWalksBottom();
 			//this.animateTreesBottom();
 		}
