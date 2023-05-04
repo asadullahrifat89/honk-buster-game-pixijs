@@ -2199,7 +2199,7 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private bossDamageImpactExplosionDelay: number = 0;
-	private bossDamageImpactExplosionDelayDefault: number = 3 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private bossDamageImpactExplosionDelayDefault: number = 5 / Constants.DEFAULT_CONSTRUCT_DELTA;
 
 	private generateBossLowHealthExplosions() {
 
