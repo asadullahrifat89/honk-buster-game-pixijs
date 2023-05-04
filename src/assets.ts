@@ -20,11 +20,11 @@ export const manifest: ResolverManifest = {
 				"resume_button": "./images/resume_button.png",
 				"quit_button": "./images/quit_button.png",
 
-				"bang_1": "./images/bang_1.png",
-				"bang_2": "./images/bang_2.png",				
+				//"bang_1": "./images/bang_1.png",
+				//"bang_2": "./images/bang_2.png",				
 
-				"blast_1": "./images/blast_1.png",
-				"blast_2": "./images/blast_2.png",
+				//"blast_1": "./images/blast_1.png",
+				//"blast_2": "./images/blast_2.png",
 
 				//"cloud_1": "./images/cloud_1.png",
 				//"cloud_2": "./images/cloud_2.png",
@@ -172,9 +172,9 @@ export const manifest: ResolverManifest = {
 				"ambience_2": "./sounds/ambience_2.mp3",
 				"ambience_3": "./sounds/ambience_3.mp3",
 
-				"barrel_break_1": "./sounds/barrel_break_1.mp3",
-				"barrel_break_2": "./sounds/barrel_break_2.mp3",
-				"barrel_break_3": "./sounds/barrel_break_3.mp3",
+				//"barrel_break_1": "./sounds/barrel_break_1.mp3",
+				//"barrel_break_2": "./sounds/barrel_break_2.mp3",
+				//"barrel_break_3": "./sounds/barrel_break_3.mp3",
 
 				"boss_background_music_1": "./sounds/boss_background_music_1.mp3",
 				"boss_background_music_2": "./sounds/boss_background_music_2.mp3",
