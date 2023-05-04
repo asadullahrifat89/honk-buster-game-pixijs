@@ -1059,6 +1059,7 @@ export class GameScene extends Container implements IScene {
 					this.generateFlashExplosion(anyBoss);
 					this.generateRingExplosion(anyBoss);
 					this.generateSmokeExplosion(anyBoss);
+					SoundManager.play(SoundType.ROCKET_BLAST);
 				}
 
 				this.bossDeathExplosionDelay = this.bossDeathExplosionDelayDefault;
@@ -1076,10 +1077,10 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region BossDamageImpactExplosions
+	//#region BossLowHealthExplosions
 
-	private bossDamageImpactExplosionDelay: number = 0;
-	private readonly bossDamageImpactExplosionDelayDefault: number = 7 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private bossLowHealthExplosionDelay: number = 0;
+	private readonly bossLowHealthExplosionDelayDefault: number = 7 / Constants.DEFAULT_CONSTRUCT_DELTA;
 
 	private generateBossLowHealthExplosions() {
 
@@ -1087,9 +1088,9 @@ export class GameScene extends Container implements IScene {
 
 		if (this.anyBossExists() && healthProgress > 0 && healthProgress <= 50) {
 
-			this.bossDamageImpactExplosionDelay -= 0.1;
+			this.bossLowHealthExplosionDelay -= 0.1;
 
-			if (this.bossDamageImpactExplosionDelay < 0) {
+			if (this.bossLowHealthExplosionDelay < 0) {
 
 				// get all the bosses and check
 
@@ -1121,7 +1122,39 @@ export class GameScene extends Container implements IScene {
 					}
 				}
 
-				this.bossDamageImpactExplosionDelay = this.bossDamageImpactExplosionDelayDefault;
+				this.bossLowHealthExplosionDelay = this.bossLowHealthExplosionDelayDefault;
+			}
+		}
+	}
+
+	//#endregion
+
+	//#region PlayerLowHealthExplosions
+
+	private playerLowHealthExplosionDelay: number = 0;
+	private readonly playerLowHealthExplosionDelayDefault: number = 7 / Constants.DEFAULT_CONSTRUCT_DELTA;
+
+	private generatePlayerLowHealthExplosions() {
+
+		let healthProgress = this.playerHealthBar.getProgress();
+
+		if (healthProgress > 0 && healthProgress <= 50) {
+
+			this.playerLowHealthExplosionDelay -= 0.1;
+
+			if (this.playerLowHealthExplosionDelay < 0) {
+
+				// get all the playeres and check			
+
+				if (this.player) {
+					this.generateSmokeExplosion(this.player); // generate smoke at 50
+
+					if (healthProgress <= 30) {
+						this.generateRingExplosion(this.player); // generate fire at 30
+					}
+				}
+
+				this.playerLowHealthExplosionDelay = this.playerLowHealthExplosionDelayDefault;
 			}
 		}
 	}
@@ -3975,6 +4008,7 @@ export class GameScene extends Container implements IScene {
 
 		this.generateBossDeathExplosions();
 		this.generateBossLowHealthExplosions();
+		this.generatePlayerLowHealthExplosions();
 	}
 
 	private animateGameObjects() {
