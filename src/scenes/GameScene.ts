@@ -59,7 +59,7 @@ export class GameScene extends Container implements IScene {
 	private readonly ufoEnemyReleaseLimit: number = 5;
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
-	private readonly ufoBossReleasePoint: number = 5; // 50
+	private readonly ufoBossReleasePoint: number = 50; // 50
 	private readonly ufoBossReleaseLimit: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
 
@@ -71,15 +71,11 @@ export class GameScene extends Container implements IScene {
 	private readonly mafiaBossReleaseLimit: number = 15;
 	private readonly mafiaBossCheckpoint: GameCheckpoint;
 
-	private ufoEnemiesAppeared: boolean = false;
-	private ufoEnemyDefeatCount: number = 0;
-	private readonly ufoEnemyDefeatPoint: number = 20;
-
 	private playerHealthBar: HealthBar;
 	private bossHealthBar: HealthBar;
 	private powerUpBar: HealthBar;
 
-	private gameLevel: number = 0;
+	private honkBustReactions: SoundTemplate[] = [];
 	private stageColors: number[] = [0x1e2a36, 0x4187ab];
 	private stageColor: Graphics;
 
@@ -87,8 +83,8 @@ export class GameScene extends Container implements IScene {
 	private talkIcon: Texture;
 	private cheerIcon: Texture;
 	private interactIcon: Texture;
-
-	private honkBustReactions: SoundTemplate[] = [];
+	
+	private gameLevel: number = 0;
 
 	//#endregion
 
@@ -1720,9 +1716,13 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#endregion	
+	//#endregion
 
 	//#region UfoEnemys
+
+	private ufoEnemiesAppeared: boolean = false;
+	private ufoEnemyDefeatCount: number = 0;
+	private readonly ufoEnemyDefeatPoint: number = 20;
 
 	//#region UfoEnemys	
 
@@ -3886,7 +3886,7 @@ export class GameScene extends Container implements IScene {
 
 	private generateGameObjects() {
 
-		if (!this.anyInAirBossExists()) {
+		if (!this.anyInAirBossExists() && !this.isBossExploding()) {
 			this.generateRoadMarks();
 			this.generateSideWalksTop();
 			//this.generateTreesTop();
@@ -3915,7 +3915,7 @@ export class GameScene extends Container implements IScene {
 
 		//this.generateClouds();
 
-		if (!this.anyInAirBossExists()) {
+		if (!this.anyInAirBossExists() && !this.isBossExploding()) {
 			this.generateSideWalksBottom();
 			//this.generateTreesBottom();
 			//this.generateLampsBottom();
@@ -3926,9 +3926,8 @@ export class GameScene extends Container implements IScene {
 
 	private animateGameObjects() {
 
-		if (!this.anyInAirBossExists()) {
+		if (!this.anyInAirBossExists() && !this.isBossExploding()) {
 			this.animateRoadMarks();
-
 			this.animateSideWalksTop();
 			//this.animateTreesTop();			
 			//this.animateLampsTop();
@@ -3938,12 +3937,7 @@ export class GameScene extends Container implements IScene {
 		this.animateVehicleBoss();
 		this.animateVehicleBossRockets();
 
-		this.animateHonks();
-
-		if (!this.anyInAirBossExists()) {
-			this.animateSideWalksBottom();
-			//this.animateTreesBottom();
-		}
+		this.animateHonks();		
 
 		this.animatePlayerHonkBombs();
 		this.animateFlashExplosions();
@@ -3970,6 +3964,11 @@ export class GameScene extends Container implements IScene {
 		this.animatePowerUpPickups();
 
 		this.animateCastShadows();
+
+		if (!this.anyInAirBossExists() && !this.isBossExploding()) {
+			this.animateSideWalksBottom();
+			//this.animateTreesBottom();
+		}
 
 		//this.animateClouds();
 		this.animateOnScreenMessage();
