@@ -1,6 +1,5 @@
-﻿import { Container, Text } from "pixi.js";
+﻿import { BlurFilter, Container, Text } from "pixi.js";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
-import { PlayerCharacterSelectionScene } from "./PlayerCharacterSelectionScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
 import { Constants, ConstructType, SoundType } from "../Constants";
@@ -8,11 +7,10 @@ import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
-import { GameInstructionsScene } from "./GameInstructionsScene";
+import { GameTitleScene } from "./GameTitleScene";
 
 
-export class GameTitleScene extends Container implements IScene {
-
+export class GameInstructionsScene extends Container implements IScene {
 	private uiContainer: GameObjectContainer;
 	private bg_container: GameObjectContainer;
 
@@ -30,60 +28,30 @@ export class GameTitleScene extends Container implements IScene {
 		bg_sprite.y = 0;
 		bg_sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
-
+		bg_sprite.filters = [new BlurFilter()];
 		this.bg_container = new GameObjectContainer();
 		this.bg_container.setHoverSpeed(0.2);
 		this.bg_container.addChild(bg_sprite);
 		this.uiContainer.addChild(this.bg_container);
 
 		// title
-		const title = new Text("HONK BUSTERS", {
-			fontFamily: Constants.GAME_TITLE_FONT,
-			align: "center",
-			fill: "#ffffff",
-			fontSize: 42
-		});
-		title.x = this.uiContainer.width / 2 - title.width / 2;
-		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
-		this.uiContainer.addChild(title);
-
-		// tag line
-		const subTitle = new Text("A honk pollution fighting saga", {
+		const subTitle = new Text("How to Play", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: "#ffffff",
-			fontSize: 19,
+			fontSize: 42,
 		});
 		subTitle.x = this.uiContainer.width / 2 - subTitle.width / 2;
-		subTitle.y = (this.uiContainer.height / 2 - subTitle.height / 2) - 65;
+		subTitle.y = (this.uiContainer.height / 2 - subTitle.height / 2) - 200;
 		this.uiContainer.addChild(subTitle);
 
 		// new game button
 		const newGameButton = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			SceneManager.isNavigating = true;
-		}).setText("New Game");
-		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, this.uiContainer.height / 2 - newGameButton.height / 2);
+		}).setText("Okay");
+		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, (this.uiContainer.height / 2 - newGameButton.height / 2) + 250);
 		this.uiContainer.addChild(newGameButton);
-
-		// how to play button
-		const howToPlayButtonButton = new Button(() => {
-			SoundManager.play(SoundType.OPTION_SELECT);
-			this.removeChild(this.uiContainer);
-			SceneManager.changeScene(new GameInstructionsScene());
-		}).setText("How To Play");
-		howToPlayButtonButton.setPosition(this.uiContainer.width / 2 - howToPlayButtonButton.width / 2, this.uiContainer.height / 2 - (howToPlayButtonButton.height / 2) + 65);
-		this.uiContainer.addChild(howToPlayButtonButton);
-
-		const bottomline = new Text("- Made with ❤️ & PixiJS -", {
-			fontFamily: "diloworld",
-			align: "center",
-			fill: "#ffffff",
-			fontSize: 18,
-		});
-		bottomline.x = this.uiContainer.width / 2 - bottomline.width / 2;
-		bottomline.y = (this.uiContainer.height / 2 - bottomline.height / 2) + 250;
-		this.uiContainer.addChild(bottomline);
 	}
 
 	public update(_framesPassed: number) {
@@ -93,12 +61,9 @@ export class GameTitleScene extends Container implements IScene {
 
 			if (this.uiContainer.alpha <= 0) {
 				this.removeChild(this.uiContainer);
-				SceneManager.changeScene(new PlayerCharacterSelectionScene());
+				SceneManager.changeScene(new GameTitleScene());
 				SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.5, true);
 			}
-		}
-		else {
-			this.bg_container.hover();
 		}
 	}
 
@@ -114,5 +79,3 @@ export class GameTitleScene extends Container implements IScene {
 		}
 	}
 }
-
-
