@@ -21,8 +21,8 @@ export class Explosion extends GameObjectContainer {
 	}
 
 	reposition(source: GameObjectContainer) {
-		this.x = source.x;
-		this.y = source.y;
+		this.x = source.x + Constants.getRandomNumber(-50, 50);
+		this.y = source.y + Constants.getRandomNumber(-50, 50);;
 		this.explosionAnimation.gotoAndPlay(0);
 	}
 

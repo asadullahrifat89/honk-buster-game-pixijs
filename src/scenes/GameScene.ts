@@ -71,15 +71,11 @@ export class GameScene extends Container implements IScene {
 	private readonly mafiaBossReleaseLimit: number = 15;
 	private readonly mafiaBossCheckpoint: GameCheckpoint;
 
-	private ufoEnemiesAppeared: boolean = false;
-	private ufoEnemyDefeatCount: number = 0;
-	private readonly ufoEnemyDefeatPoint: number = 20;
-
 	private playerHealthBar: HealthBar;
 	private bossHealthBar: HealthBar;
 	private powerUpBar: HealthBar;
 
-	private gameLevel: number = 0;
+	private honkBustReactions: SoundTemplate[] = [];
 	private stageColors: number[] = [0x1e2a36, 0x4187ab];
 	private stageColor: Graphics;
 
@@ -87,8 +83,8 @@ export class GameScene extends Container implements IScene {
 	private talkIcon: Texture;
 	private cheerIcon: Texture;
 	private interactIcon: Texture;
-
-	private honkBustReactions: SoundTemplate[] = [];
+	
+	private gameLevel: number = 0;
 
 	//#endregion
 
@@ -986,7 +982,7 @@ export class GameScene extends Container implements IScene {
 
 	spawnSmokeExplosions() {
 
-		for (let j = 0; j < 4; j++) {
+		for (let j = 0; j < 10; j++) {
 
 			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2, ExplosionType.SMOKE_EXPLOSION);
 			gameObject.disableRendering();
@@ -1720,9 +1716,13 @@ export class GameScene extends Container implements IScene {
 
 	//#endregion
 
-	//#endregion	
+	//#endregion
 
 	//#region UfoEnemys
+
+	private ufoEnemiesAppeared: boolean = false;
+	private ufoEnemyDefeatCount: number = 0;
+	private readonly ufoEnemyDefeatPoint: number = 20;
 
 	//#region UfoEnemys	
 
@@ -2146,6 +2146,62 @@ export class GameScene extends Container implements IScene {
 		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
 	}
 
+	private bossExplosionDuration: number = 0;
+	private bossExplosionDurationDefault: number = 10;
+
+	private bossExplosionDelayDefault: number = 2 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private bossExplosionDelay: number = 0;
+
+	private generateBossExplosions() {
+
+		if (this.isBossExploding() && this.anyBossExists()) {
+
+			this.bossExplosionDuration -= 0.1;
+			this.bossExplosionDelay -= 0.1;
+
+			if (this.bossExplosionDelay < 0) {
+
+				//TODO: get all the bosses and check
+
+				let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
+				let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true);
+				let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true);
+				let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
+
+				let anyBoss;
+
+				if (vehicleBoss) {
+					anyBoss = vehicleBoss;
+				}
+				else if (ufoBoss) {
+					anyBoss = ufoBoss;
+				}
+				else if (zombieBoss) {
+					anyBoss = zombieBoss;
+				}
+				else if (mafiaBoss) {
+					anyBoss = mafiaBoss;
+				}
+
+				if (anyBoss) {
+					this.generateFlashExplosion(anyBoss);
+					this.generateRingExplosion(anyBoss);
+					this.generateSmokeExplosion(anyBoss);
+				}
+
+				this.bossExplosionDelay = this.bossExplosionDelayDefault;
+			}
+		}
+	}
+
+	private isBossExploding() {
+		return this.bossExplosionDuration > 0;
+	}
+
+	private setBossExplosion() {
+		this.bossExplosionDuration = this.bossExplosionDurationDefault;
+	}
+
 	//#endregion
 
 	//#region VehicleBosss
@@ -2213,7 +2269,13 @@ export class GameScene extends Container implements IScene {
 			gameObject.pop();
 
 			if (vehicleBoss.isDead()) {
-				vehicleBoss.moveDownRight();
+
+				if (this.isBossExploding()) {
+
+				}
+				else {
+					vehicleBoss.moveDownRight(); // move down right after exploding
+				}				
 			}
 			else {
 
@@ -2259,8 +2321,10 @@ export class GameScene extends Container implements IScene {
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
+
+			this.setBossExplosion();
 		}
-	}
+	}   
 
 	private vehicleBossExists(): boolean {
 		var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
@@ -2453,11 +2517,18 @@ export class GameScene extends Container implements IScene {
 
 		if (gameObject) {
 
+			gameObject.pop();
+
 			if (ufoBoss.isDead()) {
-				ufoBoss.shrink();
+
+				if (this.isBossExploding()) {					
+					gameObject.hover();
+				}
+				else {
+					gameObject.shrink();
+				}
 			}
-			else {
-				gameObject.pop();
+			else {				
 				gameObject.hover();
 				ufoBoss.depleteHitStance();
 				ufoBoss.depleteWinStance();
@@ -2488,7 +2559,7 @@ export class GameScene extends Container implements IScene {
 				gameObject.disableRendering();
 			}
 		}
-	}
+	}   
 
 	private looseUfoBosshealth(ufoBoss: UfoBoss) {
 
@@ -2508,6 +2579,8 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+
+			this.setBossExplosion();
 		}
 	}
 
@@ -2850,11 +2923,18 @@ export class GameScene extends Container implements IScene {
 
 		if (gameObject) {
 
+			gameObject.pop();
+
 			if (zombieBoss.isDead()) {
-				zombieBoss.shrink();
+
+				if (this.isBossExploding()) {
+					gameObject.hover();
+				}
+				else {
+					gameObject.shrink();
+				}
 			}
-			else {
-				gameObject.pop();
+			else {				
 				gameObject.hover();
 				zombieBoss.depleteHitStance();
 				zombieBoss.depleteWinStance();
@@ -2905,6 +2985,8 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+
+			this.setBossExplosion();
 		}
 	}
 
@@ -3088,11 +3170,18 @@ export class GameScene extends Container implements IScene {
 
 		if (gameObject) {
 
+			gameObject.pop();
+
 			if (mafiaBoss.isDead()) {
-				mafiaBoss.shrink();
+
+				if (this.isBossExploding()) {
+					gameObject.hover();
+				}
+				else {
+					gameObject.shrink();
+				}				
 			}
-			else {
-				gameObject.pop();
+			else {				
 				gameObject.hover();
 				mafiaBoss.depleteHitStance();
 				mafiaBoss.depleteWinStance();
@@ -3143,6 +3232,8 @@ export class GameScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+
+			this.setBossExplosion();
 		}
 	}
 
@@ -3795,7 +3886,7 @@ export class GameScene extends Container implements IScene {
 
 	private generateGameObjects() {
 
-		if (!this.anyInAirBossExists()) {
+		if (!this.anyInAirBossExists() && !this.isBossExploding()) {
 			this.generateRoadMarks();
 			this.generateSideWalksTop();
 			//this.generateTreesTop();
@@ -3824,18 +3915,19 @@ export class GameScene extends Container implements IScene {
 
 		//this.generateClouds();
 
-		if (!this.anyInAirBossExists()) {
+		if (!this.anyInAirBossExists() && !this.isBossExploding()) {
 			this.generateSideWalksBottom();
 			//this.generateTreesBottom();
 			//this.generateLampsBottom();
 		}
+
+		this.generateBossExplosions();
 	}
 
 	private animateGameObjects() {
 
-		if (!this.anyInAirBossExists()) {
+		if (!this.anyInAirBossExists() && !this.isBossExploding()) {
 			this.animateRoadMarks();
-
 			this.animateSideWalksTop();
 			//this.animateTreesTop();			
 			//this.animateLampsTop();
@@ -3845,12 +3937,7 @@ export class GameScene extends Container implements IScene {
 		this.animateVehicleBoss();
 		this.animateVehicleBossRockets();
 
-		this.animateHonks();
-
-		if (!this.anyInAirBossExists()) {
-			this.animateSideWalksBottom();			
-			//this.animateTreesBottom();
-		}
+		this.animateHonks();		
 
 		this.animatePlayerHonkBombs();
 		this.animateFlashExplosions();
@@ -3877,6 +3964,11 @@ export class GameScene extends Container implements IScene {
 		this.animatePowerUpPickups();
 
 		this.animateCastShadows();
+
+		if (!this.anyInAirBossExists() && !this.isBossExploding()) {
+			this.animateSideWalksBottom();
+			//this.animateTreesBottom();
+		}
 
 		//this.animateClouds();
 		this.animateOnScreenMessage();
