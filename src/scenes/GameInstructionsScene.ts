@@ -7,7 +7,6 @@ import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
-import { GameTitleScene } from "./GameTitleScene";
 import { MessageBubble } from "../controls/MessageBubble";
 
 
@@ -48,6 +47,8 @@ export class GameInstructionsScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
+		const joystick = new Container();		
+
 		const joystick_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick"));
 		joystick_sprite.width = 256 / 2;
 		joystick_sprite.height = 256 / 2;
@@ -60,53 +61,50 @@ export class GameInstructionsScene extends Container implements IScene {
 		joystick_handle_sprite.x = joystick_sprite.width / 2 - joystick_handle_sprite.width / 2;
 		joystick_handle_sprite.y = joystick_sprite.height / 2 - joystick_handle_sprite.height / 2;
 
-		const joystick_container = new GameObjectContainer();
-		joystick_container.addChild(joystick_sprite);
-		joystick_container.addChild(joystick_handle_sprite);
-		joystick_container.setPosition(this.uiContainer.width / 2 - joystick_sprite.width * 3, this.uiContainer.height / 2 - joystick_sprite.height / 2 + 10);
-		this.uiContainer.addChild(joystick_container);
+		const joystick_controller_container = new GameObjectContainer();
+		joystick_controller_container.addChild(joystick_sprite);
+		joystick_controller_container.addChild(joystick_handle_sprite);
+		joystick_controller_container.setPosition(this.uiContainer.width / 2 - joystick_sprite.width * 3, this.uiContainer.height / 2 - joystick_sprite.height / 2 + 10);
+		joystick.addChild(joystick_controller_container);
 
 		const joystick_msg = new MessageBubble(0, "Use the 🕹️ or ⌨️ arrow keys to move.", 20);
-		joystick_msg.setPosition(joystick_container.x + joystick_container.width, joystick_container.y + 50);
-		this.uiContainer.addChild(joystick_msg);
+		joystick_msg.setPosition(joystick_controller_container.x + joystick_controller_container.width, joystick_controller_container.y + 50);
+		joystick.addChild(joystick_msg);
 
-		//const option_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_trash_1"));
-		//option_2_sprite.width = 256 / 2;
-		//option_2_sprite.height = 256 / 2;
-		//option_2_sprite.x = 0;
-		//option_2_sprite.y = 0;
-		//const player_2_button = new Button(() => {
-		//    SoundManager.play(SoundType.OPTION_SELECT);
-		//    option_2_sprite.filters = null;
-		//    option_1_sprite.filters = [new GrayscaleFilter()];
-		//    option_3_sprite.filters = [new GrayscaleFilter()];
-		//    Constants.SELECTED_HONK_BUSTER_TEMPLATE = 1;
-		//}).setBackground(option_2_sprite);
-		//player_2_button.setPosition(this.uiContainer.width / 2 - option_1_sprite.width / 2, this.uiContainer.height / 2 - option_2_sprite.height / 2 + 10);
-		//this.uiContainer.addChild(player_2_button);
+		this.uiContainer.addChild(joystick);
 
-		//const option_3_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_sticky_2"));
-		//option_3_sprite.width = 256 / 2;
-		//option_3_sprite.height = 256 / 2;
-		//option_3_sprite.x = 0;
-		//option_3_sprite.y = 0;
-		//const player_3_button = new Button(() => {
-		//    SoundManager.play(SoundType.OPTION_SELECT);
-		//    option_3_sprite.filters = null;
-		//    option_1_sprite.filters = [new GrayscaleFilter()];
-		//    option_2_sprite.filters = [new GrayscaleFilter()];
-		//    Constants.SELECTED_HONK_BUSTER_TEMPLATE = 2;
-		//}).setBackground(option_3_sprite);
-		//player_3_button.setPosition(this.uiContainer.width / 2 + option_3_sprite.width, this.uiContainer.height / 2 - option_3_sprite.height / 2 + 10);
-		//this.uiContainer.addChild(player_3_button);
+		const attack_button = new Container();
+		attack_button.renderable = false;
+
+		const attack_button_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("attack_button"));
+		attack_button_sprite.width = 256 / 3;
+		attack_button_sprite.height = 256 / 3;
+		attack_button_sprite.x = 0;
+		attack_button_sprite.y = 0;
+
+		const attack_button_container = new GameObjectContainer();
+		attack_button_container.addChild(attack_button_sprite);
+		attack_button_container.setPosition(this.uiContainer.width / 2 - attack_button_sprite.width * 4, this.uiContainer.height / 2 - attack_button_sprite.height / 2 + 10);
+		attack_button.addChild(attack_button_container);
+
+		const attack_button_msg = new MessageBubble(0, "Press this or ⌨️ space key to attack.", 20);
+		attack_button_msg.setPosition(attack_button_container.x + attack_button_container.width + 10, attack_button_container.y + 25);
+		attack_button.addChild(attack_button_msg);
+
+		this.uiContainer.addChild(attack_button);		
 
 		const button = new Button(() => {
 
-			SoundManager.play(SoundType.OPTION_SELECT);
-			this.removeChild(this.uiContainer);
-			SceneManager.changeScene(new GameTitleScene());
+			if (joystick.renderable) {
+				joystick.renderable = false;
+				attack_button.renderable = true;
+			}
 
-		}).setText("Okay");
+			SoundManager.play(SoundType.OPTION_SELECT);
+			//this.removeChild(this.uiContainer);
+			//SceneManager.changeScene(new GameTitleScene());
+
+		}).setText("Next");
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
 		this.uiContainer.addChild(button);
 	}
