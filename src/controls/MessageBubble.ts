@@ -12,7 +12,7 @@ export class MessageBubble extends GameObjectContainer {
 	private messageOnScreenDelay: number = 0;
 	private readonly messageOnScreenDelayDefault: number = 15;
 
-	constructor(speed: number, message: string = "") {
+	constructor(speed: number, message: string = "", fontSize: number = 26) {
 		super(speed);
 
 		this.messageContainer = new Container();
@@ -24,7 +24,7 @@ export class MessageBubble extends GameObjectContainer {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: Constants.MESSAGE_BOX_TEXT_COLOR,
-			fontSize: 26
+			fontSize: fontSize
 		});
 		this.messageText.x = 10;
 		this.messageText.y = 5;
@@ -50,9 +50,17 @@ export class MessageBubble extends GameObjectContainer {
 		return this.messageOnScreenDelay <= 0;;
 	}
 
-	reposition(source: GameObjectContainer, message: string) {
+	reposition(source: GameObjectContainer, message: string, fontSize: number = 26) {
 		this.source = source;
 		this.messageText.text = message;
+		if (fontSize != 26) {
+			this.messageText.style = {
+				fontFamily: Constants.GAME_DEFAULT_FONT,
+				align: "center",
+				fill: Constants.MESSAGE_BOX_TEXT_COLOR,
+				fontSize: fontSize
+			};
+		}
 		this.messageContainer.removeChild(this.messageGraphics);
 		this.messageGraphics = this.drawMessageGraphics();
 		this.messageContainer.addChildAt(this.messageGraphics, 0);

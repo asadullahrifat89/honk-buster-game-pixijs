@@ -8,6 +8,7 @@ import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
+import { GameInstructionsScene } from "./GameInstructionsScene";
 
 
 export class GameTitleScene extends Container implements IScene {
@@ -59,19 +60,22 @@ export class GameTitleScene extends Container implements IScene {
 
 		// new game button
 		const newGameButton = new Button(() => {
+
 			SoundManager.play(SoundType.OPTION_SELECT);			
 			this.removeChild(this.uiContainer);
 			SceneManager.changeScene(new PlayerCharacterSelectionScene());
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.5, true);
+
 		}).setText("New Game");
 		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, this.uiContainer.height / 2 - newGameButton.height / 2);
 		this.uiContainer.addChild(newGameButton);
 
 		// how to play button
 		const howToPlayButtonButton = new Button(() => {
+
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.uiContainer);
-
+			SceneManager.changeScene(new GameInstructionsScene());
 			//Constants.HOW_TO_PLAY_MODE = true;
 			//Constants.SELECTED_PLAYER_RIDE_TEMPLATE = Constants.getRandomNumber(PlayerRideTemplate.BALLOON, PlayerRideTemplate.CHOPPER);
 			//Constants.SELECTED_HONK_BUSTER_TEMPLATE = Constants.getRandomNumber(PlayerHonkBombTemplate.EXPLOSIVE_BOMB, PlayerHonkBombTemplate.STICKY_BOMB);
