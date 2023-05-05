@@ -32,7 +32,7 @@ export class SceneManager {
 			backgroundColor: background,
 			width: width,
 			height: height,
-			sharedTicker: true,			
+			sharedTicker: true,
 		});
 
 		// Add the ticker
@@ -82,6 +82,7 @@ export class SceneManager {
 		}
 
 		// Add the new one
+		newScene.alpha = 0;
 		SceneManager.currentScene = newScene;
 		SceneManager.app.stage.addChild(SceneManager.currentScene);
 		SceneManager.resize();
@@ -126,6 +127,9 @@ export class SceneManager {
 		// Let the current scene know that we updated it...
 		// Just for funzies, sanity check that it exists first.
 		if (SceneManager.currentScene) {
+			if (SceneManager.currentScene.alpha < 1) {
+				SceneManager.currentScene.alpha += 0.06;
+			}
 			SceneManager.currentScene.update(framesPassed);
 		}
 
