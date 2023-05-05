@@ -80,8 +80,8 @@ export class GameInstructionsScene extends Container implements IScene {
 		attack_button.renderable = false;
 
 		const attack_button_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("attack_button"));
-		attack_button_sprite.width = 256 / 3;
-		attack_button_sprite.height = 256 / 3;
+		attack_button_sprite.width = 256 / 2;
+		attack_button_sprite.height = 256 / 2;
 		attack_button_sprite.x = 0;
 		attack_button_sprite.y = 0;
 
@@ -96,8 +96,28 @@ export class GameInstructionsScene extends Container implements IScene {
 		attack_button.setPosition(this.uiContainer.width / 2 - attack_button.width / 2, (this.uiContainer.height / 2 - attack_button.height / 2) + 10);
 		this.uiContainer.addChild(attack_button);
 
-		// cars
+		// honk_bomb
+		const honk_bomb = new GameObjectContainer();
+		honk_bomb.renderable = false;
 
+		const honk_bomb_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_explosive_1"));
+		honk_bomb_sprite.width = 256 / 2;
+		honk_bomb_sprite.height = 256 / 2;
+		honk_bomb_sprite.x = 0;
+		honk_bomb_sprite.y = 0;
+
+		const honk_bomb_container = new GameObjectContainer();
+		honk_bomb_container.addChild(honk_bomb_sprite);
+		honk_bomb.addChild(honk_bomb_container);
+
+		const honk_bomb_msg = new MessageBubble(0, "These are your drop bombs.", 20);
+		honk_bomb_msg.setPosition(honk_bomb_container.x + honk_bomb_container.width + 10, honk_bomb_container.y + 25);
+		honk_bomb.addChild(honk_bomb_msg);
+
+		honk_bomb.setPosition(this.uiContainer.width / 2 - honk_bomb.width / 2, (this.uiContainer.height / 2 - honk_bomb.height / 2) + 10);
+		this.uiContainer.addChild(honk_bomb);
+
+		// car
 		const car = new GameObjectContainer();
 		car.renderable = false;
 
@@ -108,7 +128,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		car_sprite.y = 0;
 
 		const car_container = new GameObjectContainer();
-		car_container.addChild(car_sprite);		
+		car_container.addChild(car_sprite);
 		car.addChild(car_container);
 
 		const car_msg = new MessageBubble(0, "Drop bombs on honking cars.", 20);
@@ -117,6 +137,28 @@ export class GameInstructionsScene extends Container implements IScene {
 
 		car.setPosition(this.uiContainer.width / 2 - car.width / 2, (this.uiContainer.height / 2 - car.height / 2) + 10);
 		this.uiContainer.addChild(car);
+
+		// player_rocket
+		const player_rocket = new GameObjectContainer();
+		player_rocket.renderable = false;
+
+		const player_rocket_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_rocket_1"));
+		player_rocket_sprite.width = 256 / 2;
+		player_rocket_sprite.height = 256 / 2;
+		player_rocket_sprite.x = 0;
+		player_rocket_sprite.y = 0;
+		player_rocket_sprite.angle = 213;
+
+		const player_rocket_container = new GameObjectContainer();
+		player_rocket_container.addChild(player_rocket_sprite);
+		player_rocket.addChild(player_rocket_container);
+
+		const player_rocket_msg = new MessageBubble(0, "These are your drop bombs.", 20);
+		player_rocket_msg.setPosition(player_rocket_container.x + player_rocket_container.width + 10, player_rocket_container.y + 25);
+		player_rocket.addChild(player_rocket_msg);
+
+		player_rocket.setPosition(this.uiContainer.width / 2 - player_rocket.width / 2, (this.uiContainer.height / 2 - player_rocket.height / 2) + 10);
+		this.uiContainer.addChild(player_rocket);
 
 		const button = new Button(() => {
 
@@ -128,10 +170,18 @@ export class GameInstructionsScene extends Container implements IScene {
 			}
 			else if (attack_button.renderable) {
 				attack_button.renderable = false;
+				honk_bomb.renderable = true;
+			}
+			else if (honk_bomb.renderable) {
+				honk_bomb.renderable = false;
 				car.renderable = true;
 			}
 			else if (car.renderable) {
-
+				car.renderable = false;
+				player_rocket.renderable = true;
+			}
+			else if (player_rocket.renderable) {
+				player_rocket.renderable = false;
 			}
 			else {
 				this.removeChild(this.uiContainer);
