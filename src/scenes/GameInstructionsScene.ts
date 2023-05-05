@@ -49,8 +49,33 @@ export class GameInstructionsScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
+		// player
+		const player = new GameObjectContainer();
+
+		const player_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_balloon_1_idle"));
+		player_sprite.width = 256 / 2;
+		player_sprite.height = 256 / 2;
+		player_sprite.x = 0;
+		player_sprite.y = 0;
+
+		const player_container = new GameObjectContainer();
+		player_container.addChild(player_sprite);
+		player.addChild(player_container);
+
+		const player_msg = new MessageBubble(0, "This is you.", 20);
+		player_msg.setPosition(player_container.x + player_container.width + 10, player_container.y + 25);
+		player.addChild(player_msg);
+
+		const player_msg_2 = new MessageBubble(0, "Your job is to stop sound pollution in cities.", 20);
+		player_msg_2.setPosition(player_msg.x, player_msg.y + 50);
+		player.addChild(player_msg_2);
+
+		player.setPosition(this.uiContainer.width / 2 - player.width / 2, (this.uiContainer.height / 2 - player.height / 2) + 10);
+		this.uiContainer.addChild(player);
+
 		// joy stick
 		const joystick = new GameObjectContainer();
+		joystick.renderable = false;
 
 		const joystick_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick"));
 		joystick_sprite.width = 256 / 2;
@@ -69,20 +94,24 @@ export class GameInstructionsScene extends Container implements IScene {
 		joystick_controller_container.addChild(joystick_handle_sprite);
 		joystick.addChild(joystick_controller_container);
 
-		const joystick_msg = new MessageBubble(0, "Use this or ⌨️ arrow keys to move.", 20);
+		const joystick_msg = new MessageBubble(0, "Use this to move around.", 20);
 		joystick_msg.setPosition(joystick_controller_container.x + joystick_controller_container.width, joystick_controller_container.y + 50);
 		joystick.addChild(joystick_msg);
+
+		const joystick_msg_2 = new MessageBubble(0, "Or press the ⌨️ arrow keys.", 20);
+		joystick_msg_2.setPosition(joystick_msg.x, joystick_msg.y + 50);
+		joystick.addChild(joystick_msg_2);
 
 		joystick.setPosition(this.uiContainer.width / 2 - joystick.width / 2, (this.uiContainer.height / 2 - joystick.height / 2) + 10);
 		this.uiContainer.addChild(joystick);
 
-		// attack button
+		// attack_button
 		const attack_button = new GameObjectContainer();
 		attack_button.renderable = false;
 
 		const attack_button_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("attack_button"));
-		attack_button_sprite.width = 256 / 2;
-		attack_button_sprite.height = 256 / 2;
+		attack_button_sprite.width = 256 / 2.5;
+		attack_button_sprite.height = 256 / 2.5;
 		attack_button_sprite.x = 0;
 		attack_button_sprite.y = 0;
 
@@ -90,9 +119,13 @@ export class GameInstructionsScene extends Container implements IScene {
 		attack_button_container.addChild(attack_button_sprite);
 		attack_button.addChild(attack_button_container);
 
-		const attack_button_msg = new MessageBubble(0, "Press this or ⌨️ space key to attack.", 20);
+		const attack_button_msg = new MessageBubble(0, "Press this to attack.", 20);
 		attack_button_msg.setPosition(attack_button_container.x + attack_button_container.width + 10, attack_button_container.y + 25);
 		attack_button.addChild(attack_button_msg);
+
+		const attack_button_msg_2 = new MessageBubble(0, "Or Press the ⌨️ space bar.", 20);
+		attack_button_msg_2.setPosition(attack_button_msg.x, attack_button_msg.y + 50);
+		attack_button.addChild(attack_button_msg_2);
 
 		attack_button.setPosition(this.uiContainer.width / 2 - attack_button.width / 2, (this.uiContainer.height / 2 - attack_button.height / 2) + 10);
 		this.uiContainer.addChild(attack_button);
@@ -132,7 +165,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		car_container.addChild(car_sprite);
 		car.addChild(car_container);
 
-		const car_msg = new MessageBubble(0, "Stop honking cars by dropping bombs on 'em.", 20);
+		const car_msg = new MessageBubble(0, "Drop bombs on honking cars.", 20);
 		car_msg.setPosition(car_container.x + car_container.width + 10, car_container.y + 25);
 		car.addChild(car_msg);
 
@@ -183,6 +216,98 @@ export class GameInstructionsScene extends Container implements IScene {
 		ufo.setPosition(this.uiContainer.width / 2 - ufo.width / 2, (this.uiContainer.height / 2 - ufo.height / 2) + 10);
 		this.uiContainer.addChild(ufo);
 
+		// health
+		const health = new GameObjectContainer();
+		health.renderable = false;
+
+		const health_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("health_pickup"));
+		health_sprite.width = 256 / 2;
+		health_sprite.height = 256 / 2;
+		health_sprite.x = 0;
+		health_sprite.y = 0;
+
+		const health_container = new GameObjectContainer();
+		health_container.addChild(health_sprite);
+		health.addChild(health_container);
+
+		const health_msg = new MessageBubble(0, "These are health drops.", 20);
+		health_msg.setPosition(health_container.x + health_container.width + 10, health_container.y + 25);
+		health.addChild(health_msg);
+
+		const health_msg_2 = new MessageBubble(0, "Collect 'em to replenish your health.", 20);
+		health_msg_2.setPosition(health_msg.x, health_msg.y + 50);
+		health.addChild(health_msg_2);
+
+		health.setPosition(this.uiContainer.width / 2 - health.width / 2, (this.uiContainer.height / 2 - health.height / 2) + 10);
+		this.uiContainer.addChild(health);
+
+		// player_health_bar
+		const player_health_bar = new GameObjectContainer();
+		player_health_bar.renderable = false;
+
+		const player_health_bar_sprite = new HealthBar(Texture.from("health_pickup"), player_health_bar);
+		player_health_bar_sprite.setMaximumValue(100);
+		player_health_bar_sprite.setValue(50);
+		player_health_bar_sprite.x = 0;
+		player_health_bar_sprite.y = 0;
+
+		const player_health_bar_container = new GameObjectContainer();
+		player_health_bar_container.addChild(player_health_bar_sprite);
+		player_health_bar.addChild(player_health_bar_container);
+
+		const player_health_bar_msg = new MessageBubble(0, "This is your health bar.", 20);
+		player_health_bar_msg.setPosition(player_health_bar_container.x + player_health_bar_container.width + 10, player_health_bar_container.y + 25);
+		player_health_bar.addChild(player_health_bar_msg);
+
+		player_health_bar.setPosition(this.uiContainer.width / 2 - player_health_bar.width / 2, (this.uiContainer.height / 2 - player_health_bar.height / 2) + 10);
+		this.uiContainer.addChild(player_health_bar);
+
+		// power_up
+		const power_up = new GameObjectContainer();
+		power_up.renderable = false;
+
+		const power_up_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("powerup_pickup_armor"));
+		power_up_sprite.width = 256 / 2;
+		power_up_sprite.height = 256 / 2;
+		power_up_sprite.x = 0;
+		power_up_sprite.y = 0;
+
+		const power_up_container = new GameObjectContainer();
+		power_up_container.addChild(power_up_sprite);
+		power_up.addChild(power_up_container);
+
+		const power_up_msg = new MessageBubble(0, "These are power up drops.", 20);
+		power_up_msg.setPosition(power_up_container.x + power_up_container.width + 10, power_up_container.y + 25);
+		power_up.addChild(power_up_msg);
+
+		const power_up_msg_2 = new MessageBubble(0, "Collect 'em to get awesome powers.", 20);
+		power_up_msg_2.setPosition(power_up_msg.x, power_up_msg.y + 50);
+		power_up.addChild(power_up_msg_2);
+
+		power_up.setPosition(this.uiContainer.width / 2 - power_up.width / 2, (this.uiContainer.height / 2 - power_up.height / 2) + 10);
+		this.uiContainer.addChild(power_up);
+
+		// player_power_up_bar
+		const player_power_up_bar = new GameObjectContainer();
+		player_power_up_bar.renderable = false;
+
+		const player_power_up_bar_sprite = new HealthBar(Texture.from("powerup_pickup_armor"), player_power_up_bar, 0xffaa00);
+		player_power_up_bar_sprite.setMaximumValue(100);
+		player_power_up_bar_sprite.setValue(50);
+		player_power_up_bar_sprite.x = 0;
+		player_power_up_bar_sprite.y = 0;
+
+		const player_power_up_bar_container = new GameObjectContainer();
+		player_power_up_bar_container.addChild(player_power_up_bar_sprite);
+		player_power_up_bar.addChild(player_power_up_bar_container);
+
+		const player_power_up_bar_msg = new MessageBubble(0, "This is your power up bar.", 20);
+		player_power_up_bar_msg.setPosition(player_power_up_bar_container.x + player_power_up_bar_container.width + 10, player_power_up_bar_container.y + 25);
+		player_power_up_bar.addChild(player_power_up_bar_msg);
+
+		player_power_up_bar.setPosition(this.uiContainer.width / 2 - player_power_up_bar.width / 2, (this.uiContainer.height / 2 - player_power_up_bar.height / 2) + 10);
+		this.uiContainer.addChild(player_power_up_bar);
+
 		// score
 		const score = new GameObjectContainer();
 		score.renderable = false;
@@ -221,74 +346,14 @@ export class GameInstructionsScene extends Container implements IScene {
 		level.setPosition(this.uiContainer.width / 2 - level.width / 2, (this.uiContainer.height / 2 - level.height / 2) + 10);
 		this.uiContainer.addChild(level);
 
-		// player_health_bar
-		const player_health_bar = new GameObjectContainer();
-		player_health_bar.renderable = false;
-
-		const player_health_bar_sprite = new HealthBar(Texture.from("health_pickup"), player_health_bar);
-		player_health_bar_sprite.setMaximumValue(100);
-		player_health_bar_sprite.setValue(50);
-		player_health_bar_sprite.x = 0;
-		player_health_bar_sprite.y = 0;
-
-		const player_health_bar_container = new GameObjectContainer();
-		player_health_bar_container.addChild(player_health_bar_sprite);
-		player_health_bar.addChild(player_health_bar_container);
-
-		const player_health_bar_msg = new MessageBubble(0, "This is your health bar.", 20);
-		player_health_bar_msg.setPosition(player_health_bar_container.x + player_health_bar_container.width + 10, player_health_bar_container.y + 25);
-		player_health_bar.addChild(player_health_bar_msg);
-
-		player_health_bar.setPosition(this.uiContainer.width / 2 - player_health_bar.width / 2, (this.uiContainer.height / 2 - player_health_bar.height / 2) + 10);
-		this.uiContainer.addChild(player_health_bar);
-
-		// power_up
-		const power_up = new GameObjectContainer();
-		power_up.renderable = false;
-
-		const power_up_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("powerup_pickup_armor"));
-		power_up_sprite.width = 256 / 2;
-		power_up_sprite.height = 256 / 2;
-		power_up_sprite.x = 0;
-		power_up_sprite.y = 0;
-
-		const power_up_container = new GameObjectContainer();
-		power_up_container.addChild(power_up_sprite);
-		power_up.addChild(power_up_container);
-
-		const power_up_msg = new MessageBubble(0, "Collect these are power ups.", 20);
-		power_up_msg.setPosition(power_up_container.x + power_up_container.width + 10, power_up_container.y + 25);
-		power_up.addChild(power_up_msg);
-
-		power_up.setPosition(this.uiContainer.width / 2 - power_up.width / 2, (this.uiContainer.height / 2 - power_up.height / 2) + 10);
-		this.uiContainer.addChild(power_up);
-
-		// player_power_up_bar
-		const player_power_up_bar = new GameObjectContainer();
-		player_power_up_bar.renderable = false;
-
-		const player_power_up_bar_sprite = new HealthBar(Texture.from("powerup_pickup_armor"), player_power_up_bar, 0xffaa00);
-		player_power_up_bar_sprite.setMaximumValue(100);
-		player_power_up_bar_sprite.setValue(50);
-		player_power_up_bar_sprite.x = 0;
-		player_power_up_bar_sprite.y = 0;
-
-		const player_power_up_bar_container = new GameObjectContainer();
-		player_power_up_bar_container.addChild(player_power_up_bar_sprite);
-		player_power_up_bar.addChild(player_power_up_bar_container);
-
-		const player_power_up_bar_msg = new MessageBubble(0, "This is your power up bar.", 20);
-		player_power_up_bar_msg.setPosition(player_power_up_bar_container.x + player_power_up_bar_container.width + 10, player_power_up_bar_container.y + 25);
-		player_power_up_bar.addChild(player_power_up_bar_msg);
-
-		player_power_up_bar.setPosition(this.uiContainer.width / 2 - player_power_up_bar.width / 2, (this.uiContainer.height / 2 - player_power_up_bar.height / 2) + 10);
-		this.uiContainer.addChild(player_power_up_bar);
-
 		const button = new Button(() => {
 
 			SoundManager.play(SoundType.OPTION_SELECT);
-
-			if (joystick.renderable) {
+			if (player.renderable) {
+				player.renderable = false;
+				joystick.renderable = true;
+			}
+			else if (joystick.renderable) {
 				joystick.renderable = false;
 				attack_button.renderable = true;
 			}
@@ -310,14 +375,10 @@ export class GameInstructionsScene extends Container implements IScene {
 			}
 			else if (ufo.renderable) {
 				ufo.renderable = false;
-				score.renderable = true;
+				health.renderable = true;
 			}
-			else if (score.renderable) {
-				score.renderable = false;
-				level.renderable = true;
-			}
-			else if (level.renderable) {
-				level.renderable = false;
+			else if (health.renderable) {
+				health.renderable = false;
 				player_health_bar.renderable = true;
 			}
 			else if (player_health_bar.renderable) {
@@ -327,6 +388,14 @@ export class GameInstructionsScene extends Container implements IScene {
 			else if (power_up.renderable) {
 				power_up.renderable = false;
 				player_power_up_bar.renderable = true;
+			}
+			else if (player_power_up_bar.renderable) {
+				player_power_up_bar.renderable = false;
+				score.renderable = true;
+			}
+			else if (score.renderable) {
+				score.renderable = false;
+				level.renderable = true;
 			}
 			else {
 				this.removeChild(this.uiContainer);
