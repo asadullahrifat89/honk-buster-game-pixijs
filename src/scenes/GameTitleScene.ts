@@ -61,7 +61,9 @@ export class GameTitleScene extends Container implements IScene {
 		const newGameButton = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			Constants.HOW_TO_PLAY_MODE = false;
-			SceneManager.isNavigating = true;
+			this.removeChild(this.uiContainer);
+			SceneManager.changeScene(new PlayerCharacterSelectionScene());
+			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.5, true);
 		}).setText("New Game");
 		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, this.uiContainer.height / 2 - newGameButton.height / 2);
 		this.uiContainer.addChild(newGameButton);
@@ -92,19 +94,7 @@ export class GameTitleScene extends Container implements IScene {
 	}
 
 	public update(_framesPassed: number) {
-
-		if (SceneManager.isNavigating) {
-			this.uiContainer.alpha -= 0.06;
-
-			if (this.uiContainer.alpha <= 0) {
-				this.removeChild(this.uiContainer);
-				SceneManager.changeScene(new PlayerCharacterSelectionScene());
-				SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.5, true);
-			}
-		}
-		else {
-			this.bg_container.hover();
-		}
+		this.bg_container.hover();
 	}
 
 	public resize(scale: number): void {

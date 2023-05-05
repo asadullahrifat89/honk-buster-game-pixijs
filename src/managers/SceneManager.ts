@@ -8,8 +8,7 @@ export class SceneManager {
 	private static app: Application;
 	private static currentScene: IScene;
 
-	public static scaling: number = 1;
-	public static isNavigating: boolean = false;
+	public static scaling: number = 1;	
 
 	//#endregion
 
@@ -66,9 +65,7 @@ export class SceneManager {
 	}
 
 	// Call this function when you want to go to a new scene
-	public static changeScene(newScene: IScene): void {
-
-		this.isNavigating = false;
+	public static changeScene(newScene: IScene): void {		
 
 		// if the screen supports fullscreen, toggle it
 		if (document.documentElement.requestFullscreen) {
