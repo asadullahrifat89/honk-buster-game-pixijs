@@ -9,6 +9,7 @@ import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
 import { MessageBubble } from "../controls/MessageBubble";
 import { GameTitleScene } from "./GameTitleScene";
+import { HealthBar } from "../controls/HealthBar";
 
 
 export class GameInstructionsScene extends Container implements IScene {
@@ -136,7 +137,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		car.addChild(car_msg);
 
 		car.setPosition(this.uiContainer.width / 2 - car.width / 2, (this.uiContainer.height / 2 - car.height / 2) + 10);
-		this.uiContainer.addChild(car);		
+		this.uiContainer.addChild(car);
 
 		// player_rocket
 		const player_rocket = new GameObjectContainer();
@@ -213,12 +214,33 @@ export class GameInstructionsScene extends Container implements IScene {
 		level_container.addChild(level_sprite);
 		level.addChild(level_container);
 
-		const level_msg = new MessageBubble(0, "This is your level bar. The game gets harder with level up.", 20);
+		const level_msg = new MessageBubble(0, "This is your level bar.", 20);
 		level_msg.setPosition(level_container.x + level_container.width + 10, level_container.y + 25);
 		level.addChild(level_msg);
 
 		level.setPosition(this.uiContainer.width / 2 - level.width / 2, (this.uiContainer.height / 2 - level.height / 2) + 10);
 		this.uiContainer.addChild(level);
+
+		// player_health_bar
+		const player_health_bar = new GameObjectContainer();
+		player_health_bar.renderable = false;
+
+		const player_health_bar_sprite = new HealthBar(Texture.from("health_pickup"), player_health_bar);
+		player_health_bar_sprite.setMaximumValue(100);
+		player_health_bar_sprite.setValue(50);
+		player_health_bar_sprite.x = 0;
+		player_health_bar_sprite.y = 0;
+
+		const player_health_bar_container = new GameObjectContainer();
+		player_health_bar_container.addChild(player_health_bar_sprite);
+		player_health_bar.addChild(player_health_bar_container);
+
+		const player_health_bar_msg = new MessageBubble(0, "This is your health bar.", 20);
+		player_health_bar_msg.setPosition(player_health_bar_container.x + player_health_bar_container.width + 10, player_health_bar_container.y + 25);
+		player_health_bar.addChild(player_health_bar_msg);
+
+		player_health_bar.setPosition(this.uiContainer.width / 2 - player_health_bar.width / 2, (this.uiContainer.height / 2 - player_health_bar.height / 2) + 10);
+		this.uiContainer.addChild(player_health_bar);
 
 		const button = new Button(() => {
 
@@ -246,11 +268,15 @@ export class GameInstructionsScene extends Container implements IScene {
 			}
 			else if (ufo.renderable) {
 				ufo.renderable = false;
-				score.renderable = true;				
+				score.renderable = true;
 			}
 			else if (score.renderable) {
 				score.renderable = false;
 				level.renderable = true;
+			}
+			else if (level.renderable) {
+				level.renderable = false;
+				player_health_bar.renderable = true;
 			}
 			else {
 				this.removeChild(this.uiContainer);
