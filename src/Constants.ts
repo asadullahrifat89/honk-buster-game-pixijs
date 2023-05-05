@@ -225,8 +225,6 @@ export abstract class Constants {
 	public static MESSAGE_BOX_BORDER_COLOR: number = 0x000000;
 	public static MESSAGE_BOX_TEXT_COLOR: string = "#000000";
 
-	public static HOW_TO_PLAY_MODE: boolean = false;
-
 	public static GAME_SCORE: number = 0;
 
 	public static GAME_TITLE_FONT = "stitchnschool";
@@ -455,12 +453,12 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, this.imagessDirectory + "ufo_boss_rocket_3.png"),
 		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET_SEEKING, this.imagessDirectory + "ufo_boss_rocket_seeking.png"),
 
-		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "enemy_1.png"),
-		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "enemy_2.png"),
-		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "enemy_3.png"),
-		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "enemy_4.png"),
+		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "ufo_enemy_1.png"),
+		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "ufo_enemy_2.png"),
+		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "ufo_enemy_3.png"),
+		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "ufo_enemy_4.png"),
 
-		new ConstructTemplate(ConstructType.UFO_ENEMY_ROCKET, this.imagessDirectory + "enemy_bomb.png"),
+		new ConstructTemplate(ConstructType.UFO_ENEMY_ROCKET, this.imagessDirectory + "ufo_enemy_bomb.png"),
 
 		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_HIT, this.imagessDirectory + "zombie_boss_1_hit.png"),
 		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_IDLE, this.imagessDirectory + "zombie_boss_1_idle.png"),

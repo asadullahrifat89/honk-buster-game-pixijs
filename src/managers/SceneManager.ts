@@ -9,7 +9,6 @@ export class SceneManager {
 	private static currentScene: IScene;
 
 	public static scaling: number = 1;
-	public static isNavigating: boolean = false;
 
 	//#endregion
 
@@ -32,7 +31,7 @@ export class SceneManager {
 			backgroundColor: background,
 			width: width,
 			height: height,
-			sharedTicker: true,			
+			sharedTicker: true,
 		});
 
 		// Add the ticker
@@ -68,8 +67,6 @@ export class SceneManager {
 	// Call this function when you want to go to a new scene
 	public static changeScene(newScene: IScene): void {
 
-		this.isNavigating = false;
-
 		// if the screen supports fullscreen, toggle it
 		if (document.documentElement.requestFullscreen) {
 			document.documentElement.requestFullscreen();
@@ -82,6 +79,7 @@ export class SceneManager {
 		}
 
 		// Add the new one
+		newScene.alpha = 0;
 		SceneManager.currentScene = newScene;
 		SceneManager.app.stage.addChild(SceneManager.currentScene);
 		SceneManager.resize();
@@ -123,13 +121,17 @@ export class SceneManager {
 
 		// console.log("FPS: " + Manager.app.ticker.FPS);
 
-		// Let the current scene know that we updated it...
-		// Just for funzies, sanity check that it exists first.
+		// Let the current scene know that we updated it		
 		if (SceneManager.currentScene) {
+
+			if (SceneManager.currentScene.alpha < 1) {
+				SceneManager.currentScene.alpha += 0.06;
+			}
+
 			SceneManager.currentScene.update(framesPassed);
 		}
 
-		// as I said before, I HATE the "frame passed" approach. I would rather use `Manager.app.ticker.deltaMS`
+		// I HATE the "frame passed" approach. I would rather use `Manager.app.ticker.deltaMS`
 	}
 
 	//#endregion

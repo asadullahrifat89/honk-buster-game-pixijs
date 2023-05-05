@@ -38,7 +38,7 @@ import { SoundTemplate } from "../core/SoundTemplate";
 import { MessageBubble } from "../controls/MessageBubble";
 
 
-export class GameScene extends Container implements IScene {
+export class GamePlayScene extends Container implements IScene {
 
 	//#region Properties
 
@@ -115,8 +115,7 @@ export class GameScene extends Container implements IScene {
 
 		// create the scene container
 		this.sceneContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-		this.addChild(this.sceneContainer);
-		this.sceneContainer.alpha = 0;
+		this.addChild(this.sceneContainer);		
 
 		// set the check points
 		this.vehicleBossCheckpoint = new GameCheckpoint(this.vehicleBossReleasePoint);
@@ -3884,11 +3883,6 @@ export class GameScene extends Container implements IScene {
 	//#region Scene
 
 	public update(_framesPassed: number) {
-
-		if (this.sceneContainer.alpha < 1) {
-			this.sceneContainer.alpha += 0.02;
-		}
-
 		this.processFrame();
 	}
 
@@ -3911,12 +3905,11 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private processFrame() {
+
 		if (!this.gameController.isPaused) {
 			this.generateGameObjects();
-			this.animateGameObjects();
-
+			this.animateGameObjects();						
 			this.gameController.update();
-			this.animatePlayerBalloon();
 		}
 	}
 
@@ -4012,6 +4005,8 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private animateGameObjects() {
+
+		this.animatePlayerBalloon();
 
 		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
 			this.animateRoadMarks();

@@ -1,5 +1,5 @@
 ﻿import { BlurFilter, Container, Text, Texture } from "pixi.js";
-import { GameScene } from "./GameScene";
+import { GamePlayScene } from "./GamePlayScene";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -29,8 +29,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		bg_sprite.x = 0;
 		bg_sprite.y = 0;
 		bg_sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
-		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
-		//bg_sprite.alpha = 0.4;
+		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;		
 		bg_sprite.filters = [new BlurFilter()];
 
 		this.bg_container = new GameObjectContainer();
@@ -98,7 +97,8 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 
 			if (option_1_sprite.filters || option_2_sprite.filters || option_3_sprite.filters) {
 				SoundManager.play(SoundType.OPTION_SELECT);
-				SceneManager.isNavigating = true;
+				this.removeChild(this.uiContainer);
+				SceneManager.changeScene(new GamePlayScene());
 			}
 			else {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
@@ -110,16 +110,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 	}
 
 	public update(_framesPassed: number) {
-		if (SceneManager.isNavigating) {
-			this.uiContainer.alpha -= 0.06;
-			if (this.uiContainer.alpha <= 0) {
-				this.removeChild(this.uiContainer);
-				SceneManager.changeScene(new GameScene());
-			}
-		}
-		//else {
-		//	this.bg_container.hover();
-		//}
+		
 	}
 
 	public resize(scale: number): void {
