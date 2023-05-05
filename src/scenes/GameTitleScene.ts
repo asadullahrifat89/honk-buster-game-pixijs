@@ -59,8 +59,7 @@ export class GameTitleScene extends Container implements IScene {
 
 		// new game button
 		const newGameButton = new Button(() => {
-			SoundManager.play(SoundType.OPTION_SELECT);
-			Constants.HOW_TO_PLAY_MODE = false;
+			SoundManager.play(SoundType.OPTION_SELECT);			
 			this.removeChild(this.uiContainer);
 			SceneManager.changeScene(new PlayerCharacterSelectionScene());
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.5, true);

@@ -225,8 +225,6 @@ export abstract class Constants {
 	public static MESSAGE_BOX_BORDER_COLOR: number = 0x000000;
 	public static MESSAGE_BOX_TEXT_COLOR: string = "#000000";
 
-	public static HOW_TO_PLAY_MODE: boolean = false;
-
 	public static GAME_SCORE: number = 0;
 
 	public static GAME_TITLE_FONT = "stitchnschool";
