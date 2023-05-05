@@ -242,6 +242,48 @@ export class GameInstructionsScene extends Container implements IScene {
 		player_health_bar.setPosition(this.uiContainer.width / 2 - player_health_bar.width / 2, (this.uiContainer.height / 2 - player_health_bar.height / 2) + 10);
 		this.uiContainer.addChild(player_health_bar);
 
+		// power_up
+		const power_up = new GameObjectContainer();
+		power_up.renderable = false;
+
+		const power_up_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("powerup_pickup_armor"));
+		power_up_sprite.width = 256 / 2;
+		power_up_sprite.height = 256 / 2;
+		power_up_sprite.x = 0;
+		power_up_sprite.y = 0;
+
+		const power_up_container = new GameObjectContainer();
+		power_up_container.addChild(power_up_sprite);
+		power_up.addChild(power_up_container);
+
+		const power_up_msg = new MessageBubble(0, "Collect these are power ups.", 20);
+		power_up_msg.setPosition(power_up_container.x + power_up_container.width + 10, power_up_container.y + 25);
+		power_up.addChild(power_up_msg);
+
+		power_up.setPosition(this.uiContainer.width / 2 - power_up.width / 2, (this.uiContainer.height / 2 - power_up.height / 2) + 10);
+		this.uiContainer.addChild(power_up);
+
+		// player_power_up_bar
+		const player_power_up_bar = new GameObjectContainer();
+		player_power_up_bar.renderable = false;
+
+		const player_power_up_bar_sprite = new HealthBar(Texture.from("powerup_pickup_armor"), player_power_up_bar, 0xffaa00);
+		player_power_up_bar_sprite.setMaximumValue(100);
+		player_power_up_bar_sprite.setValue(50);
+		player_power_up_bar_sprite.x = 0;
+		player_power_up_bar_sprite.y = 0;
+
+		const player_power_up_bar_container = new GameObjectContainer();
+		player_power_up_bar_container.addChild(player_power_up_bar_sprite);
+		player_power_up_bar.addChild(player_power_up_bar_container);
+
+		const player_power_up_bar_msg = new MessageBubble(0, "This is your power up bar.", 20);
+		player_power_up_bar_msg.setPosition(player_power_up_bar_container.x + player_power_up_bar_container.width + 10, player_power_up_bar_container.y + 25);
+		player_power_up_bar.addChild(player_power_up_bar_msg);
+
+		player_power_up_bar.setPosition(this.uiContainer.width / 2 - player_power_up_bar.width / 2, (this.uiContainer.height / 2 - player_power_up_bar.height / 2) + 10);
+		this.uiContainer.addChild(player_power_up_bar);
+
 		const button = new Button(() => {
 
 			SoundManager.play(SoundType.OPTION_SELECT);
@@ -277,6 +319,14 @@ export class GameInstructionsScene extends Container implements IScene {
 			else if (level.renderable) {
 				level.renderable = false;
 				player_health_bar.renderable = true;
+			}
+			else if (player_health_bar.renderable) {
+				player_health_bar.renderable = false;
+				power_up.renderable = true;
+			}
+			else if (power_up.renderable) {
+				power_up.renderable = false;
+				player_power_up_bar.renderable = true;
 			}
 			else {
 				this.removeChild(this.uiContainer);
