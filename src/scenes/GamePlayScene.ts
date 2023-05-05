@@ -38,7 +38,7 @@ import { SoundTemplate } from "../core/SoundTemplate";
 import { MessageBubble } from "../controls/MessageBubble";
 
 
-export class GameScene extends Container implements IScene {
+export class GamePlayScene extends Container implements IScene {
 
 	//#region Properties
 
@@ -3911,12 +3911,11 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private processFrame() {
+
 		if (!this.gameController.isPaused) {
 			this.generateGameObjects();
-			this.animateGameObjects();
-
+			this.animateGameObjects();						
 			this.gameController.update();
-			this.animatePlayerBalloon();
 		}
 	}
 
@@ -4012,6 +4011,8 @@ export class GameScene extends Container implements IScene {
 	}
 
 	private animateGameObjects() {
+
+		this.animatePlayerBalloon();
 
 		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
 			this.animateRoadMarks();

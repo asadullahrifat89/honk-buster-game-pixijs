@@ -1,5 +1,5 @@
 ﻿import { BlurFilter, Container, Text, Texture } from "pixi.js";
-import { GameScene } from "./GameScene";
+import { GamePlayScene } from "./GamePlayScene";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -114,7 +114,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 			this.uiContainer.alpha -= 0.06;
 			if (this.uiContainer.alpha <= 0) {
 				this.removeChild(this.uiContainer);
-				SceneManager.changeScene(new GameScene());
+				SceneManager.changeScene(new GamePlayScene());
 			}
 		}
 		//else {
