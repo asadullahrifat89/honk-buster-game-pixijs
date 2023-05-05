@@ -34,12 +34,12 @@ export const manifest: ResolverManifest = {
 
 				"chopper_blades": "./images/chopper_blades.png",
 
-				"enemy_1": "./images/enemy_1.png",
-				"enemy_2": "./images/enemy_2.png",
-				"enemy_3": "./images/enemy_3.png",
-				"enemy_4": "./images/enemy_4.png",
+				"ufo_enemy_1": "./images/ufo_enemy_1.png",
+				"ufo_enemy_2": "./images/ufo_enemy_2.png",
+				"ufo_enemy_3": "./images/ufo_enemy_3.png",
+				"ufo_enemy_4": "./images/ufo_enemy_4.png",
 
-				"enemy_bomb": "./images/enemy_bomb.png",
+				"ufo_enemy_bomb": "./images/ufo_enemy_bomb.png",
 
 				"explosion_1": "./images/explosion_1.png",
 				"explosion_2": "./images/explosion_2.png",

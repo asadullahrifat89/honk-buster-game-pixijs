@@ -145,20 +145,42 @@ export class GameInstructionsScene extends Container implements IScene {
 		const player_rocket_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_rocket_1"));
 		player_rocket_sprite.width = 256 / 2;
 		player_rocket_sprite.height = 256 / 2;
-		player_rocket_sprite.x = 0;
-		player_rocket_sprite.y = 0;
+		player_rocket_sprite.x = 100;
+		player_rocket_sprite.y = 25;
 		player_rocket_sprite.angle = 213;
+		player_rocket_sprite.anchor.set(1);
 
 		const player_rocket_container = new GameObjectContainer();
 		player_rocket_container.addChild(player_rocket_sprite);
 		player_rocket.addChild(player_rocket_container);
 
-		const player_rocket_msg = new MessageBubble(0, "These are your drop bombs.", 20);
+		const player_rocket_msg = new MessageBubble(0, "These are your rockets.", 20);
 		player_rocket_msg.setPosition(player_rocket_container.x + player_rocket_container.width + 10, player_rocket_container.y + 25);
 		player_rocket.addChild(player_rocket_msg);
 
 		player_rocket.setPosition(this.uiContainer.width / 2 - player_rocket.width / 2, (this.uiContainer.height / 2 - player_rocket.height / 2) + 10);
 		this.uiContainer.addChild(player_rocket);
+
+		// ufo
+		const ufo = new GameObjectContainer();
+		ufo.renderable = false;
+
+		const ufo_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("ufo_enemy_1"));
+		ufo_sprite.width = 256 / 2;
+		ufo_sprite.height = 256 / 2;
+		ufo_sprite.x = 0;
+		ufo_sprite.y = 0;
+
+		const ufo_container = new GameObjectContainer();
+		ufo_container.addChild(ufo_sprite);
+		ufo.addChild(ufo_container);
+
+		const ufo_msg = new MessageBubble(0, "Shoot rockets at ufos.", 20);
+		ufo_msg.setPosition(ufo_container.x + ufo_container.width + 10, ufo_container.y + 25);
+		ufo.addChild(ufo_msg);
+
+		ufo.setPosition(this.uiContainer.width / 2 - ufo.width / 2, (this.uiContainer.height / 2 - ufo.height / 2) + 10);
+		this.uiContainer.addChild(ufo);
 
 		const button = new Button(() => {
 
@@ -182,6 +204,10 @@ export class GameInstructionsScene extends Container implements IScene {
 			}
 			else if (player_rocket.renderable) {
 				player_rocket.renderable = false;
+				ufo.renderable = true;
+			}
+			else if (ufo.renderable) {
+				ufo.renderable = false;
 			}
 			else {
 				this.removeChild(this.uiContainer);
