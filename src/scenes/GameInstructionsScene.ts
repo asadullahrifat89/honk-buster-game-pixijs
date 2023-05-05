@@ -259,6 +259,10 @@ export class GameInstructionsScene extends Container implements IScene {
 		player_health_bar_msg.setPosition(player_health_bar_container.x + player_health_bar_container.width + 10, player_health_bar_container.y + 25);
 		player_health_bar.addChild(player_health_bar_msg);
 
+		const player_health_bar_msg_2 = new MessageBubble(0, "If this drops to zero, it's game over.", 20);
+		player_health_bar_msg_2.setPosition(player_health_bar_msg.x, player_health_bar_msg.y + 50);
+		player_health_bar.addChild(player_health_bar_msg_2);
+
 		player_health_bar.setPosition(this.uiContainer.width / 2 - player_health_bar.width / 2, (this.uiContainer.height / 2 - player_health_bar.height / 2) + 10);
 		this.uiContainer.addChild(player_health_bar);
 
@@ -305,8 +309,83 @@ export class GameInstructionsScene extends Container implements IScene {
 		player_power_up_bar_msg.setPosition(player_power_up_bar_container.x + player_power_up_bar_container.width + 10, player_power_up_bar_container.y + 25);
 		player_power_up_bar.addChild(player_power_up_bar_msg);
 
+		const player_power_up_bar_msg_2 = new MessageBubble(0, "Using your power depletes it.", 20);
+		player_power_up_bar_msg_2.setPosition(player_power_up_bar_msg.x, player_power_up_bar_msg.y + 50);
+		player_power_up_bar.addChild(player_power_up_bar_msg_2);
+
 		player_power_up_bar.setPosition(this.uiContainer.width / 2 - player_power_up_bar.width / 2, (this.uiContainer.height / 2 - player_power_up_bar.height / 2) + 10);
 		this.uiContainer.addChild(player_power_up_bar);
+
+		// car_boss
+		const car_boss = new GameObjectContainer();
+		car_boss.renderable = false;
+
+		const car_boss_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("vehicle_boss_1"));
+		car_boss_sprite.width = 256 / 2;
+		car_boss_sprite.height = 256 / 2;
+		car_boss_sprite.x = 0;
+		car_boss_sprite.y = 0;
+
+		const car_boss_container = new GameObjectContainer();
+		car_boss_container.addChild(car_boss_sprite);
+		car_boss.addChild(car_boss_container);
+
+		const car_boss_msg = new MessageBubble(0, "These are car bosses.", 20);
+		car_boss_msg.setPosition(car_boss_container.x + car_boss_container.width + 10, car_boss_container.y + 25);
+		car_boss.addChild(car_boss_msg);
+
+		const car_boss_msg_2 = new MessageBubble(0, "Defeat them to complete a level.", 20);
+		car_boss_msg_2.setPosition(car_boss_msg.x, car_boss_msg.y + 50);
+		car_boss.addChild(car_boss_msg_2);
+
+		car_boss.setPosition(this.uiContainer.width / 2 - car_boss.width / 2, (this.uiContainer.height / 2 - car_boss.height / 2) + 10);
+		this.uiContainer.addChild(car_boss);
+
+		// ufo_boss
+		const ufo_boss = new GameObjectContainer();
+		ufo_boss.renderable = false;
+
+		const ufo_boss_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("ufo_boss_1_idle"));
+		ufo_boss_sprite.width = 256 / 2;
+		ufo_boss_sprite.height = 256 / 2;
+		ufo_boss_sprite.x = 0;
+		ufo_boss_sprite.y = 0;
+
+		const ufo_boss_container = new GameObjectContainer();
+		ufo_boss_container.addChild(ufo_boss_sprite);
+		ufo_boss.addChild(ufo_boss_container);
+
+		const ufo_boss_msg = new MessageBubble(0, "These are ufo bosses.", 20);
+		ufo_boss_msg.setPosition(ufo_boss_container.x + ufo_boss_container.width + 10, ufo_boss_container.y + 25);
+		ufo_boss.addChild(ufo_boss_msg);
+
+		const ufo_boss_msg_2 = new MessageBubble(0, "Defeat them to complete a level.", 20);
+		ufo_boss_msg_2.setPosition(ufo_boss_msg.x, ufo_boss_msg.y + 50);
+		ufo_boss.addChild(ufo_boss_msg_2);
+
+		ufo_boss.setPosition(this.uiContainer.width / 2 - ufo_boss.width / 2, (this.uiContainer.height / 2 - ufo_boss.height / 2) + 10);
+		this.uiContainer.addChild(ufo_boss);
+
+		// boss_health_bar
+		const boss_health_bar = new GameObjectContainer();
+		boss_health_bar.renderable = false;
+
+		const boss_health_bar_sprite = new HealthBar(Texture.from("ufo_boss_1_idle"), boss_health_bar);
+		boss_health_bar_sprite.setMaximumValue(100);
+		boss_health_bar_sprite.setValue(50);
+		boss_health_bar_sprite.x = 0;
+		boss_health_bar_sprite.y = 0;
+
+		const boss_health_bar_container = new GameObjectContainer();
+		boss_health_bar_container.addChild(boss_health_bar_sprite);
+		boss_health_bar.addChild(boss_health_bar_container);
+
+		const boss_health_bar_msg = new MessageBubble(0, "This is boss health bar.", 20);
+		boss_health_bar_msg.setPosition(boss_health_bar_container.x + boss_health_bar_container.width + 10, boss_health_bar_container.y + 25);
+		boss_health_bar.addChild(boss_health_bar_msg);
+
+		boss_health_bar.setPosition(this.uiContainer.width / 2 - boss_health_bar.width / 2, (this.uiContainer.height / 2 - boss_health_bar.height / 2) + 10);
+		this.uiContainer.addChild(boss_health_bar);
 
 		// score
 		const score = new GameObjectContainer();
@@ -345,6 +424,21 @@ export class GameInstructionsScene extends Container implements IScene {
 
 		level.setPosition(this.uiContainer.width / 2 - level.width / 2, (this.uiContainer.height / 2 - level.height / 2) + 10);
 		this.uiContainer.addChild(level);
+
+		// good_luck
+		const good_luck = new GameObjectContainer();
+		good_luck.renderable = false;
+
+		const good_luck_sprite = new MessageBubble(0, "Good Luck!");
+		good_luck_sprite.x = 0;
+		good_luck_sprite.y = 0;
+
+		const good_luck_container = new GameObjectContainer();
+		good_luck_container.addChild(good_luck_sprite);
+		good_luck.addChild(good_luck_container);
+
+		good_luck.setPosition(this.uiContainer.width / 2 - good_luck.width / 2, (this.uiContainer.height / 2 - good_luck.height / 2) + 10);
+		this.uiContainer.addChild(good_luck);
 
 		const button = new Button(() => {
 
@@ -391,11 +485,28 @@ export class GameInstructionsScene extends Container implements IScene {
 			}
 			else if (player_power_up_bar.renderable) {
 				player_power_up_bar.renderable = false;
+				car_boss.renderable = true;
+			}
+			else if (car_boss.renderable) {
+				car_boss.renderable = false;
+				ufo_boss.renderable = true;
+			}
+			else if (ufo_boss.renderable) {
+				ufo_boss.renderable = false;
+				boss_health_bar.renderable = true;
+			}
+			else if (boss_health_bar.renderable) {
+				boss_health_bar.renderable = false;
 				score.renderable = true;
 			}
 			else if (score.renderable) {
 				score.renderable = false;
 				level.renderable = true;
+			}
+			else if (level.renderable) {
+				level.renderable = false;
+				good_luck.renderable = true;
+				button.setText("Okay");
 			}
 			else {
 				this.removeChild(this.uiContainer);
