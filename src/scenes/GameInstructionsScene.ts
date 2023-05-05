@@ -131,12 +131,12 @@ export class GameInstructionsScene extends Container implements IScene {
 		car_container.addChild(car_sprite);
 		car.addChild(car_container);
 
-		const car_msg = new MessageBubble(0, "Drop bombs on honking cars.", 20);
+		const car_msg = new MessageBubble(0, "Stop honking cars by dropping bombs on 'em.", 20);
 		car_msg.setPosition(car_container.x + car_container.width + 10, car_container.y + 25);
 		car.addChild(car_msg);
 
 		car.setPosition(this.uiContainer.width / 2 - car.width / 2, (this.uiContainer.height / 2 - car.height / 2) + 10);
-		this.uiContainer.addChild(car);
+		this.uiContainer.addChild(car);		
 
 		// player_rocket
 		const player_rocket = new GameObjectContainer();
@@ -182,6 +182,44 @@ export class GameInstructionsScene extends Container implements IScene {
 		ufo.setPosition(this.uiContainer.width / 2 - ufo.width / 2, (this.uiContainer.height / 2 - ufo.height / 2) + 10);
 		this.uiContainer.addChild(ufo);
 
+		// score
+		const score = new GameObjectContainer();
+		score.renderable = false;
+
+		const score_sprite = new MessageBubble(0, "Score 25");
+		score_sprite.x = 0;
+		score_sprite.y = 0;
+
+		const score_container = new GameObjectContainer();
+		score_container.addChild(score_sprite);
+		score.addChild(score_container);
+
+		const score_msg = new MessageBubble(0, "This is your score bar.", 20);
+		score_msg.setPosition(score_container.x + score_container.width + 10, score_container.y + 25);
+		score.addChild(score_msg);
+
+		score.setPosition(this.uiContainer.width / 2 - score.width / 2, (this.uiContainer.height / 2 - score.height / 2) + 10);
+		this.uiContainer.addChild(score);
+
+		// level
+		const level = new GameObjectContainer();
+		level.renderable = false;
+
+		const level_sprite = new MessageBubble(0, "Lvl 1");
+		level_sprite.x = 0;
+		level_sprite.y = 0;
+
+		const level_container = new GameObjectContainer();
+		level_container.addChild(level_sprite);
+		level.addChild(level_container);
+
+		const level_msg = new MessageBubble(0, "This is your level bar. The game gets harder with level up.", 20);
+		level_msg.setPosition(level_container.x + level_container.width + 10, level_container.y + 25);
+		level.addChild(level_msg);
+
+		level.setPosition(this.uiContainer.width / 2 - level.width / 2, (this.uiContainer.height / 2 - level.height / 2) + 10);
+		this.uiContainer.addChild(level);
+
 		const button = new Button(() => {
 
 			SoundManager.play(SoundType.OPTION_SELECT);
@@ -208,6 +246,11 @@ export class GameInstructionsScene extends Container implements IScene {
 			}
 			else if (ufo.renderable) {
 				ufo.renderable = false;
+				score.renderable = true;				
+			}
+			else if (score.renderable) {
+				score.renderable = false;
+				level.renderable = true;
 			}
 			else {
 				this.removeChild(this.uiContainer);
