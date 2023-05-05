@@ -115,8 +115,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		// create the scene container
 		this.sceneContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-		this.addChild(this.sceneContainer);
-		this.sceneContainer.alpha = 0;
+		this.addChild(this.sceneContainer);		
 
 		// set the check points
 		this.vehicleBossCheckpoint = new GameCheckpoint(this.vehicleBossReleasePoint);
@@ -3884,11 +3883,6 @@ export class GamePlayScene extends Container implements IScene {
 	//#region Scene
 
 	public update(_framesPassed: number) {
-
-		if (this.sceneContainer.alpha < 1) {
-			this.sceneContainer.alpha += 0.02;
-		}
-
 		this.processFrame();
 	}
 
