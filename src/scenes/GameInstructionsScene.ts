@@ -8,6 +8,7 @@ import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
 import { MessageBubble } from "../controls/MessageBubble";
+import { GameTitleScene } from "./GameTitleScene";
 
 
 export class GameInstructionsScene extends Container implements IScene {
@@ -47,7 +48,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
-		const joystick = new Container();		
+		const joystick = new Container();
 
 		const joystick_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick"));
 		joystick_sprite.width = 256 / 2;
@@ -91,18 +92,23 @@ export class GameInstructionsScene extends Container implements IScene {
 		attack_button_msg.setPosition(attack_button_container.x + attack_button_container.width + 10, attack_button_container.y + 25);
 		attack_button.addChild(attack_button_msg);
 
-		this.uiContainer.addChild(attack_button);		
+		this.uiContainer.addChild(attack_button);
 
 		const button = new Button(() => {
+
+			SoundManager.play(SoundType.OPTION_SELECT);
 
 			if (joystick.renderable) {
 				joystick.renderable = false;
 				attack_button.renderable = true;
 			}
-
-			SoundManager.play(SoundType.OPTION_SELECT);
-			//this.removeChild(this.uiContainer);
-			//SceneManager.changeScene(new GameTitleScene());
+			else if (attack_button.renderable) {
+				attack_button.renderable = false;
+			}
+			else {
+				this.removeChild(this.uiContainer);
+				SceneManager.changeScene(new GameTitleScene());
+			}
 
 		}).setText("Next");
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
