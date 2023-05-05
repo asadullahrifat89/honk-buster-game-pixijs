@@ -32,14 +32,7 @@ export const manifest: ResolverManifest = {
 
 				"cover_image": "./images/cover_image.png",
 
-				"chopper_blades": "./images/chopper_blades.png",
-
-				"ufo_enemy_1": "./images/ufo_enemy_1.png",
-				"ufo_enemy_2": "./images/ufo_enemy_2.png",
-				"ufo_enemy_3": "./images/ufo_enemy_3.png",
-				"ufo_enemy_4": "./images/ufo_enemy_4.png",
-
-				"ufo_enemy_bomb": "./images/ufo_enemy_bomb.png",
+				"chopper_blades": "./images/chopper_blades.png",			
 
 				"explosion_1": "./images/explosion_1.png",
 				"explosion_2": "./images/explosion_2.png",
@@ -117,6 +110,13 @@ export const manifest: ResolverManifest = {
 				//"tree_1": "./images/tree_1.png",
 				//"tree_2": "./images/tree_2.png",
 				//"tree_3": "./images/tree_3.png",
+
+				"ufo_enemy_1": "./images/ufo_enemy_1.png",
+				"ufo_enemy_2": "./images/ufo_enemy_2.png",
+				"ufo_enemy_3": "./images/ufo_enemy_3.png",
+				"ufo_enemy_4": "./images/ufo_enemy_4.png",
+
+				"ufo_enemy_bomb": "./images/ufo_enemy_bomb.png",
 
 				"ufo_boss_1_hit": "./images/ufo_boss_1_hit.png",
 				"ufo_boss_1_idle": "./images/ufo_boss_1_idle.png",

@@ -146,7 +146,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		player_rocket_sprite.width = 256 / 2;
 		player_rocket_sprite.height = 256 / 2;
 		player_rocket_sprite.x = 100;
-		player_rocket_sprite.y = 25;
+		player_rocket_sprite.y = 0;
 		player_rocket_sprite.angle = 213;
 		player_rocket_sprite.anchor.set(1);
 
