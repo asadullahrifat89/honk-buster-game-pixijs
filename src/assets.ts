@@ -84,7 +84,6 @@ export const manifest: ResolverManifest = {
 
 				"powerup_pickup_armor": "./images/powerup_pickup_armor.png",
 				"powerup_pickup_bulls_eye": "./images/powerup_pickup_bulls_eye.png",
-				"powerup_pickup_seeking_snitch": "./images/powerup_pickup_seeking_snitch.png",
 
 				"player_honk_bomb_sticky_1": "./images/player_honk_bomb_sticky_1.png",
 				"player_honk_bomb_sticky_2": "./images/player_honk_bomb_sticky_2.png",
