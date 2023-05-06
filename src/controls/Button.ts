@@ -1,10 +1,11 @@
-﻿import { ColorMatrixFilter, Container, DisplayObject, FederatedPointerEvent, Graphics, Text, TextStyle, TextStyleAlign } from "pixi.js";
+﻿import { OutlineFilter } from "@pixi/filter-outline";
+import { Container, DisplayObject, FederatedPointerEvent, Graphics, Text, TextStyle, TextStyleAlign } from "pixi.js";
 import { Constants } from "../Constants";
 
 
 export class Button extends Container {
 
-	private buttonFilter: ColorMatrixFilter;
+	private buttonFilter: OutlineFilter;
 	private buttonText: Text;
 	private buttonBackground: DisplayObject;
 
@@ -13,8 +14,8 @@ export class Button extends Container {
 		this.interactive = true;
 		this.filters = null;
 
-		this.buttonFilter = new ColorMatrixFilter();
-		this.buttonFilter.saturate(1);
+		this.buttonFilter = new OutlineFilter(4);
+		//this.buttonFilter.saturate(1);
 
 		// add the button background
 		this.buttonBackground = this.getDefaultGraphics();
