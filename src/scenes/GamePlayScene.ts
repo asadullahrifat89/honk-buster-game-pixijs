@@ -115,7 +115,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		// create the scene container
 		this.sceneContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-		this.addChild(this.sceneContainer);		
+		this.addChild(this.sceneContainer);
 
 		// set the check points
 		this.vehicleBossCheckpoint = new GameCheckpoint(this.vehicleBossReleasePoint);
@@ -321,7 +321,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				var messageBubble = gameObject as MessageBubble;
 				messageBubble.reset();
-				messageBubble.reposition(source, message);
+				messageBubble.reposition(source, message, 22);
 				messageBubble.setPopping();
 
 				gameObject.enableRendering();
@@ -1019,7 +1019,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private bossDeathExplosionDuration: number = 0;
 	private readonly bossDeathExplosionDurationDefault: number = 10;
-		
+
 	private bossDeathExplosionDelay: number = 0;
 	private readonly bossDeathExplosionDelayDefault: number = 2 / Constants.DEFAULT_CONSTRUCT_DELTA;
 
@@ -1461,13 +1461,13 @@ export class GamePlayScene extends Container implements IScene {
 									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
 
 									if (vehicleEnemy) {
-										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);										
+										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
 									}
 
 									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
 
 									if (vehicleBoss) {
-										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);										
+										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
 									}
 
 									if (vehicleEnemy || vehicleBoss) {
@@ -1484,7 +1484,7 @@ export class GamePlayScene extends Container implements IScene {
 										this.generateRingExplosion(playerHonkBomb);
 									}
 
-									if (playerHonkBomb.awaitBlast()) {										
+									if (playerHonkBomb.awaitBlast()) {
 										this.generateSmokeExplosion(playerHonkBomb);
 										this.generateRingExplosion(playerHonkBomb);
 									}
@@ -2288,7 +2288,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private anyInAirBossExists(): boolean {
 		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
-	}	
+	}
 
 	//#endregion
 
@@ -3912,7 +3912,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (!this.gameController.isPaused) {
 			this.generateGameObjects();
-			this.animateGameObjects();						
+			this.animateGameObjects();
 			this.gameController.update();
 		}
 	}

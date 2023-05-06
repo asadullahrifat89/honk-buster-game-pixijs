@@ -74,8 +74,7 @@ export class GameTitleScene extends Container implements IScene {
 
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.uiContainer);
-			SceneManager.changeScene(new PlayerCharacterSelectionScene());
-			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.5, true);
+			SceneManager.changeScene(new PlayerCharacterSelectionScene());			
 
 		}).setText("New Game");
 		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, (this.uiContainer.height / 2 - newGameButton.height / 2) + 65);

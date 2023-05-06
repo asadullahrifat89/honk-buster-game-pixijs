@@ -78,14 +78,14 @@ export class GameInstructionsScene extends Container implements IScene {
 		joystick.renderable = false;
 
 		const joystick_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick"));
-		joystick_sprite.width = 256 / 2;
-		joystick_sprite.height = 256 / 2;
+		joystick_sprite.width = 256 / 1;
+		joystick_sprite.height = 256 / 1;
 		joystick_sprite.x = 0;
 		joystick_sprite.y = 0;
 
 		const joystick_handle_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
-		joystick_handle_sprite.width = 256 / 3;
-		joystick_handle_sprite.height = 256 / 3;
+		joystick_handle_sprite.width = 256 / 2;
+		joystick_handle_sprite.height = 256 / 2;
 		joystick_handle_sprite.x = joystick_sprite.width / 2 - joystick_handle_sprite.width / 2;
 		joystick_handle_sprite.y = joystick_sprite.height / 2 - joystick_handle_sprite.height / 2;
 
