@@ -59,7 +59,7 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly ufoEnemyReleaseLimit: number = 5;
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
-	private readonly ufoBossReleasePoint: number = 10; // 50
+	private readonly ufoBossReleasePoint: number = 50; // 50
 	private readonly ufoBossReleaseLimit: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
 
@@ -1229,7 +1229,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (this.gameController.isAttacking) {
 
-			if (this.anyInAirBossExists() || this.ufoEnemyExists()) {
+			if (this.anyInAirEnemyExists()) {
 
 				if (this.powerUpBar.hasHealth()) {
 
@@ -2301,6 +2301,10 @@ export class GamePlayScene extends Container implements IScene {
 
 	private anyInAirBossExists(): boolean {
 		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
+	}
+
+	private anyInAirEnemyExists(): boolean {
+		return (this.anyInAirBossExists() || this.ufoEnemyExists());
 	}
 
 	//#endregion
@@ -3724,7 +3728,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private generatePowerUpPickups() {
 
-		if ((this.anyInAirBossExists() || this.ufoEnemyExists()) && !this.powerUpBar.hasHealth()) {
+		if ((this.anyInAirEnemyExists()) && !this.powerUpBar.hasHealth()) {
 			this.powerUpPickupPopDelay -= 0.1;
 
 			if (this.powerUpPickupPopDelay < 0) {
