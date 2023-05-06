@@ -95,6 +95,9 @@ export const manifest: ResolverManifest = {
 				"player_honk_bomb_trash_1": "./images/player_honk_bomb_trash_1.png",
 				"player_honk_bomb_trash_2": "./images/player_honk_bomb_trash_2.png",
 
+				"player_honk_bomb_trash_1_open": "./images/player_honk_bomb_trash_1_open.png",
+				"player_honk_bomb_trash_2_open": "./images/player_honk_bomb_trash_2_open.png",
+
 				"road_marks": "./images/road_marks.png",
 
 				"road_side_lamp_1": "./images/road_side_lamp_1.png",

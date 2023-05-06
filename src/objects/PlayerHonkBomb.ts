@@ -60,13 +60,13 @@ export class PlayerHonkBomb extends GameObjectContainer {
 
 		switch (this.playerHonkBombTemplate) {
 			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
-				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerHonkBombTemplate.EXPLOSIVE_BOMB /*x.uri.includes("explosive")*/).map(x => x.uri);
+				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerHonkBombTemplate.EXPLOSIVE_BOMB).map(x => x.uri);
 			} break;
 			case PlayerHonkBombTemplate.TRASH_BOMB: {
-				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerHonkBombTemplate.TRASH_BOMB /*x.uri.includes("trash")*/).map(x => x.uri);
+				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerHonkBombTemplate.TRASH_BOMB).map(x => x.uri);
 			} break;
 			case PlayerHonkBombTemplate.STICKY_BOMB: {
-				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerHonkBombTemplate.STICKY_BOMB /*x.uri.includes("sticky")*/).map(x => x.uri);
+				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerHonkBombTemplate.STICKY_BOMB).map(x => x.uri);
 				this.blastDelayDefault = 45;
 			} break;
 		}
@@ -111,9 +111,15 @@ export class PlayerHonkBomb extends GameObjectContainer {
 
 	setBlast() {
 		switch (this.playerHonkBombTemplate) {
-			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: { SoundManager.play(SoundType.CRACKER_BLAST, 0.8); } break;
-			case PlayerHonkBombTemplate.TRASH_BOMB: { SoundManager.play(SoundType.TRASH_CAN_HIT); } break;
-			case PlayerHonkBombTemplate.STICKY_BOMB: { SoundManager.play(SoundType.CRACKER_BLAST, 0.8); } break;
+			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
+				SoundManager.play(SoundType.CRACKER_BLAST, 0.8);
+			} break;
+			case PlayerHonkBombTemplate.TRASH_BOMB: {
+				SoundManager.play(SoundType.TRASH_CAN_HIT);
+			} break;
+			case PlayerHonkBombTemplate.STICKY_BOMB: {
+				SoundManager.play(SoundType.CRACKER_BLAST, 0.8);
+			} break;
 			default: break;
 		}
 
@@ -127,6 +133,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 			} break;
 			case PlayerHonkBombTemplate.TRASH_BOMB: {
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 1.5;
+				this.setTexture(Constants.getRandomTexture(ConstructType.TRASH_BIN_OPEN));
 			} break;
 			case PlayerHonkBombTemplate.STICKY_BOMB: {
 				this.angle = 0;
