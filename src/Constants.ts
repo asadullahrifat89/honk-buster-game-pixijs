@@ -72,9 +72,9 @@ export enum PlayerRideTemplate {
 }
 
 export enum PlayerGroundBombTemplate {
-	EXPLOSIVE,
-	TRASH,
-	STICKY,
+	GRENADE,
+	TRASH_BIN,
+	DYNAMITE,
 }
 
 export enum PlayerAirBombTemplate {
@@ -312,14 +312,14 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, this.imagessDirectory + "player_balloon_2_win.png"),
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, this.imagessDirectory + "player_balloon_2_hit.png"),
 
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_explosive_1.png", PlayerGroundBombTemplate.EXPLOSIVE),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_explosive_2.png", PlayerGroundBombTemplate.EXPLOSIVE),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_explosive_1.png", PlayerGroundBombTemplate.GRENADE),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_explosive_2.png", PlayerGroundBombTemplate.GRENADE),
 
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_1.png", PlayerGroundBombTemplate.TRASH),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_2.png", PlayerGroundBombTemplate.TRASH),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_1.png", PlayerGroundBombTemplate.TRASH_BIN),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_2.png", PlayerGroundBombTemplate.TRASH_BIN),
 
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_sticky_1.png", PlayerGroundBombTemplate.STICKY),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_sticky_2.png", PlayerGroundBombTemplate.STICKY),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_sticky_1.png", PlayerGroundBombTemplate.DYNAMITE),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_sticky_2.png", PlayerGroundBombTemplate.DYNAMITE),
 
 		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, this.imagessDirectory + "player_honk_bomb_trash_1_open.png"),
 		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, this.imagessDirectory + "player_honk_bomb_trash_2_open.png"),
