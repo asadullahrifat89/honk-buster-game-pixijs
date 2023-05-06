@@ -285,7 +285,7 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_19.mp3", "What?"),
 		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_20.mp3", "What are you doing here?"),
 		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_21.mp3", "What the hell?"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_22.mp3", "Heyy"),
+		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_22.mp3", "Heyy."),
 		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_23.mp3", "Why?"),
 
 		new SoundTemplate(SoundType.SEEKER_ROCKET_LAUNCH, this.soundsDirectory + "seeker_rocket_launch_1.mp3"),
