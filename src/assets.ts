@@ -78,6 +78,9 @@ export const manifest: ResolverManifest = {
 				"player_balloon_2_idle": "./images/player_balloon_2_idle.png",
 				"player_balloon_2_win": "./images/player_balloon_2_win.png",
 
+				"player_ball_1": "./images/player_ball_1.png",
+				"player_ball_2": "./images/player_ball_2.png",
+
 				"player_rocket_1": "./images/player_rocket_1.png",
 				"player_rocket_2": "./images/player_rocket_2.png",
 				"player_rocket_3": "./images/player_rocket_3.png",

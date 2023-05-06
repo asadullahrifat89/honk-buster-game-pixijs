@@ -1,6 +1,6 @@
 import { BlurFilter, Container, Graphics, Texture } from "pixi.js";
 import { GameObjectContainer } from '../core/GameObjectContainer';
-import { Constants, ConstructType, ExplosionType, PlayerHonkBombTemplate, PlayerRideTemplate, PowerUpType, RotationDirection, SoundType } from '../Constants';
+import { Constants, ConstructType, ExplosionType, PlayerHonkBombTemplate, PlayerRideTemplate, PlayerAirBombTemplate, PowerUpType, RotationDirection, SoundType } from '../Constants';
 import { GameOverScene } from "./GameOverScene";
 import { IScene } from "../managers/IScene";
 import { GameController } from "../controls/GameController";
@@ -1194,8 +1194,8 @@ export class GamePlayScene extends Container implements IScene {
 		}
 
 		sprite.anchor.set(0.5, 0.5);
-
 		this.player.addChild(sprite);
+
 		this.player.setPlayerRideTemplate(this.playerRideTemplate);
 		this.player.disableRendering();
 
@@ -1229,7 +1229,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (this.gameController.isAttacking) {
 
-			if (this.anyInAirBossExists() || this.ufoEnemyExists()) {
+			if (this.anyInAirEnemyExists()) {
 
 				if (this.powerUpBar.hasHealth()) {
 
@@ -1305,7 +1305,7 @@ export class GamePlayScene extends Container implements IScene {
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
-			gameObject.setHonkBombTemplate(this.playerHonkBusterTemplate);
+			gameObject.setTemplate(this.playerHonkBusterTemplate);
 
 			this.playerHonkBombGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
@@ -1513,7 +1513,7 @@ export class GamePlayScene extends Container implements IScene {
 	private playerRocketSizeWidth: number = 90;
 	private playerRocketSizeHeight: number = 90;
 
-	private playerRocketGameObjects: Array<GameObjectContainer> = [];
+	private playerRocketGameObjects: Array<PlayerRocket> = [];
 
 	spawnPlayerRockets() {
 
@@ -1523,14 +1523,27 @@ export class GamePlayScene extends Container implements IScene {
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET));
-
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.playerRocketSizeWidth;
-			sprite.height = this.playerRocketSizeHeight;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
+
+			switch (this.playerRideTemplate) {
+				case PlayerRideTemplate.BALLOON: {
+					sprite.width = this.playerRocketSizeWidth / 1.5;
+					sprite.height = this.playerRocketSizeHeight / 1.5;
+
+					gameObject.setTemplate(PlayerAirBombTemplate.BALL);
+				} break;
+				case PlayerRideTemplate.CHOPPER: {
+					sprite.width = this.playerRocketSizeWidth;
+					sprite.height = this.playerRocketSizeHeight;
+
+					gameObject.setTemplate(PlayerAirBombTemplate.ROCKET);
+				} break;
+				default: break;
+			}
 
 			this.playerRocketGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
@@ -2288,6 +2301,10 @@ export class GamePlayScene extends Container implements IScene {
 
 	private anyInAirBossExists(): boolean {
 		return (this.ufoBossExists() || this.zombieBossExists() || this.mafiaBossExists());
+	}
+
+	private anyInAirEnemyExists(): boolean {
+		return (this.anyInAirBossExists() || this.ufoEnemyExists());
 	}
 
 	//#endregion
@@ -3711,7 +3728,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private generatePowerUpPickups() {
 
-		if ((this.anyInAirBossExists() || this.ufoEnemyExists()) && !this.powerUpBar.hasHealth()) {
+		if ((this.anyInAirEnemyExists()) && !this.powerUpBar.hasHealth()) {
 			this.powerUpPickupPopDelay -= 0.1;
 
 			if (this.powerUpPickupPopDelay < 0) {

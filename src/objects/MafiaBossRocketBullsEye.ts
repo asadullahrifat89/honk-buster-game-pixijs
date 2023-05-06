@@ -23,7 +23,7 @@ export class MafiaBossRocketBullsEye extends SeekingRocketBase {
 		this.autoBlastDelay = this.autoBlastDelayDefault;
 		this.targetHitbox = new Rectangle();
 
-		SoundManager.play(SoundType.BULLS_EYE_ROCKET_LAUNCH);
+		SoundManager.play(SoundType.BALL_LAUNCH);
 	}
 
 	reposition(source: GameObjectContainer) {
@@ -41,10 +41,9 @@ export class MafiaBossRocketBullsEye extends SeekingRocketBase {
 
 	autoBlast() {
 		this.autoBlastDelay -= 0.1;
-
-		if (this.autoBlastDelay <= 0)
+		if (this.autoBlastDelay <= 0) {
 			return true;
-
+		}			
 		return false;
 	}
 

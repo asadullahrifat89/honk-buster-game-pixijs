@@ -77,6 +77,11 @@ export enum PlayerHonkBombTemplate {
 	STICKY_BOMB,
 }
 
+export enum PlayerAirBombTemplate {
+	BALL,
+	ROCKET,	
+}
+
 export enum ConstructType {
 	NONE,
 	GAME_COVER_IMAGE,
@@ -90,7 +95,7 @@ export enum ConstructType {
 	PLAYER_ROCKET,
 	PLAYER_ROCKET_SEEKING,
 	PLAYER_ROCKET_BULLS_EYE,
-	PLAYER_HONK_BOMB,
+	PLAYER_HONK_BOMB,	
 
 	VEHICLE_ENEMY_SMALL,
 	VEHICLE_ENEMY_LARGE,
@@ -178,7 +183,7 @@ export enum SoundType {
 	HONK_BUST_REACTION,
 
 	SEEKER_ROCKET_LAUNCH,
-	BULLS_EYE_ROCKET_LAUNCH,
+	BALL_LAUNCH,
 
 	AMBIENCE,
 
@@ -232,6 +237,148 @@ export abstract class Constants {
 
 	private static soundsDirectory = "sounds/";
 	private static imagessDirectory = "images/";
+
+	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
+
+		new ConstructTemplate(ConstructType.ROAD_MARK, this.imagessDirectory + "road_marks.png"),
+
+		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, this.imagessDirectory + "tree_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, this.imagessDirectory + "tree_2.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, this.imagessDirectory + "tree_3.png"),
+
+		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, this.imagessDirectory + "road_side_walk_top_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, this.imagessDirectory + "road_side_walk_bottom_1.png"),
+
+		new ConstructTemplate(ConstructType.ROAD_SIDE_HEDGE, this.imagessDirectory + "road_side_hedge_1.png"),
+
+		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, this.imagessDirectory + "billboard_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, this.imagessDirectory + "billboard_2.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, this.imagessDirectory + "billboard_3.png"),
+
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_2.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_3.png"),
+
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LAMP, this.imagessDirectory + "road_side_lamp_1.png"),		
+
+		new ConstructTemplate(ConstructType.CLOUD, this.imagessDirectory + "cloud_1.png"),
+		new ConstructTemplate(ConstructType.CLOUD, this.imagessDirectory + "cloud_2.png"),
+		new ConstructTemplate(ConstructType.CLOUD, this.imagessDirectory + "cloud_3.png"),
+
+		new ConstructTemplate(ConstructType.VEHICLE_BOSS, this.imagessDirectory + "vehicle_boss_1.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_BOSS, this.imagessDirectory + "vehicle_boss_2.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_BOSS, this.imagessDirectory + "vehicle_boss_3.png"),
+
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_1.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_2.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_3.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_4.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_5.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_6.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_7.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_8.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_9.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_10.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_11.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_12.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_13.png"),
+
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_1.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_2.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_3.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_4.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_5.png"),
+
+		new ConstructTemplate(ConstructType.HONK, this.imagessDirectory + "honk_1.png"),
+		new ConstructTemplate(ConstructType.HONK, this.imagessDirectory + "honk_2.png"),
+		new ConstructTemplate(ConstructType.HONK, this.imagessDirectory + "honk_3.png"),
+
+		new ConstructTemplate(ConstructType.PLAYER_RIDE, this.imagessDirectory + "player_1_character.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, this.imagessDirectory + "player_balloon_1_idle.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, this.imagessDirectory + "player_balloon_1_attack.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, this.imagessDirectory + "player_balloon_1_win.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, this.imagessDirectory + "player_balloon_1_hit.png"),
+
+		new ConstructTemplate(ConstructType.PLAYER_RIDE, this.imagessDirectory + "player_1_character.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, this.imagessDirectory + "player_chopper_1_idle.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, this.imagessDirectory + "player_chopper_1_attack.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, this.imagessDirectory + "player_chopper_1_win.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, this.imagessDirectory + "player_chopper_1_hit.png"),
+
+		new ConstructTemplate(ConstructType.PLAYER_RIDE, this.imagessDirectory + "player_2_character.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, this.imagessDirectory + "player_balloon_2_idle.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, this.imagessDirectory + "player_balloon_2_attack.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, this.imagessDirectory + "player_balloon_2_win.png"),
+		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, this.imagessDirectory + "player_balloon_2_hit.png"),
+
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_explosive_1.png", PlayerHonkBombTemplate.EXPLOSIVE_BOMB),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_explosive_2.png", PlayerHonkBombTemplate.EXPLOSIVE_BOMB),
+
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_1.png", PlayerHonkBombTemplate.TRASH_BOMB),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_2.png", PlayerHonkBombTemplate.TRASH_BOMB),
+
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_sticky_1.png", PlayerHonkBombTemplate.STICKY_BOMB),
+		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_sticky_2.png", PlayerHonkBombTemplate.STICKY_BOMB),
+
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_ball_1.png", PlayerAirBombTemplate.BALL),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_ball_2.png", PlayerAirBombTemplate.BALL),
+
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_1.png", PlayerAirBombTemplate.ROCKET),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_2.png", PlayerAirBombTemplate.ROCKET),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_3.png", PlayerAirBombTemplate.ROCKET),
+
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET_BULLS_EYE, this.imagessDirectory + "player_rocket_bulls_eye_1.png"),
+
+		new ConstructTemplate(ConstructType.CHOPPER_BLADES, this.imagessDirectory + "chopper_blades.png"),
+
+		new ConstructTemplate(ConstructType.BANG, this.imagessDirectory + "bang_1.png"),
+		new ConstructTemplate(ConstructType.BANG, this.imagessDirectory + "bang_2.png"),
+
+		new ConstructTemplate(ConstructType.BLAST, this.imagessDirectory + "blast_1.png"),
+		new ConstructTemplate(ConstructType.BLAST, this.imagessDirectory + "blast_2.png"),
+
+		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, this.imagessDirectory + "vehicle_boss_rocket_1.png"),
+		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, this.imagessDirectory + "vehicle_boss_rocket_2.png"),	
+
+		new ConstructTemplate(ConstructType.UFO_BOSS_HIT, this.imagessDirectory + "ufo_boss_1_hit.png"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_IDLE, this.imagessDirectory + "ufo_boss_1_idle.png"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_WIN, this.imagessDirectory + "ufo_boss_1_win.png"),
+
+		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, this.imagessDirectory + "ufo_boss_rocket_1.png"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, this.imagessDirectory + "ufo_boss_rocket_2.png"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, this.imagessDirectory + "ufo_boss_rocket_3.png"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET_SEEKING, this.imagessDirectory + "ufo_boss_rocket_seeking.png"),
+
+		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "ufo_enemy_1.png"),
+		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "ufo_enemy_2.png"),
+		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "ufo_enemy_3.png"),
+		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "ufo_enemy_4.png"),
+
+		new ConstructTemplate(ConstructType.UFO_ENEMY_ROCKET, this.imagessDirectory + "ufo_enemy_bomb.png"),
+
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_HIT, this.imagessDirectory + "zombie_boss_1_hit.png"),
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_IDLE, this.imagessDirectory + "zombie_boss_1_idle.png"),
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_WIN, this.imagessDirectory + "zombie_boss_1_win.png"),
+
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, this.imagessDirectory + "zombie_boss_cube_1.png"),
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, this.imagessDirectory + "zombie_boss_cube_2.png"),
+		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, this.imagessDirectory + "zombie_boss_cube_3.png"),
+
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_HIT, this.imagessDirectory + "mafia_boss_1_hit.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_IDLE, this.imagessDirectory + "mafia_boss_1_idle.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_WIN, this.imagessDirectory + "mafia_boss_1_win.png"),
+
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, this.imagessDirectory + "mafia_boss_rocket_1.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, this.imagessDirectory + "mafia_boss_rocket_2.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, this.imagessDirectory + "mafia_boss_rocket_3.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE, this.imagessDirectory + "mafia_boss_rocket_bulls_eye.png"),
+
+		new ConstructTemplate(ConstructType.HEALTH_PICKUP, this.imagessDirectory + "health_pickup.png"),
+		new ConstructTemplate(ConstructType.POWERUP_PICKUP_ARMOR, this.imagessDirectory + "powerup_pickup_armor.png"),
+		new ConstructTemplate(ConstructType.POWERUP_PICKUP_BULLS_EYE, this.imagessDirectory + "powerup_pickup_bulls_eye.png"),
+
+		new ConstructTemplate(ConstructType.GAME_COVER_IMAGE, this.imagessDirectory + "cover_image.png"),
+	];
 
 	public static SOUND_TEMPLATES: (SoundTemplate)[] = [
 
@@ -291,7 +438,7 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.SEEKER_ROCKET_LAUNCH, this.soundsDirectory + "seeker_rocket_launch_1.mp3"),
 		new SoundTemplate(SoundType.SEEKER_ROCKET_LAUNCH, this.soundsDirectory + "seeker_rocket_launch_2.mp3"),
 
-		new SoundTemplate(SoundType.BULLS_EYE_ROCKET_LAUNCH, this.soundsDirectory + "bulls_eye_rocket_launch_1.mp3"),
+		new SoundTemplate(SoundType.BALL_LAUNCH, this.soundsDirectory + "bulls_eye_rocket_launch_1.mp3"),
 
 		new SoundTemplate(SoundType.AMBIENCE, this.soundsDirectory + "ambience_1.mp3"),
 		new SoundTemplate(SoundType.AMBIENCE, this.soundsDirectory + "ambience_2.mp3"),
@@ -334,154 +481,6 @@ export abstract class Constants {
 
 		new SoundTemplate(SoundType.LEVEL_UP, this.soundsDirectory + "level_up.mp3"),
 		new SoundTemplate(SoundType.OPTION_SELECT, this.soundsDirectory + "option_select.mp3"),
-	];
-
-	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
-
-		new ConstructTemplate(ConstructType.ROAD_MARK, this.imagessDirectory + "road_marks.png"),
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, this.imagessDirectory + "tree_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, this.imagessDirectory + "tree_2.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, this.imagessDirectory + "tree_3.png"),
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, this.imagessDirectory + "road_side_walk_top_1.png"),
-		//new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_2.png"),
-		//new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_3.png"),		
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, this.imagessDirectory + "road_side_walk_bottom_1.png"),
-		//new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_2.png"),	
-		//new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_3.png"),
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_HEDGE, this.imagessDirectory + "road_side_hedge_1.png"),
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, this.imagessDirectory + "billboard_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, this.imagessDirectory + "billboard_2.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, this.imagessDirectory + "billboard_3.png"),
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_2.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_3.png"),
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LAMP, this.imagessDirectory + "road_side_lamp_1.png"),
-		//new ConstructTemplate(ConstructType.ROAD_SIDE_LAMP, "road_side_lamp_2.png"),
-
-		new ConstructTemplate(ConstructType.CLOUD, this.imagessDirectory + "cloud_1.png"),
-		new ConstructTemplate(ConstructType.CLOUD, this.imagessDirectory + "cloud_2.png"),
-		new ConstructTemplate(ConstructType.CLOUD, this.imagessDirectory + "cloud_3.png"),
-
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS, this.imagessDirectory + "vehicle_boss_1.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS, this.imagessDirectory + "vehicle_boss_2.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS, this.imagessDirectory + "vehicle_boss_3.png"),
-
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_1.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_2.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_3.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_4.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_5.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_6.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_7.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_8.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_9.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_10.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_11.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_12.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, this.imagessDirectory + "vehicle_small_13.png"),
-
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_1.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_2.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_3.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_4.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, this.imagessDirectory + "vehicle_large_5.png"),
-
-		new ConstructTemplate(ConstructType.HONK, this.imagessDirectory + "honk_1.png"),
-		new ConstructTemplate(ConstructType.HONK, this.imagessDirectory + "honk_2.png"),
-		new ConstructTemplate(ConstructType.HONK, this.imagessDirectory + "honk_3.png"),
-
-		new ConstructTemplate(ConstructType.PLAYER_RIDE, this.imagessDirectory + "player_1_character.png"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, this.imagessDirectory + "player_balloon_1_idle.png"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, this.imagessDirectory + "player_balloon_1_attack.png"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, this.imagessDirectory + "player_balloon_1_win.png"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, this.imagessDirectory + "player_balloon_1_hit.png"),
-
-		new ConstructTemplate(ConstructType.PLAYER_RIDE, this.imagessDirectory + "player_1_character.png"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, this.imagessDirectory + "player_chopper_1_idle.png"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, this.imagessDirectory + "player_chopper_1_attack.png"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, this.imagessDirectory + "player_chopper_1_win.png"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, this.imagessDirectory + "player_chopper_1_hit.png"),
-
-		new ConstructTemplate(ConstructType.PLAYER_RIDE, this.imagessDirectory + "player_2_character.png"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, this.imagessDirectory + "player_balloon_2_idle.png"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, this.imagessDirectory + "player_balloon_2_attack.png"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, this.imagessDirectory + "player_balloon_2_win.png"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, this.imagessDirectory + "player_balloon_2_hit.png"),
-
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_explosive_1.png"),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_explosive_2.png"),
-
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_1.png"),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_trash_2.png"),
-
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_sticky_1.png"),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_sticky_2.png"),
-
-		new ConstructTemplate(ConstructType.CHOPPER_BLADES, this.imagessDirectory + "chopper_blades.png"),
-
-		new ConstructTemplate(ConstructType.BANG, this.imagessDirectory + "bang_1.png"),
-		new ConstructTemplate(ConstructType.BANG, this.imagessDirectory + "bang_2.png"),
-
-		new ConstructTemplate(ConstructType.BLAST, this.imagessDirectory + "blast_1.png"),
-		new ConstructTemplate(ConstructType.BLAST, this.imagessDirectory + "blast_2.png"),
-
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, this.imagessDirectory + "vehicle_boss_rocket_1.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, this.imagessDirectory + "vehicle_boss_rocket_2.png"),
-
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_1.png"),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_2.png"),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_3.png"),
-
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET_BULLS_EYE, this.imagessDirectory + "player_rocket_bulls_eye_1.png"),
-
-		//new ConstructTemplate(ConstructType.PLAYER_ROCKET_SEEKING, "player_rocket_seeking_1.png"),
-		//new ConstructTemplate(ConstructType.PLAYER_ROCKET_SEEKING, "player_rocket_seeking_2.png"),
-
-		new ConstructTemplate(ConstructType.UFO_BOSS_HIT, this.imagessDirectory + "ufo_boss_1_hit.png"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_IDLE, this.imagessDirectory + "ufo_boss_1_idle.png"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_WIN, this.imagessDirectory + "ufo_boss_1_win.png"),
-
-		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, this.imagessDirectory + "ufo_boss_rocket_1.png"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, this.imagessDirectory + "ufo_boss_rocket_2.png"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, this.imagessDirectory + "ufo_boss_rocket_3.png"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET_SEEKING, this.imagessDirectory + "ufo_boss_rocket_seeking.png"),
-
-		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "ufo_enemy_1.png"),
-		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "ufo_enemy_2.png"),
-		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "ufo_enemy_3.png"),
-		new ConstructTemplate(ConstructType.UFO_ENEMY, this.imagessDirectory + "ufo_enemy_4.png"),
-
-		new ConstructTemplate(ConstructType.UFO_ENEMY_ROCKET, this.imagessDirectory + "ufo_enemy_bomb.png"),
-
-		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_HIT, this.imagessDirectory + "zombie_boss_1_hit.png"),
-		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_IDLE, this.imagessDirectory + "zombie_boss_1_idle.png"),
-		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_WIN, this.imagessDirectory + "zombie_boss_1_win.png"),
-
-		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, this.imagessDirectory + "zombie_boss_cube_1.png"),
-		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, this.imagessDirectory + "zombie_boss_cube_2.png"),
-		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, this.imagessDirectory + "zombie_boss_cube_3.png"),
-
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_HIT, this.imagessDirectory + "mafia_boss_1_hit.png"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_IDLE, this.imagessDirectory + "mafia_boss_1_idle.png"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_WIN, this.imagessDirectory + "mafia_boss_1_win.png"),
-
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, this.imagessDirectory + "mafia_boss_rocket_1.png"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, this.imagessDirectory + "mafia_boss_rocket_2.png"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, this.imagessDirectory + "mafia_boss_rocket_3.png"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE, this.imagessDirectory + "mafia_boss_rocket_bulls_eye.png"),
-
-		new ConstructTemplate(ConstructType.HEALTH_PICKUP, this.imagessDirectory + "health_pickup.png"),
-		new ConstructTemplate(ConstructType.POWERUP_PICKUP_ARMOR, this.imagessDirectory + "powerup_pickup_armor.png"),
-		new ConstructTemplate(ConstructType.POWERUP_PICKUP_BULLS_EYE, this.imagessDirectory + "powerup_pickup_bulls_eye.png"),
-
-		new ConstructTemplate(ConstructType.GAME_COVER_IMAGE, this.imagessDirectory + "cover_image.png"),
 	];
 
 	private static ringWidth = 138;
