@@ -56,26 +56,25 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly vehicleBossCheckpoint: GameCheckpoint;
 
 	private readonly ufoEnemyReleasePoint: number = 35; // 35
-	private readonly ufoEnemyReleaseLimit: number = 5;
+	private readonly ufoEnemyReleaseLimit: number = 15;
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
 	private readonly ufoBossReleasePoint: number = 50; // 50
 	private readonly ufoBossReleaseLimit: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
 
-	private readonly zombieBossReleasePoint: number = 85; // 75
+	private readonly zombieBossReleasePoint: number = 85; // 85
 	private readonly zombieBossReleaseLimit: number = 15;
 	private readonly zombieBossCheckpoint: GameCheckpoint;
 
-	private readonly mafiaBossReleasePoint: number = 125; // 100
+	private readonly mafiaBossReleasePoint: number = 145; // 145
 	private readonly mafiaBossReleaseLimit: number = 15;
 	private readonly mafiaBossCheckpoint: GameCheckpoint;
 
 	private playerHealthBar: HealthBar;
 	private bossHealthBar: HealthBar;
 	private powerUpBar: HealthBar;
-
-	private honkBustReactions: SoundTemplate[] = [];
+		
 	private stageColors: number[] = [0x1e2a36, 0x4187ab];
 	private stageColor: Graphics;
 
@@ -83,6 +82,8 @@ export class GamePlayScene extends Container implements IScene {
 	private talkIcon: Texture;
 	private cheerIcon: Texture;
 	private interactIcon: Texture;
+
+	private honkBustReactions: SoundTemplate[] = [];
 
 	private gameLevel: number = 0;
 
@@ -98,10 +99,10 @@ export class GamePlayScene extends Container implements IScene {
 		this.honkBustReactions = Constants.SOUND_TEMPLATES.filter(x => x.soundType == SoundType.HONK_BUST_REACTION);
 
 		// get textures for on screen message icons
-		this.behindBackIcon = Texture.from("./images/character_maleAdventurer_behindBack.png");
-		this.cheerIcon = Texture.from("./images/character_maleAdventurer_cheer0.png");
-		this.talkIcon = Texture.from("./images/character_maleAdventurer_talk.png");
-		this.interactIcon = Texture.from("./images/character_maleAdventurer_interact.png");
+		this.behindBackIcon = Texture.from("character_maleAdventurer_behindBack");
+		this.cheerIcon = Texture.from(".character_maleAdventurer_cheer0");
+		this.talkIcon = Texture.from("character_maleAdventurer_talk");
+		this.interactIcon = Texture.from("character_maleAdventurer_interact");
 
 		// set the selected ride and bomb templates
 		this.playerRideTemplate = Constants.SELECTED_PLAYER_RIDE_TEMPLATE;
@@ -1166,7 +1167,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerRide
 
-	private playerRideSizeWidth: number = 512 ;
+	private playerRideSizeWidth: number = 512;
 	private playerRideSizeHeight: number = 512;
 
 	private playerRideTemplate: number = 0;
@@ -3927,10 +3928,7 @@ export class GamePlayScene extends Container implements IScene {
 	private spawnGameObjects() {
 
 		this.spawnRoadMarks();
-
 		this.spawnSideWalksTop();
-		//this.spawnTreesTop();
-		//this.spawnLampsTop();
 
 		this.spawnVehicleEnemys();
 		this.spawnVehicleBosss();
@@ -3939,11 +3937,9 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnVehicleBossRockets();
 
 		this.spawnSmokeExplosions();
-		this.spawnPlayerHonkBombs();
-		//this.spawnTreesBottom();
-
 		this.spawnSideWalksBottom();
 
+		this.spawnPlayerHonkBombs();
 		this.spawnPlayerRockets();
 		this.spawnPlayerRocketBullsEyes();
 		this.spawnPlayerBalloon();
@@ -3969,8 +3965,6 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnPowerUpPickups();
 
 		this.spawnMessageBubbles();
-
-		//this.spawnClouds();
 	}
 
 	private generateGameObjects() {

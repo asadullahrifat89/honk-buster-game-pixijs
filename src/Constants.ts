@@ -160,6 +160,7 @@ export enum ConstructType {
 
 	TITLE_SCREEN,
 	CHOPPER_BLADES,
+	TRASH_BIN_OPEN,
 }
 
 export enum SoundType {
@@ -319,6 +320,9 @@ export abstract class Constants {
 
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_sticky_1.png", PlayerHonkBombTemplate.STICKY_BOMB),
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, this.imagessDirectory + "player_honk_bomb_sticky_2.png", PlayerHonkBombTemplate.STICKY_BOMB),
+
+		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, this.imagessDirectory + "player_honk_bomb_trash_1_open.png"),
+		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, this.imagessDirectory + "player_honk_bomb_trash_2_open.png"),
 
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_ball_1.png", PlayerAirBombTemplate.BALL),
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_ball_2.png", PlayerAirBombTemplate.BALL),
