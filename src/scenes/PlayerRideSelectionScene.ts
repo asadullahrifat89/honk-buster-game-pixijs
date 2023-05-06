@@ -54,10 +54,13 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		option_1_sprite.x = 0;
 		option_1_sprite.y = 0;
 		const player_1_button = new Button(() => {
+
+			button.setText("Air Balloon");
 			SoundManager.play(SoundType.OPTION_SELECT);
 			option_2_sprite.filters = [new GrayscaleFilter()];
 			option_1_sprite.filters = null;
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 0;
+
 		}).setBackground(option_1_sprite);
 		player_1_button.setPosition(this.uiContainer.width / 2 - option_1_sprite.width, this.uiContainer.height / 2 - option_1_sprite.height / 2 + 10);
 		this.uiContainer.addChild(player_1_button);
@@ -68,10 +71,13 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		option_2_sprite.x = 0;
 		option_2_sprite.y = 0;
 		const player_2_button = new Button(() => {
+
+			button.setText("Helicopter");
 			SoundManager.play(SoundType.OPTION_SELECT);
 			option_1_sprite.filters = [new GrayscaleFilter()];
 			option_2_sprite.filters = null;
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 1;
+
 		}).setBackground(option_2_sprite);
 		player_2_button.setPosition(this.uiContainer.width / 2, this.uiContainer.height / 2 - option_2_sprite.height / 2 + 10);
 		this.uiContainer.addChild(player_2_button);
