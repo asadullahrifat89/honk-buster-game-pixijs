@@ -55,7 +55,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		option_1_sprite.y = 0;
 		const player_1_button = new Button(() => {
 
-			button.setText("Air Balloon");
+			button.setText("Air Balloon").setIsEnabled(true);
 			SoundManager.play(SoundType.OPTION_SELECT);
 			option_2_sprite.filters = [new GrayscaleFilter()];
 			option_1_sprite.filters = null;
@@ -72,7 +72,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		option_2_sprite.y = 0;
 		const player_2_button = new Button(() => {
 
-			button.setText("Helicopter");
+			button.setText("Chopper").setIsEnabled(true);
 			SoundManager.play(SoundType.OPTION_SELECT);
 			option_1_sprite.filters = [new GrayscaleFilter()];
 			option_2_sprite.filters = null;
@@ -83,7 +83,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		this.uiContainer.addChild(player_2_button);
 
 		const button = new Button(() => {
-			if (option_1_sprite.filters || option_2_sprite.filters) {
+			if (button.getIsEnabled()) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
 				SceneManager.changeScene(new PlayerGroundBombSelectionScene());
@@ -92,7 +92,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
 			}
 
-		}).setText("Next");
+		}).setText("Next").setIsEnabled(false);
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
 		this.uiContainer.addChild(button);
 	}

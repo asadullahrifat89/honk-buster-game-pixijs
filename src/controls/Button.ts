@@ -1,4 +1,5 @@
-﻿import { OutlineFilter } from "@pixi/filter-outline";
+﻿import { GrayscaleFilter } from "@pixi/filter-grayscale";
+import { OutlineFilter } from "@pixi/filter-outline";
 import { Container, DisplayObject, FederatedPointerEvent, Graphics, Text, TextStyle, TextStyleAlign } from "pixi.js";
 import { Constants } from "../Constants";
 
@@ -6,16 +7,19 @@ import { Constants } from "../Constants";
 export class Button extends Container {
 
 	private buttonFilter: OutlineFilter;
+	private buttonDisabledFilter: GrayscaleFilter;
 	private buttonText: Text;
 	private buttonBackground: DisplayObject;
+	private isEnabled: boolean = true;
 
 	constructor(onPressed: any) {
 		super();
+
 		this.interactive = true;
 		this.filters = null;
 
 		this.buttonFilter = new OutlineFilter(4);
-		//this.buttonFilter.saturate(1);
+		this.buttonDisabledFilter = new GrayscaleFilter();
 
 		// add the button background
 		this.buttonBackground = this.getDefaultGraphics();
@@ -23,7 +27,10 @@ export class Button extends Container {
 
 		this.buttonText = new Text(); // this is not added yet
 
-		this.on("pointertap", onPressed, this);
+		this.on("pointertap", () => {
+			if (this.isEnabled)
+				onPressed();
+		}, this);
 		this.on('pointerover', this.onButtonOver, this);
 		this.on('pointerout', this.onButtonOut, this);
 
@@ -65,11 +72,30 @@ export class Button extends Container {
 	}
 
 	onButtonOver(_e: FederatedPointerEvent) {
-		this.filters = [this.buttonFilter];
+		if (this.isEnabled)
+			this.filters = [this.buttonFilter];
 	}
 
 	onButtonOut(_e: FederatedPointerEvent) {
-		this.filters?.pop();
+		if (this.isEnabled)
+			this.filters?.pop();
+	}
+
+
+	setIsEnabled(isEnabled: boolean): Button {
+		this.isEnabled = isEnabled;
+
+		if (!isEnabled) {
+			this.filters = [this.buttonDisabledFilter];
+		}
+		else {
+			this.filters = null;
+		}
+		return this;
+	}
+
+	getIsEnabled(): boolean {
+		return this.isEnabled;
 	}
 
 	private getDefaultGraphics(): Graphics {
