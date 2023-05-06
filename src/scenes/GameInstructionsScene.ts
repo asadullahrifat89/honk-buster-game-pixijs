@@ -53,28 +53,21 @@ export class GameInstructionsScene extends Container implements IScene {
 		// player_ride
 		const player_ride = new GameObjectContainer();
 
-		const player_ride_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_balloon_1_idle"));
+		const player_ride_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_1"));
 		player_ride_sprite.width = 256 / 2;
 		player_ride_sprite.height = 256 / 2;
 		player_ride_sprite.x = 0;
 		player_ride_sprite.y = 0;
 
-		const player_ride_sprite_2: GameObjectSprite = new GameObjectSprite(Texture.from("player_chopper_1_idle"));
-		player_ride_sprite_2.width = 256 / 2.5;
-		player_ride_sprite_2.height = 256 / 2.5;
+		const player_ride_sprite_2: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_2"));
+		player_ride_sprite_2.width = 256 / 2;
+		player_ride_sprite_2.height = 256 / 2;
 		player_ride_sprite_2.x = 50;
 		player_ride_sprite_2.y = 50;
-
-		const player_ride_sprite_2_blades: GameObjectSprite = new GameObjectSprite(Texture.from("player_chopper_blades"));
-		player_ride_sprite_2_blades.width = 256 / 2.5;
-		player_ride_sprite_2_blades.height = 256 / 2.5;
-		player_ride_sprite_2_blades.x = 50;
-		player_ride_sprite_2_blades.y = 50;
 
 		const player_ride_container = new GameObjectContainer();
 		player_ride_container.addChild(player_ride_sprite);
 		player_ride_container.addChild(player_ride_sprite_2);
-		player_ride_container.addChild(player_ride_sprite_2_blades);
 		player_ride.addChild(player_ride_container);
 
 		const player_ride_msg = new MessageBubble(0, "These are your air rides.", 20);
