@@ -55,7 +55,7 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly vehicleBossReleaseLimit: number = 15;
 	private readonly vehicleBossCheckpoint: GameCheckpoint;
 
-	private readonly ufoEnemyReleasePoint: number = 35; // 35
+	private readonly ufoEnemyReleasePoint: number = 5; // 35
 	private readonly ufoEnemyReleaseLimit: number = 5;
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
