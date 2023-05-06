@@ -1545,8 +1545,6 @@ export class GamePlayScene extends Container implements IScene {
 				default: break;
 			}
 
-
-
 			this.playerRocketGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 

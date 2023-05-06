@@ -23,7 +23,7 @@ export class PlayerRocketBullsEye extends SeekingRocketBase {
         this.autoBlastDelay = this.autoBlastDelayDefault;
         this.targetHitbox = new Rectangle();
 
-        SoundManager.play(SoundType.BULLS_EYE_ROCKET_LAUNCH);
+        SoundManager.play(SoundType.BALL_LAUNCH);
     }
 
     reposition(source: GameObjectContainer) {

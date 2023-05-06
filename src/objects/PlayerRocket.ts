@@ -24,9 +24,11 @@ export class PlayerRocket extends GameObjectContainer {
 		switch (this.playerRocketTemplate) {
 			case PlayerAirBombTemplate.BALL: {				
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 8;
+				SoundManager.play(SoundType.BALL_LAUNCH);
 			} break;
 			case PlayerAirBombTemplate.ROCKET: {				
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 3;
+				SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
 			} break;
 			default: break;
 		}
@@ -39,9 +41,7 @@ export class PlayerRocket extends GameObjectContainer {
 		this.awaitMoveUpLeft = false;
 		this.awaitMoveDownRight = false;
 
-		this.autoBlastDelay = this.autoBlastDelayDefault;
-
-		SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
+		this.autoBlastDelay = this.autoBlastDelayDefault;		
 	}
 
 	setTemplate(playerRocketTemplate: PlayerAirBombTemplate) {
@@ -75,10 +75,9 @@ export class PlayerRocket extends GameObjectContainer {
 
 	autoBlast() {
 		this.autoBlastDelay -= 0.1;
-
-		if (this.autoBlastDelay <= 0)
+		if (this.autoBlastDelay <= 0) {
 			return true;
-
+		}
 		return false;
 	}
 }
