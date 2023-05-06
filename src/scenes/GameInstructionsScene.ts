@@ -66,7 +66,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		player_ride_sprite_2.x = 50;
 		player_ride_sprite_2.y = 50;
 
-		const player_ride_sprite_2_blades: GameObjectSprite = new GameObjectSprite(Texture.from("chopper_blades"));
+		const player_ride_sprite_2_blades: GameObjectSprite = new GameObjectSprite(Texture.from("player_chopper_blades"));
 		player_ride_sprite_2_blades.width = 256 / 2.5;
 		player_ride_sprite_2_blades.height = 256 / 2.5;
 		player_ride_sprite_2_blades.x = 50;

@@ -333,7 +333,7 @@ export abstract class Constants {
 
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET_BULLS_EYE, this.imagessDirectory + "player_rocket_bulls_eye_1.png"),
 
-		new ConstructTemplate(ConstructType.CHOPPER_BLADES, this.imagessDirectory + "chopper_blades.png"),
+		new ConstructTemplate(ConstructType.CHOPPER_BLADES, this.imagessDirectory + "player_chopper_blades.png"),
 
 		new ConstructTemplate(ConstructType.BANG, this.imagessDirectory + "bang_1.png"),
 		new ConstructTemplate(ConstructType.BANG, this.imagessDirectory + "bang_2.png"),
