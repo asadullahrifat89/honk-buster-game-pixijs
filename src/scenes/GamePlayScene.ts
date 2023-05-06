@@ -115,7 +115,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.addChildAt(this.stageColor, 0);
 
 		// create the scene container
-		this.sceneContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
+		this.sceneContainer = new GameObjectContainer();
 		this.addChild(this.sceneContainer);
 
 		// set the check points
