@@ -1166,7 +1166,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerRide
 
-	private playerRideSizeWidth: number = 512 ;
+	private playerRideSizeWidth: number = 512;
 	private playerRideSizeHeight: number = 512;
 
 	private playerRideTemplate: number = 0;
@@ -3927,10 +3927,7 @@ export class GamePlayScene extends Container implements IScene {
 	private spawnGameObjects() {
 
 		this.spawnRoadMarks();
-
 		this.spawnSideWalksTop();
-		//this.spawnTreesTop();
-		//this.spawnLampsTop();
 
 		this.spawnVehicleEnemys();
 		this.spawnVehicleBosss();
@@ -3939,11 +3936,9 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnVehicleBossRockets();
 
 		this.spawnSmokeExplosions();
-		this.spawnPlayerHonkBombs();
-		//this.spawnTreesBottom();
-
 		this.spawnSideWalksBottom();
 
+		this.spawnPlayerHonkBombs();
 		this.spawnPlayerRockets();
 		this.spawnPlayerRocketBullsEyes();
 		this.spawnPlayerBalloon();
@@ -3969,8 +3964,6 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnPowerUpPickups();
 
 		this.spawnMessageBubbles();
-
-		//this.spawnClouds();
 	}
 
 	private generateGameObjects() {
