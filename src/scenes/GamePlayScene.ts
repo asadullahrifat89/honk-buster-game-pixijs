@@ -36,6 +36,7 @@ import { ZombieBoss } from "../objects/ZombieBoss";
 import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
 import { SoundTemplate } from "../core/SoundTemplate";
 import { MessageBubble } from "../controls/MessageBubble";
+import { GrayscaleFilter } from "@pixi/filter-grayscale";
 
 
 export class GamePlayScene extends Container implements IScene {
@@ -100,7 +101,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		// get textures for on screen message icons
 		this.behindBackIcon = Texture.from("character_maleAdventurer_behindBack");
-		this.cheerIcon = Texture.from(".character_maleAdventurer_cheer0");
+		this.cheerIcon = Texture.from("character_maleAdventurer_cheer0");
 		this.talkIcon = Texture.from("character_maleAdventurer_talk");
 		this.interactIcon = Texture.from("character_maleAdventurer_interact");
 
@@ -173,9 +174,9 @@ export class GamePlayScene extends Container implements IScene {
 
 		// show message in the beginning
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
-			case PlayerGroundBombTemplate.EXPLOSIVE: { this.generateOnScreenMessage("Drop granades on honkers!", this.talkIcon); } break;
-			case PlayerGroundBombTemplate.TRASH: { this.generateOnScreenMessage("Drop trash bins on honkers!", this.talkIcon); } break;
-			case PlayerGroundBombTemplate.STICKY: { this.generateOnScreenMessage("Drop dynamites on honkers!", this.talkIcon); } break;
+			case PlayerGroundBombTemplate.GRENADE: { this.generateOnScreenMessage("Drop granades on honkers!", this.talkIcon); } break;
+			case PlayerGroundBombTemplate.TRASH_BIN: { this.generateOnScreenMessage("Drop trash bins on honkers!", this.talkIcon); } break;
+			case PlayerGroundBombTemplate.DYNAMITE: { this.generateOnScreenMessage("Drop dynamites on honkers!", this.talkIcon); } break;
 		}
 
 		// start hovering sound for player ride
@@ -185,7 +186,7 @@ export class GamePlayScene extends Container implements IScene {
 			default:
 		}
 
-		// start bacground sounds
+		// start background sounds
 		SoundManager.play(SoundType.AMBIENCE, 0.4, true);
 		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.4, true);
 		SoundManager.play(SoundType.GAME_START);
@@ -1336,123 +1337,124 @@ export class GamePlayScene extends Container implements IScene {
 
 				playerGroundBomb.pop();
 
-				if (playerGroundBomb) {
+				if (playerGroundBomb.isBlasting) {
+					playerGroundBomb.fade();
 
-					if (playerGroundBomb.isBlasting) {
-						playerGroundBomb.fade();
+					switch (playerGroundBomb.playerGroundBombTemplate) {
+						case PlayerGroundBombTemplate.GRENADE: {
+							if (playerGroundBomb.awaitMoveDownLeft) {
+								playerGroundBomb.moveDownLeft();
+								playerGroundBomb.rotate(RotationDirection.Backward, 0, 15);
+							}
+							else if (playerGroundBomb.awaitMoveDownRight) {
+								playerGroundBomb.moveDownRight();
+								playerGroundBomb.moveDownRight();
+								playerGroundBomb.moveDownRight();
+								playerGroundBomb.rotate(RotationDirection.Forward, 0, 15);
+							}
+							else if (playerGroundBomb.awaitMoveUpLeft) {
+								playerGroundBomb.moveUpLeft();
+								playerGroundBomb.rotate(RotationDirection.Backward, 0, 15);
+							}
+							else if (playerGroundBomb.awaitMoveUpRight) {
+								playerGroundBomb.moveUpRight();
+								playerGroundBomb.moveUpRight();
+								playerGroundBomb.rotate(RotationDirection.Forward, 0, 15);
+							}
+						} break;
+						case PlayerGroundBombTemplate.TRASH_BIN: {
+							if (playerGroundBomb.awaitMoveUpRight) {
+								playerGroundBomb.moveUpRight();
+								playerGroundBomb.rotate(RotationDirection.Forward, 0, 0.5);
+							}
+							else if (playerGroundBomb.awaitMoveUp) {
+								playerGroundBomb.moveUp();
+								playerGroundBomb.rotate(RotationDirection.Backward, 0, 0.5);
+							}
 
-						switch (playerGroundBomb.playerGroundBombTemplate) {
-							case PlayerGroundBombTemplate.EXPLOSIVE: {
-								if (playerGroundBomb.awaitMoveDownLeft) {
-									playerGroundBomb.moveDownLeft();
-									playerGroundBomb.rotate(RotationDirection.Backward, 0, 15);
-								}
-								else if (playerGroundBomb.awaitMoveDownRight) {
-									playerGroundBomb.moveDownRight();
-									playerGroundBomb.moveDownRight();
-									playerGroundBomb.moveDownRight();
-									playerGroundBomb.rotate(RotationDirection.Forward, 0, 15);
-								}
-								else if (playerGroundBomb.awaitMoveUpLeft) {
-									playerGroundBomb.moveUpLeft();
-									playerGroundBomb.rotate(RotationDirection.Backward, 0, 15);
-								}
-								else if (playerGroundBomb.awaitMoveUpRight) {
-									playerGroundBomb.moveUpRight();
-									playerGroundBomb.moveUpRight();
-									playerGroundBomb.rotate(RotationDirection.Forward, 0, 15);
-								}
-							} break;
-							case PlayerGroundBombTemplate.TRASH: {
-								if (playerGroundBomb.awaitMoveUpRight) {
-									playerGroundBomb.moveUpRight();
-									playerGroundBomb.rotate(RotationDirection.Forward, 0, 0.5);
-								}
-								else if (playerGroundBomb.awaitMoveUp) {
-									playerGroundBomb.moveUp();
-									playerGroundBomb.rotate(RotationDirection.Backward, 0, 0.5);
-								}
-
-							} break;
-							case PlayerGroundBombTemplate.STICKY: {
-								if (playerGroundBomb.awaitMoveUpRight) {
-									playerGroundBomb.moveUpRight();
-									playerGroundBomb.moveUpRight();
-									playerGroundBomb.rotate(RotationDirection.Forward, 0, 10);
-								}
-								else if (playerGroundBomb.awaitMoveDownLeft) {
-									playerGroundBomb.moveDownLeft();
-									playerGroundBomb.rotate(RotationDirection.Backward, 0, 10);
-								}
-							} break;
-							default: break;
-						}
+						} break;
+						case PlayerGroundBombTemplate.DYNAMITE: {
+							if (playerGroundBomb.awaitMoveUpRight) {
+								playerGroundBomb.moveUpRight();
+								playerGroundBomb.moveUpRight();
+								playerGroundBomb.rotate(RotationDirection.Forward, 0, 10);
+							}
+							else if (playerGroundBomb.awaitMoveDownLeft) {
+								playerGroundBomb.moveDownLeft();
+								playerGroundBomb.rotate(RotationDirection.Backward, 0, 10);
+							}
+						} break;
+						default: break;
 					}
-					else {
-						switch (playerGroundBomb.playerGroundBombTemplate) {
-							case PlayerGroundBombTemplate.EXPLOSIVE: {
-								playerGroundBomb.move();
+				}
+				else {
+					switch (playerGroundBomb.playerGroundBombTemplate) {
+						case PlayerGroundBombTemplate.GRENADE: {
+							playerGroundBomb.move();
 
-								if (playerGroundBomb.awaitBlast()) {
+							if (playerGroundBomb.awaitBlast()) {
 
-									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerGroundBomb));
+								let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerGroundBomb));
 
-									if (vehicleEnemy) {
-										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
-									}
-
-									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerGroundBomb));
-
-									if (vehicleBoss) {
-										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
-									}
-
-									let randomDir = Constants.getRandomNumber(0, 3);
-
-									switch (randomDir) {
-										case 0: { playerGroundBomb.awaitMoveDownLeft = true; } break;
-										case 1: { playerGroundBomb.awaitMoveDownRight = true; } break;
-										case 2: { playerGroundBomb.awaitMoveUpLeft = true; } break;
-										case 3: { playerGroundBomb.awaitMoveUpRight = true; } break;
-										default: break;
-									}
-
-									this.generateSmokeExplosion(playerGroundBomb);
-									this.generateFlashExplosion(playerGroundBomb);
-									this.generateRingExplosion(playerGroundBomb);
+								if (vehicleEnemy) {
+									this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
 								}
-							} break;
-							case PlayerGroundBombTemplate.TRASH: {
-								playerGroundBomb.move();
 
-								if (playerGroundBomb.awaitBlast()) {
+								let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerGroundBomb));
 
-									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerGroundBomb));
-
-									if (vehicleEnemy) {
-										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
-									}
-
-									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerGroundBomb));
-
-									if (vehicleBoss) {
-										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
-									}
-
-									let randomDir = Constants.getRandomNumber(0, 1);
-
-									switch (randomDir) {
-										case 0: { playerGroundBomb.awaitMoveUp = true; } break;
-										case 1: { playerGroundBomb.awaitMoveUpRight = true; } break;
-										default: break;
-									}
-
-									this.generateSmokeExplosion(playerGroundBomb);
+								if (vehicleBoss) {
+									this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
 								}
-							} break;
-							case PlayerGroundBombTemplate.STICKY: {
 
-								if (playerGroundBomb.isDropped) {
+								let randomDir = Constants.getRandomNumber(0, 3);
+
+								switch (randomDir) {
+									case 0: { playerGroundBomb.awaitMoveDownLeft = true; } break;
+									case 1: { playerGroundBomb.awaitMoveDownRight = true; } break;
+									case 2: { playerGroundBomb.awaitMoveUpLeft = true; } break;
+									case 3: { playerGroundBomb.awaitMoveUpRight = true; } break;
+									default: break;
+								}
+
+								this.generateSmokeExplosion(playerGroundBomb);
+								this.generateFlashExplosion(playerGroundBomb);
+								this.generateRingExplosion(playerGroundBomb);
+							}
+						} break;
+						case PlayerGroundBombTemplate.TRASH_BIN: {
+							playerGroundBomb.move();
+
+							if (playerGroundBomb.awaitBlast()) {
+
+								let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerGroundBomb));
+
+								if (vehicleEnemy) {
+									this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
+								}
+
+								let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerGroundBomb));
+
+								if (vehicleBoss) {
+									this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
+								}
+
+								let randomDir = Constants.getRandomNumber(0, 1);
+
+								switch (randomDir) {
+									case 0: { playerGroundBomb.awaitMoveUp = true; } break;
+									case 1: { playerGroundBomb.awaitMoveUpRight = true; } break;
+									default: break;
+								}
+
+								this.generateSmokeExplosion(playerGroundBomb);
+							}
+						} break;
+						case PlayerGroundBombTemplate.DYNAMITE: {
+
+							if (playerGroundBomb.isDropped) {
+
+								if (!this.isBossDeathExploding()) { // do not move the bomb is boss death explosion is happening
+
 									playerGroundBomb.moveDownRight();
 
 									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerGroundBomb));
@@ -1480,19 +1482,19 @@ export class GamePlayScene extends Container implements IScene {
 										this.generateSmokeExplosion(playerGroundBomb);
 										this.generateRingExplosion(playerGroundBomb);
 									}
+								}								
 
-									if (playerGroundBomb.awaitBlast()) {
-										this.generateSmokeExplosion(playerGroundBomb);
-										this.generateRingExplosion(playerGroundBomb);
-									}
+								if (playerGroundBomb.awaitBlast()) {
+									this.generateSmokeExplosion(playerGroundBomb);
+									this.generateRingExplosion(playerGroundBomb);
 								}
-								else {
-									playerGroundBomb.move();
-									playerGroundBomb.awaitDrop();
-								}
-							} break;
-							default: break;
-						}
+							}
+							else {
+								playerGroundBomb.move();
+								playerGroundBomb.awaitDrop();
+							}
+						} break;
+						default: break;
 					}
 				}
 
@@ -1931,8 +1933,9 @@ export class GamePlayScene extends Container implements IScene {
 					this.ufoEnemyPopDelay = this.ufoEnemyPopDelayDefault;
 
 					if (!this.ufoEnemiesAppeared) {
-						this.generateOnScreenMessage("Alien ufos approaching!");
 						this.ufoEnemiesAppeared = true;
+						this.generateOnScreenMessage("Alien ufos approaching!");
+						this.setOnScreenMessageFilter();
 						SoundManager.play(SoundType.UFO_ENEMY_ENTRY);
 						SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.6, true);
 					}
@@ -2351,6 +2354,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(gameObject.getSprite().getTexture());
 
 				this.generateOnScreenMessage("A hotrod has arrived!", this.interactIcon);
+				this.setOnScreenMessageFilter();
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -2595,6 +2599,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(ufoBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Cyborg inbound!", this.interactIcon);
+				this.setOnScreenMessageFilter();
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -3000,6 +3005,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(zombieBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Zombie inbound!", this.interactIcon);
+				this.setOnScreenMessageFilter();
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -3248,6 +3254,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(mafiaBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Godfather inbound.", this.interactIcon);
+				this.setOnScreenMessageFilter();
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -3883,7 +3890,19 @@ export class GamePlayScene extends Container implements IScene {
 
 			if (this.onScreenMessage.isDepleted()) {
 				this.onScreenMessage.disableRendering();
+				this.unSetOnScreenMessageFilter();
 			}
+		}
+	}
+
+	private setOnScreenMessageFilter() {
+		this.sceneContainer.filters = [new GrayscaleFilter()];
+	}
+
+
+	private unSetOnScreenMessageFilter() {
+		if (this.sceneContainer.filters) {
+			this.sceneContainer.filters = null;
 		}
 	}
 
