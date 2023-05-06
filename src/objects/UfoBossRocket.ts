@@ -14,7 +14,7 @@ export class UfoBossRocket extends GameObjectContainer {
 
 	reset() {
 		this.alpha = 1;
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 3;
+		this.speed = 0;
 		this.scale.set(1);
 		this.isBlasting = false;
 		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET));
@@ -41,6 +41,11 @@ export class UfoBossRocket extends GameObjectContainer {
 		// this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
 		this.isBlasting = true;
 		SoundManager.play(SoundType.ROCKET_BLAST);
+	}
+
+	accelerate() {
+		if (this.speed < Constants.DEFAULT_CONSTRUCT_SPEED + 9)
+			this.speed += 0.5;
 	}
 
 	autoBlast() {

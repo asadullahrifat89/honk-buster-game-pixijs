@@ -17,8 +17,8 @@ export const manifest: ResolverManifest = {
 			{
 				"attack_button": "./images/attack_button.png",
 				"pause_button": "./images/pause_button.png",
-				"resume_button": "./images/resume_button.png",
-				"quit_button": "./images/quit_button.png",
+				"play_button": "./images/play_button.png",
+				"stop_button": "./images/stop_button.png",
 
 				//"bang_1": "./images/bang_1.png",
 				//"bang_2": "./images/bang_2.png",				

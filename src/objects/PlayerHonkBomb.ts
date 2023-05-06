@@ -41,7 +41,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 
 	reposition(source: PlayerRide) {
 		switch (source.playerRideTemplate) {
-			case PlayerRideTemplate.BALLOON: {
+			case PlayerRideTemplate.AIR_BALLOON: {
 				this.setPosition(source.getLeft(), source.getTop() + 95);
 			} break;
 			case PlayerRideTemplate.CHOPPER: {
