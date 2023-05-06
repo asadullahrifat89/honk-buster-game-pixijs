@@ -21,7 +21,16 @@ export class PlayerRocket extends GameObjectContainer {
 		this.setTexture(Constants.getRandomTextureFromUris(this.playerRocketUris));
 		this.scale.set(1);
 
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 3;
+		switch (this.playerRocketTemplate) {
+			case PlayerAirBombTemplate.BALL: {				
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 8;
+			} break;
+			case PlayerAirBombTemplate.ROCKET: {				
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 3;
+			} break;
+			default: break;
+		}
+
 		this.isBlasting = false;
 
 		this.awaitMoveDownLeft = false;
@@ -40,10 +49,10 @@ export class PlayerRocket extends GameObjectContainer {
 
 		switch (this.playerRocketTemplate) {
 			case PlayerAirBombTemplate.BALL: {
-				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BALL).map(x => x.uri);
+				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BALL).map(x => x.uri);				
 			} break;
 			case PlayerAirBombTemplate.ROCKET: {
-				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.ROCKET).map(x => x.uri);
+				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.ROCKET).map(x => x.uri);				
 			} break;
 			default: break;
 		}

@@ -59,7 +59,7 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly ufoEnemyReleaseLimit: number = 5;
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
-	private readonly ufoBossReleasePoint: number = 50; // 50
+	private readonly ufoBossReleasePoint: number = 10; // 50
 	private readonly ufoBossReleaseLimit: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
 
@@ -1194,8 +1194,8 @@ export class GamePlayScene extends Container implements IScene {
 		}
 
 		sprite.anchor.set(0.5, 0.5);
-
 		this.player.addChild(sprite);
+
 		this.player.setPlayerRideTemplate(this.playerRideTemplate);
 		this.player.disableRendering();
 
@@ -1523,24 +1523,29 @@ export class GamePlayScene extends Container implements IScene {
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET));
-
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.playerRocketSizeWidth;
-			sprite.height = this.playerRocketSizeHeight;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
 			switch (this.playerRideTemplate) {
 				case PlayerRideTemplate.BALLOON: {
+					sprite.width = this.playerRocketSizeWidth / 1.5;
+					sprite.height = this.playerRocketSizeHeight / 1.5;
+
 					gameObject.setTemplate(PlayerAirBombTemplate.BALL);
 				} break;
 				case PlayerRideTemplate.CHOPPER: {
+					sprite.width = this.playerRocketSizeWidth;
+					sprite.height = this.playerRocketSizeHeight;
+
 					gameObject.setTemplate(PlayerAirBombTemplate.ROCKET);
 				} break;
 				default: break;
 			}
+
+
 
 			this.playerRocketGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
