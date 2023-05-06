@@ -184,11 +184,18 @@ export class GameInstructionsScene extends Container implements IScene {
 		player_rocket_sprite.angle = 213;
 		player_rocket_sprite.anchor.set(1);
 
+		const player_rocket_sprite_2: GameObjectSprite = new GameObjectSprite(Texture.from("player_ball_1"));
+		player_rocket_sprite_2.width = 256 / 3;
+		player_rocket_sprite_2.height = 256 / 3;
+		player_rocket_sprite_2.x = 0;
+		player_rocket_sprite_2.y = 100;
+
 		const player_rocket_container = new GameObjectContainer();
 		player_rocket_container.addChild(player_rocket_sprite);
+		player_rocket_container.addChild(player_rocket_sprite_2);
 		player_rocket.addChild(player_rocket_container);
 
-		const player_rocket_msg = new MessageBubble(0, "These are your rockets.", 20);
+		const player_rocket_msg = new MessageBubble(0, "These are your air bombs.", 20);
 		player_rocket_msg.setPosition(player_rocket_container.x + player_rocket_container.width + 10, player_rocket_container.y + 25);
 		player_rocket.addChild(player_rocket_msg);
 
