@@ -173,9 +173,9 @@ export class GamePlayScene extends Container implements IScene {
 
 		// show message in the beginning
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
-			case PlayerGroundBombTemplate.EXPLOSIVE_BOMB: { this.generateOnScreenMessage("Drop granades on honkers!", this.talkIcon); } break;
-			case PlayerGroundBombTemplate.TRASH_BOMB: { this.generateOnScreenMessage("Drop trash bags on honkers!", this.talkIcon); } break;
-			case PlayerGroundBombTemplate.STICKY_BOMB: { this.generateOnScreenMessage("Drop sticky bombs on honkers!", this.talkIcon); } break;
+			case PlayerGroundBombTemplate.EXPLOSIVE: { this.generateOnScreenMessage("Drop granades on honkers!", this.talkIcon); } break;
+			case PlayerGroundBombTemplate.TRASH: { this.generateOnScreenMessage("Drop trash bags on honkers!", this.talkIcon); } break;
+			case PlayerGroundBombTemplate.STICKY: { this.generateOnScreenMessage("Drop sticky bombs on honkers!", this.talkIcon); } break;
 		}
 
 		// start hovering sound for player ride
@@ -1343,7 +1343,7 @@ export class GamePlayScene extends Container implements IScene {
 						playerGroundBomb.fade();
 
 						switch (playerGroundBomb.playerGroundBombTemplate) {
-							case PlayerGroundBombTemplate.EXPLOSIVE_BOMB: {
+							case PlayerGroundBombTemplate.EXPLOSIVE: {
 								if (playerGroundBomb.awaitMoveDownLeft) {
 									playerGroundBomb.moveDownLeft();
 									playerGroundBomb.rotate(RotationDirection.Backward, 0, 15);
@@ -1364,7 +1364,7 @@ export class GamePlayScene extends Container implements IScene {
 									playerGroundBomb.rotate(RotationDirection.Forward, 0, 15);
 								}
 							} break;
-							case PlayerGroundBombTemplate.TRASH_BOMB: {
+							case PlayerGroundBombTemplate.TRASH: {
 								if (playerGroundBomb.awaitMoveUpRight) {
 									playerGroundBomb.moveUpRight();
 									playerGroundBomb.rotate(RotationDirection.Forward, 0, 0.5);
@@ -1375,7 +1375,7 @@ export class GamePlayScene extends Container implements IScene {
 								}
 
 							} break;
-							case PlayerGroundBombTemplate.STICKY_BOMB: {
+							case PlayerGroundBombTemplate.STICKY: {
 								if (playerGroundBomb.awaitMoveUpRight) {
 									playerGroundBomb.moveUpRight();
 									playerGroundBomb.moveUpRight();
@@ -1391,7 +1391,7 @@ export class GamePlayScene extends Container implements IScene {
 					}
 					else {
 						switch (playerGroundBomb.playerGroundBombTemplate) {
-							case PlayerGroundBombTemplate.EXPLOSIVE_BOMB: {
+							case PlayerGroundBombTemplate.EXPLOSIVE: {
 								playerGroundBomb.move();
 
 								if (playerGroundBomb.awaitBlast()) {
@@ -1423,7 +1423,7 @@ export class GamePlayScene extends Container implements IScene {
 									this.generateRingExplosion(playerGroundBomb);
 								}
 							} break;
-							case PlayerGroundBombTemplate.TRASH_BOMB: {
+							case PlayerGroundBombTemplate.TRASH: {
 								playerGroundBomb.move();
 
 								if (playerGroundBomb.awaitBlast()) {
@@ -1451,7 +1451,7 @@ export class GamePlayScene extends Container implements IScene {
 									this.generateSmokeExplosion(playerGroundBomb);
 								}
 							} break;
-							case PlayerGroundBombTemplate.STICKY_BOMB: {
+							case PlayerGroundBombTemplate.STICKY: {
 
 								if (playerGroundBomb.isDropped) {
 									playerGroundBomb.moveDownRight();
