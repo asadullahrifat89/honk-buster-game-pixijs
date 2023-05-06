@@ -229,13 +229,13 @@ export const manifest: ResolverManifest = {
 				"ufo_boss_hovering_2": "./sounds/ufo_boss_hovering_2.mp3",
 				"ufo_boss_hovering_3": "./sounds/ufo_boss_hovering_3.mp3",
 
-				"game_background_music_1": "./sounds/game_background_music_1.mp3",
-				"game_background_music_2": "./sounds/game_background_music_2.mp3",
-				"game_background_music_3": "./sounds/game_background_music_3.mp3",
+				//"game_background_music_1": "./sounds/game_background_music_1.mp3",
+				//"game_background_music_2": "./sounds/game_background_music_2.mp3",
+				//"game_background_music_3": "./sounds/game_background_music_3.mp3",
 
-				"boss_background_music_1": "./sounds/boss_background_music_1.mp3",
-				"boss_background_music_2": "./sounds/boss_background_music_2.mp3",
-				"boss_background_music_3": "./sounds/boss_background_music_3.mp3",
+				//"boss_background_music_1": "./sounds/boss_background_music_1.mp3",
+				//"boss_background_music_2": "./sounds/boss_background_music_2.mp3",
+				//"boss_background_music_3": "./sounds/boss_background_music_3.mp3",
 			},
 		},
 	]
