@@ -78,13 +78,17 @@ export class GameInstructionsScene extends Container implements IScene {
 		player_container.addChild(player_sprite_2_blades);
 		player.addChild(player_container);
 
-		const player_msg = new MessageBubble(0, "These are your rides.", 20);
+		const player_msg = new MessageBubble(0, "These are your air rides.", 20);
 		player_msg.setPosition(player_container.x + player_container.width + 10, player_container.y + 25);
 		player.addChild(player_msg);
 
-		const player_msg_2 = new MessageBubble(0, "You have to stop sound pollution in cities.", 20);
+		const player_msg_2 = new MessageBubble(0, "Each one moves at different speeds.", 20);
 		player_msg_2.setPosition(player_msg.x, player_msg.y + msg_line_2_gap);
 		player.addChild(player_msg_2);
+
+		const player_msg_3 = new MessageBubble(0, "They also shoot unique air bombs.", 20);
+		player_msg_3.setPosition(player_msg_2.x, player_msg_2.y + msg_line_2_gap);
+		player.addChild(player_msg_3);
 
 		player.setPosition(this.uiContainer.width / 2 - player.width / 2, (this.uiContainer.height / 2 - player.height / 2) + 10);
 		this.uiContainer.addChild(player);
@@ -110,7 +114,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		joystick_controller_container.addChild(joystick_handle_sprite);
 		joystick.addChild(joystick_controller_container);
 
-		const joystick_msg = new MessageBubble(0, "Use this to move around.", 20);
+		const joystick_msg = new MessageBubble(0, "Use this to move your ride.", 20);
 		joystick_msg.setPosition(joystick_controller_container.x + joystick_controller_container.width, joystick_controller_container.y + 50);
 		joystick.addChild(joystick_msg);
 
@@ -135,7 +139,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		attack_button_container.addChild(attack_button_sprite);
 		attack_button.addChild(attack_button_container);
 
-		const attack_button_msg = new MessageBubble(0, "Press this to attack.", 20);
+		const attack_button_msg = new MessageBubble(0, "Press this to drop or shoot bombs.", 20);
 		attack_button_msg.setPosition(attack_button_container.x + attack_button_container.width + 10, attack_button_container.y + 25);
 		attack_button.addChild(attack_button_msg);
 

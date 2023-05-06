@@ -1166,11 +1166,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerRide
 
-	private playerRideSizeWidth_CHOPPER: number = 512 / 3;
-	private playerRideSizeHeight_CHOPPER: number = 512 / 3;
-
-	private playerRideSizeWidth_BALLOON: number = 600 / 3;
-	private playerRideSizeHeight_BALLOON: number = 600 / 3;
+	private playerRideSizeWidth: number = 512 ;
+	private playerRideSizeHeight: number = 512;
 
 	private playerRideTemplate: number = 0;
 
@@ -1183,12 +1180,12 @@ export class GamePlayScene extends Container implements IScene {
 
 		switch (this.playerRideTemplate) {
 			case PlayerRideTemplate.AIR_BALLOON: {
-				sprite.width = this.playerRideSizeWidth_BALLOON;
-				sprite.height = this.playerRideSizeHeight_BALLOON;
+				sprite.width = this.playerRideSizeWidth / 3;
+				sprite.height = this.playerRideSizeHeight / 3;
 			} break;
 			case PlayerRideTemplate.CHOPPER: {
-				sprite.width = this.playerRideSizeWidth_CHOPPER;
-				sprite.height = this.playerRideSizeHeight_CHOPPER;
+				sprite.width = this.playerRideSizeWidth / 3.5;
+				sprite.height = this.playerRideSizeHeight / 3.5;
 			} break;
 			default: break;
 		}
@@ -3529,7 +3526,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (animatingMafiaBossRocketBullsEyes) {
 
-			animatingMafiaBossRocketBullsEyes.forEach(mafiaBossRocketBullsEye => {				
+			animatingMafiaBossRocketBullsEyes.forEach(mafiaBossRocketBullsEye => {
 
 				if (mafiaBossRocketBullsEye.isBlasting) {
 					mafiaBossRocketBullsEye.shrink();

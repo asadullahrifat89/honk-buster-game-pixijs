@@ -99,7 +99,7 @@ export class GameController extends Container {
 		quitButtonSpritebg.height = glowSpriteSize;
 		quitButtonSpritebg.width = glowSpriteSize;
 
-		const quitButtonSprite = new GameObjectSprite(Texture.from("quit_button"));
+		const quitButtonSprite = new GameObjectSprite(Texture.from("stop_button"));
 		quitButtonSprite.height = 50;
 		quitButtonSprite.width = 50;
 		quitButtonSprite.x = quitButtonSpritebg.width / 2 - quitButtonSprite.width / 2;
@@ -245,7 +245,7 @@ export class GameController extends Container {
 	public pauseGame() {
 		this.isPaused = true;
 
-		this.pauseButtonSprite.setTexture(Texture.from("resume_button"));
+		this.pauseButtonSprite.setTexture(Texture.from("play_button"));
 		SoundManager.play(SoundType.GAME_PAUSE);
 
 		this.settings.onPause?.(this.isPaused);
