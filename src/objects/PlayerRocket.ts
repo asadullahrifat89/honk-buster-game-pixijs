@@ -23,11 +23,11 @@ export class PlayerRocket extends GameObjectContainer {
 
 		switch (this.playerRocketTemplate) {
 			case PlayerAirBombTemplate.BALL: {
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 8;
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 9; // starts with high speed and slows down
 				SoundManager.play(SoundType.BALL_LAUNCH);
 			} break;
 			case PlayerAirBombTemplate.ROCKET: {
-				this.speed = 0;
+				this.speed = 0; // starts with slow speed then gets fast
 				SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
 			} break;
 			default: break;
@@ -63,11 +63,12 @@ export class PlayerRocket extends GameObjectContainer {
 	accelerate() {
 		switch (this.playerRocketTemplate) {
 			case PlayerAirBombTemplate.BALL: {
-
+				if (this.speed > 1)
+					this.speed -= 0.5; // balls loose speed with time
 			} break;
 			case PlayerAirBombTemplate.ROCKET: {
 				if (this.speed < Constants.DEFAULT_CONSTRUCT_SPEED + 9)
-					this.speed += 0.5;
+					this.speed += 0.5; // rockets gain speed with time
 			} break;
 			default: break;
 		}

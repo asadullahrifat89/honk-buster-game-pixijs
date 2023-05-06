@@ -76,7 +76,7 @@ export class PlayerRide extends GameObjectContainer {
 		let playerAttackUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_RIDE_ATTACK).map(x => x.uri);
 
 		switch (playerRideTemplate) {
-			case PlayerRideTemplate.BALLOON: {
+			case PlayerRideTemplate.AIR_BALLOON: {
 				this.playerIdleTexture = Texture.from(playerIdleUris[0]);
 				this.playerWinTexture = Texture.from(playerWinUris[0]);
 				this.playerHitTexture = Texture.from(playerHitUris[0]);
@@ -96,7 +96,7 @@ export class PlayerRide extends GameObjectContainer {
 		// add chopper animation sprite
 
 		switch (playerRideTemplate) {
-			case PlayerRideTemplate.BALLOON: {
+			case PlayerRideTemplate.AIR_BALLOON: {
 
 			} break;
 			case PlayerRideTemplate.CHOPPER: {
@@ -229,8 +229,8 @@ export class PlayerRide extends GameObjectContainer {
 	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
 
 		switch (this.playerRideTemplate) {
-			case PlayerRideTemplate.BALLOON: {
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * controller.power;
+			case PlayerRideTemplate.AIR_BALLOON: {
+				this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 0.5) * controller.power;
 			} break;
 			case PlayerRideTemplate.CHOPPER: {
 				this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 2) * controller.power; // chopper grants extra speed
@@ -300,10 +300,10 @@ export class PlayerRide extends GameObjectContainer {
 
 			if (this.chopperBladesOpacityEffect > 2) {
 				if (this.chopperBladesSprite.alpha != 1) {
-					this.chopperBladesSprite.alpha = 1;					
+					this.chopperBladesSprite.alpha = 1;
 				}
 				else {
-					this.chopperBladesSprite.alpha = 0.3;					
+					this.chopperBladesSprite.alpha = 0.3;
 				}
 
 				this.chopperBladesOpacityEffect = 0;

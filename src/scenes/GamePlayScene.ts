@@ -179,7 +179,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		// start hovering sound for player ride
 		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
-			case PlayerRideTemplate.BALLOON: { } break;
+			case PlayerRideTemplate.AIR_BALLOON: { } break;
 			case PlayerRideTemplate.CHOPPER: { SoundManager.play(SoundType.CHOPPER_HOVERING, 0.1, true); } break;
 			default:
 		}
@@ -1182,7 +1182,7 @@ export class GamePlayScene extends Container implements IScene {
 		sprite.y = 0;
 
 		switch (this.playerRideTemplate) {
-			case PlayerRideTemplate.BALLOON: {
+			case PlayerRideTemplate.AIR_BALLOON: {
 				sprite.width = this.playerRideSizeWidth_BALLOON;
 				sprite.height = this.playerRideSizeHeight_BALLOON;
 			} break;
@@ -1213,7 +1213,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.player.pop();
 		this.player.hover();
 
-		if (this.playerRideTemplate == PlayerRideTemplate.BALLOON) {
+		if (this.playerRideTemplate == PlayerRideTemplate.AIR_BALLOON) {
 			this.player.dillyDally();
 		}
 
@@ -1530,7 +1530,7 @@ export class GamePlayScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			switch (this.playerRideTemplate) {
-				case PlayerRideTemplate.BALLOON: {
+				case PlayerRideTemplate.AIR_BALLOON: {
 					sprite.width = this.playerRocketSizeWidth / 1.5;
 					sprite.height = this.playerRocketSizeHeight / 1.5;
 
