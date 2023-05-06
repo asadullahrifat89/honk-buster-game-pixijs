@@ -20,15 +20,10 @@ export const manifest: ResolverManifest = {
 				"play_button": "./images/play_button.png",
 				"stop_button": "./images/stop_button.png",
 
-				//"bang_1": "./images/bang_1.png",
-				//"bang_2": "./images/bang_2.png",				
-
-				//"blast_1": "./images/blast_1.png",
-				//"blast_2": "./images/blast_2.png",
-
-				//"cloud_1": "./images/cloud_1.png",
-				//"cloud_2": "./images/cloud_2.png",
-				//"cloud_3": "./images/cloud_3.png",
+				"character_maleAdventurer_talk": "./images/character_maleAdventurer_talk.png",
+				"character_maleAdventurer_interact": "./images/character_maleAdventurer_interact.png",
+				"character_maleAdventurer_cheer0": "./images/character_maleAdventurer_cheer0.png",
+				"character_maleAdventurer_behindBack": "./images/character_maleAdventurer_behindBack.png",
 
 				"cover_image": "./images/cover_image.png",
 
