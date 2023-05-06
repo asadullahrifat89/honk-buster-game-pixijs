@@ -55,18 +55,18 @@ export class PlayerHonkBomb extends GameObjectContainer {
 		this.setPosition(this.x + this.speed, this.y + this.speed * 1.5);
 	}
 
-	setHonkBombTemplate(honkBombTemplate: PlayerHonkBombTemplate) {
+	setTemplate(honkBombTemplate: PlayerHonkBombTemplate) {
 		this.playerHonkBombTemplate = honkBombTemplate;
 
 		switch (this.playerHonkBombTemplate) {
 			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
-				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("explosive")).map(x => x.uri);
+				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerHonkBombTemplate.EXPLOSIVE_BOMB /*x.uri.includes("explosive")*/).map(x => x.uri);
 			} break;
 			case PlayerHonkBombTemplate.TRASH_BOMB: {
-				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("trash")).map(x => x.uri);
+				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerHonkBombTemplate.TRASH_BOMB /*x.uri.includes("trash")*/).map(x => x.uri);
 			} break;
 			case PlayerHonkBombTemplate.STICKY_BOMB: {
-				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("sticky")).map(x => x.uri);
+				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerHonkBombTemplate.STICKY_BOMB /*x.uri.includes("sticky")*/).map(x => x.uri);
 				this.blastDelayDefault = 45;
 			} break;
 		}

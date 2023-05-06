@@ -2,12 +2,14 @@
 
 export class ConstructTemplate {
 
-    public constructType: ConstructType = 0;
-    public uri: string = "";
+	public constructType: ConstructType = 0;
+	public uri: string = "";
+	public tag: any;
 
-    constructor(constructType: ConstructType, uri: string) {
-        this.constructType = constructType;
-        this.uri = uri;
-    }
+	constructor(constructType: ConstructType, uri: string, tag: any = null) {
+		this.constructType = constructType;
+		this.uri = uri;
+		this.tag = tag;
+	}
 }
 
