@@ -1,6 +1,7 @@
-﻿import { Constants, ConstructType, PlayerHonkBombTemplate, SoundType } from '../Constants';
+﻿import { Constants, ConstructType, PlayerHonkBombTemplate, PlayerRideTemplate, SoundType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { SoundManager } from '../managers/SoundManager';
+import { PlayerRide } from './PlayerRide';
 
 
 export class PlayerHonkBomb extends GameObjectContainer {
@@ -9,7 +10,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 	private playerHonkBombUris: string[] = [];
 
 	private blastDelay: number = 0;
-	private readonly blastDelayDefault: number = 25;
+	private blastDelayDefault: number = 25;
 
 	private dropDelay: number = 0;
 	private readonly dropDelayDefault: number = 25;
@@ -38,8 +39,16 @@ export class PlayerHonkBomb extends GameObjectContainer {
 		SoundManager.play(SoundType.CRACKER_DROP, 0.5);
 	}
 
-	reposition(source: GameObjectContainer) {
-		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 40);
+	reposition(source: PlayerRide) {
+		switch (source.playerRideTemplate) {
+			case PlayerRideTemplate.BALLOON: {
+				this.setPosition(source.getLeft(), source.getTop() + 95);
+			} break;
+			case PlayerRideTemplate.CHOPPER: {
+				this.setPosition(source.getLeft(), source.getTop() + 70);
+			} break;
+			default:
+		}
 	}
 
 	move() {
@@ -58,6 +67,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 			} break;
 			case PlayerHonkBombTemplate.STICKY_BOMB: {
 				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("sticky")).map(x => x.uri);
+				this.blastDelayDefault = 45;
 			} break;
 		}
 

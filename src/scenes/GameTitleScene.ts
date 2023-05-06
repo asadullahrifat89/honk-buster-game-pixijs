@@ -58,32 +58,28 @@ export class GameTitleScene extends Container implements IScene {
 		subTitle.y = (this.uiContainer.height / 2 - subTitle.height / 2) - 65;
 		this.uiContainer.addChild(subTitle);
 
-		// new game button
-		const newGameButton = new Button(() => {
-
-			SoundManager.play(SoundType.OPTION_SELECT);			
-			this.removeChild(this.uiContainer);
-			SceneManager.changeScene(new PlayerCharacterSelectionScene());
-			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.5, true);
-
-		}).setText("New Game");
-		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, this.uiContainer.height / 2 - newGameButton.height / 2);
-		this.uiContainer.addChild(newGameButton);
-
 		// how to play button
 		const howToPlayButtonButton = new Button(() => {
 
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.uiContainer);
 			SceneManager.changeScene(new GameInstructionsScene());
-			//Constants.HOW_TO_PLAY_MODE = true;
-			//Constants.SELECTED_PLAYER_RIDE_TEMPLATE = Constants.getRandomNumber(PlayerRideTemplate.BALLOON, PlayerRideTemplate.CHOPPER);
-			//Constants.SELECTED_HONK_BUSTER_TEMPLATE = Constants.getRandomNumber(PlayerHonkBombTemplate.EXPLOSIVE_BOMB, PlayerHonkBombTemplate.STICKY_BOMB);
-			//SceneManager.changeScene(new GamePlayScene());
 
 		}).setText("How To Play");
-		howToPlayButtonButton.setPosition(this.uiContainer.width / 2 - howToPlayButtonButton.width / 2, this.uiContainer.height / 2 - (howToPlayButtonButton.height / 2) + 65);
+		howToPlayButtonButton.setPosition(this.uiContainer.width / 2 - howToPlayButtonButton.width / 2, (this.uiContainer.height / 2 - howToPlayButtonButton.height / 2));
 		this.uiContainer.addChild(howToPlayButtonButton);
+
+		// new game button
+		const newGameButton = new Button(() => {
+
+			SoundManager.play(SoundType.OPTION_SELECT);
+			this.removeChild(this.uiContainer);
+			SceneManager.changeScene(new PlayerCharacterSelectionScene());
+			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.5, true);
+
+		}).setText("New Game");
+		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, (this.uiContainer.height / 2 - newGameButton.height / 2) + 65);
+		this.uiContainer.addChild(newGameButton);
 
 		const bottomline = new Text("- Made with ❤️ & PixiJS -", {
 			fontFamily: "diloworld",
