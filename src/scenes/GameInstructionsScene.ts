@@ -130,8 +130,8 @@ export class GameInstructionsScene extends Container implements IScene {
 		attack_button.renderable = false;
 
 		const attack_button_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("attack_button"));
-		attack_button_sprite.width = 256 / 2.5;
-		attack_button_sprite.height = 256 / 2.5;
+		attack_button_sprite.width = 256 / 3;
+		attack_button_sprite.height = 256 / 3;
 		attack_button_sprite.x = 0;
 		attack_button_sprite.y = 0;
 
