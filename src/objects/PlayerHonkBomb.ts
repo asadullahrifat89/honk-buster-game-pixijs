@@ -10,7 +10,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 	private playerHonkBombUris: string[] = [];
 
 	private blastDelay: number = 0;
-	private readonly blastDelayDefault: number = 25;
+	private blastDelayDefault: number = 25;
 
 	private dropDelay: number = 0;
 	private readonly dropDelayDefault: number = 25;
@@ -67,6 +67,7 @@ export class PlayerHonkBomb extends GameObjectContainer {
 			} break;
 			case PlayerHonkBombTemplate.STICKY_BOMB: {
 				this.playerHonkBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.uri.includes("sticky")).map(x => x.uri);
+				this.blastDelayDefault = 45;
 			} break;
 		}
 

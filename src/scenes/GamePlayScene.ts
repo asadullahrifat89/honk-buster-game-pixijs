@@ -1482,7 +1482,12 @@ export class GamePlayScene extends Container implements IScene {
 										playerHonkBomb.setBlast();
 										this.generateSmokeExplosion(playerHonkBomb);
 										this.generateRingExplosion(playerHonkBomb);
-									}									
+									}
+
+									if (playerHonkBomb.awaitBlast()) {										
+										this.generateSmokeExplosion(playerHonkBomb);
+										this.generateRingExplosion(playerHonkBomb);
+									}
 								}
 								else {
 									playerHonkBomb.move();
