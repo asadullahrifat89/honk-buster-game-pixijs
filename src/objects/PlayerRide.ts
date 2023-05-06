@@ -11,7 +11,7 @@ export class PlayerRide extends GameObjectContainer {
 	//#region Properties
 
 	public playerBalloonStance: PlayerRideStance = PlayerRideStance.Idle;
-	private playerRideTemplate: number = 0;
+	public playerRideTemplate: PlayerRideTemplate = 0;
 
 	private movementStopDelay: number = 0;
 	private readonly movementStopSpeedLoss: number = 0.5;
