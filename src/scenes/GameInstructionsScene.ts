@@ -446,30 +446,35 @@ export class GameInstructionsScene extends Container implements IScene {
 			if (player.renderable) {
 				player.renderable = false;
 				joystick.renderable = true;
+				title.text = "Controls";
 			}
 			else if (joystick.renderable) {
 				joystick.renderable = false;
 				attack_button.renderable = true;
+				title.text = "Controls";
 			}
 			else if (attack_button.renderable) {
 				attack_button.renderable = false;
 				honk_bomb.renderable = true;
+				title.text = "Armaments";
 			}
 			else if (honk_bomb.renderable) {
 				honk_bomb.renderable = false;
-				car.renderable = true;
-			}
-			else if (car.renderable) {
-				car.renderable = false;
-				player_rocket.renderable = true;
+				player_rocket.renderable = true;				
 			}
 			else if (player_rocket.renderable) {
 				player_rocket.renderable = false;
-				ufo.renderable = true;
+				car.renderable = true;
+				title.text = "Enemies";
 			}
+			else if (car.renderable) {
+				car.renderable = false;
+				ufo.renderable = true;				
+			}			
 			else if (ufo.renderable) {
 				ufo.renderable = false;
 				health.renderable = true;
+				title.text = "Health";
 			}
 			else if (health.renderable) {
 				health.renderable = false;
@@ -478,6 +483,7 @@ export class GameInstructionsScene extends Container implements IScene {
 			else if (player_health_bar.renderable) {
 				player_health_bar.renderable = false;
 				power_up.renderable = true;
+				title.text = "Power";
 			}
 			else if (power_up.renderable) {
 				power_up.renderable = false;
@@ -486,6 +492,7 @@ export class GameInstructionsScene extends Container implements IScene {
 			else if (player_power_up_bar.renderable) {
 				player_power_up_bar.renderable = false;
 				car_boss.renderable = true;
+				title.text = "Boss";
 			}
 			else if (car_boss.renderable) {
 				car_boss.renderable = false;
@@ -498,12 +505,14 @@ export class GameInstructionsScene extends Container implements IScene {
 			else if (boss_health_bar.renderable) {
 				boss_health_bar.renderable = false;
 				score.renderable = true;
+				title.text = "HUD";
 			}
 			else if (score.renderable) {
 				score.renderable = false;
-				level.renderable = true;
+				level.renderable = true;				
 			}
 			else if (level.renderable) {
+				title.text = "You're Done";
 				level.renderable = false;
 				good_luck.renderable = true;
 				button.setText("Okay");
