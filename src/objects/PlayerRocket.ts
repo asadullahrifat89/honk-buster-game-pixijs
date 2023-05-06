@@ -22,12 +22,12 @@ export class PlayerRocket extends GameObjectContainer {
 		this.scale.set(1);
 
 		switch (this.playerRocketTemplate) {
-			case PlayerAirBombTemplate.BALL: {				
+			case PlayerAirBombTemplate.BALL: {
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 8;
 				SoundManager.play(SoundType.BALL_LAUNCH);
 			} break;
-			case PlayerAirBombTemplate.ROCKET: {				
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 3;
+			case PlayerAirBombTemplate.ROCKET: {
+				this.speed = 0;
 				SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
 			} break;
 			default: break;
@@ -41,7 +41,7 @@ export class PlayerRocket extends GameObjectContainer {
 		this.awaitMoveUpLeft = false;
 		this.awaitMoveDownRight = false;
 
-		this.autoBlastDelay = this.autoBlastDelayDefault;		
+		this.autoBlastDelay = this.autoBlastDelayDefault;
 	}
 
 	setTemplate(playerRocketTemplate: PlayerAirBombTemplate) {
@@ -49,15 +49,28 @@ export class PlayerRocket extends GameObjectContainer {
 
 		switch (this.playerRocketTemplate) {
 			case PlayerAirBombTemplate.BALL: {
-				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BALL).map(x => x.uri);				
+				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BALL).map(x => x.uri);
 			} break;
 			case PlayerAirBombTemplate.ROCKET: {
-				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.ROCKET).map(x => x.uri);				
+				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.ROCKET).map(x => x.uri);
 			} break;
 			default: break;
 		}
 
 		this.setTexture(Constants.getRandomTextureFromUris(this.playerRocketUris));
+	}
+
+	accelerate() {
+		switch (this.playerRocketTemplate) {
+			case PlayerAirBombTemplate.BALL: {
+
+			} break;
+			case PlayerAirBombTemplate.ROCKET: {
+				if (this.speed < Constants.DEFAULT_CONSTRUCT_SPEED + 9)
+					this.speed += 0.5;
+			} break;
+			default: break;
+		}
 	}
 
 	reposition(source: PlayerRide) {
