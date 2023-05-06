@@ -1,4 +1,4 @@
-import { SpriteSheetJson, Texture } from "pixi.js";
+﻿import { SpriteSheetJson, Texture } from "pixi.js";
 import { ConstructTemplate } from "./core/ConstructTemplate";
 import { GameObjectContainer } from "./core/GameObjectContainer";
 import { SoundTemplate } from "./core/SoundTemplate";
