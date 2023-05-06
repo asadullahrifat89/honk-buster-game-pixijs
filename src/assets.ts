@@ -27,7 +27,7 @@ export const manifest: ResolverManifest = {
 
 				"cover_image": "./images/cover_image.png",
 
-				"chopper_blades": "./images/chopper_blades.png",			
+				"chopper_blades": "./images/chopper_blades.png",
 
 				"explosion_1": "./images/explosion_1.png",
 				"explosion_2": "./images/explosion_2.png",
@@ -80,24 +80,24 @@ export const manifest: ResolverManifest = {
 				"player_rocket_2": "./images/player_rocket_2.png",
 				"player_rocket_3": "./images/player_rocket_3.png",
 
-				"player_rocket_bulls_eye_1": "./images/player_rocket_bulls_eye_1.png",				
+				"player_rocket_bulls_eye_1": "./images/player_rocket_bulls_eye_1.png",
 
 				"powerup_pickup_armor": "./images/powerup_pickup_armor.png",
 				"powerup_pickup_bulls_eye": "./images/powerup_pickup_bulls_eye.png",
 				"powerup_pickup_seeking_snitch": "./images/powerup_pickup_seeking_snitch.png",
 
 				"player_honk_bomb_sticky_1": "./images/player_honk_bomb_sticky_1.png",
-				"player_honk_bomb_sticky_2": "./images/player_honk_bomb_sticky_2.png",				
+				"player_honk_bomb_sticky_2": "./images/player_honk_bomb_sticky_2.png",
 
 				"player_honk_bomb_explosive_1": "./images/player_honk_bomb_explosive_1.png",
-				"player_honk_bomb_explosive_2": "./images/player_honk_bomb_explosive_2.png",				
+				"player_honk_bomb_explosive_2": "./images/player_honk_bomb_explosive_2.png",
 
 				"player_honk_bomb_trash_1": "./images/player_honk_bomb_trash_1.png",
-				"player_honk_bomb_trash_2": "./images/player_honk_bomb_trash_2.png",				
+				"player_honk_bomb_trash_2": "./images/player_honk_bomb_trash_2.png",
 
 				"road_marks": "./images/road_marks.png",
 
-				"road_side_lamp_1": "./images/road_side_lamp_1.png",			
+				"road_side_lamp_1": "./images/road_side_lamp_1.png",
 
 				"road_side_walk_top_1": "./images/road_side_walk_top_1.png",
 				"road_side_walk_bottom_1": "./images/road_side_walk_bottom_1.png",
@@ -169,11 +169,7 @@ export const manifest: ResolverManifest = {
 
 				//"barrel_break_1": "./sounds/barrel_break_1.mp3",
 				//"barrel_break_2": "./sounds/barrel_break_2.mp3",
-				//"barrel_break_3": "./sounds/barrel_break_3.mp3",
-
-				"boss_background_music_1": "./sounds/boss_background_music_1.mp3",
-				"boss_background_music_2": "./sounds/boss_background_music_2.mp3",
-				"boss_background_music_3": "./sounds/boss_background_music_3.mp3",
+				//"barrel_break_3": "./sounds/barrel_break_3.mp3",			
 
 				"car_honk_1": "./sounds/car_honk_1.mp3",
 				"car_honk_2": "./sounds/car_honk_2.mp3",
@@ -188,10 +184,6 @@ export const manifest: ResolverManifest = {
 
 				"cracker_drop_1": "./sounds/cracker_drop_1.mp3",
 				"cracker_drop_2": "./sounds/cracker_drop_2.mp3",
-
-				"game_background_music_1": "./sounds/game_background_music_1.mp3",
-				"game_background_music_2": "./sounds/game_background_music_2.mp3",
-				"game_background_music_3": "./sounds/game_background_music_3.mp3",
 
 				"game_over": "./sounds/game_over.mp3",
 				"game_pause": "./sounds/game_pause.mp3",
@@ -228,12 +220,20 @@ export const manifest: ResolverManifest = {
 				"ufo_boss_entry_1": "./sounds/ufo_boss_entry_1.mp3",
 				"ufo_boss_entry_2": "./sounds/ufo_boss_entry_2.mp3",
 
+				"ufo_enemy_entry_1": "./sounds/ufo_enemy_entry_1.mp3",
+				"ufo_enemy_entry_2": "./sounds/ufo_enemy_entry_2.mp3",
+
 				"ufo_boss_hovering_1": "./sounds/ufo_boss_hovering_1.mp3",
 				"ufo_boss_hovering_2": "./sounds/ufo_boss_hovering_2.mp3",
 				"ufo_boss_hovering_3": "./sounds/ufo_boss_hovering_3.mp3",
 
-				"ufo_enemy_entry_1": "./sounds/ufo_enemy_entry_1.mp3",
-				"ufo_enemy_entry_2": "./sounds/ufo_enemy_entry_2.mp3",
+				"game_background_music_1": "./sounds/game_background_music_1.mp3",
+				"game_background_music_2": "./sounds/game_background_music_2.mp3",
+				"game_background_music_3": "./sounds/game_background_music_3.mp3",
+
+				"boss_background_music_1": "./sounds/boss_background_music_1.mp3",
+				"boss_background_music_2": "./sounds/boss_background_music_2.mp3",
+				"boss_background_music_3": "./sounds/boss_background_music_3.mp3",
 			},
 		},
 	]
