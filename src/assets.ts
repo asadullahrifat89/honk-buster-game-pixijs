@@ -85,10 +85,7 @@ export const manifest: ResolverManifest = {
 				"player_rocket_2": "./images/player_rocket_2.png",
 				"player_rocket_3": "./images/player_rocket_3.png",
 
-				"player_rocket_bulls_eye_1": "./images/player_rocket_bulls_eye_1.png",
-
-				"player_rocket_seeking_1": "./images/player_rocket_seeking_1.png",
-				"player_rocket_seeking_2": "./images/player_rocket_seeking_2.png",
+				"player_rocket_bulls_eye_1": "./images/player_rocket_bulls_eye_1.png",				
 
 				"powerup_pickup_armor": "./images/powerup_pickup_armor.png",
 				"powerup_pickup_bulls_eye": "./images/powerup_pickup_bulls_eye.png",
