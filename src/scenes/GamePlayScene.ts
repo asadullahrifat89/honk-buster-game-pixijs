@@ -1461,15 +1461,13 @@ export class GamePlayScene extends Container implements IScene {
 									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
 
 									if (vehicleEnemy) {
-										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
-										playerHonkBomb.setBlast();
+										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);										
 									}
 
 									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
 
 									if (vehicleBoss) {
-										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
-										playerHonkBomb.setBlast();
+										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);										
 									}
 
 									if (vehicleEnemy || vehicleBoss) {
@@ -1481,9 +1479,10 @@ export class GamePlayScene extends Container implements IScene {
 											default: break;
 										}
 
+										playerHonkBomb.setBlast();
 										this.generateSmokeExplosion(playerHonkBomb);
 										this.generateRingExplosion(playerHonkBomb);
-									}
+									}									
 								}
 								else {
 									playerHonkBomb.move();
