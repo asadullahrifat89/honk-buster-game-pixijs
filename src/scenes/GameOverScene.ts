@@ -6,7 +6,7 @@ import { GameObjectSprite } from "../core/GameObjectSprite";
 import { IScene } from "../managers/IScene";
 import { SceneManager } from "../managers/SceneManager";
 import { SoundManager } from "../managers/SoundManager";
-import { PlayerCharacterSelectionScene } from "./PlayerCharacterSelectionScene";
+import { GameTitleScene } from "./GameTitleScene";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 
 
@@ -53,9 +53,11 @@ export class GameOverScene extends Container implements IScene {
 		this.uiContainer.addChild(subTitle);
 
 		const button = new Button(() => {
+
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.uiContainer);
-			SceneManager.changeScene(new PlayerCharacterSelectionScene());
+			SceneManager.changeScene(new GameTitleScene());
+
 		}).setText("Play Again");
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
 		this.uiContainer.addChild(button);
