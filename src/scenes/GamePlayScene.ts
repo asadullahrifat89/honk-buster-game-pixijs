@@ -174,8 +174,8 @@ export class GamePlayScene extends Container implements IScene {
 		// show message in the beginning
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
 			case PlayerGroundBombTemplate.EXPLOSIVE: { this.generateOnScreenMessage("Drop granades on honkers!", this.talkIcon); } break;
-			case PlayerGroundBombTemplate.TRASH: { this.generateOnScreenMessage("Drop trash bags on honkers!", this.talkIcon); } break;
-			case PlayerGroundBombTemplate.STICKY: { this.generateOnScreenMessage("Drop sticky bombs on honkers!", this.talkIcon); } break;
+			case PlayerGroundBombTemplate.TRASH: { this.generateOnScreenMessage("Drop trash bins on honkers!", this.talkIcon); } break;
+			case PlayerGroundBombTemplate.STICKY: { this.generateOnScreenMessage("Drop dynamites on honkers!", this.talkIcon); } break;
 		}
 
 		// start hovering sound for player ride
@@ -1931,7 +1931,7 @@ export class GamePlayScene extends Container implements IScene {
 					this.ufoEnemyPopDelay = this.ufoEnemyPopDelayDefault;
 
 					if (!this.ufoEnemiesAppeared) {
-						this.generateOnScreenMessage("Shoot the aliens!");
+						this.generateOnScreenMessage("Alien ufos approaching!");
 						this.ufoEnemiesAppeared = true;
 						SoundManager.play(SoundType.UFO_ENEMY_ENTRY);
 						SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.6, true);
@@ -2350,7 +2350,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setValue(gameObject.health);
 				this.bossHealthBar.setIcon(gameObject.getSprite().getTexture());
 
-				this.generateOnScreenMessage("Beat the hotrod, Avoid the rockets!", this.interactIcon);
+				this.generateOnScreenMessage("A hotrod has arrived!", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -2594,7 +2594,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setValue(ufoBoss.health);
 				this.bossHealthBar.setIcon(ufoBoss.getSprite().getTexture());
 
-				this.generateOnScreenMessage("Shoot the cyborg. Avoid the eye balls!", this.interactIcon);
+				this.generateOnScreenMessage("Cyborg inbound!", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -2999,7 +2999,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setValue(zombieBoss.health);
 				this.bossHealthBar.setIcon(zombieBoss.getSprite().getTexture());
 
-				this.generateOnScreenMessage("Shoot the zombie. Avoid the cubes!", this.interactIcon);
+				this.generateOnScreenMessage("Zombie inbound!", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -3247,7 +3247,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setValue(mafiaBoss.health);
 				this.bossHealthBar.setIcon(mafiaBoss.getSprite().getTexture());
 
-				this.generateOnScreenMessage("Shoot the mafia. Avoid the bowling balls.", this.interactIcon);
+				this.generateOnScreenMessage("Godfather inbound.", this.interactIcon);
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
