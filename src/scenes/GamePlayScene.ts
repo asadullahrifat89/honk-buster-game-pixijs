@@ -55,7 +55,7 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly vehicleBossReleaseLimit: number = 15;
 	private readonly vehicleBossCheckpoint: GameCheckpoint;
 
-	private readonly ufoEnemyReleasePoint: number = 5; // 35
+	private readonly ufoEnemyReleasePoint: number = 35; // 35
 	private readonly ufoEnemyReleaseLimit: number = 5;
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
@@ -63,11 +63,11 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly ufoBossReleaseLimit: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
 
-	private readonly zombieBossReleasePoint: number = 85; // 85
+	private readonly zombieBossReleasePoint: number = 85; // 75
 	private readonly zombieBossReleaseLimit: number = 15;
 	private readonly zombieBossCheckpoint: GameCheckpoint;
 
-	private readonly mafiaBossReleasePoint: number = 100; // 100
+	private readonly mafiaBossReleasePoint: number = 125; // 100
 	private readonly mafiaBossReleaseLimit: number = 15;
 	private readonly mafiaBossCheckpoint: GameCheckpoint;
 
