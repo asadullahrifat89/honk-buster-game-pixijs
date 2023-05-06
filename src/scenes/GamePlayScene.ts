@@ -1,6 +1,6 @@
 import { BlurFilter, Container, Graphics, Texture } from "pixi.js";
 import { GameObjectContainer } from '../core/GameObjectContainer';
-import { Constants, ConstructType, ExplosionType, PlayerHonkBombTemplate, PlayerRideTemplate, PlayerAirBombTemplate, PowerUpType, RotationDirection, SoundType } from '../Constants';
+import { Constants, ConstructType, ExplosionType, PlayerGroundBombTemplate, PlayerRideTemplate, PlayerAirBombTemplate, PowerUpType, RotationDirection, SoundType } from '../Constants';
 import { GameOverScene } from "./GameOverScene";
 import { IScene } from "../managers/IScene";
 import { GameController } from "../controls/GameController";
@@ -27,7 +27,7 @@ import { MafiaBoss } from "../objects/MafiaBoss";
 import { MafiaBossRocket } from "../objects/MafiaBossRocket";
 import { MafiaBossRocketBullsEye } from "../objects/MafiaBossRocketBullsEye";
 import { PlayerRide } from "../objects/PlayerRide";
-import { PlayerHonkBomb } from "../objects/PlayerHonkBomb";
+import { PlayerGroundBomb } from "../objects/PlayerGroundBomb";
 import { Explosion } from "../objects/Explosion";
 import { PlayerRocket } from "../objects/PlayerRocket";
 import { PlayerRocketBullsEye } from "../objects/PlayerRocketBullsEye";
@@ -74,7 +74,7 @@ export class GamePlayScene extends Container implements IScene {
 	private playerHealthBar: HealthBar;
 	private bossHealthBar: HealthBar;
 	private powerUpBar: HealthBar;
-		
+
 	private stageColors: number[] = [0x1e2a36, 0x4187ab];
 	private stageColor: Graphics;
 
@@ -115,7 +115,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.addChildAt(this.stageColor, 0);
 
 		// create the scene container
-		this.sceneContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
+		this.sceneContainer = new GameObjectContainer();
 		this.addChild(this.sceneContainer);
 
 		// set the check points
@@ -173,9 +173,9 @@ export class GamePlayScene extends Container implements IScene {
 
 		// show message in the beginning
 		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
-			case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: { this.generateOnScreenMessage("Drop granades on honkers!", this.talkIcon); } break;
-			case PlayerHonkBombTemplate.TRASH_BOMB: { this.generateOnScreenMessage("Drop trash bags on honkers!", this.talkIcon); } break;
-			case PlayerHonkBombTemplate.STICKY_BOMB: { this.generateOnScreenMessage("Drop sticky bombs on honkers!", this.talkIcon); } break;
+			case PlayerGroundBombTemplate.EXPLOSIVE: { this.generateOnScreenMessage("Drop granades on honkers!", this.talkIcon); } break;
+			case PlayerGroundBombTemplate.TRASH: { this.generateOnScreenMessage("Drop trash bags on honkers!", this.talkIcon); } break;
+			case PlayerGroundBombTemplate.STICKY: { this.generateOnScreenMessage("Drop sticky bombs on honkers!", this.talkIcon); } break;
 		}
 
 		// start hovering sound for player ride
@@ -1251,7 +1251,7 @@ export class GamePlayScene extends Container implements IScene {
 				}
 			}
 			else {
-				this.generatePlayerHonkBomb();
+				this.generatePlayerGroundBomb();
 			}
 
 			this.gameController.isAttacking = false;
@@ -1278,43 +1278,42 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region PlayerHonkBombs
+	//#region PlayerGroundBombs
 
-	private playerHonkBombSizeWidth: number = 70;
-	private playerHonkBombSizeHeight: number = 70;
+	private playerGroundBombSizeWidth: number = 70;
+	private playerGroundBombSizeHeight: number = 70;
 
-	private playerHonkBombGameObjects: Array<PlayerHonkBomb> = [];
+	private playerGroundBombGameObjects: Array<PlayerGroundBomb> = [];
 	private playerHonkBusterTemplate: number = 0;
 
-	spawnPlayerHonkBombs() {
+	spawnPlayerGroundBombs() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: PlayerHonkBomb = new PlayerHonkBomb(4);
+			const gameObject: PlayerGroundBomb = new PlayerGroundBomb(4);
 			gameObject.disableRendering();
-
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_HONK_BOMB));
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.playerHonkBombSizeWidth;
-			sprite.height = this.playerHonkBombSizeHeight;
+			sprite.width = this.playerGroundBombSizeWidth;
+			sprite.height = this.playerGroundBombSizeHeight;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
 			gameObject.setTemplate(this.playerHonkBusterTemplate);
 
-			this.playerHonkBombGameObjects.push(gameObject);
+			this.playerGroundBombGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
 	}
 
-	generatePlayerHonkBomb() {
+	generatePlayerGroundBomb() {
 
-		var gameObject = this.playerHonkBombGameObjects.find(x => x.isAnimating == false);
+		var gameObject = this.playerGroundBombGameObjects.find(x => x.isAnimating == false);
 
 		if (gameObject) {
 			gameObject.reset();
@@ -1327,82 +1326,82 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animatePlayerHonkBombs() {
+	animatePlayerGroundBombs() {
 
-		var animatingHonkBombs = this.playerHonkBombGameObjects.filter(x => x.isAnimating == true);
+		var animatingHonkBombs = this.playerGroundBombGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingHonkBombs) {
 
-			animatingHonkBombs.forEach(playerHonkBomb => {
+			animatingHonkBombs.forEach(playerGroundBomb => {
 
-				playerHonkBomb.pop();
+				playerGroundBomb.pop();
 
-				if (playerHonkBomb) {
+				if (playerGroundBomb) {
 
-					if (playerHonkBomb.isBlasting) {
-						playerHonkBomb.fade();
+					if (playerGroundBomb.isBlasting) {
+						playerGroundBomb.fade();
 
-						switch (playerHonkBomb.playerHonkBombTemplate) {
-							case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
-								if (playerHonkBomb.awaitMoveDownLeft) {
-									playerHonkBomb.moveDownLeft();
-									playerHonkBomb.rotate(RotationDirection.Backward, 0, 15);
+						switch (playerGroundBomb.playerGroundBombTemplate) {
+							case PlayerGroundBombTemplate.EXPLOSIVE: {
+								if (playerGroundBomb.awaitMoveDownLeft) {
+									playerGroundBomb.moveDownLeft();
+									playerGroundBomb.rotate(RotationDirection.Backward, 0, 15);
 								}
-								else if (playerHonkBomb.awaitMoveDownRight) {
-									playerHonkBomb.moveDownRight();
-									playerHonkBomb.moveDownRight();
-									playerHonkBomb.moveDownRight();
-									playerHonkBomb.rotate(RotationDirection.Forward, 0, 15);
+								else if (playerGroundBomb.awaitMoveDownRight) {
+									playerGroundBomb.moveDownRight();
+									playerGroundBomb.moveDownRight();
+									playerGroundBomb.moveDownRight();
+									playerGroundBomb.rotate(RotationDirection.Forward, 0, 15);
 								}
-								else if (playerHonkBomb.awaitMoveUpLeft) {
-									playerHonkBomb.moveUpLeft();
-									playerHonkBomb.rotate(RotationDirection.Backward, 0, 15);
+								else if (playerGroundBomb.awaitMoveUpLeft) {
+									playerGroundBomb.moveUpLeft();
+									playerGroundBomb.rotate(RotationDirection.Backward, 0, 15);
 								}
-								else if (playerHonkBomb.awaitMoveUpRight) {
-									playerHonkBomb.moveUpRight();
-									playerHonkBomb.moveUpRight();
-									playerHonkBomb.rotate(RotationDirection.Forward, 0, 15);
+								else if (playerGroundBomb.awaitMoveUpRight) {
+									playerGroundBomb.moveUpRight();
+									playerGroundBomb.moveUpRight();
+									playerGroundBomb.rotate(RotationDirection.Forward, 0, 15);
 								}
 							} break;
-							case PlayerHonkBombTemplate.TRASH_BOMB: {
-								if (playerHonkBomb.awaitMoveUpRight) {
-									playerHonkBomb.moveUpRight();
-									playerHonkBomb.rotate(RotationDirection.Forward, 0, 0.5);
+							case PlayerGroundBombTemplate.TRASH: {
+								if (playerGroundBomb.awaitMoveUpRight) {
+									playerGroundBomb.moveUpRight();
+									playerGroundBomb.rotate(RotationDirection.Forward, 0, 0.5);
 								}
-								else if (playerHonkBomb.awaitMoveUp) {
-									playerHonkBomb.moveUp();
-									playerHonkBomb.rotate(RotationDirection.Backward, 0, 0.5);
+								else if (playerGroundBomb.awaitMoveUp) {
+									playerGroundBomb.moveUp();
+									playerGroundBomb.rotate(RotationDirection.Backward, 0, 0.5);
 								}
 
 							} break;
-							case PlayerHonkBombTemplate.STICKY_BOMB: {
-								if (playerHonkBomb.awaitMoveUpRight) {
-									playerHonkBomb.moveUpRight();
-									playerHonkBomb.moveUpRight();
-									playerHonkBomb.rotate(RotationDirection.Forward, 0, 10);
+							case PlayerGroundBombTemplate.STICKY: {
+								if (playerGroundBomb.awaitMoveUpRight) {
+									playerGroundBomb.moveUpRight();
+									playerGroundBomb.moveUpRight();
+									playerGroundBomb.rotate(RotationDirection.Forward, 0, 10);
 								}
-								else if (playerHonkBomb.awaitMoveDownLeft) {
-									playerHonkBomb.moveDownLeft();
-									playerHonkBomb.rotate(RotationDirection.Backward, 0, 10);
+								else if (playerGroundBomb.awaitMoveDownLeft) {
+									playerGroundBomb.moveDownLeft();
+									playerGroundBomb.rotate(RotationDirection.Backward, 0, 10);
 								}
 							} break;
 							default: break;
 						}
 					}
 					else {
-						switch (playerHonkBomb.playerHonkBombTemplate) {
-							case PlayerHonkBombTemplate.EXPLOSIVE_BOMB: {
-								playerHonkBomb.move();
+						switch (playerGroundBomb.playerGroundBombTemplate) {
+							case PlayerGroundBombTemplate.EXPLOSIVE: {
+								playerGroundBomb.move();
 
-								if (playerHonkBomb.awaitBlast()) {
+								if (playerGroundBomb.awaitBlast()) {
 
-									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
+									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerGroundBomb));
 
 									if (vehicleEnemy) {
 										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
 									}
 
-									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
+									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerGroundBomb));
 
 									if (vehicleBoss) {
 										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
@@ -1411,30 +1410,30 @@ export class GamePlayScene extends Container implements IScene {
 									let randomDir = Constants.getRandomNumber(0, 3);
 
 									switch (randomDir) {
-										case 0: { playerHonkBomb.awaitMoveDownLeft = true; } break;
-										case 1: { playerHonkBomb.awaitMoveDownRight = true; } break;
-										case 2: { playerHonkBomb.awaitMoveUpLeft = true; } break;
-										case 3: { playerHonkBomb.awaitMoveUpRight = true; } break;
+										case 0: { playerGroundBomb.awaitMoveDownLeft = true; } break;
+										case 1: { playerGroundBomb.awaitMoveDownRight = true; } break;
+										case 2: { playerGroundBomb.awaitMoveUpLeft = true; } break;
+										case 3: { playerGroundBomb.awaitMoveUpRight = true; } break;
 										default: break;
 									}
 
-									this.generateSmokeExplosion(playerHonkBomb);
-									this.generateFlashExplosion(playerHonkBomb);
-									this.generateRingExplosion(playerHonkBomb);
+									this.generateSmokeExplosion(playerGroundBomb);
+									this.generateFlashExplosion(playerGroundBomb);
+									this.generateRingExplosion(playerGroundBomb);
 								}
 							} break;
-							case PlayerHonkBombTemplate.TRASH_BOMB: {
-								playerHonkBomb.move();
+							case PlayerGroundBombTemplate.TRASH: {
+								playerGroundBomb.move();
 
-								if (playerHonkBomb.awaitBlast()) {
+								if (playerGroundBomb.awaitBlast()) {
 
-									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerHonkBomb));
+									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerGroundBomb));
 
 									if (vehicleEnemy) {
 										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
 									}
 
-									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
+									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerGroundBomb));
 
 									if (vehicleBoss) {
 										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
@@ -1443,26 +1442,26 @@ export class GamePlayScene extends Container implements IScene {
 									let randomDir = Constants.getRandomNumber(0, 1);
 
 									switch (randomDir) {
-										case 0: { playerHonkBomb.awaitMoveUp = true; } break;
-										case 1: { playerHonkBomb.awaitMoveUpRight = true; } break;
+										case 0: { playerGroundBomb.awaitMoveUp = true; } break;
+										case 1: { playerGroundBomb.awaitMoveUpRight = true; } break;
 										default: break;
 									}
 
-									this.generateSmokeExplosion(playerHonkBomb);
+									this.generateSmokeExplosion(playerGroundBomb);
 								}
 							} break;
-							case PlayerHonkBombTemplate.STICKY_BOMB: {
+							case PlayerGroundBombTemplate.STICKY: {
 
-								if (playerHonkBomb.isDropped) {
-									playerHonkBomb.moveDownRight();
+								if (playerGroundBomb.isDropped) {
+									playerGroundBomb.moveDownRight();
 
-									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerHonkBomb));
+									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerGroundBomb));
 
 									if (vehicleEnemy) {
 										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
 									}
 
-									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerHonkBomb));
+									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerGroundBomb));
 
 									if (vehicleBoss) {
 										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
@@ -1472,24 +1471,24 @@ export class GamePlayScene extends Container implements IScene {
 										let randomDir = Constants.getRandomNumber(0, 1);
 
 										switch (randomDir) {
-											case 0: { playerHonkBomb.awaitMoveDownLeft = true; } break;
-											case 1: { playerHonkBomb.awaitMoveUpRight = true; } break;
+											case 0: { playerGroundBomb.awaitMoveDownLeft = true; } break;
+											case 1: { playerGroundBomb.awaitMoveUpRight = true; } break;
 											default: break;
 										}
 
-										playerHonkBomb.setBlast();
-										this.generateSmokeExplosion(playerHonkBomb);
-										this.generateRingExplosion(playerHonkBomb);
+										playerGroundBomb.setBlast();
+										this.generateSmokeExplosion(playerGroundBomb);
+										this.generateRingExplosion(playerGroundBomb);
 									}
 
-									if (playerHonkBomb.awaitBlast()) {
-										this.generateSmokeExplosion(playerHonkBomb);
-										this.generateRingExplosion(playerHonkBomb);
+									if (playerGroundBomb.awaitBlast()) {
+										this.generateSmokeExplosion(playerGroundBomb);
+										this.generateRingExplosion(playerGroundBomb);
 									}
 								}
 								else {
-									playerHonkBomb.move();
-									playerHonkBomb.awaitDrop();
+									playerGroundBomb.move();
+									playerGroundBomb.awaitDrop();
 								}
 							} break;
 							default: break;
@@ -1497,8 +1496,8 @@ export class GamePlayScene extends Container implements IScene {
 					}
 				}
 
-				if (playerHonkBomb.hasFaded() || playerHonkBomb.hasShrinked() || playerHonkBomb.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || playerHonkBomb.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					playerHonkBomb.disableRendering();
+				if (playerGroundBomb.hasFaded() || playerGroundBomb.hasShrinked() || playerGroundBomb.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || playerGroundBomb.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					playerGroundBomb.disableRendering();
 				}
 			});
 		}
@@ -3939,7 +3938,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnSmokeExplosions();
 		this.spawnSideWalksBottom();
 
-		this.spawnPlayerHonkBombs();
+		this.spawnPlayerGroundBombs();
 		this.spawnPlayerRockets();
 		this.spawnPlayerRocketBullsEyes();
 		this.spawnPlayerBalloon();
@@ -4026,7 +4025,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.animateHonks();
 
-		this.animatePlayerHonkBombs();
+		this.animatePlayerGroundBombs();
 		this.animateFlashExplosions();
 		this.animateSmokeExplosions();
 		this.animateRingExplosions();

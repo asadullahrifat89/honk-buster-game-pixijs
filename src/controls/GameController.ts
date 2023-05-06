@@ -69,7 +69,6 @@ export class GameController extends Container {
 		let glowSpriteSize = 85;
 
 		// pause button
-
 		const pauseButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
 		pauseButtonSpritebg.height = glowSpriteSize;
 		pauseButtonSpritebg.width = glowSpriteSize;
@@ -85,16 +84,17 @@ export class GameController extends Container {
 		pauseButtonGraphics.addChild(this.pauseButtonSprite);
 
 		this.pauseButton = new Button(() => {
+
 			if (this.isPaused)
 				this.resumeGame();
 			else
 				this.pauseGame();
+
 		}).setBackground(pauseButtonGraphics);
 		this.setPauseButtonPosition();
 		this.addChild(this.pauseButton);
 
-		// quit button
-
+		// stop button
 		const quitButtonSpritebg: GameObjectSprite = new GameObjectSprite(Texture.from("joystick_handle"));
 		quitButtonSpritebg.height = glowSpriteSize;
 		quitButtonSpritebg.width = glowSpriteSize;
@@ -110,7 +110,9 @@ export class GameController extends Container {
 		quitButtonGraphics.addChild(quitButtonSprite);
 
 		this.quitButton = new Button(() => {
+
 			this.quitGame();
+
 		}).setBackground(quitButtonGraphics);
 		this.setQuitButtonPosition();
 		this.quitButton.renderable = false;

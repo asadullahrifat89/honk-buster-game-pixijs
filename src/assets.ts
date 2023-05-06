@@ -27,7 +27,7 @@ export const manifest: ResolverManifest = {
 
 				"cover_image": "./images/cover_image.png",
 
-				"chopper_blades": "./images/chopper_blades.png",
+				"player_chopper_blades": "./images/player_chopper_blades.png",
 
 				"explosion_1": "./images/explosion_1.png",
 				"explosion_2": "./images/explosion_2.png",
@@ -84,7 +84,6 @@ export const manifest: ResolverManifest = {
 
 				"powerup_pickup_armor": "./images/powerup_pickup_armor.png",
 				"powerup_pickup_bulls_eye": "./images/powerup_pickup_bulls_eye.png",
-				"powerup_pickup_seeking_snitch": "./images/powerup_pickup_seeking_snitch.png",
 
 				"player_honk_bomb_sticky_1": "./images/player_honk_bomb_sticky_1.png",
 				"player_honk_bomb_sticky_2": "./images/player_honk_bomb_sticky_2.png",

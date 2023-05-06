@@ -47,35 +47,27 @@ export class GameInstructionsScene extends Container implements IScene {
 			align: "center",
 			fill: "#ffffff",
 		});
-		title.x = this.uiContainer.width / 2 - title.width / 2;
-		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
+		repositionTitle(this.uiContainer);
 		this.uiContainer.addChild(title);
 
 		// player_ride
 		const player_ride = new GameObjectContainer();
 
-		const player_ride_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_balloon_1_idle"));
+		const player_ride_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_1"));
 		player_ride_sprite.width = 256 / 2;
 		player_ride_sprite.height = 256 / 2;
 		player_ride_sprite.x = 0;
 		player_ride_sprite.y = 0;
 
-		const player_ride_sprite_2: GameObjectSprite = new GameObjectSprite(Texture.from("player_chopper_1_idle"));
-		player_ride_sprite_2.width = 256 / 2.5;
-		player_ride_sprite_2.height = 256 / 2.5;
+		const player_ride_sprite_2: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_2"));
+		player_ride_sprite_2.width = 256 / 2;
+		player_ride_sprite_2.height = 256 / 2;
 		player_ride_sprite_2.x = 50;
 		player_ride_sprite_2.y = 50;
-
-		const player_ride_sprite_2_blades: GameObjectSprite = new GameObjectSprite(Texture.from("chopper_blades"));
-		player_ride_sprite_2_blades.width = 256 / 2.5;
-		player_ride_sprite_2_blades.height = 256 / 2.5;
-		player_ride_sprite_2_blades.x = 50;
-		player_ride_sprite_2_blades.y = 50;
 
 		const player_ride_container = new GameObjectContainer();
 		player_ride_container.addChild(player_ride_sprite);
 		player_ride_container.addChild(player_ride_sprite_2);
-		player_ride_container.addChild(player_ride_sprite_2_blades);
 		player_ride.addChild(player_ride_container);
 
 		const player_ride_msg = new MessageBubble(0, "These are your air rides.", 20);
@@ -171,7 +163,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		honk_bomb_container.addChild(drop_bomb_sprite_2);
 		honk_bomb.addChild(honk_bomb_container);
 
-		const honk_bomb_msg = new MessageBubble(0, "These are your land bombs.", 20);
+		const honk_bomb_msg = new MessageBubble(0, "These are your ground bombs.", 20);
 		honk_bomb_msg.setPosition(honk_bomb_container.x + honk_bomb_container.width + 10, honk_bomb_container.y + 25);
 		honk_bomb.addChild(honk_bomb_msg);
 
@@ -192,7 +184,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		car_container.addChild(car_sprite);
 		car.addChild(car_container);
 
-		const car_msg = new MessageBubble(0, "Drop land bombs on honking cars.", 20);
+		const car_msg = new MessageBubble(0, "Drop ground bombs on honking cars.", 20);
 		car_msg.setPosition(car_container.x + car_container.width + 10, car_container.y + 25);
 		car.addChild(car_msg);
 
@@ -368,7 +360,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		ground_boss_msg.setPosition(ground_boss_container.x + ground_boss_container.width + 10, ground_boss_container.y + 25);
 		ground_boss.addChild(ground_boss_msg);
 
-		const ground_boss_msg_2 = new MessageBubble(0, "Drop land bombs on 'em.", 20);
+		const ground_boss_msg_2 = new MessageBubble(0, "Drop ground bombs on 'em.", 20);
 		ground_boss_msg_2.setPosition(ground_boss_msg.x, ground_boss_msg.y + msg_line_2_gap);
 		ground_boss.addChild(ground_boss_msg_2);
 
@@ -389,7 +381,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		air_boss_container.addChild(air_boss_sprite);
 		air_boss.addChild(air_boss_container);
 
-		const air_boss_msg = new MessageBubble(0, "These are in air bosses.", 20);
+		const air_boss_msg = new MessageBubble(0, "These are air bosses.", 20);
 		air_boss_msg.setPosition(air_boss_container.x + air_boss_container.width + 10, air_boss_container.y + 25);
 		air_boss.addChild(air_boss_msg);
 
@@ -505,7 +497,7 @@ export class GameInstructionsScene extends Container implements IScene {
 			}
 			else if (honk_bomb.renderable) {
 				honk_bomb.renderable = false;
-				player_rocket.renderable = true;				
+				player_rocket.renderable = true;
 			}
 			else if (player_rocket.renderable) {
 				player_rocket.renderable = false;
@@ -514,8 +506,8 @@ export class GameInstructionsScene extends Container implements IScene {
 			}
 			else if (car.renderable) {
 				car.renderable = false;
-				ufo.renderable = true;				
-			}			
+				ufo.renderable = true;
+			}
 			else if (ufo.renderable) {
 				ufo.renderable = false;
 				health.renderable = true;
@@ -554,7 +546,7 @@ export class GameInstructionsScene extends Container implements IScene {
 			}
 			else if (score.renderable) {
 				score.renderable = false;
-				level.renderable = true;				
+				level.renderable = true;
 			}
 			else if (level.renderable) {
 				title.text = "You're Done";
@@ -567,9 +559,16 @@ export class GameInstructionsScene extends Container implements IScene {
 				SceneManager.changeScene(new GameTitleScene());
 			}
 
+			repositionTitle(this.uiContainer);
+
 		}).setText("Next");
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
 		this.uiContainer.addChild(button);
+
+		function repositionTitle(uiContainer: GameObjectContainer) {
+			title.x = uiContainer.width / 2 - title.width / 2;
+			title.y = (uiContainer.height / 2 - title.height / 2) - 120;
+		}
 	}
 
 	public update(_framesPassed: number) {

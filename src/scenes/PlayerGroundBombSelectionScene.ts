@@ -11,7 +11,7 @@ import { SoundManager } from "../managers/SoundManager";
 import { GrayscaleFilter } from "@pixi/filter-grayscale";
 
 
-export class PlayerHonkBombSelectionScene extends Container implements IScene {
+export class PlayerGroundBombSelectionScene extends Container implements IScene {
 
 	private uiContainer: GameObjectContainer;
 	private bg_container: GameObjectContainer;
@@ -38,7 +38,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 
 		this.uiContainer.addChild(this.bg_container);
 
-		const title = new Text("Select a Bomb", {
+		const title = new Text("Select a Ground Bomb", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 35,
 			align: "center",
@@ -55,7 +55,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		option_1_sprite.y = 0;
 		const player_1_button = new Button(() => {
 
-			button.setText("Grenades");
+			button.setText("Grenades").setIsEnabled(true);
 			SoundManager.play(SoundType.OPTION_SELECT);
 			option_1_sprite.filters = null;
 			option_2_sprite.filters = [new GrayscaleFilter()];
@@ -73,7 +73,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		option_2_sprite.y = 0;
 		const player_2_button = new Button(() => {
 
-			button.setText("Trash Bins");
+			button.setText("Trash Bins").setIsEnabled(true);
 			SoundManager.play(SoundType.OPTION_SELECT);
 			option_2_sprite.filters = null;
 			option_1_sprite.filters = [new GrayscaleFilter()];
@@ -91,7 +91,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 		option_3_sprite.y = 0;
 		const player_3_button = new Button(() => {
 
-			button.setText("Time Bombs");
+			button.setText("Dynamites").setIsEnabled(true);
 			SoundManager.play(SoundType.OPTION_SELECT);
 			option_3_sprite.filters = null;
 			option_1_sprite.filters = [new GrayscaleFilter()];
@@ -104,7 +104,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 
 		const button = new Button(() => {
 
-			if (option_1_sprite.filters || option_2_sprite.filters || option_3_sprite.filters) {
+			if (button.getIsEnabled()) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
 				SceneManager.changeScene(new GamePlayScene());
@@ -113,7 +113,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
 			}
 
-		}).setText("Begin");
+		}).setText("Begin").setIsEnabled(false);
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
 		this.uiContainer.addChild(button);
 	}
