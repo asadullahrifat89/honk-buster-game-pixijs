@@ -333,6 +333,7 @@ export class GameController extends Container {
 		this.setJoystickPosition();
 		this.setAttackButtonPosition();
 		this.setPauseButtonPosition();
+		this.setQuitButtonPosition();
 	}
 
 	private setPauseButtonPosition() {
