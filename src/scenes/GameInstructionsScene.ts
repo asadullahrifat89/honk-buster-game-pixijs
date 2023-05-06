@@ -559,7 +559,7 @@ export class GameInstructionsScene extends Container implements IScene {
 				SceneManager.changeScene(new GameTitleScene());
 			}
 
-			repositionTitle(this.uiContainer);
+			//repositionTitle(this.uiContainer);
 
 		}).setText("Next");
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
