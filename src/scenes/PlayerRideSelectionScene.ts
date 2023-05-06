@@ -1,5 +1,5 @@
 ﻿import { BlurFilter, Container, Text, Texture } from "pixi.js";
-import { PlayerHonkBombSelectionScene } from "./PlayerHonkBombSelectionScene";
+import { PlayerGroundBombSelectionScene } from "./PlayerGroundBombSelectionScene";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -86,7 +86,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			if (option_1_sprite.filters || option_2_sprite.filters) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
-				SceneManager.changeScene(new PlayerHonkBombSelectionScene());
+				SceneManager.changeScene(new PlayerGroundBombSelectionScene());
 			}
 			else {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);

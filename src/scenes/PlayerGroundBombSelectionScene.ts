@@ -11,7 +11,7 @@ import { SoundManager } from "../managers/SoundManager";
 import { GrayscaleFilter } from "@pixi/filter-grayscale";
 
 
-export class PlayerHonkBombSelectionScene extends Container implements IScene {
+export class PlayerGroundBombSelectionScene extends Container implements IScene {
 
 	private uiContainer: GameObjectContainer;
 	private bg_container: GameObjectContainer;
@@ -38,7 +38,7 @@ export class PlayerHonkBombSelectionScene extends Container implements IScene {
 
 		this.uiContainer.addChild(this.bg_container);
 
-		const title = new Text("Select a Bomb", {
+		const title = new Text("Select a Ground Bomb", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 35,
 			align: "center",
