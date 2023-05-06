@@ -73,6 +73,6 @@ export class MessageBubble extends GameObjectContainer {
 	}
 
 	private drawMessageGraphics(): Graphics {
-		return new Graphics().beginFill(0xffffff).lineStyle(3, Constants.MESSAGE_BOX_BORDER_COLOR).drawRoundedRect(0, 0, this.messageText.width + 20, 35, 4).endFill();
+		return new Graphics().beginFill(0xffffff).lineStyle(3, Constants.MESSAGE_BOX_BORDER_COLOR).drawRoundedRect(0, 0, this.messageText.width + 20, this.messageText.height + 5, 4).endFill();
 	}
 }

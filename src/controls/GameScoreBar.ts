@@ -31,7 +31,7 @@ export class GameScoreBar {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: Constants.MESSAGE_BOX_TEXT_COLOR,
-			fontSize: 26,
+			fontSize: 25,
 		});
 		this.scoreText.x = 10;
 		this.scoreText.y = 5;
@@ -47,7 +47,7 @@ export class GameScoreBar {
 	reposition(x: number, y: number) {
 		this.scoreContainer.x = x;
 		this.scoreContainer.y = y;
-	}	
+	}
 
 	gainScore(score: number) {
 		this.score += score;
@@ -59,24 +59,24 @@ export class GameScoreBar {
 	looseScore(score: number) {
 		if (this.score > 1) {
 			this.score -= score;
-			this.scoreText.text = this.prefix +this.score.toString();
+			this.scoreText.text = this.prefix + this.score.toString();
 
 			this.resetGraphics();
 		}
 	}
 
-    private resetGraphics() {
-        this.scoreContainer.removeChild(this.scoreGraphics);
-        this.scoreGraphics = this.drawScoreGraphics();
-        this.scoreContainer.addChildAt(this.scoreGraphics, 0);
-    }
+	private resetGraphics() {
+		this.scoreContainer.removeChild(this.scoreGraphics);
+		this.scoreGraphics = this.drawScoreGraphics();
+		this.scoreContainer.addChildAt(this.scoreGraphics, 0);
+	}
 
 	getScore(): number {
 		return this.score;
 	}
 
 	private drawScoreGraphics(): Graphics {
-		return new Graphics().beginFill(0xffffff).lineStyle(3, Constants.MESSAGE_BOX_BORDER_COLOR).drawRoundedRect(0, 0, this.scoreText.width + 20, 35, 4).endFill();
+		return new Graphics().beginFill(0xffffff).lineStyle(3, Constants.MESSAGE_BOX_BORDER_COLOR).drawRoundedRect(0, 0, this.scoreText.width + 20, this.scoreText.height + 5, 4).endFill();
 	}
 }
 
