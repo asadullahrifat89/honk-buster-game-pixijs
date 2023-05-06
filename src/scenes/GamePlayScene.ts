@@ -1292,7 +1292,6 @@ export class GamePlayScene extends Container implements IScene {
 
 			const gameObject: PlayerGroundBomb = new PlayerGroundBomb(4);
 			gameObject.disableRendering();
-
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_HONK_BOMB));
 
 			sprite.x = 0;
