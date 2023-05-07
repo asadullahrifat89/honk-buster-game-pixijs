@@ -242,6 +242,9 @@ export abstract class Constants {
 
 	public static CHOPPER_UNLOCK_LEVEL: number = 5;
 
+	public static TRASH_BIN_UNLOCK_LEVEL: number = 3;
+	public static DYNAMITE_UNLOCK_LEVEL: number = 7;
+
 	public static GAME_TITLE_FONT = "stitchnschool";
 	public static GAME_DEFAULT_FONT = "emilio";
 

@@ -9,6 +9,7 @@ import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
 import { GrayscaleFilter } from "@pixi/filter-grayscale";
+import { MessageBubble } from "../controls/MessageBubble";
 
 
 export class PlayerGroundBombSelectionScene extends Container implements IScene {
@@ -29,7 +30,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		bg_sprite.x = 0;
 		bg_sprite.y = 0;
 		bg_sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
-		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;		
+		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
 		bg_sprite.filters = [new BlurFilter()];
 
 		this.bg_container = new GameObjectContainer();
@@ -48,6 +49,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
+		// grenade
 		const grenade_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_explosive_1"));
 		grenade_sprite.width = 256 / 2;
 		grenade_sprite.height = 256 / 2;
@@ -66,6 +68,11 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		grenade_button.setPosition(this.uiContainer.width / 2 - grenade_sprite.width * 2, this.uiContainer.height / 2 - grenade_sprite.height / 2 + 10);
 		this.uiContainer.addChild(grenade_button);
 
+		const grenade_msg = new MessageBubble(0, "Lvl 1", 20);
+		grenade_msg.setPosition(grenade_button.x + grenade_button.width / 2, grenade_button.y + grenade_button.height / 2);
+		this.uiContainer.addChild(grenade_msg);
+
+		// trash
 		const trash_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_trash_1"));
 		trash_sprite.width = 256 / 2;
 		trash_sprite.height = 256 / 2;
@@ -81,9 +88,14 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 1;
 
 		}).setBackground(trash_sprite);
-		trash_button.setPosition(this.uiContainer.width / 2 - trash_sprite.width / 2, this.uiContainer.height / 2 - trash_sprite.height / 2 + 10);
+		trash_button.setPosition(this.uiContainer.width / 2 - trash_sprite.width / 2, this.uiContainer.height / 2 - trash_sprite.height / 2 + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL);
 		this.uiContainer.addChild(trash_button);
 
+		const trash_msg = new MessageBubble(0, "Lvl " + Constants.TRASH_BIN_UNLOCK_LEVEL, 20);
+		trash_msg.setPosition(trash_button.x + trash_button.width / 2, trash_button.y + trash_button.height / 2);
+		this.uiContainer.addChild(trash_msg);
+
+		// dynamite
 		const dynamite_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_sticky_2"));
 		dynamite_sprite.width = 256 / 2;
 		dynamite_sprite.height = 256 / 2;
@@ -99,8 +111,12 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 2;
 
 		}).setBackground(dynamite_sprite);
-		dynamite_button.setPosition(this.uiContainer.width / 2 + dynamite_sprite.width, this.uiContainer.height / 2 - dynamite_sprite.height / 2 + 10);
+		dynamite_button.setPosition(this.uiContainer.width / 2 + dynamite_sprite.width, this.uiContainer.height / 2 - dynamite_sprite.height / 2 + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL);
 		this.uiContainer.addChild(dynamite_button);
+
+		const dynamite_msg = new MessageBubble(0, "Lvl " + Constants.DYNAMITE_UNLOCK_LEVEL, 20);
+		dynamite_msg.setPosition(dynamite_button.x + dynamite_button.width / 2, dynamite_button.y + dynamite_button.height / 2);
+		this.uiContainer.addChild(dynamite_msg);
 
 		const button = new Button(() => {
 
@@ -119,7 +135,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 	}
 
 	public update(_framesPassed: number) {
-		
+
 	}
 
 	public resize(scale: number): void {
