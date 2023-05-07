@@ -42,15 +42,15 @@ export class GameOverScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
-		const subTitle = new Text("Score " + Constants.GAME_SCORE, {
+		const score = new Text("Score " + Constants.GAME_SCORE, {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 32,
 			align: "center",
 			fill: "#ffffff",
 		});
-		subTitle.x = this.uiContainer.width / 2 - subTitle.width / 2;
-		subTitle.y = (this.uiContainer.height / 2 - subTitle.height / 2) - 60;
-		this.uiContainer.addChild(subTitle);
+		score.x = this.uiContainer.width / 2 - score.width / 2;
+		score.y = (this.uiContainer.height / 2 - score.height / 2) + 80;
+		this.uiContainer.addChild(score);
 
 		const button = new Button(() => {
 
