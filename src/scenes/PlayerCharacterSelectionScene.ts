@@ -103,8 +103,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 		this.uiContainer.addChild(button);
 	}
 
-	public update(_framesPassed: number) {
-		//this.bg_container.hover();
+	public update(_framesPassed: number) {		
 	}
 
 	public resize(scale: number): void {
