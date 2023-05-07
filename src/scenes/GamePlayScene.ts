@@ -67,7 +67,7 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly zombieBossReleaseLimit: number = 15;
 	private readonly zombieBossCheckpoint: GameCheckpoint;
 
-	private readonly mafiaBossReleasePoint: number = 5; // 145
+	private readonly mafiaBossReleasePoint: number = 145; // 145
 	private readonly mafiaBossReleaseLimit: number = 15;
 	private readonly mafiaBossCheckpoint: GameCheckpoint;
 
