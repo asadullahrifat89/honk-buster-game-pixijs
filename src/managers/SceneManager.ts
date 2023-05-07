@@ -118,10 +118,7 @@ export class SceneManager {
 
 	// This update will be called by a pixi ticker and tell the scene that a tick happened
 	private static update(framesPassed: number): void {
-
-		// console.log("FPS: " + Manager.app.ticker.FPS);
-
-		// Let the current scene know that we updated it		
+		// Let the current scene know that we updated it
 		if (SceneManager.currentScene) {
 
 			if (SceneManager.currentScene.alpha < 1) {
@@ -130,6 +127,8 @@ export class SceneManager {
 
 			SceneManager.currentScene.update(framesPassed);
 		}
+
+		// console.log("FPS: " + Manager.app.ticker.FPS);
 
 		// I HATE the "frame passed" approach. I would rather use `Manager.app.ticker.deltaMS`
 	}

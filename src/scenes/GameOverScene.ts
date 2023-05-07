@@ -18,7 +18,6 @@ export class GameOverScene extends Container implements IScene {
 	private uiContainer: GameObjectContainer;
 	private health: GameObjectContainer;
 	private attack: GameObjectContainer;
-	private unlockables: GameObjectContainer[] = [];
 
 	constructor() {
 		super();
@@ -109,9 +108,7 @@ export class GameOverScene extends Container implements IScene {
 		this.uiContainer.addChild(health);
 
 		if (Constants.HEALTH_LEVEL_MAX > 1) {
-			health.filters = null;
 			health.setPopping();
-			this.unlockables.push(health);
 		}
 
 		// ATTACK_LEVEL_MAX
@@ -143,9 +140,7 @@ export class GameOverScene extends Container implements IScene {
 		this.uiContainer.addChild(attack);
 
 		if (Constants.ATTACK_LEVEL_MAX > 0) {
-			attack.filters = null;
 			attack.setPopping();
-			this.unlockables.push(attack);
 		}
 
 		// play again button
@@ -164,17 +159,37 @@ export class GameOverScene extends Container implements IScene {
 
 	private unlockablePopDelay = 5;
 	private readonly unlockablePopDelayDefault = 5;
-	private unlockable: any;
 
 	public update(_framesPassed: number) {
-		if (this.unlockables && this.unlockables.length > 0) {
+
+		if (this.health.isAwaitingPop || this.attack.isAwaitingPop) { // only animate if any of the upgrades are applicable
+
 			this.unlockablePopDelay -= 0.1;
-			this.unlockable?.pop();
 
 			if (this.unlockablePopDelay <= 0) {
-				this.unlockable = this.unlockables.pop();
-				this.unlockablePopDelay = this.unlockablePopDelayDefault;
-				SoundManager.play(SoundType.LEVEL_UP);
+
+				if (this.health.isAwaitingPop) {
+					if (this.health.filters)
+						this.health.filters = null;
+
+					this.health.pop();
+
+					if (!this.health.isAwaitingPop) {
+						this.unlockablePopDelay = this.unlockablePopDelayDefault;
+						SoundManager.play(SoundType.LEVEL_UP);
+					}
+				}
+				else if (this.attack.isAwaitingPop) {
+					if (this.attack.filters)
+						this.attack.filters = null;
+
+					this.attack.pop();
+
+					if (!this.attack.isAwaitingPop) {
+						this.unlockablePopDelay = this.unlockablePopDelayDefault;
+						SoundManager.play(SoundType.LEVEL_UP);
+					}
+				}
 			}
 		}
 	}
