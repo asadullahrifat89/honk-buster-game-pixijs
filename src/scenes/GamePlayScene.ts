@@ -36,7 +36,6 @@ import { ZombieBoss } from "../objects/ZombieBoss";
 import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
 import { SoundTemplate } from "../core/SoundTemplate";
 import { MessageBubble } from "../controls/MessageBubble";
-import { GrayscaleFilter } from "@pixi/filter-grayscale";
 
 
 export class GamePlayScene extends Container implements IScene {
@@ -2922,13 +2921,15 @@ export class GamePlayScene extends Container implements IScene {
 					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
 					if (ufoBoss) {
+
 						ufoBossRocketSeeking.seek(this.player.getCloseBounds());
 
 						if (Constants.checkCloseCollision(ufoBossRocketSeeking, this.player)) {
-							ufoBossRocketSeeking.setBlast();
-							this.loosePlayerHealth();
+							ufoBossRocketSeeking.setBlast();							
 							ufoBoss.setWinStance();
+							this.loosePlayerHealth();
 							this.generateRingExplosion(ufoBossRocketSeeking);
+							this.generateSmokeExplosion(ufoBossRocketSeeking);
 						}
 						else {
 							if (ufoBossRocketSeeking.autoBlast()) {
@@ -3896,14 +3897,13 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	private setOnScreenMessageFilter() {
-		this.sceneContainer.filters = [new GrayscaleFilter()];
+		//this.sceneContainer.filters = [new GrayscaleFilter()];
 	}
 
-
 	private unSetOnScreenMessageFilter() {
-		if (this.sceneContainer.filters) {
-			this.sceneContainer.filters = null;
-		}
+		//if (this.sceneContainer.filters) {
+		//	this.sceneContainer.filters = null;
+		//}
 	}
 
 	//#endregion

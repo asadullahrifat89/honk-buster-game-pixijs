@@ -55,7 +55,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 		option_1_sprite.x = 0;
 		option_1_sprite.y = 0;
 		const player_1_button = new Button(() => {
-			button.setText("Jericho").setIsEnabled(true);
+			button.setText("Rad").setIsEnabled(true);
 			SoundManager.play(SoundType.OPTION_SELECT);
 			option_2_sprite.filters = [new BlurFilter(), new GrayscaleFilter()];
 			option_1_sprite.filters = null;
