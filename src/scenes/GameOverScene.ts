@@ -32,9 +32,10 @@ export class GameOverScene extends Container implements IScene {
 		bg_sprite.filters = [new BlurFilter()];
 		this.uiContainer.addChild(bg_sprite);
 
+		// game over title
 		const title = new Text("GAME OVER", {
 			fontFamily: Constants.GAME_TITLE_FONT,
-			fontSize: 40,
+			fontSize: 42,
 			align: "center",
 			fill: "#ffffff",
 		});
@@ -42,6 +43,7 @@ export class GameOverScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
+		// score
 		const score = new Text("Score " + Constants.GAME_SCORE, {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 30,
@@ -52,6 +54,7 @@ export class GameOverScene extends Container implements IScene {
 		score.y = (this.uiContainer.height / 2 - score.height / 2) - 60;
 		this.uiContainer.addChild(score);
 
+		// level
 		const level = new Text("Level " + Constants.GAME_LEVEL, {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 20,
@@ -59,9 +62,10 @@ export class GameOverScene extends Container implements IScene {
 			fill: "#ffffff",
 		});
 		level.x = this.uiContainer.width / 2 - level.width / 2;
-		level.y = (this.uiContainer.height / 2 - level.height / 2) - 30;
+		level.y = (this.uiContainer.height / 2 - level.height / 2) - 20;
 		this.uiContainer.addChild(level);
 
+		// play again button
 		const button = new Button(() => {
 
 			SoundManager.play(SoundType.OPTION_SELECT);
