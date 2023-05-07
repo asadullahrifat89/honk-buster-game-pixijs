@@ -2395,12 +2395,12 @@ export class GamePlayScene extends Container implements IScene {
 
 	private animateVehicleBoss() {
 
-		var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
-		let vehicleBoss: VehicleBoss = gameObject as VehicleBoss;
+		var vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
 
-		if (gameObject) {
+		if (vehicleBoss) {
 
-			gameObject.pop();
+			vehicleBoss.pop();
+			vehicleBoss.recoverFromHealthLoss();
 
 			if (vehicleBoss.isDead()) {
 
@@ -2409,17 +2409,16 @@ export class GamePlayScene extends Container implements IScene {
 				}
 			}
 			else {
-				gameObject.dillyDally();
-				gameObject.recoverFromHealthLoss();
+				vehicleBoss.dillyDally();
 
 				if (vehicleBoss.isAttacking) {
 					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling);
 
 					if (vehicleBoss.honk()) {
-						this.generateHonk(gameObject);
+						this.generateHonk(vehicleBoss);
 					}
 
-					this.generateTaunts(gameObject);
+					this.generateTaunts(vehicleBoss);
 				}
 				else {
 					// when all vehicles are out of view or have passed to the bottom right corner
@@ -2430,8 +2429,8 @@ export class GamePlayScene extends Container implements IScene {
 				}
 			}
 
-			if (vehicleBoss.isDead() && gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-				gameObject.disableRendering();
+			if (vehicleBoss.isDead() && vehicleBoss.x - vehicleBoss.width > Constants.DEFAULT_GAME_VIEW_WIDTH || vehicleBoss.y - vehicleBoss.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				vehicleBoss.disableRendering();
 			}
 		}
 	}
@@ -2642,27 +2641,26 @@ export class GamePlayScene extends Container implements IScene {
 
 	private animateUfoBoss() {
 
-		var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == true);
-		let ufoBoss: UfoBoss = gameObject as UfoBoss;
+		var ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true);
 
-		if (gameObject) {
+		if (ufoBoss) {
 
-			gameObject.pop();
+			ufoBoss.pop();
+			ufoBoss.recoverFromHealthLoss();
 
 			if (ufoBoss.isDead()) {
 
 				if (this.isBossDeathExploding()) {
-					gameObject.hover();
+					ufoBoss.hover();
 				}
 				else {
-					gameObject.shrink();
+					ufoBoss.shrink();
 				}
 			}
 			else {
-				gameObject.hover();
+				ufoBoss.hover();
 				ufoBoss.depleteHitStance();
 				ufoBoss.depleteWinStance();
-				ufoBoss.recoverFromHealthLoss();
 
 				if (ufoBoss.isAttacking) {
 
@@ -2672,7 +2670,7 @@ export class GamePlayScene extends Container implements IScene {
 						this.loosePlayerHealth();
 					}
 
-					this.generateTaunts(gameObject);
+					this.generateTaunts(ufoBoss);
 				}
 				else {
 
@@ -2686,7 +2684,7 @@ export class GamePlayScene extends Container implements IScene {
 			}
 
 			if (ufoBoss.hasShrinked()) {
-				gameObject.disableRendering();
+				ufoBoss.disableRendering();
 			}
 		}
 	}
@@ -3050,27 +3048,26 @@ export class GamePlayScene extends Container implements IScene {
 
 	private animateZombieBoss() {
 
-		var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == true);
-		let zombieBoss: ZombieBoss = gameObject as ZombieBoss;
+		var zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true);
 
-		if (gameObject) {
+		if (zombieBoss) {
 
-			gameObject.pop();
+			zombieBoss.pop();
+			zombieBoss.recoverFromHealthLoss();
 
 			if (zombieBoss.isDead()) {
 
 				if (this.isBossDeathExploding()) {
-					gameObject.hover();
+					zombieBoss.hover();
 				}
 				else {
-					gameObject.shrink();
+					zombieBoss.shrink();
 				}
 			}
 			else {
-				gameObject.hover();
+				zombieBoss.hover();
 				zombieBoss.depleteHitStance();
 				zombieBoss.depleteWinStance();
-				zombieBoss.recoverFromHealthLoss();
 
 				if (zombieBoss.isAttacking) {
 
@@ -3080,7 +3077,7 @@ export class GamePlayScene extends Container implements IScene {
 						this.loosePlayerHealth();
 					}
 
-					this.generateTaunts(gameObject);
+					this.generateTaunts(zombieBoss);
 				}
 				else {
 
@@ -3094,7 +3091,7 @@ export class GamePlayScene extends Container implements IScene {
 			}
 
 			if (zombieBoss.hasShrinked()) {
-				gameObject.disableRendering();
+				zombieBoss.disableRendering();
 			}
 		}
 	}
@@ -3299,27 +3296,26 @@ export class GamePlayScene extends Container implements IScene {
 
 	private animateMafiaBoss() {
 
-		var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
-		let mafiaBoss: MafiaBoss = gameObject as MafiaBoss;
+		var mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
 
-		if (gameObject) {
+		if (mafiaBoss) {
 
-			gameObject.pop();
+			mafiaBoss.pop();
+			mafiaBoss.recoverFromHealthLoss();
 
 			if (mafiaBoss.isDead()) {
 
 				if (this.isBossDeathExploding()) {
-					gameObject.hover();
+					mafiaBoss.hover();
 				}
 				else {
-					gameObject.shrink();
+					mafiaBoss.shrink();
 				}
 			}
 			else {
-				gameObject.hover();
+				mafiaBoss.hover();
 				mafiaBoss.depleteHitStance();
 				mafiaBoss.depleteWinStance();
-				mafiaBoss.recoverFromHealthLoss();
 
 				if (mafiaBoss.isAttacking) {
 
@@ -3329,7 +3325,7 @@ export class GamePlayScene extends Container implements IScene {
 						this.loosePlayerHealth();
 					}
 
-					this.generateTaunts(gameObject);
+					this.generateTaunts(mafiaBoss);
 				}
 				else {
 
@@ -3343,7 +3339,7 @@ export class GamePlayScene extends Container implements IScene {
 			}
 
 			if (mafiaBoss.hasShrinked()) {
-				gameObject.disableRendering();
+				mafiaBoss.disableRendering();
 			}
 		}
 	}
