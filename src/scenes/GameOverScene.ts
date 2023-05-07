@@ -174,6 +174,7 @@ export class GameOverScene extends Container implements IScene {
 		if (this.unlockablePopDelay <= 0) {
 			this.unlockable = this.unlockables.pop();
 			this.unlockablePopDelay = this.unlockablePopDelayDefault;
+			SoundManager.play(SoundType.LEVEL_UP);
 		}
 	}
 
