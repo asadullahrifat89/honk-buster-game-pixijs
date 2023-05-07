@@ -79,7 +79,7 @@ export class GameOverScene extends Container implements IScene {
 
 		//TODO: check unlockables
 
-		// health		
+		// HEALTH_LEVEL_MAX
 		if (Constants.GAME_LEVEL_MAX > 1 && Constants.GAME_LEVEL_MAX > Constants.HEALTH_LEVEL_MAX) {
 			Constants.HEALTH_LEVEL_MAX = Constants.GAME_LEVEL_MAX;
 		}
@@ -98,14 +98,45 @@ export class GameOverScene extends Container implements IScene {
 		health.addChild(health_container);
 
 		const health_msg = new MessageBubble(0, "+ " + 5 * Constants.HEALTH_LEVEL_MAX, 20); // player hitpoint multiplied by health level max
-		health_msg.setPosition(health_container.x + health_container.width, health_container.y + health_container.height - health_msg.height);
+		health_msg.setPosition(health_container.x + health_container.width - 20, health_container.y + health_container.height - health_msg.height);
 		health.addChild(health_msg);
 
-		health.setPosition((this.uiContainer.width / 2 - (health.width / 2) * 2), (this.uiContainer.height / 2 - health.height / 2) + 50);
+		health.setPosition((this.uiContainer.width / 2 - (health.width / 2) * 3), (this.uiContainer.height / 2 - health.height / 2) + 50);
 		this.uiContainer.addChild(health);
 
 		if (Constants.HEALTH_LEVEL_MAX > 1) {
 			health.filters = null;
+		}
+
+		// ATTACK_LEVEL_MAX
+		let applicable_game_level = Math.floor(Constants.GAME_LEVEL_MAX / 5);
+
+		if (Constants.GAME_LEVEL_MAX > 1 && applicable_game_level > Constants.ATTACK_LEVEL_MAX) {
+			Constants.ATTACK_LEVEL_MAX = applicable_game_level;
+		}
+
+		const attack = new GameObjectContainer();
+		attack.filters = [new GrayscaleFilter(), new BlurFilter()];
+
+		const attack_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET));
+		attack_sprite.width = 256 / 3;
+		attack_sprite.height = 256 / 3;
+		attack_sprite.x = 0;
+		attack_sprite.y = 0;
+
+		const attack_container = new GameObjectContainer();
+		attack_container.addChild(attack_sprite);
+		attack.addChild(attack_container);
+
+		const attack_msg = new MessageBubble(0, "+ " + Constants.ATTACK_LEVEL_MAX, 20);
+		attack_msg.setPosition(attack_container.x + attack_container.width - 20, attack_container.y + attack_container.height - attack_msg.height);
+		attack.addChild(attack_msg);
+
+		attack.setPosition((this.uiContainer.width / 2 - (attack.width / 2) * 1), (this.uiContainer.height / 2 - attack.height / 2) + 50);
+		this.uiContainer.addChild(attack);
+
+		if (Constants.ATTACK_LEVEL_MAX > 0) {
+			attack.filters = null;
 		}
 
 		// play again button
