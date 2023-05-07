@@ -34,7 +34,7 @@ export class GameOverScene extends Container implements IScene {
 
 		const title = new Text("GAME OVER", {
 			fontFamily: Constants.GAME_TITLE_FONT,
-			fontSize: 35,
+			fontSize: 40,
 			align: "center",
 			fill: "#ffffff",
 		});
@@ -54,12 +54,12 @@ export class GameOverScene extends Container implements IScene {
 
 		const level = new Text("Level " + Constants.GAME_LEVEL, {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
-			fontSize: 28,
+			fontSize: 20,
 			align: "center",
 			fill: "#ffffff",
 		});
 		level.x = this.uiContainer.width / 2 - level.width / 2;
-		level.y = (this.uiContainer.height / 2 - level.height / 2);
+		level.y = (this.uiContainer.height / 2 - level.height / 2) - 30;
 		this.uiContainer.addChild(level);
 
 		const button = new Button(() => {

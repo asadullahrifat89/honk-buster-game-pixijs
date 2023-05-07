@@ -270,7 +270,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private generateHonk(source: GameObjectContainer) {
 
-		if (source.getLeft() > 0 && source.getTop() > 0) {
+		if (source.getLeft() + 50 > 0 && source.getTop() + 50 > 0) {
 			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
@@ -2056,13 +2056,16 @@ export class GamePlayScene extends Container implements IScene {
 
 	generateUfoEnemyRockets(ufoEnemy: UfoEnemy) {
 
-		let ufoEnemyRocket = this.ufoEnemyRocketGameObjects.find(x => x.isAnimating == false);
+		if (ufoEnemy.getLeft() + 50 > 0 && ufoEnemy.getTop() + 50 > 0) {
 
-		if (ufoEnemyRocket) {
-			ufoEnemyRocket.reset();
-			ufoEnemyRocket.reposition(ufoEnemy);
-			ufoEnemyRocket.setPopping();
-			ufoEnemyRocket.enableRendering();
+			let ufoEnemyRocket = this.ufoEnemyRocketGameObjects.find(x => x.isAnimating == false);
+
+			if (ufoEnemyRocket) {
+				ufoEnemyRocket.reset();
+				ufoEnemyRocket.reposition(ufoEnemy);
+				ufoEnemyRocket.setPopping();
+				ufoEnemyRocket.enableRendering();
+			}
 		}
 	}
 
