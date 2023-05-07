@@ -58,39 +58,39 @@ export class UfoBossBase extends GameObjectContainer {
 		let left = this.getLeft();
 		let top = this.getTop();
 
-		let bossMiddleX = left + this.width / 2;
-		let bossMiddleY = top + this.height / 2;
+		let bossX = left + this.width / 2;
+		let bossY = top + this.height / 2;
 
-		let targetMiddleX = target.x + target.width / 2;
-		let targetMiddleY = target.y + target.height / 2;
+		let targetX = target.x + target.width / 2;
+		let targetY = target.y + target.height / 2;
 
 		// move up
-		if (targetMiddleY < bossMiddleY - this.grace) {
-			var distance = Math.abs(targetMiddleY - bossMiddleY);
+		if (targetY < bossY - this.grace) {
+			var distance = Math.abs(targetY - bossY);
 			let speed = this.getFlightSpeed(distance);
 
 			this.y = (top - speed);
 		}
 
 		// move left
-		if (targetMiddleX < bossMiddleX - this.grace) {
-			var distance = Math.abs(targetMiddleX - bossMiddleX);
+		if (targetX < bossX - this.grace) {
+			var distance = Math.abs(targetX - bossX);
 			let speed = this.getFlightSpeed(distance);
 
 			this.x = (left - speed);
 		}
 
 		// move down
-		if (targetMiddleY > bossMiddleY + this.grace) {
-			var distance = Math.abs(targetMiddleY - bossMiddleY);
+		if (targetY > bossY + this.grace) {
+			var distance = Math.abs(targetY - bossY);
 			let speed = this.getFlightSpeed(distance);
 
 			this.y = (top + speed);
 		}
 
 		// move right
-		if (targetMiddleX > bossMiddleX + this.grace) {
-			var distance = Math.abs(targetMiddleX - bossMiddleX);
+		if (targetX > bossX + this.grace) {
+			var distance = Math.abs(targetX - bossX);
 			let speed = this.getFlightSpeed(distance);
 
 			this.x = (left + speed);
