@@ -167,14 +167,15 @@ export class GameOverScene extends Container implements IScene {
 	private unlockable: any;
 
 	public update(_framesPassed: number) {
+		if (this.unlockables && this.unlockables.length > 0) {
+			this.unlockablePopDelay -= 0.1;
+			this.unlockable?.pop();
 
-		this.unlockablePopDelay -= 0.1;
-		this.unlockable?.pop();
-
-		if (this.unlockablePopDelay <= 0) {
-			this.unlockable = this.unlockables.pop();
-			this.unlockablePopDelay = this.unlockablePopDelayDefault;
-			SoundManager.play(SoundType.LEVEL_UP);
+			if (this.unlockablePopDelay <= 0) {
+				this.unlockable = this.unlockables.pop();
+				this.unlockablePopDelay = this.unlockablePopDelayDefault;
+				SoundManager.play(SoundType.LEVEL_UP);
+			}
 		}
 	}
 
