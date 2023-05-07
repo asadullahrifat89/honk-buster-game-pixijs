@@ -1,7 +1,8 @@
 ﻿import { GrayscaleFilter } from "@pixi/filter-grayscale";
 import { OutlineFilter } from "@pixi/filter-outline";
 import { Container, DisplayObject, FederatedPointerEvent, Graphics, Text, TextStyle, TextStyleAlign } from "pixi.js";
-import { Constants } from "../Constants";
+import { Constants, SoundType } from "../Constants";
+import { SoundManager } from "../managers/SoundManager";
 
 
 export class Button extends Container {
@@ -28,8 +29,12 @@ export class Button extends Container {
 		this.buttonText = new Text(); // this is not added yet
 
 		this.on("pointertap", () => {
-			if (this.isEnabled)
+			if (this.isEnabled) {
 				onPressed();
+			}
+			else {
+				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
+			}				
 		}, this);
 		this.on('pointerover', this.onButtonOver, this);
 		this.on('pointerout', this.onButtonOut, this);
@@ -80,7 +85,6 @@ export class Button extends Container {
 		if (this.isEnabled)
 			this.filters?.pop();
 	}
-
 
 	setIsEnabled(isEnabled: boolean): Button {
 		this.isEnabled = isEnabled;

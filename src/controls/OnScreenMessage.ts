@@ -17,9 +17,9 @@ export class OnScreenMessage {
 	constructor(scene: Container) {
 		this.messageContainer = new Container();
 
-		this.messageAuthor = new GameObjectSprite(Texture.from("./images/character_maleAdventurer_talk.png"));
-		this.messageAuthor.width = 256 / 2.1;
-		this.messageAuthor.height = 256 / 2.1;
+		this.messageAuthor = new GameObjectSprite(Texture.from("character_maleAdventurer_talk"));
+		this.messageAuthor.width = 256 / 2.2;
+		this.messageAuthor.height = 256 / 2.2;
 		this.messageAuthor.x = 50;
 		this.messageAuthor.y = 0;
 		this.messageAuthor.anchor.set(0.5);
