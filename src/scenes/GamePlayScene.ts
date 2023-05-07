@@ -2301,6 +2301,10 @@ export class GamePlayScene extends Container implements IScene {
 				}
 			}
 		}
+		else {
+			if (this.soundPollutionBar.getProgress() > 0) // when bosses arrive no sound pollution damage will be incurred
+				this.soundPollutionBar.setValue(0);
+		}
 	}
 
 	private looseVehicleEnemyhealth(vehicleEnemy: VehicleEnemy) {
