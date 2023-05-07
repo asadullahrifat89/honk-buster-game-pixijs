@@ -15,11 +15,10 @@ export class VehicleBossRocket extends GameObjectContainer {
 	}
 
 	reset() {
+		this.isBlasting = false;
 		this.alpha = 1;
 		this.scale.set(1);
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * 1.1;
-
-		this.isBlasting = false;
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * 1.2;		
 		this.setTexture(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
 		this.autoBlastDelay = this.autoBlastDelayDefault;
 
@@ -30,9 +29,7 @@ export class VehicleBossRocket extends GameObjectContainer {
 		this.setPosition((vehicleBoss.getLeft()), vehicleBoss.getTop());
 	}
 
-	setBlast() {
-		// this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
-		// this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
+	setBlast() {		
 		this.isBlasting = true;
 		SoundManager.play(SoundType.ROCKET_BLAST);
 	}
@@ -43,6 +40,12 @@ export class VehicleBossRocket extends GameObjectContainer {
 			return true;
 
 		return false;
+	}
+
+	decelerate() {
+		if (this.speed > 0) {
+			this.speed -= 0.1; // showly decrease the speed
+		}
 	}
 }
 
