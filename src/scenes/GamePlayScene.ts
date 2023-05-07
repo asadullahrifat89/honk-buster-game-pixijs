@@ -59,7 +59,7 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly ufoEnemyReleaseLimit: number = 15;
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
-	private readonly ufoBossReleasePoint: number = 5; // 50
+	private readonly ufoBossReleasePoint: number = 50; // 50
 	private readonly ufoBossReleaseLimit: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
 
@@ -67,7 +67,7 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly zombieBossReleaseLimit: number = 15;
 	private readonly zombieBossCheckpoint: GameCheckpoint;
 
-	private readonly mafiaBossReleasePoint: number = 145; // 145
+	private readonly mafiaBossReleasePoint: number = 5; // 145
 	private readonly mafiaBossReleaseLimit: number = 15;
 	private readonly mafiaBossCheckpoint: GameCheckpoint;
 
@@ -2922,13 +2922,14 @@ export class GamePlayScene extends Container implements IScene {
 
 					if (ufoBoss) {
 
-						ufoBossRocketSeeking.seek(this.player.getBounds());
+						ufoBossRocketSeeking.seek(this.player.getCloseBounds());
 
 						if (Constants.checkCloseCollision(ufoBossRocketSeeking, this.player)) {
-							ufoBossRocketSeeking.setBlast();
-							this.loosePlayerHealth();
+							ufoBossRocketSeeking.setBlast();							
 							ufoBoss.setWinStance();
+							this.loosePlayerHealth();
 							this.generateRingExplosion(ufoBossRocketSeeking);
+							this.generateSmokeExplosion(ufoBossRocketSeeking);
 						}
 						else {
 							if (ufoBossRocketSeeking.autoBlast()) {

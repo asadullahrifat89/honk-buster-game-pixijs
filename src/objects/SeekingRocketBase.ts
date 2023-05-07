@@ -6,8 +6,8 @@ import { SceneManager } from '../managers/SceneManager';
 
 export class SeekingRocketBase extends GameObjectContainer {
 
-	private readonly grace: number = 7;
-	private readonly lag: number = 60;
+	private readonly grace: number = 10;
+	private readonly lag: number = 40;
 	public targetHitbox: Rectangle = new Rectangle();
 
 	setTarget(target: Rectangle) {
@@ -57,14 +57,15 @@ export class SeekingRocketBase extends GameObjectContainer {
 	}
 
 	seek(target: Rectangle) {
+
 		let left = this.getLeft();
 		let top = this.getTop();
 
-		let rocketX = left /*+ this.width / 2*/;
-		let rocketY = top /*+ this.height / 2*/;
+		let rocketX = left + this.width / 2;
+		let rocketY = top + this.height / 2;
 
-		let targetX = target.x /*+ target.width / 2*/;
-		let targetY = target.y /*+ target.height / 2*/;
+		let targetX = target.x + target.width / 2;
+		let targetY = target.y + target.height / 2;
 
 		// move up
 		if (targetY < rocketY - this.grace) {
@@ -100,8 +101,10 @@ export class SeekingRocketBase extends GameObjectContainer {
 	}
 
 	private calculateSpeed(distance: number): number {
-		var speed = distance / this.lag;
-		//speed = speed < 4 ? 4 : speed;
+		var speed = distance / this.lag;		
+		//if (speed < 4) {
+		//	speed = 4;
+		//}
 		return speed;
 	}
 }
