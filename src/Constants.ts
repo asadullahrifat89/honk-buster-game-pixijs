@@ -79,7 +79,7 @@ export enum PlayerGroundBombTemplate {
 
 export enum PlayerAirBombTemplate {
 	BALL,
-	ROCKET,	
+	ROCKET,
 }
 
 export enum ConstructType {
@@ -95,7 +95,7 @@ export enum ConstructType {
 	PLAYER_ROCKET,
 	PLAYER_ROCKET_SEEKING,
 	PLAYER_ROCKET_BULLS_EYE,
-	PLAYER_HONK_BOMB,	
+	PLAYER_HONK_BOMB,
 
 	VEHICLE_ENEMY_SMALL,
 	VEHICLE_ENEMY_LARGE,
@@ -232,6 +232,18 @@ export abstract class Constants {
 	public static MESSAGE_BOX_TEXT_COLOR: string = "#000000";
 
 	public static GAME_SCORE: number = 0;
+	public static GAME_SCORE_MAX: number = 0;
+
+	public static GAME_LEVEL: number = 0;
+	public static GAME_LEVEL_MAX: number = 0;
+
+	public static HEALTH_LEVEL_MAX: number = 0;
+	public static ATTACK_LEVEL_MAX: number = 0;
+
+	public static CHOPPER_UNLOCK_LEVEL: number = 5;
+
+	public static TRASH_BIN_UNLOCK_LEVEL: number = 3;
+	public static DYNAMITE_UNLOCK_LEVEL: number = 7;
 
 	public static GAME_TITLE_FONT = "stitchnschool";
 	public static GAME_DEFAULT_FONT = "emilio";
@@ -260,7 +272,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_2.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_3.png"),
 
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LAMP, this.imagessDirectory + "road_side_lamp_1.png"),		
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LAMP, this.imagessDirectory + "road_side_lamp_1.png"),
 
 		new ConstructTemplate(ConstructType.CLOUD, this.imagessDirectory + "cloud_1.png"),
 		new ConstructTemplate(ConstructType.CLOUD, this.imagessDirectory + "cloud_2.png"),
@@ -342,7 +354,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.BLAST, this.imagessDirectory + "blast_2.png"),
 
 		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, this.imagessDirectory + "vehicle_boss_rocket_1.png"),
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, this.imagessDirectory + "vehicle_boss_rocket_2.png"),	
+		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, this.imagessDirectory + "vehicle_boss_rocket_2.png"),
 
 		new ConstructTemplate(ConstructType.UFO_BOSS_HIT, this.imagessDirectory + "ufo_boss_1_hit.png"),
 		new ConstructTemplate(ConstructType.UFO_BOSS_IDLE, this.imagessDirectory + "ufo_boss_1_idle.png"),

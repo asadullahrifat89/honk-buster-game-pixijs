@@ -55,7 +55,7 @@ export class PlayerRide extends GameObjectContainer {
 	}
 
 	reset() {
-		this.health = this.hitPoint * 10;
+		this.health = (this.hitPoint * 10) + (Constants.HEALTH_LEVEL_MAX * this.hitPoint); // add health upgrades
 		this.movementDirection = MovementDirection.None;
 		this.movementStopDelay = this.movementStopDelayDefault;
 		this.lastSpeed = 0;

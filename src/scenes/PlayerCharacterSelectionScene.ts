@@ -55,11 +55,16 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 		option_1_sprite.x = 0;
 		option_1_sprite.y = 0;
 		const player_1_button = new Button(() => {
-			button.setText("Rad").setIsEnabled(true);
+
 			SoundManager.play(SoundType.OPTION_SELECT);
-			option_2_sprite.filters = [new BlurFilter(), new GrayscaleFilter()];
+
 			option_1_sprite.filters = null;
+			option_2_sprite.filters = [new GrayscaleFilter()];
+
 			Constants.SELECTED_PLAYER_CHARACTER_TEMPLATE = 0;
+
+			button.setText("Rad").setIsEnabled(true);
+
 		}).setBackground(option_1_sprite);
 		player_1_button.setPosition(this.uiContainer.width / 2 - option_1_sprite.width, this.uiContainer.height / 2 - option_1_sprite.height / 2 + 10);
 		this.uiContainer.addChild(player_1_button);
@@ -69,15 +74,18 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 		option_2_sprite.height = 256 / 2;
 		option_2_sprite.x = 0;
 		option_2_sprite.y = 0;
-		option_2_sprite.filters = [new GrayscaleFilter()]; // TODO: remove it after character 2 ride set creation
 		const player_2_button = new Button(() => {
-			//SoundManager.play(SoundType.OPTION_SELECT);
-			//player_1_sprite.filters = [new BlurFilter()];
-			//player_2_sprite.filters = null;
-			//Constants.SELECTED_PLAYER_CHARACTER_TEMPLATE = 1;
-			SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
-		}).setBackground(option_2_sprite);		
-		player_2_button.setPosition(this.uiContainer.width / 2, this.uiContainer.height / 2 - option_2_sprite.height / 2 + 10);
+			SoundManager.play(SoundType.OPTION_SELECT);
+
+			option_1_sprite.filters = null;
+			option_2_sprite.filters = [new GrayscaleFilter()];
+
+			Constants.SELECTED_PLAYER_CHARACTER_TEMPLATE = 1;
+
+			button.setText("Rodney").setIsEnabled(true);
+
+		}).setBackground(option_2_sprite);
+		player_2_button.setPosition(this.uiContainer.width / 2, this.uiContainer.height / 2 - option_2_sprite.height / 2 + 10).setIsEnabled(false);
 		this.uiContainer.addChild(player_2_button);
 
 		const button = new Button(() => {

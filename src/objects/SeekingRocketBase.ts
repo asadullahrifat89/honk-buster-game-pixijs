@@ -7,7 +7,7 @@ import { SceneManager } from '../managers/SceneManager';
 export class SeekingRocketBase extends GameObjectContainer {
 
 	private readonly grace: number = 10;
-	private readonly lag: number = 40;
+	private readonly lag: number = 50;
 	public targetHitbox: Rectangle = new Rectangle();
 
 	setTarget(target: Rectangle) {

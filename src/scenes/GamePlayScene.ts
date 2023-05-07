@@ -87,8 +87,6 @@ export class GamePlayScene extends Container implements IScene {
 
 	private honkBustReactions: SoundTemplate[] = [];
 
-	private gameLevel: number = 0;
-
 	//#endregion
 
 	//#region Methods
@@ -129,19 +127,20 @@ export class GamePlayScene extends Container implements IScene {
 
 		// spawn the game objects
 		this.spawnGameObjects();
-		this.generatePlayerBalloon();
+		this.generatePlayerBalloon(); // player health is calculated here
 
-		// set the game score bar
+		// set the game score bar		
 		this.gameScoreBar = new GameScoreBar(this, "Score ");
 		this.repositionGameScoreBar();
 
-		// set the game level bar
+		// set the game level bar		
 		this.gameLevelBar = new GameScoreBar(this, "Lvl ", 1);
 		this.repositionGameLevelBar();
 
-		// set health bars
+		// set health bars		
 		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this).setMaximumValue(this.player.health).setValue(this.player.health);
 		this.repositionPlayerHealthBar();
+
 		this.bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS), this, 0x7200ff).setMaximumValue(100).setValue(0);
 		this.repositionBossHealthBar();
 
@@ -272,7 +271,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private generateHonk(source: GameObjectContainer) {
 
-		if (source.getLeft() > 0 && source.getTop() > 0) {
+		if (source.getLeft() + 50 > 0 && source.getTop() + 50 > 0) {
 			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
@@ -1292,9 +1291,11 @@ export class GamePlayScene extends Container implements IScene {
 	private playerGroundBombGameObjects: Array<PlayerGroundBomb> = [];
 	private playerHonkBusterTemplate: number = 0;
 
+	private readonly playerAmmoBeltSize: number = 3 + Constants.ATTACK_LEVEL_MAX;
+
 	spawnPlayerGroundBombs() {
 
-		for (let j = 0; j < 3; j++) {
+		for (let j = 0; j < this.playerAmmoBeltSize; j++) {
 
 			const gameObject: PlayerGroundBomb = new PlayerGroundBomb(4);
 			gameObject.disableRendering();
@@ -1521,7 +1522,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	spawnPlayerRockets() {
 
-		for (let j = 0; j < 3; j++) {
+		for (let j = 0; j < this.playerAmmoBeltSize; j++) {
 
 			const gameObject: PlayerRocket = new PlayerRocket(4);
 			gameObject.disableRendering();
@@ -1731,7 +1732,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	spawnPlayerRocketBullsEyes() {
 
-		for (let j = 0; j < 3; j++) {
+		for (let j = 0; j < this.playerAmmoBeltSize; j++) {
 
 			const gameObject: PlayerRocketBullsEye = new PlayerRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
@@ -2058,13 +2059,16 @@ export class GamePlayScene extends Container implements IScene {
 
 	generateUfoEnemyRockets(ufoEnemy: UfoEnemy) {
 
-		let ufoEnemyRocket = this.ufoEnemyRocketGameObjects.find(x => x.isAnimating == false);
+		if (ufoEnemy.getLeft() + 50 > 0 && ufoEnemy.getTop() + 50 > 0) {
 
-		if (ufoEnemyRocket) {
-			ufoEnemyRocket.reset();
-			ufoEnemyRocket.reposition(ufoEnemy);
-			ufoEnemyRocket.setPopping();
-			ufoEnemyRocket.enableRendering();
+			let ufoEnemyRocket = this.ufoEnemyRocketGameObjects.find(x => x.isAnimating == false);
+
+			if (ufoEnemyRocket) {
+				ufoEnemyRocket.reset();
+				ufoEnemyRocket.reposition(ufoEnemy);
+				ufoEnemyRocket.setPopping();
+				ufoEnemyRocket.enableRendering();
+			}
 		}
 	}
 
@@ -2391,12 +2395,12 @@ export class GamePlayScene extends Container implements IScene {
 
 	private animateVehicleBoss() {
 
-		var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
-		let vehicleBoss: VehicleBoss = gameObject as VehicleBoss;
+		var vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
 
-		if (gameObject) {
+		if (vehicleBoss) {
 
-			gameObject.pop();
+			vehicleBoss.pop();
+			vehicleBoss.recoverFromHealthLoss();
 
 			if (vehicleBoss.isDead()) {
 
@@ -2405,17 +2409,16 @@ export class GamePlayScene extends Container implements IScene {
 				}
 			}
 			else {
-				gameObject.dillyDally();
-				gameObject.recoverFromHealthLoss();
+				vehicleBoss.dillyDally();
 
 				if (vehicleBoss.isAttacking) {
 					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling, Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling);
 
 					if (vehicleBoss.honk()) {
-						this.generateHonk(gameObject);
+						this.generateHonk(vehicleBoss);
 					}
 
-					this.generateTaunts(gameObject);
+					this.generateTaunts(vehicleBoss);
 				}
 				else {
 					// when all vehicles are out of view or have passed to the bottom right corner
@@ -2426,8 +2429,8 @@ export class GamePlayScene extends Container implements IScene {
 				}
 			}
 
-			if (vehicleBoss.isDead() && gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-				gameObject.disableRendering();
+			if (vehicleBoss.isDead() && vehicleBoss.x - vehicleBoss.width > Constants.DEFAULT_GAME_VIEW_WIDTH || vehicleBoss.y - vehicleBoss.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				vehicleBoss.disableRendering();
 			}
 		}
 	}
@@ -2638,27 +2641,26 @@ export class GamePlayScene extends Container implements IScene {
 
 	private animateUfoBoss() {
 
-		var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == true);
-		let ufoBoss: UfoBoss = gameObject as UfoBoss;
+		var ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true);
 
-		if (gameObject) {
+		if (ufoBoss) {
 
-			gameObject.pop();
+			ufoBoss.pop();
+			ufoBoss.recoverFromHealthLoss();
 
 			if (ufoBoss.isDead()) {
 
 				if (this.isBossDeathExploding()) {
-					gameObject.hover();
+					ufoBoss.hover();
 				}
 				else {
-					gameObject.shrink();
+					ufoBoss.shrink();
 				}
 			}
 			else {
-				gameObject.hover();
+				ufoBoss.hover();
 				ufoBoss.depleteHitStance();
 				ufoBoss.depleteWinStance();
-				ufoBoss.recoverFromHealthLoss();
 
 				if (ufoBoss.isAttacking) {
 
@@ -2668,7 +2670,7 @@ export class GamePlayScene extends Container implements IScene {
 						this.loosePlayerHealth();
 					}
 
-					this.generateTaunts(gameObject);
+					this.generateTaunts(ufoBoss);
 				}
 				else {
 
@@ -2682,7 +2684,7 @@ export class GamePlayScene extends Container implements IScene {
 			}
 
 			if (ufoBoss.hasShrinked()) {
-				gameObject.disableRendering();
+				ufoBoss.disableRendering();
 			}
 		}
 	}
@@ -3046,27 +3048,26 @@ export class GamePlayScene extends Container implements IScene {
 
 	private animateZombieBoss() {
 
-		var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == true);
-		let zombieBoss: ZombieBoss = gameObject as ZombieBoss;
+		var zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true);
 
-		if (gameObject) {
+		if (zombieBoss) {
 
-			gameObject.pop();
+			zombieBoss.pop();
+			zombieBoss.recoverFromHealthLoss();
 
 			if (zombieBoss.isDead()) {
 
 				if (this.isBossDeathExploding()) {
-					gameObject.hover();
+					zombieBoss.hover();
 				}
 				else {
-					gameObject.shrink();
+					zombieBoss.shrink();
 				}
 			}
 			else {
-				gameObject.hover();
+				zombieBoss.hover();
 				zombieBoss.depleteHitStance();
 				zombieBoss.depleteWinStance();
-				zombieBoss.recoverFromHealthLoss();
 
 				if (zombieBoss.isAttacking) {
 
@@ -3076,7 +3077,7 @@ export class GamePlayScene extends Container implements IScene {
 						this.loosePlayerHealth();
 					}
 
-					this.generateTaunts(gameObject);
+					this.generateTaunts(zombieBoss);
 				}
 				else {
 
@@ -3090,7 +3091,7 @@ export class GamePlayScene extends Container implements IScene {
 			}
 
 			if (zombieBoss.hasShrinked()) {
-				gameObject.disableRendering();
+				zombieBoss.disableRendering();
 			}
 		}
 	}
@@ -3295,27 +3296,26 @@ export class GamePlayScene extends Container implements IScene {
 
 	private animateMafiaBoss() {
 
-		var gameObject = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
-		let mafiaBoss: MafiaBoss = gameObject as MafiaBoss;
+		var mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
 
-		if (gameObject) {
+		if (mafiaBoss) {
 
-			gameObject.pop();
+			mafiaBoss.pop();
+			mafiaBoss.recoverFromHealthLoss();
 
 			if (mafiaBoss.isDead()) {
 
 				if (this.isBossDeathExploding()) {
-					gameObject.hover();
+					mafiaBoss.hover();
 				}
 				else {
-					gameObject.shrink();
+					mafiaBoss.shrink();
 				}
 			}
 			else {
-				gameObject.hover();
+				mafiaBoss.hover();
 				mafiaBoss.depleteHitStance();
 				mafiaBoss.depleteWinStance();
-				mafiaBoss.recoverFromHealthLoss();
 
 				if (mafiaBoss.isAttacking) {
 
@@ -3325,7 +3325,7 @@ export class GamePlayScene extends Container implements IScene {
 						this.loosePlayerHealth();
 					}
 
-					this.generateTaunts(gameObject);
+					this.generateTaunts(mafiaBoss);
 				}
 				else {
 
@@ -3339,7 +3339,7 @@ export class GamePlayScene extends Container implements IScene {
 			}
 
 			if (mafiaBoss.hasShrinked()) {
-				gameObject.disableRendering();
+				mafiaBoss.disableRendering();
 			}
 		}
 	}
@@ -4174,15 +4174,15 @@ export class GamePlayScene extends Container implements IScene {
 		SoundManager.stop(SoundType.CHOPPER_HOVERING);
 
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
+		Constants.GAME_LEVEL = this.gameLevelBar.getScore();
 		this.removeChild(this.sceneContainer);
 		SceneManager.changeScene(new GameOverScene());
 	}
 
 	private levelUp() {
-		this.gameLevel++;
-		this.gameLevelBar.gainScore(1);
-		this.generateOnScreenMessage("Level " + this.gameLevel.toString() + " Complete", this.cheerIcon);
 		SoundManager.play(SoundType.LEVEL_UP);
+		this.generateOnScreenMessage("Level " + this.gameLevelBar.getScore().toString() + " Complete", this.cheerIcon);
+		this.gameLevelBar.gainScore(1);
 	}
 
 	//#endregion
