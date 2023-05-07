@@ -9,6 +9,7 @@ import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
 import { GrayscaleFilter } from "@pixi/filter-grayscale";
+import { MessageBubble } from "../controls/MessageBubble";
 
 
 export class PlayerRideSelectionScene extends Container implements IScene {
@@ -48,39 +49,49 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
-		const option_1_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_1"));
-		option_1_sprite.width = 256 / 2;
-		option_1_sprite.height = 256 / 2;
-		option_1_sprite.x = 0;
-		option_1_sprite.y = 0;
-		const player_1_button = new Button(() => {
+		// air balloon
+		const air_balloon_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_1"));
+		air_balloon_sprite.width = 256 / 2;
+		air_balloon_sprite.height = 256 / 2;
+		air_balloon_sprite.x = 0;
+		air_balloon_sprite.y = 0;
+		const air_balloon_button = new Button(() => {
 
 			button.setText("Air Balloon").setIsEnabled(true);
 			SoundManager.play(SoundType.OPTION_SELECT);
-			option_2_sprite.filters = [new GrayscaleFilter()];
-			option_1_sprite.filters = null;
+			chopper_sprite.filters = [new GrayscaleFilter()];
+			air_balloon_sprite.filters = null;
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 0;
 
-		}).setBackground(option_1_sprite);
-		player_1_button.setPosition(this.uiContainer.width / 2 - option_1_sprite.width, this.uiContainer.height / 2 - option_1_sprite.height / 2 + 10);
-		this.uiContainer.addChild(player_1_button);
+		}).setBackground(air_balloon_sprite);
+		air_balloon_button.setPosition(this.uiContainer.width / 2 - air_balloon_sprite.width, this.uiContainer.height / 2 - air_balloon_sprite.height / 2 + 10);
+		this.uiContainer.addChild(air_balloon_button);
 
-		const option_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_2"));
-		option_2_sprite.width = 256 / 2;
-		option_2_sprite.height = 256 / 2;
-		option_2_sprite.x = 0;
-		option_2_sprite.y = 0;
-		const player_2_button = new Button(() => {
+		const air_balloon_msg = new MessageBubble(0, "Lvl " + 1, 20);
+		air_balloon_msg.setPosition(air_balloon_button.x + air_balloon_button.width / 2, air_balloon_button.y + air_balloon_button.height / 2);
+		this.uiContainer.addChild(air_balloon_msg);
+
+		// chopper
+		const chopper_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_2"));
+		chopper_sprite.width = 256 / 2;
+		chopper_sprite.height = 256 / 2;
+		chopper_sprite.x = 0;
+		chopper_sprite.y = 0;
+		const chopper_button = new Button(() => {
 
 			button.setText("Chopper").setIsEnabled(true);
 			SoundManager.play(SoundType.OPTION_SELECT);
-			option_1_sprite.filters = [new GrayscaleFilter()];
-			option_2_sprite.filters = null;
+			air_balloon_sprite.filters = [new GrayscaleFilter()];
+			chopper_sprite.filters = null;
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 1;
 
-		}).setBackground(option_2_sprite);
-		player_2_button.setPosition(this.uiContainer.width / 2, this.uiContainer.height / 2 - option_2_sprite.height / 2 + 10);
-		this.uiContainer.addChild(player_2_button);
+		}).setBackground(chopper_sprite);
+		chopper_button.setPosition(this.uiContainer.width / 2, this.uiContainer.height / 2 - chopper_sprite.height / 2 + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= 5);
+		this.uiContainer.addChild(chopper_button);
+
+		const chopper_msg = new MessageBubble(0, "Lvl " + 5, 20);
+		chopper_msg.setPosition(chopper_button.x + chopper_button.width / 2, chopper_button.y + chopper_button.height / 2);
+		this.uiContainer.addChild(chopper_msg);
 
 		const button = new Button(() => {
 			if (button.getIsEnabled()) {
