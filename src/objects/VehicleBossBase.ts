@@ -40,7 +40,7 @@ export class VehicleBossBase extends VehicleBase {
 					this.alpha = 1;
 				}
 				else {
-					this.alpha = 0.7;
+					this.alpha = 0.4;
 				}
 
 				this.healthLossOpacityEffect = 0;

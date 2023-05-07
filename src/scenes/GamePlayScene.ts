@@ -2120,7 +2120,8 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly vehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private vehicleEnemyPopDelay: number = 15;
 
-	private soundPollutionDamageDelay: number = 10;
+	private soundPollutionDamageDelay: number = 12;
+	private readonly soundPollutionDamageDelayDefault: number = 12;
 
 	private spawnVehicleEnemys() {
 
@@ -2279,8 +2280,10 @@ export class GamePlayScene extends Container implements IScene {
 		var honkingVehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true && x.willHonk);
 
 		if (honkingVehicles) {
-			var count = honkingVehicles.length;
-			this.soundPollutionBar.setValue(count * 2); // if at least 3 or more vehicles are honking player looses health
+			var count = honkingVehicles.length * 2;
+
+			if (this.soundPollutionBar.getValue() != count)
+				this.soundPollutionBar.setValue(count); // if at least 3 or more vehicles are honking player looses health
 
 			if (this.soundPollutionBar.getProgress() >= 100) {
 
@@ -2288,8 +2291,8 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (this.soundPollutionDamageDelay <= 0) {
 					this.loosePlayerHealth();
-					this.soundPollutionDamageDelay = 10;
-				}					
+					this.soundPollutionDamageDelay = this.soundPollutionDamageDelayDefault;
+				}
 			}
 		}
 	}
