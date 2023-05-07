@@ -87,8 +87,6 @@ export class GamePlayScene extends Container implements IScene {
 
 	private honkBustReactions: SoundTemplate[] = [];
 
-	private gameLevel: number = 0;
-
 	//#endregion
 
 	//#region Methods
@@ -4179,9 +4177,9 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	private levelUp() {
-		this.gameLevel++;
+		Constants.GAME_LEVEL += 1;
 		this.gameLevelBar.gainScore(1);
-		this.generateOnScreenMessage("Level " + this.gameLevel.toString() + " Complete", this.cheerIcon);
+		this.generateOnScreenMessage("Level " + Constants.GAME_LEVEL.toString() + " Complete", this.cheerIcon);
 		SoundManager.play(SoundType.LEVEL_UP);
 	}
 

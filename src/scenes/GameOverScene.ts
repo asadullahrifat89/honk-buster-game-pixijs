@@ -66,6 +66,7 @@ export class GameOverScene extends Container implements IScene {
 	}
 
 	public update(_framesPassed: number) {
+		//TODO: check unlockables based on game score and level,
 	}
 
 	public resize(scale: number): void {
