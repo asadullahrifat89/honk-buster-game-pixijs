@@ -127,7 +127,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		// spawn the game objects
 		this.spawnGameObjects();
-		this.generatePlayerBalloon();
+		this.generatePlayerBalloon(); // player health is calculated here
 
 		// set the game score bar		
 		this.gameScoreBar = new GameScoreBar(this, "Score ");
@@ -137,9 +137,10 @@ export class GamePlayScene extends Container implements IScene {
 		this.gameLevelBar = new GameScoreBar(this, "Lvl ", 1);
 		this.repositionGameLevelBar();
 
-		// set health bars
+		// set health bars		
 		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this).setMaximumValue(this.player.health).setValue(this.player.health);
 		this.repositionPlayerHealthBar();
+
 		this.bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS), this, 0x7200ff).setMaximumValue(100).setValue(0);
 		this.repositionBossHealthBar();
 

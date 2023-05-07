@@ -81,7 +81,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 1;
 
 		}).setBackground(option_2_sprite);
-		player_2_button.setPosition(this.uiContainer.width / 2 - option_1_sprite.width / 2, this.uiContainer.height / 2 - option_2_sprite.height / 2 + 10);
+		player_2_button.setPosition(this.uiContainer.width / 2 - option_2_sprite.width / 2, this.uiContainer.height / 2 - option_2_sprite.height / 2 + 10);
 		this.uiContainer.addChild(player_2_button);
 
 		const option_3_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_sticky_2"));

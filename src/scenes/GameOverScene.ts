@@ -1,6 +1,8 @@
-﻿import { Container, Text, BlurFilter } from "pixi.js";
+﻿import { GrayscaleFilter } from "@pixi/filter-grayscale";
+import { Container, Text, BlurFilter } from "pixi.js";
 import { Constants, ConstructType, SoundType } from "../Constants";
 import { Button } from "../controls/Button";
+import { MessageBubble } from "../controls/MessageBubble";
 import { GameObjectContainer } from "../core/GameObjectContainer";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { IScene } from "../managers/IScene";
@@ -17,6 +19,16 @@ export class GameOverScene extends Container implements IScene {
 
 	constructor() {
 		super();
+
+		// record max score
+		if (Constants.GAME_SCORE > Constants.GAME_SCORE_MAX) {
+			Constants.GAME_SCORE_MAX = Constants.GAME_SCORE;
+		}
+
+		// record max level
+		if (Constants.GAME_LEVEL > Constants.GAME_LEVEL_MAX) {
+			Constants.GAME_LEVEL_MAX = Constants.GAME_LEVEL;
+		}
 
 		this.uiContainer = new GameObjectContainer();
 		this.uiContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
@@ -55,7 +67,7 @@ export class GameOverScene extends Container implements IScene {
 		this.uiContainer.addChild(score);
 
 		// level
-		const level = new Text("Level " + Constants.GAME_LEVEL, {
+		const level = new Text("Lvl " + Constants.GAME_LEVEL, {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 20,
 			align: "center",
@@ -64,6 +76,37 @@ export class GameOverScene extends Container implements IScene {
 		level.x = this.uiContainer.width / 2 - level.width / 2;
 		level.y = (this.uiContainer.height / 2 - level.height / 2) - 20;
 		this.uiContainer.addChild(level);
+
+		//TODO: check unlockables
+
+		// health		
+		if (Constants.GAME_LEVEL_MAX > 1 && Constants.GAME_LEVEL_MAX > Constants.HEALTH_LEVEL_MAX) {
+			Constants.HEALTH_LEVEL_MAX = Constants.GAME_LEVEL_MAX;
+		}
+
+		const health = new GameObjectContainer();
+		health.filters = [new GrayscaleFilter(), new BlurFilter()];
+
+		const health_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP));
+		health_sprite.width = 256 / 3;
+		health_sprite.height = 256 / 3;
+		health_sprite.x = 0;
+		health_sprite.y = 0;
+
+		const health_container = new GameObjectContainer();
+		health_container.addChild(health_sprite);
+		health.addChild(health_container);
+
+		const health_msg = new MessageBubble(0, "+ " + 5 * Constants.HEALTH_LEVEL_MAX, 20); // player hitpoint multiplied by health level max
+		health_msg.setPosition(health_container.x + health_container.width, health_container.y + health_container.height - health_msg.height);
+		health.addChild(health_msg);
+
+		health.setPosition((this.uiContainer.width / 2 - (health.width / 2) * 2), (this.uiContainer.height / 2 - health.height / 2) + 50);
+		this.uiContainer.addChild(health);
+
+		if (Constants.HEALTH_LEVEL_MAX > 1) {
+			health.filters = null;
+		}
 
 		// play again button
 		const button = new Button(() => {
@@ -80,7 +123,7 @@ export class GameOverScene extends Container implements IScene {
 	}
 
 	public update(_framesPassed: number) {
-		//TODO: check unlockables based on game score and level,
+		//TODO: animate unlockables
 	}
 
 	public resize(scale: number): void {

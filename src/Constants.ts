@@ -232,7 +232,12 @@ export abstract class Constants {
 	public static MESSAGE_BOX_TEXT_COLOR: string = "#000000";
 
 	public static GAME_SCORE: number = 0;
+	public static GAME_SCORE_MAX: number = 0;
+
 	public static GAME_LEVEL: number = 0;
+	public static GAME_LEVEL_MAX: number = 0;
+
+	public static HEALTH_LEVEL_MAX: number = 0; // default is 1
 
 	public static GAME_TITLE_FONT = "stitchnschool";
 	public static GAME_DEFAULT_FONT = "emilio";
