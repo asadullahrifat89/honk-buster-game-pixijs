@@ -384,7 +384,7 @@ export class PlayerRide extends GameObjectContainer {
 					this.alpha = 1;
 				}
 				else {
-					this.alpha = 0.7;
+					this.alpha = 0.4;
 				}
 
 				this.healthLossOpacityEffect = 0;

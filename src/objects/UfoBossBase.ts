@@ -25,7 +25,7 @@ export class UfoBossBase extends GameObjectContainer {
 			this.isAttacking = false;
 		}
 		else {
-			this.alpha = 0.7;
+			this.alpha = 0.4;
 			this.healthLossRecoveryDelay = 5;
 		}
 	}

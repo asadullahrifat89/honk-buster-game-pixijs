@@ -46,8 +46,9 @@ export class GameInstructionsScene extends Container implements IScene {
 			fontSize: 35,
 			align: "center",
 			fill: "#ffffff",
-		});
-		repositionTitle(this.uiContainer);
+		});		
+		title.x = this.uiContainer.width / 2 - title.width / 2;
+		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
 		// player_ride
@@ -292,6 +293,31 @@ export class GameInstructionsScene extends Container implements IScene {
 		player_health_bar.setPosition(this.uiContainer.width / 2 - player_health_bar.width / 2, (this.uiContainer.height / 2 - player_health_bar.height / 2) + 10);
 		this.uiContainer.addChild(player_health_bar);
 
+		// sound_pollution_bar
+		const sound_pollution_bar = new GameObjectContainer();
+		sound_pollution_bar.renderable = false;
+
+		const sound_pollution_bar_sprite = new HealthBar(Texture.from("honk_1"), sound_pollution_bar, 0x7200ff);
+		sound_pollution_bar_sprite.setMaximumValue(100);
+		sound_pollution_bar_sprite.setValue(50);
+		sound_pollution_bar_sprite.x = 0;
+		sound_pollution_bar_sprite.y = 0;
+
+		const sound_pollution_bar_container = new GameObjectContainer();
+		sound_pollution_bar_container.addChild(sound_pollution_bar_sprite);
+		sound_pollution_bar.addChild(sound_pollution_bar_container);
+
+		const sound_pollution_bar_msg = new MessageBubble(0, "This is the sound pollution bar.", 20);
+		sound_pollution_bar_msg.setPosition(sound_pollution_bar_container.x + sound_pollution_bar_container.width + 10, sound_pollution_bar_container.y + 25);
+		sound_pollution_bar.addChild(sound_pollution_bar_msg);
+
+		const sound_pollution_bar_msg_2 = new MessageBubble(0, "If this gets full, you take damage over time.", 20);
+		sound_pollution_bar_msg_2.setPosition(sound_pollution_bar_msg.x, sound_pollution_bar_msg.y + msg_line_2_gap);
+		sound_pollution_bar.addChild(sound_pollution_bar_msg_2);
+
+		sound_pollution_bar.setPosition(this.uiContainer.width / 2 - sound_pollution_bar.width / 2, (this.uiContainer.height / 2 - sound_pollution_bar.height / 2) + 10);
+		this.uiContainer.addChild(sound_pollution_bar);
+
 		// power_up
 		const power_up = new GameObjectContainer();
 		power_up.renderable = false;
@@ -519,6 +545,10 @@ export class GameInstructionsScene extends Container implements IScene {
 			}
 			else if (player_health_bar.renderable) {
 				player_health_bar.renderable = false;
+				sound_pollution_bar.renderable = true;				
+			}
+			else if (sound_pollution_bar.renderable) {
+				sound_pollution_bar.renderable = false;
 				power_up.renderable = true;
 				title.text = "Power";
 			}
@@ -559,16 +589,9 @@ export class GameInstructionsScene extends Container implements IScene {
 				SceneManager.changeScene(new GameTitleScene());
 			}
 
-			//repositionTitle(this.uiContainer);
-
 		}).setText("Next");
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
-		this.uiContainer.addChild(button);
-
-		function repositionTitle(uiContainer: GameObjectContainer) {
-			title.x = uiContainer.width / 2 - title.width / 2;
-			title.y = (uiContainer.height / 2 - title.height / 2) - 120;
-		}
+		this.uiContainer.addChild(button);		
 	}
 
 	public update(_framesPassed: number) {

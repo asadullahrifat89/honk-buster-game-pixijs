@@ -73,7 +73,9 @@ export class GamePlayScene extends Container implements IScene {
 
 	private playerHealthBar: HealthBar;
 	private bossHealthBar: HealthBar;
+
 	private powerUpBar: HealthBar;
+	private soundPollutionBar: HealthBar;
 
 	private stageColors: number[] = [0x1e2a36, 0x4187ab];
 	private stageColor: Graphics;
@@ -146,6 +148,10 @@ export class GamePlayScene extends Container implements IScene {
 		// set power up bar
 		this.powerUpBar = new HealthBar(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR), this, 0xffaa00).setMaximumValue(100).setValue(0);
 		this.repositionPowerUpBar();
+
+		// set sound pollution bar
+		this.soundPollutionBar = new HealthBar(Constants.getRandomTexture(ConstructType.HONK), this, 0x7200ff).setMaximumValue(6).setValue(0);
+		this.repositionSoundPollutionBar();
 
 		// set the game controller
 		this.gameController = new GameController({
@@ -1481,7 +1487,7 @@ export class GamePlayScene extends Container implements IScene {
 										this.generateSmokeExplosion(playerGroundBomb);
 										this.generateRingExplosion(playerGroundBomb);
 									}
-								}								
+								}
 
 								if (playerGroundBomb.awaitBlast()) {
 									this.generateSmokeExplosion(playerGroundBomb);
@@ -2114,6 +2120,9 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly vehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private vehicleEnemyPopDelay: number = 15;
 
+	private soundPollutionDamageDelay: number = 12;
+	private readonly soundPollutionDamageDelayDefault: number = 12;
+
 	private spawnVehicleEnemys() {
 
 		for (let j = 0; j < 10; j++) {
@@ -2266,6 +2275,25 @@ export class GamePlayScene extends Container implements IScene {
 					}
 				}
 			});
+		}
+
+		var honkingVehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true && x.willHonk);
+
+		if (honkingVehicles) {
+			var count = honkingVehicles.length * 2;
+
+			if (this.soundPollutionBar.getValue() != count)
+				this.soundPollutionBar.setValue(count); // if at least 3 or more vehicles are honking player looses health
+
+			if (this.soundPollutionBar.getProgress() >= 100) {
+
+				this.soundPollutionDamageDelay -= 0.1;
+
+				if (this.soundPollutionDamageDelay <= 0) {
+					this.loosePlayerHealth();
+					this.soundPollutionDamageDelay = this.soundPollutionDamageDelayDefault;
+				}
+			}
 		}
 	}
 
@@ -2505,9 +2533,7 @@ export class GamePlayScene extends Container implements IScene {
 			animatingVehicleBossRockets.forEach(gameObject => {
 				gameObject.moveUpRight();
 
-				if (gameObject.speed > 0) {
-					gameObject.speed -= 0.1; // showly decrease the speed;
-				}
+				gameObject.decelerate();
 
 				if (gameObject.isBlasting) {
 					gameObject.shrink();
@@ -2925,7 +2951,7 @@ export class GamePlayScene extends Container implements IScene {
 						ufoBossRocketSeeking.seek(this.player.getCloseBounds());
 
 						if (Constants.checkCloseCollision(ufoBossRocketSeeking, this.player)) {
-							ufoBossRocketSeeking.setBlast();							
+							ufoBossRocketSeeking.setBlast();
 							ufoBoss.setWinStance();
 							this.loosePlayerHealth();
 							this.generateRingExplosion(ufoBossRocketSeeking);
@@ -3792,17 +3818,13 @@ export class GamePlayScene extends Container implements IScene {
 						switch (gameObject.powerUpType) {
 							case PowerUpType.BULLS_EYE: // if bulls eye powerup, allow using a single shot of 20 bombs
 								{
-									this.powerUpBar.setMaximumValue(20);
-									this.powerUpBar.setValue(20);
-
+									this.powerUpBar.setMaximumValue(20).setValue(20);
 									this.generateOnScreenMessage("Bull's' Eye +20", this.powerUpBar.getIcon());
 								}
 								break;
 							case PowerUpType.ARMOR:
 								{
-									this.powerUpBar.setMaximumValue(10);
-									this.powerUpBar.setValue(10);
-
+									this.powerUpBar.setMaximumValue(10).setValue(10);
 									this.generateOnScreenMessage("Armor +10", this.powerUpBar.getIcon());
 								}
 								break;
@@ -3863,6 +3885,10 @@ export class GamePlayScene extends Container implements IScene {
 
 	private repositionPowerUpBar() {
 		this.powerUpBar.reposition((SceneManager.width) - 305, 10);
+	}
+
+	private repositionSoundPollutionBar() {
+		this.soundPollutionBar.reposition((SceneManager.width) - 405, 10);
 	}
 
 	//#endregion
