@@ -1291,9 +1291,11 @@ export class GamePlayScene extends Container implements IScene {
 	private playerGroundBombGameObjects: Array<PlayerGroundBomb> = [];
 	private playerHonkBusterTemplate: number = 0;
 
+	private readonly playerAmmoBeltSize: number = 3 + Constants.ATTACK_LEVEL_MAX;
+
 	spawnPlayerGroundBombs() {
 
-		for (let j = 0; j < 3; j++) {
+		for (let j = 0; j < this.playerAmmoBeltSize; j++) {
 
 			const gameObject: PlayerGroundBomb = new PlayerGroundBomb(4);
 			gameObject.disableRendering();
@@ -1520,7 +1522,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	spawnPlayerRockets() {
 
-		for (let j = 0; j < 3; j++) {
+		for (let j = 0; j < this.playerAmmoBeltSize; j++) {
 
 			const gameObject: PlayerRocket = new PlayerRocket(4);
 			gameObject.disableRendering();
@@ -1730,7 +1732,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	spawnPlayerRocketBullsEyes() {
 
-		for (let j = 0; j < 3; j++) {
+		for (let j = 0; j < this.playerAmmoBeltSize; j++) {
 
 			const gameObject: PlayerRocketBullsEye = new PlayerRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
