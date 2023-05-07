@@ -11,11 +11,11 @@ export class SeekingRocketBase extends GameObjectContainer {
 	public targetHitbox: Rectangle = new Rectangle();
 
 	setTarget(target: Rectangle) {
-		let rocketX = this.getLeft() /*+ this.width / 2*/;
-		let rocketY = this.getTop() /*+ this.height / 2*/;
+		let rocketX = this.getLeft() + this.width / 2;
+		let rocketY = this.getTop() + this.height / 2;
 
-		let targetX = target.x /*+ target.width / 2*/;
-		let targetY = target.y /*+ target.height / 2*/;
+		let targetX = target.x + target.width / 2;
+		let targetY = target.y + target.height / 2;
 
 		var scaling = SceneManager.scaling;
 
