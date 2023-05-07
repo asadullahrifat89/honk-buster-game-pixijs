@@ -1504,7 +1504,7 @@ export class GamePlayScene extends Container implements IScene {
 					}
 				}
 
-				if (playerGroundBomb.hasFaded() || playerGroundBomb.hasShrinked() || playerGroundBomb.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || playerGroundBomb.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (playerGroundBomb.hasFaded() || playerGroundBomb.hasShrinked() /*|| playerGroundBomb.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || playerGroundBomb.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
 					playerGroundBomb.disableRendering();
 				}
 			});
@@ -2281,21 +2281,23 @@ export class GamePlayScene extends Container implements IScene {
 			});
 		}
 
-		var honkingVehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true && x.willHonk);
+		if (!this.anyBossExists()) {
+			var honkingVehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true && x.willHonk);
 
-		if (honkingVehicles) {
-			var count = honkingVehicles.length * 2;
+			if (honkingVehicles) {
+				var count = honkingVehicles.length * 2;
 
-			if (this.soundPollutionBar.getValue() != count)
-				this.soundPollutionBar.setValue(count); // if at least 3 or more vehicles are honking player looses health
+				if (this.soundPollutionBar.getValue() != count)
+					this.soundPollutionBar.setValue(count); // if at least 3 or more vehicles are honking player looses health
 
-			if (this.soundPollutionBar.getProgress() >= 100) {
+				if (this.soundPollutionBar.getProgress() >= 100) {
 
-				this.soundPollutionDamageDelay -= 0.1;
+					this.soundPollutionDamageDelay -= 0.1;
 
-				if (this.soundPollutionDamageDelay <= 0) {
-					this.loosePlayerHealth();
-					this.soundPollutionDamageDelay = this.soundPollutionDamageDelayDefault;
+					if (this.soundPollutionDamageDelay <= 0) {
+						this.loosePlayerHealth();
+						this.soundPollutionDamageDelay = this.soundPollutionDamageDelayDefault;
+					}
 				}
 			}
 		}
