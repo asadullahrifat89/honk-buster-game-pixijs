@@ -240,6 +240,8 @@ export abstract class Constants {
 	public static HEALTH_LEVEL_MAX: number = 0;
 	public static ATTACK_LEVEL_MAX: number = 0;
 
+	public static CHOPPER_UNLOCK_LEVEL: number = 5;
+
 	public static GAME_TITLE_FONT = "stitchnschool";
 	public static GAME_DEFAULT_FONT = "emilio";
 

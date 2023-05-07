@@ -86,10 +86,10 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 1;
 
 		}).setBackground(chopper_sprite);
-		chopper_button.setPosition(this.uiContainer.width / 2, this.uiContainer.height / 2 - chopper_sprite.height / 2 + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= 5);
+		chopper_button.setPosition(this.uiContainer.width / 2, this.uiContainer.height / 2 - chopper_sprite.height / 2 + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL);
 		this.uiContainer.addChild(chopper_button);
 
-		const chopper_msg = new MessageBubble(0, "Lvl " + 5, 20);
+		const chopper_msg = new MessageBubble(0, "Lvl " + Constants.CHOPPER_UNLOCK_LEVEL, 20);
 		chopper_msg.setPosition(chopper_button.x + chopper_button.width / 2, chopper_button.y + chopper_button.height / 2);
 		this.uiContainer.addChild(chopper_msg);
 

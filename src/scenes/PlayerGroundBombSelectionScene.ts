@@ -48,59 +48,59 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
-		const option_1_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_explosive_1"));
-		option_1_sprite.width = 256 / 2;
-		option_1_sprite.height = 256 / 2;
-		option_1_sprite.x = 0;
-		option_1_sprite.y = 0;
-		const player_1_button = new Button(() => {
+		const grenade_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_explosive_1"));
+		grenade_sprite.width = 256 / 2;
+		grenade_sprite.height = 256 / 2;
+		grenade_sprite.x = 0;
+		grenade_sprite.y = 0;
+		const grenade_button = new Button(() => {
 
 			button.setText("Grenades").setIsEnabled(true);
 			SoundManager.play(SoundType.OPTION_SELECT);
-			option_1_sprite.filters = null;
-			option_2_sprite.filters = [new GrayscaleFilter()];
-			option_3_sprite.filters = [new GrayscaleFilter()];
+			grenade_sprite.filters = null;
+			trash_sprite.filters = [new GrayscaleFilter()];
+			dynamite_sprite.filters = [new GrayscaleFilter()];
 			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 0;
 
-		}).setBackground(option_1_sprite);
-		player_1_button.setPosition(this.uiContainer.width / 2 - option_1_sprite.width * 2, this.uiContainer.height / 2 - option_1_sprite.height / 2 + 10);
-		this.uiContainer.addChild(player_1_button);
+		}).setBackground(grenade_sprite);
+		grenade_button.setPosition(this.uiContainer.width / 2 - grenade_sprite.width * 2, this.uiContainer.height / 2 - grenade_sprite.height / 2 + 10);
+		this.uiContainer.addChild(grenade_button);
 
-		const option_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_trash_1"));
-		option_2_sprite.width = 256 / 2;
-		option_2_sprite.height = 256 / 2;
-		option_2_sprite.x = 0;
-		option_2_sprite.y = 0;
-		const player_2_button = new Button(() => {
+		const trash_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_trash_1"));
+		trash_sprite.width = 256 / 2;
+		trash_sprite.height = 256 / 2;
+		trash_sprite.x = 0;
+		trash_sprite.y = 0;
+		const trash_button = new Button(() => {
 
 			button.setText("Trash Bins").setIsEnabled(true);
 			SoundManager.play(SoundType.OPTION_SELECT);
-			option_2_sprite.filters = null;
-			option_1_sprite.filters = [new GrayscaleFilter()];
-			option_3_sprite.filters = [new GrayscaleFilter()];
+			trash_sprite.filters = null;
+			grenade_sprite.filters = [new GrayscaleFilter()];
+			dynamite_sprite.filters = [new GrayscaleFilter()];
 			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 1;
 
-		}).setBackground(option_2_sprite);
-		player_2_button.setPosition(this.uiContainer.width / 2 - option_2_sprite.width / 2, this.uiContainer.height / 2 - option_2_sprite.height / 2 + 10);
-		this.uiContainer.addChild(player_2_button);
+		}).setBackground(trash_sprite);
+		trash_button.setPosition(this.uiContainer.width / 2 - trash_sprite.width / 2, this.uiContainer.height / 2 - trash_sprite.height / 2 + 10);
+		this.uiContainer.addChild(trash_button);
 
-		const option_3_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_sticky_2"));
-		option_3_sprite.width = 256 / 2;
-		option_3_sprite.height = 256 / 2;
-		option_3_sprite.x = 0;
-		option_3_sprite.y = 0;
-		const player_3_button = new Button(() => {
+		const dynamite_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_sticky_2"));
+		dynamite_sprite.width = 256 / 2;
+		dynamite_sprite.height = 256 / 2;
+		dynamite_sprite.x = 0;
+		dynamite_sprite.y = 0;
+		const dynamite_button = new Button(() => {
 
 			button.setText("Dynamites").setIsEnabled(true);
 			SoundManager.play(SoundType.OPTION_SELECT);
-			option_3_sprite.filters = null;
-			option_1_sprite.filters = [new GrayscaleFilter()];
-			option_2_sprite.filters = [new GrayscaleFilter()];
+			dynamite_sprite.filters = null;
+			grenade_sprite.filters = [new GrayscaleFilter()];
+			trash_sprite.filters = [new GrayscaleFilter()];
 			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 2;
 
-		}).setBackground(option_3_sprite);
-		player_3_button.setPosition(this.uiContainer.width / 2 + option_3_sprite.width, this.uiContainer.height / 2 - option_3_sprite.height / 2 + 10);
-		this.uiContainer.addChild(player_3_button);
+		}).setBackground(dynamite_sprite);
+		dynamite_button.setPosition(this.uiContainer.width / 2 + dynamite_sprite.width, this.uiContainer.height / 2 - dynamite_sprite.height / 2 + 10);
+		this.uiContainer.addChild(dynamite_button);
 
 		const button = new Button(() => {
 
