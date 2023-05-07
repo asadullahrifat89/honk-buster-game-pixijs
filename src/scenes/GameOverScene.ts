@@ -21,7 +21,7 @@ export class GameOverScene extends Container implements IScene {
 		this.uiContainer = new GameObjectContainer();
 		this.uiContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		this.uiContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
-		this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);		
+		this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
 		this.addChild(this.uiContainer);
 
 		const bg_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
@@ -32,8 +32,8 @@ export class GameOverScene extends Container implements IScene {
 		bg_sprite.filters = [new BlurFilter()];
 		this.uiContainer.addChild(bg_sprite);
 
-		const title = new Text("Game Over", {
-			fontFamily: Constants.GAME_DEFAULT_FONT,
+		const title = new Text("GAME OVER", {
+			fontFamily: Constants.GAME_TITLE_FONT,
 			fontSize: 35,
 			align: "center",
 			fill: "#ffffff",
@@ -44,13 +44,23 @@ export class GameOverScene extends Container implements IScene {
 
 		const score = new Text("Score " + Constants.GAME_SCORE, {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
-			fontSize: 32,
+			fontSize: 30,
 			align: "center",
 			fill: "#ffffff",
 		});
 		score.x = this.uiContainer.width / 2 - score.width / 2;
-		score.y = (this.uiContainer.height / 2 - score.height / 2) + 80;
+		score.y = (this.uiContainer.height / 2 - score.height / 2) - 60;
 		this.uiContainer.addChild(score);
+
+		const level = new Text("Level " + Constants.GAME_LEVEL, {
+			fontFamily: Constants.GAME_DEFAULT_FONT,
+			fontSize: 28,
+			align: "center",
+			fill: "#ffffff",
+		});
+		level.x = this.uiContainer.width / 2 - level.width / 2;
+		level.y = (this.uiContainer.height / 2 - level.height / 2);
+		this.uiContainer.addChild(level);
 
 		const button = new Button(() => {
 
@@ -78,6 +88,6 @@ export class GameOverScene extends Container implements IScene {
 		else {
 			this.uiContainer.scale.set(scale);
 			this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
-		}		
+		}
 	}
 }

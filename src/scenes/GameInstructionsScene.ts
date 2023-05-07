@@ -572,7 +572,7 @@ export class GameInstructionsScene extends Container implements IScene {
 			else if (boss_health_bar.renderable) {
 				boss_health_bar.renderable = false;
 				score.renderable = true;
-				title.text = "Head Up Display";
+				title.text = "Information";
 			}
 			else if (score.renderable) {
 				score.renderable = false;

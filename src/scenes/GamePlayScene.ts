@@ -129,11 +129,11 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnGameObjects();
 		this.generatePlayerBalloon();
 
-		// set the game score bar
+		// set the game score bar		
 		this.gameScoreBar = new GameScoreBar(this, "Score ");
 		this.repositionGameScoreBar();
 
-		// set the game level bar
+		// set the game level bar		
 		this.gameLevelBar = new GameScoreBar(this, "Lvl ", 1);
 		this.repositionGameLevelBar();
 
@@ -4172,15 +4172,15 @@ export class GamePlayScene extends Container implements IScene {
 		SoundManager.stop(SoundType.CHOPPER_HOVERING);
 
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
+		Constants.GAME_LEVEL = this.gameLevelBar.getScore();
 		this.removeChild(this.sceneContainer);
 		SceneManager.changeScene(new GameOverScene());
 	}
 
 	private levelUp() {
-		Constants.GAME_LEVEL += 1;
-		this.gameLevelBar.gainScore(1);
-		this.generateOnScreenMessage("Level " + Constants.GAME_LEVEL.toString() + " Complete", this.cheerIcon);
 		SoundManager.play(SoundType.LEVEL_UP);
+		this.generateOnScreenMessage("Level " + this.gameLevelBar.getScore().toString() + " Complete", this.cheerIcon);
+		this.gameLevelBar.gainScore(1);
 	}
 
 	//#endregion
