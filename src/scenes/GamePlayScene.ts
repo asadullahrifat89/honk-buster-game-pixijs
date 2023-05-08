@@ -426,8 +426,8 @@ export class GamePlayScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_MARK));
 
-				sprite.x = this.roadMarkSizeWidth * i - (this.roadMarkXyAdjustment * i);
-				sprite.y = (this.roadMarkSizeHeight / 2) * i - ((this.roadMarkXyAdjustment / 2) * i);
+				sprite.x = (this.roadMarkSizeWidth * i) - (this.roadMarkXyAdjustment * i);
+				sprite.y = ((this.roadMarkSizeHeight / 2) * i) - (((this.roadMarkXyAdjustment) / 2) * i);
 				sprite.width = this.roadMarkSizeWidth;
 				sprite.height = this.roadMarkSizeHeight;
 
@@ -449,7 +449,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			if (gameObject) {
 
-				gameObject.setPosition((gameObject.width * -1) - 730, gameObject.height * -1);
+				gameObject.setPosition((gameObject.width * -1) - 748, gameObject.height * -1);
 				gameObject.enableRendering();
 
 				this.roadMarkPopDelay = this.roadMarkPopDelayDefault;
