@@ -27,8 +27,6 @@ export class Joystick extends Container {
 		this.width = settings.width;
 		this.height = settings.height;
 
-		//this.settings = settings;
-
 		if (!this.settings.outer) {
 			const outer = new Graphics();
 			outer.beginFill(0x000000);
@@ -53,7 +51,7 @@ export class Joystick extends Container {
 		this.inner = this.settings.inner!;
 
 		this.outer.scale.set(this.settings.outerScale!.x, this.settings.outerScale!.y);
-		this.inner.scale.set(this.settings.innerScale!.x, this.settings.innerScale!.y);		
+		this.inner.scale.set(this.settings.innerScale!.x, this.settings.innerScale!.y);
 
 		if ('anchor' in this.outer) { this.outer.anchor.set(0.5); }
 		if ('anchor' in this.inner) { this.inner.anchor.set(0.5); }
@@ -79,8 +77,6 @@ export class Joystick extends Container {
 		function onDragStart(_event: FederatedPointerEvent) {
 			/*startPosition = event.getLocalPosition(that);*/
 			startPosition = new Point(0, 0);
-
-			//console.log(startPosition);
 
 			dragging = true;
 			that.inner.alpha = 1;
@@ -110,15 +106,9 @@ export class Joystick extends Container {
 			let centerPoint = new Point(0, 0);
 			let angle = 0;
 
-			if (sideX == 0 && sideY == 0) { return; }
-
-			//let calRadius = 0;
-			//if (sideX * sideX + sideY * sideY >= that.outerRadius * that.outerRadius) {
-			//	calRadius = that.outerRadius;
-			//}
-			//else {
-			//	calRadius = that.outerRadius - that.innerRadius;
-			//}
+			if (sideX == 0 && sideY == 0) {
+				return;
+			}
 
 			/**
 			 * x:   -1 <-> 1

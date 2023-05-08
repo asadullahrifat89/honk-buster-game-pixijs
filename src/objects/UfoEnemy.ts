@@ -15,6 +15,7 @@ export class UfoEnemy extends VehicleBase {
 		this.scale.set(1);
 		this.alpha = 1;
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
+		this.isHonking = false;
 		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_ENEMY));
 		this.speed = Constants.getRandomNumber(2, 4);
 

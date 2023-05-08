@@ -79,7 +79,7 @@ export class GameOverScene extends Container implements IScene {
 		level.y = (this.uiContainer.height / 2 - level.height / 2) - 20;
 		this.uiContainer.addChild(level);
 
-		//TODO: check unlockables
+		// check unlockables
 
 		// HEALTH_LEVEL_MAX
 		if (Constants.GAME_LEVEL_MAX > 1 && Constants.GAME_LEVEL_MAX > Constants.HEALTH_LEVEL_MAX) {
