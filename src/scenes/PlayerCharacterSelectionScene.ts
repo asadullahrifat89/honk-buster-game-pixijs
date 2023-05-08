@@ -30,8 +30,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 		bg_sprite.x = 0;
 		bg_sprite.y = 0;
 		bg_sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
-		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
-		//bg_sprite.alpha = 0.4;
+		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;		
 		bg_sprite.filters = [new BlurFilter()];
 
 		this.bg_container = new GameObjectContainer();

@@ -11,7 +11,7 @@ export class PlayerRocket extends RocketBase {
 
 	constructor(speed: number) {
 		super(speed);
-	}	
+	}
 
 	setTemplate(playerRocketTemplate: PlayerAirBombTemplate) {
 		this.playerRocketTemplate = playerRocketTemplate;
@@ -38,7 +38,7 @@ export class PlayerRocket extends RocketBase {
 		switch (this.playerRocketTemplate) {
 			case PlayerAirBombTemplate.BALLs: {
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 20; // starts with high speed and slows down
-				SoundManager.play(SoundType.BALL_LAUNCH);
+				SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
 			} break;
 			case PlayerAirBombTemplate.ROCKETs: {
 				this.speed = 0; // starts with slow speed then gets fast
