@@ -1810,7 +1810,7 @@ export class GamePlayScene extends Container implements IScene {
 					if (!this.ufoEnemiesAppeared) {
 						this.ufoEnemiesAppeared = true;
 						this.generateOnScreenMessage("Alien ufos approaching!");
-						
+
 						SoundManager.play(SoundType.UFO_ENEMY_ENTRY);
 						SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.6, true);
 					}
@@ -2262,7 +2262,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(gameObject.getSprite().getTexture());
 
 				this.generateOnScreenMessage("A hotrod has arrived!", this.interactIcon);
-				
+
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -2504,7 +2504,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(ufoBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Cyborg inbound!", this.interactIcon);
-				
+
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -2911,7 +2911,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(zombieBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Zombie inbound!", this.interactIcon);
-				
+
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -3159,7 +3159,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(mafiaBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Godfather inbound.", this.interactIcon);
-				
+
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -3789,11 +3789,10 @@ export class GamePlayScene extends Container implements IScene {
 	private animateOnScreenMessage() {
 
 		if (this.onScreenMessage.isAnimating == true) {
-
 			this.onScreenMessage.depleteOnScreenDelay();
 
 			if (this.onScreenMessage.isDepleted()) {
-				this.onScreenMessage.disableRendering();	
+				this.onScreenMessage.disableRendering();
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿import { Container, Graphics, Text, Texture } from "pixi.js";
 import { Constants } from "../Constants";
+import { GameObjectContainer } from "../core/GameObjectContainer";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 
 
@@ -7,7 +8,7 @@ export class OnScreenMessage {
 
 	public isAnimating: boolean = false;
 
-	private messageContainer: Container;
+	private messageContainer: GameObjectContainer;
 	private messageGraphics: Graphics;
 	private messageAuthor: GameObjectSprite;
 	private messageText: Text;
@@ -15,7 +16,7 @@ export class OnScreenMessage {
 	private readonly messageOnScreenDelayDefault: number = 17;
 
 	constructor(scene: Container) {
-		this.messageContainer = new Container();
+		this.messageContainer = new GameObjectContainer();
 
 		this.messageAuthor = new GameObjectSprite(Texture.from("character_maleAdventurer_talk"));
 		this.messageAuthor.width = 256 / 2.2;
@@ -59,6 +60,7 @@ export class OnScreenMessage {
 	}
 
 	depleteOnScreenDelay() {
+		this.messageContainer.pop();
 		this.messageOnScreenDelay -= 0.1;
 	}
 
@@ -67,6 +69,7 @@ export class OnScreenMessage {
 	}
 
 	setContent(message: string, icon: Texture) {
+		this.messageContainer.setPopping();
 		this.messageText.text = message;
 		this.messageAuthor.setTexture(icon);
 
