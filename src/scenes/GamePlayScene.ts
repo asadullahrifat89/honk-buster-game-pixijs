@@ -78,7 +78,7 @@ export class GamePlayScene extends Container implements IScene {
 	private powerUpBar: HealthBar;
 	private soundPollutionBar: HealthBar;
 
-	private stageColors: number[] = [/*0x1e2a36,*/ 0x4187ab];
+	private stageColors: number[] = [0x1e2a36, 0x4187ab];
 	private stageColor: Graphics;
 
 	private behindBackIcon: Texture;
@@ -104,10 +104,6 @@ export class GamePlayScene extends Container implements IScene {
 		this.cheerIcon = Texture.from("character_maleAdventurer_cheer0");
 		this.talkIcon = Texture.from("character_maleAdventurer_talk");
 		this.interactIcon = Texture.from("character_maleAdventurer_interact");
-
-		// set the selected ride and bomb templates
-		this.playerRideTemplate = Constants.SELECTED_PLAYER_RIDE_TEMPLATE;
-		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
 
 		// set the background color of the scene		
 		let color = this.stageColors[Constants.getRandomNumber(0, this.stageColors.length - 1)];
@@ -178,7 +174,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 
 		// show message in the beginning
-		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
+		switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
 			case PlayerGroundBombTemplate.GRENADE: { this.generateOnScreenMessage("Drop granades on honkers!", this.talkIcon); } break;
 			case PlayerGroundBombTemplate.TRASH_BIN: { this.generateOnScreenMessage("Drop trash bins on honkers!", this.talkIcon); } break;
 			case PlayerGroundBombTemplate.DYNAMITE: { this.generateOnScreenMessage("Drop dynamites on honkers!", this.talkIcon); } break;
@@ -473,203 +469,6 @@ export class GamePlayScene extends Container implements IScene {
 			});
 		}
 	}
-
-	//#endregion
-
-	//#region Trees
-
-	//private treeXyAdjustment: number = 90;
-
-	//private treeSizeWidth: number = 340;
-	//private treeSizeHeight: number = 340;
-
-	//private treeTopGameObjects: Array<GameObjectContainer> = [];
-	//private treeBottomGameObjects: Array<GameObjectContainer> = [];
-
-	//private treePopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	//private treePopDelayTop: number = 17.5;
-	//private treePopDelayBottom: number = 16;
-
-	//private spawnTreesTop() {
-
-	//	for (let j = 0; j < 3; j++) {
-
-	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-	//		gameObject.disableRendering();
-
-	//		for (let i = 0; i < 5; i++) {
-
-	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
-
-	//			sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
-	//			sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
-	//			sprite.width = this.treeSizeWidth;
-	//			sprite.height = this.treeSizeHeight;
-
-	//			gameObject.addChild(sprite);
-	//		}
-
-	//		this.treeTopGameObjects.push(gameObject);
-	//		this.sceneContainer.addChild(gameObject);
-	//	}
-	//}
-
-	//private spawnTreesBottom() {
-
-	//	for (let j = 0; j < 3; j++) {
-
-	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-	//		gameObject.disableRendering();
-
-	//		for (let i = 0; i < 5; i++) {
-
-	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_TREE));
-
-	//			sprite.x = this.treeSizeWidth * i + (this.treeXyAdjustment * i);
-	//			sprite.y = (this.treeSizeHeight / 2) * i + ((this.treeXyAdjustment / 2) * i);
-	//			sprite.width = this.treeSizeWidth;
-	//			sprite.height = this.treeSizeHeight;
-
-	//			gameObject.addChild(sprite);
-	//		}
-
-	//		this.treeBottomGameObjects.push(gameObject);
-	//		this.sceneContainer.addChild(gameObject);
-	//	}
-	//}
-
-	//private generateTreesTop() {
-	//	this.treePopDelayTop -= 0.1;
-
-	//	if (this.treePopDelayTop < 0) {
-
-	//		var gameObject = this.treeTopGameObjects.find(x => x.isAnimating == false);
-
-	//		if (gameObject) {
-	//			gameObject.setPosition(-1090, gameObject.height * -1);
-	//			gameObject.enableRendering();
-	//			this.treePopDelayTop = this.treePopDelayDefault;
-	//		}
-	//	}
-	//}
-
-	//private generateTreesBottom() {
-	//	this.treePopDelayBottom -= 0.1;
-
-	//	if (this.treePopDelayBottom < 0) {
-
-	//		var gameObject = this.treeBottomGameObjects.find(x => x.isAnimating == false);
-
-	//		if (gameObject) {
-	//			gameObject.setPosition(gameObject.width * -1, -770);
-	//			gameObject.enableRendering();
-	//			this.treePopDelayBottom = this.treePopDelayDefault;
-	//		}
-	//	}
-	//}
-
-	//private animateTreesTop() {
-
-	//	var animatingTrees = this.treeTopGameObjects.filter(x => x.isAnimating == true);
-
-	//	if (animatingTrees) {
-
-	//		animatingTrees.forEach(gameObject => {
-	//			gameObject.moveDownRight();
-
-	//			if (gameObject.x - gameObject.width / 2 > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-	//				gameObject.disableRendering();
-	//			}
-	//		});
-	//	}
-	//}
-
-	//private animateTreesBottom() {
-
-	//	var animatingTrees = this.treeBottomGameObjects.filter(x => x.isAnimating == true);
-
-	//	if (animatingTrees) {
-
-	//		animatingTrees.forEach(gameObject => {
-	//			gameObject.moveDownRight();
-
-	//			if (gameObject.x - gameObject.width / 2 > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height / 2 > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-	//				gameObject.disableRendering();
-	//			}
-	//		});
-	//	}
-	//}
-
-	//#endregion
-
-	//#region Lamps
-
-	//private lampXyAdjustment: number = 197;
-
-	//private lampSizeWidth: number = 750;
-	//private lampSizeHeight: number = 750;
-
-	//private lampTopGameObjects: Array<GameObjectContainer> = [];
-
-	//private lampPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	//private lampPopDelayTop: number = 7;
-
-	//private spawnLampsTop() {
-
-	//	for (let j = 0; j < 5; j++) {
-
-	//		const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
-	//		gameObject.disableRendering();
-
-	//		for (let i = 0; i < 5; i++) {
-
-	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_LAMP));
-
-	//			sprite.x = (this.lampSizeWidth * i - (this.lampXyAdjustment * i));
-	//			sprite.y = ((this.lampSizeWidth / 2) * i - ((this.lampXyAdjustment / 2) * i));
-	//			sprite.width = this.lampSizeWidth;
-	//			sprite.height = this.lampSizeHeight;
-
-	//			gameObject.addChild(sprite);
-	//		}
-
-	//		this.lampTopGameObjects.push(gameObject);
-	//		this.sceneContainer.addChild(gameObject);
-	//	}
-	//}
-
-	//private generateLampsTop() {
-
-	//	this.lampPopDelayTop -= 0.1;
-
-	//	if (this.lampPopDelayTop < 0) {
-
-	//		var gameObject = this.lampTopGameObjects.find(x => x.isAnimating == false);
-
-	//		if (gameObject) {
-	//			gameObject.setPosition((gameObject.width * -1), (gameObject.height * -1) - 280);
-	//			gameObject.enableRendering();
-	//			this.lampPopDelayTop = this.lampPopDelayDefault;
-	//		}
-	//	}
-	//}
-
-	//private animateLampsTop() {
-
-	//	var animatingLamps = this.lampTopGameObjects.filter(x => x.isAnimating == true);
-
-	//	if (animatingLamps) {
-
-	//		animatingLamps.forEach(gameObject => {
-	//			gameObject.moveDownRight();
-
-	//			if (gameObject.x > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-	//				gameObject.disableRendering();
-
-	//			}
-	//		});
-	//	}
-	//}
 
 	//#endregion
 
@@ -1248,8 +1047,6 @@ export class GamePlayScene extends Container implements IScene {
 	private playerRideSizeWidth: number = 512;
 	private playerRideSizeHeight: number = 512;
 
-	private playerRideTemplate: number = 0;
-
 	private player: PlayerRide = new PlayerRide();
 
 	spawnPlayerBalloon() {
@@ -1257,7 +1054,7 @@ export class GamePlayScene extends Container implements IScene {
 		sprite.x = 0;
 		sprite.y = 0;
 
-		switch (this.playerRideTemplate) {
+		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
 			case PlayerRideTemplate.AIR_BALLOON: {
 				sprite.width = this.playerRideSizeWidth / 3;
 				sprite.height = this.playerRideSizeHeight / 3;
@@ -1272,7 +1069,7 @@ export class GamePlayScene extends Container implements IScene {
 		sprite.anchor.set(0.5, 0.5);
 		this.player.addChild(sprite);
 
-		this.player.setPlayerRideTemplate(this.playerRideTemplate);
+		this.player.setPlayerRideTemplate(Constants.SELECTED_PLAYER_RIDE_TEMPLATE);
 		this.player.disableRendering();
 
 		this.sceneContainer.addChild(this.player);
@@ -1289,7 +1086,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.player.pop();
 		this.player.hover();
 
-		if (this.playerRideTemplate == PlayerRideTemplate.AIR_BALLOON) {
+		if (Constants.SELECTED_PLAYER_RIDE_TEMPLATE == PlayerRideTemplate.AIR_BALLOON) {
 			this.player.dillyDally();
 		}
 
@@ -1358,11 +1155,10 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerGroundBombs
 
-	private playerGroundBombSizeWidth: number = 60;
-	private playerGroundBombSizeHeight: number = 60;
+	private playerGroundBombSizeWidth: number = 65;
+	private playerGroundBombSizeHeight: number = 65;
 
 	private playerGroundBombGameObjects: Array<PlayerGroundBomb> = [];
-	private playerHonkBusterTemplate: number = 0;
 
 	private readonly playerAmmoBeltSize: number = 3 + Constants.ATTACK_LEVEL_MAX;
 
@@ -1382,7 +1178,7 @@ export class GamePlayScene extends Container implements IScene {
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
-			gameObject.setTemplate(this.playerHonkBusterTemplate);
+			gameObject.setTemplate(Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE);
 
 			this.playerGroundBombGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
@@ -1607,18 +1403,18 @@ export class GamePlayScene extends Container implements IScene {
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
-			switch (this.playerRideTemplate) {
-				case PlayerRideTemplate.AIR_BALLOON: {
+			switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
+				case PlayerAirBombTemplate.BALLs: {
 					sprite.width = this.playerRocketSizeWidth / 1.5;
 					sprite.height = this.playerRocketSizeHeight / 1.5;
 
-					gameObject.setTemplate(PlayerAirBombTemplate.BALL);
+					gameObject.setTemplate(PlayerAirBombTemplate.BALLs);
 				} break;
-				case PlayerRideTemplate.CHOPPER: {
+				case PlayerAirBombTemplate.ROCKETs: {
 					sprite.width = this.playerRocketSizeWidth;
 					sprite.height = this.playerRocketSizeHeight;
 
-					gameObject.setTemplate(PlayerAirBombTemplate.ROCKET);
+					gameObject.setTemplate(PlayerAirBombTemplate.ROCKETs);
 				} break;
 				default: break;
 			}
@@ -2014,7 +1810,7 @@ export class GamePlayScene extends Container implements IScene {
 					if (!this.ufoEnemiesAppeared) {
 						this.ufoEnemiesAppeared = true;
 						this.generateOnScreenMessage("Alien ufos approaching!");
-						this.setOnScreenMessageFilter();
+
 						SoundManager.play(SoundType.UFO_ENEMY_ENTRY);
 						SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.6, true);
 					}
@@ -2189,8 +1985,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region VehicleEnemys	
 
-	private vehicleEnemySizeWidth: number = 260;
-	private vehicleEnemySizeHeight: number = 260;
+	private vehicleEnemySizeWidth: number = 250;
+	private vehicleEnemySizeHeight: number = 250;
 
 	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
 
@@ -2301,6 +2097,10 @@ export class GamePlayScene extends Container implements IScene {
 				if (this.anyInAirBossExists()) { // when in air bosses appear, stop the stage transition, and make the vehicles move forward
 					gameObject.moveUpLeft();
 					gameObject.moveUpLeft(); // move with double speed
+				}
+				else if (this.vehicleBossExists()) {
+					gameObject.moveDownRight();
+					gameObject.moveDownRight(); // move with double speed
 				}
 				else {
 					gameObject.moveDownRight();
@@ -2462,7 +2262,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(gameObject.getSprite().getTexture());
 
 				this.generateOnScreenMessage("A hotrod has arrived!", this.interactIcon);
-				this.setOnScreenMessageFilter();
+
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -2704,7 +2504,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(ufoBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Cyborg inbound!", this.interactIcon);
-				this.setOnScreenMessageFilter();
+
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -3111,7 +2911,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(zombieBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Zombie inbound!", this.interactIcon);
-				this.setOnScreenMessageFilter();
+
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -3359,7 +3159,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(mafiaBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Godfather inbound.", this.interactIcon);
-				this.setOnScreenMessageFilter();
+
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -3972,7 +3772,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region OnScreenMessage
 
-	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("./images/character_maleAdventurer_talk.png")) {
+	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("character_maleAdventurer_talk")) {
 		if (this.onScreenMessage.isAnimating == false) {
 			this.onScreenMessage.setContent(title, icon);
 			this.onScreenMessage.reset();
@@ -3989,24 +3789,12 @@ export class GamePlayScene extends Container implements IScene {
 	private animateOnScreenMessage() {
 
 		if (this.onScreenMessage.isAnimating == true) {
-
 			this.onScreenMessage.depleteOnScreenDelay();
 
 			if (this.onScreenMessage.isDepleted()) {
 				this.onScreenMessage.disableRendering();
-				this.unSetOnScreenMessageFilter();
 			}
 		}
-	}
-
-	private setOnScreenMessageFilter() {
-		//this.sceneContainer.filters = [new GrayscaleFilter()];
-	}
-
-	private unSetOnScreenMessageFilter() {
-		//if (this.sceneContainer.filters) {
-		//	this.sceneContainer.filters = null;
-		//}
 	}
 
 	//#endregion

@@ -1,8 +1,9 @@
 ﻿import { GrayscaleFilter } from "@pixi/filter-grayscale";
-import { Container, Text, BlurFilter } from "pixi.js";
+import { Container, Text, BlurFilter, Texture } from "pixi.js";
 import { Constants, ConstructType, SoundType } from "../Constants";
 import { Button } from "../controls/Button";
 import { MessageBubble } from "../controls/MessageBubble";
+import { OnScreenMessage } from "../controls/OnScreenMessage";
 import { GameObjectContainer } from "../core/GameObjectContainer";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { IScene } from "../managers/IScene";
@@ -18,6 +19,8 @@ export class GameOverScene extends Container implements IScene {
 	private uiContainer: GameObjectContainer;
 	private health: GameObjectContainer;
 	private attack: GameObjectContainer;
+
+	private onScreenMessage: OnScreenMessage;
 
 	constructor() {
 		super();
@@ -155,10 +158,13 @@ export class GameOverScene extends Container implements IScene {
 		this.uiContainer.addChild(button);
 
 		SoundManager.play(SoundType.GAME_OVER);
+
+		// set the on screen message layer
+		this.onScreenMessage = new OnScreenMessage(this);
 	}
 
 	private unlockablePopDelay = 5;
-	private readonly unlockablePopDelayDefault = 5;
+	private readonly unlockablePopDelayDefault = 7;
 
 	public update(_framesPassed: number) {
 
@@ -177,6 +183,7 @@ export class GameOverScene extends Container implements IScene {
 					if (!this.health.isAwaitingPop) {
 						this.unlockablePopDelay = this.unlockablePopDelayDefault;
 						SoundManager.play(SoundType.LEVEL_UP);
+						this.generateOnScreenMessage("Extra Health Unlocked!");
 					}
 				}
 				else if (this.attack.isAwaitingPop) {
@@ -188,10 +195,13 @@ export class GameOverScene extends Container implements IScene {
 					if (!this.attack.isAwaitingPop) {
 						this.unlockablePopDelay = this.unlockablePopDelayDefault;
 						SoundManager.play(SoundType.LEVEL_UP);
+						this.generateOnScreenMessage("Extra Bombs Unlocked!");
 					}
 				}
 			}
 		}
+
+		this.animateOnScreenMessage();
 	}
 
 	public resize(scale: number): void {
@@ -203,6 +213,32 @@ export class GameOverScene extends Container implements IScene {
 		else {
 			this.uiContainer.scale.set(scale);
 			this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
+		}
+	}
+
+	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("character_maleAdventurer_cheer0")) {
+		if (this.onScreenMessage.isAnimating == false) {
+			this.onScreenMessage.setContent(title, icon);
+			this.onScreenMessage.reset();
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+			this.onScreenMessage.enableRendering();
+		}
+		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
+			this.onScreenMessage.setContent(title, icon);
+			this.onScreenMessage.reset();
+			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+		}
+	}
+
+	private animateOnScreenMessage() {
+
+		if (this.onScreenMessage.isAnimating == true) {
+
+			this.onScreenMessage.depleteOnScreenDelay();
+
+			if (this.onScreenMessage.isDepleted()) {
+				this.onScreenMessage.disableRendering();
+			}
 		}
 	}
 }

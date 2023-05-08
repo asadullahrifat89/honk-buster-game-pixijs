@@ -11,8 +11,7 @@ export enum ExplosionType {
 	FLASH_EXPLOSION,
 }
 
-export enum PowerUpType {
-	//SEEKING_SNITCH,
+export enum PowerUpType {	
 	ARMOR,
 	HURLING_BALLS,
 }
@@ -78,8 +77,8 @@ export enum PlayerGroundBombTemplate {
 }
 
 export enum PlayerAirBombTemplate {
-	BALL,
-	ROCKET,
+	BALLs,
+	ROCKETs,
 }
 
 export enum ConstructType {
@@ -221,7 +220,8 @@ export abstract class Constants {
 
 	public static SELECTED_PLAYER_CHARACTER_TEMPLATE: number = 0;
 	public static SELECTED_PLAYER_RIDE_TEMPLATE: number = 0;
-	public static SELECTED_HONK_BUSTER_TEMPLATE: number = 0;
+	public static SELECTED_PLAYER_GROUND_BOMB_TEMPLATE: number = 0;
+	public static SELECTED_PLAYER_AIR_BOMB_TEMPLATE: number = 0;
 
 	public static MESSAGE_BOX_BORDER_COLOR: number = 0x000000;
 	public static MESSAGE_BOX_TEXT_COLOR: string = "#000000";
@@ -236,6 +236,8 @@ export abstract class Constants {
 	public static ATTACK_LEVEL_MAX: number = 0;
 
 	public static CHOPPER_UNLOCK_LEVEL: number = 5;
+
+	public static MISSILE_UNLOCK_LEVEL: number = 3;
 
 	public static TRASH_BIN_UNLOCK_LEVEL: number = 3;
 	public static DYNAMITE_UNLOCK_LEVEL: number = 7;
@@ -316,12 +318,12 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, this.imagessDirectory + "player_honk_bomb_trash_1_open.png"),
 		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, this.imagessDirectory + "player_honk_bomb_trash_2_open.png"),
 
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_ball_1.png", PlayerAirBombTemplate.BALL),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_ball_2.png", PlayerAirBombTemplate.BALL),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_ball_1.png", PlayerAirBombTemplate.BALLs),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_ball_2.png", PlayerAirBombTemplate.BALLs),
 
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_1.png", PlayerAirBombTemplate.ROCKET),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_2.png", PlayerAirBombTemplate.ROCKET),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_3.png", PlayerAirBombTemplate.ROCKET),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_1.png", PlayerAirBombTemplate.ROCKETs),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_2.png", PlayerAirBombTemplate.ROCKETs),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_3.png", PlayerAirBombTemplate.ROCKETs),
 
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET_HURLING_BALLS, this.imagessDirectory + "player_rocket_bulls_eye_1.png"),
 

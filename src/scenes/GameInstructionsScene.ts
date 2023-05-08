@@ -79,9 +79,9 @@ export class GameInstructionsScene extends Container implements IScene {
 		player_ride_msg_2.setPosition(player_ride_msg.x, player_ride_msg.y + msg_line_2_gap);
 		player_ride.addChild(player_ride_msg_2);
 
-		const player_ride_msg_3 = new MessageBubble(0, "They also shoot unique air bombs.", 20);
-		player_ride_msg_3.setPosition(player_ride_msg_2.x, player_ride_msg_2.y + msg_line_2_gap);
-		player_ride.addChild(player_ride_msg_3);
+		//const player_ride_msg_3 = new MessageBubble(0, "They also shoot unique air bombs.", 20);
+		//player_ride_msg_3.setPosition(player_ride_msg_2.x, player_ride_msg_2.y + msg_line_2_gap);
+		//player_ride.addChild(player_ride_msg_3);
 
 		player_ride.setPosition(this.uiContainer.width / 2 - player_ride.width / 2, (this.uiContainer.height / 2 - player_ride.height / 2) + 10);
 		this.uiContainer.addChild(player_ride);
@@ -144,8 +144,8 @@ export class GameInstructionsScene extends Container implements IScene {
 		this.uiContainer.addChild(attack_button);
 
 		// honk_bomb
-		const honk_bomb = new GameObjectContainer();
-		honk_bomb.renderable = false;
+		const ground_bomb = new GameObjectContainer();
+		ground_bomb.renderable = false;
 
 		const drop_bomb_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_explosive_1"));
 		drop_bomb_sprite.width = 256 / 2;
@@ -162,14 +162,14 @@ export class GameInstructionsScene extends Container implements IScene {
 		const honk_bomb_container = new GameObjectContainer();
 		honk_bomb_container.addChild(drop_bomb_sprite);
 		honk_bomb_container.addChild(drop_bomb_sprite_2);
-		honk_bomb.addChild(honk_bomb_container);
+		ground_bomb.addChild(honk_bomb_container);
 
 		const honk_bomb_msg = new MessageBubble(0, "These are your ground bombs.", 20);
 		honk_bomb_msg.setPosition(honk_bomb_container.x + honk_bomb_container.width + 10, honk_bomb_container.y + 25);
-		honk_bomb.addChild(honk_bomb_msg);
+		ground_bomb.addChild(honk_bomb_msg);
 
-		honk_bomb.setPosition(this.uiContainer.width / 2 - honk_bomb.width / 2, (this.uiContainer.height / 2 - honk_bomb.height / 2) + 10);
-		this.uiContainer.addChild(honk_bomb);
+		ground_bomb.setPosition(this.uiContainer.width / 2 - ground_bomb.width / 2, (this.uiContainer.height / 2 - ground_bomb.height / 2) + 10);
+		this.uiContainer.addChild(ground_bomb);
 
 		// car
 		const car = new GameObjectContainer();
@@ -193,8 +193,8 @@ export class GameInstructionsScene extends Container implements IScene {
 		this.uiContainer.addChild(car);
 
 		// player_rocket
-		const player_rocket = new GameObjectContainer();
-		player_rocket.renderable = false;
+		const air_bomb = new GameObjectContainer();
+		air_bomb.renderable = false;
 
 		const air_bomb_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_rocket_1"));
 		air_bomb_sprite.width = 256 / 2;
@@ -213,14 +213,14 @@ export class GameInstructionsScene extends Container implements IScene {
 		const player_rocket_container = new GameObjectContainer();
 		player_rocket_container.addChild(air_bomb_sprite);
 		player_rocket_container.addChild(air_bomb_sprite_2);
-		player_rocket.addChild(player_rocket_container);
+		air_bomb.addChild(player_rocket_container);
 
 		const player_rocket_msg = new MessageBubble(0, "These are your air bombs.", 20);
 		player_rocket_msg.setPosition(player_rocket_container.x + player_rocket_container.width + 10, player_rocket_container.y + 25);
-		player_rocket.addChild(player_rocket_msg);
+		air_bomb.addChild(player_rocket_msg);
 
-		player_rocket.setPosition(this.uiContainer.width / 2 - player_rocket.width / 2, (this.uiContainer.height / 2 - player_rocket.height / 2) + 10);
-		this.uiContainer.addChild(player_rocket);
+		air_bomb.setPosition(this.uiContainer.width / 2 - air_bomb.width / 2, (this.uiContainer.height / 2 - air_bomb.height / 2) + 10);
+		this.uiContainer.addChild(air_bomb);
 
 		// ufo
 		const ufo = new GameObjectContainer();
@@ -443,7 +443,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		boss_health_bar_msg.setPosition(boss_health_bar_container.x + boss_health_bar_container.width + 10, boss_health_bar_container.y + 25);
 		boss_health_bar.addChild(boss_health_bar_msg);
 
-		const boss_health_bar_msg_2 = new MessageBubble(0, "Defeat a boss to complete a level.", 20);
+		const boss_health_bar_msg_2 = new MessageBubble(0, "Defeat bosses to gain levels.", 20);
 		boss_health_bar_msg_2.setPosition(boss_health_bar_msg.x, boss_health_bar_msg.y + msg_line_2_gap);
 		boss_health_bar.addChild(boss_health_bar_msg_2);
 
@@ -485,6 +485,10 @@ export class GameInstructionsScene extends Container implements IScene {
 		level_msg.setPosition(level_container.x + level_container.width + 10, level_container.y + 25);
 		level.addChild(level_msg);
 
+		const level_msg_2 = new MessageBubble(0, "Gaining levels unlock rides, boosts 'n bombs.", 20);
+		level_msg_2.setPosition(level_msg.x, level_msg.y + msg_line_2_gap);
+		level.addChild(level_msg_2);
+
 		level.setPosition(this.uiContainer.width / 2 - level.width / 2, (this.uiContainer.height / 2 - level.height / 2) + 10);
 		this.uiContainer.addChild(level);
 
@@ -518,22 +522,21 @@ export class GameInstructionsScene extends Container implements IScene {
 			}
 			else if (attack_button.renderable) {
 				attack_button.renderable = false;
-				honk_bomb.renderable = true;
-				title.text = "Armaments";
+				ground_bomb.renderable = true;
+				title.text = "Bombs";
 			}
-			else if (honk_bomb.renderable) {
-				honk_bomb.renderable = false;
-				player_rocket.renderable = true;
-			}
-			else if (player_rocket.renderable) {
-				player_rocket.renderable = false;
+			else if (ground_bomb.renderable) {
+				ground_bomb.renderable = false;
 				car.renderable = true;
-				title.text = "Enemies";
 			}
 			else if (car.renderable) {
 				car.renderable = false;
-				ufo.renderable = true;
+				air_bomb.renderable = true;
 			}
+			else if (air_bomb.renderable) {
+				air_bomb.renderable = false;
+				ufo.renderable = true;				
+			}		
 			else if (ufo.renderable) {
 				ufo.renderable = false;
 				health.renderable = true;
@@ -572,11 +575,12 @@ export class GameInstructionsScene extends Container implements IScene {
 			else if (boss_health_bar.renderable) {
 				boss_health_bar.renderable = false;
 				score.renderable = true;
-				title.text = "Information";
+				title.text = "Score";
 			}
 			else if (score.renderable) {
 				score.renderable = false;
 				level.renderable = true;
+				title.text = "Level";
 			}
 			else if (level.renderable) {
 				title.text = "You're Done";

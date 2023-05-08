@@ -69,14 +69,14 @@ export class GameTitleScene extends Container implements IScene {
 		howToPlayButtonButton.setPosition(this.uiContainer.width / 2 - howToPlayButtonButton.width / 2, (this.uiContainer.height / 2 - howToPlayButtonButton.height / 2));
 		this.uiContainer.addChild(howToPlayButtonButton);
 
-		// new game button
+		// play button
 		const newGameButton = new Button(() => {
 
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.uiContainer);
 			SceneManager.changeScene(new PlayerCharacterSelectionScene());			
 
-		}).setText("New Game");
+		}).setText("Play");
 		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, (this.uiContainer.height / 2 - newGameButton.height / 2) + 65);
 		this.uiContainer.addChild(newGameButton);
 

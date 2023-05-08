@@ -1,4 +1,5 @@
 ﻿import { BlurFilter, Container, Text, Texture } from "pixi.js";
+import { PlayerGroundBombSelectionScene } from "./PlayerGroundBombSelectionScene";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -9,10 +10,9 @@ import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
 import { GrayscaleFilter } from "@pixi/filter-grayscale";
 import { MessageBubble } from "../controls/MessageBubble";
-import { PlayerAirBombSelectionScene } from "./PlayerAirBombSelectionScene";
 
 
-export class PlayerRideSelectionScene extends Container implements IScene {
+export class PlayerAirBombSelectionScene extends Container implements IScene {
 
 	private uiContainer: GameObjectContainer;
 	private bg_container: GameObjectContainer;
@@ -39,7 +39,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 
 		this.uiContainer.addChild(this.bg_container);
 
-		const title = new Text("Choose a Ride", {
+		const title = new Text("Select an Air Bomb", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 35,
 			align: "center",
@@ -49,55 +49,55 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
-		// air balloon
-		const air_balloon_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_1"));
-		air_balloon_sprite.width = 256 / 2;
-		air_balloon_sprite.height = 256 / 2;
-		air_balloon_sprite.x = 0;
-		air_balloon_sprite.y = 0;
-		const air_balloon_button = new Button(() => {
+		// gravity_balls
+		const gravity_balls_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ball_2"));
+		gravity_balls_sprite.width = 256 / 2.5;
+		gravity_balls_sprite.height = 256 / 2.5;
+		gravity_balls_sprite.x = 0;
+		gravity_balls_sprite.y = 0;
+		const gravity_balls_button = new Button(() => {
 
-			button.setText("Air Balloon").setIsEnabled(true);
+			button.setText("Baseballs").setIsEnabled(true);
 			SoundManager.play(SoundType.OPTION_SELECT);
-			chopper_sprite.filters = [new GrayscaleFilter()];
-			air_balloon_sprite.filters = null;
-			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 0;
+			missiles_sprite.filters = [new GrayscaleFilter()];
+			gravity_balls_sprite.filters = null;
+			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = 0;
 
-		}).setBackground(air_balloon_sprite);
-		air_balloon_button.setPosition((this.uiContainer.width / 2 - air_balloon_sprite.width * 2) + 45, this.uiContainer.height / 2 - air_balloon_sprite.height / 2 + 10);
-		this.uiContainer.addChild(air_balloon_button);
+		}).setBackground(gravity_balls_sprite);
+		gravity_balls_button.setPosition((this.uiContainer.width / 2 - gravity_balls_sprite.width * 2) + 45, (this.uiContainer.height / 2 - gravity_balls_sprite.height / 2) + 10);
+		this.uiContainer.addChild(gravity_balls_button);
 
-		const air_balloon_msg = new MessageBubble(0, "Lvl " + 1, 20);
-		air_balloon_msg.setPosition(air_balloon_button.x + air_balloon_button.width / 2, air_balloon_button.y + air_balloon_button.height / 2);
-		this.uiContainer.addChild(air_balloon_msg);
+		const gravity_balls_msg = new MessageBubble(0, "Lvl " + 1, 20);
+		gravity_balls_msg.setPosition(gravity_balls_button.x + gravity_balls_button.width / 2, gravity_balls_button.y + gravity_balls_button.height / 2);
+		this.uiContainer.addChild(gravity_balls_msg);
 
-		// chopper
-		const chopper_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_2"));
-		chopper_sprite.width = 256 / 2;
-		chopper_sprite.height = 256 / 2;
-		chopper_sprite.x = 0;
-		chopper_sprite.y = 0;
-		const chopper_button = new Button(() => {
+		// missiles
+		const missiles_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_rocket_1"));
+		missiles_sprite.width = 256 / 2;
+		missiles_sprite.height = 256 / 2;
+		missiles_sprite.x = 0;
+		missiles_sprite.y = 0;
+		const missiles_button = new Button(() => {
 
-			button.setText("Chopper").setIsEnabled(true);
+			button.setText("Missiles").setIsEnabled(true);
 			SoundManager.play(SoundType.OPTION_SELECT);
-			air_balloon_sprite.filters = [new GrayscaleFilter()];
-			chopper_sprite.filters = null;
-			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 1;
+			gravity_balls_sprite.filters = [new GrayscaleFilter()];
+			missiles_sprite.filters = null;
+			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = 1;
 
-		}).setBackground(chopper_sprite);
-		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_sprite.width / 2) + 100, this.uiContainer.height / 2 - chopper_sprite.height / 2 + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL);
-		this.uiContainer.addChild(chopper_button);
+		}).setBackground(missiles_sprite);
+		missiles_button.setPosition((this.uiContainer.width / 2 - missiles_sprite.width / 2) + 100, (this.uiContainer.height / 2 - missiles_sprite.height / 2) + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL);
+		this.uiContainer.addChild(missiles_button);
 
-		const chopper_msg = new MessageBubble(0, "Lvl " + Constants.CHOPPER_UNLOCK_LEVEL, 20);
-		chopper_msg.setPosition(chopper_button.x + chopper_button.width / 2, chopper_button.y + chopper_button.height / 2);
-		this.uiContainer.addChild(chopper_msg);
+		const missiles_msg = new MessageBubble(0, "Lvl " + Constants.MISSILE_UNLOCK_LEVEL, 20);
+		missiles_msg.setPosition(missiles_button.x + missiles_button.width / 2, missiles_button.y + missiles_button.height / 2);
+		this.uiContainer.addChild(missiles_msg);
 
 		const button = new Button(() => {
 			if (button.getIsEnabled()) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
-				SceneManager.changeScene(new PlayerAirBombSelectionScene());
+				SceneManager.changeScene(new PlayerGroundBombSelectionScene());
 			}
 			else {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
@@ -124,4 +124,3 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		}
 	}
 }
-
