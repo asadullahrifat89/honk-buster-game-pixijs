@@ -73,6 +73,7 @@ export class OnScreenMessage {
 		this.messageText.text = message;
 		this.messageAuthor.setTexture(icon);
 
+		this.messageGraphics.destroy();
 		this.messageContainer.removeChild(this.messageGraphics);
 		this.messageGraphics = this.drawMessageGraphics();
 		this.messageGraphics.x = this.messageAuthor.width / 1.8;
