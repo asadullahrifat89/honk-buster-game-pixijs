@@ -10,18 +10,6 @@ export class GameScoreBar {
 	private prefix: string = "";
 
 	constructor(scene: Container, prefix: string = "", score: number = 0) {
-		//BitmapFont.from(GAME_DEFAULT_FONT, {
-		//	fill: "#2f3a5a",
-		//	fontFamily: Constants.GAME_DEFAULT_FONT,
-		//	fontSize: 26,
-		//	align: "center",
-		//});
-
-		//this.scoreText = new BitmapText("o", {
-		//	fontName: GAME_DEFAULT_FONT,
-		//	fontSize: 26,
-		//	align: "center",
-		//});
 
 		this.prefix = prefix;
 		this.score = score;
@@ -31,7 +19,7 @@ export class GameScoreBar {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: Constants.MESSAGE_BOX_TEXT_COLOR,
-			fontSize: 25,
+			fontSize: 20,
 		});
 		this.scoreText.x = 10;
 		this.scoreText.y = 5;

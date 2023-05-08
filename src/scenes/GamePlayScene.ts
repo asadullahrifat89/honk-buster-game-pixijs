@@ -3945,11 +3945,11 @@ export class GamePlayScene extends Container implements IScene {
 	//#region ScoreBars
 
 	private repositionGameScoreBar() {
-		this.gameScoreBar.reposition(/*SceneManager.width / 2*/10, 10);
+		this.gameScoreBar.reposition(10, 10);
 	}
 
 	private repositionGameLevelBar() {
-		this.gameLevelBar.reposition(/*(SceneManager.width / 2) - 120*/10, 55);
+		this.gameLevelBar.reposition(10, 45);
 	}
 
 	//#endregion
