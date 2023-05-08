@@ -8,6 +8,55 @@ export class SeekingRocketBase extends GameObjectContainer {
 	private readonly lag: number = 50;
 	public directTarget: Rectangle = new Rectangle();
 
+	follow(target: Rectangle) {
+
+		let left = this.getLeft();
+		let top = this.getTop();
+
+		let targetX = target.x + target.width / 2;
+		let targetY = target.y + target.height / 2;
+
+		let rocketX = left + this.width / 2;
+		let rocketY = top + this.height / 2;		
+
+		// move up
+		if (targetY < rocketY - this.grace) {
+			var distance = Math.abs(targetY - rocketY);
+			let speed = this.getFollowingSpeed(distance);
+
+			this.y = (top - speed);
+		}
+
+		// move down
+		if (targetY > rocketY + this.grace) {
+			var distance = Math.abs(targetY - rocketY);
+			let speed = this.getFollowingSpeed(distance);
+
+			this.y = (top + speed);
+		}
+
+		// move left
+		if (targetX < rocketX - this.grace) {
+			var distance = Math.abs(targetX - rocketX);
+			let speed = this.getFollowingSpeed(distance);
+
+			this.x = (left - speed);
+		}
+
+		// move right
+		if (targetX > rocketX + this.grace) {
+			var distance = Math.abs(targetX - rocketX);
+			let speed = this.getFollowingSpeed(distance);
+
+			this.x = (left + speed);
+		}
+	}
+
+	private getFollowingSpeed(distance: number): number {
+		var speed = distance / this.lag;
+		return speed;
+	}
+
 	setDirectTarget(target: Rectangle) {
 
 		let rocketX = this.getLeft() + this.width / 2;
@@ -55,65 +104,16 @@ export class SeekingRocketBase extends GameObjectContainer {
 		}
 	}
 
-	follow(target: Rectangle) {
-
-		let left = this.getLeft();
-		let top = this.getTop();
-
-		let rocketX = left + this.width / 2;
-		let rocketY = top + this.height / 2;
-
-		let targetX = target.x + target.width / 2;
-		let targetY = target.y + target.height / 2;
-
-		// move up
-		if (targetY < rocketY - this.grace) {
-			var distance = Math.abs(targetY - rocketY);
-			let speed = this.getFollowingSpeed(distance);
-
-			this.y = (top - speed);
-		}
-
-		// move down
-		if (targetY > rocketY + this.grace) {
-			var distance = Math.abs(targetY - rocketY);
-			let speed = this.getFollowingSpeed(distance);
-
-			this.y = (top + speed);
-		}
-
-		// move left
-		if (targetX < rocketX - this.grace) {
-			var distance = Math.abs(targetX - rocketX);
-			let speed = this.getFollowingSpeed(distance);
-
-			this.x = (left - speed);
-		}
-
-		// move right
-		if (targetX > rocketX + this.grace) {
-			var distance = Math.abs(targetX - rocketX);
-			let speed = this.getFollowingSpeed(distance);
-
-			this.x = (left + speed);
-		}
-	}
-
-	private getFollowingSpeed(distance: number): number {
-		var speed = distance / this.lag;
-		return speed;
-	}
-
 	direct(target: Rectangle) {
 
 		let left = this.getLeft();
 		let top = this.getTop();
 
-		let rocketX = left + this.width / 2;
-		let rocketY = top + this.height / 2;
-
 		let targetX = target.x + target.width / 2;
 		let targetY = target.y + target.height / 2;
+
+		let rocketX = left + this.width / 2;
+		let rocketY = top + this.height / 2;
 
 		// move up
 		if (targetY < rocketY - this.grace) {

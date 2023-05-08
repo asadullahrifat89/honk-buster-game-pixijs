@@ -43,11 +43,11 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Properties
 
+	private sceneContainer: GameObjectContainer;
+
 	private gameController: GameController;
 	private gameScoreBar: GameScoreBar;
-	private gameLevelBar: GameScoreBar;
-
-	private sceneContainer: GameObjectContainer;
+	private gameLevelBar: GameScoreBar;	
 
 	private onScreenMessage: OnScreenMessage;
 
@@ -60,7 +60,7 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly ufoEnemyReleaseLimit: number = 15;
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
-	private readonly ufoBossReleasePoint: number = 50; // 50
+	private readonly ufoBossReleasePoint: number = 5; // 50
 	private readonly ufoBossReleaseLimit: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
 
@@ -1358,8 +1358,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerGroundBombs
 
-	private playerGroundBombSizeWidth: number = 55;
-	private playerGroundBombSizeHeight: number = 55;
+	private playerGroundBombSizeWidth: number = 60;
+	private playerGroundBombSizeHeight: number = 60;
 
 	private playerGroundBombGameObjects: Array<PlayerGroundBomb> = [];
 	private playerHonkBusterTemplate: number = 0;
@@ -2947,8 +2947,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region UfoBossRocketSeekings
 
-	private ufoBossRocketSeekingSizeWidth: number = 90;
-	private ufoBossRocketSeekingSizeHeight: number = 90;
+	private ufoBossRocketSeekingSizeWidth: number = 75;
+	private ufoBossRocketSeekingSizeHeight: number = 75;
 
 	private ufoBossRocketSeekingGameObjects: Array<UfoBossRocketSeeking> = [];
 
@@ -3048,7 +3048,7 @@ export class GamePlayScene extends Container implements IScene {
 					}
 				}
 
-				if (ufoBossRocketSeeking.hasFaded() || ufoBossRocketSeeking.x > Constants.DEFAULT_GAME_VIEW_WIDTH || ufoBossRocketSeeking.getRight() < 0 || ufoBossRocketSeeking.getBottom() < 0 || ufoBossRocketSeeking.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (ufoBossRocketSeeking.hasFaded() /*|| ufoBossRocketSeeking.x > Constants.DEFAULT_GAME_VIEW_WIDTH || ufoBossRocketSeeking.getRight() < 0 || ufoBossRocketSeeking.getBottom() < 0 || ufoBossRocketSeeking.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
 					ufoBossRocketSeeking.disableRendering();
 				}
 			});
