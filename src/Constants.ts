@@ -270,9 +270,7 @@ export abstract class Constants {
 
 		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_1.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_2.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_3.png"),
-
-		//new ConstructTemplate(ConstructType.ROAD_SIDE_LAMP, this.imagessDirectory + "road_side_lamp_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_3.png"),		
 
 		new ConstructTemplate(ConstructType.CLOUD, this.imagessDirectory + "cloud_1.png"),
 		new ConstructTemplate(ConstructType.CLOUD, this.imagessDirectory + "cloud_2.png"),

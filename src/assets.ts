@@ -99,14 +99,8 @@ export const manifest: ResolverManifest = {
 
 				"road_marks": "./images/road_marks.png",
 
-				//"road_side_lamp_1": "./images/road_side_lamp_1.png",
-
 				"road_side_walk_top_1": "./images/road_side_walk_top_1.png",
 				"road_side_walk_bottom_1": "./images/road_side_walk_bottom_1.png",
-
-				//"tree_1": "./images/tree_1.png",
-				//"tree_2": "./images/tree_2.png",
-				//"tree_3": "./images/tree_3.png",
 
 				"ufo_enemy_1": "./images/ufo_enemy_1.png",
 				"ufo_enemy_2": "./images/ufo_enemy_2.png",
