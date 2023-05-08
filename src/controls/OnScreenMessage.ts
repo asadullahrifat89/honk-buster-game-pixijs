@@ -12,7 +12,7 @@ export class OnScreenMessage {
 	private messageAuthor: GameObjectSprite;
 	private messageText: Text;
 	private messageOnScreenDelay: number = 0;
-	private readonly messageOnScreenDelayDefault: number = 20;
+	private readonly messageOnScreenDelayDefault: number = 17;
 
 	constructor(scene: Container) {
 		this.messageContainer = new Container();

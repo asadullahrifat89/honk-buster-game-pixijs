@@ -1810,7 +1810,7 @@ export class GamePlayScene extends Container implements IScene {
 					if (!this.ufoEnemiesAppeared) {
 						this.ufoEnemiesAppeared = true;
 						this.generateOnScreenMessage("Alien ufos approaching!");
-						this.setOnScreenMessageFilter();
+						
 						SoundManager.play(SoundType.UFO_ENEMY_ENTRY);
 						SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.6, true);
 					}
@@ -2262,7 +2262,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(gameObject.getSprite().getTexture());
 
 				this.generateOnScreenMessage("A hotrod has arrived!", this.interactIcon);
-				this.setOnScreenMessageFilter();
+				
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -2504,7 +2504,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(ufoBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Cyborg inbound!", this.interactIcon);
-				this.setOnScreenMessageFilter();
+				
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -2911,7 +2911,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(zombieBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Zombie inbound!", this.interactIcon);
-				this.setOnScreenMessageFilter();
+				
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -3159,7 +3159,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.bossHealthBar.setIcon(mafiaBoss.getSprite().getTexture());
 
 				this.generateOnScreenMessage("Godfather inbound.", this.interactIcon);
-				this.setOnScreenMessageFilter();
+				
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
@@ -3772,7 +3772,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region OnScreenMessage
 
-	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("./images/character_maleAdventurer_talk.png")) {
+	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("character_maleAdventurer_talk")) {
 		if (this.onScreenMessage.isAnimating == false) {
 			this.onScreenMessage.setContent(title, icon);
 			this.onScreenMessage.reset();
@@ -3793,20 +3793,9 @@ export class GamePlayScene extends Container implements IScene {
 			this.onScreenMessage.depleteOnScreenDelay();
 
 			if (this.onScreenMessage.isDepleted()) {
-				this.onScreenMessage.disableRendering();
-				this.unSetOnScreenMessageFilter();
+				this.onScreenMessage.disableRendering();	
 			}
 		}
-	}
-
-	private setOnScreenMessageFilter() {
-		//this.sceneContainer.filters = [new GrayscaleFilter()];
-	}
-
-	private unSetOnScreenMessageFilter() {
-		//if (this.sceneContainer.filters) {
-		//	this.sceneContainer.filters = null;
-		//}
 	}
 
 	//#endregion
