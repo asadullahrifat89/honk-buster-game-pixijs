@@ -72,14 +72,6 @@ export class UfoBossBase extends GameObjectContainer {
 			this.y = (top - speed);
 		}
 
-		// move left
-		if (targetX < bossX - this.grace) {
-			var distance = Math.abs(targetX - bossX);
-			let speed = this.getFlightSpeed(distance);
-
-			this.x = (left - speed);
-		}
-
 		// move down
 		if (targetY > bossY + this.grace) {
 			var distance = Math.abs(targetY - bossY);
@@ -87,6 +79,14 @@ export class UfoBossBase extends GameObjectContainer {
 
 			this.y = (top + speed);
 		}
+
+		// move left
+		if (targetX < bossX - this.grace) {
+			var distance = Math.abs(targetX - bossX);
+			let speed = this.getFlightSpeed(distance);
+
+			this.x = (left - speed);
+		}		
 
 		// move right
 		if (targetX > bossX + this.grace) {
