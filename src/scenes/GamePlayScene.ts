@@ -3718,10 +3718,9 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	private depletePowerUp() {
-		// use up the power up
+	private depletePowerUp() {		
 		if (this.powerUpBar.hasHealth())
-			this.powerUpBar.setValue(this.powerUpBar.getValue() - 1);
+			this.powerUpBar.setValue(this.powerUpBar.getValue() - 1); // use up the power up			
 	}
 
 	//#endregion
@@ -4052,7 +4051,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private levelUp() {
 		SoundManager.play(SoundType.LEVEL_UP);
-		this.generateOnScreenMessage("Level " + this.gameLevelBar.getScore().toString() + " Complete", this.cheerIcon);
+		this.generateOnScreenMessage("Gained Level " + this.gameLevelBar.getScore().toString(), this.cheerIcon);
 		this.gameLevelBar.gainScore(1);
 	}
 
