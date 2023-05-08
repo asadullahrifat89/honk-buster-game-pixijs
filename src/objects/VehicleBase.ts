@@ -80,13 +80,13 @@ export class VehicleBase extends GameObjectContainer {
 						case 0:
 							{
 								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH + this.width, yLaneHeight + (this.height) + randomY);
-								console.log("x lane 0");
+								//console.log("x lane 0");
 							}
 							break;
 						case 1:
 							{
 								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH + this.width, yLaneHeight + yLaneHeight + randomY);
-								console.log("x lane 1");
+								//console.log("x lane 1");
 							}
 							break;
 						default:
@@ -102,13 +102,13 @@ export class VehicleBase extends GameObjectContainer {
 						case 0:
 							{
 								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH + this.width, Constants.DEFAULT_GAME_VIEW_HEIGHT + (this.height / 2) + randomY);
-								console.log("y lane 0");
+								//console.log("y lane 0");
 							}
 							break;
 						case 1:
 							{
 								this.setPosition(Constants.DEFAULT_GAME_VIEW_WIDTH + this.width, Constants.DEFAULT_GAME_VIEW_HEIGHT + (yLaneHeight - this.height / 2) + randomY);
-								console.log("y lane 1");
+								//console.log("y lane 1");
 							}
 							break;
 						default:
