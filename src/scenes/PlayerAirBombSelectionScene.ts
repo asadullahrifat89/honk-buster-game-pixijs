@@ -86,7 +86,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = 1;
 
 		}).setBackground(missiles_sprite);
-		missiles_button.setPosition((this.uiContainer.width / 2 - missiles_sprite.width / 2) + 90, (this.uiContainer.height / 2 - missiles_sprite.height / 2) + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL);
+		missiles_button.setPosition((this.uiContainer.width / 2 - missiles_sprite.width / 2) + 100, (this.uiContainer.height / 2 - missiles_sprite.height / 2) + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL);
 		this.uiContainer.addChild(missiles_button);
 
 		const missiles_msg = new MessageBubble(0, "Lvl " + Constants.MISSILE_UNLOCK_LEVEL, 20);

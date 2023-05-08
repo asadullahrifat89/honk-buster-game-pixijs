@@ -64,7 +64,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 0;
 
 		}).setBackground(air_balloon_sprite);
-		air_balloon_button.setPosition(this.uiContainer.width / 2 - air_balloon_sprite.width, this.uiContainer.height / 2 - air_balloon_sprite.height / 2 + 10);
+		air_balloon_button.setPosition((this.uiContainer.width / 2 - air_balloon_sprite.width * 2) + 45, this.uiContainer.height / 2 - air_balloon_sprite.height / 2 + 10);
 		this.uiContainer.addChild(air_balloon_button);
 
 		const air_balloon_msg = new MessageBubble(0, "Lvl " + 1, 20);
@@ -86,7 +86,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 1;
 
 		}).setBackground(chopper_sprite);
-		chopper_button.setPosition(this.uiContainer.width / 2, this.uiContainer.height / 2 - chopper_sprite.height / 2 + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL);
+		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_sprite.width / 2) + 100, this.uiContainer.height / 2 - chopper_sprite.height / 2 + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL);
 		this.uiContainer.addChild(chopper_button);
 
 		const chopper_msg = new MessageBubble(0, "Lvl " + Constants.CHOPPER_UNLOCK_LEVEL, 20);

@@ -90,7 +90,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 			button.setText("Rodney").setIsEnabled(true);
 
 		}).setBackground(player_2_sprite);
-		player_2_button.setPosition((this.uiContainer.width / 2 - player_2_sprite.width / 2) + 90, this.uiContainer.height / 2 - player_2_sprite.height / 2 + 10).setIsEnabled(false);
+		player_2_button.setPosition((this.uiContainer.width / 2 - player_2_sprite.width / 2) + 100, this.uiContainer.height / 2 - player_2_sprite.height / 2 + 10).setIsEnabled(false);
 		this.uiContainer.addChild(player_2_button);
 
 		const player_2_msg = new MessageBubble(0, "Coming Soon", 20);
