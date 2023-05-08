@@ -13,12 +13,9 @@ export class UfoEnemy extends VehicleBase {
 	reset() {
 		this.health = this.hitPoint * Constants.getRandomNumber(0, 3);
 		this.scale.set(1);
-		this.alpha = 1;		
-		
+		this.alpha = 1;
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
-
 		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_ENEMY));
-
 		this.speed = Constants.getRandomNumber(2, 4);
 
 		if (this.willHonk) {

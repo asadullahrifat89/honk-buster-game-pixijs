@@ -3214,8 +3214,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region ZombieBossRocketBlocks
 
-	private zombieBossRocketBlockSizeWidth: number = 256 / 2;
-	private zombieBossRocketBlockSizeHeight: number = 256 / 2;
+	private zombieBossRocketBlockSizeWidth: number = 256 / 1.5;
+	private zombieBossRocketBlockSizeHeight: number = 256 / 1.5;
 
 	private zombieBossRocketBlockGameObjects: Array<ZombieBossRocketBlock> = [];
 
