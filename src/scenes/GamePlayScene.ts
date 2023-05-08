@@ -318,16 +318,24 @@ export class GamePlayScene extends Container implements IScene {
 	private generateMessageBubble(source: GameObjectContainer, message: string) {
 
 		if (source.getLeft() > 0 && source.getTop() > 0) {
-			var gameObject = this.messageBubbleGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
+			var existingMessageBubble = this.messageBubbleGameObjects.find(x => x.isAnimating == true && x.source == source);
 
-				var messageBubble = gameObject as MessageBubble;
-				messageBubble.reset();
-				messageBubble.reposition(source, message, 22);
-				messageBubble.setPopping();
+			if (existingMessageBubble) {
+				existingMessageBubble.reset();
+				existingMessageBubble.reposition(source, message, 22);
+				existingMessageBubble.setPopping();
+				existingMessageBubble.enableRendering();
+			}
+			else {
+				var messageBubble = this.messageBubbleGameObjects.find(x => x.isAnimating == false);
 
-				gameObject.enableRendering();
+				if (messageBubble) {					
+					messageBubble.reset();
+					messageBubble.reposition(source, message, 22);
+					messageBubble.setPopping();
+					messageBubble.enableRendering();
+				}
 			}
 		}
 	}
@@ -3718,7 +3726,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	private depletePowerUp() {		
+	private depletePowerUp() {
 		if (this.powerUpBar.hasHealth())
 			this.powerUpBar.setValue(this.powerUpBar.getValue() - 1); // use up the power up			
 	}
@@ -4051,7 +4059,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private levelUp() {
 		SoundManager.play(SoundType.LEVEL_UP);
-		this.generateOnScreenMessage("Gained Level " + this.gameLevelBar.getScore().toString(), this.cheerIcon);
+		this.generateOnScreenMessage("Gained Lvl " + this.gameLevelBar.getScore().toString(), this.cheerIcon);
 		this.gameLevelBar.gainScore(1);
 	}
 

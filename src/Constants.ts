@@ -200,6 +200,7 @@ export enum SoundType {
 
 	LEVEL_UP,
 	OPTION_SELECT,
+	BOOST_ACQUIRED,
 }
 
 //#endregion
@@ -474,6 +475,7 @@ export abstract class Constants {
 
 		new SoundTemplate(SoundType.LEVEL_UP, this.soundsDirectory + "level_up.mp3"),
 		new SoundTemplate(SoundType.OPTION_SELECT, this.soundsDirectory + "option_select.mp3"),
+		new SoundTemplate(SoundType.BOOST_ACQUIRED, this.soundsDirectory + "boost_acquired.mp3"),
 	];
 
 	private static ringWidth = 138;

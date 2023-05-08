@@ -182,7 +182,7 @@ export class GameOverScene extends Container implements IScene {
 
 					if (!this.health.isAwaitingPop) {
 						this.unlockablePopDelay = this.unlockablePopDelayDefault;
-						SoundManager.play(SoundType.LEVEL_UP);
+						SoundManager.play(SoundType.BOOST_ACQUIRED);
 						this.generateOnScreenMessage("Extra Health Acquired!");
 					}
 				}
@@ -194,7 +194,7 @@ export class GameOverScene extends Container implements IScene {
 
 					if (!this.attack.isAwaitingPop) {
 						this.unlockablePopDelay = this.unlockablePopDelayDefault;
-						SoundManager.play(SoundType.LEVEL_UP);
+						SoundManager.play(SoundType.BOOST_ACQUIRED);
 						this.generateOnScreenMessage("Extra Bombs Acquired!");
 					}
 				}
@@ -231,7 +231,6 @@ export class GameOverScene extends Container implements IScene {
 	}
 
 	private animateOnScreenMessage() {
-
 		if (this.onScreenMessage.isAnimating == true) {
 
 			this.onScreenMessage.depleteOnScreenDelay();
