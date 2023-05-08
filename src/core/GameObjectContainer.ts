@@ -39,7 +39,7 @@ export class GameObjectContainer extends Container {
 
 	public castShadowDistance: number = Constants.DEFAULT_DROP_SHADOW_DISTANCE;
 	public gravitatesUp: boolean = false;
-	public gravitatesDown: boolean = false;	
+	public gravitatesDown: boolean = false;
 
 	//#endregion
 

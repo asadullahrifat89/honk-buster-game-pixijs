@@ -28,15 +28,6 @@ export class SeekingRocketBase extends GameObjectContainer {
 				this.targetHitbox.y -= distance;
 		}
 
-		// move left
-		if (targetX < rocketX) {
-			var distance = Math.abs(targetX - rocketX);
-			this.targetHitbox.x = targetX - distance;
-
-			if (this.targetHitbox.x > 0)
-				this.targetHitbox.x -= distance;
-		}
-
 		// move down
 		if (targetY > rocketY) {
 			var distance = Math.abs(targetY - rocketY);
@@ -44,6 +35,15 @@ export class SeekingRocketBase extends GameObjectContainer {
 
 			if (this.targetHitbox.y < Constants.DEFAULT_GAME_VIEW_HEIGHT * scaling)
 				this.targetHitbox.y += distance;
+		}
+
+		// move left
+		if (targetX < rocketX) {
+			var distance = Math.abs(targetX - rocketX);
+			this.targetHitbox.x = targetX - distance;
+
+			if (this.targetHitbox.x > 0)
+				this.targetHitbox.x -= distance;
 		}
 
 		// move right
@@ -75,14 +75,6 @@ export class SeekingRocketBase extends GameObjectContainer {
 			this.y = (top - speed);
 		}
 
-		// move left
-		if (targetX < rocketX - this.grace) {
-			var distance = Math.abs(targetX - rocketX);
-			let speed = this.calculateSpeed(distance);
-
-			this.x = (left - speed);
-		}
-
 		// move down
 		if (targetY > rocketY + this.grace) {
 			var distance = Math.abs(targetY - rocketY);
@@ -91,6 +83,14 @@ export class SeekingRocketBase extends GameObjectContainer {
 			this.y = (top + speed);
 		}
 
+		// move left
+		if (targetX < rocketX - this.grace) {
+			var distance = Math.abs(targetX - rocketX);
+			let speed = this.calculateSpeed(distance);
+
+			this.x = (left - speed);
+		}
+		
 		// move right
 		if (targetX > rocketX + this.grace) {
 			var distance = Math.abs(targetX - rocketX);
@@ -101,10 +101,7 @@ export class SeekingRocketBase extends GameObjectContainer {
 	}
 
 	private calculateSpeed(distance: number): number {
-		var speed = distance / this.lag;		
-		//if (speed < 4) {
-		//	speed = 4;
-		//}
+		var speed = distance / this.lag;
 		return speed;
 	}
 }
