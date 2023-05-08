@@ -58,9 +58,12 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		const air_balloon_button = new Button(() => {
 
 			button.setText("Air Balloon").setIsEnabled(true);
+
 			SoundManager.play(SoundType.OPTION_SELECT);
+
 			chopper_sprite.filters = [new GrayscaleFilter()];
 			air_balloon_sprite.filters = null;
+
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 0;
 
 		}).setBackground(air_balloon_sprite);
@@ -80,9 +83,12 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		const chopper_button = new Button(() => {
 
 			button.setText("Chopper").setIsEnabled(true);
+
 			SoundManager.play(SoundType.OPTION_SELECT);
+
 			air_balloon_sprite.filters = [new GrayscaleFilter()];
 			chopper_sprite.filters = null;
+
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 1;
 
 		}).setBackground(chopper_sprite);

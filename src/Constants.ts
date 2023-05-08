@@ -11,7 +11,7 @@ export enum ExplosionType {
 	FLASH_EXPLOSION,
 }
 
-export enum PowerUpType {	
+export enum PowerUpType {
 	ARMOR,
 	HURLING_BALLS,
 }
@@ -169,7 +169,7 @@ export enum SoundType {
 
 	CHOPPER_HOVERING,
 
-	TRASH_CAN_HIT,
+	TRASH_BIN_HIT,
 
 	ROCKET_LAUNCH,
 	ROCKET_BLAST,
@@ -200,8 +200,6 @@ export enum SoundType {
 
 	LEVEL_UP,
 	OPTION_SELECT,
-
-	BARREL_BREAK,
 }
 
 //#endregion
@@ -390,13 +388,9 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.CRACKER_BLAST, this.soundsDirectory + "cracker_blast_3.mp3"),
 		new SoundTemplate(SoundType.CRACKER_BLAST, this.soundsDirectory + "cracker_blast_4.mp3"),
 
-		new SoundTemplate(SoundType.TRASH_CAN_HIT, this.soundsDirectory + "trashcan_hit_1.mp3"),
-		new SoundTemplate(SoundType.TRASH_CAN_HIT, this.soundsDirectory + "trashcan_hit_2.mp3"),
-		new SoundTemplate(SoundType.TRASH_CAN_HIT, this.soundsDirectory + "trashcan_hit_3.mp3"),
-
-		//new SoundTemplate(SoundType.BARREL_BREAK, this.soundsDirectory + "barrel_break_1.mp3"),
-		//new SoundTemplate(SoundType.BARREL_BREAK, this.soundsDirectory + "barrel_break_2.mp3"),
-		//new SoundTemplate(SoundType.BARREL_BREAK, this.soundsDirectory + "barrel_break_3.mp3"),
+		new SoundTemplate(SoundType.TRASH_BIN_HIT, this.soundsDirectory + "trashcan_hit_1.mp3"),
+		new SoundTemplate(SoundType.TRASH_BIN_HIT, this.soundsDirectory + "trashcan_hit_2.mp3"),
+		new SoundTemplate(SoundType.TRASH_BIN_HIT, this.soundsDirectory + "trashcan_hit_3.mp3"),
 
 		new SoundTemplate(SoundType.ROCKET_LAUNCH, this.soundsDirectory + "rocket_launch_1.mp3"),
 		new SoundTemplate(SoundType.ROCKET_LAUNCH, this.soundsDirectory + "rocket_launch_2.mp3"),
@@ -436,7 +430,8 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.SEEKER_ROCKET_LAUNCH, this.soundsDirectory + "seeker_rocket_launch_1.mp3"),
 		new SoundTemplate(SoundType.SEEKER_ROCKET_LAUNCH, this.soundsDirectory + "seeker_rocket_launch_2.mp3"),
 
-		new SoundTemplate(SoundType.BALL_LAUNCH, this.soundsDirectory + "bulls_eye_rocket_launch_1.mp3"),
+		new SoundTemplate(SoundType.BALL_LAUNCH, this.soundsDirectory + "ball_launch_1.mp3"),
+		new SoundTemplate(SoundType.BALL_LAUNCH, this.soundsDirectory + "ball_launch_2.mp3"),
 
 		new SoundTemplate(SoundType.AMBIENCE, this.soundsDirectory + "ambience_1.mp3"),
 		new SoundTemplate(SoundType.AMBIENCE, this.soundsDirectory + "ambience_2.mp3"),

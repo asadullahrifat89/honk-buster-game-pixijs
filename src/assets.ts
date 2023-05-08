@@ -164,9 +164,8 @@ export const manifest: ResolverManifest = {
 				"ambience_2": "./sounds/ambience_2.mp3",
 				"ambience_3": "./sounds/ambience_3.mp3",
 
-				//"barrel_break_1": "./sounds/barrel_break_1.mp3",
-				//"barrel_break_2": "./sounds/barrel_break_2.mp3",
-				//"barrel_break_3": "./sounds/barrel_break_3.mp3",			
+				"ball_launch_1": "./sounds/ball_launch_1.mp3",
+				"ball_launch_2": "./sounds/ball_launch_2.mp3",
 
 				"car_honk_1": "./sounds/car_honk_1.mp3",
 				"car_honk_2": "./sounds/car_honk_2.mp3",
