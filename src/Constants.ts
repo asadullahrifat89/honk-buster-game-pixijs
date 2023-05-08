@@ -436,7 +436,8 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.SEEKER_ROCKET_LAUNCH, this.soundsDirectory + "seeker_rocket_launch_1.mp3"),
 		new SoundTemplate(SoundType.SEEKER_ROCKET_LAUNCH, this.soundsDirectory + "seeker_rocket_launch_2.mp3"),
 
-		new SoundTemplate(SoundType.BALL_LAUNCH, this.soundsDirectory + "bulls_eye_rocket_launch_1.mp3"),
+		//new SoundTemplate(SoundType.BALL_LAUNCH, this.soundsDirectory + "ball_launch_1.mp3"),
+		new SoundTemplate(SoundType.BALL_LAUNCH, this.soundsDirectory + "ball_launch_2.mp3"),
 
 		new SoundTemplate(SoundType.AMBIENCE, this.soundsDirectory + "ambience_1.mp3"),
 		new SoundTemplate(SoundType.AMBIENCE, this.soundsDirectory + "ambience_2.mp3"),
