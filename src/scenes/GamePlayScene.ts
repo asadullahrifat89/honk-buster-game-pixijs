@@ -268,7 +268,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	private generateHonk(source: GameObjectContainer) {
 
-		if (source.getLeft() - 50 > 0 && source.getTop() - 50 > 0) {
+		if (source.getLeft() - 25 > 0 && source.getTop() - 25 > 0) {
+			
 			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
@@ -318,16 +319,24 @@ export class GamePlayScene extends Container implements IScene {
 	private generateMessageBubble(source: GameObjectContainer, message: string) {
 
 		if (source.getLeft() > 0 && source.getTop() > 0) {
-			var gameObject = this.messageBubbleGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
+			var existingMessageBubble = this.messageBubbleGameObjects.find(x => x.isAnimating == true && x.source == source); // if a message bubble exists for the same source, reuse it
 
-				var messageBubble = gameObject as MessageBubble;
-				messageBubble.reset();
-				messageBubble.reposition(source, message, 22);
-				messageBubble.setPopping();
+			if (existingMessageBubble) {
+				existingMessageBubble.reset();
+				existingMessageBubble.reposition(source, message, 22);
+				existingMessageBubble.setPopping();
+				existingMessageBubble.enableRendering();
+			}
+			else {
+				var messageBubble = this.messageBubbleGameObjects.find(x => x.isAnimating == false);
 
-				gameObject.enableRendering();
+				if (messageBubble) {					
+					messageBubble.reset();
+					messageBubble.reposition(source, message, 22);
+					messageBubble.setPopping();
+					messageBubble.enableRendering();
+				}
 			}
 		}
 	}
@@ -3719,9 +3728,8 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	private depletePowerUp() {
-		// use up the power up
 		if (this.powerUpBar.hasHealth())
-			this.powerUpBar.setValue(this.powerUpBar.getValue() - 1);
+			this.powerUpBar.setValue(this.powerUpBar.getValue() - 1); // use up the power up			
 	}
 
 	//#endregion
@@ -4052,7 +4060,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private levelUp() {
 		SoundManager.play(SoundType.LEVEL_UP);
-		this.generateOnScreenMessage("Level " + this.gameLevelBar.getScore().toString() + " Complete", this.cheerIcon);
+		this.generateOnScreenMessage("Gained Lvl " + this.gameLevelBar.getScore().toString(), this.cheerIcon);
 		this.gameLevelBar.gainScore(1);
 	}
 
