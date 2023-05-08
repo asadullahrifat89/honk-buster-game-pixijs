@@ -11,6 +11,23 @@ export class PlayerRocket extends RocketBase {
 
 	constructor(speed: number) {
 		super(speed);
+	}	
+
+	setTemplate(playerRocketTemplate: PlayerAirBombTemplate) {
+		this.playerRocketTemplate = playerRocketTemplate;
+
+		switch (this.playerRocketTemplate) {
+			case PlayerAirBombTemplate.BALL: {
+				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BALL).map(x => x.uri);
+				this.autoBlastDelayDefault = 6;
+			} break;
+			case PlayerAirBombTemplate.ROCKET: {
+				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.ROCKET).map(x => x.uri);
+			} break;
+			default: break;
+		}
+
+		this.setTexture(Constants.getRandomTextureFromUris(this.playerRocketUris));
 	}
 
 	reset() {
@@ -39,23 +56,6 @@ export class PlayerRocket extends RocketBase {
 		this.awaitMoveDownRight = false;
 
 		this.autoBlastDelay = this.autoBlastDelayDefault;
-	}
-
-	setTemplate(playerRocketTemplate: PlayerAirBombTemplate) {
-		this.playerRocketTemplate = playerRocketTemplate;
-
-		switch (this.playerRocketTemplate) {
-			case PlayerAirBombTemplate.BALL: {
-				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BALL).map(x => x.uri);
-				this.autoBlastDelayDefault = 6;
-			} break;
-			case PlayerAirBombTemplate.ROCKET: {
-				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.ROCKET).map(x => x.uri);
-			} break;
-			default: break;
-		}
-
-		this.setTexture(Constants.getRandomTextureFromUris(this.playerRocketUris));
 	}
 
 	override accelerate() {
