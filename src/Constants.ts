@@ -459,7 +459,7 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, this.soundsDirectory + "game_background_music_1.mp3"),
 		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, this.soundsDirectory + "game_background_music_2.mp3"),
 		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, this.soundsDirectory + "game_background_music_3.mp3"),
-		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, this.soundsDirectory + "game_background_music_4.mp3"),
+		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, this.soundsDirectory + "game_background_music_4.mp3"),		
 
 		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, this.soundsDirectory + "boss_background_music_1.mp3"),
 		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, this.soundsDirectory + "boss_background_music_2.mp3"),
