@@ -7,11 +7,11 @@ import { SoundManager } from "../managers/SoundManager";
 
 export class Button extends Container {
 
-	private buttonFilter: OutlineFilter;
+	private buttonHoverFilter: OutlineFilter;
 	private buttonDisabledFilter: GrayscaleFilter;
 	private buttonText: Text;
 	private buttonBackground: DisplayObject;
-	private isEnabled: boolean = true;
+	private buttonIsEnabled: boolean = true;
 
 	constructor(onPressed: any) {
 		super();
@@ -19,7 +19,7 @@ export class Button extends Container {
 		this.interactive = true;
 		this.filters = null;
 
-		this.buttonFilter = new OutlineFilter(4);
+		this.buttonHoverFilter = new OutlineFilter(4, 0xffffff);
 		this.buttonDisabledFilter = new GrayscaleFilter();
 
 		// add the button background
@@ -29,7 +29,7 @@ export class Button extends Container {
 		this.buttonText = new Text(); // this is not added yet
 
 		this.on("pointertap", () => {
-			if (this.isEnabled) {
+			if (this.buttonIsEnabled) {
 				onPressed();
 			}
 			else {
@@ -77,17 +77,17 @@ export class Button extends Container {
 	}
 
 	onButtonOver(_e: FederatedPointerEvent) {
-		if (this.isEnabled)
-			this.filters = [this.buttonFilter];
+		if (this.buttonIsEnabled)
+			this.filters = [this.buttonHoverFilter];
 	}
 
 	onButtonOut(_e: FederatedPointerEvent) {
-		if (this.isEnabled)
+		if (this.buttonIsEnabled)
 			this.filters?.pop();
 	}
 
 	setIsEnabled(isEnabled: boolean): Button {
-		this.isEnabled = isEnabled;
+		this.buttonIsEnabled = isEnabled;
 
 		if (!isEnabled) {
 			this.filters = [this.buttonDisabledFilter];
@@ -99,7 +99,7 @@ export class Button extends Container {
 	}
 
 	getIsEnabled(): boolean {
-		return this.isEnabled;
+		return this.buttonIsEnabled;
 	}
 
 	private getDefaultGraphics(): Graphics {
