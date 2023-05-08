@@ -106,12 +106,7 @@ export enum ConstructType {
 	ROAD_MARK,
 	ROAD_SIDE_WALK_TOP,
 	ROAD_SIDE_WALK_BOTTOM,
-
-	ROAD_SIDE_TREE,
-	ROAD_SIDE_HEDGE,
-	ROAD_SIDE_LAMP,
-	ROAD_SIDE_LIGHT_BILLBOARD,
-	ROAD_SIDE_BILLBOARD,
+	ROAD_SIDE_WALK_BOTTOM_PILLARS,
 
 	HONK,
 
@@ -255,22 +250,9 @@ export abstract class Constants {
 
 		new ConstructTemplate(ConstructType.ROAD_MARK, this.imagessDirectory + "road_marks.png"),
 
-		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, this.imagessDirectory + "tree_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, this.imagessDirectory + "tree_2.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_TREE, this.imagessDirectory + "tree_3.png"),
-
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, this.imagessDirectory + "road_side_walk_top_1.png"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, this.imagessDirectory + "road_side_walk_bottom_1.png"),
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_HEDGE, this.imagessDirectory + "road_side_hedge_1.png"),
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, this.imagessDirectory + "billboard_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, this.imagessDirectory + "billboard_2.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_BILLBOARD, this.imagessDirectory + "billboard_3.png"),
-
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_1.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_2.png"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_LIGHT_BILLBOARD, this.imagessDirectory + "road_side_light_billboard_3.png"),		
+		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM_PILLARS, this.imagessDirectory + "road_side_walk_bottom_pillars_1.png"),
 
 		new ConstructTemplate(ConstructType.CLOUD, this.imagessDirectory + "cloud_1.png"),
 		new ConstructTemplate(ConstructType.CLOUD, this.imagessDirectory + "cloud_2.png"),
