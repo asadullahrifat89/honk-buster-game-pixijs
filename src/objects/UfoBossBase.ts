@@ -54,7 +54,7 @@ export class UfoBossBase extends GameObjectContainer {
 	}
 
 	follow(target: Rectangle) {
-		
+
 		let left = this.getLeft();
 		let top = this.getTop();
 
@@ -86,7 +86,7 @@ export class UfoBossBase extends GameObjectContainer {
 			let speed = this.getFollowingSpeed(distance);
 
 			this.x = (left - speed);
-		}		
+		}
 
 		// move right
 		if (targetX > bossX + this.grace) {

@@ -269,7 +269,7 @@ export class GamePlayScene extends Container implements IScene {
 	private generateHonk(source: GameObjectContainer) {
 
 		if (source.getLeft() - 25 > 0 && source.getTop() - 25 > 0) {
-			
+
 			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
@@ -331,7 +331,7 @@ export class GamePlayScene extends Container implements IScene {
 			else {
 				var messageBubble = this.messageBubbleGameObjects.find(x => x.isAnimating == false);
 
-				if (messageBubble) {					
+				if (messageBubble) {
 					messageBubble.reset();
 					messageBubble.reposition(source, message, 22);
 					messageBubble.setPopping();
