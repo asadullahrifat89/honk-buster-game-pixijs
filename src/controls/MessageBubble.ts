@@ -62,6 +62,7 @@ export class MessageBubble extends GameObjectContainer {
 			};
 		}
 		this.messageContainer.removeChild(this.messageGraphics);
+		this.messageGraphics.destroy();
 		this.messageGraphics = this.drawMessageGraphics();
 		this.messageContainer.addChildAt(this.messageGraphics, 0);
 

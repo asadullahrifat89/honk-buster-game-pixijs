@@ -89,7 +89,7 @@ export class UfoBoss extends UfoBossBase {
 		}
 
 		super.follow(target);
-	}	
+	}
 
 	private moveInIsometricSquares(sceneWidth: number, sceneHeight: number) {
 		this.changeMovementPatternDelay -= 0.1;
@@ -295,6 +295,7 @@ export class UfoBoss extends UfoBossBase {
 	}
 
 	move(sceneWidth: number, sceneHeight: number, playerPoint: Rectangle) {
+
 		switch (this.movementPattern) {
 			case UfoBossMovementPattern.PLAYER_SEEKING:
 				this.follow(playerPoint);

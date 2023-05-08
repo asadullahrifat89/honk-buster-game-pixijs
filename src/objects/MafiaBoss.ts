@@ -89,7 +89,7 @@ export class MafiaBoss extends UfoBossBase {
 		}
 
 		super.follow(target);
-	}	
+	}
 
 	private moveRightLeft(sceneWidth: number) {
 		this.changeMovementPatternDelay -= 0.1;
@@ -219,6 +219,7 @@ export class MafiaBoss extends UfoBossBase {
 	}
 
 	move(sceneWidth: number, sceneHeight: number, playerPoint: Rectangle) {
+
 		switch (this.movementPattern) {
 			case MafiaBossMovementPattern.PLAYER_SEEKING:
 				this.follow(playerPoint);
