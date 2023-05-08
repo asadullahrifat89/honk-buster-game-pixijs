@@ -47,7 +47,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private gameController: GameController;
 	private gameScoreBar: GameScoreBar;
-	private gameLevelBar: GameScoreBar;	
+	private gameLevelBar: GameScoreBar;
 
 	private onScreenMessage: OnScreenMessage;
 
@@ -60,7 +60,7 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly ufoEnemyReleaseLimit: number = 15;
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
-	private readonly ufoBossReleasePoint: number = 5; // 50
+	private readonly ufoBossReleasePoint: number = 50; // 50
 	private readonly ufoBossReleaseLimit: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
 
@@ -1310,7 +1310,7 @@ export class GamePlayScene extends Container implements IScene {
 				if (this.powerUpBar.hasHealth()) {
 
 					switch (this.powerUpBar.tag) {
-						case PowerUpType.BULLS_EYE:
+						case PowerUpType.HURLING_BALLS:
 							{
 								this.generatePlayerRocketBullsEye();
 							}
@@ -1810,7 +1810,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: PlayerRocketBullsEye = new PlayerRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET_BULLS_EYE));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET_HURLING_BALLS));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -1863,7 +1863,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			playerRocketBullsEye.enableRendering();
 
-			if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.BULLS_EYE)
+			if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.HURLING_BALLS)
 				this.depletePowerUp();
 		}
 	}
@@ -3048,7 +3048,7 @@ export class GamePlayScene extends Container implements IScene {
 					}
 				}
 
-				if (ufoBossRocketSeeking.hasFaded() /*|| ufoBossRocketSeeking.x > Constants.DEFAULT_GAME_VIEW_WIDTH || ufoBossRocketSeeking.getRight() < 0 || ufoBossRocketSeeking.getBottom() < 0 || ufoBossRocketSeeking.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
+				if (ufoBossRocketSeeking.hasFaded()) {
 					ufoBossRocketSeeking.disableRendering();
 				}
 			});
@@ -3589,7 +3589,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: MafiaBossRocketBullsEye = new MafiaBossRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_HURLING_BALLS));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -3893,7 +3893,7 @@ export class GamePlayScene extends Container implements IScene {
 						this.powerUpBar.setIcon(gameObject.getSprite().getTexture());
 
 						switch (gameObject.powerUpType) {
-							case PowerUpType.BULLS_EYE: // if bulls eye powerup, allow using a single shot of 20 bombs
+							case PowerUpType.HURLING_BALLS: // if bulls eye powerup, allow using a single shot of 20 bombs
 								{
 									this.powerUpBar.setMaximumValue(20).setValue(20);
 									this.generateOnScreenMessage("Bull's' Eye +20", this.powerUpBar.getIcon());

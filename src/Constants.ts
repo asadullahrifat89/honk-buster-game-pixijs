@@ -14,7 +14,7 @@ export enum ExplosionType {
 export enum PowerUpType {
 	//SEEKING_SNITCH,
 	ARMOR,
-	BULLS_EYE,
+	HURLING_BALLS,
 }
 
 export enum RotationDirection {
@@ -94,7 +94,7 @@ export enum ConstructType {
 
 	PLAYER_ROCKET,
 	PLAYER_ROCKET_SEEKING,
-	PLAYER_ROCKET_BULLS_EYE,
+	PLAYER_ROCKET_HURLING_BALLS,
 	PLAYER_HONK_BOMB,
 
 	VEHICLE_ENEMY_SMALL,
@@ -136,7 +136,7 @@ export enum ConstructType {
 	UFO_BOSS_ROCKET_SEEKING,
 
 	MAFIA_BOSS_ROCKET,
-	MAFIA_BOSS_ROCKET_BULLS_EYE,
+	MAFIA_BOSS_ROCKET_HURLING_BALLS,
 
 	ZOMBIE_BOSS_ROCKET_BLOCK,
 
@@ -148,7 +148,7 @@ export enum ConstructType {
 	POWERUP_PICKUP,
 	POWERUP_PICKUP_SEEKING_SNITCH,
 	POWERUP_PICKUP_ARMOR,
-	POWERUP_PICKUP_BULLS_EYE,
+	POWERUP_PICKUP_HURLING_BALLS,
 
 	COLLECTABLE_PICKUP,
 	FLOATING_NUMBER,
@@ -323,7 +323,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_2.png", PlayerAirBombTemplate.ROCKET),
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, this.imagessDirectory + "player_rocket_3.png", PlayerAirBombTemplate.ROCKET),
 
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET_BULLS_EYE, this.imagessDirectory + "player_rocket_bulls_eye_1.png"),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET_HURLING_BALLS, this.imagessDirectory + "player_rocket_bulls_eye_1.png"),
 
 		new ConstructTemplate(ConstructType.CHOPPER_BLADES, this.imagessDirectory + "player_chopper_blades.png"),
 
@@ -367,11 +367,11 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, this.imagessDirectory + "mafia_boss_rocket_1.png"),
 		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, this.imagessDirectory + "mafia_boss_rocket_2.png"),
 		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, this.imagessDirectory + "mafia_boss_rocket_3.png"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE, this.imagessDirectory + "mafia_boss_rocket_bulls_eye.png"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET_HURLING_BALLS, this.imagessDirectory + "mafia_boss_rocket_bulls_eye.png"),
 
 		new ConstructTemplate(ConstructType.HEALTH_PICKUP, this.imagessDirectory + "health_pickup.png"),
 		new ConstructTemplate(ConstructType.POWERUP_PICKUP_ARMOR, this.imagessDirectory + "powerup_pickup_armor.png"),
-		new ConstructTemplate(ConstructType.POWERUP_PICKUP_BULLS_EYE, this.imagessDirectory + "powerup_pickup_bulls_eye.png"),
+		new ConstructTemplate(ConstructType.POWERUP_PICKUP_HURLING_BALLS, this.imagessDirectory + "powerup_pickup_bulls_eye.png"),
 
 		new ConstructTemplate(ConstructType.GAME_COVER_IMAGE, this.imagessDirectory + "cover_image.png"),
 	];

@@ -4,8 +4,7 @@ import { GameObjectContainer } from '../core/GameObjectContainer';
 
 export class SeekingRocketBase extends GameObjectContainer {
 
-	private readonly grace: number = 10;
-	private readonly lag: number = 50;
+	private readonly grace: number = 7;
 	public directTarget: Rectangle = new Rectangle();
 
 	follow(target: Rectangle) {
@@ -13,11 +12,11 @@ export class SeekingRocketBase extends GameObjectContainer {
 		let left = this.getLeft();
 		let top = this.getTop();
 
+		let rocketX = left + this.width / 2;
+		let rocketY = top + this.height / 2;
+
 		let targetX = target.x + target.width / 2;
 		let targetY = target.y + target.height / 2;
-
-		let rocketX = left + this.width / 2;
-		let rocketY = top + this.height / 2;		
 
 		// move up
 		if (targetY < rocketY - this.grace) {
@@ -53,7 +52,7 @@ export class SeekingRocketBase extends GameObjectContainer {
 	}
 
 	private getFollowingSpeed(distance: number): number {
-		var speed = distance / this.lag;
+		var speed = (1.5 / 100 * distance);
 		return speed;
 	}
 

@@ -16,7 +16,7 @@ export class PlayerRocketBullsEye extends SeekingRocketBase {
 
 	reset() {
 		this.alpha = 1;
-		this.setTexture(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET_BULLS_EYE));
+		this.setTexture(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET_HURLING_BALLS));
 		this.scale.set(1);
 		this.angle = 0;
 		this.isBlasting = false;

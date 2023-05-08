@@ -23,9 +23,9 @@ export class PowerUpPickup extends GameObjectContainer {
                     this.setTexture(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR));
                 }
                 break;
-            case PowerUpType.BULLS_EYE:
+            case PowerUpType.HURLING_BALLS:
                 {
-                    this.setTexture(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_BULLS_EYE));
+                    this.setTexture(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_HURLING_BALLS));
                 }
                 break;
             default:

@@ -303,7 +303,8 @@ export class GameObjectContainer extends Container {
 
 	getCloseBounds(): Rectangle {
 		let bounds = this.getBounds(true);
-		return new Rectangle(bounds.left + this.width / 4, bounds.top + this.height / 4, bounds.right - this.width / 4, bounds.bottom - this.height / 4);
+		return bounds;
+		//return new Rectangle(bounds.left + this.width / 4, bounds.top + this.height / 4, bounds.right - this.width / 4, bounds.bottom - this.height / 4);
 	}
 
 	//#endregion
