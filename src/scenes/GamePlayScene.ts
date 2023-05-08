@@ -3896,7 +3896,7 @@ export class GamePlayScene extends Container implements IScene {
 							case PowerUpType.HURLING_BALLS: // if bulls eye powerup, allow using a single shot of 20 bombs
 								{
 									this.powerUpBar.setMaximumValue(20).setValue(20);
-									this.generateOnScreenMessage("Bull's' Eye +20", this.powerUpBar.getIcon());
+									this.generateOnScreenMessage("Hurling Balls +20", this.powerUpBar.getIcon());
 								}
 								break;
 							case PowerUpType.ARMOR:
