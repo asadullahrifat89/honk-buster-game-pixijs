@@ -1,16 +1,13 @@
 ﻿import { Constants, ConstructType, PlayerAirBombTemplate, SoundType } from '../Constants';
-import { GameObjectContainer } from '../core/GameObjectContainer';
 import { PlayerRide } from './PlayerRide';
 import { SoundManager } from '../managers/SoundManager';
+import { RocketBase } from './RocketBase';
 
 
-export class PlayerRocket extends GameObjectContainer {
+export class PlayerRocket extends RocketBase {
 
 	public playerRocketTemplate: PlayerAirBombTemplate = PlayerAirBombTemplate.BALL;
 	private playerRocketUris: string[] = [];
-
-	private autoBlastDelay: number = 0;
-	private autoBlastDelayDefault: number = 8;
 
 	constructor(speed: number) {
 		super(speed);
@@ -61,15 +58,13 @@ export class PlayerRocket extends GameObjectContainer {
 		this.setTexture(Constants.getRandomTextureFromUris(this.playerRocketUris));
 	}
 
-	accelerate() {
+	override accelerate() {
 		switch (this.playerRocketTemplate) {
 			case PlayerAirBombTemplate.BALL: {
-				if (this.speed > 3)
-					this.speed -= 0.5; // balls loose speed with time
+				super.decelerate();
 			} break;
 			case PlayerAirBombTemplate.ROCKET: {
-				if (this.speed < Constants.DEFAULT_CONSTRUCT_SPEED + 9)
-					this.speed += 0.5; // rockets gain speed with time
+				super.accelerate();
 			} break;
 			default: break;
 		}
@@ -77,22 +72,5 @@ export class PlayerRocket extends GameObjectContainer {
 
 	reposition(source: PlayerRide) {
 		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 15);
-	}
-
-	setBlast() {
-		// this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
-		// this.angle = 0;
-		// this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED - 1;
-		this.isBlasting = true;
-		SoundManager.play(SoundType.ROCKET_BLAST);
-	}
-
-	autoBlast() {
-		this.autoBlastDelay -= 0.1;
-		if (this.autoBlastDelay <= 0) {
-			return true;
-		}
-		return false;
 	}
 }
