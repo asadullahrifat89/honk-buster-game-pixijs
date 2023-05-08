@@ -58,7 +58,8 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		const grenade_button = new Button(() => {
 
 			button.setText("Grenades").setIsEnabled(true);
-			SoundManager.play(SoundType.OPTION_SELECT);
+			/*SoundManager.play(SoundType.OPTION_SELECT);*/
+			SoundManager.play(SoundType.CRACKER_BLAST, 0.8);
 			grenade_sprite.filters = null;
 			trash_sprite.filters = [new GrayscaleFilter()];
 			dynamite_sprite.filters = [new GrayscaleFilter()];
@@ -81,7 +82,8 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		const trash_button = new Button(() => {
 
 			button.setText("Trash Bins").setIsEnabled(true);
-			SoundManager.play(SoundType.OPTION_SELECT);
+			//SoundManager.play(SoundType.OPTION_SELECT);
+			SoundManager.play(SoundType.TRASH_BIN_HIT);
 			trash_sprite.filters = null;
 			grenade_sprite.filters = [new GrayscaleFilter()];
 			dynamite_sprite.filters = [new GrayscaleFilter()];
@@ -104,7 +106,8 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		const dynamite_button = new Button(() => {
 
 			button.setText("Dynamites").setIsEnabled(true);
-			SoundManager.play(SoundType.OPTION_SELECT);
+			//SoundManager.play(SoundType.OPTION_SELECT);
+			SoundManager.play(SoundType.CRACKER_BLAST, 0.8);
 			dynamite_sprite.filters = null;
 			grenade_sprite.filters = [new GrayscaleFilter()];
 			trash_sprite.filters = [new GrayscaleFilter()];

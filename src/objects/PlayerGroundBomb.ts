@@ -115,7 +115,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 				SoundManager.play(SoundType.CRACKER_BLAST, 0.8);
 			} break;
 			case PlayerGroundBombTemplate.TRASH_BIN: {
-				SoundManager.play(SoundType.TRASH_CAN_HIT);
+				SoundManager.play(SoundType.TRASH_BIN_HIT);
 			} break;
 			case PlayerGroundBombTemplate.DYNAMITE: {
 				SoundManager.play(SoundType.CRACKER_BLAST, 0.8);

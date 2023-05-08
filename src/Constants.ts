@@ -169,7 +169,7 @@ export enum SoundType {
 
 	CHOPPER_HOVERING,
 
-	TRASH_CAN_HIT,
+	TRASH_BIN_HIT,
 
 	ROCKET_LAUNCH,
 	ROCKET_BLAST,
@@ -390,9 +390,9 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.CRACKER_BLAST, this.soundsDirectory + "cracker_blast_3.mp3"),
 		new SoundTemplate(SoundType.CRACKER_BLAST, this.soundsDirectory + "cracker_blast_4.mp3"),
 
-		new SoundTemplate(SoundType.TRASH_CAN_HIT, this.soundsDirectory + "trashcan_hit_1.mp3"),
-		new SoundTemplate(SoundType.TRASH_CAN_HIT, this.soundsDirectory + "trashcan_hit_2.mp3"),
-		new SoundTemplate(SoundType.TRASH_CAN_HIT, this.soundsDirectory + "trashcan_hit_3.mp3"),
+		new SoundTemplate(SoundType.TRASH_BIN_HIT, this.soundsDirectory + "trashcan_hit_1.mp3"),
+		new SoundTemplate(SoundType.TRASH_BIN_HIT, this.soundsDirectory + "trashcan_hit_2.mp3"),
+		new SoundTemplate(SoundType.TRASH_BIN_HIT, this.soundsDirectory + "trashcan_hit_3.mp3"),
 
 		//new SoundTemplate(SoundType.BARREL_BREAK, this.soundsDirectory + "barrel_break_1.mp3"),
 		//new SoundTemplate(SoundType.BARREL_BREAK, this.soundsDirectory + "barrel_break_2.mp3"),
