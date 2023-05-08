@@ -319,7 +319,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (source.getLeft() > 0 && source.getTop() > 0) {
 
-			var existingMessageBubble = this.messageBubbleGameObjects.find(x => x.isAnimating == true && x.source == source);
+			var existingMessageBubble = this.messageBubbleGameObjects.find(x => x.isAnimating == true && x.source == source); // if a message bubble exists for the same source, reuse it
 
 			if (existingMessageBubble) {
 				existingMessageBubble.reset();
