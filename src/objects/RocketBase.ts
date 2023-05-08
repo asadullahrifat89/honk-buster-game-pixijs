@@ -6,7 +6,7 @@ import { SoundManager } from '../managers/SoundManager';
 export class RocketBase extends GameObjectContainer {
 
     public autoBlastDelay: number = 0;
-    public autoBlastDelayDefault: number = 9;
+    public autoBlastDelayDefault: number = 9;  
 
     constructor(speed: number) {
         super(speed);

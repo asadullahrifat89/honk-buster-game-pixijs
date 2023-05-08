@@ -16,12 +16,12 @@ export class MafiaBossRocketBullsEye extends SeekingRocketBase {
 
 	reset() {
 		this.alpha = 1;
-		this.setTexture(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE));
+		this.setTexture(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_HURLING_BALLS));
 		this.scale.set(1);
 		this.angle = 0;
 		this.isBlasting = false;
 		this.autoBlastDelay = this.autoBlastDelayDefault;
-		this.targetHitbox = new Rectangle();
+		this.directTarget = new Rectangle();
 
 		SoundManager.play(SoundType.BALL_LAUNCH);
 	}
@@ -45,7 +45,7 @@ export class MafiaBossRocketBullsEye extends SeekingRocketBase {
 	}
 
 	move() {
-		this.seek(this.targetHitbox);
+		this.direct(this.directTarget);
 	}
 }
 

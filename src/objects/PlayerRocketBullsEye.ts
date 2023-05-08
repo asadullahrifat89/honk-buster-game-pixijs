@@ -7,48 +7,45 @@ import { SoundManager } from '../managers/SoundManager';
 
 export class PlayerRocketBullsEye extends SeekingRocketBase {
 
-    private autoBlastDelay: number = 0;
-    private readonly autoBlastDelayDefault: number = 15;
+	private autoBlastDelay: number = 0;
+	private readonly autoBlastDelayDefault: number = 15;
 
-    constructor(speed: number) {
-        super(speed);
-    }
+	constructor(speed: number) {
+		super(speed);
+	}
 
-    reset() {
-        this.alpha = 1;
-        this.setTexture(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET_BULLS_EYE));
-        this.scale.set(1);
-        this.angle = 0;
-        this.isBlasting = false;
-        this.autoBlastDelay = this.autoBlastDelayDefault;
-        this.targetHitbox = new Rectangle();
+	reset() {
+		this.alpha = 1;
+		this.setTexture(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET_HURLING_BALLS));
+		this.scale.set(1);
+		this.angle = 0;
+		this.isBlasting = false;
+		this.autoBlastDelay = this.autoBlastDelayDefault;
+		this.directTarget = new Rectangle();
 
-        SoundManager.play(SoundType.BALL_LAUNCH);
-    }
+		SoundManager.play(SoundType.BALL_LAUNCH);
+	}
 
-    reposition(source: GameObjectContainer) {
-        this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height);
-    }
+	reposition(source: GameObjectContainer) {
+		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height);
+	}
 
-    setBlast() {
-        this.speed = Constants.DEFAULT_CONSTRUCT_SPEED - 1;
-        // this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
-        // this.angle = 0;
-        // this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
-        this.isBlasting = true;
-        SoundManager.play(SoundType.ROCKET_BLAST);
-    }
+	setBlast() {
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED - 1;
+		this.isBlasting = true;
+		SoundManager.play(SoundType.ROCKET_BLAST);
+	}
 
-    autoBlast() {
-        this.autoBlastDelay -= 0.1;
+	autoBlast() {
+		this.autoBlastDelay -= 0.1;
 
-        if (this.autoBlastDelay <= 0)
-            return true;
+		if (this.autoBlastDelay <= 0)
+			return true;
 
-        return false;
-    }
+		return false;
+	}
 
-    move() {
-        this.seek(this.targetHitbox);
-    }
+	move() {
+		this.direct(this.directTarget);
+	}
 }

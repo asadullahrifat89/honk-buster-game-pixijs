@@ -53,7 +53,7 @@ export class UfoBossBase extends GameObjectContainer {
 		}
 	}
 
-	seekPlayer(target: Rectangle) {
+	follow(target: Rectangle) {
 		
 		let left = this.getLeft();
 		let top = this.getTop();
@@ -67,37 +67,37 @@ export class UfoBossBase extends GameObjectContainer {
 		// move up
 		if (targetY < bossY - this.grace) {
 			var distance = Math.abs(targetY - bossY);
-			let speed = this.getFlightSpeed(distance);
+			let speed = this.getFollowingSpeed(distance);
 
 			this.y = (top - speed);
-		}
-
-		// move left
-		if (targetX < bossX - this.grace) {
-			var distance = Math.abs(targetX - bossX);
-			let speed = this.getFlightSpeed(distance);
-
-			this.x = (left - speed);
 		}
 
 		// move down
 		if (targetY > bossY + this.grace) {
 			var distance = Math.abs(targetY - bossY);
-			let speed = this.getFlightSpeed(distance);
+			let speed = this.getFollowingSpeed(distance);
 
 			this.y = (top + speed);
 		}
 
+		// move left
+		if (targetX < bossX - this.grace) {
+			var distance = Math.abs(targetX - bossX);
+			let speed = this.getFollowingSpeed(distance);
+
+			this.x = (left - speed);
+		}		
+
 		// move right
 		if (targetX > bossX + this.grace) {
 			var distance = Math.abs(targetX - bossX);
-			let speed = this.getFlightSpeed(distance);
+			let speed = this.getFollowingSpeed(distance);
 
 			this.x = (left + speed);
 		}
 	}
 
-	getFlightSpeed(distance: number) {
+	getFollowingSpeed(distance: number) {
 		var flightSpeed = distance / this.lag;
 		return flightSpeed;
 	}

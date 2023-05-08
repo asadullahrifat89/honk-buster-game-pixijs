@@ -43,11 +43,11 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Properties
 
+	private sceneContainer: GameObjectContainer;
+
 	private gameController: GameController;
 	private gameScoreBar: GameScoreBar;
 	private gameLevelBar: GameScoreBar;
-
-	private sceneContainer: GameObjectContainer;
 
 	private onScreenMessage: OnScreenMessage;
 
@@ -1224,8 +1224,6 @@ export class GamePlayScene extends Container implements IScene {
 
 			if (this.playerLowHealthExplosionDelay < 0) {
 
-				// get all the playeres and check			
-
 				if (this.player) {
 					this.generateSmokeExplosion(this.player); // generate smoke at 50
 
@@ -1312,7 +1310,7 @@ export class GamePlayScene extends Container implements IScene {
 				if (this.powerUpBar.hasHealth()) {
 
 					switch (this.powerUpBar.tag) {
-						case PowerUpType.BULLS_EYE:
+						case PowerUpType.HURLING_BALLS:
 							{
 								this.generatePlayerRocketBullsEye();
 							}
@@ -1360,8 +1358,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerGroundBombs
 
-	private playerGroundBombSizeWidth: number = 70;
-	private playerGroundBombSizeHeight: number = 70;
+	private playerGroundBombSizeWidth: number = 60;
+	private playerGroundBombSizeHeight: number = 60;
 
 	private playerGroundBombGameObjects: Array<PlayerGroundBomb> = [];
 	private playerHonkBusterTemplate: number = 0;
@@ -1800,8 +1798,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerRocketBullsEyes
 
-	private playerRocketBullsEyeSizeWidth: number = 90;
-	private playerRocketBullsEyeSizeHeight: number = 90;
+	private playerRocketBullsEyeSizeWidth: number = 75;
+	private playerRocketBullsEyeSizeHeight: number = 75;
 
 	private playerRocketBullsEyeGameObjects: Array<PlayerRocketBullsEye> = [];
 
@@ -1812,7 +1810,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: PlayerRocketBullsEye = new PlayerRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET_BULLS_EYE));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET_HURLING_BALLS));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -1848,24 +1846,24 @@ export class GamePlayScene extends Container implements IScene {
 			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
 
 			if (ufoBossRocketSeeking) {
-				playerRocketBullsEye.setTarget(ufoBossRocketSeeking.getCloseBounds());
+				playerRocketBullsEye.setDirectTarget(ufoBossRocketSeeking.getCloseBounds());
 			}
 			else if (ufoEnemy) {
-				playerRocketBullsEye.setTarget(ufoEnemy.getCloseBounds());
+				playerRocketBullsEye.setDirectTarget(ufoEnemy.getCloseBounds());
 			}
 			else if (ufoBoss) {
-				playerRocketBullsEye.setTarget(ufoBoss.getCloseBounds());
+				playerRocketBullsEye.setDirectTarget(ufoBoss.getCloseBounds());
 			}
 			else if (zombieBoss) {
-				playerRocketBullsEye.setTarget(zombieBoss.getCloseBounds());
+				playerRocketBullsEye.setDirectTarget(zombieBoss.getCloseBounds());
 			}
 			else if (mafiaBoss) {
-				playerRocketBullsEye.setTarget(mafiaBoss.getCloseBounds());
+				playerRocketBullsEye.setDirectTarget(mafiaBoss.getCloseBounds());
 			}
 
 			playerRocketBullsEye.enableRendering();
 
-			if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.BULLS_EYE)
+			if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.HURLING_BALLS)
 				this.depletePowerUp();
 		}
 	}
@@ -2949,8 +2947,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region UfoBossRocketSeekings
 
-	private ufoBossRocketSeekingSizeWidth: number = 90;
-	private ufoBossRocketSeekingSizeHeight: number = 90;
+	private ufoBossRocketSeekingSizeWidth: number = 75;
+	private ufoBossRocketSeekingSizeHeight: number = 75;
 
 	private ufoBossRocketSeekingGameObjects: Array<UfoBossRocketSeeking> = [];
 
@@ -3029,7 +3027,7 @@ export class GamePlayScene extends Container implements IScene {
 
 					if (ufoBoss) {
 
-						ufoBossRocketSeeking.seek(this.player.getCloseBounds());
+						ufoBossRocketSeeking.follow(this.player.getCloseBounds());
 
 						if (Constants.checkCloseCollision(ufoBossRocketSeeking, this.player)) {
 							ufoBossRocketSeeking.setBlast();
@@ -3050,7 +3048,7 @@ export class GamePlayScene extends Container implements IScene {
 					}
 				}
 
-				if (ufoBossRocketSeeking.hasFaded() || ufoBossRocketSeeking.x > Constants.DEFAULT_GAME_VIEW_WIDTH || ufoBossRocketSeeking.getRight() < 0 || ufoBossRocketSeeking.getBottom() < 0 || ufoBossRocketSeeking.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (ufoBossRocketSeeking.hasFaded()) {
 					ufoBossRocketSeeking.disableRendering();
 				}
 			});
@@ -3576,8 +3574,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region MafiaBossRocketBullsEyes
 
-	private mafiaBossRocketBullsEyeSizeWidth: number = 90;
-	private mafiaBossRocketBullsEyeSizeHeight: number = 90;
+	private mafiaBossRocketBullsEyeSizeWidth: number = 75;
+	private mafiaBossRocketBullsEyeSizeHeight: number = 75;
 
 	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossRocketBullsEye> = [];
 
@@ -3591,7 +3589,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: MafiaBossRocketBullsEye = new MafiaBossRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_BULLS_EYE));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_HURLING_BALLS));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -3624,7 +3622,7 @@ export class GamePlayScene extends Container implements IScene {
 					mafiaBossRocketBullsEye.reset();
 					mafiaBossRocketBullsEye.reposition(mafiaBoss);
 					mafiaBossRocketBullsEye.setPopping();
-					mafiaBossRocketBullsEye.setTarget(this.player.getCloseBounds());
+					mafiaBossRocketBullsEye.setDirectTarget(this.player.getCloseBounds());
 					mafiaBossRocketBullsEye.enableRendering();
 				}
 
@@ -3895,10 +3893,10 @@ export class GamePlayScene extends Container implements IScene {
 						this.powerUpBar.setIcon(gameObject.getSprite().getTexture());
 
 						switch (gameObject.powerUpType) {
-							case PowerUpType.BULLS_EYE: // if bulls eye powerup, allow using a single shot of 20 bombs
+							case PowerUpType.HURLING_BALLS: // if bulls eye powerup, allow using a single shot of 20 bombs
 								{
 									this.powerUpBar.setMaximumValue(20).setValue(20);
-									this.generateOnScreenMessage("Bull's' Eye +20", this.powerUpBar.getIcon());
+									this.generateOnScreenMessage("Hurling Balls +20", this.powerUpBar.getIcon());
 								}
 								break;
 							case PowerUpType.ARMOR:
@@ -4058,7 +4056,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.spawnHonks();
 		this.spawnVehicleBossRockets();
-				
+
 		this.spawnSideWalksBottom();
 		this.spawnSmokeExplosions();
 
@@ -4182,7 +4180,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateMessageBubbles();
 	}
 
-	
+
 
 	//#endregion
 

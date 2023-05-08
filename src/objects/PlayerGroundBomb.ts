@@ -20,6 +20,25 @@ export class PlayerGroundBomb extends GameObjectContainer {
 		this.gravitatesDown = true;
 	}
 
+	setTemplate(honkBombTemplate: PlayerGroundBombTemplate) {
+		this.playerGroundBombTemplate = honkBombTemplate;
+
+		switch (this.playerGroundBombTemplate) {
+			case PlayerGroundBombTemplate.GRENADE: {
+				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerGroundBombTemplate.GRENADE).map(x => x.uri);
+			} break;
+			case PlayerGroundBombTemplate.TRASH_BIN: {
+				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerGroundBombTemplate.TRASH_BIN).map(x => x.uri);
+			} break;
+			case PlayerGroundBombTemplate.DYNAMITE: {
+				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerGroundBombTemplate.DYNAMITE).map(x => x.uri);
+				this.blastDelayDefault = 45;
+			} break;
+		}
+
+		this.setTexture(Constants.getRandomTextureFromUris(this.playerGroundBombUris));
+	}
+
 	reset() {
 		this.isBlasting = false;
 		this.setTexture(Constants.getRandomTextureFromUris(this.playerGroundBombUris));
@@ -53,26 +72,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 
 	move() {
 		this.setPosition(this.x + this.speed, this.y + this.speed * 1.5);
-	}
-
-	setTemplate(honkBombTemplate: PlayerGroundBombTemplate) {
-		this.playerGroundBombTemplate = honkBombTemplate;
-
-		switch (this.playerGroundBombTemplate) {
-			case PlayerGroundBombTemplate.GRENADE: {
-				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerGroundBombTemplate.GRENADE).map(x => x.uri);
-			} break;
-			case PlayerGroundBombTemplate.TRASH_BIN: {
-				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerGroundBombTemplate.TRASH_BIN).map(x => x.uri);
-			} break;
-			case PlayerGroundBombTemplate.DYNAMITE: {
-				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerGroundBombTemplate.DYNAMITE).map(x => x.uri);
-				this.blastDelayDefault = 45;
-			} break;
-		}
-
-		this.setTexture(Constants.getRandomTextureFromUris(this.playerGroundBombUris));
-	}
+	}	
 
 	awaitBlast(): boolean {
 		this.blastDelay--;

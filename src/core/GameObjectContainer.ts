@@ -39,7 +39,7 @@ export class GameObjectContainer extends Container {
 
 	public castShadowDistance: number = Constants.DEFAULT_DROP_SHADOW_DISTANCE;
 	public gravitatesUp: boolean = false;
-	public gravitatesDown: boolean = false;	
+	public gravitatesDown: boolean = false;
 
 	//#endregion
 
@@ -303,7 +303,8 @@ export class GameObjectContainer extends Container {
 
 	getCloseBounds(): Rectangle {
 		let bounds = this.getBounds(true);
-		return new Rectangle(bounds.left + this.width / 4, bounds.top + this.height / 4, bounds.right - this.width / 4, bounds.bottom - this.height / 4);
+		return bounds;
+		//return new Rectangle(bounds.left + this.width / 4, bounds.top + this.height / 4, bounds.right - this.width / 4, bounds.bottom - this.height / 4);
 	}
 
 	//#endregion
