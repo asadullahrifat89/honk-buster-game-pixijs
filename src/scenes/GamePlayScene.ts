@@ -2331,7 +2331,6 @@ export class GamePlayScene extends Container implements IScene {
 				}
 
 				// generate honk
-
 				let vehicleEnemy = gameObject as VehicleEnemy;
 
 				if (vehicleEnemy) {
@@ -2342,7 +2341,6 @@ export class GamePlayScene extends Container implements IScene {
 				}
 
 				// recycle vehicle
-
 				if (this.anyInAirBossExists()) {
 					if (gameObject.getRight() < 0 || gameObject.getBottom() < 0) {
 						gameObject.disableRendering();
@@ -2356,8 +2354,9 @@ export class GamePlayScene extends Container implements IScene {
 			});
 		}
 
+		// sound pollution damage
 		if (!this.anyBossExists()) {
-			var honkingVehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true && x.willHonk);
+			var honkingVehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true && x.willHonk && x.isHonking);
 
 			if (honkingVehicles) {
 				var count = honkingVehicles.length * 2;
@@ -2366,7 +2365,6 @@ export class GamePlayScene extends Container implements IScene {
 					this.soundPollutionBar.setValue(count); // if at least 3 or more vehicles are honking player looses health
 
 				if (this.soundPollutionBar.getProgress() >= 100) {
-
 					this.soundPollutionDamageDelay -= 0.1;
 
 					if (this.soundPollutionDamageDelay <= 0) {

@@ -4,8 +4,8 @@ import { GameObjectContainer } from '../core/GameObjectContainer';
 export class VehicleBase extends GameObjectContainer {
 
 	private honkDelay: number = 0;
-
 	public willHonk: boolean = false;
+	public isHonking: boolean = false;
 
 	constructor(speed: number) {
 		super(speed);
@@ -127,6 +127,7 @@ export class VehicleBase extends GameObjectContainer {
 
 			if (this.honkDelay < 0) {
 				this.setHonkDelay();
+				this.isHonking = true;
 				return true;
 			}
 		}
