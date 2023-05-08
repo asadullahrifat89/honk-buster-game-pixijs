@@ -62,7 +62,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			grenade_sprite.filters = null;
 			trash_sprite.filters = [new GrayscaleFilter()];
 			dynamite_sprite.filters = [new GrayscaleFilter()];
-			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 0;
+			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = 0;
 
 		}).setBackground(grenade_sprite);
 		grenade_button.setPosition(this.uiContainer.width / 2 - grenade_sprite.width * 2, (this.uiContainer.height / 2 - grenade_sprite.height / 2) + 10);
@@ -85,7 +85,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			trash_sprite.filters = null;
 			grenade_sprite.filters = [new GrayscaleFilter()];
 			dynamite_sprite.filters = [new GrayscaleFilter()];
-			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 1;
+			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = 1;
 
 		}).setBackground(trash_sprite);
 		trash_button.setPosition(this.uiContainer.width / 2 - trash_sprite.width / 2, (this.uiContainer.height / 2 - trash_sprite.height / 2) + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL);
@@ -108,7 +108,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			dynamite_sprite.filters = null;
 			grenade_sprite.filters = [new GrayscaleFilter()];
 			trash_sprite.filters = [new GrayscaleFilter()];
-			Constants.SELECTED_HONK_BUSTER_TEMPLATE = 2;
+			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = 2;
 
 		}).setBackground(dynamite_sprite);
 		dynamite_button.setPosition(this.uiContainer.width / 2 + dynamite_sprite.width, (this.uiContainer.height / 2 - dynamite_sprite.height / 2) + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL);

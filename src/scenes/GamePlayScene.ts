@@ -107,7 +107,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		// set the selected ride and bomb templates
 		this.playerRideTemplate = Constants.SELECTED_PLAYER_RIDE_TEMPLATE;
-		this.playerHonkBusterTemplate = Constants.SELECTED_HONK_BUSTER_TEMPLATE;
+		this.playerHonkBusterTemplate = Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE;
 
 		// set the background color of the scene		
 		let color = this.stageColors[Constants.getRandomNumber(0, this.stageColors.length - 1)];
@@ -178,7 +178,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 
 		// show message in the beginning
-		switch (Constants.SELECTED_HONK_BUSTER_TEMPLATE) {
+		switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
 			case PlayerGroundBombTemplate.GRENADE: { this.generateOnScreenMessage("Drop granades on honkers!", this.talkIcon); } break;
 			case PlayerGroundBombTemplate.TRASH_BIN: { this.generateOnScreenMessage("Drop trash bins on honkers!", this.talkIcon); } break;
 			case PlayerGroundBombTemplate.DYNAMITE: { this.generateOnScreenMessage("Drop dynamites on honkers!", this.talkIcon); } break;
