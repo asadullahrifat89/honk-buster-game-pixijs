@@ -4184,6 +4184,12 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateMessageBubbles();
 	}
 
+	
+
+	//#endregion
+
+	//#region Game
+
 	private resumeGame() {
 		if (this.anyBossExists()) {
 			SoundManager.resume(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -4248,11 +4254,14 @@ export class GamePlayScene extends Container implements IScene {
 		SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 		SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
 		SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+		SoundManager.stop(SoundType.UFO_BOSS_ENTRY);
+		SoundManager.stop(SoundType.UFO_ENEMY_ENTRY);
 		SoundManager.stop(SoundType.AMBIENCE);
 		SoundManager.stop(SoundType.CHOPPER_HOVERING);
 
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
 		Constants.GAME_LEVEL = this.gameLevelBar.getScore();
+
 		this.removeChild(this.sceneContainer);
 		SceneManager.changeScene(new GameOverScene());
 	}
