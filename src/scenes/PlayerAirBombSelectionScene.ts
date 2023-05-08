@@ -58,7 +58,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 		const gravity_balls_button = new Button(() => {
 
 			button.setText("Baseballs").setIsEnabled(true);
-			
+
 			SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
 			missiles_sprite.filters = [new GrayscaleFilter()];
 			gravity_balls_sprite.filters = null;
@@ -81,7 +81,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 		const missiles_button = new Button(() => {
 
 			button.setText("Missiles").setIsEnabled(true);
-			
+
 			SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
 			gravity_balls_sprite.filters = [new GrayscaleFilter()];
 			missiles_sprite.filters = null;
@@ -111,7 +111,6 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 	}
 
 	public update(_framesPassed: number) {
-		//this.bg_container.hover();
 	}
 
 	public resize(scale: number): void {
