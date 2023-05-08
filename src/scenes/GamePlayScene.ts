@@ -1358,8 +1358,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerGroundBombs
 
-	private playerGroundBombSizeWidth: number = 60;
-	private playerGroundBombSizeHeight: number = 60;
+	private playerGroundBombSizeWidth: number = 65;
+	private playerGroundBombSizeHeight: number = 65;
 
 	private playerGroundBombGameObjects: Array<PlayerGroundBomb> = [];
 	private playerHonkBusterTemplate: number = 0;
@@ -2189,8 +2189,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region VehicleEnemys	
 
-	private vehicleEnemySizeWidth: number = 260;
-	private vehicleEnemySizeHeight: number = 260;
+	private vehicleEnemySizeWidth: number = 250;
+	private vehicleEnemySizeHeight: number = 250;
 
 	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
 
