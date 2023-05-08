@@ -2124,8 +2124,8 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly vehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private vehicleEnemyPopDelay: number = 15;
 
-	private soundPollutionDamageDelay: number = 12;
-	private readonly soundPollutionDamageDelayDefault: number = 12;
+	private soundPollutionDamageDelay: number = 15;
+	private readonly soundPollutionDamageDelayDefault: number = 15;
 
 	private spawnVehicleEnemys() {
 
