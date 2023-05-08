@@ -3029,7 +3029,7 @@ export class GamePlayScene extends Container implements IScene {
 
 					if (ufoBoss) {
 
-						ufoBossRocketSeeking.seek(this.player.getCloseBounds());
+						ufoBossRocketSeeking.follow(this.player.getCloseBounds());
 
 						if (Constants.checkCloseCollision(ufoBossRocketSeeking, this.player)) {
 							ufoBossRocketSeeking.setBlast();

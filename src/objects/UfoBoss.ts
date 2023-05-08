@@ -81,14 +81,14 @@ export class UfoBoss extends UfoBossBase {
 		}
 	}
 
-	override seekPlayer(target: Rectangle) {
+	override follow(target: Rectangle) {
 		this.changeMovementPatternDelay -= 0.1;
 
 		if (this.changeMovementPatternDelay < 0) {
 			this.randomizeMovementPattern();
 		}
 
-		super.seekPlayer(target);
+		super.follow(target);
 	}	
 
 	private moveInIsometricSquares(sceneWidth: number, sceneHeight: number) {
@@ -297,7 +297,7 @@ export class UfoBoss extends UfoBossBase {
 	move(sceneWidth: number, sceneHeight: number, playerPoint: Rectangle) {
 		switch (this.movementPattern) {
 			case UfoBossMovementPattern.PLAYER_SEEKING:
-				this.seekPlayer(playerPoint);
+				this.follow(playerPoint);
 				break;
 			case UfoBossMovementPattern.ISOMETRIC_SQUARE:
 				this.moveInIsometricSquares(sceneWidth, sceneHeight);

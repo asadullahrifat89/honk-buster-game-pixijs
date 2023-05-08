@@ -49,6 +49,6 @@ export class PlayerRocketBullsEye extends SeekingRocketBase {
     }
 
     move() {
-        this.seek(this.targetHitbox);
+        this.follow(this.targetHitbox);
     }
 }

@@ -45,7 +45,7 @@ export class MafiaBossRocketBullsEye extends SeekingRocketBase {
 	}
 
 	move() {
-		this.seek(this.targetHitbox);
+		this.follow(this.targetHitbox);
 	}
 }
 

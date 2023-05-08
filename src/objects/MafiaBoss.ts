@@ -81,14 +81,14 @@ export class MafiaBoss extends UfoBossBase {
 		}
 	}
 
-	override seekPlayer(target: Rectangle) {
+	override follow(target: Rectangle) {
 		this.changeMovementPatternDelay -= 0.1;
 
 		if (this.changeMovementPatternDelay < 0) {
 			this.randomizeMovementPattern();
 		}
 
-		super.seekPlayer(target);
+		super.follow(target);
 	}	
 
 	private moveRightLeft(sceneWidth: number) {
@@ -221,7 +221,7 @@ export class MafiaBoss extends UfoBossBase {
 	move(sceneWidth: number, sceneHeight: number, playerPoint: Rectangle) {
 		switch (this.movementPattern) {
 			case MafiaBossMovementPattern.PLAYER_SEEKING:
-				this.seekPlayer(playerPoint);
+				this.follow(playerPoint);
 				break;
 			case MafiaBossMovementPattern.RECTANGULAR_SQUARE:
 				this.moveInRectangularSquares(sceneWidth, sceneHeight);

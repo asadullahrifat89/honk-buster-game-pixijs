@@ -56,7 +56,7 @@ export class SeekingRocketBase extends GameObjectContainer {
 		}
 	}
 
-	seek(target: Rectangle) {
+	follow(target: Rectangle) {
 
 		let left = this.getLeft();
 		let top = this.getTop();
@@ -70,7 +70,7 @@ export class SeekingRocketBase extends GameObjectContainer {
 		// move up
 		if (targetY < rocketY - this.grace) {
 			var distance = Math.abs(targetY - rocketY);
-			let speed = this.calculateSpeed(distance);
+			let speed = this.getFollowingSpeed(distance);
 
 			this.y = (top - speed);
 		}
@@ -78,7 +78,7 @@ export class SeekingRocketBase extends GameObjectContainer {
 		// move down
 		if (targetY > rocketY + this.grace) {
 			var distance = Math.abs(targetY - rocketY);
-			let speed = this.calculateSpeed(distance);
+			let speed = this.getFollowingSpeed(distance);
 
 			this.y = (top + speed);
 		}
@@ -86,21 +86,21 @@ export class SeekingRocketBase extends GameObjectContainer {
 		// move left
 		if (targetX < rocketX - this.grace) {
 			var distance = Math.abs(targetX - rocketX);
-			let speed = this.calculateSpeed(distance);
+			let speed = this.getFollowingSpeed(distance);
 
 			this.x = (left - speed);
 		}
-		
+
 		// move right
 		if (targetX > rocketX + this.grace) {
 			var distance = Math.abs(targetX - rocketX);
-			let speed = this.calculateSpeed(distance);
+			let speed = this.getFollowingSpeed(distance);
 
 			this.x = (left + speed);
 		}
 	}
 
-	private calculateSpeed(distance: number): number {
+	private getFollowingSpeed(distance: number): number {
 		var speed = distance / this.lag;
 		return speed;
 	}
