@@ -68,7 +68,7 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly zombieBossReleaseLimit: number = 15;
 	private readonly zombieBossCheckpoint: GameCheckpoint;
 
-	private readonly mafiaBossReleasePoint: number = 5; // 145
+	private readonly mafiaBossReleasePoint: number = 145; // 145
 	private readonly mafiaBossReleaseLimit: number = 15;
 	private readonly mafiaBossCheckpoint: GameCheckpoint;
 
@@ -1224,8 +1224,6 @@ export class GamePlayScene extends Container implements IScene {
 
 			if (this.playerLowHealthExplosionDelay < 0) {
 
-				// get all the playeres and check			
-
 				if (this.player) {
 					this.generateSmokeExplosion(this.player); // generate smoke at 50
 
@@ -1848,19 +1846,19 @@ export class GamePlayScene extends Container implements IScene {
 			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
 
 			if (ufoBossRocketSeeking) {
-				playerRocketBullsEye.setTarget(ufoBossRocketSeeking.getCloseBounds());
+				playerRocketBullsEye.setDirectTarget(ufoBossRocketSeeking.getCloseBounds());
 			}
 			else if (ufoEnemy) {
-				playerRocketBullsEye.setTarget(ufoEnemy.getCloseBounds());
+				playerRocketBullsEye.setDirectTarget(ufoEnemy.getCloseBounds());
 			}
 			else if (ufoBoss) {
-				playerRocketBullsEye.setTarget(ufoBoss.getCloseBounds());
+				playerRocketBullsEye.setDirectTarget(ufoBoss.getCloseBounds());
 			}
 			else if (zombieBoss) {
-				playerRocketBullsEye.setTarget(zombieBoss.getCloseBounds());
+				playerRocketBullsEye.setDirectTarget(zombieBoss.getCloseBounds());
 			}
 			else if (mafiaBoss) {
-				playerRocketBullsEye.setTarget(mafiaBoss.getCloseBounds());
+				playerRocketBullsEye.setDirectTarget(mafiaBoss.getCloseBounds());
 			}
 
 			playerRocketBullsEye.enableRendering();
@@ -3624,7 +3622,7 @@ export class GamePlayScene extends Container implements IScene {
 					mafiaBossRocketBullsEye.reset();
 					mafiaBossRocketBullsEye.reposition(mafiaBoss);
 					mafiaBossRocketBullsEye.setPopping();
-					mafiaBossRocketBullsEye.setTarget(this.player.getCloseBounds());
+					mafiaBossRocketBullsEye.setDirectTarget(this.player.getCloseBounds());
 					mafiaBossRocketBullsEye.enableRendering();
 				}
 
@@ -4058,7 +4056,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.spawnHonks();
 		this.spawnVehicleBossRockets();
-				
+
 		this.spawnSideWalksBottom();
 		this.spawnSmokeExplosions();
 
@@ -4182,7 +4180,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateMessageBubbles();
 	}
 
-	
+
 
 	//#endregion
 

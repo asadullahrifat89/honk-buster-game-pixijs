@@ -1,58 +1,57 @@
 ﻿import { Rectangle } from 'pixi.js';
-import { Constants } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
-import { SceneManager } from '../managers/SceneManager';
 
 
 export class SeekingRocketBase extends GameObjectContainer {
 
 	private readonly grace: number = 10;
 	private readonly lag: number = 50;
-	public targetHitbox: Rectangle = new Rectangle();
+	public directTarget: Rectangle = new Rectangle();
 
-	setTarget(target: Rectangle) {
+	setDirectTarget(target: Rectangle) {
+
 		let rocketX = this.getLeft() + this.width / 2;
 		let rocketY = this.getTop() + this.height / 2;
 
 		let targetX = target.x + target.width / 2;
 		let targetY = target.y + target.height / 2;
 
-		var scaling = SceneManager.scaling;
+		//var scaling = SceneManager.scaling;
 
 		// move up
 		if (targetY < rocketY) {
 			var distance = Math.abs(targetY - rocketY);
-			this.targetHitbox.y = targetY - distance;
+			this.directTarget.y = targetY - distance;
 
-			if (this.targetHitbox.y > 0)
-				this.targetHitbox.y -= distance;
+			//if (this.directTarget.y > 0)
+			//	this.directTarget.y -= distance;
 		}
 
 		// move down
 		if (targetY > rocketY) {
 			var distance = Math.abs(targetY - rocketY);
-			this.targetHitbox.y = targetY + distance;
+			this.directTarget.y = targetY + distance;
 
-			if (this.targetHitbox.y < Constants.DEFAULT_GAME_VIEW_HEIGHT * scaling)
-				this.targetHitbox.y += distance;
+			//if (this.directTarget.y < Constants.DEFAULT_GAME_VIEW_HEIGHT * scaling)
+			//	this.directTarget.y += distance;
 		}
 
 		// move left
 		if (targetX < rocketX) {
 			var distance = Math.abs(targetX - rocketX);
-			this.targetHitbox.x = targetX - distance;
+			this.directTarget.x = targetX - distance;
 
-			if (this.targetHitbox.x > 0)
-				this.targetHitbox.x -= distance;
+			//if (this.directTarget.x > 0)
+			//	this.directTarget.x -= distance;
 		}
 
 		// move right
 		if (targetX > rocketX) {
 			var distance = Math.abs(targetX - rocketX);
-			this.targetHitbox.x = targetX + distance;
+			this.directTarget.x = targetX + distance;
 
-			if (this.targetHitbox.x < Constants.DEFAULT_GAME_VIEW_WIDTH * scaling)
-				this.targetHitbox.x += distance;
+			//if (this.directTarget.x < Constants.DEFAULT_GAME_VIEW_WIDTH * scaling)
+			//	this.directTarget.x += distance;
 		}
 	}
 
@@ -152,6 +151,6 @@ export class SeekingRocketBase extends GameObjectContainer {
 	private getDirectingSpeed(distance: number): number {
 		var speed = (1.5 / 100 * distance);
 		return speed;
-	}	
+	}
 }
 

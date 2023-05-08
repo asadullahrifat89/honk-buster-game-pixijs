@@ -21,7 +21,7 @@ export class MafiaBossRocketBullsEye extends SeekingRocketBase {
 		this.angle = 0;
 		this.isBlasting = false;
 		this.autoBlastDelay = this.autoBlastDelayDefault;
-		this.targetHitbox = new Rectangle();
+		this.directTarget = new Rectangle();
 
 		SoundManager.play(SoundType.BALL_LAUNCH);
 	}
@@ -45,7 +45,7 @@ export class MafiaBossRocketBullsEye extends SeekingRocketBase {
 	}
 
 	move() {
-		this.direct(this.targetHitbox);
+		this.direct(this.directTarget);
 	}
 }
 
