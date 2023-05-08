@@ -104,5 +104,54 @@ export class SeekingRocketBase extends GameObjectContainer {
 		var speed = distance / this.lag;
 		return speed;
 	}
+
+	direct(target: Rectangle) {
+
+		let left = this.getLeft();
+		let top = this.getTop();
+
+		let rocketX = left + this.width / 2;
+		let rocketY = top + this.height / 2;
+
+		let targetX = target.x + target.width / 2;
+		let targetY = target.y + target.height / 2;
+
+		// move up
+		if (targetY < rocketY - this.grace) {
+			var distance = Math.abs(targetY - rocketY);
+			let speed = this.getDirectingSpeed(distance);
+
+			this.y = (top - speed);
+		}
+
+		// move down
+		if (targetY > rocketY + this.grace) {
+			var distance = Math.abs(targetY - rocketY);
+			let speed = this.getDirectingSpeed(distance);
+
+			this.y = (top + speed);
+		}
+
+		// move left
+		if (targetX < rocketX - this.grace) {
+			var distance = Math.abs(targetX - rocketX);
+			let speed = this.getDirectingSpeed(distance);
+
+			this.x = (left - speed);
+		}
+
+		// move right
+		if (targetX > rocketX + this.grace) {
+			var distance = Math.abs(targetX - rocketX);
+			let speed = this.getDirectingSpeed(distance);
+
+			this.x = (left + speed);
+		}
+	}
+
+	private getDirectingSpeed(distance: number): number {
+		var speed = (1.5 / 100 * distance);
+		return speed;
+	}	
 }
 

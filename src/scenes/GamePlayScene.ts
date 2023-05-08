@@ -1360,8 +1360,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerGroundBombs
 
-	private playerGroundBombSizeWidth: number = 70;
-	private playerGroundBombSizeHeight: number = 70;
+	private playerGroundBombSizeWidth: number = 55;
+	private playerGroundBombSizeHeight: number = 55;
 
 	private playerGroundBombGameObjects: Array<PlayerGroundBomb> = [];
 	private playerHonkBusterTemplate: number = 0;
@@ -1800,8 +1800,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerRocketBullsEyes
 
-	private playerRocketBullsEyeSizeWidth: number = 90;
-	private playerRocketBullsEyeSizeHeight: number = 90;
+	private playerRocketBullsEyeSizeWidth: number = 75;
+	private playerRocketBullsEyeSizeHeight: number = 75;
 
 	private playerRocketBullsEyeGameObjects: Array<PlayerRocketBullsEye> = [];
 
@@ -3576,8 +3576,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region MafiaBossRocketBullsEyes
 
-	private mafiaBossRocketBullsEyeSizeWidth: number = 90;
-	private mafiaBossRocketBullsEyeSizeHeight: number = 90;
+	private mafiaBossRocketBullsEyeSizeWidth: number = 75;
+	private mafiaBossRocketBullsEyeSizeHeight: number = 75;
 
 	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossRocketBullsEye> = [];
 
