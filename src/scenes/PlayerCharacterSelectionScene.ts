@@ -56,7 +56,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 		player_1_sprite.y = 0;
 		const player_1_button = new Button(() => {
 
-			SoundManager.play(SoundType.OPTION_SELECT);
+			SoundManager.play(SoundType.ITEM_SELECT);
 
 			player_1_sprite.filters = null;
 			player_2_sprite.filters = [new GrayscaleFilter()];
@@ -79,7 +79,8 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 		player_2_sprite.x = 0;
 		player_2_sprite.y = 0;
 		const player_2_button = new Button(() => {
-			SoundManager.play(SoundType.OPTION_SELECT);
+
+			SoundManager.play(SoundType.ITEM_SELECT);
 
 			player_1_sprite.filters = null;
 			player_2_sprite.filters = [new GrayscaleFilter()];

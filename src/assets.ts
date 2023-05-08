@@ -165,6 +165,7 @@ export const manifest: ResolverManifest = {
 				"ambience_3": "./sounds/ambience_3.mp3",
 
 				"boost_acquired": "./sounds/boost_acquired.mp3",
+				"item_select": "./sounds/item_select.mp3",
 
 				"ball_launch_1": "./sounds/ball_launch_1.mp3",
 				"ball_launch_2": "./sounds/ball_launch_2.mp3",

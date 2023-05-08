@@ -59,7 +59,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 
 			button.setText("Air Balloon").setIsEnabled(true);
 
-			SoundManager.play(SoundType.OPTION_SELECT);
+			SoundManager.play(SoundType.ITEM_SELECT);
 
 			chopper_sprite.filters = [new GrayscaleFilter()];
 			air_balloon_sprite.filters = null;
@@ -84,7 +84,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 
 			button.setText("Chopper").setIsEnabled(true);
 
-			SoundManager.play(SoundType.OPTION_SELECT);
+			SoundManager.play(SoundType.ITEM_SELECT);
 
 			air_balloon_sprite.filters = [new GrayscaleFilter()];
 			chopper_sprite.filters = null;

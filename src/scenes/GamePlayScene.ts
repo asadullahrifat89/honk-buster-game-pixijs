@@ -268,7 +268,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	private generateHonk(source: GameObjectContainer) {
 
-		if (source.getLeft() - 50 > 0 && source.getTop() - 50 > 0) {
+		if (source.getLeft() - 25 > 0 && source.getTop() - 25 > 0) {
+			
 			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
