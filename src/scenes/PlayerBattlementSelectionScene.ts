@@ -43,7 +43,7 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 		this.bg_container.addChild(bg_sprite);
 		this.uiContainer.addChild(this.bg_container);
 
-		// title
+		//#region title
 		const title = new Text("Select Battlement", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 35,
@@ -54,7 +54,9 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
-		// character
+		//#endregion
+
+		//#region character
 		let characterTexture: Texture = Texture.from("player_1_character");
 		let characterName: string = "";
 
@@ -71,7 +73,7 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 				characterTexture = Texture.from("player_1_character");
 				characterName = "Character";
 			} break;
-		}
+		}		
 
 		const character_sprite: GameObjectSprite = new GameObjectSprite(characterTexture);
 		character_sprite.width = 208 / 2;
@@ -93,7 +95,9 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 		character_msg.setPosition(character_button.x + character_button.width / 2, (character_button.y + character_button.height / 2) + 25);
 		this.uiContainer.addChild(character_msg);
 
-		// ride
+		//#endregion
+
+		//#region ride
 		let rideTexture: Texture = Texture.from("player_ride_1");
 		let rideName: string = "";
 
@@ -132,7 +136,9 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 		ride_msg.setPosition(ride_button.x + ride_button.width / 2, (ride_button.y + ride_button.height / 2) + 25);
 		this.uiContainer.addChild(ride_msg);
 
-		// ground_bomb
+		//#endregion
+
+		//#region ground_bomb
 		let ground_bombTexture: Texture = Texture.from("player_honk_bomb_explosive_1");
 		let ground_bombName: string = "";
 
@@ -175,7 +181,9 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 		ground_bomb_msg.setPosition(ground_bomb_button.x + ground_bomb_button.width / 2, (ground_bomb_button.y + ground_bomb_button.height / 2) + 25);
 		this.uiContainer.addChild(ground_bomb_msg);
 
-		// air_bomb
+		//#endregion
+
+		//#region air_bomb
 		let air_bombTexture: Texture = Texture.from("player_ball_2");
 		let air_bombName: string = "";
 
@@ -214,7 +222,9 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 		air_bomb_msg.setPosition(air_bomb_button.x + air_bomb_button.width / 2, (air_bomb_button.y + air_bomb_button.height / 2) + 25);
 		this.uiContainer.addChild(air_bomb_msg);
 
-		// next button
+		//#endregion
+
+		//#region next button
 		const button = new Button(() => {
 
 			if (button.getIsEnabled()) {
@@ -229,6 +239,8 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 		}).setText("Start").setIsEnabled(this.allSelectionsComplete());
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
 		this.uiContainer.addChild(button);
+
+		//#endregion
 	}
 
     private allSelectionsComplete(): boolean {

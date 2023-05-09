@@ -49,7 +49,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
-		// grenade
+		//#region grenade
 		const grenade_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_explosive_1"));
 		grenade_sprite.width = 256 / 2;
 		grenade_sprite.height = 256 / 2;
@@ -57,8 +57,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		grenade_sprite.y = 0;
 		const grenade_button = new Button(() => {
 
-			button.setText("Grenades").setIsEnabled(true);
-			/*SoundManager.play(SoundType.OPTION_SELECT);*/
+			button.setText("Grenades").setIsEnabled(true);			
 			SoundManager.play(SoundType.CRACKER_BLAST, 0.8);
 			grenade_sprite.filters = null;
 			trash_sprite.filters = [new GrayscaleFilter()];
@@ -73,7 +72,9 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		grenade_msg.setPosition(grenade_button.x + grenade_button.width / 2, grenade_button.y + grenade_button.height / 2);
 		this.uiContainer.addChild(grenade_msg);
 
-		// trash
+		//#endregion
+
+		//#region trash
 		const trash_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_trash_1"));
 		trash_sprite.width = 256 / 2;
 		trash_sprite.height = 256 / 2;
@@ -97,7 +98,9 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		trash_msg.setPosition(trash_button.x + trash_button.width / 2, trash_button.y + trash_button.height / 2);
 		this.uiContainer.addChild(trash_msg);
 
-		// dynamite
+		//#endregion
+
+		//#region dynamite
 		const dynamite_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_sticky_2"));
 		dynamite_sprite.width = 256 / 2;
 		dynamite_sprite.height = 256 / 2;
@@ -120,6 +123,8 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		const dynamite_msg = new MessageBubble(0, "Lvl " + Constants.DYNAMITE_UNLOCK_LEVEL, 20);
 		dynamite_msg.setPosition(dynamite_button.x + dynamite_button.width / 2, dynamite_button.y + dynamite_button.height / 2);
 		this.uiContainer.addChild(dynamite_msg);
+
+		//#endregion
 
 		const button = new Button(() => {
 

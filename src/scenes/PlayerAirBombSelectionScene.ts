@@ -39,6 +39,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 
 		this.uiContainer.addChild(this.bg_container);
 
+		//#region title
 		const title = new Text("Select an Air Bomb", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 35,
@@ -49,7 +50,9 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
-		// gravity_balls
+		//#endregion
+
+		//#region gravity_balls
 		const gravity_balls_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ball_2"));
 		gravity_balls_sprite.width = 256 / 2.5;
 		gravity_balls_sprite.height = 256 / 2.5;
@@ -72,7 +75,9 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 		gravity_balls_msg.setPosition(gravity_balls_button.x + gravity_balls_button.width / 2, gravity_balls_button.y + gravity_balls_button.height / 2);
 		this.uiContainer.addChild(gravity_balls_msg);
 
-		// missiles
+		//#endregion
+
+		//#region missiles
 		const missiles_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_rocket_1"));
 		missiles_sprite.width = 256 / 2;
 		missiles_sprite.height = 256 / 2;
@@ -94,6 +99,8 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 		const missiles_msg = new MessageBubble(0, "Lvl " + Constants.MISSILE_UNLOCK_LEVEL, 20);
 		missiles_msg.setPosition(missiles_button.x + missiles_button.width / 2, missiles_button.y + missiles_button.height / 2);
 		this.uiContainer.addChild(missiles_msg);
+
+		//#endregion
 
 		const button = new Button(() => {
 			if (button.getIsEnabled()) {

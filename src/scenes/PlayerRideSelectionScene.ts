@@ -49,7 +49,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
-		// air balloon
+		//#region air balloon
 		const air_balloon_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_1"));
 		air_balloon_sprite.width = 256 / 2;
 		air_balloon_sprite.height = 256 / 2;
@@ -74,7 +74,10 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		air_balloon_msg.setPosition(air_balloon_button.x + air_balloon_button.width / 2, air_balloon_button.y + air_balloon_button.height / 2);
 		this.uiContainer.addChild(air_balloon_msg);
 
-		// chopper
+		//#endregion
+
+		//#region chopper
+
 		const chopper_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_2"));
 		chopper_sprite.width = 256 / 2;
 		chopper_sprite.height = 256 / 2;
@@ -98,6 +101,8 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		const chopper_msg = new MessageBubble(0, "Lvl " + Constants.CHOPPER_UNLOCK_LEVEL, 20);
 		chopper_msg.setPosition(chopper_button.x + chopper_button.width / 2, chopper_button.y + chopper_button.height / 2);
 		this.uiContainer.addChild(chopper_msg);
+
+		//#endregion
 
 		const button = new Button(() => {
 			if (button.getIsEnabled()) {
