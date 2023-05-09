@@ -37,8 +37,12 @@ export class Explosion extends GameObjectContainer {
 				const atlasData: SpriteSheetJson = Constants.RING_EXPLOSION_JSON;
 				return await this.loadAnimationSprite(atlasData, 0.2);
 			}
-			case ExplosionType.SMOKE_EXPLOSION: {
-				const atlasData: SpriteSheetJson = Constants.SMOKE_EXPLOSION_JSON;
+			case ExplosionType.RING_SMOKE_EXPLOSION: {
+				const atlasData: SpriteSheetJson = Constants.RING_SMOKE_EXPLOSION_JSON;
+				return await this.loadAnimationSprite(atlasData);
+			}
+			case ExplosionType.BLOW_SMOKE_EXPLOSION: {
+				const atlasData: SpriteSheetJson = Constants.BLOW_SMOKE_EXPLOSION_JSON;
 				return await this.loadAnimationSprite(atlasData);
 			}
 			case ExplosionType.FLASH_EXPLOSION: {
