@@ -76,6 +76,8 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 
 		//#region trash
 
+		Constants.TRASH_BIN_UNLOCKED = Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL;
+
 		const trash_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_trash_1"));
 		trash_sprite.width = 256 / 2;
 		trash_sprite.height = 256 / 2;
@@ -92,7 +94,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = 1;
 
 		}).setBackground(trash_sprite);
-		trash_button.setPosition(this.uiContainer.width / 2 - trash_sprite.width / 2, (this.uiContainer.height / 2 - trash_sprite.height / 2) + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL);
+		trash_button.setPosition(this.uiContainer.width / 2 - trash_sprite.width / 2, (this.uiContainer.height / 2 - trash_sprite.height / 2) + 10).setIsEnabled(Constants.TRASH_BIN_UNLOCKED);
 		this.uiContainer.addChild(trash_button);
 
 		const trash_msg = new MessageBubble(0, "Lvl " + Constants.TRASH_BIN_UNLOCK_LEVEL, 20);
@@ -102,6 +104,9 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		//#endregion
 
 		//#region dynamite
+
+		Constants.DYNAMITE_UNLOCKED = Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL;
+
 		const dynamite_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_sticky_2"));
 		dynamite_sprite.width = 256 / 2;
 		dynamite_sprite.height = 256 / 2;
@@ -118,7 +123,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = 2;
 
 		}).setBackground(dynamite_sprite);
-		dynamite_button.setPosition(this.uiContainer.width / 2 + dynamite_sprite.width, (this.uiContainer.height / 2 - dynamite_sprite.height / 2) + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL);
+		dynamite_button.setPosition(this.uiContainer.width / 2 + dynamite_sprite.width, (this.uiContainer.height / 2 - dynamite_sprite.height / 2) + 10).setIsEnabled(Constants.DYNAMITE_UNLOCKED);
 		this.uiContainer.addChild(dynamite_button);
 
 		const dynamite_msg = new MessageBubble(0, "Lvl " + Constants.DYNAMITE_UNLOCK_LEVEL, 20);

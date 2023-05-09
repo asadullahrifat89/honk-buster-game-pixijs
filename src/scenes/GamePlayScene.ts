@@ -683,7 +683,6 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (gameObject.x - (this.sideWalkPillarWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - (this.sideWalkPillarWidth + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
-
 				}
 			});
 		}
@@ -4052,7 +4051,7 @@ export class GamePlayScene extends Container implements IScene {
 		SoundManager.stop(SoundType.CHOPPER_HOVERING);
 
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
-		Constants.GAME_LEVEL = this.gameLevelBar.getScore();
+		Constants.GAME_LEVEL = this.gameLevelBar.getScore() + 5;
 
 		this.removeChild(this.sceneContainer);
 		SceneManager.changeScene(new GameOverScene());

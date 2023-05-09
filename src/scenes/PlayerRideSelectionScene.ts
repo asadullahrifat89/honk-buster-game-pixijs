@@ -78,6 +78,8 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 
 		//#region chopper
 
+		Constants.CHOPPER_UNLOCKED = Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL;
+
 		const chopper_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_2"));
 		chopper_sprite.width = 256 / 2;
 		chopper_sprite.height = 256 / 2;
@@ -95,7 +97,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 1;
 
 		}).setBackground(chopper_sprite);
-		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_sprite.width / 2) + 100, this.uiContainer.height / 2 - chopper_sprite.height / 2 + 10).setIsEnabled(Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL);
+		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_sprite.width / 2) + 100, this.uiContainer.height / 2 - chopper_sprite.height / 2 + 10).setIsEnabled(Constants.CHOPPER_UNLOCKED);
 		this.uiContainer.addChild(chopper_button);
 
 		const chopper_msg = new MessageBubble(0, "Lvl " + Constants.CHOPPER_UNLOCK_LEVEL, 20);

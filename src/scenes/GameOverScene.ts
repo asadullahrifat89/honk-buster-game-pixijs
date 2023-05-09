@@ -202,25 +202,29 @@ export class GameOverScene extends Container implements IScene {
 						this.generateOnScreenMessage("Extra Bombs Acquired!");
 					}
 				}
-				else if (Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL) {
+				else if (Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL && !Constants.CHOPPER_UNLOCKED) {
 					this.unlockablePopDelay = this.unlockablePopDelayDefault;
 					SoundManager.play(SoundType.BOOST_ACQUIRED);
 					this.generateOnScreenMessage("New Ride Unlocked!", Texture.from("player_ride_2"));
+					Constants.CHOPPER_UNLOCKED = true;
 				}
-				else if (Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL) {
+				else if (Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL && !Constants.TRASH_BIN_UNLOCKED) {
 					this.unlockablePopDelay = this.unlockablePopDelayDefault;
 					SoundManager.play(SoundType.BOOST_ACQUIRED);
 					this.generateOnScreenMessage("New Ground Bomb Unlocked!", Texture.from("player_honk_bomb_trash_1"));
+					Constants.TRASH_BIN_UNLOCKED = true;
 				}
-				else if (Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL) {
+				else if (Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL && !Constants.DYNAMITE_UNLOCKED) {
 					this.unlockablePopDelay = this.unlockablePopDelayDefault;
 					SoundManager.play(SoundType.BOOST_ACQUIRED);
 					this.generateOnScreenMessage("New Ground Bomb Unlocked!", Texture.from("player_honk_bomb_sticky_2"));
+					Constants.DYNAMITE_UNLOCKED = true;
 				}
-				else if (Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL) {
+				else if (Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL && !Constants.MISSILE_UNLOCKED) {
 					this.unlockablePopDelay = this.unlockablePopDelayDefault;
 					SoundManager.play(SoundType.BOOST_ACQUIRED);
 					this.generateOnScreenMessage("New Air Bomb Unlocked!", Texture.from("player_rocket_1"));
+					Constants.MISSILE_UNLOCKED = true;
 				}
 			}
 		}
