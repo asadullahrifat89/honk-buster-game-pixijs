@@ -43,6 +43,8 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 		this.bg_container.addChild(bg_sprite);
 		this.uiContainer.addChild(this.bg_container);
 
+		const optionsGap = 256;
+
 		//#region title
 		const title = new Text("Select Battlement", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
@@ -57,6 +59,7 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 		//#endregion
 
 		//#region character
+
 		let characterTexture: Texture = Texture.from("player_1_character");
 		let characterName: string = "";
 
@@ -71,7 +74,7 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 			} break;
 			default: {
 				characterTexture = Texture.from("player_1_character");
-				characterName = "Character";
+				characterName = "Character?";
 			} break;
 		}		
 
@@ -88,7 +91,7 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 			SceneManager.changeScene(new PlayerCharacterSelectionScene());
 
 		}).setBackground(character_sprite);
-		character_button.setPosition((this.uiContainer.width / 2 - 256 * 2), (this.uiContainer.height / 2 - character_sprite.height / 2)); // character button position
+		character_button.setPosition((this.uiContainer.width / 2 - optionsGap * 2), (this.uiContainer.height / 2 - character_sprite.height / 2)); // character button position
 		this.uiContainer.addChild(character_button);
 
 		const character_msg = new MessageBubble(0, characterName, 20);
@@ -112,7 +115,7 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 			} break;
 			default: {
 				rideTexture = Texture.from("player_ride_1");
-				rideName = "Ride";
+				rideName = "Ride?";
 			} break;
 		}
 
@@ -129,7 +132,7 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 			SceneManager.changeScene(new PlayerRideSelectionScene());
 
 		}).setBackground(ride_sprite);
-		ride_button.setPosition(this.uiContainer.width / 2 - 256 * 1, (this.uiContainer.height / 2 - ride_sprite.height / 2)); // ride button position
+		ride_button.setPosition(this.uiContainer.width / 2 - optionsGap * 1, (this.uiContainer.height / 2 - ride_sprite.height / 2)); // ride button position
 		this.uiContainer.addChild(ride_button);
 
 		const ride_msg = new MessageBubble(0, rideName, 20);
@@ -157,13 +160,13 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 			} break;
 			default: {
 				ground_bombTexture = Texture.from("player_honk_bomb_explosive_1");
-				ground_bombName = "Ground Bombs";
+				ground_bombName = "Ground Bomb?";
 			} break;
 		}
 
 		const ground_bomb_sprite: GameObjectSprite = new GameObjectSprite(ground_bombTexture);
-		ground_bomb_sprite.width = 256 / 2;
-		ground_bomb_sprite.height = 256 / 2;
+		ground_bomb_sprite.width = 256 / 2.5;
+		ground_bomb_sprite.height = 256 / 2.5;
 		ground_bomb_sprite.x = 0;
 		ground_bomb_sprite.y = 0;
 		ground_bomb_sprite.filters = Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE == -1 ? [new GrayscaleFilter()] : null;
@@ -174,7 +177,7 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 			SceneManager.changeScene(new PlayerGroundBombSelectionScene());
 
 		}).setBackground(ground_bomb_sprite);
-		ground_bomb_button.setPosition((this.uiContainer.width / 2 - 256 * 0), (this.uiContainer.height / 2 - ground_bomb_sprite.height / 2)); // ground_bomb button position
+		ground_bomb_button.setPosition((this.uiContainer.width / 2 - optionsGap * 0), (this.uiContainer.height / 2 - ground_bomb_sprite.height / 2)); // ground_bomb button position
 		this.uiContainer.addChild(ground_bomb_button);
 
 		const ground_bomb_msg = new MessageBubble(0, ground_bombName, 20);
@@ -198,13 +201,13 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 			} break;
 			default: {
 				air_bombTexture = Texture.from("player_ball_2");
-				air_bombName = "Air Bombs";
+				air_bombName = "Air Bomb?";
 			} break;
 		}
 
 		const air_bomb_sprite: GameObjectSprite = new GameObjectSprite(air_bombTexture);
-		air_bomb_sprite.width = 256 / 3;
-		air_bomb_sprite.height = 256 / 3;
+		air_bomb_sprite.width = 256 / 3.5;
+		air_bomb_sprite.height = 256 / 3.5;
 		air_bomb_sprite.x = 0;
 		air_bomb_sprite.y = 0;
 		air_bomb_sprite.filters = Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE == -1 ? [new GrayscaleFilter()] : null;
@@ -215,7 +218,7 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 			SceneManager.changeScene(new PlayerAirBombSelectionScene());
 
 		}).setBackground(air_bomb_sprite);
-		air_bomb_button.setPosition((this.uiContainer.width / 2 + 256), (this.uiContainer.height / 2 - air_bomb_sprite.height / 2)); // air_bomb button position
+		air_bomb_button.setPosition((this.uiContainer.width / 2 + optionsGap), (this.uiContainer.height / 2 - air_bomb_sprite.height / 2)); // air_bomb button position
 		this.uiContainer.addChild(air_bomb_button);
 
 		const air_bomb_msg = new MessageBubble(0, air_bombName, 20);

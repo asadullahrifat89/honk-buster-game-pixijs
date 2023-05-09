@@ -115,7 +115,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
 			}
 
-		}).setText("Next").setIsEnabled(false);
+		}).setText("Select").setIsEnabled(false);
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
 		this.uiContainer.addChild(button);
 	}
