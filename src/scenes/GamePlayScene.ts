@@ -683,7 +683,6 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (gameObject.x - (this.sideWalkPillarWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - (this.sideWalkPillarWidth + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
-
 				}
 			});
 		}

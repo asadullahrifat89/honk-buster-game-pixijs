@@ -107,7 +107,7 @@ export class GameOverScene extends Container implements IScene {
 		health_msg.setPosition(health_container.x + health_container.width - 30, health_container.y + health_container.height - health_msg.height);
 		health.addChild(health_msg);
 
-		health.setPosition((this.uiContainer.width / 2 - (health.width / 2) * 3), (this.uiContainer.height / 2 - health.height / 2) + 50);
+		health.setPosition((this.uiContainer.width / 2 - (health.width / 2) * 2), (this.uiContainer.height / 2 - health.height / 2) + 50);
 		this.uiContainer.addChild(health);
 
 		if (Constants.HEALTH_LEVEL_MAX > 1) {
@@ -139,7 +139,7 @@ export class GameOverScene extends Container implements IScene {
 		attack_msg.setPosition(attack_container.x + attack_container.width - 30, attack_container.y + attack_container.height - attack_msg.height);
 		attack.addChild(attack_msg);
 
-		attack.setPosition((this.uiContainer.width / 2 - (attack.width / 2) * 1), (this.uiContainer.height / 2 - attack.height / 2) + 50);
+		attack.setPosition((this.uiContainer.width / 2 - (attack.width / 2) * 0), (this.uiContainer.height / 2 - attack.height / 2) + 50);
 		this.uiContainer.addChild(attack);
 
 		if (Constants.ATTACK_LEVEL_MAX > 0) {
@@ -168,13 +168,17 @@ export class GameOverScene extends Container implements IScene {
 
 	public update() {
 
-		if (this.health.isAwaitingPop || this.attack.isAwaitingPop) { // only animate if any of the upgrades are applicable
+		if (Constants.HEALTH_LEVEL_MAX > 1 || Constants.ATTACK_LEVEL_MAX > 0 ||
+			Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL ||
+			Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL ||
+			Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL ||
+			Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL) { // only animate if any of the upgrades are applicable
 
 			this.unlockablePopDelay -= 0.1;
 
 			if (this.unlockablePopDelay <= 0) {
 
-				if (this.health.isAwaitingPop) {
+				if (Constants.HEALTH_LEVEL_MAX > 1 && this.health.isAwaitingPop) {
 					if (this.health.filters)
 						this.health.filters = null;
 
@@ -186,7 +190,7 @@ export class GameOverScene extends Container implements IScene {
 						this.generateOnScreenMessage("Extra Health Acquired!");
 					}
 				}
-				else if (this.attack.isAwaitingPop) {
+				else if (Constants.ATTACK_LEVEL_MAX > 0 && this.attack.isAwaitingPop) {
 					if (this.attack.filters)
 						this.attack.filters = null;
 
@@ -197,6 +201,30 @@ export class GameOverScene extends Container implements IScene {
 						SoundManager.play(SoundType.BOOST_ACQUIRED);
 						this.generateOnScreenMessage("Extra Bombs Acquired!");
 					}
+				}
+				else if (Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL && !Constants.CHOPPER_UNLOCKED) {
+					this.unlockablePopDelay = this.unlockablePopDelayDefault;
+					SoundManager.play(SoundType.BOOST_ACQUIRED);
+					this.generateOnScreenMessage("New Ride Unlocked!", Texture.from("player_ride_2"));
+					Constants.CHOPPER_UNLOCKED = true;
+				}
+				else if (Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL && !Constants.TRASH_BIN_UNLOCKED) {
+					this.unlockablePopDelay = this.unlockablePopDelayDefault;
+					SoundManager.play(SoundType.BOOST_ACQUIRED);
+					this.generateOnScreenMessage("New Ground Bomb Unlocked!", Texture.from("player_honk_bomb_trash_1"));
+					Constants.TRASH_BIN_UNLOCKED = true;
+				}
+				else if (Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL && !Constants.DYNAMITE_UNLOCKED) {
+					this.unlockablePopDelay = this.unlockablePopDelayDefault;
+					SoundManager.play(SoundType.BOOST_ACQUIRED);
+					this.generateOnScreenMessage("New Ground Bomb Unlocked!", Texture.from("player_honk_bomb_sticky_2"));
+					Constants.DYNAMITE_UNLOCKED = true;
+				}
+				else if (Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL && !Constants.MISSILE_UNLOCKED) {
+					this.unlockablePopDelay = this.unlockablePopDelayDefault;
+					SoundManager.play(SoundType.BOOST_ACQUIRED);
+					this.generateOnScreenMessage("New Air Bomb Unlocked!", Texture.from("player_rocket_1"));
+					Constants.MISSILE_UNLOCKED = true;
 				}
 			}
 		}
