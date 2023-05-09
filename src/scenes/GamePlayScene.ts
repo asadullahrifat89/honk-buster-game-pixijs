@@ -1275,7 +1275,7 @@ export class GamePlayScene extends Container implements IScene {
 
 							if (playerGroundBomb.awaitBlast()) {
 
-								let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerGroundBomb));
+								let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerGroundBomb));
 
 								if (vehicleEnemy) {
 									this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
@@ -1307,7 +1307,7 @@ export class GamePlayScene extends Container implements IScene {
 
 							if (playerGroundBomb.awaitBlast()) {
 
-								let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && x.willHonk && Constants.checkCloseCollision(x, playerGroundBomb));
+								let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerGroundBomb));
 
 								if (vehicleEnemy) {
 									this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
