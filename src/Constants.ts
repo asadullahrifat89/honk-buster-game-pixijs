@@ -204,12 +204,6 @@ export enum SoundType {
 	ITEM_SELECT,
 }
 
-export enum FacingDirection {
-	NONE,
-	LEFT,
-	RIGHT,
-}
-
 //#endregion
 
 export abstract class Constants {
