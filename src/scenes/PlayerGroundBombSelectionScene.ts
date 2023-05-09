@@ -1,5 +1,4 @@
 ﻿import { BlurFilter, Container, Text, Texture } from "pixi.js";
-import { GamePlayScene } from "./GamePlayScene";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -10,6 +9,7 @@ import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
 import { GrayscaleFilter } from "@pixi/filter-grayscale";
 import { MessageBubble } from "../controls/MessageBubble";
+import { PlayerBattlementSelectionScene } from "./PlayerBattlementSelectionScene";
 
 
 export class PlayerGroundBombSelectionScene extends Container implements IScene {
@@ -126,7 +126,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			if (button.getIsEnabled()) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
-				SceneManager.changeScene(new GamePlayScene());
+				SceneManager.changeScene(new PlayerBattlementSelectionScene());
 			}
 			else {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
