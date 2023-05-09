@@ -54,18 +54,6 @@ export class PlayerRide extends GameObjectContainer {
 		super();
 	}
 
-	reset() {
-		this.health = (this.hitPoint * 10) + (Constants.HEALTH_LEVEL_MAX * this.hitPoint); // add health upgrades
-		this.movementDirection = MovementDirection.None;
-		this.movementStopDelay = this.movementStopDelayDefault;
-		this.lastSpeed = 0;
-		this.rotation = 0;
-	}
-
-	reposition() {
-		this.setPosition((Constants.DEFAULT_GAME_VIEW_WIDTH / 2 - this.width / 2), (Constants.DEFAULT_GAME_VIEW_HEIGHT / 2 - this.height / 2));
-	}
-
 	setPlayerRideTemplate(playerRideTemplate: PlayerRideTemplate) {
 
 		this.playerRideTemplate = playerRideTemplate;
@@ -102,9 +90,22 @@ export class PlayerRide extends GameObjectContainer {
 			case PlayerRideTemplate.CHOPPER: {
 				this.addTexture(this.chopperBladesTexture);
 				this.chopperBladesSprite = this.getSpriteAt(1);
+				this.chopperBladesSprite.alpha = 1;
 			} break;
 			default: break;
 		}
+	}
+
+	reset() {
+		this.health = (this.hitPoint * 10) + (Constants.HEALTH_LEVEL_MAX * this.hitPoint); // add health upgrades
+		this.movementDirection = MovementDirection.None;
+		this.movementStopDelay = this.movementStopDelayDefault;
+		this.lastSpeed = 0;
+		this.rotation = 0;
+	}
+
+	reposition() {
+		this.setPosition((Constants.DEFAULT_GAME_VIEW_WIDTH / 2 - this.width / 2), (Constants.DEFAULT_GAME_VIEW_HEIGHT / 2 - this.height / 2));
 	}
 
 	setIdleStance() {

@@ -571,7 +571,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			var gameObject = this.sideWalkBottomGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {				
+			if (gameObject) {
 				gameObject.x = gameObject.width * -1;
 				gameObject.y = -1230;
 				gameObject.enableRendering();
