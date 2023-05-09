@@ -90,7 +90,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 
 			button.setText("Missiles").setIsEnabled(true);
 
-			SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
+			SoundManager.play(SoundType.ROCKET_LAUNCH, 0.3);
 			gravity_balls_sprite.filters = [new GrayscaleFilter()];
 			missiles_sprite.filters = null;
 			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = 1;

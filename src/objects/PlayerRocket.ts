@@ -42,7 +42,7 @@ export class PlayerRocket extends RocketBase {
 			} break;
 			case PlayerAirBombTemplate.ROCKETs: {
 				this.speed = 0; // starts with slow speed then gets fast
-				SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
+				SoundManager.play(SoundType.ROCKET_LAUNCH, 0.3);
 			} break;
 			default: break;
 		}
