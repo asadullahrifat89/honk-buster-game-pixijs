@@ -168,13 +168,17 @@ export class GameOverScene extends Container implements IScene {
 
 	public update() {
 
-		if (this.health.isAwaitingPop || this.attack.isAwaitingPop) { // only animate if any of the upgrades are applicable
+		if (Constants.HEALTH_LEVEL_MAX > 1 || Constants.ATTACK_LEVEL_MAX > 0 ||
+			Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL ||
+			Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL ||
+			Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL ||
+			Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL) { // only animate if any of the upgrades are applicable
 
 			this.unlockablePopDelay -= 0.1;
 
 			if (this.unlockablePopDelay <= 0) {
 
-				if (this.health.isAwaitingPop) {
+				if (Constants.HEALTH_LEVEL_MAX > 1 && this.health.isAwaitingPop) {
 					if (this.health.filters)
 						this.health.filters = null;
 
@@ -186,7 +190,7 @@ export class GameOverScene extends Container implements IScene {
 						this.generateOnScreenMessage("Extra Health Acquired!");
 					}
 				}
-				else if (this.attack.isAwaitingPop) {
+				else if (Constants.ATTACK_LEVEL_MAX > 0 && this.attack.isAwaitingPop) {
 					if (this.attack.filters)
 						this.attack.filters = null;
 
@@ -197,6 +201,26 @@ export class GameOverScene extends Container implements IScene {
 						SoundManager.play(SoundType.BOOST_ACQUIRED);
 						this.generateOnScreenMessage("Extra Bombs Acquired!");
 					}
+				}
+				else if (Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL) {
+					this.unlockablePopDelay = this.unlockablePopDelayDefault;
+					SoundManager.play(SoundType.BOOST_ACQUIRED);
+					this.generateOnScreenMessage("New Ride Unlocked!", Texture.from("player_ride_2"));
+				}
+				else if (Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL) {
+					this.unlockablePopDelay = this.unlockablePopDelayDefault;
+					SoundManager.play(SoundType.BOOST_ACQUIRED);
+					this.generateOnScreenMessage("New Ground Bomb Unlocked!", Texture.from("player_honk_bomb_trash_1"));
+				}
+				else if (Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL) {
+					this.unlockablePopDelay = this.unlockablePopDelayDefault;
+					SoundManager.play(SoundType.BOOST_ACQUIRED);
+					this.generateOnScreenMessage("New Ground Bomb Unlocked!", Texture.from("player_honk_bomb_sticky_2"));
+				}
+				else if (Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL) {
+					this.unlockablePopDelay = this.unlockablePopDelayDefault;
+					SoundManager.play(SoundType.BOOST_ACQUIRED);
+					this.generateOnScreenMessage("New Air Bomb Unlocked!", Texture.from("player_rocket_1"));
 				}
 			}
 		}

@@ -75,6 +75,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		//#endregion
 
 		//#region trash
+
 		const trash_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_trash_1"));
 		trash_sprite.width = 256 / 2;
 		trash_sprite.height = 256 / 2;
