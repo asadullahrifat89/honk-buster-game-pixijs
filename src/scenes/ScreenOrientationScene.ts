@@ -35,7 +35,7 @@ export class ScreenOrientationScene extends Container implements IScene {
         }
     }
 
-    update(_framesPassed: number): void {
+    update(): void {
         // To be a scene we must have the update method even if we don't use it.
     }
 }

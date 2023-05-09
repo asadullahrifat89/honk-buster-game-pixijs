@@ -114,7 +114,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		this.uiContainer.addChild(button);
 	}
 
-	public update(_framesPassed: number) {
+	public update() {
 		//this.bg_container.hover();
 	}
 

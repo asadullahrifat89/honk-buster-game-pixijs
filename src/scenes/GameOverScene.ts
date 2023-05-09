@@ -166,7 +166,7 @@ export class GameOverScene extends Container implements IScene {
 	private unlockablePopDelay = 5;
 	private readonly unlockablePopDelayDefault = 7;
 
-	public update(_framesPassed: number) {
+	public update() {
 
 		if (this.health.isAwaitingPop || this.attack.isAwaitingPop) { // only animate if any of the upgrades are applicable
 

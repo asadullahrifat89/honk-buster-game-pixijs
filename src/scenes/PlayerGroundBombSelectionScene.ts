@@ -137,7 +137,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		this.uiContainer.addChild(button);
 	}
 
-	public update(_framesPassed: number) {
+	public update() {
 
 	}
 

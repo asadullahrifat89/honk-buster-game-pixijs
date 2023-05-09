@@ -3811,7 +3811,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Scene
 
-	public update(_framesPassed: number) {
+	public update() {
 		this.processFrame();
 	}
 

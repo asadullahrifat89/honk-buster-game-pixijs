@@ -35,7 +35,7 @@ export class SceneManager {
 		});
 
 		// Add the ticker
-		SceneManager.app.ticker.minFPS = 50;
+		SceneManager.app.ticker.minFPS = 55;
 		SceneManager.app.ticker.maxFPS = 60;
 		SceneManager.app.ticker.add(SceneManager.update)
 
@@ -114,9 +114,10 @@ export class SceneManager {
 
 		return scaling;
 	}
+	
 
 	// This update will be called by a pixi ticker and tell the scene that a tick happened
-	private static update(framesPassed: number): void {
+	private static update(_framesPassed: number): void {
 		// Let the current scene know that we updated it
 		if (SceneManager.currentScene) {
 
@@ -124,13 +125,24 @@ export class SceneManager {
 				SceneManager.currentScene.alpha += 0.06;
 			}
 
-			SceneManager.currentScene.update(framesPassed);
+			SceneManager.currentScene.update();
 		}
 
-		// console.log("FPS: " + Manager.app.ticker.FPS);
+		// SceneManager.logFPS();			
 
 		// I HATE the "frame passed" approach. I would rather use `Manager.app.ticker.deltaMS`
 	}
+
+	// private static fpsPrintDelay: number = 8;
+
+	// private static logFPS() {
+	// 	SceneManager.fpsPrintDelay -= 0.1;
+
+	// 	if (SceneManager.fpsPrintDelay <= 0) {
+	// 		console.log("FPS: " + SceneManager.app.ticker.FPS);
+	// 		SceneManager.fpsPrintDelay = 10;
+	// 	}
+	// }
 
 	//#endregion
 }
