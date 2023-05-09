@@ -258,7 +258,11 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_MARK, this.imagessDirectory + "road_marks.png"),
 
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, this.imagessDirectory + "road_side_walk_top_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, this.imagessDirectory + "road_side_walk_top_2.png"),
+
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, this.imagessDirectory + "road_side_walk_bottom_1.png"),
+		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, this.imagessDirectory + "road_side_walk_bottom_2.png"),
+
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM_PILLARS, this.imagessDirectory + "road_side_walk_bottom_pillars_1.png"),
 
 		new ConstructTemplate(ConstructType.CLOUD, this.imagessDirectory + "cloud_1.png"),

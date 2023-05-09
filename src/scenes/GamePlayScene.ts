@@ -37,6 +37,7 @@ import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
 import { SoundTemplate } from "../core/SoundTemplate";
 import { MessageBubble } from "../controls/MessageBubble";
 import { RoadSideWalkPillar } from "../objects/RoadSideWalkPillar";
+import { RoadMark } from "../objects/RoadMark";
 
 
 export class GamePlayScene extends Container implements IScene {
@@ -416,7 +417,7 @@ export class GamePlayScene extends Container implements IScene {
 	private roadMarkSizeWidth: number = 1400;
 	private roadMarkSizeHeight: number = 1400;
 
-	private roadMarksGameObjects: Array<GameObjectContainer> = [];
+	private roadMarksGameObjects: Array<RoadMark> = [];
 
 	private readonly roadMarkPopDelayDefault: number = 84.5 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private roadMarkPopDelay: number = 0;
@@ -425,7 +426,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: RoadMark = new RoadMark(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			for (let i = 0; i < 5; i++) {
@@ -554,7 +555,6 @@ export class GamePlayScene extends Container implements IScene {
 			var gameObject = this.sideWalkTopGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
-				//gameObject.reset();
 				gameObject.x = -2500;
 				gameObject.y = gameObject.height * -1;
 				gameObject.enableRendering();
@@ -571,8 +571,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			var gameObject = this.sideWalkBottomGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				//gameObject.reset();
+			if (gameObject) {				
 				gameObject.x = gameObject.width * -1;
 				gameObject.y = -1230;
 				gameObject.enableRendering();

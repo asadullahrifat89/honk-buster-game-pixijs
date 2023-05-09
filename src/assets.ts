@@ -100,7 +100,11 @@ export const manifest: ResolverManifest = {
 				"road_marks": "./images/road_marks.png",
 
 				"road_side_walk_top_1": "./images/road_side_walk_top_1.png",
+				"road_side_walk_top_2": "./images/road_side_walk_top_2.png",
+
 				"road_side_walk_bottom_1": "./images/road_side_walk_bottom_1.png",
+				"road_side_walk_bottom_2": "./images/road_side_walk_bottom_2.png",
+
 				"road_side_walk_bottom_pillars_1": "./images/road_side_walk_bottom_pillars_1.png",
 
 				"ufo_enemy_1": "./images/ufo_enemy_1.png",
