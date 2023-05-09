@@ -661,10 +661,9 @@ export class GamePlayScene extends Container implements IScene {
 
 			var gameObject = this.sideWalkPillarBottomGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				//gameObject.reset();
+			if (gameObject) {				
 				gameObject.x = gameObject.width * -1;
-				gameObject.y = -1230;
+				gameObject.y = -1210;
 				gameObject.enableRendering();
 				this.sideWalkPillarPopDelayBottom = this.sideWalkPillarPopDelayDefault;
 			}
