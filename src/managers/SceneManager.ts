@@ -91,27 +91,27 @@ export class SceneManager {
 		var scaling: number = 1;
 
 		if (screenWidth <= 300)
-			scaling = 0.40;
+			scaling = 0.35;
 		else if (screenWidth <= 400)
-			scaling = 0.45;
+			scaling = 0.40;
 		else if (screenWidth <= 500)
-			scaling = 0.50;
+			scaling = 0.45;
 		else if (screenWidth <= 700)
-			scaling = 0.55;
+			scaling = 0.50;
 		else if (screenWidth <= 900)
-			scaling = 0.60;
+			scaling = 0.55;
 		else if (screenWidth <= 950)
-			scaling = 0.65;
+			scaling = 0.60;
 		else if (screenWidth <= 1000)
-			scaling = 0.85;
+			scaling = 0.80;
 		else if (screenWidth <= 1400)
-			scaling = 0.90;
+			scaling = 0.85;
 		else if (screenWidth <= 1900)
-			scaling = 0.95;
+			scaling = 0.90;
 		else scaling = 1;
 
-		//console.log("ScreenWidth: " + screenWidth);
-		//console.log("Scaling: " + scaling);
+		// console.log("ScreenWidth: " + screenWidth);
+		// console.log("Scaling: " + scaling);
 
 		return scaling;
 	}

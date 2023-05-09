@@ -1,5 +1,5 @@
 import { Container, Rectangle, Texture } from 'pixi.js';
-import { Constants, FacingDirection, RotationDirection } from '../Constants';
+import { Constants, RotationDirection } from '../Constants';
 import { GameObjectSprite } from './GameObjectSprite';
 
 export class GameObjectContainer extends Container {
@@ -40,8 +40,6 @@ export class GameObjectContainer extends Container {
 	public castShadowDistance: number = Constants.DEFAULT_DROP_SHADOW_DISTANCE;
 	public gravitatesUp: boolean = false;
 	public gravitatesDown: boolean = false;
-
-	public facingDirection: FacingDirection = FacingDirection.NONE;
 
 	//#endregion
 
@@ -307,17 +305,6 @@ export class GameObjectContainer extends Container {
 		let bounds = this.getBounds(true);
 		return bounds;
 		//return new Rectangle(bounds.left + this.width / 4, bounds.top + this.height / 4, bounds.right - this.width / 4, bounds.bottom - this.height / 4);
-	}
-
-
-	faceRight() {
-		this.scale.x = 1;
-		this.facingDirection = FacingDirection.RIGHT;
-	}
-
-	faceLeft() {
-		this.scale.x = -1;
-		this.facingDirection = FacingDirection.LEFT;
 	}
 
 	//#endregion

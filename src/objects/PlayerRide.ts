@@ -1,5 +1,5 @@
 ﻿import { Texture } from 'pixi.js';
-import { Constants, ConstructType, FacingDirection, MovementDirection, PlayerRideStance, PlayerRideTemplate, RotationDirection, SoundType } from '../Constants';
+import { Constants, ConstructType, MovementDirection, PlayerRideStance, PlayerRideTemplate, RotationDirection, SoundType } from '../Constants';
 import { GameController } from '../controls/GameController';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { GameObjectSprite } from '../core/GameObjectSprite';
@@ -44,7 +44,7 @@ export class PlayerRide extends GameObjectContainer {
 	private chopperBladesHoverDelay: number = 10;
 	private chopperBladesOpacityEffect: number = 0;
 	private chopperBladesTexture: Texture = Constants.getRandomTexture(ConstructType.CHOPPER_BLADES);
-	private chopperBladesSprite: GameObjectSprite = new GameObjectSprite(this.chopperBladesTexture);	
+	private chopperBladesSprite: GameObjectSprite = new GameObjectSprite(this.chopperBladesTexture);
 
 	//#endregion
 
@@ -184,10 +184,6 @@ export class PlayerRide extends GameObjectContainer {
 		this.movementStopDelay = this.movementStopDelayDefault;
 		this.lastSpeed = this.speed;
 		this.rotate(RotationDirection.Backward, this.rotationThreadhold, this.rotationSpeed);
-
-		if (this.facingDirection != FacingDirection.LEFT) {
-			this.faceLeft();			
-		}			
 	}
 
 	override moveRight() {
@@ -196,10 +192,6 @@ export class PlayerRide extends GameObjectContainer {
 		this.movementStopDelay = this.movementStopDelayDefault;
 		this.lastSpeed = this.speed;
 		this.rotate(RotationDirection.Forward, this.rotationThreadhold, this.rotationSpeed);
-
-		if (this.facingDirection != FacingDirection.RIGHT) {
-			this.faceRight();			
-		}			
 	}
 
 	override moveUpRight() {

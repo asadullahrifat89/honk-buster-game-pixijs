@@ -236,7 +236,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region Honks	
+	//#region Honks
 
 	private roadHonkSizeWidth: number = 125;
 	private roadHonkSizeHeight: number = 125;
