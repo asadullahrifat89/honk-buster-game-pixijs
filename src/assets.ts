@@ -32,6 +32,7 @@ export const manifest: ResolverManifest = {
 				"explosion_1": "./images/explosion_1.png",
 				"explosion_2": "./images/explosion_2.png",
 				"explosion_3": "./images/explosion_3.png",
+				"explosion_4": "./images/explosion_4.png",
 
 				"health_pickup": "./images/health_pickup.png",
 

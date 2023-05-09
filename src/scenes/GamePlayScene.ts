@@ -661,7 +661,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			var gameObject = this.sideWalkPillarBottomGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {				
+			if (gameObject) {
 				gameObject.x = gameObject.width * -1;
 				gameObject.y = -1210;
 				gameObject.enableRendering();
@@ -857,24 +857,24 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region SmokeExplosions	
+	//#region RingSmokeExplosions	
 
-	private smokeExplosionGameObjects: Array<Explosion> = [];
+	private ringSmokeExplosionGameObjects: Array<Explosion> = [];
 
-	spawnSmokeExplosions() {
+	spawnRingSmokeExplosions() {
 
 		for (let j = 0; j < 10; j++) {
 
-			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2, ExplosionType.SMOKE_EXPLOSION);
+			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2, ExplosionType.RING_SMOKE_EXPLOSION);
 			gameObject.disableRendering();
 
-			this.smokeExplosionGameObjects.push(gameObject);
+			this.ringSmokeExplosionGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
-	generateSmokeExplosion(source: GameObjectContainer) {
-		var gameObject = this.smokeExplosionGameObjects.find(x => x.isAnimating == false);
+	generateRingSmokeExplosion(source: GameObjectContainer) {
+		var gameObject = this.ringSmokeExplosionGameObjects.find(x => x.isAnimating == false);
 
 		if (gameObject) {
 			gameObject.reset();
@@ -884,8 +884,52 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animateSmokeExplosions() {
-		var animatingHonkBombs = this.smokeExplosionGameObjects.filter(x => x.isAnimating == true);
+	animateRingSmokeExplosions() {
+		var animatingHonkBombs = this.ringSmokeExplosionGameObjects.filter(x => x.isAnimating == true);
+		if (animatingHonkBombs) {
+			animatingHonkBombs.forEach(gameObject => {
+				gameObject.pop();
+				gameObject.fade();
+				gameObject.moveDownRight();
+
+				if (gameObject.hasFaded() || gameObject.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
+	//#region BlowSmokeExplosions	
+
+	private blowSmokeExplosionGameObjects: Array<Explosion> = [];
+
+	spawnBlowSmokeExplosions() {
+
+		for (let j = 0; j < 10; j++) {
+
+			const gameObject: Explosion = new Explosion(Constants.DEFAULT_CONSTRUCT_SPEED - 2, ExplosionType.BLOW_SMOKE_EXPLOSION);
+			gameObject.disableRendering();
+
+			this.blowSmokeExplosionGameObjects.push(gameObject);
+			this.sceneContainer.addChild(gameObject);
+		}
+	}
+
+	generateBlowSmokeExplosion(source: GameObjectContainer) {
+		var gameObject = this.blowSmokeExplosionGameObjects.find(x => x.isAnimating == false);
+
+		if (gameObject) {
+			gameObject.reset();
+			gameObject.reposition(source);
+			gameObject.setPopping();
+			gameObject.enableRendering();
+		}
+	}
+
+	animateBlowSmokeExplosions() {
+		var animatingHonkBombs = this.blowSmokeExplosionGameObjects.filter(x => x.isAnimating == true);
 		if (animatingHonkBombs) {
 			animatingHonkBombs.forEach(gameObject => {
 				gameObject.pop();
@@ -943,7 +987,7 @@ export class GamePlayScene extends Container implements IScene {
 				if (anyBoss) {
 					this.generateFlashExplosion(anyBoss);
 					this.generateRingExplosion(anyBoss);
-					this.generateSmokeExplosion(anyBoss);
+					this.generateRingSmokeExplosion(anyBoss);
 					SoundManager.play(SoundType.ROCKET_BLAST);
 				}
 
@@ -1000,7 +1044,7 @@ export class GamePlayScene extends Container implements IScene {
 				}
 
 				if (anyBoss) {
-					this.generateSmokeExplosion(anyBoss); // generate smoke at 50
+					this.generateRingSmokeExplosion(anyBoss); // generate smoke at 50
 
 					if (healthProgress <= 30) {
 						this.generateRingExplosion(anyBoss); // generate fire at 30
@@ -1030,7 +1074,7 @@ export class GamePlayScene extends Container implements IScene {
 			if (this.playerLowHealthExplosionDelay < 0) {
 
 				if (this.player) {
-					this.generateSmokeExplosion(this.player); // generate smoke at 50
+					this.generateRingSmokeExplosion(this.player); // generate smoke at 50
 
 					if (healthProgress <= 30) {
 						this.generateRingExplosion(this.player); // generate fire at 30
@@ -1297,8 +1341,8 @@ export class GamePlayScene extends Container implements IScene {
 									default: break;
 								}
 
-								this.generateSmokeExplosion(playerGroundBomb);
-								this.generateFlashExplosion(playerGroundBomb);
+								this.generateBlowSmokeExplosion(playerGroundBomb);
+								//this.generateFlashExplosion(playerGroundBomb);
 								this.generateRingExplosion(playerGroundBomb);
 							}
 						} break;
@@ -1327,7 +1371,7 @@ export class GamePlayScene extends Container implements IScene {
 									default: break;
 								}
 
-								this.generateSmokeExplosion(playerGroundBomb);
+								this.generateBlowSmokeExplosion(playerGroundBomb);
 							}
 						} break;
 						case PlayerGroundBombTemplate.DYNAMITE: {
@@ -1360,13 +1404,13 @@ export class GamePlayScene extends Container implements IScene {
 										}
 
 										playerGroundBomb.setBlast();
-										this.generateSmokeExplosion(playerGroundBomb);
+										this.generateBlowSmokeExplosion(playerGroundBomb);
 										this.generateRingExplosion(playerGroundBomb);
 									}
 								}
 
 								if (playerGroundBomb.awaitBlast()) {
-									this.generateSmokeExplosion(playerGroundBomb);
+									this.generateBlowSmokeExplosion(playerGroundBomb);
 									this.generateRingExplosion(playerGroundBomb);
 								}
 							}
@@ -2435,7 +2479,7 @@ export class GamePlayScene extends Container implements IScene {
 						this.loosePlayerHealth();
 
 						this.generateRingExplosion(gameObject);
-						this.generateSmokeExplosion(gameObject);
+						this.generateRingSmokeExplosion(gameObject);
 						this.generateFlashExplosion(gameObject);
 					}
 
@@ -2443,7 +2487,7 @@ export class GamePlayScene extends Container implements IScene {
 						gameObject.setBlast();
 
 						this.generateRingExplosion(gameObject);
-						this.generateSmokeExplosion(gameObject);
+						this.generateRingSmokeExplosion(gameObject);
 					}
 				}
 
@@ -2840,7 +2884,7 @@ export class GamePlayScene extends Container implements IScene {
 							ufoBoss.setWinStance();
 							this.loosePlayerHealth();
 							this.generateRingExplosion(ufoBossRocketSeeking);
-							this.generateSmokeExplosion(ufoBossRocketSeeking);
+							this.generateRingSmokeExplosion(ufoBossRocketSeeking);
 						}
 						else {
 							if (ufoBossRocketSeeking.autoBlast()) {
@@ -3851,7 +3895,8 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnVehicleBossRockets();
 
 		this.spawnSideWalksBottom();
-		this.spawnSmokeExplosions();
+		this.spawnBlowSmokeExplosions();
+		this.spawnRingSmokeExplosions();
 
 		this.spawnPlayerGroundBombs();
 		this.spawnPlayerRockets();
@@ -3939,7 +3984,8 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.animatePlayerGroundBombs();
 		this.animateFlashExplosions();
-		this.animateSmokeExplosions();
+		this.animateBlowSmokeExplosions();
+		this.animateRingSmokeExplosions();
 		this.animateRingExplosions();
 		this.animatePlayerRockets();
 		this.animatePlayerRocketBullsEyes();

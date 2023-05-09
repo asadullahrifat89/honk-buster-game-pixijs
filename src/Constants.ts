@@ -7,7 +7,8 @@ import { SoundTemplate } from "./core/SoundTemplate";
 
 export enum ExplosionType {
 	RING_EXPLOSION,
-	SMOKE_EXPLOSION,
+	RING_SMOKE_EXPLOSION,
+	BLOW_SMOKE_EXPLOSION,
 	FLASH_EXPLOSION,
 }
 
@@ -526,9 +527,71 @@ export abstract class Constants {
 	private static smokeWidth = 128;
 	private static smokeHeight = 128;
 
-	public static SMOKE_EXPLOSION_JSON: SpriteSheetJson = {
+	public static RING_SMOKE_EXPLOSION_JSON: SpriteSheetJson = {
 		meta: {
 			image: './images/explosion_2.png',
+			scale: "1",
+		},
+		frames: {
+			frame0: {
+				frame: { x: this.smokeWidth * 0, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame1: {
+				frame: { x: this.smokeWidth * 1, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame2: {
+				frame: { x: this.smokeWidth * 2, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame3: {
+				frame: { x: this.smokeWidth * 3, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame4: {
+				frame: { x: this.smokeWidth * 4, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame5: {
+				frame: { x: this.smokeWidth * 5, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame6: {
+				frame: { x: this.smokeWidth * 6, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame7: {
+				frame: { x: this.smokeWidth * 7, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame8: {
+				frame: { x: this.smokeWidth * 8, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+			frame9: {
+				frame: { x: this.smokeWidth * 9, y: 0, w: this.smokeWidth, h: this.smokeHeight },
+				sourceSize: { w: this.smokeWidth, h: this.smokeHeight },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
+		},
+		animations: {
+			frames: ["frame0", "frame1", "frame2", "frame3", "frame4", "frame5", "frame6", "frame7", "frame8", "frame9"]
+		}
+	};
+
+	public static BLOW_SMOKE_EXPLOSION_JSON: SpriteSheetJson = {
+		meta: {
+			image: './images/explosion_4.png',
 			scale: "1",
 		},
 		frames: {
