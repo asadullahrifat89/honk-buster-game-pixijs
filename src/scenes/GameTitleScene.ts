@@ -1,6 +1,5 @@
 ﻿import { Container, Text } from "pixi.js";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
-import { PlayerCharacterSelectionScene } from "./PlayerCharacterSelectionScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
 import { Constants, ConstructType, SoundType } from "../Constants";
@@ -9,6 +8,7 @@ import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
 import { GameInstructionsScene } from "./GameInstructionsScene";
+import { PlayerBattlementSelectionScene } from "./PlayerBattlementSelectionScene";
 
 
 export class GameTitleScene extends Container implements IScene {
@@ -74,7 +74,7 @@ export class GameTitleScene extends Container implements IScene {
 
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.uiContainer);
-			SceneManager.changeScene(new PlayerCharacterSelectionScene());			
+			SceneManager.changeScene(new PlayerBattlementSelectionScene());
 
 		}).setText("Play");
 		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, (this.uiContainer.height / 2 - newGameButton.height / 2) + 65);

@@ -7,9 +7,9 @@ import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
-import { PlayerRideSelectionScene } from "./PlayerRideSelectionScene";
 import { GrayscaleFilter } from "@pixi/filter-grayscale";
 import { MessageBubble } from "../controls/MessageBubble";
+import { PlayerBattlementSelectionScene } from "./PlayerBattlementSelectionScene";
 
 
 export class PlayerCharacterSelectionScene extends Container implements IScene {
@@ -30,7 +30,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 		bg_sprite.x = 0;
 		bg_sprite.y = 0;
 		bg_sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
-		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;		
+		bg_sprite.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
 		bg_sprite.filters = [new BlurFilter()];
 
 		this.bg_container = new GameObjectContainer();
@@ -101,7 +101,7 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 			if (button.getIsEnabled()) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
-				SceneManager.changeScene(new PlayerRideSelectionScene());
+				SceneManager.changeScene(new PlayerBattlementSelectionScene());
 			}
 			else {
 				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
