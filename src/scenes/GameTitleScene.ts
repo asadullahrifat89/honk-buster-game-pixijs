@@ -37,7 +37,7 @@ export class GameTitleScene extends Container implements IScene {
 		this.uiContainer.addChild(this.bg_container);
 
 		// title
-		const title = new Text("HONK BUSTERS", {
+		const title = new Text("HONKY ROADS", {
 			fontFamily: Constants.GAME_TITLE_FONT,
 			align: "center",
 			fill: "#ffffff",
