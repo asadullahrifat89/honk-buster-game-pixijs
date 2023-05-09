@@ -25,7 +25,7 @@ export class UfoBossRocket extends RocketBase {
 
 		this.autoBlastDelay = this.autoBlastDelayDefault;
 
-		SoundManager.play(SoundType.ROCKET_LAUNCH, 0.4);
+		SoundManager.play(SoundType.ROCKET_LAUNCH, 0.3);
 	}
 
 	reposition(source: UfoBoss) {
