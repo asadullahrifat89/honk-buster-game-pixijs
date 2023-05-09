@@ -37,7 +37,6 @@ export class SceneManager {
 		// Add the ticker
 		SceneManager.app.ticker.minFPS = 50;
 		SceneManager.app.ticker.maxFPS = 60;
-
 		SceneManager.app.ticker.add(SceneManager.update)
 
 		// listen for the browser telling us that the screen size changed
