@@ -1263,6 +1263,7 @@ export class GamePlayScene extends Container implements IScene {
 				playerGroundBomb.pop();
 
 				if (playerGroundBomb.isBlasting) {
+
 					playerGroundBomb.fade();
 
 					switch (playerGroundBomb.playerGroundBombTemplate) {
@@ -1314,7 +1315,9 @@ export class GamePlayScene extends Container implements IScene {
 				}
 				else {
 					switch (playerGroundBomb.playerGroundBombTemplate) {
+
 						case PlayerGroundBombTemplate.GRENADE: {
+
 							playerGroundBomb.move();
 
 							if (playerGroundBomb.awaitBlast()) {
@@ -1341,12 +1344,12 @@ export class GamePlayScene extends Container implements IScene {
 									default: break;
 								}
 
-								this.generateBlowSmokeExplosion(playerGroundBomb);
-								//this.generateFlashExplosion(playerGroundBomb);
+								this.generateBlowSmokeExplosion(playerGroundBomb);								
 								this.generateRingExplosion(playerGroundBomb);
 							}
 						} break;
 						case PlayerGroundBombTemplate.TRASH_BIN: {
+
 							playerGroundBomb.move();
 
 							if (playerGroundBomb.awaitBlast()) {
@@ -1405,12 +1408,14 @@ export class GamePlayScene extends Container implements IScene {
 
 										playerGroundBomb.setBlast();
 										this.generateBlowSmokeExplosion(playerGroundBomb);
+										this.generateFlashExplosion(playerGroundBomb);
 										this.generateRingExplosion(playerGroundBomb);
 									}
 								}
 
 								if (playerGroundBomb.awaitBlast()) {
 									this.generateBlowSmokeExplosion(playerGroundBomb);
+									this.generateFlashExplosion(playerGroundBomb);
 									this.generateRingExplosion(playerGroundBomb);
 								}
 							}
