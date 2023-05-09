@@ -107,7 +107,7 @@ export class GameOverScene extends Container implements IScene {
 		health_msg.setPosition(health_container.x + health_container.width - 30, health_container.y + health_container.height - health_msg.height);
 		health.addChild(health_msg);
 
-		health.setPosition((this.uiContainer.width / 2 - (health.width / 2) * 3), (this.uiContainer.height / 2 - health.height / 2) + 50);
+		health.setPosition((this.uiContainer.width / 2 - (health.width / 2) * 2), (this.uiContainer.height / 2 - health.height / 2) + 50);
 		this.uiContainer.addChild(health);
 
 		if (Constants.HEALTH_LEVEL_MAX > 1) {
@@ -139,7 +139,7 @@ export class GameOverScene extends Container implements IScene {
 		attack_msg.setPosition(attack_container.x + attack_container.width - 30, attack_container.y + attack_container.height - attack_msg.height);
 		attack.addChild(attack_msg);
 
-		attack.setPosition((this.uiContainer.width / 2 - (attack.width / 2) * 1), (this.uiContainer.height / 2 - attack.height / 2) + 50);
+		attack.setPosition((this.uiContainer.width / 2 - (attack.width / 2) * 0), (this.uiContainer.height / 2 - attack.height / 2) + 50);
 		this.uiContainer.addChild(attack);
 
 		if (Constants.ATTACK_LEVEL_MAX > 0) {

@@ -46,8 +46,8 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 		const optionsGap = 256;
 
 		//#region title
-		const title = new Text("Select Battlement", {
-			fontFamily: Constants.GAME_DEFAULT_FONT,
+		const title = new Text("SELECT BATTLEMENT", {
+			fontFamily: Constants.GAME_TITLE_FONT,
 			fontSize: 35,
 			align: "center",
 			fill: "#ffffff",
