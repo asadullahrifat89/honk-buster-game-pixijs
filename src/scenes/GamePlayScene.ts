@@ -4051,7 +4051,7 @@ export class GamePlayScene extends Container implements IScene {
 		SoundManager.stop(SoundType.CHOPPER_HOVERING);
 
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
-		Constants.GAME_LEVEL = this.gameLevelBar.getScore() + 5;
+		Constants.GAME_LEVEL = this.gameLevelBar.getScore();
 
 		this.removeChild(this.sceneContainer);
 		SceneManager.changeScene(new GameOverScene());
