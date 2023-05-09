@@ -81,6 +81,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private stageColors: number[] = [0x1e2a36, 0x4187ab];
 	private stageColor: Graphics;
+	private stageMask: Graphics;
 
 	private behindBackIcon: Texture;
 	private talkIcon: Texture;
@@ -165,8 +166,8 @@ export class GamePlayScene extends Container implements IScene {
 			}
 		});
 		this.addChild(this.gameController);
-
-		this.mask = new Graphics().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
+		this.stageMask = new Graphics().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
+		this.mask = this.stageMask;
 
 		// set the on screen message layer
 		this.onScreenMessage = new OnScreenMessage(this);
@@ -3875,9 +3876,10 @@ export class GamePlayScene extends Container implements IScene {
 			this.repositionBossHealthBar();
 			this.repositionPowerUpBar();
 			this.gameController.resize();
-
-			this.stageColor.width = SceneManager.width;
-			this.stageColor.height = SceneManager.height;
+			
+			let color = this.stageColors[Constants.getRandomNumber(0, this.stageColors.length - 1)];
+			this.stageColor.clear().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+			this.stageMask.clear().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
 		}
 	}
 
@@ -4026,8 +4028,6 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateMessageBubbles();
 	}
 
-
-
 	//#endregion
 
 	//#region Game
@@ -4104,8 +4104,8 @@ export class GamePlayScene extends Container implements IScene {
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
 		Constants.GAME_LEVEL = this.gameLevelBar.getScore();
 
-		let mask = this.mask as Graphics;
-		mask?.destroy();
+		this.stageMask.destroy();
+		this.stageColor.destroy();
 
 		this.removeChild(this.sceneContainer);
 		SceneManager.changeScene(new GameOverScene());
