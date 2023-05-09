@@ -110,7 +110,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 		this.uiContainer.addChild(button);
 	}
 
-	public update(_framesPassed: number) {
+	public update() {
 	}
 
 	public resize(scale: number): void {

@@ -91,7 +91,7 @@ export class GameTitleScene extends Container implements IScene {
 		this.uiContainer.addChild(bottomline);
 	}
 
-	public update(_framesPassed: number) {
+	public update() {
 		this.bg_container.hover();
 	}
 
