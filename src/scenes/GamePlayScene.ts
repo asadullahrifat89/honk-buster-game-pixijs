@@ -166,6 +166,8 @@ export class GamePlayScene extends Container implements IScene {
 		});
 		this.addChild(this.gameController);
 
+		this.mask = new Graphics().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
+
 		// set the on screen message layer
 		this.onScreenMessage = new OnScreenMessage(this);
 
@@ -1344,7 +1346,7 @@ export class GamePlayScene extends Container implements IScene {
 									default: break;
 								}
 
-								this.generateBlowSmokeExplosion(playerGroundBomb);								
+								this.generateBlowSmokeExplosion(playerGroundBomb);
 								this.generateRingExplosion(playerGroundBomb);
 							}
 						} break;
@@ -4101,6 +4103,9 @@ export class GamePlayScene extends Container implements IScene {
 
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
 		Constants.GAME_LEVEL = this.gameLevelBar.getScore();
+
+		let mask = this.mask as Graphics;
+		mask?.destroy();
 
 		this.removeChild(this.sceneContainer);
 		SceneManager.changeScene(new GameOverScene());
