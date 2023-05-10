@@ -33,7 +33,7 @@ export class Button extends Container {
 				onPressed();
 			}
 			else {
-				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
+				SoundManager.play(SoundType.HEALTH_LOSS);
 			}				
 		}, this);
 		this.on('pointerover', this.onButtonOver, this);

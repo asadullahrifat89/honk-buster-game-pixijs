@@ -1,4 +1,5 @@
-﻿import { Constants, ConstructType } from '../Constants';
+﻿import { Constants, ConstructType, SoundType } from '../Constants';
+import { SoundManager } from '../managers/SoundManager';
 import { VehicleBase } from './VehicleBase';
 
 
@@ -43,5 +44,6 @@ export class UfoEnemy extends VehicleBase {
 
 	looseHealth() {
 		this.health -= this.hitPoint;
+		SoundManager.play(SoundType.HEALTH_LOSS);
 	}
 }

@@ -113,7 +113,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 				SceneManager.changeScene(new PlayerBattlementSelectionScene());
 			}
 			else {
-				SoundManager.play(SoundType.PLAYER_HEALTH_LOSS);
+				SoundManager.play(SoundType.HEALTH_LOSS);
 			}
 
 		}).setText("Select").setIsEnabled(false);
