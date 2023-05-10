@@ -3930,11 +3930,12 @@ export class GamePlayScene extends Container implements IScene {
 		}
 		else {
 			this.sceneContainer.scale.set(scale);
+			this.gameController.resize();
+
 			this.repositionGameScoreBar();
 			this.repositionPlayerHealthBar();
 			this.repositionBossHealthBar();
-			this.repositionPowerUpBar();
-			this.gameController.resize();
+			this.repositionPowerUpBar();			
 
 			let color = this.stageColors[Constants.getRandomNumber(0, this.stageColors.length - 1)];
 			this.stageColor.clear().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
