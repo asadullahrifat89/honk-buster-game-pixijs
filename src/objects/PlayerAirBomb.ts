@@ -26,6 +26,7 @@ export class PlayerAirBomb extends SeekingRocketBase {
 			} break;
 			case PlayerAirBombTemplate.BULLET_BALL: {
 				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BULLET_BALL).map(x => x.uri);
+				this.autoBlastDelayDefault = 5;
 			} break;
 			default: break;
 		}
@@ -62,19 +63,7 @@ export class PlayerAirBomb extends SeekingRocketBase {
 		this.awaitMoveDownRight = false;
 
 		this.autoBlastDelay = this.autoBlastDelayDefault;
-	}
-
-	override accelerate() {
-		switch (this.playerAirBombTemplate) {
-			case PlayerAirBombTemplate.GRAVITY_BALL: {
-				super.decelerate();
-			} break;
-			case PlayerAirBombTemplate.MISSILE: {
-				super.accelerate();
-			} break;
-			default: break;
-		}
-	}
+	}	
 
 	reposition(source: PlayerRide) {
 		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 15);

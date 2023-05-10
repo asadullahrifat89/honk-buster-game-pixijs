@@ -1570,24 +1570,29 @@ export class GamePlayScene extends Container implements IScene {
 			let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
 			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
 
+			let anyTarget: any = undefined;
+
 			if (ufoBossRocketSeeking) {
-				this.setPlayerAirBombDirection(this.player, playerAirBomb, ufoBossRocketSeeking);
+				anyTarget = ufoBossRocketSeeking;
 			}
 			else if (ufoEnemy) {
-				this.setPlayerAirBombDirection(this.player, playerAirBomb, ufoEnemy);
+				anyTarget = ufoEnemy;
 			}
 			else if (ufoBoss) {
-				this.setPlayerAirBombDirection(this.player, playerAirBomb, ufoBoss);
+				anyTarget = ufoBoss;
 			}
 			else if (zombieBoss) {
-				this.setPlayerAirBombDirection(this.player, playerAirBomb, zombieBoss);
+				anyTarget = zombieBoss;
 			}
 			else if (mafiaBoss) {
-				this.setPlayerAirBombDirection(this.player, playerAirBomb, mafiaBoss);
+				anyTarget = mafiaBoss;
 			}
 
-			playerAirBomb.setPopping();
-			playerAirBomb.enableRendering();
+			if (anyTarget) {
+				this.setPlayerAirBombDirection(this.player, playerAirBomb, anyTarget);
+				playerAirBomb.setPopping();
+				playerAirBomb.enableRendering();
+			}
 		}
 	}
 
@@ -1603,40 +1608,57 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (playerAirBomb) {
 
-					switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
-						case PlayerAirBombTemplate.GRAVITY_BALL:
-						case PlayerAirBombTemplate.MISSILE: {
-
-							playerAirBomb.accelerate();
-
-							if (playerAirBomb.awaitMoveDownLeft) {
-								playerAirBomb.moveDownLeft();
-							}
-							else if (playerAirBomb.awaitMoveUpRight) {
-								playerAirBomb.moveUpRight();
-							}
-							else if (playerAirBomb.awaitMoveUpLeft) {
-								playerAirBomb.moveUpLeft();
-							}
-							else if (playerAirBomb.awaitMoveDownRight) {
-								playerAirBomb.moveDownRight();
-							}
-
-						} break;
-						case PlayerAirBombTemplate.BULLET_BALL: {
-							playerAirBomb.shoot();
-							playerAirBomb.rotate(RotationDirection.Forward, 0, 2.0);
-						} break;
-						default: break;
-					}
-
 					if (playerAirBomb.isBlasting) {
 						playerAirBomb.shrink();
 						playerAirBomb.fade();
 					}
 					else {
 
-						playerAirBomb.hover();
+						switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
+							case PlayerAirBombTemplate.GRAVITY_BALL: {
+
+								playerAirBomb.decelerate();
+								playerAirBomb.hover();
+
+								if (playerAirBomb.awaitMoveDownLeft) {
+									playerAirBomb.moveDownLeft();
+								}
+								else if (playerAirBomb.awaitMoveUpRight) {
+									playerAirBomb.moveUpRight();
+								}
+								else if (playerAirBomb.awaitMoveUpLeft) {
+									playerAirBomb.moveUpLeft();
+								}
+								else if (playerAirBomb.awaitMoveDownRight) {
+									playerAirBomb.moveDownRight();
+								}
+
+							} break;
+							case PlayerAirBombTemplate.MISSILE: {
+
+								playerAirBomb.accelerate();
+								playerAirBomb.hover();
+
+								if (playerAirBomb.awaitMoveDownLeft) {
+									playerAirBomb.moveDownLeft();
+								}
+								else if (playerAirBomb.awaitMoveUpRight) {
+									playerAirBomb.moveUpRight();
+								}
+								else if (playerAirBomb.awaitMoveUpLeft) {
+									playerAirBomb.moveUpLeft();
+								}
+								else if (playerAirBomb.awaitMoveDownRight) {
+									playerAirBomb.moveDownRight();
+								}
+
+							} break;
+							case PlayerAirBombTemplate.BULLET_BALL: {
+								playerAirBomb.shoot();
+								playerAirBomb.rotate(RotationDirection.Forward, 0, 2.0);
+							} break;
+							default: break;
+						}
 
 						let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerAirBomb));
 						let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerAirBomb));
@@ -1652,32 +1674,26 @@ export class GamePlayScene extends Container implements IScene {
 
 						if (ufoBossRocketSeeking) {
 							anyTarget = ufoBossRocketSeeking;
-							playerAirBomb.setBlast();
 							ufoBossRocketSeeking.setBlast();
 						}
 						else if (ufoEnemy) {
 							anyTarget = ufoEnemy;
-							playerAirBomb.setBlast();
 							this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
 						}
 						else if (ufoBoss) {
 							anyTarget = ufoBoss;
-							playerAirBomb.setBlast();
 							this.looseUfoBosshealth(ufoBoss as UfoBoss);
 						}
 						else if (zombieBossRocketBlock) {
 							anyTarget = zombieBossRocketBlock;
-							playerAirBomb.setBlast();
 							zombieBossRocketBlock.looseHealth();
 						}
 						else if (zombieBoss) {
 							anyTarget = zombieBoss;
-							playerAirBomb.setBlast();
 							this.looseZombieBosshealth(zombieBoss as ZombieBoss);
 						}
 						else if (mafiaBoss) {
 							anyTarget = mafiaBoss;
-							playerAirBomb.setBlast();
 							this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
 						}
 
@@ -1702,7 +1718,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	setPlayerAirBombDirection(source: GameObjectContainer, playerAirBomb: PlayerAirBomb, target: GameObjectContainer) {
 
-		if (playerAirBomb.playerAirBombTemplate == PlayerAirBombTemplate.BULLET_BALL) {
+		if (playerAirBomb.playerAirBombTemplate == PlayerAirBombTemplate.BULLET_BALL) { // if bullet ball set the target
 			playerAirBomb.setShootTarget(target.getCloseBounds());
 		}
 
@@ -1835,39 +1851,35 @@ export class GamePlayScene extends Container implements IScene {
 
 					let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerAirBombBullsEye));
 
+					let anyTarget: any = undefined;
+
 					if (ufoBossRocketSeeking) {
-						playerAirBombBullsEye.setBlast();
+						anyTarget = ufoBossRocketSeeking;
 						ufoBossRocketSeeking.setBlast();
-						this.generateRingFireExplosion(playerAirBombBullsEye);
-						this.generateFlashExplosion(playerAirBombBullsEye);
 					}
 					else if (ufoBoss) {
-						playerAirBombBullsEye.setBlast();
+						anyTarget = ufoBoss;
 						this.looseUfoBosshealth(ufoBoss as UfoBoss);
-						this.generateRingFireExplosion(playerAirBombBullsEye);
-						this.generateFlashExplosion(playerAirBombBullsEye);
 					}
 					else if (ufoEnemy) {
-						playerAirBombBullsEye.setBlast();
+						anyTarget = ufoEnemy;
 						this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
-						this.generateRingFireExplosion(playerAirBombBullsEye);
-						this.generateFlashExplosion(playerAirBombBullsEye);
 					}
 					else if (zombieBossRocketBlock) {
-						playerAirBombBullsEye.setBlast();
+						anyTarget = zombieBossRocketBlock;
 						zombieBossRocketBlock.looseHealth();
-						this.generateRingFireExplosion(playerAirBombBullsEye);
-						this.generateFlashExplosion(playerAirBombBullsEye);
 					}
 					else if (zombieBoss) {
-						playerAirBombBullsEye.setBlast();
+						anyTarget = zombieBoss;
 						this.looseZombieBosshealth(zombieBoss as ZombieBoss);
-						this.generateRingFireExplosion(playerAirBombBullsEye);
-						this.generateFlashExplosion(playerAirBombBullsEye);
 					}
 					else if (mafiaBoss) {
-						playerAirBombBullsEye.setBlast();
+						anyTarget = mafiaBoss;
 						this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
+					}
+
+					if (anyTarget) {
+						playerAirBombBullsEye.setBlast();
 						this.generateRingFireExplosion(playerAirBombBullsEye);
 						this.generateFlashExplosion(playerAirBombBullsEye);
 					}
@@ -1878,7 +1890,7 @@ export class GamePlayScene extends Container implements IScene {
 					}
 				}
 
-				if (playerAirBombBullsEye.hasFaded() || playerAirBombBullsEye.x > Constants.DEFAULT_GAME_VIEW_WIDTH || playerAirBombBullsEye.getRight() < 0 || playerAirBombBullsEye.getBottom() < 0 || playerAirBombBullsEye.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (playerAirBombBullsEye.hasFaded() /*|| playerAirBombBullsEye.x > Constants.DEFAULT_GAME_VIEW_WIDTH || playerAirBombBullsEye.getRight() < 0 || playerAirBombBullsEye.getBottom() < 0 || playerAirBombBullsEye.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
 					playerAirBombBullsEye.disableRendering();
 				}
 			});
@@ -2856,7 +2868,7 @@ export class GamePlayScene extends Container implements IScene {
 					}
 				}
 
-				if (ufoBossRocket.hasFaded() || ufoBossRocket.x > Constants.DEFAULT_GAME_VIEW_WIDTH || ufoBossRocket.getRight() < 0 || ufoBossRocket.getBottom() < 0 || ufoBossRocket.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (ufoBossRocket.hasFaded() /*|| ufoBossRocket.x > Constants.DEFAULT_GAME_VIEW_WIDTH || ufoBossRocket.getRight() < 0 || ufoBossRocket.getBottom() < 0 || ufoBossRocket.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
 					ufoBossRocket.disableRendering();
 				}
 			});
@@ -3513,7 +3525,7 @@ export class GamePlayScene extends Container implements IScene {
 					}
 				}
 
-				if (mafiaBossRocket.hasFaded() || mafiaBossRocket.x > Constants.DEFAULT_GAME_VIEW_WIDTH || mafiaBossRocket.getRight() < 0 || mafiaBossRocket.getBottom() < 0 || mafiaBossRocket.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (mafiaBossRocket.hasFaded() /*|| mafiaBossRocket.x > Constants.DEFAULT_GAME_VIEW_WIDTH || mafiaBossRocket.getRight() < 0 || mafiaBossRocket.getBottom() < 0 || mafiaBossRocket.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
 					mafiaBossRocket.disableRendering();
 				}
 			});
@@ -3622,7 +3634,7 @@ export class GamePlayScene extends Container implements IScene {
 					}
 				}
 
-				if (mafiaBossRocketBullsEye.hasFaded() || mafiaBossRocketBullsEye.x > Constants.DEFAULT_GAME_VIEW_WIDTH || mafiaBossRocketBullsEye.getRight() < 0 || mafiaBossRocketBullsEye.getBottom() < 0 || mafiaBossRocketBullsEye.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (mafiaBossRocketBullsEye.hasFaded() /*|| mafiaBossRocketBullsEye.x > Constants.DEFAULT_GAME_VIEW_WIDTH || mafiaBossRocketBullsEye.getRight() < 0 || mafiaBossRocketBullsEye.getBottom() < 0 || mafiaBossRocketBullsEye.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
 					mafiaBossRocketBullsEye.disableRendering();
 				}
 			});
