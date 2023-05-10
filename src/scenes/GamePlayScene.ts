@@ -192,8 +192,8 @@ export class GamePlayScene extends Container implements IScene {
 		}
 
 		// start background sounds
-		SoundManager.play(SoundType.AMBIENCE, 0.4, true);
-		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.4, true);
+		SoundManager.play(SoundType.AMBIENCE, 0.3, true);
+		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.3, true);
 		SoundManager.play(SoundType.GAME_START);
 	}
 
@@ -1927,7 +1927,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (ufoEnemy.isDead()) {
 			this.gameScoreBar.gainScore(2);
 			this.ufoEnemyDefeatCount++;
-			SoundManager.play(SoundType.SCORE, 0.6);
+			SoundManager.play(SoundType.SCORE, 1);
 
 			if (this.ufoEnemyDefeatCount > this.ufoEnemyDefeatPoint) // after killing limited enemies increase the threadhold limit
 			{
@@ -2248,7 +2248,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.gameScoreBar.gainScore(2);
 				//let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
 				//let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
-				SoundManager.play(SoundType.SCORE, 0.6);
+				SoundManager.play(SoundType.SCORE, 1);
 
 				this.generateMessageBubble(vehicleEnemy, this.honkBustReactions[Constants.getRandomNumber(0, this.honkBustReactions.length - 1)]);
 			}
@@ -2324,7 +2324,7 @@ export class GamePlayScene extends Container implements IScene {
 
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.3, true);
 			}
 		}
 	}
@@ -2566,7 +2566,7 @@ export class GamePlayScene extends Container implements IScene {
 
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.3, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
 
@@ -2643,7 +2643,7 @@ export class GamePlayScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-			SoundManager.play(SoundType.SCORE, 0.6);
+			SoundManager.play(SoundType.SCORE, 1);
 
 			this.generateMessageBubble(ufoBoss, "I'll reboot and revert!");
 			this.setBossDeathExplosion();
@@ -2974,7 +2974,7 @@ export class GamePlayScene extends Container implements IScene {
 
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.3, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
 
@@ -3051,7 +3051,7 @@ export class GamePlayScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-			SoundManager.play(SoundType.SCORE, 0.6);
+			SoundManager.play(SoundType.SCORE, 1);
 
 			this.setBossDeathExplosion();
 			this.generateMessageBubble(zombieBoss, "I'll return from the dead!");
@@ -3223,7 +3223,7 @@ export class GamePlayScene extends Container implements IScene {
 
 
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.6, true);
+				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.3, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_BOSS_HOVERING, 0.8, true);
 
@@ -3300,7 +3300,7 @@ export class GamePlayScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-			SoundManager.play(SoundType.SCORE, 0.6);
+			SoundManager.play(SoundType.SCORE, 1);
 
 			this.setBossDeathExplosion();
 			this.generateMessageBubble(mafiaBoss, "See you next time, kid!");
