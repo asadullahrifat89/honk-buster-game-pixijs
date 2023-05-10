@@ -6,7 +6,7 @@ import { RocketBase } from './RocketBase';
 
 export class PlayerRocket extends RocketBase {
 
-	public playerRocketTemplate: PlayerAirBombTemplate = PlayerAirBombTemplate.BALLs;
+	public playerRocketTemplate: PlayerAirBombTemplate = PlayerAirBombTemplate.BALL;
 	private playerRocketUris: string[] = [];
 
 	constructor(speed: number) {
@@ -17,12 +17,12 @@ export class PlayerRocket extends RocketBase {
 		this.playerRocketTemplate = playerRocketTemplate;
 
 		switch (this.playerRocketTemplate) {
-			case PlayerAirBombTemplate.BALLs: {
-				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BALLs).map(x => x.uri);
+			case PlayerAirBombTemplate.BALL: {
+				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BALL).map(x => x.uri);
 				this.autoBlastDelayDefault = 6;
 			} break;
-			case PlayerAirBombTemplate.ROCKETs: {
-				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.ROCKETs).map(x => x.uri);
+			case PlayerAirBombTemplate.ROCKET: {
+				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.ROCKET).map(x => x.uri);
 			} break;
 			default: break;
 		}
@@ -36,11 +36,11 @@ export class PlayerRocket extends RocketBase {
 		this.scale.set(1);
 
 		switch (this.playerRocketTemplate) {
-			case PlayerAirBombTemplate.BALLs: {
+			case PlayerAirBombTemplate.BALL: {
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 20; // starts with high speed and slows down
 				SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
 			} break;
-			case PlayerAirBombTemplate.ROCKETs: {
+			case PlayerAirBombTemplate.ROCKET: {
 				this.speed = 0; // starts with slow speed then gets fast
 				SoundManager.play(SoundType.ROCKET_LAUNCH, 0.3);
 			} break;
@@ -60,10 +60,10 @@ export class PlayerRocket extends RocketBase {
 
 	override accelerate() {
 		switch (this.playerRocketTemplate) {
-			case PlayerAirBombTemplate.BALLs: {
+			case PlayerAirBombTemplate.BALL: {
 				super.decelerate();
 			} break;
-			case PlayerAirBombTemplate.ROCKETs: {
+			case PlayerAirBombTemplate.ROCKET: {
 				super.accelerate();
 			} break;
 			default: break;

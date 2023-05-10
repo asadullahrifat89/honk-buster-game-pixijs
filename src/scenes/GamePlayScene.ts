@@ -1462,17 +1462,17 @@ export class GamePlayScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
-				case PlayerAirBombTemplate.BALLs: {
+				case PlayerAirBombTemplate.BALL: {
 					sprite.width = this.playerRocketSizeWidth / 1.5;
 					sprite.height = this.playerRocketSizeHeight / 1.5;
 
-					gameObject.setTemplate(PlayerAirBombTemplate.BALLs);
+					gameObject.setTemplate(PlayerAirBombTemplate.BALL);
 				} break;
-				case PlayerAirBombTemplate.ROCKETs: {
+				case PlayerAirBombTemplate.ROCKET: {
 					sprite.width = this.playerRocketSizeWidth;
 					sprite.height = this.playerRocketSizeHeight;
 
-					gameObject.setTemplate(PlayerAirBombTemplate.ROCKETs);
+					gameObject.setTemplate(PlayerAirBombTemplate.ROCKET);
 				} break;
 				default: break;
 			}
@@ -1925,7 +1925,7 @@ export class GamePlayScene extends Container implements IScene {
 		ufoEnemy.looseHealth();
 
 		if (ufoEnemy.isDead()) {
-			this.gameScoreBar.gainScore(2);
+			this.gainScore();
 			this.ufoEnemyDefeatCount++;
 			SoundManager.play(SoundType.SCORE, 1);
 
@@ -2245,7 +2245,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			if (vehicleEnemy.isDead()) {
 				vehicleEnemy.setBlast();
-				this.gameScoreBar.gainScore(2);
+				this.gainScore(false);
 				//let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
 				//let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
 				SoundManager.play(SoundType.SCORE, 1);
@@ -2381,7 +2381,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (vehicleBoss.isDead()) {
 
 			this.player.setWinStance();
-			this.gameScoreBar.gainScore(3);
+			this.gainScore(false);
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -2636,7 +2636,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (ufoBoss.isDead()) {
 
 			this.player.setWinStance();
-			this.gameScoreBar.gainScore(3);
+			this.gainScore();
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -3044,7 +3044,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (zombieBoss.isDead()) {
 
 			this.player.setWinStance();
-			this.gameScoreBar.gainScore(3);
+			this.gainScore();
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -3293,7 +3293,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (mafiaBoss.isDead()) {
 
 			this.player.setWinStance();
-			this.gameScoreBar.gainScore(3);
+			this.gainScore();
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -4035,6 +4035,32 @@ export class GamePlayScene extends Container implements IScene {
 	//#endregion
 
 	//#region Game
+
+	private gainScore(airEnemy: boolean = true) {
+
+		let score = 0;
+
+		if (airEnemy) {
+			switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
+				case PlayerAirBombTemplate.BALL: { score = 1; } break;
+				case PlayerAirBombTemplate.ROCKET: { score = 2; } break;
+				default: { score = 1; } break;
+			}
+
+			this.gameScoreBar.gainScore(2);
+			
+		}
+		else {
+			switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
+				case PlayerGroundBombTemplate.GRENADE: { score = 1; } break;
+				case PlayerGroundBombTemplate.TRASH_BIN: { score = 2; } break;
+				case PlayerGroundBombTemplate.DYNAMITE: { score = 3; } break;
+				default: { score = 1; } break;
+			}
+
+			this.gameScoreBar.gainScore(score);
+		}
+	}
 
 	private resumeGame() {
 		if (this.anyBossExists()) {
