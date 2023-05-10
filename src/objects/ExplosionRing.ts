@@ -1,5 +1,6 @@
-﻿//import { Constants, ConstructType } from '../Constants';
+﻿import { SoundType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
+import { SoundManager } from '../managers/SoundManager';
 
 
 export class ExplosionRing extends GameObjectContainer {
@@ -11,9 +12,8 @@ export class ExplosionRing extends GameObjectContainer {
 
     reset() {
         this.alpha = 1.0;
-        this.scale.set(1);
-        //this.setTexture(Constants.getRandomTexture(ConstructType.EXPLOSION_RING));
-        //SoundManager.play(SoundType.HONK, 0.5);
+        this.scale.set(1);        
+        SoundManager.play(SoundType.EXPLOSION_RING, 0.8);
     }
 
     reposition(source: GameObjectContainer) {

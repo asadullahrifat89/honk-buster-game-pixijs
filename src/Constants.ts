@@ -208,7 +208,7 @@ export enum SoundType {
     BOOST_ACQUIRED,
     ITEM_SELECT,
     SCORE,
-    BOSS_EXPLOSION
+    EXPLOSION_RING
 }
 
 //#endregion
@@ -397,8 +397,8 @@ export abstract class Constants {
 
 	public static SOUND_TEMPLATES: (SoundTemplate)[] = [
 
-		new SoundTemplate(SoundType.BOSS_EXPLOSION, this.soundsDirectory + "boss_explosion_1.mp3"),
-		new SoundTemplate(SoundType.BOSS_EXPLOSION, this.soundsDirectory + "boss_explosion_2.mp3"),
+		new SoundTemplate(SoundType.EXPLOSION_RING, this.soundsDirectory + "boss_explosion_1.mp3"),
+		new SoundTemplate(SoundType.EXPLOSION_RING, this.soundsDirectory + "boss_explosion_2.mp3"),
 
 		new SoundTemplate(SoundType.CHOPPER_HOVERING, this.soundsDirectory + "chopper_hovering.mp3"),
 
