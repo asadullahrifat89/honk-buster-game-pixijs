@@ -83,8 +83,9 @@ export class GamePlayScene extends Container implements IScene {
 
 	private honkBustReactions: string[] = [];
 
-	private surfaceSceneWidth: number = Constants.DEFAULT_GAME_VIEW_WIDTH * (SceneManager.scaling == 1 ? 1 : SceneManager.scaling * 1.35);
-	private surfaceSceneHeight: number = Constants.DEFAULT_GAME_VIEW_HEIGHT * (SceneManager.scaling == 1 ? 1 : SceneManager.scaling * 1.35);
+	private sceneBoundaryWidth: number = Constants.DEFAULT_GAME_VIEW_WIDTH;
+	private sceneBoundaryHeight: number = Constants.DEFAULT_GAME_VIEW_HEIGHT;
+
 	//#endregion
 
 	//#region Methods
@@ -1193,7 +1194,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		//console.log("scale: " + SceneManager.scaling + " w: " + screenWidth + " h: " + screenHeight + " pl.x:" + this.player.x + " pl.y:" + this.player.y);
 
-		this.player.move(this.surfaceSceneWidth, this.surfaceSceneHeight, this.gameController);
+		this.player.move(this.sceneBoundaryWidth, this.sceneBoundaryHeight, this.gameController);
 
 		if (this.gameController.isAttacking) {
 
@@ -2423,7 +2424,7 @@ export class GamePlayScene extends Container implements IScene {
 				vehicleBoss.dillyDally();
 
 				if (vehicleBoss.isAttacking) {
-					vehicleBoss.move(this.surfaceSceneWidth, this.surfaceSceneHeight);
+					vehicleBoss.move(this.sceneBoundaryWidth, this.sceneBoundaryHeight);
 
 					if (vehicleBoss.honk()) {
 						this.generateHonk(vehicleBoss);
@@ -2672,7 +2673,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (ufoBoss.isAttacking) {
 
-					ufoBoss.move(this.surfaceSceneWidth, this.surfaceSceneHeight, this.player.getCloseBounds());
+					ufoBoss.move(this.sceneBoundaryWidth, this.sceneBoundaryHeight, this.player.getCloseBounds());
 
 					if (Constants.checkCloseCollision(this.player, ufoBoss)) {
 						this.loosePlayerHealth();
@@ -3320,7 +3321,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (mafiaBoss.isAttacking) {
 
-					mafiaBoss.move(this.surfaceSceneWidth, this.surfaceSceneHeight, this.player.getCloseBounds());
+					mafiaBoss.move(this.sceneBoundaryWidth, this.sceneBoundaryHeight, this.player.getCloseBounds());
 
 					if (Constants.checkCloseCollision(this.player, mafiaBoss)) {
 						this.loosePlayerHealth();
@@ -3942,8 +3943,8 @@ export class GamePlayScene extends Container implements IScene {
 			this.stageColor.clear().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 			this.stageMask.clear().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
 
-			this.surfaceSceneWidth = Constants.DEFAULT_GAME_VIEW_WIDTH * (SceneManager.scaling == 1 ? 1 : SceneManager.scaling * 1.35);
-			this.surfaceSceneHeight = Constants.DEFAULT_GAME_VIEW_HEIGHT * (SceneManager.scaling == 1 ? 1 : SceneManager.scaling * 1.35);
+			this.sceneBoundaryWidth = Constants.DEFAULT_GAME_VIEW_WIDTH * (SceneManager.scaling * 1.20);
+			this.sceneBoundaryHeight = Constants.DEFAULT_GAME_VIEW_HEIGHT * (SceneManager.scaling * 1.35);
 		}
 	}
 
