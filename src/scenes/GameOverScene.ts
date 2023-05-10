@@ -179,8 +179,10 @@ export class GameOverScene extends Container implements IScene {
 			if (this.unlockablePopDelay <= 0) {
 
 				if (Constants.HEALTH_LEVEL_MAX > 1 && this.health.isAwaitingPop) {
-					if (this.health.filters)
+					if (this.health.filters) {
+						SoundManager.play(SoundType.LEVEL_UP);
 						this.health.filters = null;
+					}						
 
 					this.health.pop();
 
@@ -191,8 +193,10 @@ export class GameOverScene extends Container implements IScene {
 					}
 				}
 				else if (Constants.ATTACK_LEVEL_MAX > 0 && this.attack.isAwaitingPop) {
-					if (this.attack.filters)
+					if (this.attack.filters) {
+						SoundManager.play(SoundType.LEVEL_UP);
 						this.attack.filters = null;
+					}						
 
 					this.attack.pop();
 
@@ -245,6 +249,7 @@ export class GameOverScene extends Container implements IScene {
 	}
 
 	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("character_maleAdventurer_cheer0")) {
+
 		if (this.onScreenMessage.isAnimating == false) {
 			this.onScreenMessage.setContent(title, icon);
 			this.onScreenMessage.reset();
@@ -259,6 +264,7 @@ export class GameOverScene extends Container implements IScene {
 	}
 
 	private animateOnScreenMessage() {
+
 		if (this.onScreenMessage.isAnimating == true) {
 
 			this.onScreenMessage.depleteOnScreenDelay();
