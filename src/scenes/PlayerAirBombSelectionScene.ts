@@ -9,7 +9,7 @@ import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
 import { GrayscaleFilter } from "@pixi/filter-grayscale";
 import { MessageBubble } from "../controls/MessageBubble";
-import { PlayerBattlementSelectionScene } from "./PlayerBattlementSelectionScene";
+import { PlayerGearSelectionScene } from "./PlayerGearSelectionScene";
 
 
 export class PlayerAirBombSelectionScene extends Container implements IScene {
@@ -109,7 +109,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			if (button.getIsEnabled()) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
-				SceneManager.changeScene(new PlayerBattlementSelectionScene());
+				SceneManager.changeScene(new PlayerGearSelectionScene());
 			}
 			else {
 				SoundManager.play(SoundType.HEALTH_LOSS);

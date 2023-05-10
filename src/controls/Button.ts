@@ -19,7 +19,7 @@ export class Button extends Container {
 		this.interactive = true;
 		this.filters = null;
 
-		this.buttonHoverFilter = new OutlineFilter(4, 0xffffff);
+		this.buttonHoverFilter = new OutlineFilter(3, 0xffffff);
 		this.buttonDisabledFilter = new GrayscaleFilter();
 
 		// add the button background
