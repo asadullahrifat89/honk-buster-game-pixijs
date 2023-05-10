@@ -59,8 +59,8 @@ export class GamePlayScene extends Container implements IScene {
 	private readonly ufoBossRelease: { point: number, limit: number } = { point: 50, limit: 15 };
 	private readonly zombieBossRelease: { point: number, limit: number } = { point: 100, limit: 15 };
 	private readonly mafiaBossRelease: { point: number, limit: number } = { point: 150, limit: 15 };
-		
-	private readonly ufoEnemyCheckpoint: GameCheckpoint;	
+
+	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 	private readonly vehicleBossCheckpoint: GameCheckpoint;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
 	private readonly zombieBossCheckpoint: GameCheckpoint;
@@ -235,10 +235,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Honks
 
-	private roadHonkSizeWidth: number = 125;
-	private roadHonkSizeHeight: number = 125;
-
-	private roadHonkGameObjects: Array<Honk> = [];
+	private honkSize = { width: 125, height: 125 };
+	private honkGameObjects: Array<Honk> = [];
 
 	private spawnHonks() {
 
@@ -251,14 +249,14 @@ export class GamePlayScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.roadHonkSizeWidth;
-			sprite.height = this.roadHonkSizeHeight;
+			sprite.width = this.honkSize.width;
+			sprite.height = this.honkSize.height;
 
 			sprite.anchor.set(0.5, 0.5);
 
 			gameObject.addChild(sprite);
 
-			this.roadHonkGameObjects.push(gameObject);
+			this.honkGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
@@ -267,7 +265,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (source.getLeft() - 25 > 0 && source.getTop() - 25 > 0) {
 
-			var gameObject = this.roadHonkGameObjects.find(x => x.isAnimating == false);
+			var gameObject = this.honkGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 				gameObject.reset();
@@ -280,7 +278,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private animateHonks() {
 
-		var animatingHonks = this.roadHonkGameObjects.filter(x => x.isAnimating == true);
+		var animatingHonks = this.honkGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingHonks) {
 
@@ -360,7 +358,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Taunts
 
-	private tauntDelay: number = 15
+	private tauntDelay: number = 15;
 	private ufoEnemyTaunts: string[] = ["Let the humans honk!", "We want more honks!", "We will stop you!", "You can't beat us!'.", "The city is ours!"];
 	private vehicleBossTaunts: string[] = ["Catch me if you can!", "Too slow!", "You're no match for me!", "Let's see how you do.", "I am the boss!"];
 	private ufoBossTaunts: string[] = ["You have met your doom.", "My logic is undeniable.", "You can't beat me!", "Ha! ha! ha! ha! ha!", "I am the boss!"];
@@ -410,9 +408,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private roadMarkXyAdjustment: number = 890;
 
-	private roadMarkSizeWidth: number = 1400;
-	private roadMarkSizeHeight: number = 1400;
-
+	private roadMarkSize = { width: 1400, height: 1400 };
 	private roadMarksGameObjects: Array<RoadMark> = [];
 
 	private readonly roadMarkPopDelayDefault: number = 84.5 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -429,10 +425,10 @@ export class GamePlayScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_MARK));
 
-				sprite.x = (this.roadMarkSizeWidth * i) - (this.roadMarkXyAdjustment * i);
-				sprite.y = ((this.roadMarkSizeHeight / 2) * i) - (((this.roadMarkXyAdjustment) / 2) * i);
-				sprite.width = this.roadMarkSizeWidth;
-				sprite.height = this.roadMarkSizeHeight;
+				sprite.x = (this.roadMarkSize.width * i) - (this.roadMarkXyAdjustment * i);
+				sprite.y = ((this.roadMarkSize.height / 2) * i) - (((this.roadMarkXyAdjustment) / 2) * i);
+				sprite.width = this.roadMarkSize.width;
+				sprite.height = this.roadMarkSize.height;
 
 				gameObject.addChild(sprite);
 			}
@@ -481,10 +477,7 @@ export class GamePlayScene extends Container implements IScene {
 	//#region SideWalks
 
 	private sideWalkXyAdjustment: number = 192;
-
-	private sideWalkWidth: number = 750;
-	private sideWalkHeight: number = 750;
-
+	private sideWalkSize = { width: 750, height: 750 };
 	private sideWalkTopGameObjects: Array<RoadSideWalk> = [];
 	private sideWalkBottomGameObjects: Array<RoadSideWalk> = [];
 
@@ -503,11 +496,11 @@ export class GamePlayScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK_TOP));
 
-				sprite.x = this.sideWalkWidth * i - (this.sideWalkXyAdjustment * i);
-				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
+				sprite.x = this.sideWalkSize.width * i - (this.sideWalkXyAdjustment * i);
+				sprite.y = (this.sideWalkSize.height / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
 
-				sprite.width = this.sideWalkWidth;
-				sprite.height = this.sideWalkHeight;
+				sprite.width = this.sideWalkSize.width;
+				sprite.height = this.sideWalkSize.height;
 
 				gameObject.addChild(sprite);
 			}
@@ -528,11 +521,11 @@ export class GamePlayScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK_BOTTOM));
 
-				sprite.x = this.sideWalkWidth * i - (this.sideWalkXyAdjustment * i);
-				sprite.y = (this.sideWalkHeight / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
+				sprite.x = this.sideWalkSize.width * i - (this.sideWalkXyAdjustment * i);
+				sprite.y = (this.sideWalkSize.height / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
 
-				sprite.width = this.sideWalkWidth;
-				sprite.height = this.sideWalkHeight;
+				sprite.width = this.sideWalkSize.width;
+				sprite.height = this.sideWalkSize.height;
 
 				gameObject.addChild(sprite);
 			}
@@ -585,7 +578,7 @@ export class GamePlayScene extends Container implements IScene {
 			animatingSideWalks.forEach(gameObject => {
 				gameObject.moveDownRight();
 
-				if (gameObject.x - (this.sideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.x - (this.sideWalkSize.width + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 
 				}
@@ -602,7 +595,7 @@ export class GamePlayScene extends Container implements IScene {
 			animatingSideWalks.forEach(gameObject => {
 				gameObject.moveDownRight();
 
-				if (gameObject.x - (this.sideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - (this.sideWalkWidth + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.x - (this.sideWalkSize.width + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - (this.sideWalkSize.width + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 
 				}
@@ -615,10 +608,7 @@ export class GamePlayScene extends Container implements IScene {
 	//#region SideWalkPillars
 
 	private sideWalkPillarXyAdjustment: number = 192;
-
-	private sideWalkPillarWidth: number = 750;
-	private sideWalkPillarHeight: number = 750;
-
+	private sideWalkPillarSize = { width: 750, height: 750 };
 	private sideWalkPillarBottomGameObjects: Array<RoadSideWalkPillar> = [];
 
 	private readonly sideWalkPillarPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -635,11 +625,11 @@ export class GamePlayScene extends Container implements IScene {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK_BOTTOM_PILLARS));
 
-				sprite.x = this.sideWalkPillarWidth * i - (this.sideWalkPillarXyAdjustment * i);
-				sprite.y = (this.sideWalkPillarHeight / 2) * i - ((this.sideWalkPillarXyAdjustment / 2) * i);
+				sprite.x = this.sideWalkPillarSize.width * i - (this.sideWalkPillarXyAdjustment * i);
+				sprite.y = (this.sideWalkPillarSize.height / 2) * i - ((this.sideWalkPillarXyAdjustment / 2) * i);
 
-				sprite.width = this.sideWalkPillarWidth;
-				sprite.height = this.sideWalkPillarHeight;
+				sprite.width = this.sideWalkPillarSize.width;
+				sprite.height = this.sideWalkPillarSize.height;
 
 				gameObject.addChild(sprite);
 			}
@@ -675,7 +665,7 @@ export class GamePlayScene extends Container implements IScene {
 			animatingSideWalkPillars.forEach(gameObject => {
 				gameObject.moveDownRight();
 
-				if (gameObject.x - (this.sideWalkPillarWidth + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - (this.sideWalkPillarWidth + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+				if (gameObject.x - (this.sideWalkPillarSize.width + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - (this.sideWalkPillarSize.width + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					gameObject.disableRendering();
 				}
 			});
@@ -768,9 +758,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region ExplosionRings
 
-	private roadExplosionRingSizeWidth: number = 145;
-	private roadExplosionRingSizeHeight: number = 145;
-
+	private roadExplosionRingSize = { width: 145, height: 145 };
 	private roadExplosionRingGameObjects: Array<ExplosionRing> = [];
 
 	private spawnExplosionRings() {
@@ -783,8 +771,8 @@ export class GamePlayScene extends Container implements IScene {
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.EXPLOSION_RING));
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.roadExplosionRingSizeWidth;
-			sprite.height = this.roadExplosionRingSizeHeight;
+			sprite.width = this.roadExplosionRingSize.width;
+			sprite.height = this.roadExplosionRingSize.height;
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
@@ -1152,9 +1140,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerRide
 
-	private playerRideSizeWidth: number = 512;
-	private playerRideSizeHeight: number = 512;
-
+	private playerRideSize = { width: 512, height: 512 };
 	private player: PlayerRide = new PlayerRide();
 
 	spawnPlayerBalloon() {
@@ -1164,12 +1150,12 @@ export class GamePlayScene extends Container implements IScene {
 
 		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
 			case PlayerRideTemplate.AIR_BALLOON: {
-				sprite.width = this.playerRideSizeWidth / 3;
-				sprite.height = this.playerRideSizeHeight / 3;
+				sprite.width = this.playerRideSize.width / 3;
+				sprite.height = this.playerRideSize.height / 3;
 			} break;
 			case PlayerRideTemplate.CHOPPER: {
-				sprite.width = this.playerRideSizeWidth / 3.5;
-				sprite.height = this.playerRideSizeHeight / 3.5;
+				sprite.width = this.playerRideSize.width / 3.5;
+				sprite.height = this.playerRideSize.height / 3.5;
 			} break;
 			default: break;
 		}
@@ -1263,9 +1249,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerGroundBombs
 
-	private playerGroundBombSizeWidth: number = 65;
-	private playerGroundBombSizeHeight: number = 65;
-
+	private playerGroundBombSize = { width: 65, height: 65 };
 	private playerGroundBombGameObjects: Array<PlayerGroundBomb> = [];
 
 	private readonly playerAmmoBeltSize: number = 3 + Constants.ATTACK_LEVEL_MAX;
@@ -1280,8 +1264,8 @@ export class GamePlayScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.playerGroundBombSizeWidth;
-			sprite.height = this.playerGroundBombSizeHeight;
+			sprite.width = this.playerGroundBombSize.width;
+			sprite.height = this.playerGroundBombSize.height;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
@@ -1496,10 +1480,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerAirBombs
 
-	private PlayerAirBombSizeWidth: number = 90;
-	private PlayerAirBombSizeHeight: number = 90;
-
-	private PlayerAirBombGameObjects: Array<PlayerAirBomb> = [];
+	private playerAirBombSize = { width: 90, height: 90 };
+	private playerAirBombGameObjects: Array<PlayerAirBomb> = [];
 
 	spawnPlayerAirBombs() {
 
@@ -1517,27 +1499,27 @@ export class GamePlayScene extends Container implements IScene {
 
 			switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
 				case PlayerAirBombTemplate.GRAVITY_BALL: {
-					sprite.width = this.PlayerAirBombSizeWidth / 1.5;
-					sprite.height = this.PlayerAirBombSizeHeight / 1.5;
+					sprite.width = this.playerAirBombSize.width / 1.5;
+					sprite.height = this.playerAirBombSize.height / 1.5;
 
 					gameObject.setTemplate(PlayerAirBombTemplate.GRAVITY_BALL);
 				} break;
 				case PlayerAirBombTemplate.MISSILE: {
-					sprite.width = this.PlayerAirBombSizeWidth;
-					sprite.height = this.PlayerAirBombSizeHeight;
+					sprite.width = this.playerAirBombSize.width;
+					sprite.height = this.playerAirBombSize.height;
 
 					gameObject.setTemplate(PlayerAirBombTemplate.MISSILE);
 				} break;
 				case PlayerAirBombTemplate.BULLET_BALL: {
-					sprite.width = this.PlayerAirBombSizeWidth / 1.5;
-					sprite.height = this.PlayerAirBombSizeHeight / 1.5;
+					sprite.width = this.playerAirBombSize.width / 1.5;
+					sprite.height = this.playerAirBombSize.height / 1.5;
 
 					gameObject.setTemplate(PlayerAirBombTemplate.BULLET_BALL);
 				} break;
 				default: break;
 			}
 
-			this.PlayerAirBombGameObjects.push(gameObject);
+			this.playerAirBombGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
@@ -1546,7 +1528,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	generatePlayerAirBomb() {
 
-		var playerAirBomb = this.PlayerAirBombGameObjects.find(x => x.isAnimating == false);
+		var playerAirBomb = this.playerAirBombGameObjects.find(x => x.isAnimating == false);
 
 		if (playerAirBomb) {
 			playerAirBomb.reset();
@@ -1590,7 +1572,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	animatePlayerAirBombs() {
 
-		var animatingHonkBombs = this.PlayerAirBombGameObjects.filter(x => x.isAnimating == true);
+		var animatingHonkBombs = this.playerAirBombGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingHonkBombs) {
 
@@ -1745,9 +1727,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerAirBombBullsEyes
 
-	private playerAirBombBullsEyeSizeWidth: number = 75;
-	private playerAirBombBullsEyeSizeHeight: number = 75;
-
+	private playerAirBombBullsEyeSize = { width: 75, height: 75 };
 	private playerAirBombBullsEyeGameObjects: Array<PlayerAirBombBullsEye> = [];
 
 	spawnPlayerAirBombBullsEyes() {
@@ -1761,8 +1741,8 @@ export class GamePlayScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.playerAirBombBullsEyeSizeWidth;
-			sprite.height = this.playerAirBombBullsEyeSizeHeight;
+			sprite.width = this.playerAirBombBullsEyeSize.width;
+			sprite.height = this.playerAirBombBullsEyeSize.height;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
@@ -1906,11 +1886,9 @@ export class GamePlayScene extends Container implements IScene {
 	private ufoEnemyDefeatCount: number = 0;
 	private readonly ufoEnemyDefeatPoint: number = 20;
 
-	//#region UfoEnemys	
+	//#region UfoEnemys
 
-	private ufoEnemySizeWidth: number = 165;
-	private ufoEnemySizeHeight: number = 165;
-
+	private ufoEnemySize = { width: 165, height: 165 };
 	private ufoEnemyGameObjects: Array<UfoEnemy> = [];
 
 	private readonly ufoEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -1927,8 +1905,8 @@ export class GamePlayScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.ufoEnemySizeWidth;
-			sprite.height = this.ufoEnemySizeHeight;
+			sprite.width = this.ufoEnemySize.width;
+			sprite.height = this.ufoEnemySize.height;
 			sprite.anchor.set(0.5, 0.5);
 
 			gameObject.addChild(sprite);
@@ -2051,9 +2029,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region UfoEnemyRockets
 
-	private ufoEnemyRocketSizeWidth: number = 85;
-	private ufoEnemyRocketSizeHeight: number = 85;
-
+	private ufoEnemyRocketSize = { width: 85, height: 85 };
 	private ufoEnemyRocketGameObjects: Array<UfoEnemyRocket> = [];
 
 	spawnUfoEnemyRockets() {
@@ -2067,8 +2043,8 @@ export class GamePlayScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.ufoEnemyRocketSizeWidth;
-			sprite.height = this.ufoEnemyRocketSizeHeight;
+			sprite.width = this.ufoEnemyRocketSize.width;
+			sprite.height = this.ufoEnemyRocketSize.height;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
@@ -2138,11 +2114,9 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region VehicleEnemys	
+	//#region VehicleEnemys
 
-	private vehicleEnemySizeWidth: number = 250;
-	private vehicleEnemySizeHeight: number = 250;
-
+	private vehicleEnemySize = { width: 250, height: 250 };
 	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
 
 	private readonly vehicleEnemyPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -2179,12 +2153,12 @@ export class GamePlayScene extends Container implements IScene {
 
 			switch (gameObject.vehicleType) {
 				case ConstructType.VEHICLE_ENEMY_SMALL: {
-					sprite.width = this.vehicleEnemySizeWidth / 1.2;
-					sprite.height = this.vehicleEnemySizeHeight / 1.2;
+					sprite.width = this.vehicleEnemySize.width / 1.2;
+					sprite.height = this.vehicleEnemySize.height / 1.2;
 				} break;
 				case ConstructType.VEHICLE_ENEMY_LARGE: {
-					sprite.width = this.vehicleEnemySizeWidth;
-					sprite.height = this.vehicleEnemySizeHeight;
+					sprite.width = this.vehicleEnemySize.width;
+					sprite.height = this.vehicleEnemySize.height;
 				} break;
 				default: break;
 			}
@@ -2215,12 +2189,12 @@ export class GamePlayScene extends Container implements IScene {
 
 					switch (gameObject.vehicleType) {
 						case ConstructType.VEHICLE_ENEMY_SMALL: {
-							sprite.width = this.vehicleEnemySizeWidth / 1.2;
-							sprite.height = this.vehicleEnemySizeHeight / 1.2;
+							sprite.width = this.vehicleEnemySize.width / 1.2;
+							sprite.height = this.vehicleEnemySize.height / 1.2;
 						} break;
 						case ConstructType.VEHICLE_ENEMY_LARGE: {
-							sprite.width = this.vehicleEnemySizeWidth;
-							sprite.height = this.vehicleEnemySizeHeight;
+							sprite.width = this.vehicleEnemySize.width;
+							sprite.height = this.vehicleEnemySize.height;
 						} break;
 						default: break;
 					}
@@ -2383,8 +2357,8 @@ export class GamePlayScene extends Container implements IScene {
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS));
 		sprite.x = 0;
 		sprite.y = 0;
-		sprite.width = this.vehicleEnemySizeWidth / 1.2;
-		sprite.height = this.vehicleEnemySizeHeight / 1.2;
+		sprite.width = this.vehicleEnemySize.width / 1.2;
+		sprite.height = this.vehicleEnemySize.height / 1.2;
 		sprite.anchor.set(0.5, 0.5);
 
 		gameObject.addChild(sprite);
@@ -2404,8 +2378,8 @@ export class GamePlayScene extends Container implements IScene {
 
 				let sprite = gameObject.getSprite();
 
-				sprite.width = this.vehicleEnemySizeWidth / 1.2;
-				sprite.height = this.vehicleEnemySizeHeight / 1.2;
+				sprite.width = this.vehicleEnemySize.width / 1.2;
+				sprite.height = this.vehicleEnemySize.height / 1.2;
 
 				gameObject.reposition();
 				gameObject.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
@@ -2505,9 +2479,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region VehicleBossRockets
 
-	private vehicleBossRocketSizeWidth: number = 90;
-	private vehicleBossRocketSizeHeight: number = 90;
-
+	private vehicleBossRocketSize = { width: 90, height: 90 };
 	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
 
 	private readonly vehicleBossRocketPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -2524,8 +2496,8 @@ export class GamePlayScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.vehicleBossRocketSizeWidth;
-			sprite.height = this.vehicleBossRocketSizeHeight;
+			sprite.width = this.vehicleBossRocketSize.width;
+			sprite.height = this.vehicleBossRocketSize.height;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
@@ -2616,9 +2588,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region UfoBosss
 
-	private ufoBossSizeWidth: number = 200;
-	private ufoBossSizeHeight: number = 200;
-
+	private ufoBossSize = { width: 200, height: 200 };
 	private ufoBossGameObjects: Array<UfoBoss> = [];
 
 	private spawnUfoBosss() {
@@ -2629,8 +2599,8 @@ export class GamePlayScene extends Container implements IScene {
 
 		sprite.x = 0;
 		sprite.y = 0;
-		sprite.width = this.ufoBossSizeWidth;
-		sprite.height = this.ufoBossSizeHeight;
+		sprite.width = this.ufoBossSize.width;
+		sprite.height = this.ufoBossSize.height;
 
 		sprite.anchor.set(0.5, 0.5);
 
@@ -2764,9 +2734,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region UfoBossRockets
 
-	private ufoBossRocketSizeWidth: number = 90;
-	private ufoBossRocketSizeHeight: number = 90;
-
+	private ufoBossRocketSize = { width: 90, height: 90 };
 	private ufoBossRocketGameObjects: Array<UfoBossRocket> = [];
 
 	private readonly ufoBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -2783,8 +2751,8 @@ export class GamePlayScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.ufoBossRocketSizeWidth;
-			sprite.height = this.ufoBossRocketSizeHeight;
+			sprite.width = this.ufoBossRocketSize.width;
+			sprite.height = this.ufoBossRocketSize.height;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
@@ -2908,9 +2876,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region UfoBossRocketSeekings
 
-	private ufoBossRocketSeekingSizeWidth: number = 75;
-	private ufoBossRocketSeekingSizeHeight: number = 75;
-
+	private ufoBossRocketSeekingSize = { width: 75, height: 75 };
 	private ufoBossRocketSeekingGameObjects: Array<UfoBossRocketSeeking> = [];
 
 	private readonly ufoBossRocketSeekingPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -2927,8 +2893,8 @@ export class GamePlayScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.ufoBossRocketSeekingSizeWidth;
-			sprite.height = this.ufoBossRocketSeekingSizeHeight;
+			sprite.width = this.ufoBossRocketSeekingSize.width;
+			sprite.height = this.ufoBossRocketSeekingSize.height;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
@@ -3023,11 +2989,9 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region ZombieBosss
 
-	//#region ZombieBosss	
+	//#region ZombieBosss
 
-	private zombieBossSizeWidth: number = 200;
-	private zombieBossSizeHeight: number = 200;
-
+	private zombieBossSize = { width: 200, height: 200 };
 	private zombieBossGameObjects: Array<ZombieBoss> = [];
 
 	private spawnZombieBosss() {
@@ -3038,8 +3002,8 @@ export class GamePlayScene extends Container implements IScene {
 
 		sprite.x = 0;
 		sprite.y = 0;
-		sprite.width = this.zombieBossSizeWidth;
-		sprite.height = this.zombieBossSizeHeight;
+		sprite.width = this.zombieBossSize.width;
+		sprite.height = this.zombieBossSize.height;
 
 		sprite.anchor.set(0.5, 0.5);
 
@@ -3122,8 +3086,8 @@ export class GamePlayScene extends Container implements IScene {
 
 					zombieBoss.moveDownRight();
 
-					if (zombieBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 3)) // bring ZombieBoss to a suitable distance from player and then start attacking
-					{
+					// bring ZombieBoss to a suitable distance from player and then start attacking
+					if (zombieBoss.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling / 2)) {
 						zombieBoss.isAttacking = true;
 					}
 				}
@@ -3173,9 +3137,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region ZombieBossRocketBlocks
 
-	private zombieBossRocketBlockSizeWidth: number = 256 / 1.5;
-	private zombieBossRocketBlockSizeHeight: number = 256 / 1.5;
-
+	private zombieBossRocketBlockSize = { width: 256 / 1.5, height: 256 / 1.5 };
 	private zombieBossRocketBlockGameObjects: Array<ZombieBossRocketBlock> = [];
 
 	private readonly zombieBossRocketBlockPopDelayDefault: number = 8 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -3192,8 +3154,8 @@ export class GamePlayScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.zombieBossRocketBlockSizeWidth;
-			sprite.height = this.zombieBossRocketBlockSizeHeight;
+			sprite.width = this.zombieBossRocketBlockSize.width;
+			sprite.height = this.zombieBossRocketBlockSize.height;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
@@ -3274,9 +3236,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region MafiaBosss
 
-	private mafiaBossSizeWidth: number = 200;
-	private mafiaBossSizeHeight: number = 200;
-
+	private mafiaBossSize = { width: 200, height: 200 };
 	private mafiaBossGameObjects: Array<MafiaBoss> = [];
 
 	private spawnMafiaBosss() {
@@ -3287,8 +3247,8 @@ export class GamePlayScene extends Container implements IScene {
 
 		sprite.x = 0;
 		sprite.y = 0;
-		sprite.width = this.mafiaBossSizeWidth;
-		sprite.height = this.mafiaBossSizeHeight;
+		sprite.width = this.mafiaBossSize.width;
+		sprite.height = this.mafiaBossSize.height;
 
 		sprite.anchor.set(0.5, 0.5);
 
@@ -3422,9 +3382,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region MafiaBossRockets
 
-	private mafiaBossRocketSizeWidth: number = 90;
-	private mafiaBossRocketSizeHeight: number = 90;
-
+	private mafiaBossRocketSize = { width: 90, height: 90 };
 	private mafiaBossRocketGameObjects: Array<MafiaBossRocket> = [];
 
 	private readonly mafiaBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -3441,8 +3399,8 @@ export class GamePlayScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.mafiaBossRocketSizeWidth;
-			sprite.height = this.mafiaBossRocketSizeHeight;
+			sprite.width = this.mafiaBossRocketSize.width;
+			sprite.height = this.mafiaBossRocketSize.height;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
@@ -3538,9 +3496,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region MafiaBossRocketBullsEyes
 
-	private mafiaBossRocketBullsEyeSizeWidth: number = 75;
-	private mafiaBossRocketBullsEyeSizeHeight: number = 75;
-
+	private mafiaBossRocketBullsEyeSize = { width: 75, height: 75 };
 	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossRocketBullsEye> = [];
 
 	private readonly mafiaBossRocketBullsEyePopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -3557,8 +3513,8 @@ export class GamePlayScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.mafiaBossRocketBullsEyeSizeWidth;
-			sprite.height = this.mafiaBossRocketBullsEyeSizeHeight;
+			sprite.width = this.mafiaBossRocketBullsEyeSize.width;
+			sprite.height = this.mafiaBossRocketBullsEyeSize.height;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
@@ -3650,11 +3606,9 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Pickups
 
-	//#region HealthPickups	
+	//#region HealthPickups
 
-	private healthPickupSizeWidth: number = 327 / 3;
-	private healthPickupSizeHeight: number = 327 / 3;
-
+	private healthPickupSize = { width: 327 / 3, height: 327 / 3 };
 	private healthPickupGameObjects: Array<HealthPickup> = [];
 
 	private readonly healthPickupPopDelayDefault: number = 130 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -3671,8 +3625,8 @@ export class GamePlayScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.healthPickupSizeWidth;
-			sprite.height = this.healthPickupSizeHeight;
+			sprite.width = this.healthPickupSize.width;
+			sprite.height = this.healthPickupSize.height;
 			sprite.anchor.set(0.5, 0.5);
 
 			gameObject.addChild(sprite);
@@ -3758,11 +3712,9 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region PowerUpPickups	
+	//#region PowerUpPickups
 
-	private powerUpPickupSizeWidth: number = 327 / 3;
-	private powerUpPickupSizeHeight: number = 327 / 3;
-
+	private powerUpPickupSize = { width: 327 / 3, height: 327 / 3 };
 	private powerUpPickupGameObjects: Array<PowerUpPickup> = [];
 
 	private readonly powerUpPickupPopDelayDefault: number = 130 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -3779,8 +3731,8 @@ export class GamePlayScene extends Container implements IScene {
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.powerUpPickupSizeWidth;
-			sprite.height = this.powerUpPickupSizeHeight;
+			sprite.width = this.powerUpPickupSize.width;
+			sprite.height = this.powerUpPickupSize.height;
 			sprite.anchor.set(0.5, 0.5);
 
 			gameObject.addChild(sprite);
