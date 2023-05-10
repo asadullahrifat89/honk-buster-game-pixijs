@@ -158,51 +158,53 @@ export enum ConstructType {
 	TRASH_BIN_OPEN,
 }
 
+
 export enum SoundType {
-	NONE,
+    NONE,
 
-	GAME_START,
-	GAME_PAUSE,
-	GAME_OVER,
+    GAME_START,
+    GAME_PAUSE,
+    GAME_OVER,
 
-	CRACKER_DROP,
-	CRACKER_BLAST,
+    CRACKER_DROP,
+    CRACKER_BLAST,
 
-	CHOPPER_HOVERING,
+    CHOPPER_HOVERING,
 
-	TRASH_BIN_HIT,
+    TRASH_BIN_HIT,
 
-	ROCKET_LAUNCH,
-	ROCKET_BLAST,
+    ROCKET_LAUNCH,
+    ROCKET_BLAST,
 
-	HONK,
-	HONK_BUST_REACTION,
+    HONK,
+    HONK_BUST_REACTION,
 
-	SEEKER_ROCKET_LAUNCH,
-	BALL_LAUNCH,
+    SEEKER_ROCKET_LAUNCH,
+    BALL_LAUNCH,
 
-	AMBIENCE,
+    AMBIENCE,
 
-	UFO_BOSS_ENTRY,
-	UFO_BOSS_HOVERING,
-	UFO_BOSS_DEAD,
+    UFO_BOSS_ENTRY,
+    UFO_BOSS_HOVERING,
+    UFO_BOSS_DEAD,
 
-	POWERUP_PICKUP,
-	HEALTH_PICKUP,
+    POWERUP_PICKUP,
+    HEALTH_PICKUP,
 
-	PLAYER_HEALTH_LOSS,
+    PLAYER_HEALTH_LOSS,
 
-	UFO_ENEMY_ENTRY,
+    UFO_ENEMY_ENTRY,
 
-	GAME_BACKGROUND_MUSIC,
-	BOSS_BACKGROUND_MUSIC,
+    GAME_BACKGROUND_MUSIC,
+    BOSS_BACKGROUND_MUSIC,
 
-	ORB_LAUNCH,
+    ORB_LAUNCH,
 
-	LEVEL_UP,
-	OPTION_SELECT,
-	BOOST_ACQUIRED,
-	ITEM_SELECT,
+    LEVEL_UP,
+    OPTION_SELECT,
+    BOOST_ACQUIRED,
+    ITEM_SELECT,
+    SCORE
 }
 
 //#endregion
@@ -487,6 +489,7 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.OPTION_SELECT, this.soundsDirectory + "option_select.mp3"),
 		new SoundTemplate(SoundType.BOOST_ACQUIRED, this.soundsDirectory + "boost_acquired.mp3"),
 		new SoundTemplate(SoundType.ITEM_SELECT, this.soundsDirectory + "item_select.mp3"),
+		new SoundTemplate(SoundType.SCORE, this.soundsDirectory + "score.mp3"),
 	];
 
 	private static ringWidth = 138;

@@ -34,7 +34,6 @@ import { PlayerRocketBullsEye } from "../objects/PlayerRocketBullsEye";
 import { PowerUpPickup } from "../objects/PowerUpPickup";
 import { ZombieBoss } from "../objects/ZombieBoss";
 import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
-import { SoundTemplate } from "../core/SoundTemplate";
 import { MessageBubble } from "../controls/MessageBubble";
 import { RoadSideWalkPillar } from "../objects/RoadSideWalkPillar";
 import { RoadMark } from "../objects/RoadMark";
@@ -88,7 +87,8 @@ export class GamePlayScene extends Container implements IScene {
 	private cheerIcon: Texture;
 	private interactIcon: Texture;
 
-	private honkBustReactions: SoundTemplate[] = [];
+	/*private honkBustReactions: SoundTemplate[] = [];*/
+	private honkBustReactions: string[] = [];
 
 	//#endregion
 
@@ -99,7 +99,7 @@ export class GamePlayScene extends Container implements IScene {
 	constructor() {
 		super();
 
-		this.honkBustReactions = Constants.SOUND_TEMPLATES.filter(x => x.soundType == SoundType.HONK_BUST_REACTION);
+		this.honkBustReactions = Constants.SOUND_TEMPLATES.filter(x => x.soundType == SoundType.HONK_BUST_REACTION).map(x => x.subTitle);
 
 		// get textures for on screen message icons
 		this.behindBackIcon = Texture.from("character_maleAdventurer_behindBack");
@@ -1926,8 +1926,8 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (ufoEnemy.isDead()) {
 			this.gameScoreBar.gainScore(2);
-
 			this.ufoEnemyDefeatCount++;
+			SoundManager.play(SoundType.SCORE, 0.8);
 
 			if (this.ufoEnemyDefeatCount > this.ufoEnemyDefeatPoint) // after killing limited enemies increase the threadhold limit
 			{
@@ -2246,10 +2246,11 @@ export class GamePlayScene extends Container implements IScene {
 			if (vehicleEnemy.isDead()) {
 				vehicleEnemy.setBlast();
 				this.gameScoreBar.gainScore(2);
-				let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
-				let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
+				//let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
+				//let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
+				SoundManager.play(SoundType.SCORE, 0.8);
 
-				this.generateMessageBubble(vehicleEnemy, soundTemplate.subTitle);
+				this.generateMessageBubble(vehicleEnemy, this.honkBustReactions[Constants.getRandomNumber(0, this.honkBustReactions.length - 1)]);
 			}
 		}
 	}
@@ -2642,6 +2643,7 @@ export class GamePlayScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+			SoundManager.play(SoundType.SCORE, 0.8);
 
 			this.generateMessageBubble(ufoBoss, "I'll reboot and revert!");
 			this.setBossDeathExplosion();
@@ -3049,6 +3051,7 @@ export class GamePlayScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+			SoundManager.play(SoundType.SCORE, 0.8);
 
 			this.setBossDeathExplosion();
 			this.generateMessageBubble(zombieBoss, "I'll return from the dead!");
@@ -3297,6 +3300,7 @@ export class GamePlayScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
+			SoundManager.play(SoundType.SCORE, 0.8);
 
 			this.setBossDeathExplosion();
 			this.generateMessageBubble(mafiaBoss, "See you next time, kid!");
@@ -3876,7 +3880,7 @@ export class GamePlayScene extends Container implements IScene {
 			this.repositionBossHealthBar();
 			this.repositionPowerUpBar();
 			this.gameController.resize();
-			
+
 			let color = this.stageColors[Constants.getRandomNumber(0, this.stageColors.length - 1)];
 			this.stageColor.clear().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 			this.stageMask.clear().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
