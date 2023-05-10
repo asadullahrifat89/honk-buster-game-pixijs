@@ -46,7 +46,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 
 	reset() {
 		this.isBlasting = false;
-		this.uriIndex = Constants.getRandomNumber(0, this.playerGroundBombUris.length);
+		this.uriIndex = Constants.getRandomNumber(0, this.playerGroundBombUris.length - 1);
 		this.setTexture(Constants.getTextureFromUri(this.playerGroundBombUris[this.uriIndex]));
 		this.alpha = 1;
 		this.scale.set(1);
@@ -138,7 +138,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 				this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
 			} break;
 			case PlayerGroundBombTemplate.TRASH_BIN: {
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 1.5;				
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 1.5;
 				this.setTexture(Constants.getTextureFromUri(this.playerGroundBombBlastUris[this.uriIndex]));
 			} break;
 			case PlayerGroundBombTemplate.DYNAMITE: {
