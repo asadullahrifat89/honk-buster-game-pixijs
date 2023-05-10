@@ -201,7 +201,7 @@ export const manifest: ResolverManifest = {
 				"option_select": "./sounds/option_select.mp3",
 				"orb_launch": "./sounds/orb_launch.mp3",
 
-				"player_health_loss_1": "./sounds/player_health_loss_1.mp3",
+				"health_loss_1": "./sounds/health_loss_1.mp3",
 				"power_up_pickup_1": "./sounds/power_up_pickup_1.mp3",
 
 				"rocket_blast_1": "./sounds/rocket_blast_1.mp3",

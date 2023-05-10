@@ -440,7 +440,7 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.POWERUP_PICKUP, this.soundsDirectory + "power_up_pickup_1.mp3"),
 		new SoundTemplate(SoundType.HEALTH_PICKUP, this.soundsDirectory + "health_pickup_1.mp3"),
 
-		new SoundTemplate(SoundType.HEALTH_LOSS, this.soundsDirectory + "player_health_loss_1.mp3"),
+		new SoundTemplate(SoundType.HEALTH_LOSS, this.soundsDirectory + "health_loss_1.mp3"),
 
 		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, this.soundsDirectory + "ufo_enemy_entry_1.mp3"),
 		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, this.soundsDirectory + "ufo_enemy_entry_2.mp3"),
