@@ -4143,8 +4143,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	private levelUp() {
 		SoundManager.play(SoundType.LEVEL_UP);
-		this.generateOnScreenMessage("Gained Lvl " + this.gameLevelBar.getScore().toString(), this.cheerIcon);
 		this.gameLevelBar.gainScore(1);
+		this.generateOnScreenMessage("Gained Lvl " + this.gameLevelBar.getScore().toString(), this.cheerIcon);		
 	}
 
 	//#endregion
