@@ -1,4 +1,5 @@
-﻿import { Constants, SoundType } from '../Constants';
+﻿import { GrayscaleFilter } from '@pixi/filter-grayscale';
+import { Constants, SoundType } from '../Constants';
 import { SoundManager } from '../managers/SoundManager';
 import { VehicleBase } from './VehicleBase';
 
@@ -10,19 +11,23 @@ export class VehicleBossBase extends VehicleBase {
 	private healthLossRecoveryDelay: number = 0;
 	private healthLossOpacityEffect: number = 0;
 
+	private grayScaleFilter: GrayscaleFilter = new GrayscaleFilter();
+
 	reset() {
 		this.alpha = 1;
 		this.health = 100;
 		this.isAttacking = false;
 		this.willHonk = true;
+		this.filters = null;
 	}
 
 	looseHealth() {
-		this.health -= this.hitPoint;		
+		this.health -= this.hitPoint;
 
 		if (this.isDead()) {
-			this.speed = Constants.DEFAULT_CONSTRUCT_SPEED - 1;
+			this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 			this.isAttacking = false;
+			this.filters = [this.grayScaleFilter];
 		}
 		else {
 			this.alpha = 0.7;

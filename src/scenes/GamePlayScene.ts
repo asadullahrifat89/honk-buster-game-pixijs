@@ -52,24 +52,25 @@ export class GamePlayScene extends Container implements IScene {
 
 	private onScreenMessage: OnScreenMessage;
 
-	//TODO: do yourself a favor, reset these to the default values after testing
-	private readonly vehicleBossReleasePoint: number = 25; // 25
-	private readonly vehicleBossReleaseLimit: number = 15;
-	private readonly vehicleBossCheckpoint: GameCheckpoint;
+	//TODO: do yourself a favor, reset these to the default values after testing	
 
 	private readonly ufoEnemyReleasePoint: number = 35; // 35
 	private readonly ufoEnemyReleaseLimit: number = 15;
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 
+	private readonly vehicleBossReleasePoint: number = 25; // 25
+	private readonly vehicleBossReleaseLimit: number = 15;
+	private readonly vehicleBossCheckpoint: GameCheckpoint;
+
 	private readonly ufoBossReleasePoint: number = 50; // 50
 	private readonly ufoBossReleaseLimit: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
 
-	private readonly zombieBossReleasePoint: number = 85; // 85
+	private readonly zombieBossReleasePoint: number = 100; // 100
 	private readonly zombieBossReleaseLimit: number = 15;
 	private readonly zombieBossCheckpoint: GameCheckpoint;
 
-	private readonly mafiaBossReleasePoint: number = 145; // 145
+	private readonly mafiaBossReleasePoint: number = 150; // 150
 	private readonly mafiaBossReleaseLimit: number = 15;
 	private readonly mafiaBossCheckpoint: GameCheckpoint;
 
@@ -87,8 +88,7 @@ export class GamePlayScene extends Container implements IScene {
 	private talkIcon: Texture;
 	private cheerIcon: Texture;
 	private interactIcon: Texture;
-
-	/*private honkBustReactions: SoundTemplate[] = [];*/
+	
 	private honkBustReactions: string[] = [];
 
 	//#endregion
@@ -783,7 +783,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private spawnExplosionRings() {
 
-		for (let j = 0; j < 2; j++) {
+		for (let j = 0; j < 1; j++) {
 
 			const gameObject: ExplosionRing = new ExplosionRing(0);
 			gameObject.disableRendering();
@@ -808,7 +808,6 @@ export class GamePlayScene extends Container implements IScene {
 		if (gameObject) {
 			gameObject.reset();
 			gameObject.reposition(source);
-			//gameObject.setPopping();
 			gameObject.enableRendering();
 		}
 	}
@@ -820,7 +819,6 @@ export class GamePlayScene extends Container implements IScene {
 		if (animatingExplosionRings) {
 
 			animatingExplosionRings.forEach(gameObject => {
-				/*gameObject.pop();*/
 				gameObject.fade();
 				gameObject.expand();
 
@@ -1053,7 +1051,7 @@ export class GamePlayScene extends Container implements IScene {
 					this.generateRingSmokeExplosion(anyBoss);
 					SoundManager.play(SoundType.ROCKET_BLAST);
 
-					if (this.bossDeathExplosionDuration <= 0.2) { // when duration depletes generate an explosion ring
+					if (this.bossDeathExplosionDuration > 0 && this.bossDeathExplosionDuration <= 0.3) { // when duration depletes generate an explosion ring
 						this.generateExplosionRing(anyBoss);
 					}
 				}
@@ -1068,6 +1066,7 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	private setBossDeathExplosion() {
+		this.bossDeathExplosionDelay = this.bossDeathExplosionDelayDefault;
 		this.bossDeathExplosionDuration = this.bossDeathExplosionDurationDefault;
 	}
 
@@ -1991,7 +1990,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (ufoEnemy.isDead()) {
 			this.gainScore();
 			this.ufoEnemyDefeatCount++;
-			
+
 			SoundManager.play(SoundType.SCORE, 1);
 
 			if (this.ufoEnemyDefeatCount > this.ufoEnemyDefeatPoint) // after killing limited enemies increase the threadhold limit
@@ -2306,7 +2305,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				vehicleEnemy.setBlast();
 				this.gainScore(false);
-				
+
 				//let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
 				//let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
 				SoundManager.play(SoundType.SCORE, 1);
@@ -4115,7 +4114,6 @@ export class GamePlayScene extends Container implements IScene {
 			}
 
 			this.gameScoreBar.gainScore(2);
-
 		}
 		else {
 			switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
