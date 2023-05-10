@@ -783,7 +783,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private spawnExplosionRings() {
 
-		for (let j = 0; j < 5; j++) {
+		for (let j = 0; j < 2; j++) {
 
 			const gameObject: ExplosionRing = new ExplosionRing(0);
 			gameObject.disableRendering();
@@ -803,16 +803,13 @@ export class GamePlayScene extends Container implements IScene {
 
 	private generateExplosionRing(source: GameObjectContainer) {
 
-		if (source.getLeft() - 25 > 0 && source.getTop() - 25 > 0) {
+		var gameObject = this.roadExplosionRingGameObjects.find(x => x.isAnimating == false);
 
-			var gameObject = this.roadExplosionRingGameObjects.find(x => x.isAnimating == false);
-
-			if (gameObject) {
-				gameObject.reset();
-				gameObject.reposition(source);
-				//gameObject.setPopping();
-				gameObject.enableRendering();
-			}
+		if (gameObject) {
+			gameObject.reset();
+			gameObject.reposition(source);
+			//gameObject.setPopping();
+			gameObject.enableRendering();
 		}
 	}
 
@@ -1056,13 +1053,13 @@ export class GamePlayScene extends Container implements IScene {
 					this.generateRingSmokeExplosion(anyBoss);
 					SoundManager.play(SoundType.ROCKET_BLAST);
 
-					if (this.bossDeathExplosionDuration <= 0) { // when duration depletes generate an explosion ring
+					if (this.bossDeathExplosionDuration <= 0.2) { // when duration depletes generate an explosion ring
 						this.generateExplosionRing(anyBoss);
 					}
 				}
 
-				this.bossDeathExplosionDelay = this.bossDeathExplosionDelayDefault;				
-			}			
+				this.bossDeathExplosionDelay = this.bossDeathExplosionDelayDefault;
+			}
 		}
 	}
 
@@ -1994,6 +1991,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (ufoEnemy.isDead()) {
 			this.gainScore();
 			this.ufoEnemyDefeatCount++;
+			
 			SoundManager.play(SoundType.SCORE, 1);
 
 			if (this.ufoEnemyDefeatCount > this.ufoEnemyDefeatPoint) // after killing limited enemies increase the threadhold limit
@@ -2214,17 +2212,17 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (animatingVehicleEnemys) {
 
-			animatingVehicleEnemys.forEach(gameObject => {
+			animatingVehicleEnemys.forEach(vehicleEnemy => {
 
-				gameObject.pop();
-				gameObject.dillyDally();
+				vehicleEnemy.pop();
+				vehicleEnemy.dillyDally();
 
 				if (this.anyInAirBossExists()) { // when in air bosses appear, stop the stage transition, and make the vehicles move forward
-					gameObject.moveUpLeft();
-					gameObject.moveUpLeft(); // move with double speed
-				}				
+					vehicleEnemy.moveUpLeft();
+					vehicleEnemy.moveUpLeft(); // move with double speed
+				}
 				else {
-					gameObject.moveDownRight();
+					vehicleEnemy.moveDownRight();
 				}
 
 				// prevent overlapping				
@@ -2235,39 +2233,37 @@ export class GamePlayScene extends Container implements IScene {
 
 					vehicles.forEach(collidingVehicle => {
 
-						if (Constants.checkCollision(collidingVehicle, gameObject)) {
+						if (Constants.checkCollision(collidingVehicle, vehicleEnemy)) {
 
-							if (collidingVehicle.speed > gameObject.speed) // colliding vehicle is faster
+							if (collidingVehicle.speed > vehicleEnemy.speed) // colliding vehicle is faster
 							{
-								gameObject.speed = collidingVehicle.speed;
+								vehicleEnemy.speed = collidingVehicle.speed;
 							}
-							else if (gameObject.speed > collidingVehicle.speed) // current vehicle is faster
+							else if (vehicleEnemy.speed > collidingVehicle.speed) // current vehicle is faster
 							{
-								collidingVehicle.speed = gameObject.speed;
+								collidingVehicle.speed = vehicleEnemy.speed;
 							}
 						}
 					});
 				}
 
 				// generate honk
-				let vehicleEnemy = gameObject as VehicleEnemy;
-
 				if (vehicleEnemy) {
 
 					if (vehicleEnemy.honk() && !this.ufoEnemyExists() && !this.anyInAirBossExists()) {
-						this.generateHonk(gameObject);
+						this.generateHonk(vehicleEnemy);
 					}
 				}
 
 				// recycle vehicle
 				if (this.anyInAirBossExists()) {
-					if (gameObject.getRight() < 0 || gameObject.getBottom() < 0) {
-						gameObject.disableRendering();
+					if (vehicleEnemy.getRight() < 0 || vehicleEnemy.getBottom() < 0) {
+						vehicleEnemy.disableRendering();
 					}
 				}
 				else {
-					if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-						gameObject.disableRendering();
+					if (vehicleEnemy.x - vehicleEnemy.width > Constants.DEFAULT_GAME_VIEW_WIDTH || vehicleEnemy.y - vehicleEnemy.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+						vehicleEnemy.disableRendering();
 					}
 				}
 			});
@@ -2307,8 +2303,10 @@ export class GamePlayScene extends Container implements IScene {
 		if (vehicleEnemy.willHonk) {
 
 			if (vehicleEnemy.isDead()) {
+
 				vehicleEnemy.setBlast();
 				this.gainScore(false);
+				
 				//let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
 				//let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
 				SoundManager.play(SoundType.SCORE, 1);
@@ -4106,6 +4104,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private gainScore(airEnemy: boolean = true) {
 
+		// TODO: set this to 0 after testing
 		let score = 0;
 
 		if (airEnemy) {
@@ -4116,7 +4115,7 @@ export class GamePlayScene extends Container implements IScene {
 			}
 
 			this.gameScoreBar.gainScore(2);
-			
+
 		}
 		else {
 			switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
@@ -4212,7 +4211,7 @@ export class GamePlayScene extends Container implements IScene {
 	private levelUp() {
 		SoundManager.play(SoundType.LEVEL_UP);
 		this.gameLevelBar.gainScore(1);
-		this.generateOnScreenMessage("Gained Lvl " + this.gameLevelBar.getScore().toString(), this.cheerIcon);		
+		this.generateOnScreenMessage("Gained Lvl " + this.gameLevelBar.getScore().toString(), this.cheerIcon);
 	}
 
 	//#endregion

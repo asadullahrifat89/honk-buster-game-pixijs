@@ -160,6 +160,8 @@ export enum ConstructType {
 }
 
 
+
+
 export enum SoundType {
     NONE,
 
@@ -205,7 +207,8 @@ export enum SoundType {
     OPTION_SELECT,
     BOOST_ACQUIRED,
     ITEM_SELECT,
-    SCORE
+    SCORE,
+    BOSS_EXPLOSION
 }
 
 //#endregion
@@ -393,6 +396,9 @@ export abstract class Constants {
 	private static soundsDirectory = "sounds/";
 
 	public static SOUND_TEMPLATES: (SoundTemplate)[] = [
+
+		new SoundTemplate(SoundType.BOSS_EXPLOSION, this.soundsDirectory + "boss_explosion_1.mp3"),
+		new SoundTemplate(SoundType.BOSS_EXPLOSION, this.soundsDirectory + "boss_explosion_2.mp3"),
 
 		new SoundTemplate(SoundType.CHOPPER_HOVERING, this.soundsDirectory + "chopper_hovering.mp3"),
 
