@@ -17,7 +17,7 @@ import { GamePlayScene } from "./GamePlayScene";
 
 
 
-export class PlayerBattlementSelectionScene extends Container implements IScene {
+export class PlayerGearSelectionScene extends Container implements IScene {
 
 	private uiContainer: GameObjectContainer;
 	private bg_container: GameObjectContainer;
@@ -46,7 +46,7 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 		const optionsGap = 256;
 
 		//#region title
-		const title = new Text("SELECT BATTLEMENT", {
+		const title = new Text("SELECT GEAR", {
 			fontFamily: Constants.GAME_TITLE_FONT,
 			fontSize: 35,
 			align: "center",
@@ -76,7 +76,7 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 				characterTexture = Texture.from("player_1_character");
 				characterName = "Character?";
 			} break;
-		}		
+		}
 
 		const character_sprite: GameObjectSprite = new GameObjectSprite(characterTexture);
 		character_sprite.width = 208 / 2;
@@ -239,16 +239,16 @@ export class PlayerBattlementSelectionScene extends Container implements IScene 
 				SoundManager.play(SoundType.HEALTH_LOSS);
 			}
 
-		}).setText("Start").setIsEnabled(this.allSelectionsComplete());
+		}).setText("Confirm").setIsEnabled(this.allSelectionsComplete());
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
 		this.uiContainer.addChild(button);
 
 		//#endregion
 	}
 
-    private allSelectionsComplete(): boolean {
-        return Constants.SELECTED_PLAYER_CHARACTER_TEMPLATE != -1 && Constants.SELECTED_PLAYER_RIDE_TEMPLATE != -1 && Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE != -1 && Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE != -1;
-    }
+	private allSelectionsComplete(): boolean {
+		return Constants.SELECTED_PLAYER_CHARACTER_TEMPLATE != -1 && Constants.SELECTED_PLAYER_RIDE_TEMPLATE != -1 && Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE != -1 && Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE != -1;
+	}
 
 	public update() {
 	}
