@@ -241,15 +241,12 @@ export abstract class Constants {
 	public static GAME_LEVEL_MAX: number = 0;
 
 	public static HEALTH_LEVEL_MAX: number = 0;
-	public static ATTACK_LEVEL_MAX: number = 0;
-
-	public static CHOPPER_UNLOCK_LEVEL: number = 5; // 5
-	public static CHOPPER_UNLOCKED: boolean = false;
+	public static ATTACK_LEVEL_MAX: number = 0;	
 
 	public static MISSILE_UNLOCK_LEVEL: number = 3; // 3
 	public static MISSILE_UNLOCKED: boolean = false;
 
-	public static BULLET_BALL_UNLOCK_LEVEL: number = 1; // 7
+	public static BULLET_BALL_UNLOCK_LEVEL: number = 7; // 7
 	public static BULLET_BALL_UNLOCKED: boolean = false;
 
 	public static TRASH_BIN_UNLOCK_LEVEL: number = 3; // 3
@@ -257,6 +254,9 @@ export abstract class Constants {
 
 	public static DYNAMITE_UNLOCK_LEVEL: number = 7; // 7
 	public static DYNAMITE_UNLOCKED: boolean = false;
+
+	public static CHOPPER_UNLOCK_LEVEL: number = 5; // 5
+	public static CHOPPER_UNLOCKED: boolean = false;
 
 	public static GAME_TITLE_FONT = "stitchnschool";
 	public static GAME_DEFAULT_FONT = "emilio";	

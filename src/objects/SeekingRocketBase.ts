@@ -4,9 +4,10 @@ import { RocketBase } from './RocketBase';
 
 export class SeekingRocketBase extends RocketBase {
 
-	private readonly grace: number = 7;
 	public directTarget: Rectangle = new Rectangle();
 	public shootTarget: Rectangle = new Rectangle();
+
+	private readonly grace: number = 7;
 
 	private shootXSpeed: number = 0;
 	private shootYSpeed: number = 0;
@@ -24,8 +25,6 @@ export class SeekingRocketBase extends RocketBase {
 
 		var distanceX = Math.abs(targetX - rocketX);
 		this.shootXSpeed = this.getShootingSpeed(distanceX);
-
-		//var scaling = SceneManager.scaling;
 
 		// move up
 		if (targetY < rocketY) {
@@ -90,29 +89,26 @@ export class SeekingRocketBase extends RocketBase {
 		let left = this.getLeft();
 		let top = this.getTop();
 
-		let targetX = this.shootTarget.x + this.shootTarget.width / 2;
-		let targetY = this.shootTarget.y + this.shootTarget.height / 2;
-
 		let rocketX = left + this.width / 2;
 		let rocketY = top + this.height / 2;
 
 		// move up
-		if (targetY < rocketY - this.grace) {
+		if (this.shootTarget.top < rocketY) {
 			this.y = (top - this.shootYSpeed);
 		}
 
 		// move down
-		if (targetY > rocketY + this.grace) {
+		if (this.shootTarget.bottom > rocketY) {
 			this.y = (top + this.shootYSpeed);
 		}
 
 		// move left
-		if (targetX < rocketX - this.grace) {
+		if (this.shootTarget.left < rocketX) {
 			this.x = (left - this.shootXSpeed);
 		}
 
 		// move right
-		if (targetX > rocketX + this.grace) {
+		if (this.shootTarget.right > rocketX) {
 			this.x = (left + this.shootXSpeed);
 		}
 	}
@@ -203,7 +199,7 @@ export class SeekingRocketBase extends RocketBase {
 
 			this.x = (left + speed);
 		}
-	}	
+	}
 
 	private getFollowingSpeed(distance: number): number {
 		var speed = (1.5 / 100 * distance);
@@ -211,7 +207,7 @@ export class SeekingRocketBase extends RocketBase {
 	}
 
 	private getShootingSpeed(distance: number): number {
-		var speed = (1.5 / 70 * distance);
+		var speed = (1.5 / 60 * distance);
 		return speed;
 	}
 
