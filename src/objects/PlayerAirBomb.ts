@@ -26,7 +26,7 @@ export class PlayerAirBomb extends SeekingRocketBase {
 			} break;
 			case PlayerAirBombTemplate.BULLET_BALL: {
 				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BULLET_BALL).map(x => x.uri);
-				this.autoBlastDelayDefault = 5;
+				this.autoBlastDelayDefault = 8;
 			} break;
 			default: break;
 		}
