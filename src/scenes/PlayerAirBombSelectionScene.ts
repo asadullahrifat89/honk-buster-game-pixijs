@@ -2,7 +2,7 @@
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
-import { Constants, ConstructType, SoundType } from "../Constants";
+import { Constants, ConstructType, PlayerAirBombTemplate, SoundType } from "../Constants";
 import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
@@ -65,7 +65,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
 			missiles_sprite.filters = [new GrayscaleFilter()];
 			gravity_balls_sprite.filters = null;
-			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = 0;
+			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.GRAVITY_BALL;
 
 		}).setBackground(gravity_balls_sprite);
 		gravity_balls_button.setPosition((this.uiContainer.width / 2 - gravity_balls_sprite.width * 2.5) + 45, (this.uiContainer.height / 2 - gravity_balls_sprite.height / 2) + 10);
@@ -93,7 +93,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.ROCKET_LAUNCH, 0.3);
 			gravity_balls_sprite.filters = [new GrayscaleFilter()];
 			missiles_sprite.filters = null;
-			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = 1;
+			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.MISSILE;
 
 		}).setBackground(missiles_sprite);
 		missiles_button.setPosition((this.uiContainer.width / 2 - missiles_sprite.width / 2), (this.uiContainer.height / 2 - missiles_sprite.height / 2) + 10).setIsEnabled(Constants.MISSILE_UNLOCKED);
@@ -121,7 +121,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
 			gravity_balls_sprite.filters = [new GrayscaleFilter()];
 			bullet_balls_sprite.filters = null;
-			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = 2;
+			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.BULLET_BALL;
 
 		}).setBackground(bullet_balls_sprite);
 		bullet_balls_button.setPosition((this.uiContainer.width / 2 + bullet_balls_sprite.width), (this.uiContainer.height / 2 - bullet_balls_sprite.height / 2) + 10).setIsEnabled(Constants.MISSILE_UNLOCKED);
