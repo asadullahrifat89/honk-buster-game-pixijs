@@ -1927,7 +1927,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (ufoEnemy.isDead()) {
 			this.gameScoreBar.gainScore(2);
 			this.ufoEnemyDefeatCount++;
-			SoundManager.play(SoundType.SCORE, 0.8);
+			SoundManager.play(SoundType.SCORE, 0.6);
 
 			if (this.ufoEnemyDefeatCount > this.ufoEnemyDefeatPoint) // after killing limited enemies increase the threadhold limit
 			{
@@ -2248,7 +2248,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.gameScoreBar.gainScore(2);
 				//let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
 				//let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
-				SoundManager.play(SoundType.SCORE, 0.8);
+				SoundManager.play(SoundType.SCORE, 0.6);
 
 				this.generateMessageBubble(vehicleEnemy, this.honkBustReactions[Constants.getRandomNumber(0, this.honkBustReactions.length - 1)]);
 			}
@@ -2643,7 +2643,7 @@ export class GamePlayScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-			SoundManager.play(SoundType.SCORE, 0.8);
+			SoundManager.play(SoundType.SCORE, 0.6);
 
 			this.generateMessageBubble(ufoBoss, "I'll reboot and revert!");
 			this.setBossDeathExplosion();
@@ -3051,7 +3051,7 @@ export class GamePlayScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-			SoundManager.play(SoundType.SCORE, 0.8);
+			SoundManager.play(SoundType.SCORE, 0.6);
 
 			this.setBossDeathExplosion();
 			this.generateMessageBubble(zombieBoss, "I'll return from the dead!");
@@ -3300,7 +3300,7 @@ export class GamePlayScene extends Container implements IScene {
 			SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC);
 			SoundManager.play(SoundType.UFO_BOSS_DEAD);
 			SoundManager.stop(SoundType.UFO_BOSS_HOVERING);
-			SoundManager.play(SoundType.SCORE, 0.8);
+			SoundManager.play(SoundType.SCORE, 0.6);
 
 			this.setBossDeathExplosion();
 			this.generateMessageBubble(mafiaBoss, "See you next time, kid!");

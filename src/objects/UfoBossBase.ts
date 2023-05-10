@@ -1,5 +1,7 @@
 ﻿import { Rectangle } from 'pixi.js';
+import { SoundType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
+import { SoundManager } from '../managers/SoundManager';
 
 
 export class UfoBossBase extends GameObjectContainer {
@@ -28,6 +30,8 @@ export class UfoBossBase extends GameObjectContainer {
 			this.alpha = 0.4;
 			this.healthLossRecoveryDelay = 5;
 		}
+
+		SoundManager.play(SoundType.HEALTH_LOSS);
 	}
 
 	recoverFromHealthLoss() {
