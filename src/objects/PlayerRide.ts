@@ -3,6 +3,7 @@ import { Constants, ConstructType, MovementDirection, PlayerRideStance, PlayerRi
 import { GameController } from '../controls/GameController';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { GameObjectSprite } from '../core/GameObjectSprite';
+import { SceneManager } from '../managers/SceneManager';
 import { SoundManager } from '../managers/SoundManager';
 
 
@@ -105,7 +106,7 @@ export class PlayerRide extends GameObjectContainer {
 	}
 
 	reposition() {
-		this.setPosition((Constants.DEFAULT_GAME_VIEW_WIDTH / 2 - this.width / 2), (Constants.DEFAULT_GAME_VIEW_HEIGHT / 2 - this.height / 2));
+		this.setPosition(((Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling) / 2 - this.width / 2), ((Constants.DEFAULT_GAME_VIEW_HEIGHT * SceneManager.scaling) / 2 - this.height / 2));
 	}
 
 	setIdleStance() {
