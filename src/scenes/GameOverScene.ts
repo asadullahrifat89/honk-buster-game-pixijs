@@ -49,7 +49,8 @@ export class GameOverScene extends Container implements IScene {
 		bg_sprite.filters = [new BlurFilter()];
 		this.uiContainer.addChild(bg_sprite);
 
-		// game over title
+		//#region game over title
+
 		const title = new Text("GAME OVER", {
 			fontFamily: Constants.GAME_TITLE_FONT,
 			fontSize: 42,
@@ -60,7 +61,10 @@ export class GameOverScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
-		// score
+		//#endregion
+
+		//#region score
+
 		const score = new Text("Score " + Constants.GAME_SCORE, {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 30,
@@ -71,7 +75,10 @@ export class GameOverScene extends Container implements IScene {
 		score.y = (this.uiContainer.height / 2 - score.height / 2) - 60;
 		this.uiContainer.addChild(score);
 
-		// level
+		//#endregion
+
+		//#region level
+
 		const level = new Text("Lvl " + Constants.GAME_LEVEL, {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			fontSize: 20,
@@ -82,9 +89,10 @@ export class GameOverScene extends Container implements IScene {
 		level.y = (this.uiContainer.height / 2 - level.height / 2) - 20;
 		this.uiContainer.addChild(level);
 
-		// check unlockables
+		//#endregion
 
-		// HEALTH_LEVEL_MAX
+		//#region HEALTH_LEVEL_MAX
+
 		if (Constants.GAME_LEVEL_MAX > 1 && Constants.GAME_LEVEL_MAX > Constants.HEALTH_LEVEL_MAX) {
 			Constants.HEALTH_LEVEL_MAX = Constants.GAME_LEVEL_MAX;
 		}
@@ -114,7 +122,10 @@ export class GameOverScene extends Container implements IScene {
 			health.setPopping();
 		}
 
-		// ATTACK_LEVEL_MAX
+		//#endregion
+
+		//#region ATTACK_LEVEL_MAX
+
 		let applicable_game_level = Math.floor(Constants.GAME_LEVEL_MAX / 5);
 
 		if (Constants.GAME_LEVEL_MAX > 1 && applicable_game_level > Constants.ATTACK_LEVEL_MAX) {
@@ -146,7 +157,9 @@ export class GameOverScene extends Container implements IScene {
 			attack.setPopping();
 		}
 
-		// play again button
+		//#endregion
+
+		//#region play again button
 		const button = new Button(() => {
 
 			SoundManager.play(SoundType.OPTION_SELECT);
@@ -156,6 +169,8 @@ export class GameOverScene extends Container implements IScene {
 		}).setText("Play Again");
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
 		this.uiContainer.addChild(button);
+
+		//#endregion
 
 		SoundManager.play(SoundType.GAME_OVER);
 
@@ -169,7 +184,8 @@ export class GameOverScene extends Container implements IScene {
 			Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL ||
 			Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL ||
 			Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL ||
-			Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL) { // only animate if any of the upgrades are applicable
+			Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL ||
+			Constants.GAME_LEVEL_MAX >= Constants.BULLET_BALL_UNLOCK_LEVEL) { // only animate if any of the upgrades are applicable
 
 			this.unlockablePopDelay -= 0.1;
 
@@ -217,19 +233,14 @@ export class GameOverScene extends Container implements IScene {
 					this.showUnlockMessage("New Air Bomb Unlocked!", Texture.from("player_rocket_1"));
 					Constants.MISSILE_UNLOCKED = true;
 				}
+				else if (Constants.GAME_LEVEL_MAX >= Constants.BULLET_BALL_UNLOCK_LEVEL && !Constants.BULLET_BALL_UNLOCKED) {
+					this.showUnlockMessage("New Air Bomb Unlocked!", Texture.from("player_bullet_ball_1"));
+					Constants.BULLET_BALL_UNLOCKED = true;
+				}
 			}
 		}
 
 		this.animateOnScreenMessage();
-	}
-
-	private unlockablePopDelay = 6;
-	private readonly unlockablePopDelayDefault = 6;
-
-	private showUnlockMessage(message: string, icon: Texture) {
-		this.unlockablePopDelay = this.unlockablePopDelayDefault;
-		SoundManager.play(SoundType.BOOST_ACQUIRED);
-		this.generateOnScreenMessage(message, icon);
 	}
 
 	public resize(scale: number): void {
@@ -242,6 +253,15 @@ export class GameOverScene extends Container implements IScene {
 			this.uiContainer.scale.set(scale);
 			this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
 		}
+	}
+
+	private unlockablePopDelay = 6;
+	private readonly unlockablePopDelayDefault = 6;
+
+	private showUnlockMessage(message: string, icon: Texture) {
+		this.unlockablePopDelay = this.unlockablePopDelayDefault;
+		SoundManager.play(SoundType.BOOST_ACQUIRED);
+		this.generateOnScreenMessage(message, icon);
 	}
 
 	private generateOnScreenMessage(title: string, icon: Texture = Texture.from("character_maleAdventurer_cheer0")) {

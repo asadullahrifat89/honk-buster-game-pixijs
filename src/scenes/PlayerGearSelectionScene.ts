@@ -187,20 +187,24 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 		//#endregion
 
 		//#region air_bomb
-		let air_bombTexture: Texture = Texture.from("player_ball_2");
+		let air_bombTexture: Texture = Texture.from("player_gravity_ball_2");
 		let air_bombName: string = "";
 
 		switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
-			case PlayerAirBombTemplate.BALL: {
-				air_bombTexture = Texture.from("player_ball_2");
-				air_bombName = "Baseballs";
+			case PlayerAirBombTemplate.GRAVITY_BALL: {
+				air_bombTexture = Texture.from("player_gravity_ball_2");
+				air_bombName = "Gravity Balls";
 			} break;
-			case PlayerAirBombTemplate.ROCKET: {
+			case PlayerAirBombTemplate.MISSILE: {
 				air_bombTexture = Texture.from("player_rocket_1");
 				air_bombName = "Missiles";
 			} break;
+			case PlayerAirBombTemplate.BULLET_BALL: {
+				air_bombTexture = Texture.from("player_bullet_ball_1");
+				air_bombName = "Bullet Balls";
+			} break;
 			default: {
-				air_bombTexture = Texture.from("player_ball_2");
+				air_bombTexture = Texture.from("player_gravity_ball_2");
 				air_bombName = "Air Bomb?";
 			} break;
 		}

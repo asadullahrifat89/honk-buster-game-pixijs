@@ -6,11 +6,9 @@ import { SoundManager } from '../managers/SoundManager';
 
 export class UfoBossRocketSeeking extends SeekingRocketBase {
 
-	private autoBlastDelay: number = 0;
-	private readonly autoBlastDelayDefault: number = 25;
-
 	constructor(speed: number) {
 		super(speed);
+		super.autoBlastDelayDefault = 25;
 	}
 
 	reset() {
@@ -26,21 +24,6 @@ export class UfoBossRocketSeeking extends SeekingRocketBase {
 
 	reposition(source: GameObjectContainer) {
 		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 15);
-	}
-
-	setBlast() {
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED - 1;		
-		this.isBlasting = true;
-		SoundManager.play(SoundType.ROCKET_BLAST);
-	}
-
-	autoBlast() {
-		this.autoBlastDelay -= 0.1;
-
-		if (this.autoBlastDelay <= 0)
-			return true;
-
-		return false;
-	}
+	}	
 }
 

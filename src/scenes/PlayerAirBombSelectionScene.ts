@@ -2,7 +2,7 @@
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
-import { Constants, ConstructType, SoundType } from "../Constants";
+import { Constants, ConstructType, PlayerAirBombTemplate, SoundType } from "../Constants";
 import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
@@ -53,22 +53,22 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 		//#endregion
 
 		//#region gravity_balls
-		const gravity_balls_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ball_2"));
+		const gravity_balls_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_gravity_ball_2"));
 		gravity_balls_sprite.width = 256 / 2.5;
 		gravity_balls_sprite.height = 256 / 2.5;
 		gravity_balls_sprite.x = 0;
 		gravity_balls_sprite.y = 0;
 		const gravity_balls_button = new Button(() => {
 
-			button.setText("Baseballs").setIsEnabled(true);
+			button.setText("Gravity Balls").setIsEnabled(true);
 
 			SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
 			missiles_sprite.filters = [new GrayscaleFilter()];
 			gravity_balls_sprite.filters = null;
-			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = 0;
+			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.GRAVITY_BALL;
 
 		}).setBackground(gravity_balls_sprite);
-		gravity_balls_button.setPosition((this.uiContainer.width / 2 - gravity_balls_sprite.width * 2) + 45, (this.uiContainer.height / 2 - gravity_balls_sprite.height / 2) + 10);
+		gravity_balls_button.setPosition((this.uiContainer.width / 2 - gravity_balls_sprite.width * 2.5) + 45, (this.uiContainer.height / 2 - gravity_balls_sprite.height / 2) + 10);
 		this.uiContainer.addChild(gravity_balls_button);
 
 		const gravity_balls_msg = new MessageBubble(0, "Lvl " + 1, 20);
@@ -93,15 +93,43 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.ROCKET_LAUNCH, 0.3);
 			gravity_balls_sprite.filters = [new GrayscaleFilter()];
 			missiles_sprite.filters = null;
-			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = 1;
+			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.MISSILE;
 
 		}).setBackground(missiles_sprite);
-		missiles_button.setPosition((this.uiContainer.width / 2 - missiles_sprite.width / 2) + 100, (this.uiContainer.height / 2 - missiles_sprite.height / 2) + 10).setIsEnabled(Constants.MISSILE_UNLOCKED);
+		missiles_button.setPosition((this.uiContainer.width / 2 - missiles_sprite.width / 2), (this.uiContainer.height / 2 - missiles_sprite.height / 2) + 10).setIsEnabled(Constants.MISSILE_UNLOCKED);
 		this.uiContainer.addChild(missiles_button);
 
 		const missiles_msg = new MessageBubble(0, "Lvl " + Constants.MISSILE_UNLOCK_LEVEL, 20);
 		missiles_msg.setPosition(missiles_button.x + missiles_button.width / 2, missiles_button.y + missiles_button.height / 2);
 		this.uiContainer.addChild(missiles_msg);
+
+		//#endregion
+
+		//#region bullet_balls
+
+		Constants.BULLET_BALL_UNLOCKED = Constants.GAME_LEVEL_MAX >= Constants.BULLET_BALL_UNLOCK_LEVEL;
+
+		const bullet_balls_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_bullet_ball_1"));
+		bullet_balls_sprite.width = 256 / 2.5;
+		bullet_balls_sprite.height = 256 / 2.5;
+		bullet_balls_sprite.x = 0;
+		bullet_balls_sprite.y = 0;
+		const bullet_balls_button = new Button(() => {
+
+			button.setText("Bullet Balls").setIsEnabled(true);
+
+			SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
+			gravity_balls_sprite.filters = [new GrayscaleFilter()];
+			bullet_balls_sprite.filters = null;
+			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.BULLET_BALL;
+
+		}).setBackground(bullet_balls_sprite);
+		bullet_balls_button.setPosition((this.uiContainer.width / 2 + bullet_balls_sprite.width), (this.uiContainer.height / 2 - bullet_balls_sprite.height / 2) + 10).setIsEnabled(Constants.BULLET_BALL_UNLOCKED);
+		this.uiContainer.addChild(bullet_balls_button);
+
+		const bullet_balls_msg = new MessageBubble(0, "Lvl " + Constants.BULLET_BALL_UNLOCK_LEVEL, 20);
+		bullet_balls_msg.setPosition(bullet_balls_button.x + bullet_balls_button.width / 2, bullet_balls_button.y + bullet_balls_button.height / 2);
+		this.uiContainer.addChild(bullet_balls_msg);
 
 		//#endregion
 
