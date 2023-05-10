@@ -88,7 +88,7 @@ export class GamePlayScene extends Container implements IScene {
 	private talkIcon: Texture;
 	private cheerIcon: Texture;
 	private interactIcon: Texture;
-	
+
 	private honkBustReactions: string[] = [];
 
 	//#endregion
@@ -2214,18 +2214,22 @@ export class GamePlayScene extends Container implements IScene {
 			animatingVehicleEnemys.forEach(vehicleEnemy => {
 
 				vehicleEnemy.pop();
-				vehicleEnemy.dillyDally();
 
 				if (this.anyInAirBossExists()) { // when in air bosses appear, stop the stage transition, and make the vehicles move forward
+
 					vehicleEnemy.moveUpLeft();
 					vehicleEnemy.moveUpLeft(); // move with double speed
+					vehicleEnemy.dillyDally();
 				}
 				else {
+
+					if (!this.vehicleBossExists())
+						vehicleEnemy.dillyDally();
+
 					vehicleEnemy.moveDownRight();
 				}
 
-				// prevent overlapping				
-
+				// prevent overlapping
 				var vehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
 
 				if (vehicles) {
@@ -2256,7 +2260,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				// recycle vehicle
 				if (this.anyInAirBossExists()) {
-					if (vehicleEnemy.getRight() < 0 || vehicleEnemy.getBottom() < 0) {
+					if (vehicleEnemy.getRight() < 0 || vehicleEnemy.getBottom() < 0) { // reverse recycling
 						vehicleEnemy.disableRendering();
 					}
 				}
@@ -4101,19 +4105,17 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Game
 
-	private gainScore(airEnemy: boolean = true) {
+	private gainScore(airEnemyBusted: boolean = true) {
 
 		// TODO: set this to 0 after testing
 		let score = 0;
 
-		if (airEnemy) {
+		if (airEnemyBusted) {
 			switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
 				case PlayerAirBombTemplate.BALL: { score += 1; } break;
 				case PlayerAirBombTemplate.ROCKET: { score += 2; } break;
 				default: { score += 1; } break;
 			}
-
-			this.gameScoreBar.gainScore(2);
 		}
 		else {
 			switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
@@ -4122,9 +4124,9 @@ export class GamePlayScene extends Container implements IScene {
 				case PlayerGroundBombTemplate.DYNAMITE: { score += 3; } break;
 				default: { score += 1; } break;
 			}
-
-			this.gameScoreBar.gainScore(score);
 		}
+
+		this.gameScoreBar.gainScore(score);
 	}
 
 	private resumeGame() {
