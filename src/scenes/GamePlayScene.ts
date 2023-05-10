@@ -1698,6 +1698,7 @@ export class GamePlayScene extends Container implements IScene {
 						}
 
 						if (anyTarget) {
+							playerAirBomb.setBlast();
 							this.generateRingFireExplosion(playerAirBomb);
 							this.generateFlashExplosion(playerAirBomb);
 						}
