@@ -1525,17 +1525,17 @@ export class GamePlayScene extends Container implements IScene {
 			gameObject.addChild(sprite);
 
 			switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
-				case PlayerAirBombTemplate.BALL: {
+				case PlayerAirBombTemplate.GRAVITY_BALL: {
 					sprite.width = this.PlayerAirBombSizeWidth / 1.5;
 					sprite.height = this.PlayerAirBombSizeHeight / 1.5;
 
-					gameObject.setTemplate(PlayerAirBombTemplate.BALL);
+					gameObject.setTemplate(PlayerAirBombTemplate.GRAVITY_BALL);
 				} break;
-				case PlayerAirBombTemplate.ROCKET: {
+				case PlayerAirBombTemplate.MISSILE: {
 					sprite.width = this.PlayerAirBombSizeWidth;
 					sprite.height = this.PlayerAirBombSizeHeight;
 
-					gameObject.setTemplate(PlayerAirBombTemplate.ROCKET);
+					gameObject.setTemplate(PlayerAirBombTemplate.MISSILE);
 				} break;
 				default: break;
 			}
@@ -4112,8 +4112,8 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (airEnemyBusted) {
 			switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
-				case PlayerAirBombTemplate.BALL: { score += 1; } break;
-				case PlayerAirBombTemplate.ROCKET: { score += 2; } break;
+				case PlayerAirBombTemplate.GRAVITY_BALL: { score += 1; } break;
+				case PlayerAirBombTemplate.MISSILE: { score += 2; } break;
 				default: { score += 1; } break;
 			}
 		}

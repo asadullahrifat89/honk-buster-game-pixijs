@@ -60,7 +60,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 		gravity_balls_sprite.y = 0;
 		const gravity_balls_button = new Button(() => {
 
-			button.setText("Baseballs").setIsEnabled(true);
+			button.setText("Gravity Balls").setIsEnabled(true);
 
 			SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
 			missiles_sprite.filters = [new GrayscaleFilter()];

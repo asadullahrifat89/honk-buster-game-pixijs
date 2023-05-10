@@ -6,7 +6,7 @@ import { SeekingRocketBase } from './SeekingRocketBase';
 
 export class PlayerAirBomb extends SeekingRocketBase {
 
-	public playerAirBombTemplate: PlayerAirBombTemplate = PlayerAirBombTemplate.BALL;
+	public playerAirBombTemplate: PlayerAirBombTemplate = PlayerAirBombTemplate.GRAVITY_BALL;
 	private PlayerAirBombUris: string[] = [];
 
 	constructor(speed: number) {
@@ -17,12 +17,12 @@ export class PlayerAirBomb extends SeekingRocketBase {
 		this.playerAirBombTemplate = playerAirBombTemplate;
 
 		switch (this.playerAirBombTemplate) {
-			case PlayerAirBombTemplate.BALL: {
-				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BALL).map(x => x.uri);
+			case PlayerAirBombTemplate.GRAVITY_BALL: {
+				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.GRAVITY_BALL).map(x => x.uri);
 				this.autoBlastDelayDefault = 6;
 			} break;
-			case PlayerAirBombTemplate.ROCKET: {
-				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.ROCKET).map(x => x.uri);
+			case PlayerAirBombTemplate.MISSILE: {
+				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.MISSILE).map(x => x.uri);
 			} break;
 			default: break;
 		}
@@ -36,11 +36,11 @@ export class PlayerAirBomb extends SeekingRocketBase {
 		this.scale.set(1);
 
 		switch (this.playerAirBombTemplate) {
-			case PlayerAirBombTemplate.BALL: {
+			case PlayerAirBombTemplate.GRAVITY_BALL: {
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 20; // starts with high speed and slows down
 				SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
 			} break;
-			case PlayerAirBombTemplate.ROCKET: {
+			case PlayerAirBombTemplate.MISSILE: {
 				this.speed = 0; // starts with slow speed then gets fast
 				SoundManager.play(SoundType.ROCKET_LAUNCH, 0.3);
 			} break;
@@ -60,10 +60,10 @@ export class PlayerAirBomb extends SeekingRocketBase {
 
 	override accelerate() {
 		switch (this.playerAirBombTemplate) {
-			case PlayerAirBombTemplate.BALL: {
+			case PlayerAirBombTemplate.GRAVITY_BALL: {
 				super.decelerate();
 			} break;
-			case PlayerAirBombTemplate.ROCKET: {
+			case PlayerAirBombTemplate.MISSILE: {
 				super.accelerate();
 			} break;
 			default: break;

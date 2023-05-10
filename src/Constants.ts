@@ -78,8 +78,8 @@ export enum PlayerGroundBombTemplate {
 }
 
 export enum PlayerAirBombTemplate {
-	BALL,
-	ROCKET,
+	GRAVITY_BALL,
+	MISSILE,
 }
 
 export enum ConstructType {
@@ -333,12 +333,12 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, "player_honk_bomb_trash_1_open"),
 		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, "player_honk_bomb_trash_2_open"),
 
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_ball_1", PlayerAirBombTemplate.BALL),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_ball_2", PlayerAirBombTemplate.BALL),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_ball_1", PlayerAirBombTemplate.GRAVITY_BALL),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_ball_2", PlayerAirBombTemplate.GRAVITY_BALL),
 
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_1", PlayerAirBombTemplate.ROCKET),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_2", PlayerAirBombTemplate.ROCKET),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_3", PlayerAirBombTemplate.ROCKET),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_1", PlayerAirBombTemplate.MISSILE),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_2", PlayerAirBombTemplate.MISSILE),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_3", PlayerAirBombTemplate.MISSILE),
 
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET_HURLING_BALLS, "player_rocket_bulls_eye_1"),
 
