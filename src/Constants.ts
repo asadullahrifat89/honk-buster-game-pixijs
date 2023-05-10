@@ -156,16 +156,9 @@ export enum ConstructType {
 
 	TITLE_SCREEN,
 	CHOPPER_BLADES,
-	TRASH_BIN_OPEN,
+	TRASH_BIN_BLAST,
 	EXPLOSION_RING
 }
-
-
-
-
-
-
-
 
 export enum SoundType {
 	NONE,
@@ -336,8 +329,8 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "player_honk_bomb_sticky_1", PlayerGroundBombTemplate.DYNAMITE),
 		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "player_honk_bomb_sticky_2", PlayerGroundBombTemplate.DYNAMITE),
 
-		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, "player_honk_bomb_trash_1_open"),
-		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, "player_honk_bomb_trash_2_open"),
+		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_1_open", PlayerGroundBombTemplate.TRASH_BIN),
+		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_2_open", PlayerGroundBombTemplate.TRASH_BIN),
 
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_gravity_ball_1", PlayerAirBombTemplate.GRAVITY_BALL),
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_gravity_ball_2", PlayerAirBombTemplate.GRAVITY_BALL),
@@ -728,6 +721,11 @@ export abstract class Constants {
 	static getRandomTextureFromUris(uris: string[]): Texture {
 
 		const uri = this.getRandomUriFromUris(uris);
+		const texture = Texture.from(uri);
+		return texture;
+	}
+
+	static getTextureFromUri(uri: string): Texture {		
 		const texture = Texture.from(uri);
 		return texture;
 	}

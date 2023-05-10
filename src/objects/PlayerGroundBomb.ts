@@ -7,13 +7,17 @@ import { PlayerRide } from './PlayerRide';
 export class PlayerGroundBomb extends GameObjectContainer {
 
 	public playerGroundBombTemplate: PlayerGroundBombTemplate = PlayerGroundBombTemplate.GRENADE;
+
 	private playerGroundBombUris: string[] = [];
+	private playerGroundBombBlastUris: string[] = [];
 
 	private blastDelay: number = 0;
 	private blastDelayDefault: number = 25;
 
 	private dropDelay: number = 0;
 	private readonly dropDelayDefault: number = 25;
+
+	private uriIndex: number = 0;
 
 	constructor(speed: number) {
 		super(speed);
@@ -29,6 +33,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 			} break;
 			case PlayerGroundBombTemplate.TRASH_BIN: {
 				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerGroundBombTemplate.TRASH_BIN).map(x => x.uri);
+				this.playerGroundBombBlastUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.TRASH_BIN_BLAST && x.tag == PlayerGroundBombTemplate.TRASH_BIN).map(x => x.uri);
 			} break;
 			case PlayerGroundBombTemplate.DYNAMITE: {
 				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerGroundBombTemplate.DYNAMITE).map(x => x.uri);
@@ -41,7 +46,8 @@ export class PlayerGroundBomb extends GameObjectContainer {
 
 	reset() {
 		this.isBlasting = false;
-		this.setTexture(Constants.getRandomTextureFromUris(this.playerGroundBombUris));
+		this.uriIndex = Constants.getRandomNumber(0, this.playerGroundBombUris.length);
+		this.setTexture(Constants.getTextureFromUri(this.playerGroundBombUris[this.uriIndex]));
 		this.alpha = 1;
 		this.scale.set(1);
 		this.angle = 0;
@@ -72,7 +78,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 
 	move() {
 		this.setPosition(this.x + this.speed, this.y + this.speed * 1.5);
-	}	
+	}
 
 	awaitBlast(): boolean {
 		this.blastDelay--;
@@ -132,8 +138,8 @@ export class PlayerGroundBomb extends GameObjectContainer {
 				this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
 			} break;
 			case PlayerGroundBombTemplate.TRASH_BIN: {
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 1.5;
-				this.setTexture(Constants.getRandomTexture(ConstructType.TRASH_BIN_OPEN));
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 1.5;				
+				this.setTexture(Constants.getTextureFromUri(this.playerGroundBombBlastUris[this.uriIndex]));
 			} break;
 			case PlayerGroundBombTemplate.DYNAMITE: {
 				this.angle = 0;

@@ -52,26 +52,18 @@ export class GamePlayScene extends Container implements IScene {
 
 	private onScreenMessage: OnScreenMessage;
 
-	//TODO: do yourself a favor, reset these to the default values after testing	
+	//TODO: do yourself a favor, reset these to the default values after testing
 
-	private readonly ufoEnemyReleasePoint: number = 35; // 35
-	private readonly ufoEnemyReleaseLimit: number = 15;
-	private readonly ufoEnemyCheckpoint: GameCheckpoint;
-
-	private readonly vehicleBossReleasePoint: number = 25; // 25
-	private readonly vehicleBossReleaseLimit: number = 15;
+	private readonly ufoEnemyRelease: { point: number, limit: number } = { point: 35, limit: 15 };
+	private readonly vehicleBossRelease: { point: number, limit: number } = { point: 25, limit: 15 };
+	private readonly ufoBossRelease: { point: number, limit: number } = { point: 50, limit: 15 };
+	private readonly zombieBossRelease: { point: number, limit: number } = { point: 100, limit: 15 };
+	private readonly mafiaBossRelease: { point: number, limit: number } = { point: 150, limit: 15 };
+		
+	private readonly ufoEnemyCheckpoint: GameCheckpoint;	
 	private readonly vehicleBossCheckpoint: GameCheckpoint;
-
-	private readonly ufoBossReleasePoint: number = 50; // 50
-	private readonly ufoBossReleaseLimit: number = 15;
 	private readonly ufoBossCheckpoint: GameCheckpoint;
-
-	private readonly zombieBossReleasePoint: number = 100; // 100
-	private readonly zombieBossReleaseLimit: number = 15;
 	private readonly zombieBossCheckpoint: GameCheckpoint;
-
-	private readonly mafiaBossReleasePoint: number = 150; // 150
-	private readonly mafiaBossReleaseLimit: number = 15;
 	private readonly mafiaBossCheckpoint: GameCheckpoint;
 
 	private playerHealthBar: HealthBar;
@@ -119,11 +111,11 @@ export class GamePlayScene extends Container implements IScene {
 		this.addChild(this.sceneContainer);
 
 		// set the check points
-		this.vehicleBossCheckpoint = new GameCheckpoint(this.vehicleBossReleasePoint);
-		this.ufoBossCheckpoint = new GameCheckpoint(this.ufoBossReleasePoint);
-		this.zombieBossCheckpoint = new GameCheckpoint(this.zombieBossReleasePoint);
-		this.mafiaBossCheckpoint = new GameCheckpoint(this.mafiaBossReleasePoint);
-		this.ufoEnemyCheckpoint = new GameCheckpoint(this.ufoEnemyReleasePoint);
+		this.vehicleBossCheckpoint = new GameCheckpoint(this.vehicleBossRelease.point);
+		this.ufoBossCheckpoint = new GameCheckpoint(this.ufoBossRelease.point);
+		this.zombieBossCheckpoint = new GameCheckpoint(this.zombieBossRelease.point);
+		this.mafiaBossCheckpoint = new GameCheckpoint(this.mafiaBossRelease.point);
+		this.ufoEnemyCheckpoint = new GameCheckpoint(this.ufoEnemyRelease.point);
 
 		// spawn the game objects
 		this.spawnGameObjects();
@@ -2035,7 +2027,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			if (this.ufoEnemyDefeatCount > this.ufoEnemyDefeatPoint) // after killing limited enemies increase the threadhold limit
 			{
-				this.ufoEnemyCheckpoint.increaseLimit(this.ufoEnemyReleaseLimit, this.gameScoreBar.getScore());
+				this.ufoEnemyCheckpoint.increaseLimit(this.ufoEnemyRelease.limit, this.gameScoreBar.getScore());
 				this.ufoEnemyDefeatCount = 0;
 				this.ufoEnemiesAppeared = false;
 
@@ -2419,7 +2411,7 @@ export class GamePlayScene extends Container implements IScene {
 				gameObject.health = this.vehicleBossCheckpoint.getReleasePointDifference() * 1.5;
 				gameObject.enableRendering();
 
-				this.vehicleBossCheckpoint.increaseLimit(this.vehicleBossReleaseLimit, this.gameScoreBar.getScore());
+				this.vehicleBossCheckpoint.increaseLimit(this.vehicleBossRelease.limit, this.gameScoreBar.getScore());
 
 				this.bossHealthBar.setMaximumValue(gameObject.health);
 				this.bossHealthBar.setValue(gameObject.health);
@@ -2665,7 +2657,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				gameObject.enableRendering();
 
-				this.ufoBossCheckpoint.increaseLimit(this.ufoBossReleaseLimit, this.gameScoreBar.getScore());
+				this.ufoBossCheckpoint.increaseLimit(this.ufoBossRelease.limit, this.gameScoreBar.getScore());
 
 				this.bossHealthBar.setMaximumValue(ufoBoss.health);
 				this.bossHealthBar.setValue(ufoBoss.health);
@@ -3074,7 +3066,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				gameObject.enableRendering();
 
-				this.zombieBossCheckpoint.increaseLimit(this.zombieBossReleaseLimit, this.gameScoreBar.getScore());
+				this.zombieBossCheckpoint.increaseLimit(this.zombieBossRelease.limit, this.gameScoreBar.getScore());
 
 				this.bossHealthBar.setMaximumValue(zombieBoss.health);
 				this.bossHealthBar.setValue(zombieBoss.health);
@@ -3323,7 +3315,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				gameObject.enableRendering();
 
-				this.mafiaBossCheckpoint.increaseLimit(this.mafiaBossReleaseLimit, this.gameScoreBar.getScore());
+				this.mafiaBossCheckpoint.increaseLimit(this.mafiaBossRelease.limit, this.gameScoreBar.getScore());
 
 				this.bossHealthBar.setMaximumValue(mafiaBoss.health);
 				this.bossHealthBar.setValue(mafiaBoss.health);
