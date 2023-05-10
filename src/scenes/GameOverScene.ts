@@ -161,10 +161,7 @@ export class GameOverScene extends Container implements IScene {
 
 		// set the on screen message layer
 		this.onScreenMessage = new OnScreenMessage(this);
-	}
-
-	private unlockablePopDelay = 5;
-	private readonly unlockablePopDelayDefault = 7;
+	}	
 
 	public update() {
 
@@ -179,61 +176,60 @@ export class GameOverScene extends Container implements IScene {
 			if (this.unlockablePopDelay <= 0) {
 
 				if (Constants.HEALTH_LEVEL_MAX > 1 && this.health.isAwaitingPop) {
+
 					if (this.health.filters) {
 						SoundManager.play(SoundType.LEVEL_UP);
 						this.health.filters = null;
-					}						
+					}
 
 					this.health.pop();
 
 					if (!this.health.isAwaitingPop) {
-						this.unlockablePopDelay = this.unlockablePopDelayDefault;
-						SoundManager.play(SoundType.BOOST_ACQUIRED);
-						this.generateOnScreenMessage("Extra Health Acquired!");
+						this.showUnlockMessage("Extra Health Acquired!", Constants.getRandomTexture(ConstructType.HEALTH_PICKUP));
 					}
 				}
 				else if (Constants.ATTACK_LEVEL_MAX > 0 && this.attack.isAwaitingPop) {
+
 					if (this.attack.filters) {
 						SoundManager.play(SoundType.LEVEL_UP);
 						this.attack.filters = null;
-					}						
+					}
 
 					this.attack.pop();
 
 					if (!this.attack.isAwaitingPop) {
-						this.unlockablePopDelay = this.unlockablePopDelayDefault;
-						SoundManager.play(SoundType.BOOST_ACQUIRED);
-						this.generateOnScreenMessage("Extra Bombs Acquired!");
+						this.showUnlockMessage("Extra Bombs Acquired!", Constants.getRandomTexture(ConstructType.PLAYER_ROCKET));
 					}
 				}
 				else if (Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL && !Constants.CHOPPER_UNLOCKED) {
-					this.unlockablePopDelay = this.unlockablePopDelayDefault;
-					SoundManager.play(SoundType.BOOST_ACQUIRED);
-					this.generateOnScreenMessage("New Ride Unlocked!", Texture.from("player_ride_2"));
+					this.showUnlockMessage("New Ride Unlocked!", Texture.from("player_ride_2"));
 					Constants.CHOPPER_UNLOCKED = true;
 				}
 				else if (Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL && !Constants.TRASH_BIN_UNLOCKED) {
-					this.unlockablePopDelay = this.unlockablePopDelayDefault;
-					SoundManager.play(SoundType.BOOST_ACQUIRED);
-					this.generateOnScreenMessage("New Ground Bomb Unlocked!", Texture.from("player_honk_bomb_trash_1"));
+					this.showUnlockMessage("New Ground Bomb Unlocked!", Texture.from("player_honk_bomb_trash_1"));
 					Constants.TRASH_BIN_UNLOCKED = true;
 				}
 				else if (Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL && !Constants.DYNAMITE_UNLOCKED) {
-					this.unlockablePopDelay = this.unlockablePopDelayDefault;
-					SoundManager.play(SoundType.BOOST_ACQUIRED);
-					this.generateOnScreenMessage("New Ground Bomb Unlocked!", Texture.from("player_honk_bomb_sticky_2"));
+					this.showUnlockMessage("New Ground Bomb Unlocked!", Texture.from("player_honk_bomb_sticky_2"));
 					Constants.DYNAMITE_UNLOCKED = true;
 				}
 				else if (Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL && !Constants.MISSILE_UNLOCKED) {
-					this.unlockablePopDelay = this.unlockablePopDelayDefault;
-					SoundManager.play(SoundType.BOOST_ACQUIRED);
-					this.generateOnScreenMessage("New Air Bomb Unlocked!", Texture.from("player_rocket_1"));
+					this.showUnlockMessage("New Air Bomb Unlocked!", Texture.from("player_rocket_1"));
 					Constants.MISSILE_UNLOCKED = true;
 				}
 			}
 		}
 
 		this.animateOnScreenMessage();
+	}
+
+	private unlockablePopDelay = 6;
+	private readonly unlockablePopDelayDefault = 6;
+
+	private showUnlockMessage(message: string, icon: Texture) {
+		this.unlockablePopDelay = this.unlockablePopDelayDefault;
+		SoundManager.play(SoundType.BOOST_ACQUIRED);
+		this.generateOnScreenMessage(message, icon);
 	}
 
 	public resize(scale: number): void {
