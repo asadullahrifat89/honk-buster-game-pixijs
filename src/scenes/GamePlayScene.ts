@@ -1276,7 +1276,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			const gameObject: PlayerGroundBomb = new PlayerGroundBomb(4);
 			gameObject.disableRendering();
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_HONK_BOMB));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_GROUND_BOMB));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -1508,7 +1508,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: PlayerAirBomb = new PlayerAirBomb(4);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_AIR_BOMB));
 			sprite.x = 0;
 			sprite.y = 0;
 
@@ -1757,7 +1757,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: PlayerAirBombBullsEye = new PlayerAirBombBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET_HURLING_BALLS));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_AIR_BOMB_HURLING_BALLS));
 
 			sprite.x = 0;
 			sprite.y = 0;

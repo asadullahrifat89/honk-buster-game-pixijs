@@ -83,81 +83,82 @@ export enum PlayerAirBombTemplate {
 	BULLET_BALL,
 }
 
+
 export enum ConstructType {
-	NONE,
-	GAME_COVER_IMAGE,
+    NONE,
+    GAME_COVER_IMAGE,
 
-	PLAYER_RIDE,
-	PLAYER_RIDE_IDLE,
-	PLAYER_RIDE_ATTACK,
-	PLAYER_RIDE_WIN,
-	PLAYER_RIDE_HIT,
+    PLAYER_RIDE,
+    PLAYER_RIDE_IDLE,
+    PLAYER_RIDE_ATTACK,
+    PLAYER_RIDE_WIN,
+    PLAYER_RIDE_HIT,
 
-	PLAYER_ROCKET,
-	PLAYER_ROCKET_SEEKING,
-	PLAYER_ROCKET_HURLING_BALLS,
-	PLAYER_HONK_BOMB,
+    PLAYER_AIR_BOMB,    
+    PLAYER_AIR_BOMB_HURLING_BALLS,
+	PLAYER_GROUND_BOMB,
 
-	VEHICLE_ENEMY_SMALL,
-	VEHICLE_ENEMY_LARGE,
-	VEHICLE_BOSS,
+    VEHICLE_ENEMY_SMALL,
+    VEHICLE_ENEMY_LARGE,
+    VEHICLE_BOSS,
 
-	VEHICLE_BOSS_ROCKET,
+    VEHICLE_BOSS_ROCKET,
 
-	ROAD_MARK,
-	ROAD_SIDE_WALK_TOP,
-	ROAD_SIDE_WALK_BOTTOM,
-	ROAD_SIDE_WALK_BOTTOM_PILLARS,
+    ROAD_MARK,
+    ROAD_SIDE_WALK_TOP,
+    ROAD_SIDE_WALK_BOTTOM,
+    ROAD_SIDE_WALK_BOTTOM_PILLARS,
 
-	HONK,
+    HONK,
 
-	CLOUD,
+    CLOUD,
 
-	BLAST,
-	BANG,
+    BLAST,
+    BANG,
 
-	DROP_SHADOW,
+    DROP_SHADOW,
 
-	UFO_BOSS,
-	UFO_BOSS_IDLE,
-	UFO_BOSS_HIT,
-	UFO_BOSS_WIN,
+    UFO_BOSS,
+    UFO_BOSS_IDLE,
+    UFO_BOSS_HIT,
+    UFO_BOSS_WIN,
 
-	MAFIA_BOSS,
-	MAFIA_BOSS_IDLE,
-	MAFIA_BOSS_HIT,
-	MAFIA_BOSS_WIN,
+    MAFIA_BOSS,
+    MAFIA_BOSS_IDLE,
+    MAFIA_BOSS_HIT,
+    MAFIA_BOSS_WIN,
 
-	ZOMBIE_BOSS,
-	ZOMBIE_BOSS_IDLE,
-	ZOMBIE_BOSS_HIT,
-	ZOMBIE_BOSS_WIN,
+    ZOMBIE_BOSS,
+    ZOMBIE_BOSS_IDLE,
+    ZOMBIE_BOSS_HIT,
+    ZOMBIE_BOSS_WIN,
 
-	UFO_BOSS_ROCKET,
-	UFO_BOSS_ROCKET_SEEKING,
+    UFO_BOSS_ROCKET,
+    UFO_BOSS_ROCKET_SEEKING,
 
-	MAFIA_BOSS_ROCKET,
-	MAFIA_BOSS_ROCKET_HURLING_BALLS,
+    MAFIA_BOSS_ROCKET,
+    MAFIA_BOSS_ROCKET_HURLING_BALLS,
 
-	ZOMBIE_BOSS_ROCKET_BLOCK,
+    ZOMBIE_BOSS_ROCKET_BLOCK,
 
-	UFO_ENEMY,
-	UFO_ENEMY_ROCKET,
+    UFO_ENEMY,
+    UFO_ENEMY_ROCKET,
 
-	HEALTH_PICKUP,
+    HEALTH_PICKUP,
 
-	POWERUP_PICKUP,
-	POWERUP_PICKUP_SEEKING_SNITCH,
-	POWERUP_PICKUP_ARMOR,
-	POWERUP_PICKUP_HURLING_BALLS,
+    POWERUP_PICKUP,
+    POWERUP_PICKUP_SEEKING_SNITCH,
+    POWERUP_PICKUP_ARMOR,
+    POWERUP_PICKUP_HURLING_BALLS,
 
-	COLLECTABLE_PICKUP,
-	FLOATING_NUMBER,
+    COLLECTABLE_PICKUP,
+    FLOATING_NUMBER,
 
-	TITLE_SCREEN,
-	CHOPPER_BLADES,
-	TRASH_BIN_BLAST,
-	EXPLOSION_RING
+    TITLE_SCREEN,
+    CHOPPER_BLADES,
+    TRASH_BIN_BLAST,
+    EXPLOSION_RING,
+    GRENADE_BLAST
 }
 
 export enum SoundType {
@@ -320,29 +321,33 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, "player_balloon_2_win"),
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, "player_balloon_2_hit"),
 
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "player_honk_bomb_explosive_1", PlayerGroundBombTemplate.GRENADE),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "player_honk_bomb_explosive_2", PlayerGroundBombTemplate.GRENADE),
 
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "player_honk_bomb_trash_1", PlayerGroundBombTemplate.TRASH_BIN),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "player_honk_bomb_trash_2", PlayerGroundBombTemplate.TRASH_BIN),
+		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_explosive_1", PlayerGroundBombTemplate.GRENADE),
+		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_explosive_2", PlayerGroundBombTemplate.GRENADE),
 
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "player_honk_bomb_sticky_1", PlayerGroundBombTemplate.DYNAMITE),
-		new ConstructTemplate(ConstructType.PLAYER_HONK_BOMB, "player_honk_bomb_sticky_2", PlayerGroundBombTemplate.DYNAMITE),
+		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_trash_1", PlayerGroundBombTemplate.TRASH_BIN),
+		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_trash_2", PlayerGroundBombTemplate.TRASH_BIN),
+
+		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_sticky_1", PlayerGroundBombTemplate.DYNAMITE),
+		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_sticky_2", PlayerGroundBombTemplate.DYNAMITE),	
+
+		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_explosive_1_open", PlayerGroundBombTemplate.GRENADE),
+		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_explosive_2_open", PlayerGroundBombTemplate.GRENADE),	
 
 		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_1_open", PlayerGroundBombTemplate.TRASH_BIN),
-		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_2_open", PlayerGroundBombTemplate.TRASH_BIN),
+		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_2_open", PlayerGroundBombTemplate.TRASH_BIN),			
 
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_gravity_ball_1", PlayerAirBombTemplate.GRAVITY_BALL),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_gravity_ball_2", PlayerAirBombTemplate.GRAVITY_BALL),
+		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_gravity_ball_1", PlayerAirBombTemplate.GRAVITY_BALL),
+		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_gravity_ball_2", PlayerAirBombTemplate.GRAVITY_BALL),
 
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_1", PlayerAirBombTemplate.MISSILE),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_2", PlayerAirBombTemplate.MISSILE),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_3", PlayerAirBombTemplate.MISSILE),
+		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_rocket_1", PlayerAirBombTemplate.MISSILE),
+		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_rocket_2", PlayerAirBombTemplate.MISSILE),
+		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_rocket_3", PlayerAirBombTemplate.MISSILE),
 
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_bullet_ball_1", PlayerAirBombTemplate.BULLET_BALL),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_bullet_ball_2", PlayerAirBombTemplate.BULLET_BALL),
+		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_bullet_ball_1", PlayerAirBombTemplate.BULLET_BALL),
+		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_bullet_ball_2", PlayerAirBombTemplate.BULLET_BALL),
 
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET_HURLING_BALLS, "player_rocket_bulls_eye_1"),
+		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB_HURLING_BALLS, "player_rocket_bulls_eye_1"),
 
 		new ConstructTemplate(ConstructType.CHOPPER_BLADES, "player_chopper_blades"),
 

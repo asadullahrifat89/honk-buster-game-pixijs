@@ -29,14 +29,15 @@ export class PlayerGroundBomb extends GameObjectContainer {
 
 		switch (this.playerGroundBombTemplate) {
 			case PlayerGroundBombTemplate.GRENADE: {
-				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerGroundBombTemplate.GRENADE).map(x => x.uri);
+				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_GROUND_BOMB && x.tag == PlayerGroundBombTemplate.GRENADE).map(x => x.uri);
+				this.playerGroundBombBlastUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.GRENADE_BLAST && x.tag == PlayerGroundBombTemplate.GRENADE).map(x => x.uri);
 			} break;
 			case PlayerGroundBombTemplate.TRASH_BIN: {
-				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerGroundBombTemplate.TRASH_BIN).map(x => x.uri);
+				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_GROUND_BOMB && x.tag == PlayerGroundBombTemplate.TRASH_BIN).map(x => x.uri);
 				this.playerGroundBombBlastUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.TRASH_BIN_BLAST && x.tag == PlayerGroundBombTemplate.TRASH_BIN).map(x => x.uri);
 			} break;
 			case PlayerGroundBombTemplate.DYNAMITE: {
-				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_HONK_BOMB && x.tag == PlayerGroundBombTemplate.DYNAMITE).map(x => x.uri);
+				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_GROUND_BOMB && x.tag == PlayerGroundBombTemplate.DYNAMITE).map(x => x.uri);				
 				this.blastDelayDefault = 45;
 			} break;
 		}
@@ -136,6 +137,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 				this.angle = 0;
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 2;
 				this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
+				this.setTexture(Constants.getTextureFromUri(this.playerGroundBombBlastUris[this.uriIndex]));
 			} break;
 			case PlayerGroundBombTemplate.TRASH_BIN: {
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 1.5;
