@@ -80,6 +80,7 @@ export enum PlayerGroundBombTemplate {
 export enum PlayerAirBombTemplate {
 	GRAVITY_BALL,
 	MISSILE,
+	BULLET_BALL,
 }
 
 export enum ConstructType {
@@ -248,6 +249,9 @@ export abstract class Constants {
 	public static MISSILE_UNLOCK_LEVEL: number = 3;
 	public static MISSILE_UNLOCKED: boolean = false;
 
+	public static BULLET_BALL_UNLOCK_LEVEL: number = 7;
+	public static BULLET_BALL_UNLOCKED: boolean = false;
+
 	public static TRASH_BIN_UNLOCK_LEVEL: number = 3;
 	public static TRASH_BIN_UNLOCKED: boolean = false;
 
@@ -333,12 +337,15 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, "player_honk_bomb_trash_1_open"),
 		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, "player_honk_bomb_trash_2_open"),
 
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_ball_1", PlayerAirBombTemplate.GRAVITY_BALL),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_ball_2", PlayerAirBombTemplate.GRAVITY_BALL),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_gravity_ball_1", PlayerAirBombTemplate.GRAVITY_BALL),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_gravity_ball_2", PlayerAirBombTemplate.GRAVITY_BALL),
 
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_1", PlayerAirBombTemplate.MISSILE),
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_2", PlayerAirBombTemplate.MISSILE),
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_3", PlayerAirBombTemplate.MISSILE),
+
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_target_ball_1", PlayerAirBombTemplate.BULLET_BALL),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_target_ball_2", PlayerAirBombTemplate.BULLET_BALL),
 
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET_HURLING_BALLS, "player_rocket_bulls_eye_1"),
 

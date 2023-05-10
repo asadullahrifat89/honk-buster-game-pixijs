@@ -205,7 +205,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		air_bomb_sprite.angle = 213;
 		air_bomb_sprite.anchor.set(1);
 
-		const air_bomb_sprite_2: GameObjectSprite = new GameObjectSprite(Texture.from("player_ball_1"));
+		const air_bomb_sprite_2: GameObjectSprite = new GameObjectSprite(Texture.from("player_gravity_ball_1"));
 		air_bomb_sprite_2.width = 256 / 3;
 		air_bomb_sprite_2.height = 256 / 3;
 		air_bomb_sprite_2.x = 0;
