@@ -1,10 +1,10 @@
 ﻿import { Constants, ConstructType, PlayerAirBombTemplate, SoundType } from '../Constants';
 import { PlayerRide } from './PlayerRide';
 import { SoundManager } from '../managers/SoundManager';
-import { RocketBase } from './RocketBase';
+import { SeekingRocketBase } from './SeekingRocketBase';
 
 
-export class PlayerAirBomb extends RocketBase {
+export class PlayerAirBomb extends SeekingRocketBase {
 
 	public playerAirBombTemplate: PlayerAirBombTemplate = PlayerAirBombTemplate.BALL;
 	private PlayerAirBombUris: string[] = [];

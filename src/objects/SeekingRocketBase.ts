@@ -1,8 +1,8 @@
 ﻿import { Rectangle } from 'pixi.js';
-import { GameObjectContainer } from '../core/GameObjectContainer';
+import { RocketBase } from './RocketBase';
 
 
-export class SeekingRocketBase extends GameObjectContainer {
+export class SeekingRocketBase extends RocketBase {
 
 	private readonly grace: number = 7;
 	public directTarget: Rectangle = new Rectangle();
