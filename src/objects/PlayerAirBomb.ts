@@ -4,38 +4,38 @@ import { SoundManager } from '../managers/SoundManager';
 import { RocketBase } from './RocketBase';
 
 
-export class PlayerRocket extends RocketBase {
+export class PlayerAirBomb extends RocketBase {
 
-	public playerRocketTemplate: PlayerAirBombTemplate = PlayerAirBombTemplate.BALL;
-	private playerRocketUris: string[] = [];
+	public playerAirBombTemplate: PlayerAirBombTemplate = PlayerAirBombTemplate.BALL;
+	private PlayerAirBombUris: string[] = [];
 
 	constructor(speed: number) {
 		super(speed);
 	}
 
-	setTemplate(playerRocketTemplate: PlayerAirBombTemplate) {
-		this.playerRocketTemplate = playerRocketTemplate;
+	setTemplate(playerAirBombTemplate: PlayerAirBombTemplate) {
+		this.playerAirBombTemplate = playerAirBombTemplate;
 
-		switch (this.playerRocketTemplate) {
+		switch (this.playerAirBombTemplate) {
 			case PlayerAirBombTemplate.BALL: {
-				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BALL).map(x => x.uri);
+				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BALL).map(x => x.uri);
 				this.autoBlastDelayDefault = 6;
 			} break;
 			case PlayerAirBombTemplate.ROCKET: {
-				this.playerRocketUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.ROCKET).map(x => x.uri);
+				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.ROCKET).map(x => x.uri);
 			} break;
 			default: break;
 		}
 
-		this.setTexture(Constants.getRandomTextureFromUris(this.playerRocketUris));
+		this.setTexture(Constants.getRandomTextureFromUris(this.PlayerAirBombUris));
 	}
 
 	reset() {
 		this.alpha = 1;
-		this.setTexture(Constants.getRandomTextureFromUris(this.playerRocketUris));
+		this.setTexture(Constants.getRandomTextureFromUris(this.PlayerAirBombUris));
 		this.scale.set(1);
 
-		switch (this.playerRocketTemplate) {
+		switch (this.playerAirBombTemplate) {
 			case PlayerAirBombTemplate.BALL: {
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 20; // starts with high speed and slows down
 				SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
@@ -59,7 +59,7 @@ export class PlayerRocket extends RocketBase {
 	}
 
 	override accelerate() {
-		switch (this.playerRocketTemplate) {
+		switch (this.playerAirBombTemplate) {
 			case PlayerAirBombTemplate.BALL: {
 				super.decelerate();
 			} break;

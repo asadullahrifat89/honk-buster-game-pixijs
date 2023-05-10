@@ -5,7 +5,7 @@ import { SeekingRocketBase } from './SeekingRocketBase';
 import { SoundManager } from '../managers/SoundManager';
 
 
-export class PlayerRocketBullsEye extends SeekingRocketBase {
+export class PlayerAirBombBullsEye extends SeekingRocketBase {
 
 	private autoBlastDelay: number = 0;
 	private readonly autoBlastDelayDefault: number = 15;

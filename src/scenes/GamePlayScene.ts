@@ -29,8 +29,8 @@ import { MafiaBossRocketBullsEye } from "../objects/MafiaBossRocketBullsEye";
 import { PlayerRide } from "../objects/PlayerRide";
 import { PlayerGroundBomb } from "../objects/PlayerGroundBomb";
 import { Explosion } from "../objects/Explosion";
-import { PlayerRocket } from "../objects/PlayerRocket";
-import { PlayerRocketBullsEye } from "../objects/PlayerRocketBullsEye";
+import { PlayerAirBomb } from "../objects/PlayerAirBomb";
+import { PlayerAirBombBullsEye } from "../objects/PlayerAirBombBullsEye";
 import { PowerUpPickup } from "../objects/PowerUpPickup";
 import { ZombieBoss } from "../objects/ZombieBoss";
 import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
@@ -1225,12 +1225,12 @@ export class GamePlayScene extends Container implements IScene {
 					switch (this.powerUpBar.tag) {
 						case PowerUpType.HURLING_BALLS:
 							{
-								this.generatePlayerRocketBullsEye();
+								this.generatePlayerAirBombBullsEye();
 							}
 							break;
 						case PowerUpType.ARMOR:
 							{
-								this.generatePlayerRocket();
+								this.generatePlayerAirBomb();
 							}
 							break;
 						default:
@@ -1238,7 +1238,7 @@ export class GamePlayScene extends Container implements IScene {
 					}
 				}
 				else {
-					this.generatePlayerRocket();
+					this.generatePlayerAirBomb();
 				}
 			}
 			else {
@@ -1503,18 +1503,18 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region PlayerRockets
+	//#region PlayerAirBombs
 
-	private playerRocketSizeWidth: number = 90;
-	private playerRocketSizeHeight: number = 90;
+	private PlayerAirBombSizeWidth: number = 90;
+	private PlayerAirBombSizeHeight: number = 90;
 
-	private playerRocketGameObjects: Array<PlayerRocket> = [];
+	private PlayerAirBombGameObjects: Array<PlayerAirBomb> = [];
 
-	spawnPlayerRockets() {
+	spawnPlayerAirBombs() {
 
 		for (let j = 0; j < this.playerAmmoBeltSize; j++) {
 
-			const gameObject: PlayerRocket = new PlayerRocket(4);
+			const gameObject: PlayerAirBomb = new PlayerAirBomb(4);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET));
@@ -1526,37 +1526,37 @@ export class GamePlayScene extends Container implements IScene {
 
 			switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
 				case PlayerAirBombTemplate.BALL: {
-					sprite.width = this.playerRocketSizeWidth / 1.5;
-					sprite.height = this.playerRocketSizeHeight / 1.5;
+					sprite.width = this.PlayerAirBombSizeWidth / 1.5;
+					sprite.height = this.PlayerAirBombSizeHeight / 1.5;
 
 					gameObject.setTemplate(PlayerAirBombTemplate.BALL);
 				} break;
 				case PlayerAirBombTemplate.ROCKET: {
-					sprite.width = this.playerRocketSizeWidth;
-					sprite.height = this.playerRocketSizeHeight;
+					sprite.width = this.PlayerAirBombSizeWidth;
+					sprite.height = this.PlayerAirBombSizeHeight;
 
 					gameObject.setTemplate(PlayerAirBombTemplate.ROCKET);
 				} break;
 				default: break;
 			}
 
-			this.playerRocketGameObjects.push(gameObject);
+			this.PlayerAirBombGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
 	}
 
-	generatePlayerRocket() {
+	generatePlayerAirBomb() {
 
-		var gameObject = this.playerRocketGameObjects.find(x => x.isAnimating == false);
+		var gameObject = this.PlayerAirBombGameObjects.find(x => x.isAnimating == false);
 
 		if (gameObject) {
 
-			var playerRocket = gameObject as PlayerRocket;
-			playerRocket.reset();
-			playerRocket.reposition(this.player);
-			playerRocket.setPopping();
+			var PlayerAirBomb = gameObject as PlayerAirBomb;
+			PlayerAirBomb.reset();
+			PlayerAirBomb.reposition(this.player);
+			PlayerAirBomb.setPopping();
 
 			gameObject.enableRendering();
 
@@ -1570,120 +1570,120 @@ export class GamePlayScene extends Container implements IScene {
 			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
 
 			if (ufoBossRocketSeeking) {
-				this.setPlayerRocketDirection(this.player, playerRocket, ufoBossRocketSeeking);
+				this.setPlayerAirBombDirection(this.player, PlayerAirBomb, ufoBossRocketSeeking);
 			}
 			else if (ufoEnemy) {
-				this.setPlayerRocketDirection(this.player, playerRocket, ufoEnemy);
+				this.setPlayerAirBombDirection(this.player, PlayerAirBomb, ufoEnemy);
 			}
 			else if (ufoBoss) {
-				this.setPlayerRocketDirection(this.player, playerRocket, ufoBoss);
+				this.setPlayerAirBombDirection(this.player, PlayerAirBomb, ufoBoss);
 			}
 			else if (zombieBoss) {
-				this.setPlayerRocketDirection(this.player, playerRocket, zombieBoss);
+				this.setPlayerAirBombDirection(this.player, PlayerAirBomb, zombieBoss);
 			}
 			else if (mafiaBoss) {
-				this.setPlayerRocketDirection(this.player, playerRocket, mafiaBoss);
+				this.setPlayerAirBombDirection(this.player, PlayerAirBomb, mafiaBoss);
 			}
 		}
 	}
 
-	animatePlayerRockets() {
+	animatePlayerAirBombs() {
 
-		var animatingHonkBombs = this.playerRocketGameObjects.filter(x => x.isAnimating == true);
+		var animatingHonkBombs = this.PlayerAirBombGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingHonkBombs) {
 
-			animatingHonkBombs.forEach(playerRocket => {
+			animatingHonkBombs.forEach(PlayerAirBomb => {
 
-				playerRocket.pop();
+				PlayerAirBomb.pop();
 
-				if (playerRocket) {
+				if (PlayerAirBomb) {
 
-					playerRocket.accelerate();
+					PlayerAirBomb.accelerate();
 
-					if (playerRocket.awaitMoveDownLeft) {
-						playerRocket.moveDownLeft();
+					if (PlayerAirBomb.awaitMoveDownLeft) {
+						PlayerAirBomb.moveDownLeft();
 					}
-					else if (playerRocket.awaitMoveUpRight) {
-						playerRocket.moveUpRight();
+					else if (PlayerAirBomb.awaitMoveUpRight) {
+						PlayerAirBomb.moveUpRight();
 					}
-					else if (playerRocket.awaitMoveUpLeft) {
-						playerRocket.moveUpLeft();
+					else if (PlayerAirBomb.awaitMoveUpLeft) {
+						PlayerAirBomb.moveUpLeft();
 					}
-					else if (playerRocket.awaitMoveDownRight) {
-						playerRocket.moveDownRight();
+					else if (PlayerAirBomb.awaitMoveDownRight) {
+						PlayerAirBomb.moveDownRight();
 					}
 
-					if (playerRocket.isBlasting) {
-						playerRocket.shrink();
-						playerRocket.fade();
+					if (PlayerAirBomb.isBlasting) {
+						PlayerAirBomb.shrink();
+						PlayerAirBomb.fade();
 					}
 					else {
 
-						playerRocket.hover();
+						PlayerAirBomb.hover();
 
-						let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
-						let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
+						let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, PlayerAirBomb));
+						let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, PlayerAirBomb));
 
-						let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
-						let zombieBossRocketBlock = this.zombieBossRocketBlockGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocket));
+						let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, PlayerAirBomb));
+						let zombieBossRocketBlock = this.zombieBossRocketBlockGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, PlayerAirBomb));
 
-						let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocket));
+						let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, PlayerAirBomb));
 
-						let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerRocket));
+						let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, PlayerAirBomb));
 
 						if (ufoBossRocketSeeking) {
-							playerRocket.setBlast();
+							PlayerAirBomb.setBlast();
 							ufoBossRocketSeeking.setBlast();
-							this.generateRingFireExplosion(playerRocket);
-							this.generateFlashExplosion(playerRocket);
+							this.generateRingFireExplosion(PlayerAirBomb);
+							this.generateFlashExplosion(PlayerAirBomb);
 						}
 						else if (ufoEnemy) {
-							playerRocket.setBlast();
+							PlayerAirBomb.setBlast();
 							this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
-							this.generateRingFireExplosion(playerRocket);
-							this.generateFlashExplosion(playerRocket);
+							this.generateRingFireExplosion(PlayerAirBomb);
+							this.generateFlashExplosion(PlayerAirBomb);
 						}
 						else if (ufoBoss) {
-							playerRocket.setBlast();
+							PlayerAirBomb.setBlast();
 							this.looseUfoBosshealth(ufoBoss as UfoBoss);
-							this.generateRingFireExplosion(playerRocket);
-							this.generateFlashExplosion(playerRocket);
+							this.generateRingFireExplosion(PlayerAirBomb);
+							this.generateFlashExplosion(PlayerAirBomb);
 						}
 						else if (zombieBossRocketBlock) {
-							playerRocket.setBlast();
+							PlayerAirBomb.setBlast();
 							zombieBossRocketBlock.looseHealth();
-							this.generateRingFireExplosion(playerRocket);
-							this.generateFlashExplosion(playerRocket);
+							this.generateRingFireExplosion(PlayerAirBomb);
+							this.generateFlashExplosion(PlayerAirBomb);
 						}
 						else if (zombieBoss) {
-							playerRocket.setBlast();
+							PlayerAirBomb.setBlast();
 							this.looseZombieBosshealth(zombieBoss as ZombieBoss);
-							this.generateRingFireExplosion(playerRocket);
-							this.generateFlashExplosion(playerRocket);
+							this.generateRingFireExplosion(PlayerAirBomb);
+							this.generateFlashExplosion(PlayerAirBomb);
 						}
 						else if (mafiaBoss) {
-							playerRocket.setBlast();
+							PlayerAirBomb.setBlast();
 							this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
-							this.generateRingFireExplosion(playerRocket);
-							this.generateFlashExplosion(playerRocket);
+							this.generateRingFireExplosion(PlayerAirBomb);
+							this.generateFlashExplosion(PlayerAirBomb);
 						}
 
-						if (playerRocket.autoBlast()) {
-							playerRocket.setBlast();
-							this.generateRingFireExplosion(playerRocket);
+						if (PlayerAirBomb.autoBlast()) {
+							PlayerAirBomb.setBlast();
+							this.generateRingFireExplosion(PlayerAirBomb);
 						}
 					}
 				}
 
-				if (playerRocket.hasFaded() || playerRocket.x > Constants.DEFAULT_GAME_VIEW_WIDTH || playerRocket.getRight() < 0 || playerRocket.getBottom() < 0 || playerRocket.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					playerRocket.disableRendering();
+				if (PlayerAirBomb.hasFaded() || PlayerAirBomb.x > Constants.DEFAULT_GAME_VIEW_WIDTH || PlayerAirBomb.getRight() < 0 || PlayerAirBomb.getBottom() < 0 || PlayerAirBomb.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					PlayerAirBomb.disableRendering();
 				}
 			});
 		}
 	}
 
-	setPlayerRocketDirection(source: GameObjectContainer, rocket: GameObjectContainer, rocketTarget: GameObjectContainer) {
+	setPlayerAirBombDirection(source: GameObjectContainer, rocket: GameObjectContainer, rocketTarget: GameObjectContainer) {
 
 		// rocket target is on the bottom right side of the UfoBoss
 		if (rocketTarget.getTop() > source.getTop() && rocketTarget.getLeft() > source.getLeft()) {
@@ -1713,45 +1713,45 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region PlayerRocketBullsEyes
+	//#region PlayerAirBombBullsEyes
 
-	private playerRocketBullsEyeSizeWidth: number = 75;
-	private playerRocketBullsEyeSizeHeight: number = 75;
+	private PlayerAirBombBullsEyeSizeWidth: number = 75;
+	private PlayerAirBombBullsEyeSizeHeight: number = 75;
 
-	private playerRocketBullsEyeGameObjects: Array<PlayerRocketBullsEye> = [];
+	private PlayerAirBombBullsEyeGameObjects: Array<PlayerAirBombBullsEye> = [];
 
-	spawnPlayerRocketBullsEyes() {
+	spawnPlayerAirBombBullsEyes() {
 
 		for (let j = 0; j < this.playerAmmoBeltSize; j++) {
 
-			const gameObject: PlayerRocketBullsEye = new PlayerRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: PlayerAirBombBullsEye = new PlayerAirBombBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_ROCKET_HURLING_BALLS));
 
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.playerRocketBullsEyeSizeWidth;
-			sprite.height = this.playerRocketBullsEyeSizeHeight;
+			sprite.width = this.PlayerAirBombBullsEyeSizeWidth;
+			sprite.height = this.PlayerAirBombBullsEyeSizeHeight;
 
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
-			this.playerRocketBullsEyeGameObjects.push(gameObject);
+			this.PlayerAirBombBullsEyeGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
 		}
 	}
 
-	generatePlayerRocketBullsEye() {
+	generatePlayerAirBombBullsEye() {
 
-		let playerRocketBullsEye = this.playerRocketBullsEyeGameObjects.find(x => x.isAnimating == false);
+		let PlayerAirBombBullsEye = this.PlayerAirBombBullsEyeGameObjects.find(x => x.isAnimating == false);
 
-		if (playerRocketBullsEye) {
-			playerRocketBullsEye.reset();
-			playerRocketBullsEye.reposition(this.player);
-			playerRocketBullsEye.setPopping();
+		if (PlayerAirBombBullsEye) {
+			PlayerAirBombBullsEye.reset();
+			PlayerAirBombBullsEye.reposition(this.player);
+			PlayerAirBombBullsEye.setPopping();
 
 			this.player.setAttackStance();
 
@@ -1763,102 +1763,102 @@ export class GamePlayScene extends Container implements IScene {
 			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
 
 			if (ufoBossRocketSeeking) {
-				playerRocketBullsEye.setDirectTarget(ufoBossRocketSeeking.getCloseBounds());
+				PlayerAirBombBullsEye.setDirectTarget(ufoBossRocketSeeking.getCloseBounds());
 			}
 			else if (ufoEnemy) {
-				playerRocketBullsEye.setDirectTarget(ufoEnemy.getCloseBounds());
+				PlayerAirBombBullsEye.setDirectTarget(ufoEnemy.getCloseBounds());
 			}
 			else if (ufoBoss) {
-				playerRocketBullsEye.setDirectTarget(ufoBoss.getCloseBounds());
+				PlayerAirBombBullsEye.setDirectTarget(ufoBoss.getCloseBounds());
 			}
 			else if (zombieBoss) {
-				playerRocketBullsEye.setDirectTarget(zombieBoss.getCloseBounds());
+				PlayerAirBombBullsEye.setDirectTarget(zombieBoss.getCloseBounds());
 			}
 			else if (mafiaBoss) {
-				playerRocketBullsEye.setDirectTarget(mafiaBoss.getCloseBounds());
+				PlayerAirBombBullsEye.setDirectTarget(mafiaBoss.getCloseBounds());
 			}
 
-			playerRocketBullsEye.enableRendering();
+			PlayerAirBombBullsEye.enableRendering();
 
 			if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.HURLING_BALLS)
 				this.depletePowerUp();
 		}
 	}
 
-	animatePlayerRocketBullsEyes() {
+	animatePlayerAirBombBullsEyes() {
 
-		let animatingPlayerRocketBullsEyes = this.playerRocketBullsEyeGameObjects.filter(x => x.isAnimating == true);
+		let animatingPlayerAirBombBullsEyes = this.PlayerAirBombBullsEyeGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingPlayerRocketBullsEyes) {
+		if (animatingPlayerAirBombBullsEyes) {
 
-			animatingPlayerRocketBullsEyes.forEach(playerRocketBullsEye => {
+			animatingPlayerAirBombBullsEyes.forEach(PlayerAirBombBullsEye => {
 
-				if (playerRocketBullsEye.isBlasting) {
-					playerRocketBullsEye.shrink();
-					playerRocketBullsEye.fade();
-					playerRocketBullsEye.moveDownRight();
+				if (PlayerAirBombBullsEye.isBlasting) {
+					PlayerAirBombBullsEye.shrink();
+					PlayerAirBombBullsEye.fade();
+					PlayerAirBombBullsEye.moveDownRight();
 				}
 				else {
 
-					playerRocketBullsEye.pop();
-					playerRocketBullsEye.rotate(RotationDirection.Forward, 0, 2.5);
-					playerRocketBullsEye.move();
+					PlayerAirBombBullsEye.pop();
+					PlayerAirBombBullsEye.rotate(RotationDirection.Forward, 0, 2.5);
+					PlayerAirBombBullsEye.move();
 
-					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocketBullsEye));
-					let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocketBullsEye));
+					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, PlayerAirBombBullsEye));
+					let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, PlayerAirBombBullsEye));
 
-					let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocketBullsEye));
-					let zombieBossRocketBlock = this.zombieBossRocketBlockGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerRocketBullsEye));
+					let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, PlayerAirBombBullsEye));
+					let zombieBossRocketBlock = this.zombieBossRocketBlockGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, PlayerAirBombBullsEye));
 
-					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerRocketBullsEye));
+					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, PlayerAirBombBullsEye));
 
-					let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerRocketBullsEye));
+					let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, PlayerAirBombBullsEye));
 
 					if (ufoBossRocketSeeking) {
-						playerRocketBullsEye.setBlast();
+						PlayerAirBombBullsEye.setBlast();
 						ufoBossRocketSeeking.setBlast();
-						this.generateRingFireExplosion(playerRocketBullsEye);
-						this.generateFlashExplosion(playerRocketBullsEye);
+						this.generateRingFireExplosion(PlayerAirBombBullsEye);
+						this.generateFlashExplosion(PlayerAirBombBullsEye);
 					}
 					else if (ufoBoss) {
-						playerRocketBullsEye.setBlast();
+						PlayerAirBombBullsEye.setBlast();
 						this.looseUfoBosshealth(ufoBoss as UfoBoss);
-						this.generateRingFireExplosion(playerRocketBullsEye);
-						this.generateFlashExplosion(playerRocketBullsEye);
+						this.generateRingFireExplosion(PlayerAirBombBullsEye);
+						this.generateFlashExplosion(PlayerAirBombBullsEye);
 					}
 					else if (ufoEnemy) {
-						playerRocketBullsEye.setBlast();
+						PlayerAirBombBullsEye.setBlast();
 						this.looseUfoEnemyhealth(ufoEnemy as UfoEnemy);
-						this.generateRingFireExplosion(playerRocketBullsEye);
-						this.generateFlashExplosion(playerRocketBullsEye);
+						this.generateRingFireExplosion(PlayerAirBombBullsEye);
+						this.generateFlashExplosion(PlayerAirBombBullsEye);
 					}
 					else if (zombieBossRocketBlock) {
-						playerRocketBullsEye.setBlast();
+						PlayerAirBombBullsEye.setBlast();
 						zombieBossRocketBlock.looseHealth();
-						this.generateRingFireExplosion(playerRocketBullsEye);
-						this.generateFlashExplosion(playerRocketBullsEye);
+						this.generateRingFireExplosion(PlayerAirBombBullsEye);
+						this.generateFlashExplosion(PlayerAirBombBullsEye);
 					}
 					else if (zombieBoss) {
-						playerRocketBullsEye.setBlast();
+						PlayerAirBombBullsEye.setBlast();
 						this.looseZombieBosshealth(zombieBoss as ZombieBoss);
-						this.generateRingFireExplosion(playerRocketBullsEye);
-						this.generateFlashExplosion(playerRocketBullsEye);
+						this.generateRingFireExplosion(PlayerAirBombBullsEye);
+						this.generateFlashExplosion(PlayerAirBombBullsEye);
 					}
 					else if (mafiaBoss) {
-						playerRocketBullsEye.setBlast();
+						PlayerAirBombBullsEye.setBlast();
 						this.looseMafiaBosshealth(mafiaBoss as MafiaBoss);
-						this.generateRingFireExplosion(playerRocketBullsEye);
-						this.generateFlashExplosion(playerRocketBullsEye);
+						this.generateRingFireExplosion(PlayerAirBombBullsEye);
+						this.generateFlashExplosion(PlayerAirBombBullsEye);
 					}
 
-					if (playerRocketBullsEye.autoBlast()) {
-						playerRocketBullsEye.setBlast();
-						this.generateRingFireExplosion(playerRocketBullsEye);
+					if (PlayerAirBombBullsEye.autoBlast()) {
+						PlayerAirBombBullsEye.setBlast();
+						this.generateRingFireExplosion(PlayerAirBombBullsEye);
 					}
 				}
 
-				if (playerRocketBullsEye.hasFaded() || playerRocketBullsEye.x > Constants.DEFAULT_GAME_VIEW_WIDTH || playerRocketBullsEye.getRight() < 0 || playerRocketBullsEye.getBottom() < 0 || playerRocketBullsEye.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					playerRocketBullsEye.disableRendering();
+				if (PlayerAirBombBullsEye.hasFaded() || PlayerAirBombBullsEye.x > Constants.DEFAULT_GAME_VIEW_WIDTH || PlayerAirBombBullsEye.getRight() < 0 || PlayerAirBombBullsEye.getBottom() < 0 || PlayerAirBombBullsEye.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					PlayerAirBombBullsEye.disableRendering();
 				}
 			});
 		}
@@ -3979,8 +3979,8 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnRingSmokeExplosions();
 
 		this.spawnPlayerGroundBombs();
-		this.spawnPlayerRockets();
-		this.spawnPlayerRocketBullsEyes();
+		this.spawnPlayerAirBombs();
+		this.spawnPlayerAirBombBullsEyes();
 		this.spawnPlayerBalloon();
 
 		this.spawnUfoBossRockets();
@@ -4069,8 +4069,8 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateRingSmokeExplosions();
 		this.animateRingFireExplosions();
 		this.animateExplosionRings();
-		this.animatePlayerRockets();
-		this.animatePlayerRocketBullsEyes();
+		this.animatePlayerAirBombs();
+		this.animatePlayerAirBombBullsEyes();
 
 		this.animateUfoBoss();
 		this.animateUfoBossRockets();
