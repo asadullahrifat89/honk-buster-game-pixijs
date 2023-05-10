@@ -118,7 +118,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 
 			button.setText("Bullet Balls").setIsEnabled(true);
 
-			SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
+			SoundManager.play(SoundType.BULLET_LAUNCH);
 			gravity_balls_sprite.filters = [new GrayscaleFilter()];
 			bullet_balls_sprite.filters = null;
 			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.BULLET_BALL;

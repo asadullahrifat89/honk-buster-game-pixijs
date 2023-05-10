@@ -49,7 +49,7 @@ export class PlayerAirBomb extends SeekingRocketBase {
 				this.speed = 0; // starts with slow speed then gets fast
 			} break;
 			case PlayerAirBombTemplate.BULLET_BALL: {
-				SoundManager.play(SoundType.BULLET_LAUNCH, 0.6);
+				SoundManager.play(SoundType.BULLET_LAUNCH);
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * 3.3;
 			} break;
 			default: break;

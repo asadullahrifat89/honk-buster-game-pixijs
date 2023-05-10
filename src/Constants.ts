@@ -438,9 +438,8 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.SEEKER_ROCKET_LAUNCH, this.soundsDirectory + "seeker_rocket_launch_1.mp3"),
 		new SoundTemplate(SoundType.SEEKER_ROCKET_LAUNCH, this.soundsDirectory + "seeker_rocket_launch_2.mp3"),
 
+		new SoundTemplate(SoundType.ORB_LAUNCH, this.soundsDirectory + "orb_launch_1.mp3"),
 		new SoundTemplate(SoundType.BALL_LAUNCH, this.soundsDirectory + "ball_launch_1.mp3"),
-		new SoundTemplate(SoundType.BALL_LAUNCH, this.soundsDirectory + "ball_launch_2.mp3"),
-
 		new SoundTemplate(SoundType.BULLET_LAUNCH, this.soundsDirectory + "bullet_launch_1.mp3"),
 
 		new SoundTemplate(SoundType.AMBIENCE, this.soundsDirectory + "ambience_1.mp3"),
@@ -463,9 +462,7 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.DAMAGE_TAKEN, this.soundsDirectory + "health_loss_1.mp3"),
 
 		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, this.soundsDirectory + "ufo_enemy_entry_1.mp3"),
-		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, this.soundsDirectory + "ufo_enemy_entry_2.mp3"),
-
-		new SoundTemplate(SoundType.ORB_LAUNCH, this.soundsDirectory + "orb_launch.mp3"),
+		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, this.soundsDirectory + "ufo_enemy_entry_2.mp3"),		
 
 		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, this.soundsDirectory + "game_background_music_1.mp3"),
 		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, this.soundsDirectory + "game_background_music_2.mp3"),

@@ -172,15 +172,18 @@ export const manifest: ResolverManifest = {
 
 				"ambience_1": "./sounds/ambience_1.mp3",
 				"ambience_2": "./sounds/ambience_2.mp3",
-				"ambience_3": "./sounds/ambience_3.mp3",
-
-				"boost_acquired": "./sounds/boost_acquired.mp3",
-				"item_select": "./sounds/item_select.mp3",
+				"ambience_3": "./sounds/ambience_3.mp3",				
 
 				"ball_launch_1": "./sounds/ball_launch_1.mp3",
-				"ball_launch_2": "./sounds/ball_launch_2.mp3",
-
 				"bullet_launch_1": "./sounds/bullet_launch_1.mp3",
+				"orb_launch_1": "./sounds/orb_launch_1.mp3",
+
+				"rocket_launch_1": "./sounds/rocket_launch_1.mp3",
+				"rocket_launch_2": "./sounds/rocket_launch_2.mp3",
+				"rocket_launch_3": "./sounds/rocket_launch_3.mp3",
+
+				"seeker_rocket_launch_1": "./sounds/seeker_rocket_launch_1.mp3",
+				"seeker_rocket_launch_2": "./sounds/seeker_rocket_launch_2.mp3",
 
 				"boss_explosion_1": "./sounds/boss_explosion_1.mp3",
 				"boss_explosion_2": "./sounds/boss_explosion_2.mp3",
@@ -196,6 +199,10 @@ export const manifest: ResolverManifest = {
 				"cracker_blast_3": "./sounds/cracker_blast_3.mp3",
 				"cracker_blast_4": "./sounds/cracker_blast_4.mp3",
 
+				"rocket_blast_1": "./sounds/rocket_blast_1.mp3",
+				"rocket_blast_2": "./sounds/rocket_blast_2.mp3",
+				"rocket_blast_3": "./sounds/rocket_blast_3.mp3",
+
 				"cracker_drop_1": "./sounds/cracker_drop_1.mp3",
 				"cracker_drop_2": "./sounds/cracker_drop_2.mp3",
 
@@ -204,26 +211,16 @@ export const manifest: ResolverManifest = {
 				"game_start": "./sounds/game_start.mp3",
 
 				"health_pickup_1": "./sounds/health_pickup_1.mp3",
-
-				"level_up": "./sounds/level_up.mp3",
-				"score": "./sounds/score.mp3",
-
-				"option_select": "./sounds/option_select.mp3",
-				"orb_launch": "./sounds/orb_launch.mp3",
-
-				"health_loss_1": "./sounds/health_loss_1.mp3",
 				"power_up_pickup_1": "./sounds/power_up_pickup_1.mp3",
 
-				"rocket_blast_1": "./sounds/rocket_blast_1.mp3",
-				"rocket_blast_2": "./sounds/rocket_blast_2.mp3",
-				"rocket_blast_3": "./sounds/rocket_blast_3.mp3",
+				"score": "./sounds/score.mp3",
+				"level_up": "./sounds/level_up.mp3",				
+				"boost_acquired": "./sounds/boost_acquired.mp3",
 
-				"rocket_launch_1": "./sounds/rocket_launch_1.mp3",
-				"rocket_launch_2": "./sounds/rocket_launch_2.mp3",
-				"rocket_launch_3": "./sounds/rocket_launch_3.mp3",
+				"item_select": "./sounds/item_select.mp3",
+				"option_select": "./sounds/option_select.mp3",				
 
-				"seeker_rocket_launch_1": "./sounds/seeker_rocket_launch_1.mp3",
-				"seeker_rocket_launch_2": "./sounds/seeker_rocket_launch_2.mp3",
+				"health_loss_1": "./sounds/health_loss_1.mp3",
 
 				"trashcan_hit_1": "./sounds/trashcan_hit_1.mp3",
 				"trashcan_hit_2": "./sounds/trashcan_hit_2.mp3",
