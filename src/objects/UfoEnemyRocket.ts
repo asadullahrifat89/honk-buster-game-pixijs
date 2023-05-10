@@ -34,7 +34,7 @@ export class UfoEnemyRocket extends GameObjectContainer {
 		// this.angle = 0;
 		// this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
 		this.isBlasting = true;
-		SoundManager.play(SoundType.ROCKET_BLAST);
+		SoundManager.play(SoundType.AIR_BOMB_BLAST);
 	}
 
 	autoBlast() {

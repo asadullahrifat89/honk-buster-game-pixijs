@@ -1,5 +1,4 @@
 ﻿import { Point, Rectangle } from 'pixi.js';
-import { Constants } from '../Constants';
 import { RocketBase } from './RocketBase';
 
 
@@ -13,7 +12,6 @@ export class SeekingRocketBase extends RocketBase {
 
 	setShootTarget(target: Rectangle) {
 		const angle = Math.atan2(target.y - this.y, target.x - this.x);
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * 3.3;		
 		this.velocity = {
 			x: Math.cos(angle) * this.speed,
 			y: Math.sin(angle) * this.speed

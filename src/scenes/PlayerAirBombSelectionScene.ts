@@ -140,7 +140,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 				SceneManager.changeScene(new PlayerGearSelectionScene());
 			}
 			else {
-				SoundManager.play(SoundType.HEALTH_LOSS);
+				SoundManager.play(SoundType.DAMAGE_TAKEN);
 			}
 
 		}).setText("Select").setIsEnabled(false);

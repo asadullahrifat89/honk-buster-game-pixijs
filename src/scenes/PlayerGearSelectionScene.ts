@@ -240,7 +240,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 				SceneManager.changeScene(new GamePlayScene());
 			}
 			else {
-				SoundManager.play(SoundType.HEALTH_LOSS);
+				SoundManager.play(SoundType.DAMAGE_TAKEN);
 			}
 
 		}).setText("Confirm").setIsEnabled(this.allSelectionsComplete());

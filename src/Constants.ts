@@ -163,53 +163,55 @@ export enum ConstructType {
 
 
 
+
+
+
+
 export enum SoundType {
 	NONE,
+
+	AMBIENCE,
+	HONK,
 
 	GAME_START,
 	GAME_PAUSE,
 	GAME_OVER,
 
-	CRACKER_DROP,
-	CRACKER_BLAST,
+	GROUND_BOMB_DROP,
 
-	CHOPPER_HOVERING,
+	BOSS_BLAST,
+	GROUND_BOMB_BLAST,
+	AIR_BOMB_BLAST,
+	TRASH_BIN_BLAST,	
 
-	TRASH_BIN_HIT,
-
-	ROCKET_LAUNCH,
-	ROCKET_BLAST,
-
-	HONK,
-	HONK_BUST_REACTION,
-
-	SEEKER_ROCKET_LAUNCH,
 	BALL_LAUNCH,
-
-	AMBIENCE,
-
-	UFO_BOSS_ENTRY,
-	UFO_BOSS_HOVERING,
+	BULLET_LAUNCH,
+	ORB_LAUNCH,
+	ROCKET_LAUNCH,
+	SEEKER_ROCKET_LAUNCH,	
+	
+	UFO_HOVERING,
+	CHOPPER_HOVERING,
 	UFO_BOSS_DEAD,
 
 	POWERUP_PICKUP,
 	HEALTH_PICKUP,
 
-	HEALTH_LOSS,
+	DAMAGE_TAKEN,
 
 	UFO_ENEMY_ENTRY,
+	UFO_BOSS_ENTRY,
 
 	GAME_BACKGROUND_MUSIC,
 	BOSS_BACKGROUND_MUSIC,
 
-	ORB_LAUNCH,
-
 	LEVEL_UP,
-	OPTION_SELECT,
+
+	SCORE_ACQUIRED,
 	BOOST_ACQUIRED,
+
+	OPTION_SELECT,
 	ITEM_SELECT,
-	SCORE,
-	EXPLOSION_RING
 }
 
 //#endregion
@@ -404,30 +406,30 @@ export abstract class Constants {
 
 	public static SOUND_TEMPLATES: (SoundTemplate)[] = [
 
-		new SoundTemplate(SoundType.EXPLOSION_RING, this.soundsDirectory + "boss_explosion_1.mp3"),
-		new SoundTemplate(SoundType.EXPLOSION_RING, this.soundsDirectory + "boss_explosion_2.mp3"),
+		new SoundTemplate(SoundType.BOSS_BLAST, this.soundsDirectory + "boss_explosion_1.mp3"),
+		new SoundTemplate(SoundType.BOSS_BLAST, this.soundsDirectory + "boss_explosion_2.mp3"),
 
 		new SoundTemplate(SoundType.CHOPPER_HOVERING, this.soundsDirectory + "chopper_hovering.mp3"),
 
-		new SoundTemplate(SoundType.CRACKER_DROP, this.soundsDirectory + "cracker_drop_1.mp3"),
-		new SoundTemplate(SoundType.CRACKER_DROP, this.soundsDirectory + "cracker_drop_2.mp3"),
+		new SoundTemplate(SoundType.GROUND_BOMB_DROP, this.soundsDirectory + "cracker_drop_1.mp3"),
+		new SoundTemplate(SoundType.GROUND_BOMB_DROP, this.soundsDirectory + "cracker_drop_2.mp3"),
 
-		new SoundTemplate(SoundType.CRACKER_BLAST, this.soundsDirectory + "cracker_blast_1.mp3"),
-		new SoundTemplate(SoundType.CRACKER_BLAST, this.soundsDirectory + "cracker_blast_2.mp3"),
-		new SoundTemplate(SoundType.CRACKER_BLAST, this.soundsDirectory + "cracker_blast_3.mp3"),
-		new SoundTemplate(SoundType.CRACKER_BLAST, this.soundsDirectory + "cracker_blast_4.mp3"),
+		new SoundTemplate(SoundType.GROUND_BOMB_BLAST, this.soundsDirectory + "cracker_blast_1.mp3"),
+		new SoundTemplate(SoundType.GROUND_BOMB_BLAST, this.soundsDirectory + "cracker_blast_2.mp3"),
+		new SoundTemplate(SoundType.GROUND_BOMB_BLAST, this.soundsDirectory + "cracker_blast_3.mp3"),
+		new SoundTemplate(SoundType.GROUND_BOMB_BLAST, this.soundsDirectory + "cracker_blast_4.mp3"),
 
-		new SoundTemplate(SoundType.TRASH_BIN_HIT, this.soundsDirectory + "trashcan_hit_1.mp3"),
-		new SoundTemplate(SoundType.TRASH_BIN_HIT, this.soundsDirectory + "trashcan_hit_2.mp3"),
-		new SoundTemplate(SoundType.TRASH_BIN_HIT, this.soundsDirectory + "trashcan_hit_3.mp3"),
+		new SoundTemplate(SoundType.TRASH_BIN_BLAST, this.soundsDirectory + "trashcan_hit_1.mp3"),
+		new SoundTemplate(SoundType.TRASH_BIN_BLAST, this.soundsDirectory + "trashcan_hit_2.mp3"),
+		new SoundTemplate(SoundType.TRASH_BIN_BLAST, this.soundsDirectory + "trashcan_hit_3.mp3"),
 
 		new SoundTemplate(SoundType.ROCKET_LAUNCH, this.soundsDirectory + "rocket_launch_1.mp3"),
 		new SoundTemplate(SoundType.ROCKET_LAUNCH, this.soundsDirectory + "rocket_launch_2.mp3"),
 		new SoundTemplate(SoundType.ROCKET_LAUNCH, this.soundsDirectory + "rocket_launch_3.mp3"),
 
-		new SoundTemplate(SoundType.ROCKET_BLAST, this.soundsDirectory + "rocket_blast_1.mp3"),
-		new SoundTemplate(SoundType.ROCKET_BLAST, this.soundsDirectory + "rocket_blast_2.mp3"),
-		new SoundTemplate(SoundType.ROCKET_BLAST, this.soundsDirectory + "rocket_blast_3.mp3"),
+		new SoundTemplate(SoundType.AIR_BOMB_BLAST, this.soundsDirectory + "rocket_blast_1.mp3"),
+		new SoundTemplate(SoundType.AIR_BOMB_BLAST, this.soundsDirectory + "rocket_blast_2.mp3"),
+		new SoundTemplate(SoundType.AIR_BOMB_BLAST, this.soundsDirectory + "rocket_blast_3.mp3"),
 
 		new SoundTemplate(SoundType.HONK, this.soundsDirectory + "car_honk_1.mp3"),
 		new SoundTemplate(SoundType.HONK, this.soundsDirectory + "car_honk_2.mp3"),
@@ -439,13 +441,15 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.BALL_LAUNCH, this.soundsDirectory + "ball_launch_1.mp3"),
 		new SoundTemplate(SoundType.BALL_LAUNCH, this.soundsDirectory + "ball_launch_2.mp3"),
 
+		new SoundTemplate(SoundType.BULLET_LAUNCH, this.soundsDirectory + "bullet_launch_1.mp3"),
+
 		new SoundTemplate(SoundType.AMBIENCE, this.soundsDirectory + "ambience_1.mp3"),
 		new SoundTemplate(SoundType.AMBIENCE, this.soundsDirectory + "ambience_2.mp3"),
 		new SoundTemplate(SoundType.AMBIENCE, this.soundsDirectory + "ambience_3.mp3"),
 
-		new SoundTemplate(SoundType.UFO_BOSS_HOVERING, this.soundsDirectory + "ufo_boss_hovering_1.mp3"),
-		new SoundTemplate(SoundType.UFO_BOSS_HOVERING, this.soundsDirectory + "ufo_boss_hovering_2.mp3"),
-		new SoundTemplate(SoundType.UFO_BOSS_HOVERING, this.soundsDirectory + "ufo_boss_hovering_3.mp3"),
+		new SoundTemplate(SoundType.UFO_HOVERING, this.soundsDirectory + "ufo_boss_hovering_1.mp3"),
+		new SoundTemplate(SoundType.UFO_HOVERING, this.soundsDirectory + "ufo_boss_hovering_2.mp3"),
+		new SoundTemplate(SoundType.UFO_HOVERING, this.soundsDirectory + "ufo_boss_hovering_3.mp3"),
 
 		new SoundTemplate(SoundType.UFO_BOSS_ENTRY, this.soundsDirectory + "ufo_boss_entry_1.mp3"),
 		new SoundTemplate(SoundType.UFO_BOSS_ENTRY, this.soundsDirectory + "ufo_boss_entry_2.mp3"),
@@ -456,7 +460,7 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.POWERUP_PICKUP, this.soundsDirectory + "power_up_pickup_1.mp3"),
 		new SoundTemplate(SoundType.HEALTH_PICKUP, this.soundsDirectory + "health_pickup_1.mp3"),
 
-		new SoundTemplate(SoundType.HEALTH_LOSS, this.soundsDirectory + "health_loss_1.mp3"),
+		new SoundTemplate(SoundType.DAMAGE_TAKEN, this.soundsDirectory + "health_loss_1.mp3"),
 
 		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, this.soundsDirectory + "ufo_enemy_entry_1.mp3"),
 		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, this.soundsDirectory + "ufo_enemy_entry_2.mp3"),
@@ -478,34 +482,11 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.GAME_PAUSE, this.soundsDirectory + "game_pause.mp3"),
 		new SoundTemplate(SoundType.GAME_OVER, this.soundsDirectory + "game_over.mp3"),
 
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_1.mp3", "Hey yo!"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_3.mp3", "Hey!"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_4.mp3", "No!"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_5.mp3", "Heyyy!"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_6.mp3", "Heyy!"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_7.mp3", "What?"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_8.mp3", "No!"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_9.mp3", "Noo!"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_10.mp3", "No no no no no!"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_11.mp3", "Oh no!"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_12.mp3", "Oh what the hell?"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_13.mp3", "Hey!"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_14.mp3", "Hey!"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_15.mp3", "Heey!"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_16.mp3", "What?"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_17.mp3", "What?"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_18.mp3", "What are you doing?"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_19.mp3", "What?"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_20.mp3", "What are you doing here?"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_21.mp3", "What the hell?"),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_22.mp3", "Heyy."),
-		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_23.mp3", "Why?"),
-
 		new SoundTemplate(SoundType.LEVEL_UP, this.soundsDirectory + "level_up.mp3"),
 		new SoundTemplate(SoundType.OPTION_SELECT, this.soundsDirectory + "option_select.mp3"),
 		new SoundTemplate(SoundType.BOOST_ACQUIRED, this.soundsDirectory + "boost_acquired.mp3"),
 		new SoundTemplate(SoundType.ITEM_SELECT, this.soundsDirectory + "item_select.mp3"),
-		new SoundTemplate(SoundType.SCORE, this.soundsDirectory + "score.mp3"),
+		new SoundTemplate(SoundType.SCORE_ACQUIRED, this.soundsDirectory + "score.mp3"),
 	];
 
 	private static ringWidth = 138;

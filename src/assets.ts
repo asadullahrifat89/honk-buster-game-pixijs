@@ -180,6 +180,8 @@ export const manifest: ResolverManifest = {
 				"ball_launch_1": "./sounds/ball_launch_1.mp3",
 				"ball_launch_2": "./sounds/ball_launch_2.mp3",
 
+				"bullet_launch_1": "./sounds/bullet_launch_1.mp3",
+
 				"boss_explosion_1": "./sounds/boss_explosion_1.mp3",
 				"boss_explosion_2": "./sounds/boss_explosion_2.mp3",
 

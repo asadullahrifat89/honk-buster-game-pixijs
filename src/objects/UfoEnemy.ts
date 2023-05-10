@@ -44,6 +44,6 @@ export class UfoEnemy extends VehicleBase {
 
 	looseHealth() {
 		this.health -= this.hitPoint;
-		SoundManager.play(SoundType.HEALTH_LOSS);
+		SoundManager.play(SoundType.DAMAGE_TAKEN);
 	}
 }

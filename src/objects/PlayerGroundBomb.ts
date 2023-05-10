@@ -55,7 +55,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 		this.awaitMoveUpLeft = false;
 		this.awaitMoveUpRight = false;
 
-		SoundManager.play(SoundType.CRACKER_DROP, 0.5);
+		SoundManager.play(SoundType.GROUND_BOMB_DROP, 0.5);
 	}
 
 	reposition(source: PlayerRide) {
@@ -112,13 +112,13 @@ export class PlayerGroundBomb extends GameObjectContainer {
 	setBlast() {
 		switch (this.playerGroundBombTemplate) {
 			case PlayerGroundBombTemplate.GRENADE: {
-				SoundManager.play(SoundType.CRACKER_BLAST, 0.8);
+				SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
 			} break;
 			case PlayerGroundBombTemplate.TRASH_BIN: {
-				SoundManager.play(SoundType.TRASH_BIN_HIT);
+				SoundManager.play(SoundType.TRASH_BIN_BLAST);
 			} break;
 			case PlayerGroundBombTemplate.DYNAMITE: {
-				SoundManager.play(SoundType.CRACKER_BLAST, 0.8);
+				SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
 			} break;
 			default: break;
 		}

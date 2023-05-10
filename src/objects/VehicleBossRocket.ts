@@ -31,7 +31,7 @@ export class VehicleBossRocket extends GameObjectContainer {
 
 	setBlast() {		
 		this.isBlasting = true;
-		SoundManager.play(SoundType.ROCKET_BLAST);
+		SoundManager.play(SoundType.AIR_BOMB_BLAST);
 	}
 
 	autoBlast(): boolean {
