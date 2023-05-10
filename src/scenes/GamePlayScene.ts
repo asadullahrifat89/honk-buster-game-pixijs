@@ -37,6 +37,7 @@ import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
 import { MessageBubble } from "../controls/MessageBubble";
 import { RoadSideWalkPillar } from "../objects/RoadSideWalkPillar";
 import { RoadMark } from "../objects/RoadMark";
+import { ExplosionRing } from "../objects/ExplosionRing";
 
 
 export class GamePlayScene extends Container implements IScene {
@@ -773,6 +774,68 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Explosions
 
+	//#region ExplosionRings
+
+	private roadExplosionRingSizeWidth: number = 145;
+	private roadExplosionRingSizeHeight: number = 145;
+
+	private roadExplosionRingGameObjects: Array<ExplosionRing> = [];
+
+	private spawnExplosionRings() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const gameObject: ExplosionRing = new ExplosionRing(0);
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.EXPLOSION_RING));
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.roadExplosionRingSizeWidth;
+			sprite.height = this.roadExplosionRingSizeHeight;
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			this.roadExplosionRingGameObjects.push(gameObject);
+			this.sceneContainer.addChild(gameObject);
+		}
+	}
+
+	private generateExplosionRing(source: GameObjectContainer) {
+
+		if (source.getLeft() - 25 > 0 && source.getTop() - 25 > 0) {
+
+			var gameObject = this.roadExplosionRingGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+				gameObject.reset();
+				gameObject.reposition(source);
+				//gameObject.setPopping();
+				gameObject.enableRendering();
+			}
+		}
+	}
+
+	private animateExplosionRings() {
+
+		var animatingExplosionRings = this.roadExplosionRingGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingExplosionRings) {
+
+			animatingExplosionRings.forEach(gameObject => {
+				/*gameObject.pop();*/
+				gameObject.fade();
+				gameObject.expand();
+
+				if (gameObject.hasFaded()) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
+
 	//#region RingExplosions
 
 	private ringFireExplosionGameObjects: Array<Explosion> = [];
@@ -960,8 +1023,8 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (this.isBossDeathExploding() && this.anyBossExists()) {
 
-			this.bossDeathExplosionDuration -= 0.1;
-			this.bossDeathExplosionDelay -= 0.1;
+			this.bossDeathExplosionDuration -= 0.1; // deplete the explosion duration
+			this.bossDeathExplosionDelay -= 0.1; // deplete the explosion generation delay
 
 			if (this.bossDeathExplosionDelay < 0) {
 
@@ -992,10 +1055,14 @@ export class GamePlayScene extends Container implements IScene {
 					this.generateRingFireExplosion(anyBoss);
 					this.generateRingSmokeExplosion(anyBoss);
 					SoundManager.play(SoundType.ROCKET_BLAST);
+
+					if (this.bossDeathExplosionDuration <= 0) { // when duration depletes generate an explosion ring
+						this.generateExplosionRing(anyBoss);
+					}
 				}
 
-				this.bossDeathExplosionDelay = this.bossDeathExplosionDelayDefault;
-			}
+				this.bossDeathExplosionDelay = this.bossDeathExplosionDelayDefault;				
+			}			
 		}
 	}
 
@@ -2155,11 +2222,7 @@ export class GamePlayScene extends Container implements IScene {
 				if (this.anyInAirBossExists()) { // when in air bosses appear, stop the stage transition, and make the vehicles move forward
 					gameObject.moveUpLeft();
 					gameObject.moveUpLeft(); // move with double speed
-				}
-				else if (this.vehicleBossExists()) {
-					gameObject.moveDownRight();
-					gameObject.moveDownRight(); // move with double speed
-				}
+				}				
 				else {
 					gameObject.moveDownRight();
 				}
@@ -2322,9 +2385,12 @@ export class GamePlayScene extends Container implements IScene {
 
 				this.generateOnScreenMessage("A hotrod has arrived!", this.interactIcon);
 
-
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.3, true);
+
+				this.vehicleEnemyGameObjects.forEach(vehicle => {
+					vehicle.speed = Constants.DEFAULT_CONSTRUCT_SPEED; // when vehicle boss arrive all vehicles stop
+				});
 			}
 		}
 	}
@@ -3932,6 +3998,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.spawnFlashExplosions();
 		this.spawnRingFireExplosions();
+		this.spawnExplosionRings();
 
 		this.spawnHealthPickups();
 		this.spawnPowerUpPickups();
@@ -4000,6 +4067,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateBlowSmokeExplosions();
 		this.animateRingSmokeExplosions();
 		this.animateRingFireExplosions();
+		this.animateExplosionRings();
 		this.animatePlayerRockets();
 		this.animatePlayerRocketBullsEyes();
 
@@ -4042,9 +4110,9 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (airEnemy) {
 			switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
-				case PlayerAirBombTemplate.BALL: { score = 1; } break;
-				case PlayerAirBombTemplate.ROCKET: { score = 2; } break;
-				default: { score = 1; } break;
+				case PlayerAirBombTemplate.BALL: { score += 1; } break;
+				case PlayerAirBombTemplate.ROCKET: { score += 2; } break;
+				default: { score += 1; } break;
 			}
 
 			this.gameScoreBar.gainScore(2);
@@ -4052,10 +4120,10 @@ export class GamePlayScene extends Container implements IScene {
 		}
 		else {
 			switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
-				case PlayerGroundBombTemplate.GRENADE: { score = 1; } break;
-				case PlayerGroundBombTemplate.TRASH_BIN: { score = 2; } break;
-				case PlayerGroundBombTemplate.DYNAMITE: { score = 3; } break;
-				default: { score = 1; } break;
+				case PlayerGroundBombTemplate.GRENADE: { score += 1; } break;
+				case PlayerGroundBombTemplate.TRASH_BIN: { score += 2; } break;
+				case PlayerGroundBombTemplate.DYNAMITE: { score += 3; } break;
+				default: { score += 1; } break;
 			}
 
 			this.gameScoreBar.gainScore(score);

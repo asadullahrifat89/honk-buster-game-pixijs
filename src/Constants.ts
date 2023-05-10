@@ -156,6 +156,7 @@ export enum ConstructType {
 	TITLE_SCREEN,
 	CHOPPER_BLADES,
 	TRASH_BIN_OPEN,
+	EXPLOSION_RING
 }
 
 
@@ -254,6 +255,8 @@ export abstract class Constants {
 	public static GAME_DEFAULT_FONT = "emilio";	
 
 	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
+
+		new ConstructTemplate(ConstructType.EXPLOSION_RING, "explosion_ring_1"),
 
 		new ConstructTemplate(ConstructType.ROAD_MARK, "road_marks"),
 

@@ -2,7 +2,6 @@
 import { Constants, ExplosionType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 
-
 export class Explosion extends GameObjectContainer {
 
 	private explosionAnimation: AnimatedSprite = new AnimatedSprite([Texture.from("./images/explosion_1.png")]);
