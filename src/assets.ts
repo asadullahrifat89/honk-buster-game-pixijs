@@ -79,8 +79,8 @@ export const manifest: ResolverManifest = {
 				"player_gravity_ball_1": "./images/player_gravity_ball_1.png",
 				"player_gravity_ball_2": "./images/player_gravity_ball_2.png",
 
-				"player_target_ball_1": "./images/player_target_ball_1.png",
-				"player_target_ball_2": "./images/player_target_ball_2.png",
+				"player_bullet_ball_1": "./images/player_bullet_ball_1.png",
+				"player_bullet_ball_2": "./images/player_bullet_ball_2.png",
 
 				"player_rocket_1": "./images/player_rocket_1.png",
 				"player_rocket_2": "./images/player_rocket_2.png",

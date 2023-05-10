@@ -109,7 +109,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 
 		Constants.BULLET_BALL_UNLOCKED = Constants.GAME_LEVEL_MAX >= Constants.BULLET_BALL_UNLOCK_LEVEL;
 
-		const bullet_balls_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_target_ball_2"));
+		const bullet_balls_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_bullet_ball_1"));
 		bullet_balls_sprite.width = 256 / 2.5;
 		bullet_balls_sprite.height = 256 / 2.5;
 		bullet_balls_sprite.x = 0;

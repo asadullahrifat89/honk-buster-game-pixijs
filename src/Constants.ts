@@ -344,8 +344,8 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_2", PlayerAirBombTemplate.MISSILE),
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_3", PlayerAirBombTemplate.MISSILE),
 
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_target_ball_1", PlayerAirBombTemplate.BULLET_BALL),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_target_ball_2", PlayerAirBombTemplate.BULLET_BALL),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_bullet_ball_1", PlayerAirBombTemplate.BULLET_BALL),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_bullet_ball_2", PlayerAirBombTemplate.BULLET_BALL),
 
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET_HURLING_BALLS, "player_rocket_bulls_eye_1"),
 
