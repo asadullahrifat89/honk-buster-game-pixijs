@@ -78,8 +78,8 @@ export enum PlayerGroundBombTemplate {
 }
 
 export enum PlayerAirBombTemplate {
-	BALLs,
-	ROCKETs,
+	BALL,
+	ROCKET,
 }
 
 export enum ConstructType {
@@ -156,7 +156,10 @@ export enum ConstructType {
 	TITLE_SCREEN,
 	CHOPPER_BLADES,
 	TRASH_BIN_OPEN,
+	EXPLOSION_RING
 }
+
+
 
 
 export enum SoundType {
@@ -204,7 +207,8 @@ export enum SoundType {
     OPTION_SELECT,
     BOOST_ACQUIRED,
     ITEM_SELECT,
-    SCORE
+    SCORE,
+    EXPLOSION_RING
 }
 
 //#endregion
@@ -254,6 +258,8 @@ export abstract class Constants {
 	public static GAME_DEFAULT_FONT = "emilio";	
 
 	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
+
+		new ConstructTemplate(ConstructType.EXPLOSION_RING, "explosion_ring_1"),
 
 		new ConstructTemplate(ConstructType.ROAD_MARK, "road_marks"),
 
@@ -327,12 +333,12 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, "player_honk_bomb_trash_1_open"),
 		new ConstructTemplate(ConstructType.TRASH_BIN_OPEN, "player_honk_bomb_trash_2_open"),
 
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_ball_1", PlayerAirBombTemplate.BALLs),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_ball_2", PlayerAirBombTemplate.BALLs),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_ball_1", PlayerAirBombTemplate.BALL),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_ball_2", PlayerAirBombTemplate.BALL),
 
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_1", PlayerAirBombTemplate.ROCKETs),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_2", PlayerAirBombTemplate.ROCKETs),
-		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_3", PlayerAirBombTemplate.ROCKETs),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_1", PlayerAirBombTemplate.ROCKET),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_2", PlayerAirBombTemplate.ROCKET),
+		new ConstructTemplate(ConstructType.PLAYER_ROCKET, "player_rocket_3", PlayerAirBombTemplate.ROCKET),
 
 		new ConstructTemplate(ConstructType.PLAYER_ROCKET_HURLING_BALLS, "player_rocket_bulls_eye_1"),
 
@@ -390,6 +396,9 @@ export abstract class Constants {
 	private static soundsDirectory = "sounds/";
 
 	public static SOUND_TEMPLATES: (SoundTemplate)[] = [
+
+		new SoundTemplate(SoundType.EXPLOSION_RING, this.soundsDirectory + "boss_explosion_1.mp3"),
+		new SoundTemplate(SoundType.EXPLOSION_RING, this.soundsDirectory + "boss_explosion_2.mp3"),
 
 		new SoundTemplate(SoundType.CHOPPER_HOVERING, this.soundsDirectory + "chopper_hovering.mp3"),
 

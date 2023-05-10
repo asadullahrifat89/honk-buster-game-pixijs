@@ -34,6 +34,8 @@ export const manifest: ResolverManifest = {
 				"explosion_3": "./images/explosion_3.png",
 				"explosion_4": "./images/explosion_4.png",
 
+				"explosion_ring_1": "./images/explosion_ring_1.png",
+
 				"health_pickup": "./images/health_pickup.png",
 
 				"honk_1": "./images/honk_1.png",
@@ -174,6 +176,9 @@ export const manifest: ResolverManifest = {
 
 				"ball_launch_1": "./sounds/ball_launch_1.mp3",
 				"ball_launch_2": "./sounds/ball_launch_2.mp3",
+
+				"boss_explosion_1": "./sounds/boss_explosion_1.mp3",
+				"boss_explosion_2": "./sounds/boss_explosion_2.mp3",
 
 				"car_honk_1": "./sounds/car_honk_1.mp3",
 				"car_honk_2": "./sounds/car_honk_2.mp3",

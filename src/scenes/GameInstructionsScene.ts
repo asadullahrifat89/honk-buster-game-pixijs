@@ -71,17 +71,14 @@ export class GameInstructionsScene extends Container implements IScene {
 		player_ride_container.addChild(player_ride_sprite_2);
 		player_ride.addChild(player_ride_container);
 
-		const player_ride_msg = new MessageBubble(0, "These are your air rides.", 20);
+		const player_ride_msg = new MessageBubble(0, "These are your rides.", 20);
 		player_ride_msg.setPosition(player_ride_container.x + player_ride_container.width + 10, player_ride_container.y + 25);
 		player_ride.addChild(player_ride_msg);
 
-		const player_ride_msg_2 = new MessageBubble(0, "Each one moves at different speeds.", 20);
+		const player_ride_msg_2 = new MessageBubble(0, "Higher level rides move at higher speeds.", 20);
 		player_ride_msg_2.setPosition(player_ride_msg.x, player_ride_msg.y + msg_line_2_gap);
 		player_ride.addChild(player_ride_msg_2);
-
-		//const player_ride_msg_3 = new MessageBubble(0, "They also shoot unique air bombs.", 20);
-		//player_ride_msg_3.setPosition(player_ride_msg_2.x, player_ride_msg_2.y + msg_line_2_gap);
-		//player_ride.addChild(player_ride_msg_3);
+		
 
 		player_ride.setPosition(this.uiContainer.width / 2 - player_ride.width / 2, (this.uiContainer.height / 2 - player_ride.height / 2) + 10);
 		this.uiContainer.addChild(player_ride);
@@ -107,7 +104,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		joystick_controller_container.addChild(joystick_handle_sprite);
 		joystick.addChild(joystick_controller_container);
 
-		const joystick_msg = new MessageBubble(0, "Use this to move your ride.", 20);
+		const joystick_msg = new MessageBubble(0, "Use the joystick to control your movement.", 20);
 		joystick_msg.setPosition(joystick_controller_container.x + joystick_controller_container.width, joystick_controller_container.y + 50);
 		joystick.addChild(joystick_msg);
 
@@ -132,7 +129,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		attack_button_container.addChild(attack_button_sprite);
 		attack_button.addChild(attack_button_container);
 
-		const attack_button_msg = new MessageBubble(0, "Press this to drop or shoot bombs.", 20);
+		const attack_button_msg = new MessageBubble(0, "Press this button to attack.", 20);
 		attack_button_msg.setPosition(attack_button_container.x + attack_button_container.width + 10, attack_button_container.y + 25);
 		attack_button.addChild(attack_button_msg);
 
@@ -147,26 +144,30 @@ export class GameInstructionsScene extends Container implements IScene {
 		const ground_bomb = new GameObjectContainer();
 		ground_bomb.renderable = false;
 
-		const drop_bomb_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_explosive_1"));
-		drop_bomb_sprite.width = 256 / 2;
-		drop_bomb_sprite.height = 256 / 2;
-		drop_bomb_sprite.x = 0;
-		drop_bomb_sprite.y = 0;
+		const ground_bomb_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_explosive_1"));
+		ground_bomb_sprite.width = 256 / 2;
+		ground_bomb_sprite.height = 256 / 2;
+		ground_bomb_sprite.x = 0;
+		ground_bomb_sprite.y = 0;
 
-		const drop_bomb_sprite_2: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_trash_1"));
-		drop_bomb_sprite_2.width = 256 / 2;
-		drop_bomb_sprite_2.height = 256 / 2;
-		drop_bomb_sprite_2.x = 50;
-		drop_bomb_sprite_2.y = 50;
+		const ground_bomb_sprite_2: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_trash_1"));
+		ground_bomb_sprite_2.width = 256 / 2.5;
+		ground_bomb_sprite_2.height = 256 / 2.5;
+		ground_bomb_sprite_2.x = 50;
+		ground_bomb_sprite_2.y = 50;
 
-		const honk_bomb_container = new GameObjectContainer();
-		honk_bomb_container.addChild(drop_bomb_sprite);
-		honk_bomb_container.addChild(drop_bomb_sprite_2);
-		ground_bomb.addChild(honk_bomb_container);
+		const ground_bomb_container = new GameObjectContainer();
+		ground_bomb_container.addChild(ground_bomb_sprite);
+		ground_bomb_container.addChild(ground_bomb_sprite_2);
+		ground_bomb.addChild(ground_bomb_container);
 
-		const honk_bomb_msg = new MessageBubble(0, "These are your ground bombs.", 20);
-		honk_bomb_msg.setPosition(honk_bomb_container.x + honk_bomb_container.width + 10, honk_bomb_container.y + 25);
-		ground_bomb.addChild(honk_bomb_msg);
+		const ground_bomb_msg = new MessageBubble(0, "These are your ground bombs.", 20);
+		ground_bomb_msg.setPosition(ground_bomb_container.x + ground_bomb_container.width + 10, ground_bomb_container.y + 25);
+		ground_bomb.addChild(ground_bomb_msg);
+
+		const ground_bomb_msg_2 = new MessageBubble(0, "Higher level bombs yield more score.", 20);
+		ground_bomb_msg_2.setPosition(ground_bomb_msg.x, ground_bomb_msg.y + msg_line_2_gap);
+		ground_bomb.addChild(ground_bomb_msg_2);
 
 		ground_bomb.setPosition(this.uiContainer.width / 2 - ground_bomb.width / 2, (this.uiContainer.height / 2 - ground_bomb.height / 2) + 10);
 		this.uiContainer.addChild(ground_bomb);
@@ -210,14 +211,18 @@ export class GameInstructionsScene extends Container implements IScene {
 		air_bomb_sprite_2.x = 0;
 		air_bomb_sprite_2.y = 100;
 
-		const player_rocket_container = new GameObjectContainer();
-		player_rocket_container.addChild(air_bomb_sprite);
-		player_rocket_container.addChild(air_bomb_sprite_2);
-		air_bomb.addChild(player_rocket_container);
+		const air_bomb_container = new GameObjectContainer();
+		air_bomb_container.addChild(air_bomb_sprite);
+		air_bomb_container.addChild(air_bomb_sprite_2);
+		air_bomb.addChild(air_bomb_container);
 
-		const player_rocket_msg = new MessageBubble(0, "These are your air bombs.", 20);
-		player_rocket_msg.setPosition(player_rocket_container.x + player_rocket_container.width + 10, player_rocket_container.y + 25);
-		air_bomb.addChild(player_rocket_msg);
+		const air_bomb_msg = new MessageBubble(0, "These are your air bombs.", 20);
+		air_bomb_msg.setPosition(air_bomb_container.x + air_bomb_container.width + 10, air_bomb_container.y + 25);
+		air_bomb.addChild(air_bomb_msg);
+
+		const air_bomb_msg_2 = new MessageBubble(0, "Higher level bombs yield more score.", 20);
+		air_bomb_msg_2.setPosition(air_bomb_msg.x, air_bomb_msg.y + msg_line_2_gap);
+		air_bomb.addChild(air_bomb_msg_2);
 
 		air_bomb.setPosition(this.uiContainer.width / 2 - air_bomb.width / 2, (this.uiContainer.height / 2 - air_bomb.height / 2) + 10);
 		this.uiContainer.addChild(air_bomb);
@@ -261,9 +266,13 @@ export class GameInstructionsScene extends Container implements IScene {
 		health_msg.setPosition(health_container.x + health_container.width + 10, health_container.y + 25);
 		health.addChild(health_msg);
 
-		const health_msg_2 = new MessageBubble(0, "Collect 'em to replenish your health.", 20);
+		const health_msg_2 = new MessageBubble(0, "These will pop up when your health is low.", 20);
 		health_msg_2.setPosition(health_msg.x, health_msg.y + msg_line_2_gap);
 		health.addChild(health_msg_2);
+
+		const health_msg_3 = new MessageBubble(0, "Collect 'em to replenish your health.", 20);
+		health_msg_3.setPosition(health_msg_2.x, health_msg_2.y + msg_line_2_gap);
+		health.addChild(health_msg_3);
 
 		health.setPosition(this.uiContainer.width / 2 - health.width / 2, (this.uiContainer.height / 2 - health.height / 2) + 10);
 		this.uiContainer.addChild(health);
@@ -336,9 +345,13 @@ export class GameInstructionsScene extends Container implements IScene {
 		power_up_msg.setPosition(power_up_container.x + power_up_container.width + 10, power_up_container.y + 25);
 		power_up.addChild(power_up_msg);
 
-		const power_up_msg_2 = new MessageBubble(0, "Collect 'em to get awesome powers.", 20);
+		const power_up_msg_2 = new MessageBubble(0, "These will pop up randomly.", 20);
 		power_up_msg_2.setPosition(power_up_msg.x, power_up_msg.y + msg_line_2_gap);
 		power_up.addChild(power_up_msg_2);
+
+		const power_up_msg_3 = new MessageBubble(0, "Collect 'em to get awesome powers.", 20);
+		power_up_msg_3.setPosition(power_up_msg_2.x, power_up_msg_2.y + msg_line_2_gap);
+		power_up.addChild(power_up_msg_3);
 
 		power_up.setPosition(this.uiContainer.width / 2 - power_up.width / 2, (this.uiContainer.height / 2 - power_up.height / 2) + 10);
 		this.uiContainer.addChild(power_up);

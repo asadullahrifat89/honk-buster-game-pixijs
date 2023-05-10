@@ -51,6 +51,10 @@ export class VehicleEnemy extends VehicleBase {
 		this.willHonk = false;
 		this.isHonking = false;
 		this.speed = this.speed * 1.4;
+
+		if (this.speed > Constants.DEFAULT_CONSTRUCT_SPEED)
+			this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
+
 		this.filters = [this.grayScaleFilter];
 		this.setDillyDallySpeed(0);
 	}
