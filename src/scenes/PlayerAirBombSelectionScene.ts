@@ -124,7 +124,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.BULLET_BALL;
 
 		}).setBackground(bullet_balls_sprite);
-		bullet_balls_button.setPosition((this.uiContainer.width / 2 + bullet_balls_sprite.width), (this.uiContainer.height / 2 - bullet_balls_sprite.height / 2) + 10).setIsEnabled(Constants.MISSILE_UNLOCKED);
+		bullet_balls_button.setPosition((this.uiContainer.width / 2 + bullet_balls_sprite.width), (this.uiContainer.height / 2 - bullet_balls_sprite.height / 2) + 10).setIsEnabled(Constants.BULLET_BALL_UNLOCKED);
 		this.uiContainer.addChild(bullet_balls_button);
 
 		const bullet_balls_msg = new MessageBubble(0, "Lvl " + Constants.BULLET_BALL_UNLOCK_LEVEL, 20);

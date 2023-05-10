@@ -24,6 +24,9 @@ export class PlayerAirBomb extends SeekingRocketBase {
 			case PlayerAirBombTemplate.MISSILE: {
 				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.MISSILE).map(x => x.uri);
 			} break;
+			case PlayerAirBombTemplate.BULLET_BALL: {
+				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_ROCKET && x.tag == PlayerAirBombTemplate.BULLET_BALL).map(x => x.uri);
+			} break;
 			default: break;
 		}
 
@@ -43,6 +46,9 @@ export class PlayerAirBomb extends SeekingRocketBase {
 			case PlayerAirBombTemplate.MISSILE: {
 				this.speed = 0; // starts with slow speed then gets fast
 				SoundManager.play(SoundType.ROCKET_LAUNCH, 0.3);
+			} break;
+			case PlayerAirBombTemplate.BULLET_BALL: {				
+				SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
 			} break;
 			default: break;
 		}

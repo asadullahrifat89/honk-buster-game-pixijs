@@ -26,10 +26,6 @@ export class MafiaBossRocketBullsEye extends SeekingRocketBase {
 
 	reposition(source: GameObjectContainer) {
 		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height);
-	}	
-
-	move() {
-		this.direct(this.directTarget);
 	}
 }
 

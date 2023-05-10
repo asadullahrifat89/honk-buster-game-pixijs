@@ -6,6 +6,7 @@ export class SeekingRocketBase extends RocketBase {
 
 	private readonly grace: number = 7;
 	public directTarget: Rectangle = new Rectangle();
+	public shootTarget: Rectangle = new Rectangle();
 
 	private shootXSpeed: number = 0;
 	private shootYSpeed: number = 0;
@@ -29,37 +30,25 @@ export class SeekingRocketBase extends RocketBase {
 		// move up
 		if (targetY < rocketY) {
 			var distance = Math.abs(targetY - rocketY);
-			this.directTarget.y = targetY - distance;
-
-			//if (this.directTarget.y > 0)
-			//	this.directTarget.y -= distance;
+			this.shootTarget.y = targetY - distance;
 		}
 
 		// move down
 		if (targetY > rocketY) {
 			var distance = Math.abs(targetY - rocketY);
-			this.directTarget.y = targetY + distance;
-
-			//if (this.directTarget.y < Constants.DEFAULT_GAME_VIEW_HEIGHT * scaling)
-			//	this.directTarget.y += distance;
+			this.shootTarget.y = targetY + distance;
 		}
 
 		// move left
 		if (targetX < rocketX) {
 			var distance = Math.abs(targetX - rocketX);
-			this.directTarget.x = targetX - distance;
-
-			//if (this.directTarget.x > 0)
-			//	this.directTarget.x -= distance;
+			this.shootTarget.x = targetX - distance;
 		}
 
 		// move right
 		if (targetX > rocketX) {
 			var distance = Math.abs(targetX - rocketX);
-			this.directTarget.x = targetX + distance;
-
-			//if (this.directTarget.x < Constants.DEFAULT_GAME_VIEW_WIDTH * scaling)
-			//	this.directTarget.x += distance;
+			this.shootTarget.x = targetX + distance;
 		}
 	}
 
@@ -96,13 +85,13 @@ export class SeekingRocketBase extends RocketBase {
 		}
 	}
 
-	shoot(target: Rectangle) {
+	shoot() {
 
 		let left = this.getLeft();
 		let top = this.getTop();
 
-		let targetX = target.x + target.width / 2;
-		let targetY = target.y + target.height / 2;
+		let targetX = this.shootTarget.x + this.shootTarget.width / 2;
+		let targetY = this.shootTarget.y + this.shootTarget.height / 2;
 
 		let rocketX = left + this.width / 2;
 		let rocketY = top + this.height / 2;
@@ -128,13 +117,13 @@ export class SeekingRocketBase extends RocketBase {
 		}
 	}
 
-	direct(target: Rectangle) {
+	direct() {
 
 		let left = this.getLeft();
 		let top = this.getTop();
 
-		let targetX = target.x + target.width / 2;
-		let targetY = target.y + target.height / 2;
+		let targetX = this.directTarget.x + this.directTarget.width / 2;
+		let targetY = this.directTarget.y + this.directTarget.height / 2;
 
 		let rocketX = left + this.width / 2;
 		let rocketY = top + this.height / 2;
