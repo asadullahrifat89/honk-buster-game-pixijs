@@ -1,54 +1,21 @@
-﻿import { Rectangle } from 'pixi.js';
+﻿import { Point, Rectangle } from 'pixi.js';
 import { RocketBase } from './RocketBase';
 
 
 export class SeekingRocketBase extends RocketBase {
 
 	public directTarget: Rectangle = new Rectangle();
-	public shootTarget: Rectangle = new Rectangle();
+	public shootTarget: Point = new Point();
 
 	private readonly grace: number = 7;
-
-	private shootXSpeed: number = 0;
-	private shootYSpeed: number = 0;
+	private velocity: { x: number, y: number } = { x: 0, y: 0 };
 
 	setShootTarget(target: Rectangle) {
-
-		let rocketX = this.getLeft() + this.width / 2;
-		let rocketY = this.getTop() + this.height / 2;
-
-		let targetX = target.x + target.width / 2;
-		let targetY = target.y + target.height / 2;
-
-		var distanceY = Math.abs(targetY - rocketY);
-		this.shootYSpeed = this.getShootingSpeed(distanceY);
-
-		var distanceX = Math.abs(targetX - rocketX);
-		this.shootXSpeed = this.getShootingSpeed(distanceX);
-
-		// move up
-		if (targetY < rocketY) {
-			var distance = Math.abs(targetY - rocketY);
-			this.shootTarget.y = targetY - distance;
-		}
-
-		// move down
-		if (targetY > rocketY) {
-			var distance = Math.abs(targetY - rocketY);
-			this.shootTarget.y = targetY + distance;
-		}
-
-		// move left
-		if (targetX < rocketX) {
-			var distance = Math.abs(targetX - rocketX);
-			this.shootTarget.x = targetX - distance;
-		}
-
-		// move right
-		if (targetX > rocketX) {
-			var distance = Math.abs(targetX - rocketX);
-			this.shootTarget.x = targetX + distance;
-		}
+		const angle = Math.atan2(target.y - this.y, target.x - this.x);
+		this.velocity = {
+			x: Math.cos(angle) * this.speed,
+			y: Math.sin(angle) * this.speed
+		};
 	}
 
 	setDirectTarget(target: Rectangle) {
@@ -85,32 +52,8 @@ export class SeekingRocketBase extends RocketBase {
 	}
 
 	shoot() {
-
-		let left = this.getLeft();
-		let top = this.getTop();
-
-		let rocketX = left + this.width / 2;
-		let rocketY = top + this.height / 2;
-
-		// move up
-		if (this.shootTarget.top < rocketY) {
-			this.y = (top - this.shootYSpeed);
-		}
-
-		// move down
-		if (this.shootTarget.bottom > rocketY) {
-			this.y = (top + this.shootYSpeed);
-		}
-
-		// move left
-		if (this.shootTarget.left < rocketX) {
-			this.x = (left - this.shootXSpeed);
-		}
-
-		// move right
-		if (this.shootTarget.right > rocketX) {
-			this.x = (left + this.shootXSpeed);
-		}
+		this.x += this.velocity.x;
+		this.y += this.velocity.y;
 	}
 
 	direct() {
@@ -203,11 +146,6 @@ export class SeekingRocketBase extends RocketBase {
 
 	private getFollowingSpeed(distance: number): number {
 		var speed = (1.5 / 100 * distance);
-		return speed;
-	}
-
-	private getShootingSpeed(distance: number): number {
-		var speed = (1.5 / 60 * distance);
 		return speed;
 	}
 

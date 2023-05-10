@@ -13,7 +13,7 @@ export class ExplosionRing extends GameObjectContainer {
 	reset() {
 		this.alpha = 1.0;
 		this.scale.set(1);		
-		SoundManager.play(SoundType.EXPLOSION_RING, 0.8);
+		SoundManager.play(SoundType.BOSS_BLAST, 0.8);
 	}
 
 	reposition(source: GameObjectContainer) {

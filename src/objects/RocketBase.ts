@@ -25,7 +25,7 @@ export class RocketBase extends GameObjectContainer {
     setBlast() {
         this.speed = Constants.DEFAULT_CONSTRUCT_SPEED - 1;
         this.isBlasting = true;
-        SoundManager.play(SoundType.ROCKET_BLAST);
+        SoundManager.play(SoundType.AIR_BOMB_BLAST);
     }
 
     autoBlast() {

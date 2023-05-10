@@ -52,7 +52,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			align: "center",
 			fill: "#ffffff",
 		});
-		title.x = this.uiContainer.width / 2 - title.width / 2;
+		title.x = this.uiContainer.width / 2 - title.width / 2.5;
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
@@ -240,7 +240,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 				SceneManager.changeScene(new GamePlayScene());
 			}
 			else {
-				SoundManager.play(SoundType.HEALTH_LOSS);
+				SoundManager.play(SoundType.DAMAGE_TAKEN);
 			}
 
 		}).setText("Confirm").setIsEnabled(this.allSelectionsComplete());

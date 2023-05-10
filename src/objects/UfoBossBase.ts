@@ -31,7 +31,7 @@ export class UfoBossBase extends GameObjectContainer {
 			this.healthLossRecoveryDelay = 5;
 		}
 
-		SoundManager.play(SoundType.HEALTH_LOSS);
+		SoundManager.play(SoundType.DAMAGE_TAKEN);
 	}
 
 	recoverFromHealthLoss() {

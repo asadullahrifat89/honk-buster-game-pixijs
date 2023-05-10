@@ -58,7 +58,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		const grenade_button = new Button(() => {
 
 			button.setText("Grenades").setIsEnabled(true);			
-			SoundManager.play(SoundType.CRACKER_BLAST, 0.8);
+			SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
 			grenade_sprite.filters = null;
 			trash_sprite.filters = [new GrayscaleFilter()];
 			dynamite_sprite.filters = [new GrayscaleFilter()];
@@ -87,7 +87,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 
 			button.setText("Trash Bins").setIsEnabled(true);
 			
-			SoundManager.play(SoundType.TRASH_BIN_HIT);
+			SoundManager.play(SoundType.TRASH_BIN_BLAST);
 			trash_sprite.filters = null;
 			grenade_sprite.filters = [new GrayscaleFilter()];
 			dynamite_sprite.filters = [new GrayscaleFilter()];
@@ -116,7 +116,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 
 			button.setText("Dynamites").setIsEnabled(true);
 			
-			SoundManager.play(SoundType.CRACKER_BLAST, 0.8);
+			SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
 			dynamite_sprite.filters = null;
 			grenade_sprite.filters = [new GrayscaleFilter()];
 			trash_sprite.filters = [new GrayscaleFilter()];
@@ -140,7 +140,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 				SceneManager.changeScene(new PlayerGearSelectionScene());
 			}
 			else {
-				SoundManager.play(SoundType.HEALTH_LOSS);
+				SoundManager.play(SoundType.DAMAGE_TAKEN);
 			}
 
 		}).setText("Select").setIsEnabled(false);
