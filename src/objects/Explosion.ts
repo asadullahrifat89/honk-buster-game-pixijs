@@ -4,30 +4,16 @@ import { GameObjectContainer } from '../core/GameObjectContainer';
 
 export class Explosion extends GameObjectContainer {
 
-	private explosionAnimation: AnimatedSprite = new AnimatedSprite([Texture.from("./images/explosion_1.png")]);
+	private explosionAnimation: AnimatedSprite = new AnimatedSprite([Texture.from("explosion_1")]);
+	private explosionType: ExplosionType = ExplosionType.RING_EXPLOSION;
 
 	constructor(speed: number, explosionType: ExplosionType = ExplosionType.RING_EXPLOSION) {
 		super(speed);
+		this.explosionType = explosionType;
 		this.loadExplosionAnimation(explosionType).then((animatedSprite: AnimatedSprite) => {
 			this.explosionAnimation = animatedSprite;
 			this.addChild(this.explosionAnimation);
 		});
-	}
-
-	reset() {
-		this.alpha = 1.0;
-		this.explosionAnimation.stop();
-	}
-
-	reposition(source: GameObjectContainer) {
-		this.x = source.x + Constants.getRandomNumber(-50, 50);
-		this.y = source.y + Constants.getRandomNumber(-50, 50);;
-		this.explosionAnimation.gotoAndPlay(0);
-	}
-
-	override disableRendering() {
-		this.explosionAnimation.stop();
-		super.disableRendering();
 	}
 
 	private async loadExplosionAnimation(explosionType: ExplosionType): Promise<AnimatedSprite> {
@@ -50,6 +36,31 @@ export class Explosion extends GameObjectContainer {
 			}
 		}
 	}
+
+	reset() {
+		this.alpha = 1.0;
+		this.explosionAnimation.stop();
+	}
+
+	reposition(source: GameObjectContainer) {
+
+		if (this.explosionType == ExplosionType.FLASH_EXPLOSION) {
+			this.x = source.x;
+			this.y = source.y;
+		}
+		else {
+			this.x = source.x + Constants.getRandomNumber(-50, 50);
+			this.y = source.y + Constants.getRandomNumber(-50, 50);
+		}
+		this.explosionAnimation.gotoAndPlay(0);
+	}
+
+	override disableRendering() {
+		this.explosionAnimation.stop();
+		super.disableRendering();
+	}
+
+
 
 	private async loadAnimationSprite(atlasData: SpriteSheetJson, animationSpeed: number = 0.3, loop: boolean = false): Promise<AnimatedSprite> {
 		const spritesheet: Spritesheet = new Spritesheet(BaseTexture.from(atlasData.meta.image), atlasData);

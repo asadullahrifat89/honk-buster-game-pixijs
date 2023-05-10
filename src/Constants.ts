@@ -164,52 +164,52 @@ export enum ConstructType {
 
 
 export enum SoundType {
-    NONE,
+	NONE,
 
-    GAME_START,
-    GAME_PAUSE,
-    GAME_OVER,
+	GAME_START,
+	GAME_PAUSE,
+	GAME_OVER,
 
-    CRACKER_DROP,
-    CRACKER_BLAST,
+	CRACKER_DROP,
+	CRACKER_BLAST,
 
-    CHOPPER_HOVERING,
+	CHOPPER_HOVERING,
 
-    TRASH_BIN_HIT,
+	TRASH_BIN_HIT,
 
-    ROCKET_LAUNCH,
-    ROCKET_BLAST,
+	ROCKET_LAUNCH,
+	ROCKET_BLAST,
 
-    HONK,
-    HONK_BUST_REACTION,
+	HONK,
+	HONK_BUST_REACTION,
 
-    SEEKER_ROCKET_LAUNCH,
-    BALL_LAUNCH,
+	SEEKER_ROCKET_LAUNCH,
+	BALL_LAUNCH,
 
-    AMBIENCE,
+	AMBIENCE,
 
-    UFO_BOSS_ENTRY,
-    UFO_BOSS_HOVERING,
-    UFO_BOSS_DEAD,
+	UFO_BOSS_ENTRY,
+	UFO_BOSS_HOVERING,
+	UFO_BOSS_DEAD,
 
-    POWERUP_PICKUP,
-    HEALTH_PICKUP,
+	POWERUP_PICKUP,
+	HEALTH_PICKUP,
 
-    HEALTH_LOSS,
+	HEALTH_LOSS,
 
-    UFO_ENEMY_ENTRY,
+	UFO_ENEMY_ENTRY,
 
-    GAME_BACKGROUND_MUSIC,
-    BOSS_BACKGROUND_MUSIC,
+	GAME_BACKGROUND_MUSIC,
+	BOSS_BACKGROUND_MUSIC,
 
-    ORB_LAUNCH,
+	ORB_LAUNCH,
 
-    LEVEL_UP,
-    OPTION_SELECT,
-    BOOST_ACQUIRED,
-    ITEM_SELECT,
-    SCORE,
-    EXPLOSION_RING
+	LEVEL_UP,
+	OPTION_SELECT,
+	BOOST_ACQUIRED,
+	ITEM_SELECT,
+	SCORE,
+	EXPLOSION_RING
 }
 
 //#endregion
@@ -241,7 +241,7 @@ export abstract class Constants {
 	public static GAME_LEVEL_MAX: number = 0;
 
 	public static HEALTH_LEVEL_MAX: number = 0;
-	public static ATTACK_LEVEL_MAX: number = 0;	
+	public static ATTACK_LEVEL_MAX: number = 0;
 
 	public static MISSILE_UNLOCK_LEVEL: number = 3; // 3
 	public static MISSILE_UNLOCKED: boolean = false;
@@ -259,7 +259,7 @@ export abstract class Constants {
 	public static CHOPPER_UNLOCKED: boolean = false;
 
 	public static GAME_TITLE_FONT = "stitchnschool";
-	public static GAME_DEFAULT_FONT = "emilio";	
+	public static GAME_DEFAULT_FONT = "emilio";
 
 	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
 
@@ -431,7 +431,7 @@ export abstract class Constants {
 
 		new SoundTemplate(SoundType.HONK, this.soundsDirectory + "car_honk_1.mp3"),
 		new SoundTemplate(SoundType.HONK, this.soundsDirectory + "car_honk_2.mp3"),
-		new SoundTemplate(SoundType.HONK, this.soundsDirectory + "car_honk_3.mp3"),	
+		new SoundTemplate(SoundType.HONK, this.soundsDirectory + "car_honk_3.mp3"),
 
 		new SoundTemplate(SoundType.SEEKER_ROCKET_LAUNCH, this.soundsDirectory + "seeker_rocket_launch_1.mp3"),
 		new SoundTemplate(SoundType.SEEKER_ROCKET_LAUNCH, this.soundsDirectory + "seeker_rocket_launch_2.mp3"),
@@ -476,7 +476,7 @@ export abstract class Constants {
 
 		new SoundTemplate(SoundType.GAME_START, this.soundsDirectory + "game_start.mp3"),
 		new SoundTemplate(SoundType.GAME_PAUSE, this.soundsDirectory + "game_pause.mp3"),
-		new SoundTemplate(SoundType.GAME_OVER, this.soundsDirectory + "game_over.mp3"),		
+		new SoundTemplate(SoundType.GAME_OVER, this.soundsDirectory + "game_over.mp3"),
 
 		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_1.mp3", "Hey yo!"),
 		new SoundTemplate(SoundType.HONK_BUST_REACTION, this.soundsDirectory + "honk_bust_reaction_3.mp3", "Hey!"),
@@ -694,9 +694,14 @@ export abstract class Constants {
 				sourceSize: { w: this.puffWidth, h: this.puffHeight },
 				spriteSourceSize: { x: 0, y: 0 }
 			},
+			frame3: {
+				frame: { x: this.puffWidth * 3, y: 0, w: this.puffWidth, h: this.puffHeight },
+				sourceSize: { w: this.puffWidth, h: this.puffHeight },
+				spriteSourceSize: { x: 0, y: 0 }
+			},
 		},
 		animations: {
-			frames: ["frame0", "frame1", "frame2"],
+			frames: ["frame0", "frame1", "frame2", "frame3"],
 		}
 	};
 

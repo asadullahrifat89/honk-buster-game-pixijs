@@ -1305,16 +1305,15 @@ export class GamePlayScene extends Container implements IScene {
 
 	generatePlayerGroundBomb() {
 
-		var gameObject = this.playerGroundBombGameObjects.find(x => x.isAnimating == false);
+		var playerGroundBomb = this.playerGroundBombGameObjects.find(x => x.isAnimating == false);
 
-		if (gameObject) {
-			gameObject.reset();
-			gameObject.reposition(this.player);
-			gameObject.setPopping();
-
-			gameObject.enableRendering();
-
+		if (playerGroundBomb) {
+			playerGroundBomb.reset();
+			playerGroundBomb.reposition(this.player);
+			playerGroundBomb.setPopping();
+			playerGroundBomb.enableRendering();
 			this.player.setAttackStance();
+			this.generateFlashExplosion(playerGroundBomb);
 		}
 	}
 
@@ -1592,6 +1591,7 @@ export class GamePlayScene extends Container implements IScene {
 				this.setPlayerAirBombDirection(this.player, playerAirBomb, anyTarget);
 				playerAirBomb.setPopping();
 				playerAirBomb.enableRendering();
+				this.generateFlashExplosion(playerAirBomb);
 			}
 		}
 	}
@@ -1800,26 +1800,32 @@ export class GamePlayScene extends Container implements IScene {
 			let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
 			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
 
+			let anyTarget: any = undefined;
+
 			if (ufoBossRocketSeeking) {
-				playerAirBombBullsEye.setDirectTarget(ufoBossRocketSeeking.getCloseBounds());
+				anyTarget = ufoBossRocketSeeking;
 			}
 			else if (ufoEnemy) {
-				playerAirBombBullsEye.setDirectTarget(ufoEnemy.getCloseBounds());
+				anyTarget = ufoEnemy;
 			}
 			else if (ufoBoss) {
-				playerAirBombBullsEye.setDirectTarget(ufoBoss.getCloseBounds());
+				anyTarget = ufoBoss;
 			}
 			else if (zombieBoss) {
-				playerAirBombBullsEye.setDirectTarget(zombieBoss.getCloseBounds());
+				anyTarget = zombieBoss;
 			}
 			else if (mafiaBoss) {
-				playerAirBombBullsEye.setDirectTarget(mafiaBoss.getCloseBounds());
+				anyTarget = mafiaBoss;
 			}
 
-			playerAirBombBullsEye.enableRendering();
+			if (anyTarget) {
+				playerAirBombBullsEye.setDirectTarget(anyTarget.getCloseBounds());
+				playerAirBombBullsEye.enableRendering();
+				this.generateFlashExplosion(playerAirBombBullsEye);
 
-			if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.HURLING_BALLS)
-				this.depletePowerUp();
+				if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.HURLING_BALLS)
+					this.depletePowerUp();
+			}
 		}
 	}
 
@@ -2093,6 +2099,7 @@ export class GamePlayScene extends Container implements IScene {
 				ufoEnemyRocket.reposition(ufoEnemy);
 				ufoEnemyRocket.setPopping();
 				ufoEnemyRocket.enableRendering();
+				this.generateFlashExplosion(ufoEnemyRocket);
 			}
 		}
 	}
@@ -2557,6 +2564,7 @@ export class GamePlayScene extends Container implements IScene {
 					vehicleBossRocket.reposition(vehicleBoss);
 					vehicleBossRocket.setPopping();
 					vehicleBossRocket.enableRendering();
+					this.generateFlashExplosion(vehicleBossRocket);
 				}
 
 				this.vehicleBossRocketPopDelay = this.vehicleBossRocketPopDelayDefault;
@@ -2813,8 +2821,8 @@ export class GamePlayScene extends Container implements IScene {
 					ufoBossRocket.reposition(ufoBoss);
 					ufoBossRocket.setPopping();
 					ufoBossRocket.enableRendering();
-
 					this.setBossRocketDirection(ufoBoss, ufoBossRocket, this.player);
+					this.generateFlashExplosion(ufoBossRocket);
 				}
 
 				this.ufoBossRocketPopDelay = this.ufoBossRocketPopDelayDefault;
@@ -2959,6 +2967,7 @@ export class GamePlayScene extends Container implements IScene {
 						ufoBossRocketSeeking.reposition(ufoBoss);
 						ufoBossRocketSeeking.setPopping();
 						ufoBossRocketSeeking.enableRendering();
+						this.generateFlashExplosion(ufoBossRocketSeeking);
 					}
 
 					this.ufoBossRocketSeekingPopDelay = this.ufoBossRocketSeekingPopDelayDefault;
@@ -3470,7 +3479,7 @@ export class GamePlayScene extends Container implements IScene {
 					mafiaBossRocket.reposition(mafiaBoss);
 					mafiaBossRocket.setPopping();
 					mafiaBossRocket.enableRendering();
-
+					this.generateFlashExplosion(mafiaBossRocket);
 					this.setBossRocketDirection(mafiaBoss, mafiaBossRocket, this.player);
 				}
 
@@ -3587,6 +3596,7 @@ export class GamePlayScene extends Container implements IScene {
 					mafiaBossRocketBullsEye.setPopping();
 					mafiaBossRocketBullsEye.setDirectTarget(this.player.getCloseBounds());
 					mafiaBossRocketBullsEye.enableRendering();
+					this.generateFlashExplosion(mafiaBossRocketBullsEye);
 				}
 
 				this.mafiaBossRocketBullsEyePopDelay = this.mafiaBossRocketBullsEyePopDelayDefault;
