@@ -14,7 +14,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 	private blastDelay: number = 0;
 	private blastDelayDefault: number = 25;
 
-	private dropDelay: number = 0;
+	private dropOnGroundDelay: number = 0;
 	private readonly dropDelayDefault: number = 25;
 
 	private uriIndex: number = 0;
@@ -53,9 +53,9 @@ export class PlayerGroundBomb extends GameObjectContainer {
 		this.scale.set(1);
 		this.angle = 0;
 		this.blastDelay = this.blastDelayDefault;
-		this.dropDelay = this.dropDelayDefault;
+		this.dropOnGroundDelay = this.dropDelayDefault;
 		this.speed = 4;
-		this.isDropped = false;
+		this.isDroppedOnGround = false;
 
 		this.awaitMoveDownLeft = false;
 		this.awaitMoveDownRight = false;
@@ -94,26 +94,26 @@ export class PlayerGroundBomb extends GameObjectContainer {
 		return false;
 	}
 
-	awaitDrop(): boolean {
-		this.dropDelay--;
+	awaitToDropOnGround(): boolean {
+		this.dropOnGroundDelay--;
 
-		if (this.dropDelay <= 0) {
-
-			this.setDrop();
-			this.isDropped = true;
+		if (this.dropOnGroundDelay <= 0) {
+			this.setDropOnGround();
+			this.isDroppedOnGround = true;
 			return true;
 		}
 
 		return false;
 	}
 
-	setDrop() {
-		switch (this.playerGroundBombTemplate) {
-			case PlayerGroundBombTemplate.DYNAMITE: {
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
-			} break;
-			default: break;
-		}
+	private setDropOnGround() {
+		//switch (this.playerGroundBombTemplate) {
+		//	case PlayerGroundBombTemplate.DYNAMITE: {
+		//		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
+		//	} break;
+		//	default: break;
+		//}
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 	}
 
 	setBlast() {

@@ -20,17 +20,15 @@ export class VehicleBoss extends VehicleBossBase {
 		this.randomizeMovementPattern();
 	}
 
-	move(
-		sceneWidth: number,
-		sceneHeight: number) {
+	move(sceneWidth: number, sceneHeight: number) {
 		this.moveUpLeftDownRight(sceneWidth, sceneHeight);
 	}
 
 	private randomizeMovementPattern() {
 		this.speed = Constants.getRandomNumber(Constants.DEFAULT_CONSTRUCT_SPEED, Constants.DEFAULT_CONSTRUCT_SPEED + 2);
-		this.changeMovementPatternDelay = Constants.getRandomNumber(40, 60);
+		this.changeMovementPatternDelay = Constants.getRandomNumber(50, 60);
 		this.movementDirection = MovementDirection.None;
-	}	
+	}
 
 	private moveUpLeftDownRight(sceneWidth: number, sceneHeight: number) {
 		this.changeMovementPatternDelay -= 0.1;

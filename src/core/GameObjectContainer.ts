@@ -13,6 +13,11 @@ export class GameObjectContainer extends Container {
 	private readonly hoverDelayDefault: number = 28;
 	private hoverSpeed: number = 0.3;
 
+	private hopDelay: number = 0;
+	private readonly hopDelayDefault: number = 10;
+	private hopSpeed: number = 7;
+	private readonly hopSpeedLimit: number = 7;
+
 	private dillyDallyDelay: number = 0;
 	private dillyDallyDelayDefault: number = 55;
 	private dillyDallySpeed: number = 0.2;
@@ -25,8 +30,9 @@ export class GameObjectContainer extends Container {
 	public hitPoint: number = 5;
 
 	public isAwaitingPop: boolean = false;
+	public isAwaitingHop: boolean = false;
 	public isBlasting: boolean = false;
-	public isDropped: boolean = false;
+	public isDroppedOnGround: boolean = false;
 
 	public awaitMoveUp: boolean = false;
 	public awaitMoveDown: boolean = false;
@@ -159,15 +165,6 @@ export class GameObjectContainer extends Container {
 		this.addChild(sprite);
 	}
 
-	setPopping() {
-
-		if (!this.isAwaitingPop) {
-			this.scale.set(1);
-			this.isPoppingComplete = false;
-			this.isAwaitingPop = true;
-		}
-	}
-
 	expand() {
 		this.scale.x += this.expandSpeed;
 		this.scale.y += this.expandSpeed;
@@ -179,6 +176,14 @@ export class GameObjectContainer extends Container {
 
 		if (this.scale.y > 0)
 			this.scale.y -= this.expandSpeed;
+	}
+
+	setPopping() {
+		if (!this.isAwaitingPop) {
+			this.scale.set(1);
+			this.isPoppingComplete = false;
+			this.isAwaitingPop = true;
+		}
 	}
 
 	pop() {
@@ -216,6 +221,38 @@ export class GameObjectContainer extends Container {
 
 				if (this.hoverDelay <= this.hoverDelayDefault * -1)
 					this.hoverDelay = this.hoverDelayDefault;
+			}
+		}
+	}
+
+	setHopping() {
+		if (!this.isAwaitingHop) {
+			this.isAwaitingHop = true;
+			this.hopDelay = this.hopDelayDefault;
+		}
+	}
+
+	hop() {
+		if (this.isAwaitingHop) {
+
+			this.hopDelay--;
+
+			if (this.hopDelay >= 0) {
+				this.y -= this.hopSpeed;
+
+				if (this.hopSpeed > 0)
+					this.hopSpeed -= 0.1; // decrease speed
+			}
+			else {
+				this.y += this.hopSpeed;
+
+				if (this.hopSpeed <= this.hopSpeedLimit)
+					this.hopSpeed += 0.2;
+
+				if (this.hopDelay <= this.hopDelayDefault * -1) {
+					this.hopDelay = this.hopDelayDefault;
+					this.isAwaitingHop = false;
+				}
 			}
 		}
 	}

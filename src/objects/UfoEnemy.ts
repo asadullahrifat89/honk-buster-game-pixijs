@@ -5,13 +5,18 @@ import { VehicleBase } from './VehicleBase';
 
 export class UfoEnemy extends VehicleBase {
 
+	public isDestructionComplete: boolean = false;
+
 	private attackDelay: number = 0;
+	private destructionDelay: number = 0;
+	private destructionDelayDefault: number = 40;	
 
 	constructor(speed: number) {
 		super(speed);
 	}
 
 	reset() {
+		this.isDestructionComplete = false;
 		this.health = this.hitPoint * Constants.getRandomNumber(0, 3);
 		this.scale.set(1);
 		this.alpha = 1;
@@ -45,5 +50,27 @@ export class UfoEnemy extends VehicleBase {
 	looseHealth() {
 		this.health -= this.hitPoint;
 		SoundManager.play(SoundType.DAMAGE_TAKEN);
+	}
+
+	setDestruction() {
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
+		this.destructionDelay = this.destructionDelayDefault;
+		this.isDestructionComplete = false;
+	}
+
+	awaitDestruction() {
+		if (!this.isDestructionComplete) {
+			this.destructionDelay--;
+
+			if (this.speed > 0) {
+				this.speed -= 0.2;
+				this.y -= this.speed / 2;
+				this.x -= this.speed;
+			}
+
+			if (this.destructionDelay <= 0) {
+				this.isDestructionComplete = true;
+			}
+		}
 	}
 }

@@ -1,11 +1,9 @@
 ﻿import { Constants, ConstructType } from '../Constants';
 import { VehicleBase } from './VehicleBase';
-import { GrayscaleFilter } from '@pixi/filter-grayscale';
 import { Texture } from 'pixi.js';
 
 export class VehicleEnemy extends VehicleBase {
-
-	private grayScaleFilter: GrayscaleFilter = new GrayscaleFilter();
+	
 	public vehicleType: number = 0;
 
 	constructor(speed: number) {
@@ -13,10 +11,11 @@ export class VehicleEnemy extends VehicleBase {
 	}
 
 	reset() {
+		this.isBlasting = false;
 		this.speed = Constants.getRandomNumber(2, 4);
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
 		this.isHonking = false;
-		this.filters = null;
+		this.filters = null;		
 
 		this.vehicleType = Constants.getRandomNumber(ConstructType.VEHICLE_ENEMY_SMALL, ConstructType.VEHICLE_ENEMY_LARGE);
 
@@ -48,6 +47,7 @@ export class VehicleEnemy extends VehicleBase {
 	}
 
 	setBlast() {
+		this.isBlasting = true;
 		this.willHonk = false;
 		this.isHonking = false;
 		this.speed = this.speed * 1.4;
@@ -55,7 +55,7 @@ export class VehicleEnemy extends VehicleBase {
 		if (this.speed > Constants.DEFAULT_CONSTRUCT_SPEED)
 			this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 
-		this.filters = [this.grayScaleFilter];
-		this.setDillyDallySpeed(0);
-	}
+		this.setDestroyed();
+		this.setDillyDallySpeed(0);		
+	}	
 }
