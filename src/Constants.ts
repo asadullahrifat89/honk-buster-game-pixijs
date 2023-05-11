@@ -196,6 +196,7 @@ export enum SoundType {
 	UFO_ENEMY_ENTRY,
 	UFO_BOSS_ENTRY,
 
+	GAME_INTRO_MUSIC,
 	GAME_BACKGROUND_MUSIC,
 	BOSS_BACKGROUND_MUSIC,
 
@@ -463,16 +464,23 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, this.soundsDirectory + "ufo_enemy_entry_1.mp3"),
 		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, this.soundsDirectory + "ufo_enemy_entry_2.mp3"),		
 
+		new SoundTemplate(SoundType.GAME_INTRO_MUSIC, this.soundsDirectory + "intro_music_1.mp3"),
+		new SoundTemplate(SoundType.GAME_INTRO_MUSIC, this.soundsDirectory + "intro_music_2.mp3"),
+
 		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, this.soundsDirectory + "game_background_music_1.mp3"),
 		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, this.soundsDirectory + "game_background_music_2.mp3"),
 		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, this.soundsDirectory + "game_background_music_3.mp3"),
 		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, this.soundsDirectory + "game_background_music_4.mp3"),
+		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, this.soundsDirectory + "game_background_music_5.mp3"),
+		new SoundTemplate(SoundType.GAME_BACKGROUND_MUSIC, this.soundsDirectory + "game_background_music_6.mp3"),
 
 		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, this.soundsDirectory + "boss_background_music_1.mp3"),
 		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, this.soundsDirectory + "boss_background_music_2.mp3"),
 		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, this.soundsDirectory + "boss_background_music_3.mp3"),
 		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, this.soundsDirectory + "boss_background_music_4.mp3"),
 		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, this.soundsDirectory + "boss_background_music_5.mp3"),
+		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, this.soundsDirectory + "boss_background_music_6.mp3"),
+		new SoundTemplate(SoundType.BOSS_BACKGROUND_MUSIC, this.soundsDirectory + "boss_background_music_7.mp3"),
 
 		new SoundTemplate(SoundType.GAME_START, this.soundsDirectory + "game_start.mp3"),
 		new SoundTemplate(SoundType.GAME_PAUSE, this.soundsDirectory + "game_pause.mp3"),
