@@ -1,16 +1,14 @@
-﻿import { BlurFilter, Container, Text, Texture } from "pixi.js";
+﻿import { BlurFilter, Container, Text } from "pixi.js";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
-import { Constants, ConstructType, SoundType } from "../Constants";
+import { Constants, ConstructType, PlayerRideTemplate, SoundType } from "../Constants";
 import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
-import { GrayscaleFilter } from "@pixi/filter-grayscale";
-import { MessageBubble } from "../controls/MessageBubble";
 import { PlayerGearSelectionScene } from "./PlayerGearSelectionScene";
-
+import { SelectionButton } from "../controls/SelectionButton";
 
 export class PlayerRideSelectionScene extends Container implements IScene {
 
@@ -50,29 +48,18 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		this.uiContainer.addChild(title);
 
 		//#region air balloon
-		const air_balloon_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_1"));
-		air_balloon_sprite.width = 256 / 2;
-		air_balloon_sprite.height = 256 / 2;
-		air_balloon_sprite.x = 0;
-		air_balloon_sprite.y = 0;
-		const air_balloon_button = new Button(() => {
+
+		const air_balloon_button = new SelectionButton("player_ride_1", 256 / 2, 256 / 2, "Lvl " + 1, () => {
 
 			button.setText("Air Balloon").setIsEnabled(true);
-
+			air_balloon_button.select();
+			chopper_button.unselect();
+			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.AIR_BALLOON;
 			SoundManager.play(SoundType.ITEM_SELECT);
+		});
 
-			chopper_sprite.filters = [new GrayscaleFilter()];
-			air_balloon_sprite.filters = null;
-
-			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 0;
-
-		}).setBackground(air_balloon_sprite);
-		air_balloon_button.setPosition((this.uiContainer.width / 2 - air_balloon_sprite.width * 2) + 45, this.uiContainer.height / 2 - air_balloon_sprite.height / 2 + 10);
+		air_balloon_button.setPosition((this.uiContainer.width / 2 - air_balloon_button.width * 2) + 45, this.uiContainer.height / 2 - air_balloon_button.height / 2 + 10);
 		this.uiContainer.addChild(air_balloon_button);
-
-		const air_balloon_msg = new MessageBubble(0, "Lvl " + 1, 20);
-		air_balloon_msg.setPosition(air_balloon_button.x + air_balloon_button.width / 2, air_balloon_button.y + air_balloon_button.height / 2);
-		this.uiContainer.addChild(air_balloon_msg);
 
 		//#endregion
 
@@ -80,29 +67,17 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 
 		Constants.CHOPPER_UNLOCKED = Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL;
 
-		const chopper_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_2"));
-		chopper_sprite.width = 256 / 2;
-		chopper_sprite.height = 256 / 2;
-		chopper_sprite.x = 0;
-		chopper_sprite.y = 0;
-		const chopper_button = new Button(() => {
+		const chopper_button = new SelectionButton("player_ride_2", 256 / 2, 256 / 2, "Lvl " + Constants.CHOPPER_UNLOCK_LEVEL, () => {
 
 			button.setText("Chopper").setIsEnabled(true);
-
+			chopper_button.select();
+			air_balloon_button.unselect();
+			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.CHOPPER;
 			SoundManager.play(SoundType.ITEM_SELECT);
 
-			air_balloon_sprite.filters = [new GrayscaleFilter()];
-			chopper_sprite.filters = null;
-
-			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = 1;
-
-		}).setBackground(chopper_sprite);
-		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_sprite.width / 2) + 100, this.uiContainer.height / 2 - chopper_sprite.height / 2 + 10).setIsEnabled(Constants.CHOPPER_UNLOCKED);
+		}, Constants.CHOPPER_UNLOCKED);
+		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_button.width / 2) + 100, this.uiContainer.height / 2 - chopper_button.height / 2 + 10);
 		this.uiContainer.addChild(chopper_button);
-
-		const chopper_msg = new MessageBubble(0, "Lvl " + Constants.CHOPPER_UNLOCK_LEVEL, 20);
-		chopper_msg.setPosition(chopper_button.x + chopper_button.width / 2, chopper_button.y + chopper_button.height / 2);
-		this.uiContainer.addChild(chopper_msg);
 
 		//#endregion
 

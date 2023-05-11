@@ -1,4 +1,4 @@
-﻿import { Container, Text, BlurFilter, Texture } from "pixi.js";
+﻿import { Container, Text, BlurFilter } from "pixi.js";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -7,9 +7,8 @@ import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
-import { GrayscaleFilter } from "@pixi/filter-grayscale";
-import { MessageBubble } from "../controls/MessageBubble";
 import { PlayerGearSelectionScene } from "./PlayerGearSelectionScene";
+import { SelectionButton } from "../controls/SelectionButton";
 
 
 export class PlayerCharacterSelectionScene extends Container implements IScene {
@@ -51,57 +50,33 @@ export class PlayerCharacterSelectionScene extends Container implements IScene {
 
 		//#region player 1
 
-		const player_1_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_1_character"));
-		player_1_sprite.width = 208 / 2;
-		player_1_sprite.height = 256 / 2;
-		player_1_sprite.x = 0;
-		player_1_sprite.y = 0;
-		const player_1_button = new Button(() => {
-
-			SoundManager.play(SoundType.ITEM_SELECT);
-
-			player_1_sprite.filters = null;
-			player_2_sprite.filters = [new GrayscaleFilter()];
-
-			Constants.SELECTED_PLAYER_CHARACTER_TEMPLATE = 0;
+		const player_1_button = new SelectionButton("player_1_character", 208 / 2, 256 / 2, "Lvl " + 1, () => {
 
 			button.setText("Rad").setIsEnabled(true);
+			player_1_button.select();
+			player_2_button.unselect();
+			Constants.SELECTED_PLAYER_CHARACTER_TEMPLATE = 0;
+			SoundManager.play(SoundType.ITEM_SELECT);
+		});
 
-		}).setBackground(player_1_sprite);
-		player_1_button.setPosition((this.uiContainer.width / 2 - player_1_sprite.width * 2) + 45, this.uiContainer.height / 2 - player_1_sprite.height / 2 + 10);
+		player_1_button.setPosition((this.uiContainer.width / 2 - player_1_button.width * 2) + 100, this.uiContainer.height / 2 - player_1_button.height / 2 + 10);
 		this.uiContainer.addChild(player_1_button);
-
-		const player_1_msg = new MessageBubble(0, "Lvl " + 1, 20);
-		player_1_msg.setPosition(player_1_button.x + player_1_button.width / 2, (player_1_button.y + player_1_button.height / 2) + 10);
-		this.uiContainer.addChild(player_1_msg);
 
 		//#endregion
 
 		//#region player 2
 
-		const player_2_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_2_character"));
-		player_2_sprite.width = 208 / 2;
-		player_2_sprite.height = 256 / 2;
-		player_2_sprite.x = 0;
-		player_2_sprite.y = 0;
-		const player_2_button = new Button(() => {
-
-			SoundManager.play(SoundType.ITEM_SELECT);
-
-			player_1_sprite.filters = null;
-			player_2_sprite.filters = [new GrayscaleFilter()];
-
-			Constants.SELECTED_PLAYER_CHARACTER_TEMPLATE = 1;
+		const player_2_button = new SelectionButton("player_2_character", 208 / 2, 256 / 2, "Coming Soon", () => {
 
 			button.setText("Rodney").setIsEnabled(true);
+			player_2_button.select();
+			player_1_button.unselect();
+			Constants.SELECTED_PLAYER_CHARACTER_TEMPLATE = 1;
+			SoundManager.play(SoundType.ITEM_SELECT);
+		}, false);
 
-		}).setBackground(player_2_sprite);
-		player_2_button.setPosition((this.uiContainer.width / 2 - player_2_sprite.width / 2) + 100, this.uiContainer.height / 2 - player_2_sprite.height / 2 + 10).setIsEnabled(false);
+		player_2_button.setPosition((this.uiContainer.width / 2 - player_2_button.width / 2) + 180, this.uiContainer.height / 2 - player_2_button.height / 2 + 10);
 		this.uiContainer.addChild(player_2_button);
-
-		const player_2_msg = new MessageBubble(0, "Coming Soon", 20);
-		player_2_msg.setPosition(player_2_button.x + player_2_button.width / 2, (player_2_button.y + player_2_button.height / 2) + 10);
-		this.uiContainer.addChild(player_2_msg);
 
 		//#endregion
 

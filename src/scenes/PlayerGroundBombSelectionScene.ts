@@ -1,4 +1,4 @@
-﻿import { BlurFilter, Container, Text, Texture } from "pixi.js";
+﻿import { BlurFilter, Container, Text } from "pixi.js";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -7,9 +7,8 @@ import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
-import { GrayscaleFilter } from "@pixi/filter-grayscale";
-import { MessageBubble } from "../controls/MessageBubble";
 import { PlayerGearSelectionScene } from "./PlayerGearSelectionScene";
+import { SelectionButton } from "../controls/SelectionButton";
 
 
 export class PlayerGroundBombSelectionScene extends Container implements IScene {
@@ -50,27 +49,19 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		this.uiContainer.addChild(title);
 
 		//#region grenade
-		const grenade_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_explosive_1"));
-		grenade_sprite.width = 256 / 2;
-		grenade_sprite.height = 256 / 2;
-		grenade_sprite.x = 0;
-		grenade_sprite.y = 0;
-		const grenade_button = new Button(() => {
 
-			button.setText("Grenades").setIsEnabled(true);			
+		const grenade_button = new SelectionButton("player_honk_bomb_explosive_1", 256 / 2, 256 / 2, "Lvl " + 1, () => {
+
+			button.setText("Grenades").setIsEnabled(true);
 			SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
-			grenade_sprite.filters = null;
-			trash_sprite.filters = [new GrayscaleFilter()];
-			dynamite_sprite.filters = [new GrayscaleFilter()];
+			grenade_button.select();
+			trash_button.unselect();
+			dynamite_button.unselect();
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.GRENADE;
+		});
 
-		}).setBackground(grenade_sprite);
-		grenade_button.setPosition((this.uiContainer.width / 2 - grenade_sprite.width * 2), (this.uiContainer.height / 2 - grenade_sprite.height / 2) + 10);
+		grenade_button.setPosition((this.uiContainer.width / 2 - grenade_button.width * 2), (this.uiContainer.height / 2 - grenade_button.height / 2) + 10);
 		this.uiContainer.addChild(grenade_button);
-
-		const grenade_msg = new MessageBubble(0, "Lvl 1", 20);
-		grenade_msg.setPosition(grenade_button.x + grenade_button.width / 2, grenade_button.y + grenade_button.height / 2);
-		this.uiContainer.addChild(grenade_msg);
 
 		//#endregion
 
@@ -78,28 +69,19 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 
 		Constants.TRASH_BIN_UNLOCKED = Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL;
 
-		const trash_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_trash_1"));
-		trash_sprite.width = 256 / 2;
-		trash_sprite.height = 256 / 2;
-		trash_sprite.x = 0;
-		trash_sprite.y = 0;
-		const trash_button = new Button(() => {
+		const trash_button = new SelectionButton("player_honk_bomb_trash_1", 256 / 2, 256 / 2, "Lvl " + Constants.TRASH_BIN_UNLOCK_LEVEL, () => {
 
 			button.setText("Trash Bins").setIsEnabled(true);
-			
 			SoundManager.play(SoundType.TRASH_BIN_BLAST);
-			trash_sprite.filters = null;
-			grenade_sprite.filters = [new GrayscaleFilter()];
-			dynamite_sprite.filters = [new GrayscaleFilter()];
+			trash_button.select();
+			grenade_button.unselect();
+			dynamite_button.unselect();
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.TRASH_BIN;
 
-		}).setBackground(trash_sprite);
-		trash_button.setPosition((this.uiContainer.width / 2 - trash_sprite.width / 2), (this.uiContainer.height / 2 - trash_sprite.height / 2) + 10).setIsEnabled(Constants.TRASH_BIN_UNLOCKED);
-		this.uiContainer.addChild(trash_button);
+		}, Constants.TRASH_BIN_UNLOCKED);
 
-		const trash_msg = new MessageBubble(0, "Lvl " + Constants.TRASH_BIN_UNLOCK_LEVEL, 20);
-		trash_msg.setPosition(trash_button.x + trash_button.width / 2, trash_button.y + trash_button.height / 2);
-		this.uiContainer.addChild(trash_msg);
+		trash_button.setPosition((this.uiContainer.width / 2 - trash_button.width / 2), (this.uiContainer.height / 2 - trash_button.height / 2) + 10);
+		this.uiContainer.addChild(trash_button);
 
 		//#endregion
 
@@ -107,28 +89,19 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 
 		Constants.DYNAMITE_UNLOCKED = Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL;
 
-		const dynamite_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_sticky_2"));
-		dynamite_sprite.width = 256 / 2;
-		dynamite_sprite.height = 256 / 2;
-		dynamite_sprite.x = 0;
-		dynamite_sprite.y = 0;
-		const dynamite_button = new Button(() => {
+		const dynamite_button = new SelectionButton("player_honk_bomb_sticky_2", 256 / 2, 256 / 2, "Lvl " + Constants.DYNAMITE_UNLOCK_LEVEL, () => {
 
 			button.setText("Dynamites").setIsEnabled(true);
-			
 			SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
-			dynamite_sprite.filters = null;
-			grenade_sprite.filters = [new GrayscaleFilter()];
-			trash_sprite.filters = [new GrayscaleFilter()];
+			dynamite_button.select();
+			grenade_button.unselect();
+			trash_button.unselect();
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.DYNAMITE;
 
-		}).setBackground(dynamite_sprite);
-		dynamite_button.setPosition((this.uiContainer.width / 2 + dynamite_sprite.width), (this.uiContainer.height / 2 - dynamite_sprite.height / 2) + 10).setIsEnabled(Constants.DYNAMITE_UNLOCKED);
-		this.uiContainer.addChild(dynamite_button);
+		}, Constants.DYNAMITE_UNLOCKED);
 
-		const dynamite_msg = new MessageBubble(0, "Lvl " + Constants.DYNAMITE_UNLOCK_LEVEL, 20);
-		dynamite_msg.setPosition(dynamite_button.x + dynamite_button.width / 2, dynamite_button.y + dynamite_button.height / 2);
-		this.uiContainer.addChild(dynamite_msg);
+		dynamite_button.setPosition((this.uiContainer.width / 2 + dynamite_button.width), (this.uiContainer.height / 2 - dynamite_button.height / 2) + 10);
+		this.uiContainer.addChild(dynamite_button);
 
 		//#endregion
 
