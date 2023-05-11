@@ -450,7 +450,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			if (gameObject) {
 
-				gameObject.setPosition((gameObject.width * -1) - 725, gameObject.height * -1);
+				gameObject.setPosition((gameObject.width * -1) - 730, gameObject.height * -1);
 				gameObject.enableRendering();
 
 				this.roadMarkPopDelay = this.roadMarkPopDelayDefault;
