@@ -1007,7 +1007,6 @@ export class GamePlayScene extends Container implements IScene {
 			if (this.bossDeathExplosionDelay < 0) {
 
 				// get all the bosses and check
-
 				let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
 				let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true);
 				let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true);
@@ -1036,6 +1035,10 @@ export class GamePlayScene extends Container implements IScene {
 
 					if (this.bossDeathExplosionDuration > 0 && this.bossDeathExplosionDuration <= 0.3) { // when duration depletes generate an explosion ring
 						this.generateExplosionRing(anyBoss);
+
+						if (vehicleBoss) {
+							vehicleBoss.setHopping();
+						}
 					}
 				}
 
@@ -2312,19 +2315,15 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	private looseVehicleEnemyhealth(vehicleEnemy: VehicleEnemy) {
-		vehicleEnemy.setHopping();
 		vehicleEnemy.setPopping();
 		vehicleEnemy.looseHealth();
 
 		if (vehicleEnemy.willHonk) {
 
 			if (vehicleEnemy.isDead()) {
-
+				vehicleEnemy.setHopping();
 				vehicleEnemy.setBlast();
 				this.gainScore(false);
-
-				//let soundIndex = SoundManager.play(SoundType.HONK_BUST_REACTION, 0.8);
-				//let soundTemplate: SoundTemplate = this.honkBustReactions[soundIndex];
 				SoundManager.play(SoundType.SCORE_ACQUIRED, 1);
 
 				this.generateMessageBubble(vehicleEnemy, this.honkBustReactions[Constants.getRandomNumber(0, this.honkBustReactions.length - 1)]);
@@ -2415,6 +2414,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (vehicleBoss) {
 
+			vehicleBoss.hop();
 			vehicleBoss.pop();
 			vehicleBoss.recoverFromHealthLoss();
 
@@ -2425,7 +2425,7 @@ export class GamePlayScene extends Container implements IScene {
 				}
 			}
 			else {
-				vehicleBoss.dillyDally();
+				vehicleBoss.dillyDally();				
 
 				if (vehicleBoss.isAttacking) {
 					vehicleBoss.move(this.sceneBoundaryWidth, this.sceneBoundaryHeight);
@@ -2453,6 +2453,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private looseVehicleBosshealth(vehicleBoss: VehicleBoss) {
 
+		vehicleBoss.setHopping();
 		vehicleBoss.setPopping();
 		vehicleBoss.looseHealth();
 
