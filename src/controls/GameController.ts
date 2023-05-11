@@ -40,7 +40,8 @@ export class GameController extends Container {
 
 		this.settings = settings;
 
-		this.interactive = true;
+		//this.interactive = true;
+		this.eventMode = 'dynamic';
 
 		this.on("pointertap", () => {
 			this.joystick.alpha = 1;

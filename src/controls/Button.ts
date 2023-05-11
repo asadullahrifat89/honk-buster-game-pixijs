@@ -17,7 +17,8 @@ export class Button extends Container {
 	constructor(onPressed: any) {
 		super();
 
-		this.interactive = true;
+		/*this.interactive = true;*/
+		this.eventMode = 'dynamic';
 		this.filters = null;
 
 		this.buttonHoverFilter = new OutlineFilter(3, 0xffffff);
