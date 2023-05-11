@@ -43,6 +43,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Properties
 
+	private circleOverlay: GameObjectContainer;
+
 	private sceneContainer: GameObjectContainer;
 
 	private gameController: GameController;
@@ -189,6 +191,309 @@ export class GamePlayScene extends Container implements IScene {
 		SoundManager.play(SoundType.AMBIENCE, 0.3, true);
 		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.3, true);
 		SoundManager.play(SoundType.GAME_START);
+
+		this.circleOverlay = new GameObjectContainer();
+		this.circleOverlay.expandSpeed = 0.4;
+		this.circleOverlay.addChild(new Graphics().lineStyle(250, 0x1f2a36).drawCircle(0, 0, 165));
+		this.circleOverlay.setPosition(SceneManager.width / 2, SceneManager.height / 2);
+		this.addChild(this.circleOverlay);
+	}
+
+	//#endregion
+
+	//#region Scene
+
+	public update() {
+		this.processFrame();
+
+		if (this.circleOverlay.scale.x <= 200) {
+			this.circleOverlay.expand();
+		}
+	}
+
+	public resize(scale: number): void {
+
+		if (SceneManager.width < SceneManager.height) {
+			this.gameController.pauseGame();
+		}
+		else {
+			this.sceneContainer.scale.set(scale);
+			this.gameController.resize();
+
+			this.repositionGameScoreBar();
+			this.repositionPlayerHealthBar();
+			this.repositionBossHealthBar();
+			this.repositionPowerUpBar();
+
+			let color = this.stageColors[Constants.getRandomNumber(0, this.stageColors.length - 1)];
+			this.stageColor.clear().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+			this.stageMask.clear().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
+
+			this.sceneBoundaryWidth = Constants.DEFAULT_GAME_VIEW_WIDTH * (SceneManager.scaling * 1.20);
+			this.sceneBoundaryHeight = Constants.DEFAULT_GAME_VIEW_HEIGHT * (SceneManager.scaling * 1.35);
+		}
+	}
+
+	private processFrame() {
+
+		if (!this.gameController.isPaused) {
+			this.generateGameObjects();
+			this.animateGameObjects();
+			this.gameController.update();
+		}
+	}
+
+	private spawnGameObjects() {
+
+		this.spawnRoadMarks();
+		this.spawnSideWalksTop();
+
+		this.spawnVehicleEnemys();
+		this.spawnVehicleBosss();
+
+		this.spawnHonks();
+		this.spawnVehicleBossRockets();
+
+		this.spawnSideWalksBottom();
+		this.spawnBlowSmokeExplosions();
+		this.spawnRingSmokeExplosions();
+
+		this.spawnPlayerGroundBombs();
+		this.spawnPlayerAirBombs();
+		this.spawnPlayerAirBombBullsEyes();
+		this.spawnPlayerBalloon();
+
+		this.spawnUfoBossRockets();
+		this.spawnUfoBossRocketSeekings();
+		this.spawnUfoBosss();
+
+		this.spawnZombieBosss();
+		this.spawnZombieBossRocketBlocks();
+
+		this.spawnMafiaBosss();
+		this.spawnMafiaBossRockets();
+		this.spawnMafiaBossRocketBullsEyes();
+
+		this.spawnUfoEnemyRockets();
+		this.spawnUfoEnemys();
+
+		this.spawnFlashExplosions();
+		this.spawnRingFireExplosions();
+		this.spawnGrandExplosionRings();
+
+		this.spawnHealthPickups();
+		this.spawnPowerUpPickups();
+
+		this.spawnMessageBubbles();
+
+		//this.spawnSideWalkPillarsBottom();
+	}
+
+	private generateGameObjects() {
+
+		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
+			this.generateRoadMarks();
+			this.generateSideWalksTop();
+		}
+
+		this.generateVehicleEnemys();
+		this.generateVehicleBoss();
+		this.generateVehicleBossRockets();
+
+		this.generateUfoBoss();
+		this.generateUfoBossRockets();
+		this.generateUfoBossRocketSeekings();
+
+		this.generateZombieBoss();
+		this.generateZombieBossRocketBlocks();
+
+		this.generateMafiaBoss();
+		this.generateMafiaBossRockets();
+		this.generateMafiaBossRocketBullsEyes();
+
+		this.generateUfoEnemys();
+
+		this.generateHealthPickups();
+		this.generatePowerUpPickups();
+
+		//this.generateClouds();
+
+		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
+			this.generateSideWalksBottom();
+			//this.generateSideWalkPillarsBottom();
+		}
+
+		this.generateBossDeathExplosions();
+		this.generateBossLowHealthExplosions();
+		this.generatePlayerLowHealthExplosions();
+	}
+
+	private animateGameObjects() {
+
+		this.animatePlayerBalloon();
+
+		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
+			this.animateRoadMarks();
+			this.animateSideWalksTop();
+		}
+
+		this.animateVehicleEnemys();
+		this.animateVehicleBoss();
+		this.animateVehicleBossRockets();
+
+		this.animateHonks();
+
+		this.animatePlayerGroundBombs();
+		this.animateFlashExplosions();
+		this.animateBlowSmokeExplosions();
+		this.animateRingSmokeExplosions();
+		this.animateRingFireExplosions();
+		this.animateGrandExplosionRings();
+		this.animatePlayerAirBombs();
+		this.animatePlayerAirBombBullsEyes();
+
+		this.animateUfoBoss();
+		this.animateUfoBossRockets();
+		this.animateUfoBossRocketSeekings();
+
+		this.animateZombieBoss();
+		this.animateZombieBossRocketBlocks();
+
+		this.animateMafiaBoss();
+		this.animateMafiaBossRockets();
+		this.animateMafiaBossRocketBullsEyes();
+
+		this.animateUfoEnemys();
+		this.animateUfoEnemyRockets();
+
+		this.animateHealthPickups();
+		this.animatePowerUpPickups();
+
+		this.animateCastShadows();
+
+		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
+			this.animateSideWalksBottom();
+			//this.animateSideWalkPillarsBottom();
+		}
+
+		//this.animateClouds();
+		this.animateOnScreenMessage();
+		this.animateMessageBubbles();
+	}
+
+	//#endregion
+
+	//#region Game
+
+	private gainScore(airEnemyBusted: boolean = true) {
+
+		// TODO: set this to 0 after testing
+		let score = 0;
+
+		if (airEnemyBusted) {
+			switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
+				case PlayerAirBombTemplate.GRAVITY_BALL: { score += 1; } break;
+				case PlayerAirBombTemplate.MISSILE: { score += 2; } break;
+				case PlayerAirBombTemplate.BULLET_BALL: { score += 3; } break;
+				default: { score += 1; } break;
+			}
+		}
+		else {
+			switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
+				case PlayerGroundBombTemplate.GRENADE: { score += 1; } break;
+				case PlayerGroundBombTemplate.TRASH_BIN: { score += 2; } break;
+				case PlayerGroundBombTemplate.DYNAMITE: { score += 3; } break;
+				default: { score += 1; } break;
+			}
+		}
+
+		this.gameScoreBar.gainScore(score);
+	}
+
+	private resumeGame() {
+		if (this.anyBossExists()) {
+			SoundManager.resume(SoundType.BOSS_BACKGROUND_MUSIC);
+
+			if (this.anyInAirBossExists()) {
+				SoundManager.resume(SoundType.UFO_HOVERING);
+			}
+		}
+		else {
+			SoundManager.resume(SoundType.GAME_BACKGROUND_MUSIC);
+		}
+
+		if (this.ufoEnemyExists()) {
+			SoundManager.resume(SoundType.UFO_HOVERING);
+		}
+
+		SoundManager.resume(SoundType.AMBIENCE);
+
+		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
+			case 0: { } break;
+			case 1: { SoundManager.resume(SoundType.CHOPPER_HOVERING); } break;
+			default:
+		}
+
+		if (this.onScreenMessage.isAnimating == true && this.onScreenMessage.getText() == "Game paused") {
+			this.onScreenMessage.disableRendering();
+		}
+
+		this.sceneContainer.filters = null;
+	}
+
+	private pauseGame() {
+		if (this.anyBossExists()) {
+			SoundManager.pause(SoundType.BOSS_BACKGROUND_MUSIC);
+
+			if (this.anyInAirBossExists()) {
+				SoundManager.pause(SoundType.UFO_HOVERING);
+			}
+		}
+		else {
+			SoundManager.pause(SoundType.GAME_BACKGROUND_MUSIC);
+		}
+
+		if (this.ufoEnemyExists()) {
+			SoundManager.pause(SoundType.UFO_HOVERING);
+		}
+
+		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
+			case 0: { } break;
+			case 1: { SoundManager.pause(SoundType.CHOPPER_HOVERING); } break;
+			default:
+		}
+
+		SoundManager.pause(SoundType.AMBIENCE);
+
+		this.generateOnScreenMessage("Game paused", this.behindBackIcon);
+
+		this.sceneContainer.filters = [new BlurFilter()];
+	}
+
+	private gameOver() {
+		SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
+		SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
+		SoundManager.stop(SoundType.UFO_HOVERING);
+		SoundManager.stop(SoundType.UFO_BOSS_ENTRY);
+		SoundManager.stop(SoundType.UFO_ENEMY_ENTRY);
+		SoundManager.stop(SoundType.AMBIENCE);
+		SoundManager.stop(SoundType.CHOPPER_HOVERING);
+
+		Constants.GAME_SCORE = this.gameScoreBar.getScore();
+		Constants.GAME_LEVEL = this.gameLevelBar.getScore();
+
+		this.stageMask.destroy();
+		this.stageColor.destroy();
+
+		this.removeChild(this.sceneContainer);
+		this.sceneContainer.destroy();
+		SceneManager.changeScene(new GameOverScene());
+	}
+
+	private levelUp() {
+		SoundManager.play(SoundType.LEVEL_UP);
+		this.gameLevelBar.gainScore(1);
+		this.generateOnScreenMessage("Gained Lvl " + this.gameLevelBar.getScore().toString(), this.cheerIcon);
 	}
 
 	//#endregion
@@ -3888,299 +4193,6 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	//#endregion
-
-	//#endregion
-
-	//#region Scene
-
-	public update() {
-		this.processFrame();
-	}
-
-	public resize(scale: number): void {
-
-		if (SceneManager.width < SceneManager.height) {
-			this.gameController.pauseGame();
-		}
-		else {
-			this.sceneContainer.scale.set(scale);
-			this.gameController.resize();
-
-			this.repositionGameScoreBar();
-			this.repositionPlayerHealthBar();
-			this.repositionBossHealthBar();
-			this.repositionPowerUpBar();
-
-			let color = this.stageColors[Constants.getRandomNumber(0, this.stageColors.length - 1)];
-			this.stageColor.clear().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
-			this.stageMask.clear().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
-
-			this.sceneBoundaryWidth = Constants.DEFAULT_GAME_VIEW_WIDTH * (SceneManager.scaling * 1.20);
-			this.sceneBoundaryHeight = Constants.DEFAULT_GAME_VIEW_HEIGHT * (SceneManager.scaling * 1.35);
-		}
-	}
-
-	private processFrame() {
-
-		if (!this.gameController.isPaused) {
-			this.generateGameObjects();
-			this.animateGameObjects();
-			this.gameController.update();
-		}
-	}
-
-	private spawnGameObjects() {
-
-		this.spawnRoadMarks();
-		this.spawnSideWalksTop();
-
-		this.spawnVehicleEnemys();
-		this.spawnVehicleBosss();
-
-		this.spawnHonks();
-		this.spawnVehicleBossRockets();
-
-		this.spawnSideWalksBottom();
-		this.spawnBlowSmokeExplosions();
-		this.spawnRingSmokeExplosions();
-
-		this.spawnPlayerGroundBombs();
-		this.spawnPlayerAirBombs();
-		this.spawnPlayerAirBombBullsEyes();
-		this.spawnPlayerBalloon();
-
-		this.spawnUfoBossRockets();
-		this.spawnUfoBossRocketSeekings();
-		this.spawnUfoBosss();
-
-		this.spawnZombieBosss();
-		this.spawnZombieBossRocketBlocks();
-
-		this.spawnMafiaBosss();
-		this.spawnMafiaBossRockets();
-		this.spawnMafiaBossRocketBullsEyes();
-
-		this.spawnUfoEnemyRockets();
-		this.spawnUfoEnemys();
-
-		this.spawnFlashExplosions();
-		this.spawnRingFireExplosions();
-		this.spawnGrandExplosionRings();
-
-		this.spawnHealthPickups();
-		this.spawnPowerUpPickups();
-
-		this.spawnMessageBubbles();
-
-		//this.spawnSideWalkPillarsBottom();
-	}
-
-	private generateGameObjects() {
-
-		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
-			this.generateRoadMarks();
-			this.generateSideWalksTop();
-		}
-
-		this.generateVehicleEnemys();
-		this.generateVehicleBoss();
-		this.generateVehicleBossRockets();
-
-		this.generateUfoBoss();
-		this.generateUfoBossRockets();
-		this.generateUfoBossRocketSeekings();
-
-		this.generateZombieBoss();
-		this.generateZombieBossRocketBlocks();
-
-		this.generateMafiaBoss();
-		this.generateMafiaBossRockets();
-		this.generateMafiaBossRocketBullsEyes();
-
-		this.generateUfoEnemys();
-
-		this.generateHealthPickups();
-		this.generatePowerUpPickups();
-
-		//this.generateClouds();
-
-		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
-			this.generateSideWalksBottom();
-			//this.generateSideWalkPillarsBottom();
-		}
-
-		this.generateBossDeathExplosions();
-		this.generateBossLowHealthExplosions();
-		this.generatePlayerLowHealthExplosions();
-	}
-
-	private animateGameObjects() {
-
-		this.animatePlayerBalloon();
-
-		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
-			this.animateRoadMarks();
-			this.animateSideWalksTop();
-		}
-
-		this.animateVehicleEnemys();
-		this.animateVehicleBoss();
-		this.animateVehicleBossRockets();
-
-		this.animateHonks();
-
-		this.animatePlayerGroundBombs();
-		this.animateFlashExplosions();
-		this.animateBlowSmokeExplosions();
-		this.animateRingSmokeExplosions();
-		this.animateRingFireExplosions();
-		this.animateGrandExplosionRings();
-		this.animatePlayerAirBombs();
-		this.animatePlayerAirBombBullsEyes();
-
-		this.animateUfoBoss();
-		this.animateUfoBossRockets();
-		this.animateUfoBossRocketSeekings();
-
-		this.animateZombieBoss();
-		this.animateZombieBossRocketBlocks();
-
-		this.animateMafiaBoss();
-		this.animateMafiaBossRockets();
-		this.animateMafiaBossRocketBullsEyes();
-
-		this.animateUfoEnemys();
-		this.animateUfoEnemyRockets();
-
-		this.animateHealthPickups();
-		this.animatePowerUpPickups();
-
-		this.animateCastShadows();
-
-		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
-			this.animateSideWalksBottom();
-			//this.animateSideWalkPillarsBottom();
-		}
-
-		//this.animateClouds();
-		this.animateOnScreenMessage();
-		this.animateMessageBubbles();
-	}
-
-	//#endregion
-
-	//#region Game
-
-	private gainScore(airEnemyBusted: boolean = true) {
-
-		// TODO: set this to 0 after testing
-		let score = 0;
-
-		if (airEnemyBusted) {
-			switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
-				case PlayerAirBombTemplate.GRAVITY_BALL: { score += 1; } break;
-				case PlayerAirBombTemplate.MISSILE: { score += 2; } break;
-				case PlayerAirBombTemplate.BULLET_BALL: { score += 3; } break;
-				default: { score += 1; } break;
-			}
-		}
-		else {
-			switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
-				case PlayerGroundBombTemplate.GRENADE: { score += 1; } break;
-				case PlayerGroundBombTemplate.TRASH_BIN: { score += 2; } break;
-				case PlayerGroundBombTemplate.DYNAMITE: { score += 3; } break;
-				default: { score += 1; } break;
-			}
-		}
-
-		this.gameScoreBar.gainScore(score);
-	}
-
-	private resumeGame() {
-		if (this.anyBossExists()) {
-			SoundManager.resume(SoundType.BOSS_BACKGROUND_MUSIC);
-
-			if (this.anyInAirBossExists()) {
-				SoundManager.resume(SoundType.UFO_HOVERING);
-			}
-		}
-		else {
-			SoundManager.resume(SoundType.GAME_BACKGROUND_MUSIC);
-		}
-
-		if (this.ufoEnemyExists()) {
-			SoundManager.resume(SoundType.UFO_HOVERING);
-		}
-
-		SoundManager.resume(SoundType.AMBIENCE);
-
-		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
-			case 0: { } break;
-			case 1: { SoundManager.resume(SoundType.CHOPPER_HOVERING); } break;
-			default:
-		}
-
-		if (this.onScreenMessage.isAnimating == true && this.onScreenMessage.getText() == "Game paused") {
-			this.onScreenMessage.disableRendering();
-		}
-
-		this.sceneContainer.filters = null;
-	}
-
-	private pauseGame() {
-		if (this.anyBossExists()) {
-			SoundManager.pause(SoundType.BOSS_BACKGROUND_MUSIC);
-
-			if (this.anyInAirBossExists()) {
-				SoundManager.pause(SoundType.UFO_HOVERING);
-			}
-		}
-		else {
-			SoundManager.pause(SoundType.GAME_BACKGROUND_MUSIC);
-		}
-
-		if (this.ufoEnemyExists()) {
-			SoundManager.pause(SoundType.UFO_HOVERING);
-		}
-
-		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
-			case 0: { } break;
-			case 1: { SoundManager.pause(SoundType.CHOPPER_HOVERING); } break;
-			default:
-		}
-
-		SoundManager.pause(SoundType.AMBIENCE);
-
-		this.generateOnScreenMessage("Game paused", this.behindBackIcon);
-
-		this.sceneContainer.filters = [new BlurFilter()];
-	}
-
-	private gameOver() {
-		SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
-		SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
-		SoundManager.stop(SoundType.UFO_HOVERING);
-		SoundManager.stop(SoundType.UFO_BOSS_ENTRY);
-		SoundManager.stop(SoundType.UFO_ENEMY_ENTRY);
-		SoundManager.stop(SoundType.AMBIENCE);
-		SoundManager.stop(SoundType.CHOPPER_HOVERING);
-
-		Constants.GAME_SCORE = this.gameScoreBar.getScore();
-		Constants.GAME_LEVEL = this.gameLevelBar.getScore();
-
-		this.stageMask.destroy();
-		this.stageColor.destroy();
-
-		this.removeChild(this.sceneContainer);
-		this.sceneContainer.destroy();
-		SceneManager.changeScene(new GameOverScene());
-	}
-
-	private levelUp() {
-		SoundManager.play(SoundType.LEVEL_UP);
-		this.gameLevelBar.gainScore(1);
-		this.generateOnScreenMessage("Gained Lvl " + this.gameLevelBar.getScore().toString(), this.cheerIcon);
-	}
 
 	//#endregion
 

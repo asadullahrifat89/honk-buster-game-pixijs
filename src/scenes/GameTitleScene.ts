@@ -126,9 +126,7 @@ export class GameTitleScene extends Container implements IScene {
 
 	//#region Rings
 
-	private ringSize = { width: 50, height: 50 };
 	private ringGameObjects: Array<GameObjectContainer> = [];
-
 	private readonly ringPopDelayDefault: number = 15 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private ringPopDelay: number = 0;
 
@@ -139,7 +137,7 @@ export class GameTitleScene extends Container implements IScene {
 			const gameObject: GameObjectContainer = new GameObjectContainer();
 			gameObject.disableRendering();
 			gameObject.expandSpeed = 0.1;
-			gameObject.addChild(new Graphics().lineStyle(1, 0xffffff).drawCircle(0, 0, this.ringSize.width));
+			gameObject.addChild(new Graphics().lineStyle(1, 0xffffff).drawCircle(0, 0, 50));
 			gameObject.filters = [new BlurFilter()];
 			this.ringGameObjects.push(gameObject);
 			this.addChild(gameObject);
@@ -147,6 +145,7 @@ export class GameTitleScene extends Container implements IScene {
 	}
 
 	private generateRings() {
+
 		this.ringPopDelay -= 0.1;
 
 		if (this.ringPopDelay < 0) {
@@ -171,10 +170,9 @@ export class GameTitleScene extends Container implements IScene {
 		if (animatingRings) {
 
 			animatingRings.forEach(gameObject => {
-				//gameObject.fade();
 				gameObject.expand();
 
-				if (gameObject.scale.x >= 20) {
+				if (gameObject.scale.x >= 25) {
 					gameObject.disableRendering();
 				}
 			});
