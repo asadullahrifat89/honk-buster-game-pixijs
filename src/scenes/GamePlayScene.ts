@@ -243,22 +243,19 @@ export class GamePlayScene extends Container implements IScene {
 
 		for (let j = 0; j < 5; j++) {
 
-			const gameObject: Honk = new Honk(0);
-			gameObject.disableRendering();
+			const honk: Honk = new Honk(Constants.DEFAULT_CONSTRUCT_SPEED);
+			honk.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HONK));
-
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.honkSize.width;
 			sprite.height = this.honkSize.height;
-
 			sprite.anchor.set(0.5, 0.5);
+			honk.addChild(sprite);
 
-			gameObject.addChild(sprite);
-
-			this.honkGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
+			this.honkGameObjects.push(honk);
+			this.sceneContainer.addChild(honk);
 		}
 	}
 
@@ -266,13 +263,13 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (source.getLeft() - 25 > 0 && source.getTop() - 25 > 0) {
 
-			var gameObject = this.honkGameObjects.find(x => x.isAnimating == false);
+			var honk = this.honkGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.reset();
-				gameObject.reposition(source);
-				gameObject.setPopping();
-				gameObject.enableRendering();
+			if (honk) {
+				honk.reset();
+				honk.reposition(source);
+				//honk.setPopping();
+				honk.enableRendering();
 			}
 		}
 	}
@@ -283,12 +280,14 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (animatingHonks) {
 
-			animatingHonks.forEach(gameObject => {
-				gameObject.pop();
-				gameObject.fade();
+			animatingHonks.forEach(honk => {
+				//honk.pop();
+				honk.fade();
+				honk.expand();
+				honk.moveDownRight();
 
-				if (gameObject.hasFaded()) {
-					gameObject.disableRendering();
+				if (honk.hasFaded()) {
+					honk.disableRendering();
 				}
 			});
 		}

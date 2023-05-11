@@ -300,8 +300,8 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_5"),
 
 		new ConstructTemplate(ConstructType.HONK, "honk_1"),
-		new ConstructTemplate(ConstructType.HONK, "honk_2"),
-		new ConstructTemplate(ConstructType.HONK, "honk_3"),
+		//new ConstructTemplate(ConstructType.HONK, "honk_2"),
+		//new ConstructTemplate(ConstructType.HONK, "honk_3"),
 
 		new ConstructTemplate(ConstructType.PLAYER_RIDE, "player_1_character"),
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, "player_balloon_1_idle"),
