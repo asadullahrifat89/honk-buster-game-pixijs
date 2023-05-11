@@ -268,7 +268,7 @@ export class GamePlayScene extends Container implements IScene {
 			if (honk) {
 				honk.reset();
 				honk.reposition(source);
-				//honk.setPopping();
+				honk.setPopping();
 				honk.enableRendering();
 			}
 		}
@@ -281,10 +281,10 @@ export class GamePlayScene extends Container implements IScene {
 		if (animatingHonks) {
 
 			animatingHonks.forEach(honk => {
-				//honk.pop();
+				honk.pop();
 				honk.fade();
-				honk.expand();
-				honk.moveDownRight();
+				//honk.expand();
+				//honk.moveDownRight();
 
 				if (honk.hasFaded()) {
 					honk.disableRendering();
