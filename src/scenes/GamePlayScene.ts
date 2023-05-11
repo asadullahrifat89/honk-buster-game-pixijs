@@ -236,7 +236,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Honks
 
-	private honkSize = { width: 125, height: 125 };
+	private honkSize = { width: 80, height: 80 };
 	private honkGameObjects: Array<Honk> = [];
 
 	private spawnHonks() {
@@ -283,8 +283,6 @@ export class GamePlayScene extends Container implements IScene {
 			animatingHonks.forEach(honk => {
 				honk.pop();
 				honk.fade();
-				//honk.expand();
-				//honk.moveDownRight();
 
 				if (honk.hasFaded()) {
 					honk.disableRendering();
