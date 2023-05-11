@@ -36,7 +36,8 @@ export class GameTitleScene extends Container implements IScene {
 		this.bg_container.addChild(bg_sprite);
 		this.uiContainer.addChild(this.bg_container);
 
-		// title
+		//#region title
+
 		const title = new Text("HONKY ROADS", {
 			fontFamily: Constants.GAME_TITLE_FONT,
 			align: "center",
@@ -47,7 +48,10 @@ export class GameTitleScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
-		// tag line
+		//#endregion
+
+		//#region tag line
+
 		const subTitle = new Text("A honk pollution fighting saga", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
@@ -58,7 +62,10 @@ export class GameTitleScene extends Container implements IScene {
 		subTitle.y = (this.uiContainer.height / 2 - subTitle.height / 2) - 65;
 		this.uiContainer.addChild(subTitle);
 
-		// how to play button
+		//#endregion
+
+		//#region how to play button
+
 		const howToPlayButtonButton = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.uiContainer);
@@ -69,7 +76,10 @@ export class GameTitleScene extends Container implements IScene {
 		howToPlayButtonButton.setPosition(this.uiContainer.width / 2 - howToPlayButtonButton.width / 2, (this.uiContainer.height / 2 - howToPlayButtonButton.height / 2));
 		this.uiContainer.addChild(howToPlayButtonButton);
 
-		// play button
+		//#endregion
+
+		//#region play button
+
 		const newGameButton = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.uiContainer);
@@ -79,6 +89,8 @@ export class GameTitleScene extends Container implements IScene {
 		}).setText("Play");
 		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, (this.uiContainer.height / 2 - newGameButton.height / 2) + 65);
 		this.uiContainer.addChild(newGameButton);
+
+		//#endregion
 
 		const bottomline = new Text("- Made with ❤️ & PixiJS -", {
 			fontFamily: "diloworld",
