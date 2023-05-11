@@ -236,7 +236,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Honks
 
-	private honkSize = { width: 80, height: 80 };
+	private honkSize = { width: 90, height: 90 };
 	private honkGameObjects: Array<Honk> = [];
 
 	private spawnHonks() {
