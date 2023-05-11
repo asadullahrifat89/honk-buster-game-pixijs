@@ -1037,7 +1037,8 @@ export class GamePlayScene extends Container implements IScene {
 						this.generateExplosionRing(anyBoss);
 
 						if (vehicleBoss) {
-							vehicleBoss.setHopping();
+							vehicleBoss.setHopping(); // set it to hop just when explosion ring blasts
+							vehicleBoss.setDestroyed(); // once blast explosion finishes set it to grayscale
 						}
 					}
 				}
@@ -2428,7 +2429,7 @@ export class GamePlayScene extends Container implements IScene {
 				vehicleBoss.dillyDally();				
 
 				if (vehicleBoss.isAttacking) {
-					vehicleBoss.move(this.sceneBoundaryWidth, this.sceneBoundaryHeight);
+					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH, Constants.DEFAULT_GAME_VIEW_HEIGHT);
 
 					if (vehicleBoss.honk()) {
 						this.generateHonk(vehicleBoss);
@@ -2439,7 +2440,7 @@ export class GamePlayScene extends Container implements IScene {
 				else {
 					// when all vehicles are out of view or have passed to the bottom right corner
 					if (this.vehicleEnemyGameObjects.every(x => x.isAnimating == false ||
-						this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > ((Constants.DEFAULT_GAME_VIEW_WIDTH * SceneManager.scaling) / 3) * 2))) {
+						this.vehicleEnemyGameObjects.filter(x => x.isAnimating).every(x => x.getLeft() > (Constants.DEFAULT_GAME_VIEW_WIDTH / 3) * 2))) {
 						vehicleBoss.isAttacking = true;
 					}
 				}
@@ -2447,6 +2448,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			if (vehicleBoss.isDead() && vehicleBoss.x - vehicleBoss.width > Constants.DEFAULT_GAME_VIEW_WIDTH || vehicleBoss.y - vehicleBoss.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 				vehicleBoss.disableRendering();
+				console.log("vehicle boss died.");
 			}
 		}
 	}

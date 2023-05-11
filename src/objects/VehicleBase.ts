@@ -1,7 +1,10 @@
-﻿import { Constants } from '../Constants';
+﻿import { GrayscaleFilter } from '@pixi/filter-grayscale';
+import { Constants } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 
 export class VehicleBase extends GameObjectContainer {
+
+	private grayScaleFilter: GrayscaleFilter = new GrayscaleFilter();
 
 	private honkDelay: number = 0;
 	public willHonk: boolean = false;
@@ -137,6 +140,10 @@ export class VehicleBase extends GameObjectContainer {
 
 	setHonkDelay() {
 		this.honkDelay = Constants.getRandomNumber(40, 80);
+	}
+
+	setDestroyed() {
+		this.filters = [this.grayScaleFilter];
 	}
 }
 

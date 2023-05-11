@@ -1,11 +1,9 @@
 ﻿import { Constants, ConstructType } from '../Constants';
 import { VehicleBase } from './VehicleBase';
-import { GrayscaleFilter } from '@pixi/filter-grayscale';
 import { Texture } from 'pixi.js';
 
 export class VehicleEnemy extends VehicleBase {
-
-	private grayScaleFilter: GrayscaleFilter = new GrayscaleFilter();
+	
 	public vehicleType: number = 0;
 
 	constructor(speed: number) {
@@ -57,7 +55,7 @@ export class VehicleEnemy extends VehicleBase {
 		if (this.speed > Constants.DEFAULT_CONSTRUCT_SPEED)
 			this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 
-		this.filters = [this.grayScaleFilter];
+		this.setDestroyed();
 		this.setDillyDallySpeed(0);		
 	}	
 }
