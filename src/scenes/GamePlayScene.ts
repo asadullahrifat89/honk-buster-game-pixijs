@@ -1023,7 +1023,7 @@ export class GamePlayScene extends Container implements IScene {
 					anyBoss = mafiaBoss;
 				}
 
-				if (anyBoss) {					
+				if (anyBoss) {
 					this.generateRingFireExplosion(anyBoss);
 					//this.generateRingSmokeExplosion(anyBoss);
 					SoundManager.play(SoundType.AIR_BOMB_BLAST);
@@ -4171,7 +4171,7 @@ export class GamePlayScene extends Container implements IScene {
 		SoundManager.stop(SoundType.CHOPPER_HOVERING);
 
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
-		Constants.GAME_LEVEL = this.gameLevelBar.getScore();
+		Constants.GAME_LEVEL = this.gameLevelBar.getScore() + 10;
 
 		this.stageMask.destroy();
 		this.stageColor.destroy();

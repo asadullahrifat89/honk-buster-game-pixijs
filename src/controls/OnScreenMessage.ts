@@ -57,12 +57,16 @@ export class OnScreenMessage {
 
 	reset() {
 		this.messageOnScreenDelay = this.messageOnScreenDelayDefault;
+		this.messageContainer.alpha = 1;
 	}
 
 	depleteOnScreenDelay() {
-		this.messageContainer.pop();
-		this.messageContainer.y -= 0.1;
+		this.messageContainer.pop();		
 		this.messageOnScreenDelay -= 0.1;
+		this.messageContainer.y -= 0.5; // move the message up a little bit
+
+		if (this.messageOnScreenDelay < 7)
+			this.messageContainer.alpha -= 0.05; // decrease opacity fast after a while
 	}
 
 	isDepleted() {

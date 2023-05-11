@@ -136,7 +136,7 @@ export class GameOverScene extends Container implements IScene {
 		const attack = this.attack;
 		attack.filters = [new GrayscaleFilter(), new BlurFilter()];
 
-		const attack_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_AIR_BOMB));
+		const attack_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_GROUND_BOMB));
 		attack_sprite.width = 256 / 3;
 		attack_sprite.height = 256 / 3;
 		attack_sprite.x = 0;
@@ -214,7 +214,7 @@ export class GameOverScene extends Container implements IScene {
 					this.attack.pop();
 
 					if (!this.attack.isAwaitingPop) {
-						this.showUnlockMessage("+" + Constants.ATTACK_LEVEL_MAX.toString() + " Bombs Acquired!", Constants.getRandomTexture(ConstructType.PLAYER_AIR_BOMB));
+						this.showUnlockMessage("+" + Constants.ATTACK_LEVEL_MAX.toString() + " Bombs Activated!", Constants.getRandomTexture(ConstructType.PLAYER_AIR_BOMB));
 					}
 				}
 				else if (Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL && !Constants.CHOPPER_UNLOCKED) {
