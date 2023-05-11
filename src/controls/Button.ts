@@ -2,6 +2,7 @@
 import { OutlineFilter } from "@pixi/filter-outline";
 import { Container, DisplayObject, FederatedPointerEvent, Graphics, Text, TextStyle, TextStyleAlign } from "pixi.js";
 import { Constants, SoundType } from "../Constants";
+import { SceneManager } from "../managers/SceneManager";
 import { SoundManager } from "../managers/SoundManager";
 
 
@@ -29,12 +30,16 @@ export class Button extends Container {
 		this.buttonText = new Text(); // this is not added yet
 
 		this.on("pointertap", () => {
+			if (!SceneManager.interacted)
+				SceneManager.interacted = true;
+
 			if (this.buttonIsEnabled) {
 				onPressed();
 			}
 			else {
 				SoundManager.play(SoundType.DAMAGE_TAKEN);
-			}				
+			}
+
 		}, this);
 		this.on('pointerover', this.onButtonOver, this);
 		this.on('pointerout', this.onButtonOut, this);
