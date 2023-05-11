@@ -253,6 +253,9 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 		this.uiContainer.addChild(button);
 
 		//#endregion
+
+		if (!SoundManager.isPlaying(SoundType.GAME_INTRO_MUSIC))
+			SoundManager.play(SoundType.GAME_INTRO_MUSIC, 0.8);
 	}
 
 	private allSelectionsComplete(): boolean {

@@ -188,6 +188,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 
 		// start background sounds
+		SoundManager.stop(SoundType.GAME_INTRO_MUSIC);
 		SoundManager.play(SoundType.AMBIENCE, 0.3, true);
 		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.3, true);
 		SoundManager.play(SoundType.GAME_START);
