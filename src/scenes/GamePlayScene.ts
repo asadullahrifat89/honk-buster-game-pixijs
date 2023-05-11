@@ -223,7 +223,7 @@ export class GamePlayScene extends Container implements IScene {
 			});
 		}
 
-		var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false || x.source.isBlasting || x.source.isDropped || x.source.isDead());
+		var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false || x.source.isBlasting || x.source.isDroppedOnGround || x.source.isDead());
 
 		if (nonAnimatingCastShadows) {
 
@@ -1426,7 +1426,7 @@ export class GamePlayScene extends Container implements IScene {
 						} break;
 						case PlayerGroundBombTemplate.DYNAMITE: {
 
-							if (playerGroundBomb.isDropped) {
+							if (playerGroundBomb.isDroppedOnGround) {
 
 								if (!this.isBossDeathExploding()) { // do not move the bomb is boss death explosion is happening
 
@@ -1468,7 +1468,7 @@ export class GamePlayScene extends Container implements IScene {
 							}
 							else {
 								playerGroundBomb.move();
-								playerGroundBomb.awaitDrop();
+								playerGroundBomb.awaitToDropOnGround();
 							}
 						} break;
 						default: break;
@@ -1965,6 +1965,7 @@ export class GamePlayScene extends Container implements IScene {
 			animatingUfoEnemys.forEach(gameObject => {
 				if (gameObject.isDead()) {
 					gameObject.shrink();
+					//TODO: drop ufo
 				}
 				else {
 					gameObject.pop();
@@ -1977,13 +1978,11 @@ export class GamePlayScene extends Container implements IScene {
 				if (ufoEnemy) {
 
 					// generate honk
-
 					if (!this.anyBossExists() && ufoEnemy.honk()) {
 						this.generateHonk(gameObject);
 					}
 
 					// fire orbs
-
 					if (!this.anyBossExists() && ufoEnemy.attack()) {
 						this.generateUfoEnemyRockets(ufoEnemy);
 					}
@@ -2414,7 +2413,6 @@ export class GamePlayScene extends Container implements IScene {
 		var vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
 
 		if (vehicleBoss) {
-
 			vehicleBoss.hop();
 			vehicleBoss.pop();
 			vehicleBoss.recoverFromHealthLoss();
@@ -2454,7 +2452,6 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	private looseVehicleBosshealth(vehicleBoss: VehicleBoss) {
-
 		vehicleBoss.setHopping();
 		vehicleBoss.setPopping();
 		vehicleBoss.looseHealth();

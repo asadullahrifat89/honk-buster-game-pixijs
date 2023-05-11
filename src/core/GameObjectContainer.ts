@@ -32,7 +32,7 @@ export class GameObjectContainer extends Container {
 	public isAwaitingPop: boolean = false;
 	public isAwaitingHop: boolean = false;
 	public isBlasting: boolean = false;
-	public isDropped: boolean = false;
+	public isDroppedOnGround: boolean = false;
 
 	public awaitMoveUp: boolean = false;
 	public awaitMoveDown: boolean = false;
