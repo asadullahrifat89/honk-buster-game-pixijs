@@ -603,6 +603,7 @@ export class GameInstructionsScene extends Container implements IScene {
 			}
 			else {
 				this.removeChild(this.uiContainer);
+				this.uiContainer.destroy();
 				SceneManager.changeScene(new GameTitleScene());
 			}
 
@@ -618,6 +619,7 @@ export class GameInstructionsScene extends Container implements IScene {
 
 		if (SceneManager.width < SceneManager.height) {
 			this.removeChild(this.uiContainer);
+			this.uiContainer.destroy();
 			SceneManager.changeScene(new ScreenOrientationScene());
 		}
 		else {

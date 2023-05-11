@@ -88,6 +88,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 
 			SoundManager.play(SoundType.ITEM_SELECT);
 			this.removeChild(this.uiContainer);
+			this.uiContainer.destroy();
 			SceneManager.changeScene(new PlayerCharacterSelectionScene());
 
 		}).setBackground(character_sprite);
@@ -129,6 +130,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 
 			SoundManager.play(SoundType.ITEM_SELECT);
 			this.removeChild(this.uiContainer);
+			this.uiContainer.destroy();
 			SceneManager.changeScene(new PlayerRideSelectionScene());
 
 		}).setBackground(ride_sprite);
@@ -174,6 +176,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 
 			SoundManager.play(SoundType.ITEM_SELECT);
 			this.removeChild(this.uiContainer);
+			this.uiContainer.destroy();
 			SceneManager.changeScene(new PlayerGroundBombSelectionScene());
 
 		}).setBackground(ground_bomb_sprite);
@@ -219,6 +222,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 
 			SoundManager.play(SoundType.ITEM_SELECT);
 			this.removeChild(this.uiContainer);
+			this.uiContainer.destroy();
 			SceneManager.changeScene(new PlayerAirBombSelectionScene());
 
 		}).setBackground(air_bomb_sprite);
@@ -237,6 +241,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			if (button.getIsEnabled()) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
+				this.uiContainer.destroy();
 				SceneManager.changeScene(new GamePlayScene());
 			}
 			else {
@@ -261,6 +266,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 
 		if (SceneManager.width < SceneManager.height) {
 			this.removeChild(this.uiContainer);
+			this.uiContainer.destroy();
 			SceneManager.changeScene(new ScreenOrientationScene());
 		}
 		else {

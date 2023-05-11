@@ -4200,6 +4200,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.stageColor.destroy();
 
 		this.removeChild(this.sceneContainer);
+		this.sceneContainer.destroy();
 		SceneManager.changeScene(new GameOverScene());
 	}
 

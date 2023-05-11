@@ -67,7 +67,8 @@ export class Joystick extends Container {
 
 	protected bindEvents() {
 		let that = this;
-		this.interactive = true;
+		/*this.interactive = true;*/
+		this.eventMode = 'dynamic';
 
 		let dragging: boolean = false;
 		//let eventData: InteractionData;

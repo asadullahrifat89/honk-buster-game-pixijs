@@ -113,6 +113,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			if (button.getIsEnabled()) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
+				this.uiContainer.destroy();
 				SceneManager.changeScene(new PlayerGearSelectionScene());
 			}
 			else {
@@ -131,6 +132,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 
 		if (SceneManager.width < SceneManager.height) {
 			this.removeChild(this.uiContainer);
+			this.uiContainer.destroy();
 			SceneManager.changeScene(new ScreenOrientationScene());
 		}
 		else {

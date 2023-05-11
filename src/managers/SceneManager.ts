@@ -32,12 +32,13 @@ export class SceneManager {
 			backgroundColor: background,
 			width: width,
 			height: height,
-			sharedTicker: true,
+			//sharedTicker: true,
 		});
 
 		// Add the ticker
 		SceneManager.app.ticker.minFPS = 55;
 		SceneManager.app.ticker.maxFPS = 60;
+		
 		SceneManager.app.ticker.add(SceneManager.update)
 
 		// listen for the browser telling us that the screen size changed
@@ -129,21 +130,21 @@ export class SceneManager {
 			SceneManager.currentScene.update();
 		}
 
-		// SceneManager.logFPS();			
+		//SceneManager.logFPS();
 
 		// I HATE the "frame passed" approach. I would rather use `Manager.app.ticker.deltaMS`
 	}
 
-	// private static fpsPrintDelay: number = 8;
+	//private static fpsPrintDelay: number = 6;
 
-	// private static logFPS() {
-	// 	SceneManager.fpsPrintDelay -= 0.1;
+	//private static logFPS() {
+	//	SceneManager.fpsPrintDelay -= 0.1;
 
-	// 	if (SceneManager.fpsPrintDelay <= 0) {
-	// 		console.log("FPS: " + SceneManager.app.ticker.FPS);
-	// 		SceneManager.fpsPrintDelay = 10;
-	// 	}
-	// }
+	//	if (SceneManager.fpsPrintDelay <= 0) {
+	//		console.log("FPS: " + SceneManager.app.ticker.FPS);
+	//		SceneManager.fpsPrintDelay = 10;
+	//	}
+	//}
 
 	//#endregion
 }

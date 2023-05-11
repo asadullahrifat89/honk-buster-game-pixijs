@@ -62,6 +62,7 @@ export class GameTitleScene extends Container implements IScene {
 		const howToPlayButtonButton = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.uiContainer);
+			this.uiContainer.destroy();
 			SceneManager.changeScene(new GameInstructionsScene());
 
 		}).setText("How To Play");
@@ -72,6 +73,7 @@ export class GameTitleScene extends Container implements IScene {
 		const newGameButton = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.uiContainer);
+			this.uiContainer.destroy();
 			SceneManager.changeScene(new PlayerGearSelectionScene());
 
 		}).setText("Play");
@@ -97,6 +99,7 @@ export class GameTitleScene extends Container implements IScene {
 
 		if (SceneManager.width < SceneManager.height) {
 			this.removeChild(this.uiContainer);
+			this.uiContainer.destroy();
 			SceneManager.changeScene(new ScreenOrientationScene());
 		}
 		else {
