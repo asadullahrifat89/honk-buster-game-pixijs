@@ -107,7 +107,7 @@ export class GameTitleScene extends Container implements IScene {
 		this.uiContainer.addChild(bottomline);
 
 		this.overlay = new GameObjectContainer();
-		this.overlay.expandSpeed = 0.2;
+		this.overlay.expandSpeed = 0.4;
 		this.overlay.addChild(new Graphics().lineStyle(250, 0x1f2a36).drawCircle(0, 0, 150));
 		this.overlay.setPosition(SceneManager.width / 2, SceneManager.height / 2);
 		this.addChild(this.overlay);
