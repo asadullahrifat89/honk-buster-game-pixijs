@@ -13,10 +13,11 @@ export class VehicleEnemy extends VehicleBase {
 	}
 
 	reset() {
+		this.isBlasting = false;
 		this.speed = Constants.getRandomNumber(2, 4);
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
 		this.isHonking = false;
-		this.filters = null;
+		this.filters = null;		
 
 		this.vehicleType = Constants.getRandomNumber(ConstructType.VEHICLE_ENEMY_SMALL, ConstructType.VEHICLE_ENEMY_LARGE);
 
@@ -48,6 +49,7 @@ export class VehicleEnemy extends VehicleBase {
 	}
 
 	setBlast() {
+		this.isBlasting = true;
 		this.willHonk = false;
 		this.isHonking = false;
 		this.speed = this.speed * 1.4;

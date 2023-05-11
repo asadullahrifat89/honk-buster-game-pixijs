@@ -2238,6 +2238,10 @@ export class GamePlayScene extends Container implements IScene {
 					vehicleEnemy.moveDownRight();
 				}
 
+				if (vehicleEnemy.isBlasting) {
+
+				}
+
 				// prevent overlapping
 				var vehicles = this.vehicleEnemyGameObjects.filter(x => x.isAnimating == true);
 
