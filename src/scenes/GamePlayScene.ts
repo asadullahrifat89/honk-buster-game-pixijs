@@ -1023,7 +1023,7 @@ export class GamePlayScene extends Container implements IScene {
 					anyBoss = mafiaBoss;
 				}
 
-				if (anyBoss) {					
+				if (anyBoss) {
 					this.generateRingFireExplosion(anyBoss);
 					//this.generateRingSmokeExplosion(anyBoss);
 					SoundManager.play(SoundType.AIR_BOMB_BLAST);
@@ -3871,13 +3871,13 @@ export class GamePlayScene extends Container implements IScene {
 		if (this.onScreenMessage.isAnimating == false) {
 			this.onScreenMessage.setContent(title, icon);
 			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+			this.onScreenMessage.reposition(SceneManager.width / 2, (SceneManager.height / 3) * 2);
 			this.onScreenMessage.enableRendering();
 		}
 		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
 			this.onScreenMessage.setContent(title, icon);
 			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+			this.onScreenMessage.reposition(SceneManager.width / 2, (SceneManager.height / 3) * 2);
 		}
 	}
 
