@@ -208,8 +208,9 @@ export const manifest: ResolverManifest = {
 				"rocket_blast_2": "./sounds/rocket_blast_2.mp3",
 				"rocket_blast_3": "./sounds/rocket_blast_3.mp3",
 
-				"cracker_drop_1": "./sounds/cracker_drop_1.mp3",
-				"cracker_drop_2": "./sounds/cracker_drop_2.mp3",
+				"ground_bomb_drop_1": "./sounds/ground_bomb_drop_1.mp3",
+				"ground_bomb_drop_2": "./sounds/ground_bomb_drop_2.mp3",
+				"ground_bomb_drop_3": "./sounds/ground_bomb_drop_3.mp3",
 
 				"game_over": "./sounds/game_over.mp3",
 				"game_pause": "./sounds/game_pause.mp3",

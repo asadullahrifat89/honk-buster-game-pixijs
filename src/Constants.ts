@@ -411,8 +411,9 @@ export abstract class Constants {
 
 		new SoundTemplate(SoundType.CHOPPER_HOVERING, this.soundsDirectory + "chopper_hovering.mp3"),
 
-		new SoundTemplate(SoundType.GROUND_BOMB_DROP, this.soundsDirectory + "cracker_drop_1.mp3"),
-		new SoundTemplate(SoundType.GROUND_BOMB_DROP, this.soundsDirectory + "cracker_drop_2.mp3"),
+		new SoundTemplate(SoundType.GROUND_BOMB_DROP, this.soundsDirectory + "ground_bomb_drop_1.mp3"),
+		new SoundTemplate(SoundType.GROUND_BOMB_DROP, this.soundsDirectory + "ground_bomb_drop_2.mp3"),
+		new SoundTemplate(SoundType.GROUND_BOMB_DROP, this.soundsDirectory + "ground_bomb_drop_3.mp3"),
 
 		new SoundTemplate(SoundType.GROUND_BOMB_BLAST, this.soundsDirectory + "cracker_blast_1.mp3"),
 		new SoundTemplate(SoundType.GROUND_BOMB_BLAST, this.soundsDirectory + "cracker_blast_2.mp3"),

@@ -174,6 +174,7 @@ export class GameOverScene extends Container implements IScene {
 		//#endregion
 
 		SoundManager.play(SoundType.GAME_OVER);
+		SoundManager.play(SoundType.GAME_INTRO_MUSIC, 0.8);
 
 		// set the on screen message layer
 		this.onScreenMessage = new OnScreenMessage(this);
