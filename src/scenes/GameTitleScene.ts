@@ -1,4 +1,4 @@
-﻿import { Container, Graphics, Text } from "pixi.js";
+﻿import { BlurFilter, Container, Graphics, Text } from "pixi.js";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -88,7 +88,7 @@ export class GameTitleScene extends Container implements IScene {
 			this.uiContainer.destroy();
 			SceneManager.changeScene(new PlayerGearSelectionScene());
 
-		}).setText("Play");
+		}).setText("Start Game");
 		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, (this.uiContainer.height / 2 - newGameButton.height / 2) + 65);
 		this.uiContainer.addChild(newGameButton);
 
@@ -107,7 +107,7 @@ export class GameTitleScene extends Container implements IScene {
 
 	public update() {
 		this.bg_container.hover();
-		this.generateRing();
+		this.generateRings();
 		this.animateRings();
 	}
 
@@ -140,12 +140,13 @@ export class GameTitleScene extends Container implements IScene {
 			gameObject.disableRendering();
 			gameObject.expandSpeed = 0.1;
 			gameObject.addChild(new Graphics().lineStyle(1, 0xffffff).drawCircle(0, 0, this.ringSize.width));
+			gameObject.filters = [new BlurFilter()];
 			this.ringGameObjects.push(gameObject);
 			this.addChild(gameObject);
 		}
 	}
 
-	private generateRing() {
+	private generateRings() {
 		this.ringPopDelay -= 0.1;
 
 		if (this.ringPopDelay < 0) {
