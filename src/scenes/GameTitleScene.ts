@@ -16,8 +16,6 @@ export class GameTitleScene extends Container implements IScene {
 	private uiContainer: GameObjectContainer;
 	private bg_container: GameObjectContainer;
 
-	private overlay: GameObjectContainer;
-
 	constructor() {
 		super();
 
@@ -105,26 +103,12 @@ export class GameTitleScene extends Container implements IScene {
 		bottomline.x = this.uiContainer.width / 2 - bottomline.width / 2;
 		bottomline.y = (this.uiContainer.height / 2 - bottomline.height / 2) + 250;
 		this.uiContainer.addChild(bottomline);
-
-		this.overlay = new GameObjectContainer();
-		this.overlay.expandSpeed = 0.4;
-		this.overlay.addChild(new Graphics().lineStyle(250, 0x1f2a36).drawCircle(0, 0, 150));
-		this.overlay.setPosition(SceneManager.width / 2, SceneManager.height / 2);
-		this.addChild(this.overlay);
 	}
 
 	public update() {
 		this.bg_container.hover();
 		this.generateRings();
 		this.animateRings();
-
-		if (this.overlay.scale.x <= 200) {
-			this.overlay.expand();
-		}
-		//else {
-		//	if (!this.isRingsGenOk)
-		//		this.isRingsGenOk = true;
-		//}
 	}
 
 	public resize(scale: number): void {

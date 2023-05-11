@@ -43,7 +43,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Properties
 
-	private overlay: GameObjectContainer;
+	private circleOverlay: GameObjectContainer;
 
 	private sceneContainer: GameObjectContainer;
 
@@ -192,11 +192,11 @@ export class GamePlayScene extends Container implements IScene {
 		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.3, true);
 		SoundManager.play(SoundType.GAME_START);
 
-		this.overlay = new GameObjectContainer();
-		this.overlay.expandSpeed = 0.4;
-		this.overlay.addChild(new Graphics().lineStyle(250, 0x1f2a36).drawCircle(0, 0, 150));
-		this.overlay.setPosition(SceneManager.width / 2, SceneManager.height / 2);
-		this.addChild(this.overlay);
+		this.circleOverlay = new GameObjectContainer();
+		this.circleOverlay.expandSpeed = 0.4;
+		this.circleOverlay.addChild(new Graphics().lineStyle(250, 0x1f2a36).drawCircle(0, 0, 165));
+		this.circleOverlay.setPosition(SceneManager.width / 2, SceneManager.height / 2);
+		this.addChild(this.circleOverlay);
 	}
 
 	//#endregion
@@ -206,8 +206,8 @@ export class GamePlayScene extends Container implements IScene {
 	public update() {
 		this.processFrame();
 
-		if (this.overlay.scale.x <= 200) {
-			this.overlay.expand();
+		if (this.circleOverlay.scale.x <= 200) {
+			this.circleOverlay.expand();
 		}
 	}
 
