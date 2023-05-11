@@ -236,6 +236,7 @@ export class PlayerRide extends GameObjectContainer {
 			} break;
 			case PlayerRideTemplate.CHOPPER: {
 				this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 2) * controller.power; // chopper grants extra speed
+				this.animateChopperBlades();
 			} break;
 			default: break;
 		}
@@ -278,38 +279,34 @@ export class PlayerRide extends GameObjectContainer {
 		else {
 			this.stopMovement();
 		}
-
-		this.animateChopperBlades();
 	}
 
 	private animateChopperBlades() {
-		if (this.playerRideTemplate == PlayerRideTemplate.CHOPPER) {
 
-			this.chopperBladesHoverDelay--; // chopper blades hover effect
+		this.chopperBladesHoverDelay--; // chopper blades hover effect
 
-			if (this.chopperBladesHoverDelay >= 0) {
-				this.chopperBladesSprite.y += 0.4;
+		if (this.chopperBladesHoverDelay >= 0) {
+			this.chopperBladesSprite.y += 0.4;
+		}
+		else {
+			this.chopperBladesSprite.y -= 0.4;
+
+			if (this.chopperBladesHoverDelay <= -10) {
+				this.chopperBladesHoverDelay = 10;
+			}
+		}
+
+		this.chopperBladesOpacityEffect++; // chopper blades blinking effect
+
+		if (this.chopperBladesOpacityEffect > 2) {
+			if (this.chopperBladesSprite.alpha != 1) {
+				this.chopperBladesSprite.alpha = 1;
 			}
 			else {
-				this.chopperBladesSprite.y -= 0.4;
-
-				if (this.chopperBladesHoverDelay <= -10) {
-					this.chopperBladesHoverDelay = 10;
-				}
+				this.chopperBladesSprite.alpha = 0.3;
 			}
 
-			this.chopperBladesOpacityEffect++; // chopper blades blinking effect
-
-			if (this.chopperBladesOpacityEffect > 2) {
-				if (this.chopperBladesSprite.alpha != 1) {
-					this.chopperBladesSprite.alpha = 1;
-				}
-				else {
-					this.chopperBladesSprite.alpha = 0.3;
-				}
-
-				this.chopperBladesOpacityEffect = 0;
-			}
+			this.chopperBladesOpacityEffect = 0;
 		}
 	}
 
