@@ -180,13 +180,12 @@ export class GameOverScene extends Container implements IScene {
 	}
 
 	public update() {
-
-		if (Constants.HEALTH_LEVEL_MAX > 1 || Constants.ATTACK_LEVEL_MAX > 0 ||
-			Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL ||
-			Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL ||
-			Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL ||
-			Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL ||
-			Constants.GAME_LEVEL_MAX >= Constants.BULLET_BALL_UNLOCK_LEVEL) { // only animate if any of the upgrades are applicable
+		if ((Constants.HEALTH_LEVEL_MAX > 1 && this.health.isAwaitingPop) || (Constants.ATTACK_LEVEL_MAX > 0 && this.attack.isAwaitingPop) ||
+			(Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL && !Constants.CHOPPER_UNLOCKED) ||
+			(Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL && !Constants.TRASH_BIN_UNLOCKED) ||
+			(Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL && !Constants.DYNAMITE_UNLOCKED) ||
+			(Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL && !Constants.MISSILE_UNLOCKED) ||
+			(Constants.GAME_LEVEL_MAX >= Constants.BULLET_BALL_UNLOCK_LEVEL && !Constants.BULLET_BALL_UNLOCKED)) { // only animate if any of the upgrades are applicable
 
 			this.unlockablePopDelay -= 0.1;
 
@@ -257,6 +256,8 @@ export class GameOverScene extends Container implements IScene {
 		}
 	}
 
+	//#region Unlockables
+
 	private unlockablePopDelay = 6;
 	private readonly unlockablePopDelayDefault = 6;
 
@@ -292,4 +293,6 @@ export class GameOverScene extends Container implements IScene {
 			}
 		}
 	}
+
+	//#endregion
 }

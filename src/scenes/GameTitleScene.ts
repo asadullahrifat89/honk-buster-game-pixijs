@@ -1,4 +1,4 @@
-﻿import { Container, Text } from "pixi.js";
+﻿import { BlurFilter, Container, Graphics, Text } from "pixi.js";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -19,6 +19,8 @@ export class GameTitleScene extends Container implements IScene {
 	constructor() {
 		super();
 
+		this.spawnRings();
+
 		this.uiContainer = new GameObjectContainer();
 		this.uiContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		this.uiContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
@@ -36,7 +38,8 @@ export class GameTitleScene extends Container implements IScene {
 		this.bg_container.addChild(bg_sprite);
 		this.uiContainer.addChild(this.bg_container);
 
-		// title
+		//#region title
+
 		const title = new Text("HONKY ROADS", {
 			fontFamily: Constants.GAME_TITLE_FONT,
 			align: "center",
@@ -47,8 +50,11 @@ export class GameTitleScene extends Container implements IScene {
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
-		// tag line
-		const subTitle = new Text("A honk pollution fighting saga", {
+		//#endregion
+
+		//#region tag line
+
+		const subTitle = new Text("The battle against honks", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: "#ffffff",
@@ -58,7 +64,10 @@ export class GameTitleScene extends Container implements IScene {
 		subTitle.y = (this.uiContainer.height / 2 - subTitle.height / 2) - 65;
 		this.uiContainer.addChild(subTitle);
 
-		// how to play button
+		//#endregion
+
+		//#region how to play button
+
 		const howToPlayButtonButton = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.uiContainer);
@@ -69,16 +78,21 @@ export class GameTitleScene extends Container implements IScene {
 		howToPlayButtonButton.setPosition(this.uiContainer.width / 2 - howToPlayButtonButton.width / 2, (this.uiContainer.height / 2 - howToPlayButtonButton.height / 2));
 		this.uiContainer.addChild(howToPlayButtonButton);
 
-		// play button
+		//#endregion
+
+		//#region play button
+
 		const newGameButton = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.uiContainer);
 			this.uiContainer.destroy();
 			SceneManager.changeScene(new PlayerGearSelectionScene());
 
-		}).setText("Play");
+		}).setText("Start Game");
 		newGameButton.setPosition(this.uiContainer.width / 2 - newGameButton.width / 2, (this.uiContainer.height / 2 - newGameButton.height / 2) + 65);
 		this.uiContainer.addChild(newGameButton);
+
+		//#endregion
 
 		const bottomline = new Text("- Made with ❤️ & PixiJS -", {
 			fontFamily: "diloworld",
@@ -93,6 +107,8 @@ export class GameTitleScene extends Container implements IScene {
 
 	public update() {
 		this.bg_container.hover();
+		this.generateRings();
+		this.animateRings();
 	}
 
 	public resize(scale: number): void {
@@ -107,6 +123,65 @@ export class GameTitleScene extends Container implements IScene {
 			this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
 		}
 	}
+
+	//#region Rings
+
+	private ringSize = { width: 50, height: 50 };
+	private ringGameObjects: Array<GameObjectContainer> = [];
+
+	private readonly ringPopDelayDefault: number = 15 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private ringPopDelay: number = 0;
+
+	private spawnRings() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: GameObjectContainer = new GameObjectContainer();
+			gameObject.disableRendering();
+			gameObject.expandSpeed = 0.1;
+			gameObject.addChild(new Graphics().lineStyle(1, 0xffffff).drawCircle(0, 0, this.ringSize.width));
+			gameObject.filters = [new BlurFilter()];
+			this.ringGameObjects.push(gameObject);
+			this.addChild(gameObject);
+		}
+	}
+
+	private generateRings() {
+		this.ringPopDelay -= 0.1;
+
+		if (this.ringPopDelay < 0) {
+			var gameObject = this.ringGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+				gameObject.alpha = 1;
+				gameObject.scale.set(1);
+				gameObject.x = SceneManager.width / 2;
+				gameObject.y = SceneManager.height / 2;
+				gameObject.enableRendering();
+			}
+
+			this.ringPopDelay = this.ringPopDelayDefault;
+		}
+	}
+
+	private animateRings() {
+
+		var animatingRings = this.ringGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingRings) {
+
+			animatingRings.forEach(gameObject => {
+				//gameObject.fade();
+				gameObject.expand();
+
+				if (gameObject.scale.x >= 20) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
 }
 
 

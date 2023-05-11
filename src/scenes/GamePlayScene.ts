@@ -281,6 +281,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (animatingHonks) {
 
 			animatingHonks.forEach(honk => {
+				honk.dillyDally();
 				honk.pop();
 				honk.fade();
 
@@ -1187,9 +1188,6 @@ export class GamePlayScene extends Container implements IScene {
 		this.player.depleteWinStance();
 		this.player.depleteHitStance();
 		this.player.recoverFromHealthLoss();
-
-		//console.log("scale: " + SceneManager.scaling + " w: " + screenWidth + " h: " + screenHeight + " pl.x:" + this.player.x + " pl.y:" + this.player.y);
-
 		this.player.move(this.sceneBoundaryWidth, this.sceneBoundaryHeight, this.gameController);
 
 		if (this.gameController.isAttacking) {
