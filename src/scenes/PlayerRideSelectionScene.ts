@@ -7,7 +7,6 @@ import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
-import { GrayscaleFilter } from "@pixi/filter-grayscale";
 import { PlayerGearSelectionScene } from "./PlayerGearSelectionScene";
 import { SelectionButton } from "../controls/SelectionButton";
 
@@ -53,8 +52,8 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		const air_balloon_button = new SelectionButton("player_ride_1", 256 / 2, 256 / 2, "Lvl " + 1, () => {
 
 			button.setText("Air Balloon").setIsEnabled(true);
-			chopper_button.filters = [new GrayscaleFilter()];
-			air_balloon_button.filters = null;
+			air_balloon_button.select();
+			chopper_button.unselect();
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.AIR_BALLOON;
 			SoundManager.play(SoundType.ITEM_SELECT);
 		});
@@ -71,8 +70,8 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		const chopper_button = new SelectionButton("player_ride_2", 256 / 2, 256 / 2, "Lvl " + Constants.CHOPPER_UNLOCK_LEVEL, () => {
 
 			button.setText("Chopper").setIsEnabled(true);
-			air_balloon_button.filters = [new GrayscaleFilter()];
-			chopper_button.filters = null;
+			chopper_button.select();
+			air_balloon_button.unselect();
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.CHOPPER;
 			SoundManager.play(SoundType.ITEM_SELECT);
 
