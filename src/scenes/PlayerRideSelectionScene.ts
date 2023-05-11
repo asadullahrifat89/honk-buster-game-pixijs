@@ -50,30 +50,6 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 
 		//#region air balloon
 
-		//const air_balloon_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_1"));
-		//air_balloon_sprite.width = 256 / 2;
-		//air_balloon_sprite.height = 256 / 2;
-		//air_balloon_sprite.x = 0;
-		//air_balloon_sprite.y = 0;
-		//const air_balloon_button = new Button(() => {
-
-		//	button.setText("Air Balloon").setIsEnabled(true);
-
-		//	SoundManager.play(SoundType.ITEM_SELECT);
-
-		//	chopper_sprite.filters = [new GrayscaleFilter()];
-		//	air_balloon_sprite.filters = null;
-
-		//	Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.AIR_BALLOON;
-
-		//}).setBackground(air_balloon_sprite);
-		//air_balloon_button.setPosition((this.uiContainer.width / 2 - air_balloon_sprite.width * 2) + 45, this.uiContainer.height / 2 - air_balloon_sprite.height / 2 + 10);
-		//this.uiContainer.addChild(air_balloon_button);
-
-		//const air_balloon_msg = new MessageBubble(0, "Lvl " + 1, 20);
-		//air_balloon_msg.setPosition(air_balloon_button.x + air_balloon_button.width / 2, air_balloon_button.y + air_balloon_button.height / 2);
-		//this.uiContainer.addChild(air_balloon_msg);
-
 		const air_balloon_button = new SelectionButton("player_ride_1", 256 / 2, 256 / 2, "Lvl " + 1, () => {
 
 			button.setText("Air Balloon").setIsEnabled(true);
@@ -103,27 +79,6 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		}, Constants.CHOPPER_UNLOCKED);
 		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_button.width / 2) + 100, this.uiContainer.height / 2 - chopper_button.height / 2 + 10);
 		this.uiContainer.addChild(chopper_button);
-
-		//const chopper_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_ride_2"));
-		//chopper_sprite.width = 256 / 2;
-		//chopper_sprite.height = 256 / 2;
-		//chopper_sprite.x = 0;
-		//chopper_sprite.y = 0;
-		//const chopper_button = new Button(() => {
-
-		//	button.setText("Chopper").setIsEnabled(true);
-		//	air_balloon_button.filters = [new GrayscaleFilter()];
-		//	chopper_sprite.filters = null;
-		//	Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.CHOPPER;
-		//	SoundManager.play(SoundType.ITEM_SELECT);
-
-		//}).setBackground(chopper_sprite);
-		//chopper_button.setPosition((this.uiContainer.width / 2 - chopper_sprite.width / 2) + 100, this.uiContainer.height / 2 - chopper_sprite.height / 2 + 10).setIsEnabled(Constants.CHOPPER_UNLOCKED);
-		//this.uiContainer.addChild(chopper_button);
-
-		//const chopper_msg = new MessageBubble(0, "Lvl " + Constants.CHOPPER_UNLOCK_LEVEL, 20);
-		//chopper_msg.setPosition(chopper_button.x + chopper_button.width / 2, chopper_button.y + chopper_button.height / 2);
-		//this.uiContainer.addChild(chopper_msg);
 
 		//#endregion
 
