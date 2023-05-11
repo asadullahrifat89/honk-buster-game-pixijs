@@ -264,10 +264,10 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_MARK, "road_marks"),
 
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_1"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_2"),
+		//new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_2"),
 
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_1"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_2"),
+		//new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_2"),
 
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM_PILLARS, "road_side_walk_bottom_pillars_1"),
 
