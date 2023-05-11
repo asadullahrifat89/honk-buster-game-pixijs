@@ -15,7 +15,8 @@ export class GameObjectContainer extends Container {
 
 	private hopDelay: number = 0;
 	private readonly hopDelayDefault: number = 10;
-	private hopSpeed: number = 5;
+	private hopSpeed: number = 7;
+	private readonly hopSpeedLimit: number = 7;
 
 	private dillyDallyDelay: number = 0;
 	private dillyDallyDelayDefault: number = 55;
@@ -245,7 +246,7 @@ export class GameObjectContainer extends Container {
 			else {
 				this.y += this.hopSpeed;
 
-				if (this.hopSpeed <= 5)
+				if (this.hopSpeed <= this.hopSpeedLimit)
 					this.hopSpeed += 0.2;
 
 				if (this.hopDelay <= this.hopDelayDefault * -1) {

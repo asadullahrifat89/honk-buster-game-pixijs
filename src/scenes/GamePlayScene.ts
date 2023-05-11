@@ -2312,7 +2312,7 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	private looseVehicleEnemyhealth(vehicleEnemy: VehicleEnemy) {
-
+		vehicleEnemy.setHopping();
 		vehicleEnemy.setPopping();
 		vehicleEnemy.looseHealth();
 

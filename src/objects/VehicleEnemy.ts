@@ -58,7 +58,6 @@ export class VehicleEnemy extends VehicleBase {
 			this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 
 		this.filters = [this.grayScaleFilter];
-		this.setDillyDallySpeed(0);
-		this.setHopping();
+		this.setDillyDallySpeed(0);		
 	}	
 }
