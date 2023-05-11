@@ -34,7 +34,7 @@ export class OnScreenMessage {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: Constants.MESSAGE_BOX_TEXT_COLOR,
-			fontSize: 20
+			fontSize: 18
 		});
 		this.messageText.x = this.messageAuthor.width / 1.5;
 		this.messageText.y = 8;
@@ -95,7 +95,7 @@ export class OnScreenMessage {
 	}
 
 	private drawMessageGraphics(): Graphics {
-		return new Graphics().beginFill(0xffffff).lineStyle(3, Constants.MESSAGE_BOX_BORDER_COLOR).drawRoundedRect(0, 0, this.messageText.width + 28, 40, 4).endFill();
+		return new Graphics().beginFill(0xffffff).lineStyle(3, Constants.MESSAGE_BOX_BORDER_COLOR).drawRoundedRect(0, 0, this.messageText.width + 28, this.messageText.height + 14, 4).endFill();
 	}
 }
 

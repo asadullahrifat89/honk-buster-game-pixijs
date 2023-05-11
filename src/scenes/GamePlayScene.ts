@@ -3871,13 +3871,13 @@ export class GamePlayScene extends Container implements IScene {
 		if (this.onScreenMessage.isAnimating == false) {
 			this.onScreenMessage.setContent(title, icon);
 			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+			this.onScreenMessage.reposition(SceneManager.width / 2, (SceneManager.height / 3) * 2);
 			this.onScreenMessage.enableRendering();
 		}
 		if (this.onScreenMessage.isAnimating && this.onScreenMessage.getText() != title) {
 			this.onScreenMessage.setContent(title, icon);
 			this.onScreenMessage.reset();
-			this.onScreenMessage.reposition(SceneManager.width / 2, SceneManager.height - SceneManager.height / 11);
+			this.onScreenMessage.reposition(SceneManager.width / 2, (SceneManager.height / 3) * 2);
 		}
 	}
 
@@ -4171,7 +4171,7 @@ export class GamePlayScene extends Container implements IScene {
 		SoundManager.stop(SoundType.CHOPPER_HOVERING);
 
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
-		Constants.GAME_LEVEL = this.gameLevelBar.getScore() + 10;
+		Constants.GAME_LEVEL = this.gameLevelBar.getScore();
 
 		this.stageMask.destroy();
 		this.stageColor.destroy();

@@ -28,7 +28,7 @@ export class SceneManager {
 			resizeTo: window, // This line here handles the actual resize!
 			resolution: window.devicePixelRatio || 1,
 			autoDensity: true,
-			//antialias: true,
+			antialias: true,
 			backgroundColor: background,
 			width: width,
 			height: height,
