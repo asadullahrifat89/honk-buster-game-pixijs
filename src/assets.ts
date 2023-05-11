@@ -39,8 +39,8 @@ export const manifest: ResolverManifest = {
 				"health_pickup": "./images/health_pickup.png",
 
 				"honk_1": "./images/honk_1.png",
-				"honk_2": "./images/honk_2.png",
-				"honk_3": "./images/honk_3.png",
+				//"honk_2": "./images/honk_2.png",
+				//"honk_3": "./images/honk_3.png",
 
 				"joystick": "./images/joystick.png",
 				"joystick_handle": "./images/joystick_handle.png",
