@@ -9,6 +9,7 @@ export class SceneManager {
 	private static currentScene: IScene;
 
 	public static scaling: number = 1;
+	public static interacted: boolean = false;
 
 	//#endregion
 
@@ -67,7 +68,7 @@ export class SceneManager {
 	public static changeScene(newScene: IScene): void {
 
 		// if the screen supports fullscreen, toggle it
-		if (document.documentElement.requestFullscreen) {
+		if (SceneManager.interacted && document.fullscreenEnabled && !document.fullscreenElement) {
 			document.documentElement.requestFullscreen();
 		}
 
@@ -114,7 +115,7 @@ export class SceneManager {
 
 		return scaling;
 	}
-	
+
 
 	// This update will be called by a pixi ticker and tell the scene that a tick happened
 	private static update(_framesPassed: number): void {
