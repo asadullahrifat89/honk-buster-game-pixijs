@@ -19,6 +19,8 @@ export class GameTitleScene extends Container implements IScene {
 	constructor() {
 		super();
 
+		this.spawnGrandExplosionRings();
+
 		this.uiContainer = new GameObjectContainer();
 		this.uiContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
 		this.uiContainer.height = Constants.DEFAULT_GAME_VIEW_HEIGHT / 2;
@@ -105,6 +107,8 @@ export class GameTitleScene extends Container implements IScene {
 
 	public update() {
 		this.bg_container.hover();
+		this.generateGrandExplosionRing();
+		this.animateGrandExplosionRings();
 	}
 
 	public resize(scale: number): void {
@@ -119,6 +123,73 @@ export class GameTitleScene extends Container implements IScene {
 			this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
 		}
 	}
+
+	//#region GrandExplosionRings
+
+	private grandExplosionRingSize = { width: 145, height: 145 };
+	private grandExplosionRingGameObjects: Array<GameObjectContainer> = [];
+
+	private readonly grandExplosionRingPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private grandExplosionRingPopDelay: number = 10;
+
+	private spawnGrandExplosionRings() {
+
+		for (let j = 0; j < 3; j++) {
+
+			const gameObject: GameObjectContainer = new GameObjectContainer();
+			gameObject.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GRAND_EXPLOSION_RING));
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.grandExplosionRingSize.width;
+			sprite.height = this.grandExplosionRingSize.height;
+			sprite.anchor.set(0.5, 0.5);
+			gameObject.addChild(sprite);
+
+			gameObject.expandSpeed = 0.1;
+
+			this.grandExplosionRingGameObjects.push(gameObject);
+			this.addChild(gameObject);
+		}
+	}
+
+	private generateGrandExplosionRing() {
+		this.grandExplosionRingPopDelay -= 0.1;
+
+		if (this.grandExplosionRingPopDelay < 0) {
+			var gameObject = this.grandExplosionRingGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+				gameObject.alpha = 1;
+				gameObject.scale.set(1);
+				gameObject.x = SceneManager.width / 2;
+				gameObject.y = SceneManager.height / 2;
+				gameObject.enableRendering();
+			}
+
+			this.grandExplosionRingPopDelay = this.grandExplosionRingPopDelayDefault;
+		}
+	}
+
+	private animateGrandExplosionRings() {
+
+		var animatingGrandExplosionRings = this.grandExplosionRingGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingGrandExplosionRings) {
+
+			animatingGrandExplosionRings.forEach(gameObject => {
+				//gameObject.fade();
+				gameObject.expand();
+
+				if (gameObject.scale.x >= 20) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
 }
 
 
