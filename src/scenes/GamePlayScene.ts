@@ -281,6 +281,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (animatingHonks) {
 
 			animatingHonks.forEach(honk => {
+				honk.dillyDally();
 				honk.pop();
 				honk.fade();
 

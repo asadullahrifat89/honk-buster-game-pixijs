@@ -1,4 +1,4 @@
-﻿import { Container, Text } from "pixi.js";
+﻿import { Container, Graphics, Text } from "pixi.js";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -19,7 +19,7 @@ export class GameTitleScene extends Container implements IScene {
 	constructor() {
 		super();
 
-		this.spawnGrandExplosionRings();
+		this.spawnRings();
 
 		this.uiContainer = new GameObjectContainer();
 		this.uiContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
@@ -54,7 +54,7 @@ export class GameTitleScene extends Container implements IScene {
 
 		//#region tag line
 
-		const subTitle = new Text("A honk pollution fighting saga", {
+		const subTitle = new Text("The battle against honks", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: "#ffffff",
@@ -107,8 +107,8 @@ export class GameTitleScene extends Container implements IScene {
 
 	public update() {
 		this.bg_container.hover();
-		this.generateGrandExplosionRing();
-		this.animateGrandExplosionRings();
+		this.generateRing();
+		this.animateRings();
 	}
 
 	public resize(scale: number): void {
@@ -124,41 +124,32 @@ export class GameTitleScene extends Container implements IScene {
 		}
 	}
 
-	//#region GrandExplosionRings
+	//#region Rings
 
-	private grandExplosionRingSize = { width: 145, height: 145 };
-	private grandExplosionRingGameObjects: Array<GameObjectContainer> = [];
+	private ringSize = { width: 50, height: 50 };
+	private ringGameObjects: Array<GameObjectContainer> = [];
 
-	private readonly grandExplosionRingPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private grandExplosionRingPopDelay: number = 10;
+	private readonly ringPopDelayDefault: number = 15 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private ringPopDelay: number = 0;
 
-	private spawnGrandExplosionRings() {
+	private spawnRings() {
 
 		for (let j = 0; j < 3; j++) {
 
 			const gameObject: GameObjectContainer = new GameObjectContainer();
 			gameObject.disableRendering();
-
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GRAND_EXPLOSION_RING));
-			sprite.x = 0;
-			sprite.y = 0;
-			sprite.width = this.grandExplosionRingSize.width;
-			sprite.height = this.grandExplosionRingSize.height;
-			sprite.anchor.set(0.5, 0.5);
-			gameObject.addChild(sprite);
-
 			gameObject.expandSpeed = 0.1;
-
-			this.grandExplosionRingGameObjects.push(gameObject);
+			gameObject.addChild(new Graphics().lineStyle(1, 0xffffff).drawCircle(0, 0, this.ringSize.width));
+			this.ringGameObjects.push(gameObject);
 			this.addChild(gameObject);
 		}
 	}
 
-	private generateGrandExplosionRing() {
-		this.grandExplosionRingPopDelay -= 0.1;
+	private generateRing() {
+		this.ringPopDelay -= 0.1;
 
-		if (this.grandExplosionRingPopDelay < 0) {
-			var gameObject = this.grandExplosionRingGameObjects.find(x => x.isAnimating == false);
+		if (this.ringPopDelay < 0) {
+			var gameObject = this.ringGameObjects.find(x => x.isAnimating == false);
 
 			if (gameObject) {
 				gameObject.alpha = 1;
@@ -168,17 +159,17 @@ export class GameTitleScene extends Container implements IScene {
 				gameObject.enableRendering();
 			}
 
-			this.grandExplosionRingPopDelay = this.grandExplosionRingPopDelayDefault;
+			this.ringPopDelay = this.ringPopDelayDefault;
 		}
 	}
 
-	private animateGrandExplosionRings() {
+	private animateRings() {
 
-		var animatingGrandExplosionRings = this.grandExplosionRingGameObjects.filter(x => x.isAnimating == true);
+		var animatingRings = this.ringGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingGrandExplosionRings) {
+		if (animatingRings) {
 
-			animatingGrandExplosionRings.forEach(gameObject => {
+			animatingRings.forEach(gameObject => {
 				//gameObject.fade();
 				gameObject.expand();
 
