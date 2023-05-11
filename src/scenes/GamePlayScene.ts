@@ -35,7 +35,6 @@ import { PowerUpPickup } from "../objects/PowerUpPickup";
 import { ZombieBoss } from "../objects/ZombieBoss";
 import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
 import { MessageBubble } from "../controls/MessageBubble";
-import { RoadSideWalkPillar } from "../objects/RoadSideWalkPillar";
 import { RoadMark } from "../objects/RoadMark";
 import { GrandExplosionRing } from "../objects/GrandExplosionRing";
 
@@ -426,12 +425,10 @@ export class GamePlayScene extends Container implements IScene {
 			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_MARK));
-
 				sprite.x = (this.roadMarkSize.width * i) - (this.roadMarkXyAdjustment * i);
 				sprite.y = ((this.roadMarkSize.height / 2) * i) - (((this.roadMarkXyAdjustment) / 2) * i);
 				sprite.width = this.roadMarkSize.width;
 				sprite.height = this.roadMarkSize.height;
-
 				gameObject.addChild(sprite);
 			}
 
@@ -609,70 +606,70 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region SideWalkPillars
 
-	private sideWalkPillarXyAdjustment: number = 192;
-	private sideWalkPillarSize = { width: 750, height: 750 };
-	private sideWalkPillarBottomGameObjects: Array<RoadSideWalkPillar> = [];
+	//private sideWalkPillarXyAdjustment: number = 192;
+	//private sideWalkPillarSize = { width: 750, height: 750 };
+	//private sideWalkPillarBottomGameObjects: Array<RoadSideWalkPillar> = [];
 
-	private readonly sideWalkPillarPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private sideWalkPillarPopDelayBottom: number = 16;
+	//private readonly sideWalkPillarPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	//private sideWalkPillarPopDelayBottom: number = 16;
 
-	private spawnSideWalkPillarsBottom() {
+	//private spawnSideWalkPillarsBottom() {
 
-		for (let j = 0; j < 5; j++) {
+	//	for (let j = 0; j < 5; j++) {
 
-			const gameObject: RoadSideWalkPillar = new RoadSideWalkPillar(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+	//		const gameObject: RoadSideWalkPillar = new RoadSideWalkPillar(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+	//		for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK_BOTTOM_PILLARS));
+	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK_BOTTOM_PILLARS));
 
-				sprite.x = this.sideWalkPillarSize.width * i - (this.sideWalkPillarXyAdjustment * i);
-				sprite.y = (this.sideWalkPillarSize.height / 2) * i - ((this.sideWalkPillarXyAdjustment / 2) * i);
+	//			sprite.x = this.sideWalkPillarSize.width * i - (this.sideWalkPillarXyAdjustment * i);
+	//			sprite.y = (this.sideWalkPillarSize.height / 2) * i - ((this.sideWalkPillarXyAdjustment / 2) * i);
 
-				sprite.width = this.sideWalkPillarSize.width;
-				sprite.height = this.sideWalkPillarSize.height;
+	//			sprite.width = this.sideWalkPillarSize.width;
+	//			sprite.height = this.sideWalkPillarSize.height;
 
-				gameObject.addChild(sprite);
-			}
+	//			gameObject.addChild(sprite);
+	//		}
 
-			this.sideWalkPillarBottomGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.sideWalkPillarBottomGameObjects.push(gameObject);
+	//		this.sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private generateSideWalkPillarsBottom() {
+	//private generateSideWalkPillarsBottom() {
 
-		this.sideWalkPillarPopDelayBottom -= 0.1;
+	//	this.sideWalkPillarPopDelayBottom -= 0.1;
 
-		if (this.sideWalkPillarPopDelayBottom < 0) {
+	//	if (this.sideWalkPillarPopDelayBottom < 0) {
 
-			var gameObject = this.sideWalkPillarBottomGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.sideWalkPillarBottomGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.x = gameObject.width * -1;
-				gameObject.y = -1210;
-				gameObject.enableRendering();
-				this.sideWalkPillarPopDelayBottom = this.sideWalkPillarPopDelayDefault;
-			}
-		}
-	}
+	//		if (gameObject) {
+	//			gameObject.x = gameObject.width * -1;
+	//			gameObject.y = -1210;
+	//			gameObject.enableRendering();
+	//			this.sideWalkPillarPopDelayBottom = this.sideWalkPillarPopDelayDefault;
+	//		}
+	//	}
+	//}
 
-	private animateSideWalkPillarsBottom() {
+	//private animateSideWalkPillarsBottom() {
 
-		var animatingSideWalkPillars = this.sideWalkPillarBottomGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingSideWalkPillars = this.sideWalkPillarBottomGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingSideWalkPillars) {
+	//	if (animatingSideWalkPillars) {
 
-			animatingSideWalkPillars.forEach(gameObject => {
-				gameObject.moveDownRight();
+	//		animatingSideWalkPillars.forEach(gameObject => {
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x - (this.sideWalkPillarSize.width + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - (this.sideWalkPillarSize.width + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
+	//			if (gameObject.x - (this.sideWalkPillarSize.width + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - (this.sideWalkPillarSize.width + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
+	//			}
+	//		});
+	//	}
+	//}
 
 	//#endregion
 
@@ -3980,7 +3977,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.spawnMessageBubbles();
 
-		this.spawnSideWalkPillarsBottom();
+		//this.spawnSideWalkPillarsBottom();
 	}
 
 	private generateGameObjects() {
@@ -4014,7 +4011,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
 			this.generateSideWalksBottom();
-			this.generateSideWalkPillarsBottom();
+			//this.generateSideWalkPillarsBottom();
 		}
 
 		this.generateBossDeathExplosions();
@@ -4067,7 +4064,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
 			this.animateSideWalksBottom();
-			this.animateSideWalkPillarsBottom();
+			//this.animateSideWalkPillarsBottom();
 		}
 
 		//this.animateClouds();
