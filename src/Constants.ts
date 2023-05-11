@@ -157,7 +157,7 @@ export enum ConstructType {
     TITLE_SCREEN,
     CHOPPER_BLADES,
     TRASH_BIN_BLAST,
-    EXPLOSION_RING,
+    GRAND_EXPLOSION_RING,
     GRENADE_BLAST
 }
 
@@ -173,7 +173,7 @@ export enum SoundType {
 
 	GROUND_BOMB_DROP,
 
-	BOSS_BLAST,
+	GRAND_EXPLOSION_RING,
 	GROUND_BOMB_BLAST,
 	AIR_BOMB_BLAST,
 	TRASH_BIN_BLAST,	
@@ -259,7 +259,7 @@ export abstract class Constants {
 
 	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
 
-		new ConstructTemplate(ConstructType.EXPLOSION_RING, "explosion_ring_1"),
+		new ConstructTemplate(ConstructType.GRAND_EXPLOSION_RING, "grand_explosion_ring_1"),
 
 		new ConstructTemplate(ConstructType.ROAD_MARK, "road_marks"),
 
@@ -404,8 +404,9 @@ export abstract class Constants {
 
 	public static SOUND_TEMPLATES: (SoundTemplate)[] = [
 
-		new SoundTemplate(SoundType.BOSS_BLAST, this.soundsDirectory + "boss_explosion_1.mp3"),
-		new SoundTemplate(SoundType.BOSS_BLAST, this.soundsDirectory + "boss_explosion_2.mp3"),
+		new SoundTemplate(SoundType.GRAND_EXPLOSION_RING, this.soundsDirectory + "grand_explosion_1.mp3"),
+		new SoundTemplate(SoundType.GRAND_EXPLOSION_RING, this.soundsDirectory + "grand_explosion_2.mp3"),
+		new SoundTemplate(SoundType.GRAND_EXPLOSION_RING, this.soundsDirectory + "grand_explosion_3.mp3"),
 
 		new SoundTemplate(SoundType.CHOPPER_HOVERING, this.soundsDirectory + "chopper_hovering.mp3"),
 

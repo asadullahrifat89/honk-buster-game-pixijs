@@ -3,7 +3,7 @@ import { GameObjectContainer } from '../core/GameObjectContainer';
 import { SoundManager } from '../managers/SoundManager';
 
 
-export class ExplosionRing extends GameObjectContainer {
+export class GrandExplosionRing extends GameObjectContainer {
 
 	constructor(speed: number) {
 		super(speed);
@@ -13,7 +13,7 @@ export class ExplosionRing extends GameObjectContainer {
 	reset() {
 		this.alpha = 1.0;
 		this.scale.set(1);		
-		SoundManager.play(SoundType.BOSS_BLAST, 0.8);
+		SoundManager.play(SoundType.GRAND_EXPLOSION_RING, 0.8);
 	}
 
 	reposition(source: GameObjectContainer) {

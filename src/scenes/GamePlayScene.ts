@@ -35,9 +35,8 @@ import { PowerUpPickup } from "../objects/PowerUpPickup";
 import { ZombieBoss } from "../objects/ZombieBoss";
 import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
 import { MessageBubble } from "../controls/MessageBubble";
-import { RoadSideWalkPillar } from "../objects/RoadSideWalkPillar";
 import { RoadMark } from "../objects/RoadMark";
-import { ExplosionRing } from "../objects/ExplosionRing";
+import { GrandExplosionRing } from "../objects/GrandExplosionRing";
 
 
 export class GamePlayScene extends Container implements IScene {
@@ -426,12 +425,10 @@ export class GamePlayScene extends Container implements IScene {
 			for (let i = 0; i < 5; i++) {
 
 				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_MARK));
-
 				sprite.x = (this.roadMarkSize.width * i) - (this.roadMarkXyAdjustment * i);
 				sprite.y = ((this.roadMarkSize.height / 2) * i) - (((this.roadMarkXyAdjustment) / 2) * i);
 				sprite.width = this.roadMarkSize.width;
 				sprite.height = this.roadMarkSize.height;
-
 				gameObject.addChild(sprite);
 			}
 
@@ -450,7 +447,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			if (gameObject) {
 
-				gameObject.setPosition((gameObject.width * -1) - 748, gameObject.height * -1);
+				gameObject.setPosition((gameObject.width * -1) - 730, gameObject.height * -1);
 				gameObject.enableRendering();
 
 				this.roadMarkPopDelay = this.roadMarkPopDelayDefault;
@@ -609,70 +606,70 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region SideWalkPillars
 
-	private sideWalkPillarXyAdjustment: number = 192;
-	private sideWalkPillarSize = { width: 750, height: 750 };
-	private sideWalkPillarBottomGameObjects: Array<RoadSideWalkPillar> = [];
+	//private sideWalkPillarXyAdjustment: number = 192;
+	//private sideWalkPillarSize = { width: 750, height: 750 };
+	//private sideWalkPillarBottomGameObjects: Array<RoadSideWalkPillar> = [];
 
-	private readonly sideWalkPillarPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	private sideWalkPillarPopDelayBottom: number = 16;
+	//private readonly sideWalkPillarPopDelayDefault: number = 93 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	//private sideWalkPillarPopDelayBottom: number = 16;
 
-	private spawnSideWalkPillarsBottom() {
+	//private spawnSideWalkPillarsBottom() {
 
-		for (let j = 0; j < 5; j++) {
+	//	for (let j = 0; j < 5; j++) {
 
-			const gameObject: RoadSideWalkPillar = new RoadSideWalkPillar(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.disableRendering();
+	//		const gameObject: RoadSideWalkPillar = new RoadSideWalkPillar(Constants.DEFAULT_CONSTRUCT_SPEED);
+	//		gameObject.disableRendering();
 
-			for (let i = 0; i < 5; i++) {
+	//		for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK_BOTTOM_PILLARS));
+	//			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK_BOTTOM_PILLARS));
 
-				sprite.x = this.sideWalkPillarSize.width * i - (this.sideWalkPillarXyAdjustment * i);
-				sprite.y = (this.sideWalkPillarSize.height / 2) * i - ((this.sideWalkPillarXyAdjustment / 2) * i);
+	//			sprite.x = this.sideWalkPillarSize.width * i - (this.sideWalkPillarXyAdjustment * i);
+	//			sprite.y = (this.sideWalkPillarSize.height / 2) * i - ((this.sideWalkPillarXyAdjustment / 2) * i);
 
-				sprite.width = this.sideWalkPillarSize.width;
-				sprite.height = this.sideWalkPillarSize.height;
+	//			sprite.width = this.sideWalkPillarSize.width;
+	//			sprite.height = this.sideWalkPillarSize.height;
 
-				gameObject.addChild(sprite);
-			}
+	//			gameObject.addChild(sprite);
+	//		}
 
-			this.sideWalkPillarBottomGameObjects.push(gameObject);
-			this.sceneContainer.addChild(gameObject);
-		}
-	}
+	//		this.sideWalkPillarBottomGameObjects.push(gameObject);
+	//		this.sceneContainer.addChild(gameObject);
+	//	}
+	//}
 
-	private generateSideWalkPillarsBottom() {
+	//private generateSideWalkPillarsBottom() {
 
-		this.sideWalkPillarPopDelayBottom -= 0.1;
+	//	this.sideWalkPillarPopDelayBottom -= 0.1;
 
-		if (this.sideWalkPillarPopDelayBottom < 0) {
+	//	if (this.sideWalkPillarPopDelayBottom < 0) {
 
-			var gameObject = this.sideWalkPillarBottomGameObjects.find(x => x.isAnimating == false);
+	//		var gameObject = this.sideWalkPillarBottomGameObjects.find(x => x.isAnimating == false);
 
-			if (gameObject) {
-				gameObject.x = gameObject.width * -1;
-				gameObject.y = -1210;
-				gameObject.enableRendering();
-				this.sideWalkPillarPopDelayBottom = this.sideWalkPillarPopDelayDefault;
-			}
-		}
-	}
+	//		if (gameObject) {
+	//			gameObject.x = gameObject.width * -1;
+	//			gameObject.y = -1210;
+	//			gameObject.enableRendering();
+	//			this.sideWalkPillarPopDelayBottom = this.sideWalkPillarPopDelayDefault;
+	//		}
+	//	}
+	//}
 
-	private animateSideWalkPillarsBottom() {
+	//private animateSideWalkPillarsBottom() {
 
-		var animatingSideWalkPillars = this.sideWalkPillarBottomGameObjects.filter(x => x.isAnimating == true);
+	//	var animatingSideWalkPillars = this.sideWalkPillarBottomGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingSideWalkPillars) {
+	//	if (animatingSideWalkPillars) {
 
-			animatingSideWalkPillars.forEach(gameObject => {
-				gameObject.moveDownRight();
+	//		animatingSideWalkPillars.forEach(gameObject => {
+	//			gameObject.moveDownRight();
 
-				if (gameObject.x - (this.sideWalkPillarSize.width + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - (this.sideWalkPillarSize.width + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
-				}
-			});
-		}
-	}
+	//			if (gameObject.x - (this.sideWalkPillarSize.width + 50) > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - (this.sideWalkPillarSize.width + 50) > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+	//				gameObject.disableRendering();
+	//			}
+	//		});
+	//	}
+	//}
 
 	//#endregion
 
@@ -758,34 +755,34 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Explosions
 
-	//#region ExplosionRings
+	//#region GrandExplosionRings
 
-	private roadExplosionRingSize = { width: 145, height: 145 };
-	private roadExplosionRingGameObjects: Array<ExplosionRing> = [];
+	private grandExplosionRingSize = { width: 145, height: 145 };
+	private grandExplosionRingGameObjects: Array<GrandExplosionRing> = [];
 
-	private spawnExplosionRings() {
+	private spawnGrandExplosionRings() {
 
 		for (let j = 0; j < 1; j++) {
 
-			const gameObject: ExplosionRing = new ExplosionRing(0);
+			const gameObject: GrandExplosionRing = new GrandExplosionRing(0);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.EXPLOSION_RING));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GRAND_EXPLOSION_RING));
 			sprite.x = 0;
 			sprite.y = 0;
-			sprite.width = this.roadExplosionRingSize.width;
-			sprite.height = this.roadExplosionRingSize.height;
+			sprite.width = this.grandExplosionRingSize.width;
+			sprite.height = this.grandExplosionRingSize.height;
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
-			this.roadExplosionRingGameObjects.push(gameObject);
+			this.grandExplosionRingGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 		}
 	}
 
-	private generateExplosionRing(source: GameObjectContainer) {
+	private generateGrandExplosionRing(source: GameObjectContainer) {
 
-		var gameObject = this.roadExplosionRingGameObjects.find(x => x.isAnimating == false);
+		var gameObject = this.grandExplosionRingGameObjects.find(x => x.isAnimating == false);
 
 		if (gameObject) {
 			gameObject.reset();
@@ -794,13 +791,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	private animateExplosionRings() {
+	private animateGrandExplosionRings() {
 
-		var animatingExplosionRings = this.roadExplosionRingGameObjects.filter(x => x.isAnimating == true);
+		var animatingGrandExplosionRings = this.grandExplosionRingGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingExplosionRings) {
+		if (animatingGrandExplosionRings) {
 
-			animatingExplosionRings.forEach(gameObject => {
+			animatingGrandExplosionRings.forEach(gameObject => {
 				gameObject.fade();
 				gameObject.expand();
 
@@ -1026,14 +1023,13 @@ export class GamePlayScene extends Container implements IScene {
 					anyBoss = mafiaBoss;
 				}
 
-				if (anyBoss) {
-					this.generateFlashExplosion(anyBoss);
+				if (anyBoss) {					
 					this.generateRingFireExplosion(anyBoss);
-					this.generateRingSmokeExplosion(anyBoss);
+					//this.generateRingSmokeExplosion(anyBoss);
 					SoundManager.play(SoundType.AIR_BOMB_BLAST);
 
 					if (this.bossDeathExplosionDuration > 0 && this.bossDeathExplosionDuration <= 0.3) { // when duration depletes generate an explosion ring
-						this.generateExplosionRing(anyBoss);
+						this.generateGrandExplosionRing(anyBoss);
 
 						if (vehicleBoss) {
 							vehicleBoss.setHopping(); // set it to hop just when explosion ring blasts
@@ -3974,14 +3970,14 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.spawnFlashExplosions();
 		this.spawnRingFireExplosions();
-		this.spawnExplosionRings();
+		this.spawnGrandExplosionRings();
 
 		this.spawnHealthPickups();
 		this.spawnPowerUpPickups();
 
 		this.spawnMessageBubbles();
 
-		this.spawnSideWalkPillarsBottom();
+		//this.spawnSideWalkPillarsBottom();
 	}
 
 	private generateGameObjects() {
@@ -4015,7 +4011,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
 			this.generateSideWalksBottom();
-			this.generateSideWalkPillarsBottom();
+			//this.generateSideWalkPillarsBottom();
 		}
 
 		this.generateBossDeathExplosions();
@@ -4043,7 +4039,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateBlowSmokeExplosions();
 		this.animateRingSmokeExplosions();
 		this.animateRingFireExplosions();
-		this.animateExplosionRings();
+		this.animateGrandExplosionRings();
 		this.animatePlayerAirBombs();
 		this.animatePlayerAirBombBullsEyes();
 
@@ -4068,7 +4064,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
 			this.animateSideWalksBottom();
-			this.animateSideWalkPillarsBottom();
+			//this.animateSideWalkPillarsBottom();
 		}
 
 		//this.animateClouds();
