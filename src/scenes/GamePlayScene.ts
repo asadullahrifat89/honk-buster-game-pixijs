@@ -53,12 +53,11 @@ export class GamePlayScene extends Container implements IScene {
 	private onScreenMessage: OnScreenMessage;
 
 	//TODO: do yourself a favor, reset these to the default values after testing
-
-	private readonly ufoEnemyRelease: { point: number, limit: number } = { point: 35, limit: 15 };
-	private readonly vehicleBossRelease: { point: number, limit: number } = { point: 25, limit: 15 };
-	private readonly ufoBossRelease: { point: number, limit: number } = { point: 50, limit: 15 };
-	private readonly zombieBossRelease: { point: number, limit: number } = { point: 100, limit: 15 };
-	private readonly mafiaBossRelease: { point: number, limit: number } = { point: 150, limit: 15 };
+	private readonly ufoEnemyRelease: { point: number, limit: number } = { point: 35, limit: 15 }; // 35
+	private readonly vehicleBossRelease: { point: number, limit: number } = { point: 25, limit: 15 }; // 25
+	private readonly ufoBossRelease: { point: number, limit: number } = { point: 50, limit: 15 }; // 50
+	private readonly zombieBossRelease: { point: number, limit: number } = { point: 100, limit: 15 }; // 100
+	private readonly mafiaBossRelease: { point: number, limit: number } = { point: 150, limit: 15 }; // 150
 
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 	private readonly vehicleBossCheckpoint: GameCheckpoint;
@@ -1648,7 +1647,7 @@ export class GamePlayScene extends Container implements IScene {
 
 						let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerAirBomb));
 
-						let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerAirBomb));
+						let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating == true && !x.isDead() && Constants.checkCloseCollision(x, playerAirBomb));
 
 						let anyTarget: any = undefined;
 
@@ -1834,7 +1833,7 @@ export class GamePlayScene extends Container implements IScene {
 
 					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerAirBombBullsEye));
 
-					let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerAirBombBullsEye));
+					let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating == true && !x.isDead() && Constants.checkCloseCollision(x, playerAirBombBullsEye));
 
 					let anyTarget: any = undefined;
 
@@ -1932,15 +1931,12 @@ export class GamePlayScene extends Container implements IScene {
 
 			if (this.ufoEnemyPopDelay < 0) {
 
-				var gameObject = this.ufoEnemyGameObjects.find(x => x.isAnimating == false);
+				var ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating == false);
 
-				if (gameObject) {
-
-					var ufoEnemy = gameObject as UfoEnemy;
+				if (ufoEnemy) {
 					ufoEnemy.reset();
 					ufoEnemy.reposition();
-
-					gameObject.enableRendering();
+					ufoEnemy.enableRendering();
 
 					this.ufoEnemyPopDelay = this.ufoEnemyPopDelayDefault;
 
@@ -1961,25 +1957,23 @@ export class GamePlayScene extends Container implements IScene {
 		var animatingUfoEnemys = this.ufoEnemyGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingUfoEnemys) {
+			animatingUfoEnemys.forEach(ufoEnemy => {
 
-			animatingUfoEnemys.forEach(gameObject => {
-				if (gameObject.isDead()) {
-					gameObject.shrink();
-					//TODO: drop ufo
+				ufoEnemy.pop();
+
+				if (ufoEnemy.isDead()) {
+					ufoEnemy.fade();
+
+					if (!ufoEnemy.isDestructionComplete)
+						ufoEnemy.awaitDestruction();
 				}
 				else {
-					gameObject.pop();
-					gameObject.hover();
-					gameObject.moveDownRight();
-				}
-
-				let ufoEnemy = gameObject as UfoEnemy;
-
-				if (ufoEnemy) {
+					ufoEnemy.hover();
+					ufoEnemy.moveDownRight();
 
 					// generate honk
 					if (!this.anyBossExists() && ufoEnemy.honk()) {
-						this.generateHonk(gameObject);
+						this.generateHonk(ufoEnemy);
 					}
 
 					// fire orbs
@@ -1987,11 +1981,11 @@ export class GamePlayScene extends Container implements IScene {
 						this.generateUfoEnemyRockets(ufoEnemy);
 					}
 
-					this.generateTaunts(gameObject);
+					this.generateTaunts(ufoEnemy);
 				}
 
-				if (gameObject.hasShrinked() || gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-					gameObject.disableRendering();
+				if (ufoEnemy.hasFaded() || ufoEnemy.x - ufoEnemy.width > Constants.DEFAULT_GAME_VIEW_WIDTH || ufoEnemy.y - ufoEnemy.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					ufoEnemy.disableRendering();
 				}
 			});
 		}
@@ -1999,35 +1993,33 @@ export class GamePlayScene extends Container implements IScene {
 
 	private looseUfoEnemyhealth(ufoEnemy: UfoEnemy) {
 
-		ufoEnemy.setPopping();
-		ufoEnemy.looseHealth();
+		if (!ufoEnemy.isDead()) {
+			ufoEnemy.setPopping();
+			ufoEnemy.looseHealth();
 
-		if (ufoEnemy.isDead()) {
-			this.gainScore();
-			this.ufoEnemyDefeatCount++;
+			if (ufoEnemy.isDead()) {
 
-			SoundManager.play(SoundType.SCORE_ACQUIRED, 1);
+				ufoEnemy.setDestruction();
+				this.gainScore();
+				this.ufoEnemyDefeatCount++;
 
-			if (this.ufoEnemyDefeatCount > this.ufoEnemyDefeatPoint) // after killing limited enemies increase the threadhold limit
-			{
-				this.ufoEnemyCheckpoint.increaseLimit(this.ufoEnemyRelease.limit, this.gameScoreBar.getScore());
-				this.ufoEnemyDefeatCount = 0;
-				this.ufoEnemiesAppeared = false;
+				SoundManager.play(SoundType.SCORE_ACQUIRED, 1);
 
-				this.levelUp();
+				if (this.ufoEnemyDefeatCount > this.ufoEnemyDefeatPoint) // after killing limited enemies increase the threadhold limit
+				{
+					this.ufoEnemyCheckpoint.increaseLimit(this.ufoEnemyRelease.limit, this.gameScoreBar.getScore());
+					this.ufoEnemyDefeatCount = 0;
+					this.ufoEnemiesAppeared = false;
+					this.levelUp();
 
-				SoundManager.stop(SoundType.UFO_HOVERING);
+					SoundManager.stop(SoundType.UFO_HOVERING);
+				}
 			}
 		}
 	}
 
 	private ufoEnemyExists(): boolean {
-		var gameObject = this.ufoEnemyGameObjects.find(x => x.isAnimating == true);
-
-		if (gameObject)
-			return true;
-		else
-			return false;
+		return this.ufoEnemyGameObjects.some(x => x.isAnimating == true && !x.isDead());
 	}
 
 	//#endregion
@@ -2424,7 +2416,7 @@ export class GamePlayScene extends Container implements IScene {
 				}
 			}
 			else {
-				vehicleBoss.dillyDally();				
+				vehicleBoss.dillyDally();
 
 				if (vehicleBoss.isAttacking) {
 					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH, Constants.DEFAULT_GAME_VIEW_HEIGHT);
@@ -2473,12 +2465,7 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	private vehicleBossExists(): boolean {
-		var gameObject = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
-
-		if (gameObject)
-			return true;
-		else
-			return false;
+		return this.vehicleBossGameObjects.some(x => x.isAnimating == true);
 	}
 
 	//#endregion
@@ -2728,12 +2715,7 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	private ufoBossExists(): boolean {
-		var gameObject = this.ufoBossGameObjects.find(x => x.isAnimating == true);
-
-		if (gameObject)
-			return true;
-		else
-			return false;
+		return this.ufoBossGameObjects.some(x => x.isAnimating == true);
 	}
 
 	//#endregion
@@ -3131,12 +3113,7 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	private zombieBossExists(): boolean {
-		var gameObject = this.zombieBossGameObjects.find(x => x.isAnimating == true);
-
-		if (gameObject)
-			return true;
-		else
-			return false;
+		return this.zombieBossGameObjects.some(x => x.isAnimating == true);
 	}
 
 	//#endregion
