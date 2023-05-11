@@ -176,7 +176,7 @@ export class GameOverScene extends Container implements IScene {
 
 		// set the on screen message layer
 		this.onScreenMessage = new OnScreenMessage(this);
-	}	
+	}
 
 	public update() {
 
@@ -201,7 +201,7 @@ export class GameOverScene extends Container implements IScene {
 					this.health.pop();
 
 					if (!this.health.isAwaitingPop) {
-						this.showUnlockMessage("Extra Health Acquired!", Constants.getRandomTexture(ConstructType.HEALTH_PICKUP));
+						this.showUnlockMessage("+" + (5 * Constants.HEALTH_LEVEL_MAX).toString() + " Health Activated!", Constants.getRandomTexture(ConstructType.HEALTH_PICKUP));
 					}
 				}
 				else if (Constants.ATTACK_LEVEL_MAX > 0 && this.attack.isAwaitingPop) {
@@ -214,27 +214,27 @@ export class GameOverScene extends Container implements IScene {
 					this.attack.pop();
 
 					if (!this.attack.isAwaitingPop) {
-						this.showUnlockMessage("Extra Bombs Acquired!", Constants.getRandomTexture(ConstructType.PLAYER_AIR_BOMB));
+						this.showUnlockMessage("+" + Constants.ATTACK_LEVEL_MAX.toString() + " Bombs Acquired!", Constants.getRandomTexture(ConstructType.PLAYER_AIR_BOMB));
 					}
 				}
 				else if (Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL && !Constants.CHOPPER_UNLOCKED) {
-					this.showUnlockMessage("New Ride Unlocked!", Texture.from("player_ride_2"));
+					this.showUnlockMessage("Chopper Unlocked!", Texture.from("player_ride_2"));
 					Constants.CHOPPER_UNLOCKED = true;
 				}
 				else if (Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL && !Constants.TRASH_BIN_UNLOCKED) {
-					this.showUnlockMessage("New Ground Bomb Unlocked!", Texture.from("player_honk_bomb_trash_1"));
+					this.showUnlockMessage("Trash Bins Unlocked!", Texture.from("player_honk_bomb_trash_1"));
 					Constants.TRASH_BIN_UNLOCKED = true;
 				}
 				else if (Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL && !Constants.DYNAMITE_UNLOCKED) {
-					this.showUnlockMessage("New Ground Bomb Unlocked!", Texture.from("player_honk_bomb_sticky_2"));
+					this.showUnlockMessage("Dynamites Unlocked!", Texture.from("player_honk_bomb_sticky_2"));
 					Constants.DYNAMITE_UNLOCKED = true;
 				}
 				else if (Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL && !Constants.MISSILE_UNLOCKED) {
-					this.showUnlockMessage("New Air Bomb Unlocked!", Texture.from("player_rocket_1"));
+					this.showUnlockMessage("Missiles Unlocked!", Texture.from("player_rocket_1"));
 					Constants.MISSILE_UNLOCKED = true;
 				}
 				else if (Constants.GAME_LEVEL_MAX >= Constants.BULLET_BALL_UNLOCK_LEVEL && !Constants.BULLET_BALL_UNLOCKED) {
-					this.showUnlockMessage("New Air Bomb Unlocked!", Texture.from("player_bullet_ball_1"));
+					this.showUnlockMessage("Bullet Balls Unlocked!", Texture.from("player_bullet_ball_1"));
 					Constants.BULLET_BALL_UNLOCKED = true;
 				}
 			}

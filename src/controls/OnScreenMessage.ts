@@ -61,6 +61,7 @@ export class OnScreenMessage {
 
 	depleteOnScreenDelay() {
 		this.messageContainer.pop();
+		this.messageContainer.y -= 0.1;
 		this.messageOnScreenDelay -= 0.1;
 	}
 
