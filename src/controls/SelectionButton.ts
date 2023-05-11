@@ -39,7 +39,6 @@ export class SelectionButton extends Container {
 	setPosition(x: number, y: number): SelectionButton {
 		this.x = x;
 		this.y = y;
-
 		return this;
 	}
 }
