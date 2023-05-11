@@ -2239,7 +2239,7 @@ export class GamePlayScene extends Container implements IScene {
 				}
 
 				if (vehicleEnemy.isBlasting) {
-
+					vehicleEnemy.hop();
 				}
 
 				// prevent overlapping

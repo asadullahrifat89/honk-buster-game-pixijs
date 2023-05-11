@@ -59,5 +59,6 @@ export class VehicleEnemy extends VehicleBase {
 
 		this.filters = [this.grayScaleFilter];
 		this.setDillyDallySpeed(0);
-	}
+		this.setHopping();
+	}	
 }
