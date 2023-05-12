@@ -1527,14 +1527,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	loosePlayerHealth() {
-		this.player.setPopping();
+	loosePlayerHealth() {		
 
 		if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.ARMOR) {
 			this.depletePowerUp();
 		}
 		else {
-
+			this.player.setPopping();
 			this.player.looseHealth();
 			this.player.setHitStance();
 			this.playerHealthBar.setValue(this.player.health);
@@ -2189,9 +2188,9 @@ export class GamePlayScene extends Container implements IScene {
 			const armorSphere: GameObjectContainer = new GameObjectContainer();
 			armorSphere.disableRendering();
 
-			const circle = new Graphics().beginFill(0xf9c573).lineStyle(5, 0x1d1d1b).drawCircle(0, 0, 110).endFill();
+			const circle = new Graphics().lineStyle(7, 0x1d1d1b).beginFill(0xf9c573).drawCircle(0, 0, 110).endFill();
 			armorSphere.addChild(circle);
-			armorSphere.alpha = 0.5;
+			armorSphere.alpha = 0.4;
 
 			this.armorSphereGameObjects.push(armorSphere);
 			this.sceneContainer.addChild(armorSphere);
