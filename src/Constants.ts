@@ -85,80 +85,80 @@ export enum PlayerAirBombTemplate {
 
 
 export enum ConstructType {
-    NONE,
-    GAME_COVER_IMAGE,
+	NONE,
+	GAME_COVER_IMAGE,
 
-    PLAYER_RIDE,
-    PLAYER_RIDE_IDLE,
-    PLAYER_RIDE_ATTACK,
-    PLAYER_RIDE_WIN,
-    PLAYER_RIDE_HIT,
+	PLAYER_RIDE,
+	PLAYER_RIDE_IDLE,
+	PLAYER_RIDE_ATTACK,
+	PLAYER_RIDE_WIN,
+	PLAYER_RIDE_HIT,
 
-    PLAYER_AIR_BOMB,    
-    PLAYER_AIR_BOMB_HURLING_BALLS,
+	PLAYER_AIR_BOMB,
+	PLAYER_AIR_BOMB_HURLING_BALLS,
 	PLAYER_GROUND_BOMB,
 
-    VEHICLE_ENEMY_SMALL,
-    VEHICLE_ENEMY_LARGE,
-    VEHICLE_BOSS,
+	VEHICLE_ENEMY_SMALL,
+	VEHICLE_ENEMY_LARGE,
+	VEHICLE_BOSS,
 
-    VEHICLE_BOSS_ROCKET,
+	VEHICLE_BOSS_ROCKET,
 
-    ROAD_MARK,
-    ROAD_SIDE_WALK_TOP,
-    ROAD_SIDE_WALK_BOTTOM,
-    ROAD_SIDE_WALK_BOTTOM_PILLARS,
+	ROAD_MARK,
+	ROAD_SIDE_WALK_TOP,
+	ROAD_SIDE_WALK_BOTTOM,
+	ROAD_SIDE_WALK_BOTTOM_PILLARS,
 
-    HONK,
+	HONK,
 
-    CLOUD,
+	CLOUD,
 
-    BLAST,
-    BANG,
+	BLAST,
+	BANG,
 
-    DROP_SHADOW,
+	DROP_SHADOW,
 
-    UFO_BOSS,
-    UFO_BOSS_IDLE,
-    UFO_BOSS_HIT,
-    UFO_BOSS_WIN,
+	UFO_BOSS,
+	UFO_BOSS_IDLE,
+	UFO_BOSS_HIT,
+	UFO_BOSS_WIN,
 
-    MAFIA_BOSS,
-    MAFIA_BOSS_IDLE,
-    MAFIA_BOSS_HIT,
-    MAFIA_BOSS_WIN,
+	MAFIA_BOSS,
+	MAFIA_BOSS_IDLE,
+	MAFIA_BOSS_HIT,
+	MAFIA_BOSS_WIN,
 
-    ZOMBIE_BOSS,
-    ZOMBIE_BOSS_IDLE,
-    ZOMBIE_BOSS_HIT,
-    ZOMBIE_BOSS_WIN,
+	ZOMBIE_BOSS,
+	ZOMBIE_BOSS_IDLE,
+	ZOMBIE_BOSS_HIT,
+	ZOMBIE_BOSS_WIN,
 
-    UFO_BOSS_ROCKET,
-    UFO_BOSS_ROCKET_SEEKING,
+	UFO_BOSS_ROCKET,
+	UFO_BOSS_ROCKET_SEEKING,
 
-    MAFIA_BOSS_ROCKET,
-    MAFIA_BOSS_ROCKET_HURLING_BALLS,
+	MAFIA_BOSS_ROCKET,
+	MAFIA_BOSS_ROCKET_HURLING_BALLS,
 
-    ZOMBIE_BOSS_ROCKET_BLOCK,
+	ZOMBIE_BOSS_ROCKET_BLOCK,
 
-    UFO_ENEMY,
-    UFO_ENEMY_ROCKET,
+	UFO_ENEMY,
+	UFO_ENEMY_ROCKET,
 
-    HEALTH_PICKUP,
+	HEALTH_PICKUP,
 
-    POWERUP_PICKUP,
-    POWERUP_PICKUP_SEEKING_SNITCH,
-    POWERUP_PICKUP_ARMOR,
-    POWERUP_PICKUP_HURLING_BALLS,
+	POWERUP_PICKUP,
+	POWERUP_PICKUP_SEEKING_SNITCH,
+	POWERUP_PICKUP_ARMOR,
+	POWERUP_PICKUP_HURLING_BALLS,
 
-    COLLECTABLE_PICKUP,
-    FLOATING_NUMBER,
+	COLLECTABLE_PICKUP,
+	FLOATING_NUMBER,
 
-    TITLE_SCREEN,
-    CHOPPER_BLADES,
-    TRASH_BIN_BLAST,
-    GRAND_EXPLOSION_RING,
-    GRENADE_BLAST
+	TITLE_SCREEN,
+	CHOPPER_BLADES,
+	TRASH_BIN_BLAST,
+	GRAND_EXPLOSION_RING,
+	GRENADE_BLAST
 }
 
 export enum SoundType {
@@ -176,14 +176,14 @@ export enum SoundType {
 	GRAND_EXPLOSION_RING,
 	GROUND_BOMB_BLAST,
 	AIR_BOMB_BLAST,
-	TRASH_BIN_BLAST,	
+	TRASH_BIN_BLAST,
 
 	BALL_LAUNCH,
 	BULLET_LAUNCH,
 	ORB_LAUNCH,
 	ROCKET_LAUNCH,
-	SEEKER_ROCKET_LAUNCH,	
-	
+	SEEKER_ROCKET_LAUNCH,
+
 	UFO_HOVERING,
 	CHOPPER_HOVERING,
 	UFO_BOSS_DEAD,
@@ -240,6 +240,7 @@ export abstract class Constants {
 	public static HEALTH_LEVEL_MAX: number = 0;
 	public static ATTACK_LEVEL_MAX: number = 0;
 
+	//TODO: reset these to the default values after testing
 	public static MISSILE_UNLOCK_LEVEL: number = 3; // 3
 	public static MISSILE_UNLOCKED: boolean = false;
 
@@ -265,11 +266,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_MARK, "road_marks"),
 
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_1"),
-		//new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_2"),
-
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_1"),
-		//new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_2"),
-
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM_PILLARS, "road_side_walk_bottom_pillars_1"),
 
 		new ConstructTemplate(ConstructType.CLOUD, "cloud_1"),
@@ -330,13 +327,13 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_trash_2", PlayerGroundBombTemplate.TRASH_BIN),
 
 		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_sticky_1", PlayerGroundBombTemplate.DYNAMITE),
-		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_sticky_2", PlayerGroundBombTemplate.DYNAMITE),	
+		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_sticky_2", PlayerGroundBombTemplate.DYNAMITE),
 
 		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_explosive_1_open", PlayerGroundBombTemplate.GRENADE),
-		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_explosive_2_open", PlayerGroundBombTemplate.GRENADE),	
+		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_explosive_2_open", PlayerGroundBombTemplate.GRENADE),
 
 		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_1_open", PlayerGroundBombTemplate.TRASH_BIN),
-		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_2_open", PlayerGroundBombTemplate.TRASH_BIN),			
+		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_2_open", PlayerGroundBombTemplate.TRASH_BIN),
 
 		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_gravity_ball_1", PlayerAirBombTemplate.GRAVITY_BALL),
 		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_gravity_ball_2", PlayerAirBombTemplate.GRAVITY_BALL),
@@ -463,7 +460,7 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.DAMAGE_TAKEN, this.soundsDirectory + "health_loss_1.mp3"),
 
 		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, this.soundsDirectory + "ufo_enemy_entry_1.mp3"),
-		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, this.soundsDirectory + "ufo_enemy_entry_2.mp3"),		
+		new SoundTemplate(SoundType.UFO_ENEMY_ENTRY, this.soundsDirectory + "ufo_enemy_entry_2.mp3"),
 
 		new SoundTemplate(SoundType.GAME_INTRO_MUSIC, this.soundsDirectory + "intro_music_1.mp3"),
 		new SoundTemplate(SoundType.GAME_INTRO_MUSIC, this.soundsDirectory + "intro_music_2.mp3"),
@@ -747,7 +744,7 @@ export abstract class Constants {
 		return texture;
 	}
 
-	static getTextureFromUri(uri: string): Texture {		
+	static getTextureFromUri(uri: string): Texture {
 		const texture = Texture.from(uri);
 		return texture;
 	}

@@ -230,54 +230,75 @@ export class PlayerRide extends GameObjectContainer {
 
 	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
 
-		switch (this.playerRideTemplate) {
-			case PlayerRideTemplate.AIR_BALLOON: {
-				this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED) * controller.power;
-			} break;
-			case PlayerRideTemplate.CHOPPER: {
-				this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 1) * controller.power; // chopper grants extra speed
-				this.animateChopperBlades();
-			} break;
-			default: break;
-		}
+		if (controller.joystickActivated) {
 
-		let halfHeight = this.height / 2;
-		let halfWidth = this.width / 2;
+			switch (this.playerRideTemplate) {
+				case PlayerRideTemplate.AIR_BALLOON: {
+					this.x += controller.velocity.x;
+					this.y += controller.velocity.y;
+				} break;
+				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
+					this.x += controller.velocity.x + 1;
+					this.y += controller.velocity.y + 1;
+					this.animateChopperBlades();
+				} break;
+				default: break;
+			}
 
-		if (controller.isMoveUp && controller.isMoveLeft) {
-			if (this.y + halfHeight > 0 && this.x + halfWidth > 0)
-				this.moveUpLeft();
-		}
-		else if (controller.isMoveUp && controller.isMoveRight) {
-			if (this.x - halfWidth < sceneWidth && this.y + halfHeight > 0)
-				this.moveUpRight();
-		}
-		else if (controller.isMoveUp) {
-			if (this.y + halfHeight > 0)
-				this.moveUp();
-		}
-		else if (controller.isMoveDown && controller.isMoveRight) {
-			if (this.getBottom() - halfHeight < sceneHeight && this.x - halfWidth < sceneWidth)
-				this.moveDownRight();
-		}
-		else if (controller.isMoveDown && controller.isMoveLeft) {
-			if (this.x + halfWidth > 0 && this.getBottom() - halfHeight < sceneHeight)
-				this.moveDownLeft();
-		}
-		else if (controller.isMoveDown) {
-			if (this.getBottom() - halfHeight < sceneHeight)
-				this.moveDown();
-		}
-		else if (controller.isMoveRight) {
-			if (this.x - halfWidth < sceneWidth)
-				this.moveRight();
-		}
-		else if (controller.isMoveLeft) {
-			if (this.x + halfWidth > 0)
-				this.moveLeft();
+			this.x += controller.velocity.x;
+			this.y += controller.velocity.y;
 		}
 		else {
-			this.stopMovement();
+
+			switch (this.playerRideTemplate) {
+				case PlayerRideTemplate.AIR_BALLOON: {
+					this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * controller.power;
+				} break;
+				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
+					this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 1) * controller.power;
+					this.animateChopperBlades();
+				} break;
+				default: break;
+			}
+
+			let halfHeight = this.height / 2;
+			let halfWidth = this.width / 2;
+
+			if (controller.isMoveUp && controller.isMoveLeft) {
+				if (this.y + halfHeight > 0 && this.x + halfWidth > 0)
+					this.moveUpLeft();
+			}
+			else if (controller.isMoveUp && controller.isMoveRight) {
+				if (this.x - halfWidth < sceneWidth && this.y + halfHeight > 0)
+					this.moveUpRight();
+			}
+			else if (controller.isMoveUp) {
+				if (this.y + halfHeight > 0)
+					this.moveUp();
+			}
+			else if (controller.isMoveDown && controller.isMoveRight) {
+				if (this.getBottom() - halfHeight < sceneHeight && this.x - halfWidth < sceneWidth)
+					this.moveDownRight();
+			}
+			else if (controller.isMoveDown && controller.isMoveLeft) {
+				if (this.x + halfWidth > 0 && this.getBottom() - halfHeight < sceneHeight)
+					this.moveDownLeft();
+			}
+			else if (controller.isMoveDown) {
+				if (this.getBottom() - halfHeight < sceneHeight)
+					this.moveDown();
+			}
+			else if (controller.isMoveRight) {
+				if (this.x - halfWidth < sceneWidth)
+					this.moveRight();
+			}
+			else if (controller.isMoveLeft) {
+				if (this.x + halfWidth > 0)
+					this.moveLeft();
+			}
+			else {
+				this.stopMovement();
+			}
 		}
 	}
 
