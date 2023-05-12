@@ -74,7 +74,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			button.setText("Grenades").setIsEnabled(true);
 			SoundManager.play(SoundType.TRASH_BIN_BLAST);
 			grenade_button.select();
-			grenade_button.unselect();
+			trash_bin_button.unselect();
 			dynamite_button.unselect();
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.GRENADE;
 
@@ -94,8 +94,8 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			button.setText("Dynamites").setIsEnabled(true);
 			SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
 			dynamite_button.select();
-			grenade_button.unselect();
 			trash_bin_button.unselect();
+			grenade_button.unselect();			
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.DYNAMITE;
 
 		}, Constants.DYNAMITE_UNLOCKED);
