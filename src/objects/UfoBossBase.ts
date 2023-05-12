@@ -102,8 +102,8 @@ export class UfoBossBase extends GameObjectContainer {
 	}
 
 	getFollowingSpeed(distance: number) {
-		var flightSpeed = distance / this.lag;
-		return flightSpeed;
+		var speed = distance / this.lag;
+		return speed;
 	}
 }
 

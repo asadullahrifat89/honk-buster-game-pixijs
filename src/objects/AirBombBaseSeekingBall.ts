@@ -9,6 +9,7 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 	public shootingTarget: Point = new Point();
 
 	private readonly grace: number = 7;
+	private readonly lag: number = 50;
 	private velocity: { x: number, y: number } = { x: 0, y: 0 };
 
 	setShootingTarget(target: Rectangle) {
@@ -148,7 +149,7 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 	}
 
 	private getFollowingSpeed(distance: number): number {
-		var speed = (1.5 / 100 * distance);
+		var speed = distance / this.lag;
 		return speed;
 	}
 
