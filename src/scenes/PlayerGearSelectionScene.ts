@@ -47,13 +47,14 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 		const optionsGap = 256;
 
 		//#region title
+
 		const title = new Text("SELECT GEAR", {
 			fontFamily: Constants.GAME_TITLE_FONT,
 			fontSize: 35,
 			align: "center",
 			fill: "#ffffff",
 		});
-		title.x = this.uiContainer.width / 2 - title.width / 2.5;
+		title.x = this.uiContainer.width / 2 - title.width / 2.6;
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
