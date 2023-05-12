@@ -54,14 +54,19 @@ export class PlayerGroundBomb extends GameObjectContainer {
 		this.alpha = 1;
 		this.scale.set(1);
 
-		if (this.playerGroundBombTemplate == PlayerGroundBombTemplate.DYNAMITE) {
-			this.angle = Constants.getRandomNumber(-45, 45);
-		}
-		else {
-			this.angle = 0;
+		switch (this.playerGroundBombTemplate) {
+			case PlayerGroundBombTemplate.GRENADE: {
+				this.angle = -45;
+			} break;
+			case PlayerGroundBombTemplate.TRASH_BIN: {
+				this.angle = 0;
+			} break;
+			case PlayerGroundBombTemplate.DYNAMITE: {
+				this.angle = 0;// Constants.getRandomNumber(33, 213);
+			} break;
 		}
 
-		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 3;
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 3.2;
 		this.isDroppedOnGround = false;
 
 		this.awaitMoveDownLeft = false;

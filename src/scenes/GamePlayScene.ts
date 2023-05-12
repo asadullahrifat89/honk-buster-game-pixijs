@@ -1571,6 +1571,17 @@ export class GamePlayScene extends Container implements IScene {
 			sprite.width = this.playerGroundBombSize.width;
 			sprite.height = this.playerGroundBombSize.height;
 
+			switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
+				case PlayerGroundBombTemplate.DYNAMITE: {
+					sprite.width = this.playerGroundBombSize.width / 1.3;
+					sprite.height = this.playerGroundBombSize.height / 1.3;
+				} break;
+				default: {
+					sprite.width = this.playerGroundBombSize.width;
+					sprite.height = this.playerGroundBombSize.height;
+				} break;
+			}
+
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
@@ -1649,7 +1660,7 @@ export class GamePlayScene extends Container implements IScene {
 
 							if (playerGroundBomb.awaitMoveUpRight) {
 								playerGroundBomb.moveUpRight();
-								playerGroundBomb.moveUpRight();								
+								playerGroundBomb.moveUpRight();
 								playerGroundBomb.rotate(RotationDirection.Forward, 0, 10);
 							}
 							else if (playerGroundBomb.awaitMoveDownLeft) {
