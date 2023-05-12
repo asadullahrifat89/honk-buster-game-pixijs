@@ -22,9 +22,10 @@ export class GameController extends Container {
 	public isAttacking: boolean = false;
 	public isPaused: boolean = false;
 	public power: number = 1;
+	public velocity: { x: number, y: number } = { x: 0, y: 0 };
 
-	private joystickActivated: boolean = false;
-	private keyboardActivated: boolean = false;
+	public joystickActivated: boolean = false;
+	public keyboardActivated: boolean = false;
 
 	private settings: GameControllerSettings;
 
@@ -190,6 +191,7 @@ export class GameController extends Container {
 
 	private onJoystickChange(data: JoystickChangeEvent) {
 		this.power = data.power;
+		this.velocity = data.velocity;
 
 		switch (data.direction) {
 			case Direction.TOP: {

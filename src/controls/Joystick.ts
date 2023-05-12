@@ -1,4 +1,5 @@
 ﻿import { Container, FederatedPointerEvent, Graphics, Point, Sprite } from 'pixi.js';
+import { Constants } from '../Constants';
 
 
 export class Joystick extends Container {
@@ -11,7 +12,7 @@ export class Joystick extends Container {
 	outer!: Sprite | Graphics | Container;
 	inner!: Sprite | Graphics | Container;
 
-	innerAlphaStandby = 0.5;
+	innerAlphaStandby = 0.5;	
 
 	constructor(settings: JoystickSettings) {
 		super();
@@ -74,6 +75,7 @@ export class Joystick extends Container {
 		//let eventData: InteractionData;
 		let power: number;
 		let startPosition: Point;
+		let velocity: { x: number, y: number } = { x: 0, y: 0 };
 
 		function onDragStart(_event: FederatedPointerEvent) {
 			/*startPosition = event.getLocalPosition(that);*/
@@ -111,6 +113,8 @@ export class Joystick extends Container {
 				return;
 			}
 
+			
+
 			/**
 			 * x:   -1 <-> 1
 			 * y:   -1 <-> 1
@@ -138,7 +142,10 @@ export class Joystick extends Container {
 				}
 				that.inner.position.set(centerPoint.x, centerPoint.y);
 				power = that.getPower(centerPoint);
-				that.settings.onChange?.({ angle, direction, power, });
+
+				velocity = that.getVelocity(newPosition, power);
+
+				that.settings.onChange?.({ angle, direction, power, velocity });
 				return;
 			}
 
@@ -155,7 +162,10 @@ export class Joystick extends Container {
 
 				that.inner.position.set(centerPoint.x, centerPoint.y);
 				power = that.getPower(centerPoint);
-				that.settings.onChange?.({ angle, direction, power, });
+
+				velocity = that.getVelocity(newPosition, power);
+
+				that.settings.onChange?.({ angle, direction, power, velocity });
 				return;
 			}
 
@@ -200,16 +210,27 @@ export class Joystick extends Container {
 			centerPoint.set(centerX, centerY);
 			power = that.getPower(centerPoint);
 
-			direction = that.getDirection(centerPoint);
-			that.inner.position.set(centerPoint.x, centerPoint.y);
+			velocity = that.getVelocity(newPosition, power);
 
-			that.settings.onChange?.({ angle, direction, power, });
+			direction = that.getDirection(centerPoint);
+			that.inner.position.set(centerPoint.x, centerPoint.y);			
+
+			that.settings.onChange?.({ angle, direction, power, velocity });
 		};
 
 		this.on('pointerdown', onDragStart)
 			.on('pointerup', onDragEnd)
 			.on('pointerupoutside', onDragEnd)
 			.on('pointermove', onDragMove);
+	}
+
+	protected getVelocity(target: Point, power: number): { x: number, y: number } {
+		let startPosition = new Point(0, 0);
+		const angle = Math.atan2(target.y - startPosition.y, target.x - startPosition.x);
+		return {
+			x: Math.cos(angle) * Constants.DEFAULT_CONSTRUCT_SPEED * power,
+			y: Math.sin(angle) * Constants.DEFAULT_CONSTRUCT_SPEED * power
+		};
 	}
 
 	protected getPower(centerPoint: Point) {
@@ -244,6 +265,7 @@ export interface JoystickChangeEvent {
 	angle: number;
 	direction: Direction;
 	power: number;
+	velocity: { x: number, y: number }
 }
 
 export enum Direction {

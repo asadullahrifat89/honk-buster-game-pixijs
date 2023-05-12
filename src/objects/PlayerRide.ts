@@ -241,44 +241,50 @@ export class PlayerRide extends GameObjectContainer {
 			default: break;
 		}
 
-		let halfHeight = this.height / 2;
-		let halfWidth = this.width / 2;
-
-		if (controller.isMoveUp && controller.isMoveLeft) {
-			if (this.y + halfHeight > 0 && this.x + halfWidth > 0)
-				this.moveUpLeft();
-		}
-		else if (controller.isMoveUp && controller.isMoveRight) {
-			if (this.x - halfWidth < sceneWidth && this.y + halfHeight > 0)
-				this.moveUpRight();
-		}
-		else if (controller.isMoveUp) {
-			if (this.y + halfHeight > 0)
-				this.moveUp();
-		}
-		else if (controller.isMoveDown && controller.isMoveRight) {
-			if (this.getBottom() - halfHeight < sceneHeight && this.x - halfWidth < sceneWidth)
-				this.moveDownRight();
-		}
-		else if (controller.isMoveDown && controller.isMoveLeft) {
-			if (this.x + halfWidth > 0 && this.getBottom() - halfHeight < sceneHeight)
-				this.moveDownLeft();
-		}
-		else if (controller.isMoveDown) {
-			if (this.getBottom() - halfHeight < sceneHeight)
-				this.moveDown();
-		}
-		else if (controller.isMoveRight) {
-			if (this.x - halfWidth < sceneWidth)
-				this.moveRight();
-		}
-		else if (controller.isMoveLeft) {
-			if (this.x + halfWidth > 0)
-				this.moveLeft();
+		if (controller.joystickActivated) {
+			this.x += controller.velocity.x;
+			this.y += controller.velocity.y;
 		}
 		else {
-			this.stopMovement();
-		}
+			let halfHeight = this.height / 2;
+			let halfWidth = this.width / 2;
+
+			if (controller.isMoveUp && controller.isMoveLeft) {
+				if (this.y + halfHeight > 0 && this.x + halfWidth > 0)
+					this.moveUpLeft();
+			}
+			else if (controller.isMoveUp && controller.isMoveRight) {
+				if (this.x - halfWidth < sceneWidth && this.y + halfHeight > 0)
+					this.moveUpRight();
+			}
+			else if (controller.isMoveUp) {
+				if (this.y + halfHeight > 0)
+					this.moveUp();
+			}
+			else if (controller.isMoveDown && controller.isMoveRight) {
+				if (this.getBottom() - halfHeight < sceneHeight && this.x - halfWidth < sceneWidth)
+					this.moveDownRight();
+			}
+			else if (controller.isMoveDown && controller.isMoveLeft) {
+				if (this.x + halfWidth > 0 && this.getBottom() - halfHeight < sceneHeight)
+					this.moveDownLeft();
+			}
+			else if (controller.isMoveDown) {
+				if (this.getBottom() - halfHeight < sceneHeight)
+					this.moveDown();
+			}
+			else if (controller.isMoveRight) {
+				if (this.x - halfWidth < sceneWidth)
+					this.moveRight();
+			}
+			else if (controller.isMoveLeft) {
+				if (this.x + halfWidth > 0)
+					this.moveLeft();
+			}
+			else {
+				this.stopMovement();
+			}
+		}		
 	}
 
 	private animateChopperBlades() {
