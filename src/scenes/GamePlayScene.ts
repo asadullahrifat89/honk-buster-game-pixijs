@@ -1645,9 +1645,11 @@ export class GamePlayScene extends Container implements IScene {
 
 						} break;
 						case PlayerGroundBombTemplate.DYNAMITE: {
+							playerGroundBomb.shrink();
+
 							if (playerGroundBomb.awaitMoveUpRight) {
 								playerGroundBomb.moveUpRight();
-								playerGroundBomb.moveUpRight();
+								playerGroundBomb.moveUpRight();								
 								playerGroundBomb.rotate(RotationDirection.Forward, 0, 10);
 							}
 							else if (playerGroundBomb.awaitMoveDownLeft) {

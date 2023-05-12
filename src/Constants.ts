@@ -250,7 +250,7 @@ export abstract class Constants {
 	public static TRASH_BIN_UNLOCK_LEVEL: number = 3; // 3
 	public static TRASH_BIN_UNLOCKED: boolean = false;
 
-	public static DYNAMITE_UNLOCK_LEVEL: number = 7; // 7
+	public static DYNAMITE_UNLOCK_LEVEL: number = 0; // 7
 	public static DYNAMITE_UNLOCKED: boolean = false;
 
 	public static CHOPPER_UNLOCK_LEVEL: number = 5; // 5

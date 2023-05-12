@@ -37,7 +37,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 				this.playerGroundBombBlastUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.TRASH_BIN_BLAST && x.tag == PlayerGroundBombTemplate.TRASH_BIN).map(x => x.uri);
 			} break;
 			case PlayerGroundBombTemplate.DYNAMITE: {
-				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_GROUND_BOMB && x.tag == PlayerGroundBombTemplate.DYNAMITE).map(x => x.uri);				
+				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_GROUND_BOMB && x.tag == PlayerGroundBombTemplate.DYNAMITE).map(x => x.uri);
 				this.blastDelayDefault = 45;
 			} break;
 		}
@@ -47,20 +47,30 @@ export class PlayerGroundBomb extends GameObjectContainer {
 
 	reset() {
 		this.isBlasting = false;
+
 		this.uriIndex = Constants.getRandomNumber(0, this.playerGroundBombUris.length - 1);
 		this.setTexture(Constants.getTextureFromUri(this.playerGroundBombUris[this.uriIndex]));
+
 		this.alpha = 1;
 		this.scale.set(1);
-		this.angle = 0;
-		this.blastDelay = this.blastDelayDefault;
-		this.dropOnGroundDelay = this.dropDelayDefault;
-		this.speed = 4;
+
+		if (this.playerGroundBombTemplate == PlayerGroundBombTemplate.DYNAMITE) {
+			this.angle = Constants.getRandomNumber(-45, 45);
+		}
+		else {
+			this.angle = 0;
+		}
+
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 3;
 		this.isDroppedOnGround = false;
 
 		this.awaitMoveDownLeft = false;
 		this.awaitMoveDownRight = false;
 		this.awaitMoveUpLeft = false;
 		this.awaitMoveUpRight = false;
+
+		this.blastDelay = this.blastDelayDefault;
+		this.dropOnGroundDelay = this.dropDelayDefault;
 
 		SoundManager.play(SoundType.GROUND_BOMB_DROP, 0.5);
 	}
@@ -107,12 +117,6 @@ export class PlayerGroundBomb extends GameObjectContainer {
 	}
 
 	private setDropOnGround() {
-		//switch (this.playerGroundBombTemplate) {
-		//	case PlayerGroundBombTemplate.DYNAMITE: {
-		//		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
-		//	} break;
-		//	default: break;
-		//}
 		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 	}
 
@@ -146,7 +150,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 			case PlayerGroundBombTemplate.DYNAMITE: {
 				this.angle = 0;
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 3;
-				this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
+				//this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
 			} break;
 			default: break;
 		}
