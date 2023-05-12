@@ -5,6 +5,7 @@ import { AirBombBase } from './AirBombBase';
 export class AirBombBaseSeekingBall extends AirBombBase {
 
 	public hurlingTarget: Rectangle = new Rectangle();
+	public followingTarget: Rectangle = new Rectangle();
 	public shootingTarget: Point = new Point();
 
 	private readonly grace: number = 7;
@@ -102,14 +103,16 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 
 	follow(target: Rectangle) {
 
+		this.followingTarget = target;
+
 		let left = this.getLeft();
 		let top = this.getTop();
 
+		let targetX = this.followingTarget.x + this.followingTarget.width / 2;
+		let targetY = this.followingTarget.y + this.followingTarget.height / 2;
+
 		let rocketX = left + this.width / 2;
 		let rocketY = top + this.height / 2;
-
-		let targetX = target.x + target.width / 2;
-		let targetY = target.y + target.height / 2;
 
 		// move up
 		if (targetY < rocketY - this.grace) {
