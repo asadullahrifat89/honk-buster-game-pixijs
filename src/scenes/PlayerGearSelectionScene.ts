@@ -294,7 +294,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 
 			const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED * 4);
 			gameObject.disableRendering();
-			gameObject.addChild(new Graphics().beginFill(0xffffff).lineStyle(1, 0xffffff).drawRoundedRect(0, 0, 300, 5, 5).endFill());
+			gameObject.addChild(new Graphics().beginFill(0xffffff).lineStyle(1, 0xffffff).drawRoundedRect(0, 0, 300, 4, 4).endFill());
 			gameObject.filters = [new BlurFilter()];
 			this.ringGameObjects.push(gameObject);
 			this.addChild(gameObject);
