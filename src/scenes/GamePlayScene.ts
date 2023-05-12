@@ -2521,6 +2521,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private soundPollutionDamageDelay: number = 15;
 	private readonly soundPollutionDamageDelayDefault: number = 15;
+	private readonly soundPollutionDamageDialogues: string[] = ["My ears hurt!", "Let's stop 'em.", "Let's shut 'em up!", "Too much honking!", "Are we giving up?", "Aah!", "Ouch!", "Oh no!", "Too noisy!"];
 
 	private spawnVehicleEnemys() {
 
@@ -2694,6 +2695,7 @@ export class GamePlayScene extends Container implements IScene {
 
 					if (this.soundPollutionDamageDelay <= 0) {
 						this.loosePlayerHealth();
+						this.generateMessageBubble(this.player, this.soundPollutionDamageDialogues[Constants.getRandomNumber(0, this.soundPollutionDamageDialogues.length - 1)]);
 						this.soundPollutionDamageDelay = this.soundPollutionDamageDelayDefault;
 					}
 				}
@@ -2923,6 +2925,8 @@ export class GamePlayScene extends Container implements IScene {
 		if (vehicleBoss.isDead()) {
 
 			this.player.setWinStance();
+			this.generateMessageBubble(this.player, "Ha ha! Yeah!");
+
 			this.addScore(false);
 			this.levelUp();
 
@@ -3170,6 +3174,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (ufoBoss.isDead()) {
 
 			this.player.setWinStance();
+			this.generateMessageBubble(this.player, "Not so tough are we?");
 			this.addScore();
 			this.levelUp();
 
@@ -3568,6 +3573,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (zombieBoss.isDead()) {
 
 			this.player.setWinStance();
+			this.generateMessageBubble(this.player, "Rest in peace!");
 			this.addScore();
 			this.levelUp();
 
@@ -3808,6 +3814,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (mafiaBoss.isDead()) {
 
 			this.player.setWinStance();
+			this.generateMessageBubble(this.player, "Who's the boss now?");
 			this.addScore();
 			this.levelUp();
 
