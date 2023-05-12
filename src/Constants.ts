@@ -250,7 +250,7 @@ export abstract class Constants {
 	public static GRENADE_UNLOCK_LEVEL: number = 3; // 3
 	public static GRENADE_UNLOCKED: boolean = false;
 
-	public static DYNAMITE_UNLOCK_LEVEL: number = 0; // 7
+	public static DYNAMITE_UNLOCK_LEVEL: number = 7; // 7
 	public static DYNAMITE_UNLOCKED: boolean = false;
 
 	public static CHOPPER_UNLOCK_LEVEL: number = 5; // 5
