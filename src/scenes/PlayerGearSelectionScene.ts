@@ -1,4 +1,4 @@
-﻿import { BlurFilter, Container, Graphics, Text, Texture } from "pixi.js";
+﻿import { BlurFilter, Container, Graphics, Text } from "pixi.js";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -7,8 +7,6 @@ import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
-import { GrayscaleFilter } from "@pixi/filter-grayscale";
-import { MessageBubble } from "../controls/MessageBubble";
 import { PlayerAirBombSelectionScene } from "./PlayerAirBombSelectionScene";
 import { PlayerRideSelectionScene } from "./PlayerRideSelectionScene";
 import { PlayerCharacterSelectionScene } from "./PlayerCharacterSelectionScene";
@@ -286,48 +284,82 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 		//#endregion
 
 		//#region air_bomb
-		let air_bombTexture: Texture = Texture.from("player_gravity_ball_2");
+
+		//let air_bombTexture: Texture = Texture.from("player_gravity_ball_2");
+		//let air_bombName: string = "";
+
+		//switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
+		//	case PlayerAirBombTemplate.GRAVITY_BALL: {
+		//		air_bombTexture = Texture.from("player_gravity_ball_2");
+		//		air_bombName = "Gravity Balls";
+		//	} break;
+		//	case PlayerAirBombTemplate.MISSILE: {
+		//		air_bombTexture = Texture.from("player_rocket_1");
+		//		air_bombName = "Missiles";
+		//	} break;
+		//	case PlayerAirBombTemplate.BULLET_BALL: {
+		//		air_bombTexture = Texture.from("player_bullet_ball_1");
+		//		air_bombName = "Bullet Balls";
+		//	} break;
+		//	default: {
+		//		air_bombTexture = Texture.from("player_gravity_ball_2");
+		//		air_bombName = "Air Bomb?";
+		//	} break;
+		//}
+
+		//const air_bomb_sprite: GameObjectSprite = new GameObjectSprite(air_bombTexture);
+		//air_bomb_sprite.width = 256 / 3.5;
+		//air_bomb_sprite.height = 256 / 3.5;
+		//air_bomb_sprite.x = 0;
+		//air_bomb_sprite.y = 0;
+		//air_bomb_sprite.filters = Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE == -1 ? [new GrayscaleFilter()] : null;
+		//const air_bomb_button = new Button(() => {
+
+		//	SoundManager.play(SoundType.ITEM_SELECT);
+		//	this.removeChild(this.uiContainer);
+		//	this.uiContainer.destroy();
+		//	SceneManager.changeScene(new PlayerAirBombSelectionScene());
+
+		//}).setBackground(air_bomb_sprite);
+		//air_bomb_button.setPosition((this.uiContainer.width / 2 + optionsGap), (this.uiContainer.height / 2 - air_bomb_sprite.height / 2)); // air_bomb button position
+		//this.uiContainer.addChild(air_bomb_button);
+
+		//const air_bomb_msg = new MessageBubble(0, air_bombName, 20);
+		//air_bomb_msg.setPosition(air_bomb_button.x + air_bomb_button.width / 2, (air_bomb_button.y + air_bomb_button.height / 2) + 25);
+		//this.uiContainer.addChild(air_bomb_msg);
+
+		let air_bombTexture: string = "player_gravity_ball_2";
 		let air_bombName: string = "";
 
 		switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
 			case PlayerAirBombTemplate.GRAVITY_BALL: {
-				air_bombTexture = Texture.from("player_gravity_ball_2");
+				air_bombTexture = "player_gravity_ball_2";
 				air_bombName = "Gravity Balls";
 			} break;
 			case PlayerAirBombTemplate.MISSILE: {
-				air_bombTexture = Texture.from("player_rocket_1");
+				air_bombTexture = "player_rocket_1";
 				air_bombName = "Missiles";
 			} break;
 			case PlayerAirBombTemplate.BULLET_BALL: {
-				air_bombTexture = Texture.from("player_bullet_ball_1");
+				air_bombTexture = "player_bullet_ball_1";
 				air_bombName = "Bullet Balls";
 			} break;
 			default: {
-				air_bombTexture = Texture.from("player_gravity_ball_2");
+				air_bombTexture = "player_gravity_ball_2";
 				air_bombName = "Air Bomb?";
 			} break;
 		}
 
-		const air_bomb_sprite: GameObjectSprite = new GameObjectSprite(air_bombTexture);
-		air_bomb_sprite.width = 256 / 3.5;
-		air_bomb_sprite.height = 256 / 3.5;
-		air_bomb_sprite.x = 0;
-		air_bomb_sprite.y = 0;
-		air_bomb_sprite.filters = Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE == -1 ? [new GrayscaleFilter()] : null;
-		const air_bomb_button = new Button(() => {
+		const air_bomb_button = new SelectionButton(air_bombTexture, 256 / 3.5, 256 / 3.5, air_bombName, () => {
 
 			SoundManager.play(SoundType.ITEM_SELECT);
 			this.removeChild(this.uiContainer);
 			this.uiContainer.destroy();
 			SceneManager.changeScene(new PlayerAirBombSelectionScene());
+		});
 
-		}).setBackground(air_bomb_sprite);
-		air_bomb_button.setPosition((this.uiContainer.width / 2 + optionsGap), (this.uiContainer.height / 2 - air_bomb_sprite.height / 2)); // air_bomb button position
+		air_bomb_button.setPosition((this.uiContainer.width / 2 + optionsGap), (this.uiContainer.height / 2 - air_bomb_button.height / 2));
 		this.uiContainer.addChild(air_bomb_button);
-
-		const air_bomb_msg = new MessageBubble(0, air_bombName, 20);
-		air_bomb_msg.setPosition(air_bomb_button.x + air_bomb_button.width / 2, (air_bomb_button.y + air_bomb_button.height / 2) + 25);
-		this.uiContainer.addChild(air_bomb_msg);
 
 		//#endregion
 
