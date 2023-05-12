@@ -69,9 +69,7 @@ export class SceneManager {
 	public static changeScene(newScene: IScene): void {
 
 		// if the screen supports fullscreen, toggle it
-		if (SceneManager.interacted && document.fullscreenEnabled && !document.fullscreenElement) {
-			document.documentElement.requestFullscreen();
-		}
+		SceneManager.toggleFullscreen();
 
 		// Remove and destroy old scene... if we had one..
 		if (SceneManager.currentScene) {
@@ -86,6 +84,12 @@ export class SceneManager {
 		SceneManager.app.stage.addChild(SceneManager.currentScene);
 		SceneManager.resize();
 	}
+
+	public static toggleFullscreen() {
+        if (SceneManager.interacted && document.fullscreenEnabled && !document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        }
+    }
 
 	private static getScaling() {
 		const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);

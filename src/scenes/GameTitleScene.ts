@@ -19,6 +19,15 @@ export class GameTitleScene extends Container implements IScene {
 	constructor() {
 		super();
 
+		this.eventMode = 'dynamic';
+
+		this.on("pointertap", () => {
+			if (!SceneManager.interacted) {
+				SceneManager.interacted = true;				
+			}
+			SceneManager.toggleFullscreen();
+		}, this);
+
 		this.spawnRings();
 
 		this.uiContainer = new GameObjectContainer();

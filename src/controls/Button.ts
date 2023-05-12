@@ -21,6 +21,7 @@ export class Button extends Container {
 		this.eventMode = 'dynamic';
 		this.filters = null;
 
+		// button hover, disabled filters
 		this.buttonHoverFilter = new OutlineFilter(3, 0xffffff);
 		this.buttonDisabledFilter = new GrayscaleFilter();
 

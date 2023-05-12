@@ -12,6 +12,13 @@ export class ScreenOrientationScene extends Container implements IScene {
     constructor() {
         super();
 
+        this.on("pointertap", () => {
+            if (!SceneManager.interacted) {
+                SceneManager.interacted = true;               
+            }
+            SceneManager.toggleFullscreen();
+        }, this);
+
         this.changeOrienationText = new Text("Pls Change Screen Orientation", {
             fontFamily: Constants.GAME_DEFAULT_FONT,
             fontSize: 18,

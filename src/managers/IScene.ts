@@ -2,8 +2,9 @@
 
 export interface IScene extends DisplayObject {
 
+    // update method for scenes to process ticket events
     update(): void;
 
-    // we added the resize method to the interface
+    // resize method for scenes to adopt to scaling
     resize(scale: number): void;
 }
