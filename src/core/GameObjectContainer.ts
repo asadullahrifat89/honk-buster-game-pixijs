@@ -12,6 +12,7 @@ export class GameObjectContainer extends Container {
 	private hoverDelay: number = 0;
 	private readonly hoverDelayDefault: number = 28;
 	private hoverSpeed: number = 0.3;
+	private hopAngle: number = 0;
 
 	private hopDelay: number = 0;
 	private readonly hopDelayDefault: number = 10;
@@ -229,6 +230,8 @@ export class GameObjectContainer extends Container {
 		if (!this.isAwaitingHop) {
 			this.isAwaitingHop = true;
 			this.hopDelay = this.hopDelayDefault;
+			let draw = Constants.getRandomNumber(0, 1);
+			this.hopAngle = draw == 0 ? -0.5 : 0.5;
 		}
 	}
 
@@ -239,12 +242,14 @@ export class GameObjectContainer extends Container {
 
 			if (this.hopDelay >= 0) {
 				this.y -= this.hopSpeed;
+				this.angle -= this.hopAngle;
 
 				if (this.hopSpeed > 0)
 					this.hopSpeed -= 0.1; // decrease speed
 			}
 			else {
 				this.y += this.hopSpeed;
+				this.angle += this.hopAngle;
 
 				if (this.hopSpeed <= this.hopSpeedLimit)
 					this.hopSpeed += 0.2;
