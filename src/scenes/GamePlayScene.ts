@@ -406,9 +406,9 @@ export class GamePlayScene extends Container implements IScene {
 			}
 		}
 		else {
-			switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
-				case PlayerGroundBombTemplate.GRENADE: { score += 1; } break;
-				case PlayerGroundBombTemplate.TRASH_BIN: { score += 2; } break;
+			switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {				
+				case PlayerGroundBombTemplate.TRASH_BIN: { score += 1; } break;
+				case PlayerGroundBombTemplate.GRENADE: { score += 2; } break;
 				case PlayerGroundBombTemplate.DYNAMITE: { score += 3; } break;
 				default: { score += 1; } break;
 			}

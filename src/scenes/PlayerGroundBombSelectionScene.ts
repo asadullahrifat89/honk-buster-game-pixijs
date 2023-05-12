@@ -48,40 +48,40 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
 		this.uiContainer.addChild(title);
 
-		//#region grenade
-
-		const grenade_button = new SelectionButton("player_honk_bomb_explosive_1", 256 / 2, 256 / 2, "Lvl " + 1, () => {
-
-			button.setText("Grenades").setIsEnabled(true);
-			SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
-			grenade_button.select();
-			trash_button.unselect();
-			dynamite_button.unselect();
-			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.GRENADE;
-		});
-
-		grenade_button.setPosition((this.uiContainer.width / 2 - grenade_button.width * 2), (this.uiContainer.height / 2 - grenade_button.height / 2) + 10);
-		this.uiContainer.addChild(grenade_button);
-
-		//#endregion
-
 		//#region trash
 
-		Constants.TRASH_BIN_UNLOCKED = Constants.GAME_LEVEL_MAX >= Constants.TRASH_BIN_UNLOCK_LEVEL;
-
-		const trash_button = new SelectionButton("player_honk_bomb_trash_1", 256 / 2, 256 / 2, "Lvl " + Constants.TRASH_BIN_UNLOCK_LEVEL, () => {
+		const trash_bin_button = new SelectionButton("player_honk_bomb_trash_1", 256 / 2, 256 / 2, "Lvl " + 1, () => {
 
 			button.setText("Trash Bins").setIsEnabled(true);
-			SoundManager.play(SoundType.TRASH_BIN_BLAST);
-			trash_button.select();
+			SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
+			trash_bin_button.select();
 			grenade_button.unselect();
 			dynamite_button.unselect();
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.TRASH_BIN;
+		});
 
-		}, Constants.TRASH_BIN_UNLOCKED);
+		trash_bin_button.setPosition((this.uiContainer.width / 2 - trash_bin_button.width * 2), (this.uiContainer.height / 2 - trash_bin_button.height / 2) + 10);
+		this.uiContainer.addChild(trash_bin_button);
 
-		trash_button.setPosition((this.uiContainer.width / 2 - trash_button.width / 2), (this.uiContainer.height / 2 - trash_button.height / 2) + 10);
-		this.uiContainer.addChild(trash_button);
+		//#endregion
+
+		//#region grenade
+
+		Constants.GRENADE_UNLOCKED = Constants.GAME_LEVEL_MAX >= Constants.GRENADE_UNLOCK_LEVEL;
+
+		const grenade_button = new SelectionButton("player_honk_bomb_explosive_2", 256 / 2, 256 / 2, "Lvl " + Constants.GRENADE_UNLOCK_LEVEL, () => {
+
+			button.setText("Grenades").setIsEnabled(true);
+			SoundManager.play(SoundType.TRASH_BIN_BLAST);
+			grenade_button.select();
+			grenade_button.unselect();
+			dynamite_button.unselect();
+			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.GRENADE;
+
+		}, Constants.GRENADE_UNLOCKED);
+
+		grenade_button.setPosition((this.uiContainer.width / 2 - grenade_button.width / 2), (this.uiContainer.height / 2 - grenade_button.height / 2) + 10);
+		this.uiContainer.addChild(grenade_button);
 
 		//#endregion
 
@@ -95,7 +95,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
 			dynamite_button.select();
 			grenade_button.unselect();
-			trash_button.unselect();
+			trash_bin_button.unselect();
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.DYNAMITE;
 
 		}, Constants.DYNAMITE_UNLOCKED);
