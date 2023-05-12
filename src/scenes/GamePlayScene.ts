@@ -55,7 +55,7 @@ export class GamePlayScene extends Container implements IScene {
 	private onScreenMessage: OnScreenMessage;
 
 	//TODO: reset these to the default values after testing
-	private readonly ufoEnemyRelease: { point: number, limit: number } = { point: 35, limit: 15 }; // 35
+	private readonly ufoEnemyRelease: { point: number, limit: number } = { point: 5, limit: 15 }; // 35
 	private readonly vehicleBossRelease: { point: number, limit: number } = { point: 25, limit: 15 }; // 25
 	private readonly ufoBossRelease: { point: number, limit: number } = { point: 50, limit: 15 }; // 50
 	private readonly zombieBossRelease: { point: number, limit: number } = { point: 100, limit: 15 }; // 100
@@ -264,6 +264,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnPlayerAirBombs();
 		this.spawnPlayerAirBombHurlingBalls();
 		this.spawnPlayerBalloon();
+		this.spawnPlayerArmorSpheres();
 
 		this.spawnUfoBossAirBombs();
 		this.spawnUfoBossAirBombSeekingBalls();
@@ -334,6 +335,7 @@ export class GamePlayScene extends Container implements IScene {
 	private animateGameObjects() {
 
 		this.animatePlayerBalloon();
+		this.animatePlayerArmorSpheres();
 
 		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
 			this.animateRoadMarks();
@@ -346,12 +348,13 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.animateHonks();
 
-		this.animatePlayerGroundBombs();
 		this.animateFlashExplosions();
 		this.animateBlowSmokeExplosions();
 		this.animateRingSmokeExplosions();
 		this.animateRingFireExplosions();
 		this.animateGrandExplosionRings();
+
+		this.animatePlayerGroundBombs();
 		this.animatePlayerAirBombs();
 		this.animatePlayerAirBombHurlingBalls();
 
@@ -2170,6 +2173,62 @@ export class GamePlayScene extends Container implements IScene {
 					playerAirBombBullsEye.disableRendering();
 				}
 			});
+		}
+	}
+
+	//#endregion
+
+	//#region PlayerArmorSpheres
+
+	private armorSphereGameObjects: Array<GameObjectContainer> = [];
+
+	private spawnPlayerArmorSpheres() {
+
+		for (let j = 0; j < 5; j++) {
+
+			const armorSphere: GameObjectContainer = new GameObjectContainer();
+			armorSphere.disableRendering();
+
+			const circle = new Graphics().beginFill(0xf9c573).lineStyle(5, 0x1d1d1b).drawCircle(0, 0, 120).endFill();
+			armorSphere.addChild(circle);
+			armorSphere.alpha = 0.5;
+
+			this.armorSphereGameObjects.push(armorSphere);
+			this.sceneContainer.addChild(armorSphere);
+		}
+	}
+
+	private generatePlayerArmorSpheres() {
+
+		if (this.powerUpBar.tag == PowerUpType.ARMOR && this.powerUpBar.hasHealth()) {
+
+			var armorSphere = this.armorSphereGameObjects.find(x => x.isAnimating == false);
+
+			if (armorSphere) {
+				armorSphere.setPosition(this.player.x, this.player.y);
+				armorSphere.enableRendering();
+			}
+		}
+	}
+
+	private animatePlayerArmorSpheres() {
+
+		if (this.powerUpBar.tag == PowerUpType.ARMOR) {
+
+			var animatingArmorSpheres = this.armorSphereGameObjects.filter(x => x.isAnimating == true);
+
+			if (animatingArmorSpheres) {
+
+				animatingArmorSpheres.forEach(armorSphere => {
+
+					if (this.powerUpBar.hasHealth()) {
+						armorSphere.setPosition(this.player.x, this.player.y);
+					}
+					else {
+						armorSphere.disableRendering();
+					}
+				});
+			}
 		}
 	}
 
@@ -4093,6 +4152,7 @@ export class GamePlayScene extends Container implements IScene {
 								{
 									this.powerUpBar.setMaximumValue(10).setValue(10);
 									this.generateOnScreenMessage("Armor +10", this.powerUpBar.getIcon());
+									this.generatePlayerArmorSpheres();
 								}
 								break;
 							default:
