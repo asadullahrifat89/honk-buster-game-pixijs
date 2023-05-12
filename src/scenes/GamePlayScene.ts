@@ -263,8 +263,8 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnPlayerGroundBombs();
 		this.spawnPlayerAirBombs();
 		this.spawnPlayerAirBombHurlingBalls();
-		this.spawnPlayerBalloon();
 		this.spawnPlayerArmorSpheres();
+		this.spawnPlayerBalloon();
 
 		this.spawnUfoBossAirBombs();
 		this.spawnUfoBossAirBombSeekingBalls();
@@ -1527,7 +1527,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	loosePlayerHealth() {		
+	loosePlayerHealth() {
 
 		if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.ARMOR) {
 			this.depletePowerUp();
@@ -2188,7 +2188,7 @@ export class GamePlayScene extends Container implements IScene {
 			const armorSphere: GameObjectContainer = new GameObjectContainer();
 			armorSphere.disableRendering();
 
-			const circle = new Graphics().lineStyle(7, 0x1d1d1b).beginFill(0xf9c573).drawCircle(0, 0, 110).endFill();
+			const circle = new Graphics().lineStyle(7, 0xffffff).beginFill(0x00d8de).drawCircle(0, 0, 110).endFill();
 			armorSphere.addChild(circle);
 			armorSphere.alpha = 0.4;
 
@@ -2227,6 +2227,13 @@ export class GamePlayScene extends Container implements IScene {
 						armorSphere.disableRendering();
 					}
 				});
+			}
+		}
+		else {
+			if (this.armorSphereGameObjects.some(x => x.isAnimating == true)) {
+				var animatingArmorSphere = this.armorSphereGameObjects.find(x => x.isAnimating == true);
+				if (animatingArmorSphere)
+					animatingArmorSphere.disableRendering();
 			}
 		}
 	}
