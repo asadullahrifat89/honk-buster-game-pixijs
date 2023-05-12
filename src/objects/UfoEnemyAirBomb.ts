@@ -18,9 +18,7 @@ export class UfoEnemyAirBomb extends GameObjectContainer {
 		this.scale.set(1);
 		this.isBlasting = false;
 		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_ENEMY_ROCKET));
-
 		this.autoBlastDelay = this.autoBlastDelayDefault;
-
 		SoundManager.play(SoundType.ORB_LAUNCH, 0.4);
 	}
 
@@ -30,9 +28,6 @@ export class UfoEnemyAirBomb extends GameObjectContainer {
 
 	setBlast() {
 		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED - 1;
-		// this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
-		// this.angle = 0;
-		// this.setTexture(Constants.getRandomTexture(ConstructType.BLAST));
 		this.isBlasting = true;
 		SoundManager.play(SoundType.AIR_BOMB_BLAST);
 	}
