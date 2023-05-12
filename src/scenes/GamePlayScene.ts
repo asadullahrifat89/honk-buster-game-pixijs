@@ -20,7 +20,7 @@ import { UfoEnemy } from "../objects/UfoEnemy";
 import { UfoEnemyRocket } from "../objects/UfoEnemyRocket";
 import { UfoBoss } from "../objects/UfoBoss";
 import { UfoBossRocket } from "../objects/UfoBossRocket";
-import { UfoBossRocketSeeking } from "../objects/UfoBossRocketSeeking";
+import { UfoBossAirBombSeekingBall } from "../objects/UfoBossAirBombSeekingBall";
 import { HealthPickup } from "../objects/HealthPickup";
 import { Honk } from "../objects/Honk";
 import { MafiaBoss } from "../objects/MafiaBoss";
@@ -265,7 +265,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnPlayerBalloon();
 
 		this.spawnUfoBossRockets();
-		this.spawnUfoBossRocketSeekings();
+		this.spawnUfoBossAirBombSeekingBalls();
 		this.spawnUfoBosss();
 
 		this.spawnZombieBosss();
@@ -303,7 +303,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.generateUfoBoss();
 		this.generateUfoBossRockets();
-		this.generateUfoBossRocketSeekings();
+		this.generateUfoBossAirBombSeekingBalls();
 
 		this.generateZombieBoss();
 		this.generateZombieBossRocketBlocks();
@@ -355,7 +355,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.animateUfoBoss();
 		this.animateUfoBossRockets();
-		this.animateUfoBossRocketSeekings();
+		this.animateUfoBossAirBombSeekingBalls();
 
 		this.animateZombieBoss();
 		this.animateZombieBossRocketBlocks();
@@ -3160,19 +3160,19 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region UfoBossRocketSeekings
+	//#region UfoBossAirBombSeekingBalls
 
 	private ufoBossRocketSeekingSize = { width: 75, height: 75 };
-	private ufoBossRocketSeekingGameObjects: Array<UfoBossRocketSeeking> = [];
+	private ufoBossRocketSeekingGameObjects: Array<UfoBossAirBombSeekingBall> = [];
 
 	private readonly ufoBossRocketSeekingPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private ufoBossRocketSeekingPopDelay: number = 0;
 
-	spawnUfoBossRocketSeekings() {
+	spawnUfoBossAirBombSeekingBalls() {
 
 		for (let j = 0; j < 2; j++) {
 
-			const gameObject: UfoBossRocketSeeking = new UfoBossRocketSeeking(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: UfoBossAirBombSeekingBall = new UfoBossAirBombSeekingBall(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET_SEEKING));
@@ -3192,7 +3192,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generateUfoBossRocketSeekings() {
+	generateUfoBossAirBombSeekingBalls() {
 
 		let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
@@ -3220,13 +3220,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animateUfoBossRocketSeekings() {
+	animateUfoBossAirBombSeekingBalls() {
 
-		let animatingUfoBossRocketSeekings = this.ufoBossRocketSeekingGameObjects.filter(x => x.isAnimating == true);
+		let animatingUfoBossAirBombSeekingBalls = this.ufoBossRocketSeekingGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingUfoBossRocketSeekings) {
+		if (animatingUfoBossAirBombSeekingBalls) {
 
-			animatingUfoBossRocketSeekings.forEach(ufoBossRocketSeeking => {
+			animatingUfoBossAirBombSeekingBalls.forEach(ufoBossRocketSeeking => {
 
 				if (ufoBossRocketSeeking.isBlasting) {
 					ufoBossRocketSeeking.shrink();
