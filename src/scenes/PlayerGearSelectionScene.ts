@@ -128,12 +128,12 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 
 		//#region ground_bomb
 
-		let ground_bombTexture: string = "player_honk_bomb_grenade_1";
+		let ground_bombTexture: string = "player_honk_bomb_grenade_2";
 		let ground_bombName: string = "";
 
 		switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
 			case PlayerGroundBombTemplate.GRENADE: {
-				ground_bombTexture = "player_honk_bomb_grenade_1";
+				ground_bombTexture = "player_honk_bomb_grenade_2";
 				ground_bombName = "Grenades";
 			} break;
 			case PlayerGroundBombTemplate.TRASH_BIN: {
@@ -145,7 +145,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 				ground_bombName = "Dynamites";
 			} break;
 			default: {
-				ground_bombTexture = "player_honk_bomb_grenade_1";
+				ground_bombTexture = "player_honk_bomb_grenade_2";
 				ground_bombName = "Ground Bomb?";
 			} break;
 		}
