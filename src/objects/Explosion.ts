@@ -43,15 +43,21 @@ export class Explosion extends GameObjectContainer {
 	}
 
 	reposition(source: GameObjectContainer) {
-
-		if (this.explosionType == ExplosionType.FLASH_EXPLOSION) {
-			this.x = source.x;
-			this.y = source.y;
+		switch (this.explosionType) {
+			case ExplosionType.FLASH_EXPLOSION: { // flash explosions always appear from point of contact
+				this.x = source.x;
+				this.y = source.y;
+			} break;
+			case ExplosionType.BLOW_SMOKE_EXPLOSION: {
+				this.x = source.x - source.width / 2;
+				this.y = source.y - source.height / 2;
+			} break;
+			default: {
+				this.x = source.x + Constants.getRandomNumber(-50, 50);
+				this.y = source.y + Constants.getRandomNumber(-50, 50);
+			} break;
 		}
-		else {
-			this.x = source.x + Constants.getRandomNumber(-50, 50);
-			this.y = source.y + Constants.getRandomNumber(-50, 50);
-		}
+		
 		this.explosionAnimation.gotoAndPlay(0);
 	}
 
