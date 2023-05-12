@@ -9,7 +9,7 @@ export class PlayerAirBombHurlingBall extends AirBombBaseSeekingBall {
 
 	constructor(speed: number) {
 		super(speed);
-		super.autoBlastDelayDefault = 10;
+		super.autoBlastDelayDefault = 8;
 	}
 
 	reset() {
