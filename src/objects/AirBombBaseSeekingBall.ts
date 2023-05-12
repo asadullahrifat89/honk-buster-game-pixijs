@@ -145,7 +145,7 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 			let speed = this.getFollowingSpeed(distance);
 
 			this.x = (left + speed);
-		}
+		}		
 	}
 
 	private getFollowingSpeed(distance: number): number {

@@ -56,7 +56,7 @@ export class GamePlayScene extends Container implements IScene {
 	//TODO: reset these to the default values after testing
 	private readonly ufoEnemyRelease: { point: number, limit: number } = { point: 35, limit: 15 }; // 35
 	private readonly vehicleBossRelease: { point: number, limit: number } = { point: 25, limit: 15 }; // 25
-	private readonly ufoBossRelease: { point: number, limit: number } = { point: 5, limit: 15 }; // 50
+	private readonly ufoBossRelease: { point: number, limit: number } = { point: 50, limit: 15 }; // 50
 	private readonly zombieBossRelease: { point: number, limit: number } = { point: 100, limit: 15 }; // 100
 	private readonly mafiaBossRelease: { point: number, limit: number } = { point: 150, limit: 15 }; // 150
 
