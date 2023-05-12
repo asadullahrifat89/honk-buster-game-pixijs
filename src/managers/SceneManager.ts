@@ -148,7 +148,7 @@ export class SceneManager {
 
 	//	if (SceneManager.fpsPrintDelay <= 0) {
 	//		console.log("FPS: " + SceneManager.app.ticker.FPS);
-	//		SceneManager.fpsPrintDelay = 10;
+	//		SceneManager.fpsPrintDelay = 6;
 	//	}
 	//}
 

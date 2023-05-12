@@ -212,6 +212,8 @@ export class GamePlayScene extends Container implements IScene {
 		if (this.circleOverlay.scale.x <= 200) {
 			this.circleOverlay.expand();
 		}
+
+		//this.logCount();
 	}
 
 	public resize(scale: number): void {
@@ -390,6 +392,17 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.animateLeafs();
 	}
+
+	//private countPrintDelay: number = 6;
+
+	//private logCount() {
+	//	this.countPrintDelay -= 0.1;
+
+	//	if (this.countPrintDelay <= 0) {
+	//		console.log("Total Count: " + this.sceneContainer.children.length + " Animating: " + this.sceneContainer.children.filter(x => x.renderable == true).length);
+	//		this.countPrintDelay = 6;
+	//	}
+	//}
 
 	//#endregion
 
@@ -2873,6 +2886,7 @@ export class GamePlayScene extends Container implements IScene {
 			}
 			else {
 				vehicleBoss.dillyDally();
+				this.generateVehicleSmoke(vehicleBoss);
 
 				if (vehicleBoss.isAttacking) {
 					vehicleBoss.move(Constants.DEFAULT_GAME_VIEW_WIDTH, Constants.DEFAULT_GAME_VIEW_HEIGHT);
