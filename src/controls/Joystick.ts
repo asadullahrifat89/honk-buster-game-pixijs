@@ -77,9 +77,9 @@ export class Joystick extends Container {
 		let startPosition: Point;
 		let velocity: { x: number, y: number } = { x: 0, y: 0 };
 
-		function onDragStart(_event: FederatedPointerEvent) {
-			/*startPosition = event.getLocalPosition(that);*/
-			startPosition = new Point(0, 0);
+		function onDragStart(event: FederatedPointerEvent) {
+			startPosition = event.getLocalPosition(that);
+			//startPosition = new Point(0, 0);
 
 			dragging = true;
 			that.inner.alpha = 1;
@@ -140,7 +140,7 @@ export class Joystick extends Container {
 				}
 				that.inner.position.set(centerPoint.x, centerPoint.y);
 				power = that.getPower(centerPoint);
-				velocity = that.getVelocity(newPosition, power);
+				velocity = that.getVelocity(startPosition, newPosition, power);
 
 				that.settings.onChange?.({ angle, direction, power, velocity });
 				return;
@@ -159,7 +159,7 @@ export class Joystick extends Container {
 
 				that.inner.position.set(centerPoint.x, centerPoint.y);
 				power = that.getPower(centerPoint);
-				velocity = that.getVelocity(newPosition, power);
+				velocity = that.getVelocity(startPosition, newPosition, power);
 
 				that.settings.onChange?.({ angle, direction, power, velocity });
 				return;
@@ -205,7 +205,7 @@ export class Joystick extends Container {
 			}
 			centerPoint.set(centerX, centerY);
 			power = that.getPower(centerPoint);
-			velocity = that.getVelocity(newPosition, power);
+			velocity = that.getVelocity(startPosition, newPosition, power);
 
 			direction = that.getDirection(centerPoint);
 			that.inner.position.set(centerPoint.x, centerPoint.y);
@@ -219,9 +219,8 @@ export class Joystick extends Container {
 			.on('pointermove', onDragMove);
 	}
 
-	protected getVelocity(target: Point, power: number): { x: number, y: number } {
-		let startPosition = new Point(0, 0);
-		const angle = Math.atan2(target.y - startPosition.y, target.x - startPosition.x);
+	protected getVelocity(startPosition: Point, newPosition: Point, power: number): { x: number, y: number } {
+		const angle = Math.atan2(newPosition.y - startPosition.y, newPosition.x - startPosition.x);
 		return {
 			x: Math.cos(angle) * (Constants.DEFAULT_CONSTRUCT_SPEED / 2) * power,
 			y: Math.sin(angle) * (Constants.DEFAULT_CONSTRUCT_SPEED / 2) * power
