@@ -55,7 +55,7 @@ export class GamePlayScene extends Container implements IScene {
 	private onScreenMessage: OnScreenMessage;
 
 	//TODO: reset these to the default values after testing
-	private readonly ufoEnemyRelease: { point: number, limit: number } = { point: 2, limit: 15 }; // 35
+	private readonly ufoEnemyRelease: { point: number, limit: number } = { point: 35, limit: 15 }; // 35
 	private readonly vehicleBossRelease: { point: number, limit: number } = { point: 25, limit: 15 }; // 25
 	private readonly ufoBossRelease: { point: number, limit: number } = { point: 50, limit: 15 }; // 50
 	private readonly zombieBossRelease: { point: number, limit: number } = { point: 100, limit: 15 }; // 100
@@ -1531,6 +1531,11 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.ARMOR) {
 			this.depletePowerUp();
+
+			var animatingArmorSphere = this.armorSphereGameObjects.find(x => x.isAnimating == true);
+			if (animatingArmorSphere)
+				animatingArmorSphere.setPopping();
+
 		}
 		else {
 			this.player.setPopping();
@@ -2219,6 +2224,7 @@ export class GamePlayScene extends Container implements IScene {
 			if (animatingArmorSpheres) {
 
 				animatingArmorSpheres.forEach(armorSphere => {
+					armorSphere.pop();
 
 					if (this.powerUpBar.hasHealth()) {
 						armorSphere.setPosition(this.player.x, this.player.y);
