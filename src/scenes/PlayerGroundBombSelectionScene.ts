@@ -69,7 +69,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 
 		Constants.GRENADE_UNLOCKED = Constants.GAME_LEVEL_MAX >= Constants.GRENADE_UNLOCK_LEVEL;
 
-		const grenade_button = new SelectionButton("player_honk_bomb_explosive_2", 256 / 2, 256 / 2, "Lvl " + Constants.GRENADE_UNLOCK_LEVEL, () => {
+		const grenade_button = new SelectionButton("player_honk_bomb_grenade_2", 256 / 2, 256 / 2, "Lvl " + Constants.GRENADE_UNLOCK_LEVEL, () => {
 
 			button.setText("Grenades").setIsEnabled(true);
 			SoundManager.play(SoundType.TRASH_BIN_BLAST);

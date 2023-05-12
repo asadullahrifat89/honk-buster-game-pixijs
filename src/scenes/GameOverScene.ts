@@ -225,7 +225,7 @@ export class GameOverScene extends Container implements IScene {
 					Constants.CHOPPER_UNLOCKED = true;
 				}
 				else if (Constants.GAME_LEVEL_MAX >= Constants.GRENADE_UNLOCK_LEVEL && !Constants.GRENADE_UNLOCKED) {
-					this.showUnlockMessage("Grenades Unlocked!", Texture.from("player_honk_bomb_explosive_1"));
+					this.showUnlockMessage("Grenades Unlocked!", Texture.from("player_honk_bomb_grenade_1"));
 					Constants.GRENADE_UNLOCKED = true;
 				}
 				else if (Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL && !Constants.DYNAMITE_UNLOCKED) {

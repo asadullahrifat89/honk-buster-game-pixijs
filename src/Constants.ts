@@ -318,8 +318,8 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, "player_balloon_2_hit"),
 
 
-		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_explosive_1", PlayerGroundBombTemplate.GRENADE),
-		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_explosive_2", PlayerGroundBombTemplate.GRENADE),
+		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_1", PlayerGroundBombTemplate.GRENADE),
+		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_2", PlayerGroundBombTemplate.GRENADE),
 
 		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_trash_1", PlayerGroundBombTemplate.TRASH_BIN),
 		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_trash_2", PlayerGroundBombTemplate.TRASH_BIN),
@@ -327,8 +327,8 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_sticky_1", PlayerGroundBombTemplate.DYNAMITE),
 		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_sticky_2", PlayerGroundBombTemplate.DYNAMITE),
 
-		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_explosive_1_open", PlayerGroundBombTemplate.GRENADE),
-		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_explosive_2_open", PlayerGroundBombTemplate.GRENADE),
+		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_grenade_1_open", PlayerGroundBombTemplate.GRENADE),
+		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_grenade_2_open", PlayerGroundBombTemplate.GRENADE),
 
 		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_1_open", PlayerGroundBombTemplate.TRASH_BIN),
 		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_2_open", PlayerGroundBombTemplate.TRASH_BIN),
