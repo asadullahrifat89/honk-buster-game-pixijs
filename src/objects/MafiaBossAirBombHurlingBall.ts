@@ -19,7 +19,7 @@ export class MafiaBossAirBombHurlingBall extends SeekingRocketBase {
 		this.angle = 0;
 		this.isBlasting = false;
 		this.autoBlastDelay = this.autoBlastDelayDefault;
-		this.directTarget = new Rectangle();
+		this.hurlingTarget = new Rectangle();
 
 		SoundManager.play(SoundType.BALL_LAUNCH);
 	}

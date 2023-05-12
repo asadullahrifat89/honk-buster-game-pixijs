@@ -1997,7 +1997,7 @@ export class GamePlayScene extends Container implements IScene {
 	setPlayerAirBombDirection(source: GameObjectContainer, playerAirBomb: PlayerAirBomb, target: GameObjectContainer) {
 
 		if (playerAirBomb.playerAirBombTemplate == PlayerAirBombTemplate.BULLET_BALL) { // if bullet ball set the target
-			playerAirBomb.setShootTarget(target.getCloseBounds());
+			playerAirBomb.setShootingTarget(target.getCloseBounds());
 		}
 
 		// rocket target is on the bottom right side of the UfoBoss
@@ -2094,7 +2094,7 @@ export class GamePlayScene extends Container implements IScene {
 			}
 
 			if (anyTarget) {
-				playerAirBombBullsEye.setDirectTarget(anyTarget.getCloseBounds());
+				playerAirBombBullsEye.setHurlingTarget(anyTarget.getCloseBounds());
 				playerAirBombBullsEye.enableRendering();
 				this.generateFlashExplosion(playerAirBombBullsEye);
 
@@ -2121,7 +2121,7 @@ export class GamePlayScene extends Container implements IScene {
 
 					playerAirBombBullsEye.pop();
 					playerAirBombBullsEye.rotate(RotationDirection.Forward, 0, 2.5);
-					playerAirBombBullsEye.direct();
+					playerAirBombBullsEye.hurl();
 
 					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerAirBombBullsEye));
 					let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerAirBombBullsEye));
@@ -3823,7 +3823,7 @@ export class GamePlayScene extends Container implements IScene {
 					mafiaBossRocketBullsEye.reset();
 					mafiaBossRocketBullsEye.reposition(mafiaBoss);
 					mafiaBossRocketBullsEye.setPopping();
-					mafiaBossRocketBullsEye.setDirectTarget(this.player.getCloseBounds());
+					mafiaBossRocketBullsEye.setHurlingTarget(this.player.getCloseBounds());
 					mafiaBossRocketBullsEye.enableRendering();
 					this.generateFlashExplosion(mafiaBossRocketBullsEye);
 				}
@@ -3854,7 +3854,7 @@ export class GamePlayScene extends Container implements IScene {
 					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
 					if (mafiaBoss) {
-						mafiaBossRocketBullsEye.direct();
+						mafiaBossRocketBullsEye.hurl();
 
 						if (Constants.checkCloseCollision(mafiaBossRocketBullsEye, this.player)) {
 							mafiaBossRocketBullsEye.setBlast();
