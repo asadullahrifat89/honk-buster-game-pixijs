@@ -17,7 +17,7 @@ import { VehicleEnemy } from "../objects/VehicleEnemy";
 import { VehicleBoss } from "../objects/VehicleBoss";
 import { VehicleBossRocket } from "../objects/VehicleBossRocket";
 import { UfoEnemy } from "../objects/UfoEnemy";
-import { UfoEnemyRocket } from "../objects/UfoEnemyRocket";
+import { UfoEnemyAirBomb } from "../objects/UfoEnemyAirBomb";
 import { UfoBoss } from "../objects/UfoBoss";
 import { UfoBossRocket } from "../objects/UfoBossRocket";
 import { UfoBossAirBombSeekingBall } from "../objects/UfoBossAirBombSeekingBall";
@@ -275,7 +275,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnMafiaBossRockets();
 		this.spawnMafiaBossAirBombHurlingBalls();
 
-		this.spawnUfoEnemyRockets();
+		this.spawnUfoEnemyAirBombs();
 		this.spawnUfoEnemys();
 
 		this.spawnFlashExplosions();
@@ -365,7 +365,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateMafiaBossAirBombHurlingBalls();
 
 		this.animateUfoEnemys();
-		this.animateUfoEnemyRockets();
+		this.animateUfoEnemyAirBombs();
 
 		this.animateHealthPickups();
 		this.animatePowerUpPickups();
@@ -2276,7 +2276,7 @@ export class GamePlayScene extends Container implements IScene {
 
 					// fire orbs
 					if (!this.anyBossExists() && ufoEnemy.attack()) {
-						this.generateUfoEnemyRockets(ufoEnemy);
+						this.generateUfoEnemyAirBombs(ufoEnemy);
 					}
 
 					this.generateTaunts(ufoEnemy);
@@ -2322,16 +2322,16 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region UfoEnemyRockets
+	//#region UfoEnemyAirBombs
 
 	private ufoEnemyRocketSize = { width: 85, height: 85 };
-	private ufoEnemyRocketGameObjects: Array<UfoEnemyRocket> = [];
+	private ufoEnemyRocketGameObjects: Array<UfoEnemyAirBomb> = [];
 
-	spawnUfoEnemyRockets() {
+	spawnUfoEnemyAirBombs() {
 
 		for (let j = 0; j < 7; j++) {
 
-			const gameObject: UfoEnemyRocket = new UfoEnemyRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			const gameObject: UfoEnemyAirBomb = new UfoEnemyAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY_ROCKET));
@@ -2351,7 +2351,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generateUfoEnemyRockets(ufoEnemy: UfoEnemy) {
+	generateUfoEnemyAirBombs(ufoEnemy: UfoEnemy) {
 
 		if (ufoEnemy.getLeft() - 50 > 0 && ufoEnemy.getTop() - 50 > 0) {
 
@@ -2367,13 +2367,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animateUfoEnemyRockets() {
+	animateUfoEnemyAirBombs() {
 
-		let animatingUfoEnemyRockets = this.ufoEnemyRocketGameObjects.filter(x => x.isAnimating == true);
+		let animatingUfoEnemyAirBombs = this.ufoEnemyRocketGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingUfoEnemyRockets) {
+		if (animatingUfoEnemyAirBombs) {
 
-			animatingUfoEnemyRockets.forEach(ufoEnemyRocket => {
+			animatingUfoEnemyAirBombs.forEach(ufoEnemyRocket => {
 
 				ufoEnemyRocket.moveDownRight();
 
