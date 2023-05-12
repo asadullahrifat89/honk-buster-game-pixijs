@@ -5,11 +5,11 @@ import { SeekingRocketBase } from './SeekingRocketBase';
 import { SoundManager } from '../managers/SoundManager';
 
 
-export class PlayerAirBombBullsEye extends SeekingRocketBase {
+export class PlayerAirBombHurlingBall extends SeekingRocketBase {
 
 	constructor(speed: number) {
 		super(speed);
-		super.autoBlastDelayDefault = 15;
+		super.autoBlastDelayDefault = 10;
 	}
 
 	reset() {

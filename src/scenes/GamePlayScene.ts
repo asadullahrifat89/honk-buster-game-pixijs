@@ -30,7 +30,7 @@ import { PlayerRide } from "../objects/PlayerRide";
 import { PlayerGroundBomb } from "../objects/PlayerGroundBomb";
 import { Explosion } from "../objects/Explosion";
 import { PlayerAirBomb } from "../objects/PlayerAirBomb";
-import { PlayerAirBombBullsEye } from "../objects/PlayerAirBombBullsEye";
+import { PlayerAirBombHurlingBall } from "../objects/PlayerAirBombHurlingBall";
 import { PowerUpPickup } from "../objects/PowerUpPickup";
 import { ZombieBoss } from "../objects/ZombieBoss";
 import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
@@ -261,7 +261,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.spawnPlayerGroundBombs();
 		this.spawnPlayerAirBombs();
-		this.spawnPlayerAirBombBullsEyes();
+		this.spawnPlayerAirBombHurlingBalls();
 		this.spawnPlayerBalloon();
 
 		this.spawnUfoBossRockets();
@@ -351,7 +351,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateRingFireExplosions();
 		this.animateGrandExplosionRings();
 		this.animatePlayerAirBombs();
-		this.animatePlayerAirBombBullsEyes();
+		this.animatePlayerAirBombHurlingBalls();
 
 		this.animateUfoBoss();
 		this.animateUfoBossRockets();
@@ -1506,7 +1506,7 @@ export class GamePlayScene extends Container implements IScene {
 					switch (this.powerUpBar.tag) {
 						case PowerUpType.HURLING_BALLS:
 							{
-								this.generatePlayerAirBombBullsEye();
+								this.generatePlayerAirBombHurlingBall();
 							}
 							break;
 						case PowerUpType.ARMOR:
@@ -2028,16 +2028,16 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region PlayerAirBombBullsEyes
+	//#region PlayerAirBombHurlingBalls
 
 	private playerAirBombBullsEyeSize = { width: 75, height: 75 };
-	private playerAirBombBullsEyeGameObjects: Array<PlayerAirBombBullsEye> = [];
+	private playerAirBombBullsEyeGameObjects: Array<PlayerAirBombHurlingBall> = [];
 
-	spawnPlayerAirBombBullsEyes() {
+	spawnPlayerAirBombHurlingBalls() {
 
 		for (let j = 0; j < this.playerAmmoBeltSize; j++) {
 
-			const gameObject: PlayerAirBombBullsEye = new PlayerAirBombBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: PlayerAirBombHurlingBall = new PlayerAirBombHurlingBall(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_AIR_BOMB_HURLING_BALLS));
@@ -2057,7 +2057,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generatePlayerAirBombBullsEye() {
+	generatePlayerAirBombHurlingBall() {
 
 		let playerAirBombBullsEye = this.playerAirBombBullsEyeGameObjects.find(x => x.isAnimating == false);
 
@@ -2104,13 +2104,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animatePlayerAirBombBullsEyes() {
+	animatePlayerAirBombHurlingBalls() {
 
-		let animatingPlayerAirBombBullsEyes = this.playerAirBombBullsEyeGameObjects.filter(x => x.isAnimating == true);
+		let animatingPlayerAirBombHurlingBalls = this.playerAirBombBullsEyeGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingPlayerAirBombBullsEyes) {
+		if (animatingPlayerAirBombHurlingBalls) {
 
-			animatingPlayerAirBombBullsEyes.forEach(playerAirBombBullsEye => {
+			animatingPlayerAirBombHurlingBalls.forEach(playerAirBombBullsEye => {
 
 				if (playerAirBombBullsEye.isBlasting) {
 					playerAirBombBullsEye.shrink();
