@@ -15,25 +15,25 @@ import { GameObjectSprite } from "../core/GameObjectSprite";
 import { RoadSideWalk } from "../objects/RoadSideWalk";
 import { VehicleEnemy } from "../objects/VehicleEnemy";
 import { VehicleBoss } from "../objects/VehicleBoss";
-import { VehicleBossRocket } from "../objects/VehicleBossRocket";
+import { VehicleBossAirBomb } from "../objects/VehicleBossAirBomb";
 import { UfoEnemy } from "../objects/UfoEnemy";
-import { UfoEnemyRocket } from "../objects/UfoEnemyRocket";
+import { UfoEnemyAirBomb } from "../objects/UfoEnemyAirBomb";
 import { UfoBoss } from "../objects/UfoBoss";
-import { UfoBossRocket } from "../objects/UfoBossRocket";
-import { UfoBossRocketSeeking } from "../objects/UfoBossRocketSeeking";
+import { UfoBossAirBomb } from "../objects/UfoBossAirBomb";
+import { UfoBossAirBombSeekingBall } from "../objects/UfoBossAirBombSeekingBall";
 import { HealthPickup } from "../objects/HealthPickup";
 import { Honk } from "../objects/Honk";
 import { MafiaBoss } from "../objects/MafiaBoss";
-import { MafiaBossRocket } from "../objects/MafiaBossRocket";
-import { MafiaBossRocketBullsEye } from "../objects/MafiaBossRocketBullsEye";
+import { MafiaBossAirBomb } from "../objects/MafiaBossAirBomb";
+import { MafiaBossAirBombHurlingBall } from "../objects/MafiaBossAirBombHurlingBall";
 import { PlayerRide } from "../objects/PlayerRide";
 import { PlayerGroundBomb } from "../objects/PlayerGroundBomb";
 import { Explosion } from "../objects/Explosion";
 import { PlayerAirBomb } from "../objects/PlayerAirBomb";
-import { PlayerAirBombBullsEye } from "../objects/PlayerAirBombBullsEye";
+import { PlayerAirBombHurlingBall } from "../objects/PlayerAirBombHurlingBall";
 import { PowerUpPickup } from "../objects/PowerUpPickup";
 import { ZombieBoss } from "../objects/ZombieBoss";
-import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
+import { ZombieBossAirBombCube } from "../objects/ZombieBossAirBombCube";
 import { MessageBubble } from "../controls/MessageBubble";
 import { RoadMark } from "../objects/RoadMark";
 import { GrandExplosionRing } from "../objects/GrandExplosionRing";
@@ -253,7 +253,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnVehicleBosss();
 
 		this.spawnHonks();
-		this.spawnVehicleBossRockets();
+		this.spawnVehicleBossAirBombs();
 
 		this.spawnSideWalksBottom();
 		this.spawnBlowSmokeExplosions();
@@ -261,21 +261,21 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.spawnPlayerGroundBombs();
 		this.spawnPlayerAirBombs();
-		this.spawnPlayerAirBombBullsEyes();
+		this.spawnPlayerAirBombHurlingBalls();
 		this.spawnPlayerBalloon();
 
-		this.spawnUfoBossRockets();
-		this.spawnUfoBossRocketSeekings();
+		this.spawnUfoBossAirBombs();
+		this.spawnUfoBossAirBombSeekingBalls();
 		this.spawnUfoBosss();
 
 		this.spawnZombieBosss();
-		this.spawnZombieBossRocketBlocks();
+		this.spawnZombieBossAirBombCubes();
 
 		this.spawnMafiaBosss();
-		this.spawnMafiaBossRockets();
-		this.spawnMafiaBossRocketBullsEyes();
+		this.spawnMafiaBossAirBombs();
+		this.spawnMafiaBossAirBombHurlingBalls();
 
-		this.spawnUfoEnemyRockets();
+		this.spawnUfoEnemyAirBombs();
 		this.spawnUfoEnemys();
 
 		this.spawnFlashExplosions();
@@ -299,18 +299,18 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.generateVehicleEnemys();
 		this.generateVehicleBoss();
-		this.generateVehicleBossRockets();
+		this.generateVehicleBossAirBombs();
 
 		this.generateUfoBoss();
-		this.generateUfoBossRockets();
-		this.generateUfoBossRocketSeekings();
+		this.generateUfoBossAirBombs();
+		this.generateUfoBossAirBombSeekingBalls();
 
 		this.generateZombieBoss();
-		this.generateZombieBossRocketBlocks();
+		this.generateZombieBossAirBombCubes();
 
 		this.generateMafiaBoss();
-		this.generateMafiaBossRockets();
-		this.generateMafiaBossRocketBullsEyes();
+		this.generateMafiaBossAirBombs();
+		this.generateMafiaBossAirBombHurlingBalls();
 
 		this.generateUfoEnemys();
 
@@ -340,7 +340,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.animateVehicleEnemys();
 		this.animateVehicleBoss();
-		this.animateVehicleBossRockets();
+		this.animateVehicleBossAirBombs();
 
 		this.animateHonks();
 
@@ -351,21 +351,21 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateRingFireExplosions();
 		this.animateGrandExplosionRings();
 		this.animatePlayerAirBombs();
-		this.animatePlayerAirBombBullsEyes();
+		this.animatePlayerAirBombHurlingBalls();
 
 		this.animateUfoBoss();
-		this.animateUfoBossRockets();
-		this.animateUfoBossRocketSeekings();
+		this.animateUfoBossAirBombs();
+		this.animateUfoBossAirBombSeekingBalls();
 
 		this.animateZombieBoss();
-		this.animateZombieBossRocketBlocks();
+		this.animateZombieBossAirBombCubes();
 
 		this.animateMafiaBoss();
-		this.animateMafiaBossRockets();
-		this.animateMafiaBossRocketBullsEyes();
+		this.animateMafiaBossAirBombs();
+		this.animateMafiaBossAirBombHurlingBalls();
 
 		this.animateUfoEnemys();
-		this.animateUfoEnemyRockets();
+		this.animateUfoEnemyAirBombs();
 
 		this.animateHealthPickups();
 		this.animatePowerUpPickups();
@@ -1506,7 +1506,7 @@ export class GamePlayScene extends Container implements IScene {
 					switch (this.powerUpBar.tag) {
 						case PowerUpType.HURLING_BALLS:
 							{
-								this.generatePlayerAirBombBullsEye();
+								this.generatePlayerAirBombHurlingBall();
 							}
 							break;
 						case PowerUpType.ARMOR:
@@ -1997,7 +1997,7 @@ export class GamePlayScene extends Container implements IScene {
 	setPlayerAirBombDirection(source: GameObjectContainer, playerAirBomb: PlayerAirBomb, target: GameObjectContainer) {
 
 		if (playerAirBomb.playerAirBombTemplate == PlayerAirBombTemplate.BULLET_BALL) { // if bullet ball set the target
-			playerAirBomb.setShootTarget(target.getCloseBounds());
+			playerAirBomb.setShootingTarget(target.getCloseBounds());
 		}
 
 		// rocket target is on the bottom right side of the UfoBoss
@@ -2028,16 +2028,16 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region PlayerAirBombBullsEyes
+	//#region PlayerAirBombHurlingBalls
 
 	private playerAirBombBullsEyeSize = { width: 75, height: 75 };
-	private playerAirBombBullsEyeGameObjects: Array<PlayerAirBombBullsEye> = [];
+	private playerAirBombBullsEyeGameObjects: Array<PlayerAirBombHurlingBall> = [];
 
-	spawnPlayerAirBombBullsEyes() {
+	spawnPlayerAirBombHurlingBalls() {
 
 		for (let j = 0; j < this.playerAmmoBeltSize; j++) {
 
-			const gameObject: PlayerAirBombBullsEye = new PlayerAirBombBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: PlayerAirBombHurlingBall = new PlayerAirBombHurlingBall(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_AIR_BOMB_HURLING_BALLS));
@@ -2057,7 +2057,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generatePlayerAirBombBullsEye() {
+	generatePlayerAirBombHurlingBall() {
 
 		let playerAirBombBullsEye = this.playerAirBombBullsEyeGameObjects.find(x => x.isAnimating == false);
 
@@ -2094,7 +2094,7 @@ export class GamePlayScene extends Container implements IScene {
 			}
 
 			if (anyTarget) {
-				playerAirBombBullsEye.setDirectTarget(anyTarget.getCloseBounds());
+				playerAirBombBullsEye.setHurlingTarget(anyTarget.getCloseBounds());
 				playerAirBombBullsEye.enableRendering();
 				this.generateFlashExplosion(playerAirBombBullsEye);
 
@@ -2104,13 +2104,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animatePlayerAirBombBullsEyes() {
+	animatePlayerAirBombHurlingBalls() {
 
-		let animatingPlayerAirBombBullsEyes = this.playerAirBombBullsEyeGameObjects.filter(x => x.isAnimating == true);
+		let animatingPlayerAirBombHurlingBalls = this.playerAirBombBullsEyeGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingPlayerAirBombBullsEyes) {
+		if (animatingPlayerAirBombHurlingBalls) {
 
-			animatingPlayerAirBombBullsEyes.forEach(playerAirBombBullsEye => {
+			animatingPlayerAirBombHurlingBalls.forEach(playerAirBombBullsEye => {
 
 				if (playerAirBombBullsEye.isBlasting) {
 					playerAirBombBullsEye.shrink();
@@ -2121,7 +2121,7 @@ export class GamePlayScene extends Container implements IScene {
 
 					playerAirBombBullsEye.pop();
 					playerAirBombBullsEye.rotate(RotationDirection.Forward, 0, 2.5);
-					playerAirBombBullsEye.direct();
+					playerAirBombBullsEye.hurl();
 
 					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerAirBombBullsEye));
 					let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating == true && !x.isBlasting == true && Constants.checkCloseCollision(x, playerAirBombBullsEye));
@@ -2276,7 +2276,7 @@ export class GamePlayScene extends Container implements IScene {
 
 					// fire orbs
 					if (!this.anyBossExists() && ufoEnemy.attack()) {
-						this.generateUfoEnemyRockets(ufoEnemy);
+						this.generateUfoEnemyAirBombs(ufoEnemy);
 					}
 
 					this.generateTaunts(ufoEnemy);
@@ -2322,16 +2322,16 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region UfoEnemyRockets
+	//#region UfoEnemyAirBombs
 
 	private ufoEnemyRocketSize = { width: 85, height: 85 };
-	private ufoEnemyRocketGameObjects: Array<UfoEnemyRocket> = [];
+	private ufoEnemyRocketGameObjects: Array<UfoEnemyAirBomb> = [];
 
-	spawnUfoEnemyRockets() {
+	spawnUfoEnemyAirBombs() {
 
 		for (let j = 0; j < 7; j++) {
 
-			const gameObject: UfoEnemyRocket = new UfoEnemyRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			const gameObject: UfoEnemyAirBomb = new UfoEnemyAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY_ROCKET));
@@ -2351,7 +2351,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generateUfoEnemyRockets(ufoEnemy: UfoEnemy) {
+	generateUfoEnemyAirBombs(ufoEnemy: UfoEnemy) {
 
 		if (ufoEnemy.getLeft() - 50 > 0 && ufoEnemy.getTop() - 50 > 0) {
 
@@ -2367,13 +2367,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animateUfoEnemyRockets() {
+	animateUfoEnemyAirBombs() {
 
-		let animatingUfoEnemyRockets = this.ufoEnemyRocketGameObjects.filter(x => x.isAnimating == true);
+		let animatingUfoEnemyAirBombs = this.ufoEnemyRocketGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingUfoEnemyRockets) {
+		if (animatingUfoEnemyAirBombs) {
 
-			animatingUfoEnemyRockets.forEach(ufoEnemyRocket => {
+			animatingUfoEnemyAirBombs.forEach(ufoEnemyRocket => {
 
 				ufoEnemyRocket.moveDownRight();
 
@@ -2768,19 +2768,19 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region VehicleBossRockets
+	//#region VehicleBossAirBombs
 
 	private vehicleBossRocketSize = { width: 90, height: 90 };
-	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
+	private vehicleBossRocketGameObjects: Array<VehicleBossAirBomb> = [];
 
 	private readonly vehicleBossRocketPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private vehicleBossRocketPopDelay: number = 0;
 
-	spawnVehicleBossRockets() {
+	spawnVehicleBossAirBombs() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED * 1.1);
+			const gameObject: VehicleBossAirBomb = new VehicleBossAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED * 1.1);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
@@ -2802,7 +2802,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generateVehicleBossRockets() {
+	generateVehicleBossAirBombs() {
 
 		let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
@@ -2827,13 +2827,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animateVehicleBossRockets() {
+	animateVehicleBossAirBombs() {
 
-		let animatingVehicleBossRockets = this.vehicleBossRocketGameObjects.filter(x => x.isAnimating == true);
+		let animatingVehicleBossAirBombs = this.vehicleBossRocketGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingVehicleBossRockets) {
+		if (animatingVehicleBossAirBombs) {
 
-			animatingVehicleBossRockets.forEach(gameObject => {
+			animatingVehicleBossAirBombs.forEach(gameObject => {
 				gameObject.moveUpRight();
 
 				gameObject.decelerate();
@@ -3018,19 +3018,19 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region UfoBossRockets
+	//#region UfoBossAirBombs
 
 	private ufoBossRocketSize = { width: 90, height: 90 };
-	private ufoBossRocketGameObjects: Array<UfoBossRocket> = [];
+	private ufoBossRocketGameObjects: Array<UfoBossAirBomb> = [];
 
 	private readonly ufoBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private ufoBossRocketPopDelay: number = 0;
 
-	spawnUfoBossRockets() {
+	spawnUfoBossAirBombs() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: UfoBossRocket = new UfoBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			const gameObject: UfoBossAirBomb = new UfoBossAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET));
@@ -3050,7 +3050,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generateUfoBossRockets() {
+	generateUfoBossAirBombs() {
 
 		let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
@@ -3076,13 +3076,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animateUfoBossRockets() {
+	animateUfoBossAirBombs() {
 
-		let animatingUfoBossRockets = this.ufoBossRocketGameObjects.filter(x => x.isAnimating == true);
+		let animatingUfoBossAirBombs = this.ufoBossRocketGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingUfoBossRockets) {
+		if (animatingUfoBossAirBombs) {
 
-			animatingUfoBossRockets.forEach(ufoBossRocket => {
+			animatingUfoBossAirBombs.forEach(ufoBossRocket => {
 
 				ufoBossRocket.accelerate();
 
@@ -3160,19 +3160,19 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region UfoBossRocketSeekings
+	//#region UfoBossAirBombSeekingBalls
 
 	private ufoBossRocketSeekingSize = { width: 75, height: 75 };
-	private ufoBossRocketSeekingGameObjects: Array<UfoBossRocketSeeking> = [];
+	private ufoBossRocketSeekingGameObjects: Array<UfoBossAirBombSeekingBall> = [];
 
 	private readonly ufoBossRocketSeekingPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private ufoBossRocketSeekingPopDelay: number = 0;
 
-	spawnUfoBossRocketSeekings() {
+	spawnUfoBossAirBombSeekingBalls() {
 
 		for (let j = 0; j < 2; j++) {
 
-			const gameObject: UfoBossRocketSeeking = new UfoBossRocketSeeking(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: UfoBossAirBombSeekingBall = new UfoBossAirBombSeekingBall(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET_SEEKING));
@@ -3192,7 +3192,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generateUfoBossRocketSeekings() {
+	generateUfoBossAirBombSeekingBalls() {
 
 		let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
@@ -3220,13 +3220,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animateUfoBossRocketSeekings() {
+	animateUfoBossAirBombSeekingBalls() {
 
-		let animatingUfoBossRocketSeekings = this.ufoBossRocketSeekingGameObjects.filter(x => x.isAnimating == true);
+		let animatingUfoBossAirBombSeekingBalls = this.ufoBossRocketSeekingGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingUfoBossRocketSeekings) {
+		if (animatingUfoBossAirBombSeekingBalls) {
 
-			animatingUfoBossRocketSeekings.forEach(ufoBossRocketSeeking => {
+			animatingUfoBossAirBombSeekingBalls.forEach(ufoBossRocketSeeking => {
 
 				if (ufoBossRocketSeeking.isBlasting) {
 					ufoBossRocketSeeking.shrink();
@@ -3416,19 +3416,19 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region ZombieBossRocketBlocks
+	//#region ZombieBossAirBombCubes
 
 	private zombieBossRocketBlockSize = { width: 256 / 1.5, height: 256 / 1.5 };
-	private zombieBossRocketBlockGameObjects: Array<ZombieBossRocketBlock> = [];
+	private zombieBossRocketBlockGameObjects: Array<ZombieBossAirBombCube> = [];
 
 	private readonly zombieBossRocketBlockPopDelayDefault: number = 8 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private zombieBossRocketBlockPopDelay: number = 0;
 
-	spawnZombieBossRocketBlocks() {
+	spawnZombieBossAirBombCubes() {
 
 		for (let j = 0; j < 5; j++) {
 
-			const gameObject: ZombieBossRocketBlock = new ZombieBossRocketBlock(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: ZombieBossAirBombCube = new ZombieBossAirBombCube(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK));
@@ -3448,7 +3448,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generateZombieBossRocketBlocks() {
+	generateZombieBossAirBombCubes() {
 
 		let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
@@ -3472,13 +3472,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animateZombieBossRocketBlocks() {
+	animateZombieBossAirBombCubes() {
 
-		let animatingZombieBossRocketBlocks = this.zombieBossRocketBlockGameObjects.filter(x => x.isAnimating == true);
+		let animatingZombieBossAirBombCubes = this.zombieBossRocketBlockGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingZombieBossRocketBlocks) {
+		if (animatingZombieBossAirBombCubes) {
 
-			animatingZombieBossRocketBlocks.forEach(zombieBossRocketBlock => {
+			animatingZombieBossAirBombCubes.forEach(zombieBossRocketBlock => {
 				zombieBossRocketBlock.moveDownRight();
 
 				if (zombieBossRocketBlock.isBlasting) {
@@ -3661,19 +3661,19 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region MafiaBossRockets
+	//#region MafiaBossAirBombs
 
 	private mafiaBossRocketSize = { width: 90, height: 90 };
-	private mafiaBossRocketGameObjects: Array<MafiaBossRocket> = [];
+	private mafiaBossRocketGameObjects: Array<MafiaBossAirBomb> = [];
 
 	private readonly mafiaBossRocketPopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private mafiaBossRocketPopDelay: number = 0;
 
-	spawnMafiaBossRockets() {
+	spawnMafiaBossAirBombs() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: MafiaBossRocket = new MafiaBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
+			const gameObject: MafiaBossAirBomb = new MafiaBossAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET));
@@ -3693,7 +3693,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generateMafiaBossRockets() {
+	generateMafiaBossAirBombs() {
 
 		let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
@@ -3719,13 +3719,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animateMafiaBossRockets() {
+	animateMafiaBossAirBombs() {
 
-		let animatingMafiaBossRockets = this.mafiaBossRocketGameObjects.filter(x => x.isAnimating == true);
+		let animatingMafiaBossAirBombs = this.mafiaBossRocketGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingMafiaBossRockets) {
+		if (animatingMafiaBossAirBombs) {
 
-			animatingMafiaBossRockets.forEach(mafiaBossRocket => {
+			animatingMafiaBossAirBombs.forEach(mafiaBossRocket => {
 
 				mafiaBossRocket.accelerate();
 
@@ -3775,19 +3775,19 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region MafiaBossRocketBullsEyes
+	//#region MafiaBossAirBombHurlingBalls
 
 	private mafiaBossRocketBullsEyeSize = { width: 75, height: 75 };
-	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossRocketBullsEye> = [];
+	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossAirBombHurlingBall> = [];
 
 	private readonly mafiaBossRocketBullsEyePopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private mafiaBossRocketBullsEyePopDelay: number = 0;
 
-	spawnMafiaBossRocketBullsEyes() {
+	spawnMafiaBossAirBombHurlingBalls() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: MafiaBossRocketBullsEye = new MafiaBossRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: MafiaBossAirBombHurlingBall = new MafiaBossAirBombHurlingBall(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_HURLING_BALLS));
@@ -3807,7 +3807,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generateMafiaBossRocketBullsEyes() {
+	generateMafiaBossAirBombHurlingBalls() {
 
 		let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
@@ -3823,7 +3823,7 @@ export class GamePlayScene extends Container implements IScene {
 					mafiaBossRocketBullsEye.reset();
 					mafiaBossRocketBullsEye.reposition(mafiaBoss);
 					mafiaBossRocketBullsEye.setPopping();
-					mafiaBossRocketBullsEye.setDirectTarget(this.player.getCloseBounds());
+					mafiaBossRocketBullsEye.setHurlingTarget(this.player.getCloseBounds());
 					mafiaBossRocketBullsEye.enableRendering();
 					this.generateFlashExplosion(mafiaBossRocketBullsEye);
 				}
@@ -3833,13 +3833,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animateMafiaBossRocketBullsEyes() {
+	animateMafiaBossAirBombHurlingBalls() {
 
-		let animatingMafiaBossRocketBullsEyes = this.mafiaBossRocketBullsEyeGameObjects.filter(x => x.isAnimating == true);
+		let animatingMafiaBossAirBombHurlingBalls = this.mafiaBossRocketBullsEyeGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingMafiaBossRocketBullsEyes) {
+		if (animatingMafiaBossAirBombHurlingBalls) {
 
-			animatingMafiaBossRocketBullsEyes.forEach(mafiaBossRocketBullsEye => {
+			animatingMafiaBossAirBombHurlingBalls.forEach(mafiaBossRocketBullsEye => {
 
 				if (mafiaBossRocketBullsEye.isBlasting) {
 					mafiaBossRocketBullsEye.shrink();
@@ -3854,7 +3854,7 @@ export class GamePlayScene extends Container implements IScene {
 					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
 					if (mafiaBoss) {
-						mafiaBossRocketBullsEye.direct();
+						mafiaBossRocketBullsEye.hurl();
 
 						if (Constants.checkCloseCollision(mafiaBossRocketBullsEye, this.player)) {
 							mafiaBossRocketBullsEye.setBlast();

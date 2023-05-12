@@ -3,7 +3,7 @@ import { GameObjectContainer } from '../core/GameObjectContainer';
 import { SoundManager } from '../managers/SoundManager';
 
 
-export class RocketBase extends GameObjectContainer {
+export class AirBombBase extends GameObjectContainer {
 
     public autoBlastDelay: number = 0;
     public autoBlastDelayDefault: number = 9;  

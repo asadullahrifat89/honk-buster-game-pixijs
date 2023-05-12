@@ -1,10 +1,9 @@
 ﻿import { Constants, ConstructType, SoundType } from '../Constants';
 import { SoundManager } from '../managers/SoundManager';
-import { RocketBase } from './RocketBase';
-import { UfoBoss } from './UfoBoss';
+import { MafiaBoss } from './MafiaBoss';
+import { AirBombBase } from './AirBombBase';
 
-
-export class UfoBossRocket extends RocketBase {
+export class MafiaBossAirBomb extends AirBombBase {
 
 	constructor(speed: number) {
 		super(speed);
@@ -28,8 +27,7 @@ export class UfoBossRocket extends RocketBase {
 		SoundManager.play(SoundType.ROCKET_LAUNCH, 0.3);
 	}
 
-	reposition(source: UfoBoss) {
+	reposition(source: MafiaBoss) {
 		this.setPosition(source.getLeft() + 15 - this.width / 2, source.getTop() + this.height + 15);
 	}
 }
-

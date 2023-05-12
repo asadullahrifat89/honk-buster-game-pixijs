@@ -1,16 +1,18 @@
 ﻿import { Point, Rectangle } from 'pixi.js';
-import { RocketBase } from './RocketBase';
+import { AirBombBase } from './AirBombBase';
 
 
-export class SeekingRocketBase extends RocketBase {
+export class AirBombBaseSeekingBall extends AirBombBase {
 
-	public directTarget: Rectangle = new Rectangle();
-	public shootTarget: Point = new Point();
+	public hurlingTarget: Rectangle = new Rectangle();
+	public followingTarget: Rectangle = new Rectangle();
+	public shootingTarget: Point = new Point();
 
-	private readonly grace: number = 7;
+	private readonly grace: number = 10;
+	private readonly lag: number = 50;
 	private velocity: { x: number, y: number } = { x: 0, y: 0 };
 
-	setShootTarget(target: Rectangle) {
+	setShootingTarget(target: Rectangle) {
 		const angle = Math.atan2(target.y - this.y, target.x - this.x);
 		this.velocity = {
 			x: Math.cos(angle) * this.speed,
@@ -18,7 +20,7 @@ export class SeekingRocketBase extends RocketBase {
 		};
 	}
 
-	setDirectTarget(target: Rectangle) {
+	setHurlingTarget(target: Rectangle) {
 
 		let rocketX = this.getLeft() + this.width / 2;
 		let rocketY = this.getTop() + this.height / 2;
@@ -29,25 +31,25 @@ export class SeekingRocketBase extends RocketBase {
 		// move up
 		if (targetY < rocketY) {
 			var distance = Math.abs(targetY - rocketY);
-			this.directTarget.y = targetY - distance;
+			this.hurlingTarget.y = targetY - distance;
 		}
 
 		// move down
 		if (targetY > rocketY) {
 			var distance = Math.abs(targetY - rocketY);
-			this.directTarget.y = targetY + distance;
+			this.hurlingTarget.y = targetY + distance;
 		}
 
 		// move left
 		if (targetX < rocketX) {
 			var distance = Math.abs(targetX - rocketX);
-			this.directTarget.x = targetX - distance;
+			this.hurlingTarget.x = targetX - distance;
 		}
 
 		// move right
 		if (targetX > rocketX) {
 			var distance = Math.abs(targetX - rocketX);
-			this.directTarget.x = targetX + distance;
+			this.hurlingTarget.x = targetX + distance;
 		}
 	}
 
@@ -56,13 +58,13 @@ export class SeekingRocketBase extends RocketBase {
 		this.y += this.velocity.y;
 	}
 
-	direct() {
+	hurl() {
 
 		let left = this.getLeft();
 		let top = this.getTop();
 
-		let targetX = this.directTarget.x + this.directTarget.width / 2;
-		let targetY = this.directTarget.y + this.directTarget.height / 2;
+		let targetX = this.hurlingTarget.x + this.hurlingTarget.width / 2;
+		let targetY = this.hurlingTarget.y + this.hurlingTarget.height / 2;
 
 		let rocketX = left + this.width / 2;
 		let rocketY = top + this.height / 2;
@@ -70,7 +72,7 @@ export class SeekingRocketBase extends RocketBase {
 		// move up
 		if (targetY < rocketY - this.grace) {
 			var distance = Math.abs(targetY - rocketY);
-			let speed = this.getDirectingSpeed(distance);
+			let speed = this.getHurlingSpeed(distance);
 
 			this.y = (top - speed);
 		}
@@ -78,7 +80,7 @@ export class SeekingRocketBase extends RocketBase {
 		// move down
 		if (targetY > rocketY + this.grace) {
 			var distance = Math.abs(targetY - rocketY);
-			let speed = this.getDirectingSpeed(distance);
+			let speed = this.getHurlingSpeed(distance);
 
 			this.y = (top + speed);
 		}
@@ -86,7 +88,7 @@ export class SeekingRocketBase extends RocketBase {
 		// move left
 		if (targetX < rocketX - this.grace) {
 			var distance = Math.abs(targetX - rocketX);
-			let speed = this.getDirectingSpeed(distance);
+			let speed = this.getHurlingSpeed(distance);
 
 			this.x = (left - speed);
 		}
@@ -94,7 +96,7 @@ export class SeekingRocketBase extends RocketBase {
 		// move right
 		if (targetX > rocketX + this.grace) {
 			var distance = Math.abs(targetX - rocketX);
-			let speed = this.getDirectingSpeed(distance);
+			let speed = this.getHurlingSpeed(distance);
 
 			this.x = (left + speed);
 		}
@@ -102,17 +104,19 @@ export class SeekingRocketBase extends RocketBase {
 
 	follow(target: Rectangle) {
 
+		this.followingTarget = target;
+
 		let left = this.getLeft();
 		let top = this.getTop();
+
+		let targetX = this.followingTarget.x + this.followingTarget.width / 2;
+		let targetY = this.followingTarget.y + this.followingTarget.height / 2;
 
 		let rocketX = left + this.width / 2;
 		let rocketY = top + this.height / 2;
 
-		let targetX = target.x + target.width / 2;
-		let targetY = target.y + target.height / 2;
-
 		// move up
-		if (targetY < rocketY - this.grace) {
+		if (targetY - this.grace < rocketY) {
 			var distance = Math.abs(targetY - rocketY);
 			let speed = this.getFollowingSpeed(distance);
 
@@ -120,7 +124,7 @@ export class SeekingRocketBase extends RocketBase {
 		}
 
 		// move down
-		if (targetY > rocketY + this.grace) {
+		if (targetY + this.grace > rocketY) {
 			var distance = Math.abs(targetY - rocketY);
 			let speed = this.getFollowingSpeed(distance);
 
@@ -128,7 +132,7 @@ export class SeekingRocketBase extends RocketBase {
 		}
 
 		// move left
-		if (targetX < rocketX - this.grace) {
+		if (targetX - this.grace < rocketX) {
 			var distance = Math.abs(targetX - rocketX);
 			let speed = this.getFollowingSpeed(distance);
 
@@ -136,20 +140,20 @@ export class SeekingRocketBase extends RocketBase {
 		}
 
 		// move right
-		if (targetX > rocketX + this.grace) {
+		if (targetX + this.grace > rocketX) {
 			var distance = Math.abs(targetX - rocketX);
 			let speed = this.getFollowingSpeed(distance);
 
 			this.x = (left + speed);
-		}
+		}		
 	}
 
 	private getFollowingSpeed(distance: number): number {
-		var speed = (1.5 / 100 * distance);
+		var speed = distance / this.lag;
 		return speed;
 	}
 
-	private getDirectingSpeed(distance: number): number {
+	private getHurlingSpeed(distance: number): number {
 		var speed = (1.5 / 100 * distance);
 		return speed;
 	}

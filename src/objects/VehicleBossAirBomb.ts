@@ -4,7 +4,7 @@ import { SoundManager } from '../managers/SoundManager';
 import { VehicleBoss } from './VehicleBoss';
 
 
-export class VehicleBossRocket extends GameObjectContainer {
+export class VehicleBossAirBomb extends GameObjectContainer {
 
 	private autoBlastDelay: number = 0;
 	private readonly autoBlastDelayDefault: number = 8;
