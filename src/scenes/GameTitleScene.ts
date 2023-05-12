@@ -104,7 +104,8 @@ export class GameTitleScene extends Container implements IScene {
 		bottomline.y = (this.uiContainer.height / 2 - bottomline.height / 2) + 250;
 		this.uiContainer.addChild(bottomline);
 
-		SoundManager.play(SoundType.GAME_INTRO_MUSIC, 0.8);
+		if (!SoundManager.isPlaying(SoundType.GAME_INTRO_MUSIC))
+			SoundManager.play(SoundType.GAME_INTRO_MUSIC, 0.8);
 	}
 
 	public update() {
