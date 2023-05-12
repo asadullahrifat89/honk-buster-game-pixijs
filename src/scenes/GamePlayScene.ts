@@ -999,8 +999,11 @@ export class GamePlayScene extends Container implements IScene {
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.leafSize.width;
-			sprite.height = this.leafSize.height;			
+			sprite.height = this.leafSize.height;
 			leaf.addChild(sprite);
+
+			leaf.setHoverSpeed(0.6);
+			leaf.setDillyDallySpeed(0.6);
 
 			this.leafGameObjects.push(leaf);
 			this.sceneContainer.addChild(leaf);
@@ -1020,7 +1023,7 @@ export class GamePlayScene extends Container implements IScene {
 				leaf.reposition();
 				leaf.enableRendering();
 
-				this.leafPopDelay = Constants.getRandomNumber(this.leafPopDelayDefault, this.leafPopDelayDefault + 10);
+				this.leafPopDelay = Constants.getRandomNumber(this.leafPopDelayDefault, this.leafPopDelayDefault + 20);
 			}
 		}
 	}
@@ -1033,8 +1036,9 @@ export class GamePlayScene extends Container implements IScene {
 
 			animatingLeafs.forEach(leaf => {
 				leaf.hover();
-				leaf.moveDownRight();
+				leaf.dillyDally();
 				leaf.rotate(RotationDirection.Forward, 0, 0.6);
+				leaf.moveDownRight();
 
 				if (leaf.x - leaf.width > Constants.DEFAULT_GAME_VIEW_WIDTH || leaf.y - leaf.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
 					leaf.disableRendering();
