@@ -1,11 +1,11 @@
 ﻿import { Rectangle } from 'pixi.js';
 import { Constants, ConstructType, SoundType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
-import { SeekingRocketBase } from './SeekingRocketBase';
+import { SeekingAirBombBase } from './SeekingAirBombBase';
 import { SoundManager } from '../managers/SoundManager';
 
 
-export class PlayerAirBombHurlingBall extends SeekingRocketBase {
+export class PlayerAirBombHurlingBall extends SeekingAirBombBase {
 
 	constructor(speed: number) {
 		super(speed);

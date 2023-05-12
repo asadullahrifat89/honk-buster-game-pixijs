@@ -1,10 +1,10 @@
 ﻿import { Constants, ConstructType, SoundType } from '../Constants';
 import { SoundManager } from '../managers/SoundManager';
-import { RocketBase } from './RocketBase';
+import { AirBombBase } from './AirBombBase';
 import { UfoBoss } from './UfoBoss';
 
 
-export class UfoBossRocket extends RocketBase {
+export class UfoBossRocket extends AirBombBase {
 
 	constructor(speed: number) {
 		super(speed);

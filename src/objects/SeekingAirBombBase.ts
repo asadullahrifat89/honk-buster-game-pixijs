@@ -1,8 +1,8 @@
 ﻿import { Point, Rectangle } from 'pixi.js';
-import { RocketBase } from './RocketBase';
+import { AirBombBase } from './AirBombBase';
 
 
-export class SeekingRocketBase extends RocketBase {
+export class SeekingAirBombBase extends AirBombBase {
 
 	public hurlingTarget: Rectangle = new Rectangle();
 	public shootingTarget: Point = new Point();
