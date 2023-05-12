@@ -1,4 +1,4 @@
-﻿import { BlurFilter, Container, Graphics, Text } from "pixi.js";
+﻿import { BlurFilter, Container, Graphics, Rectangle, Text } from "pixi.js";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -28,6 +28,7 @@ export class GameTitleScene extends Container implements IScene {
 			SceneManager.toggleFullscreen();
 		}, this);
 
+		this.hitArea = new Rectangle(0, 0, SceneManager.width, SceneManager.height);
 		this.spawnRings();
 
 		this.uiContainer = new GameObjectContainer();
