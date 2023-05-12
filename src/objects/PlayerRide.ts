@@ -230,22 +230,37 @@ export class PlayerRide extends GameObjectContainer {
 
 	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
 
-		switch (this.playerRideTemplate) {
-			case PlayerRideTemplate.AIR_BALLOON: {
-				this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED) * controller.power;
-			} break;
-			case PlayerRideTemplate.CHOPPER: {
-				this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 1) * controller.power; // chopper grants extra speed
-				this.animateChopperBlades();
-			} break;
-			default: break;
-		}
-
 		if (controller.joystickActivated) {
+
+			switch (this.playerRideTemplate) {
+				case PlayerRideTemplate.AIR_BALLOON: {
+					this.x += controller.velocity.x;
+					this.y += controller.velocity.y;
+				} break;
+				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
+					this.x += controller.velocity.x + 1;
+					this.y += controller.velocity.y + 1;
+					this.animateChopperBlades();
+				} break;
+				default: break;
+			}
+
 			this.x += controller.velocity.x;
 			this.y += controller.velocity.y;
 		}
 		else {
+
+			switch (this.playerRideTemplate) {
+				case PlayerRideTemplate.AIR_BALLOON: {
+					this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * controller.power;
+				} break;
+				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
+					this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 1) * controller.power;
+					this.animateChopperBlades();
+				} break;
+				default: break;
+			}
+
 			let halfHeight = this.height / 2;
 			let halfWidth = this.width / 2;
 
@@ -284,7 +299,7 @@ export class PlayerRide extends GameObjectContainer {
 			else {
 				this.stopMovement();
 			}
-		}		
+		}
 	}
 
 	private animateChopperBlades() {

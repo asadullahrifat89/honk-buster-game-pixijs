@@ -39,10 +39,8 @@ export class GameController extends Container {
 	constructor(settings: GameControllerSettings) {
 		super();
 
-		this.settings = settings;
-
-		//this.interactive = true;
 		this.eventMode = 'dynamic';
+		this.settings = settings;
 
 		this.on("pointertap", () => {
 			this.joystick.alpha = 1;
@@ -169,6 +167,7 @@ export class GameController extends Container {
 				//console.log(data.direction);
 				//console.log(data.power); // Power from 0 to 1
 				//console.log(data.angle); // Angle from 0 to 360
+				//console.log(data.velocity);
 			},
 
 			onStart: () => {

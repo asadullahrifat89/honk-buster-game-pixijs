@@ -12,7 +12,7 @@ export class Joystick extends Container {
 	outer!: Sprite | Graphics | Container;
 	inner!: Sprite | Graphics | Container;
 
-	innerAlphaStandby = 0.5;	
+	innerAlphaStandby = 0.5;
 
 	constructor(settings: JoystickSettings) {
 		super();
@@ -113,8 +113,6 @@ export class Joystick extends Container {
 				return;
 			}
 
-			
-
 			/**
 			 * x:   -1 <-> 1
 			 * y:   -1 <-> 1
@@ -142,7 +140,6 @@ export class Joystick extends Container {
 				}
 				that.inner.position.set(centerPoint.x, centerPoint.y);
 				power = that.getPower(centerPoint);
-
 				velocity = that.getVelocity(newPosition, power);
 
 				that.settings.onChange?.({ angle, direction, power, velocity });
@@ -162,7 +159,6 @@ export class Joystick extends Container {
 
 				that.inner.position.set(centerPoint.x, centerPoint.y);
 				power = that.getPower(centerPoint);
-
 				velocity = that.getVelocity(newPosition, power);
 
 				that.settings.onChange?.({ angle, direction, power, velocity });
@@ -209,11 +205,10 @@ export class Joystick extends Container {
 			}
 			centerPoint.set(centerX, centerY);
 			power = that.getPower(centerPoint);
-
 			velocity = that.getVelocity(newPosition, power);
 
 			direction = that.getDirection(centerPoint);
-			that.inner.position.set(centerPoint.x, centerPoint.y);			
+			that.inner.position.set(centerPoint.x, centerPoint.y);
 
 			that.settings.onChange?.({ angle, direction, power, velocity });
 		};
@@ -228,8 +223,8 @@ export class Joystick extends Container {
 		let startPosition = new Point(0, 0);
 		const angle = Math.atan2(target.y - startPosition.y, target.x - startPosition.x);
 		return {
-			x: Math.cos(angle) * Constants.DEFAULT_CONSTRUCT_SPEED * power,
-			y: Math.sin(angle) * Constants.DEFAULT_CONSTRUCT_SPEED * power
+			x: Math.cos(angle) * (Constants.DEFAULT_CONSTRUCT_SPEED / 2) * power,
+			y: Math.sin(angle) * (Constants.DEFAULT_CONSTRUCT_SPEED / 2) * power
 		};
 	}
 
