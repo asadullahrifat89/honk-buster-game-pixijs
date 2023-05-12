@@ -28,17 +28,18 @@ export class PlayerGroundBomb extends GameObjectContainer {
 		this.playerGroundBombTemplate = honkBombTemplate;
 
 		switch (this.playerGroundBombTemplate) {
-			case PlayerGroundBombTemplate.GRENADE: {
-				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_GROUND_BOMB && x.tag == PlayerGroundBombTemplate.GRENADE).map(x => x.uri);
-				this.playerGroundBombBlastUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.GRENADE_BLAST && x.tag == PlayerGroundBombTemplate.GRENADE).map(x => x.uri);
-			} break;
 			case PlayerGroundBombTemplate.TRASH_BIN: {
 				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_GROUND_BOMB && x.tag == PlayerGroundBombTemplate.TRASH_BIN).map(x => x.uri);
 				this.playerGroundBombBlastUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.TRASH_BIN_BLAST && x.tag == PlayerGroundBombTemplate.TRASH_BIN).map(x => x.uri);
 			} break;
+			case PlayerGroundBombTemplate.GRENADE: {
+				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_GROUND_BOMB && x.tag == PlayerGroundBombTemplate.GRENADE).map(x => x.uri);
+				this.playerGroundBombBlastUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.GRENADE_BLAST && x.tag == PlayerGroundBombTemplate.GRENADE).map(x => x.uri);
+			} break;
 			case PlayerGroundBombTemplate.DYNAMITE: {
-				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_GROUND_BOMB && x.tag == PlayerGroundBombTemplate.DYNAMITE).map(x => x.uri);				
+				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_GROUND_BOMB && x.tag == PlayerGroundBombTemplate.DYNAMITE).map(x => x.uri);
 				this.blastDelayDefault = 45;
+				this.setHoppingIntensity(2);
 			} break;
 		}
 
@@ -47,20 +48,36 @@ export class PlayerGroundBomb extends GameObjectContainer {
 
 	reset() {
 		this.isBlasting = false;
+
 		this.uriIndex = Constants.getRandomNumber(0, this.playerGroundBombUris.length - 1);
 		this.setTexture(Constants.getTextureFromUri(this.playerGroundBombUris[this.uriIndex]));
+
 		this.alpha = 1;
 		this.scale.set(1);
-		this.angle = 0;
-		this.blastDelay = this.blastDelayDefault;
-		this.dropOnGroundDelay = this.dropDelayDefault;
-		this.speed = 4;
+
+		switch (this.playerGroundBombTemplate) {
+			case PlayerGroundBombTemplate.TRASH_BIN: {
+				this.angle = 0;
+			} break;
+			case PlayerGroundBombTemplate.GRENADE: {
+				this.angle = -45;
+			} break;
+			case PlayerGroundBombTemplate.DYNAMITE: {
+				this.angle = 0;
+				//this.angle = Constants.getRandomNumber(33, 213);
+			} break;
+		}
+
+		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 3.2;
 		this.isDroppedOnGround = false;
 
 		this.awaitMoveDownLeft = false;
 		this.awaitMoveDownRight = false;
 		this.awaitMoveUpLeft = false;
 		this.awaitMoveUpRight = false;
+
+		this.blastDelay = this.blastDelayDefault;
+		this.dropOnGroundDelay = this.dropDelayDefault;
 
 		SoundManager.play(SoundType.GROUND_BOMB_DROP, 0.5);
 	}
@@ -107,22 +124,16 @@ export class PlayerGroundBomb extends GameObjectContainer {
 	}
 
 	private setDropOnGround() {
-		//switch (this.playerGroundBombTemplate) {
-		//	case PlayerGroundBombTemplate.DYNAMITE: {
-		//		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
-		//	} break;
-		//	default: break;
-		//}
 		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 	}
 
 	setBlast() {
 		switch (this.playerGroundBombTemplate) {
-			case PlayerGroundBombTemplate.GRENADE: {
-				SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
-			} break;
 			case PlayerGroundBombTemplate.TRASH_BIN: {
 				SoundManager.play(SoundType.TRASH_BIN_BLAST);
+			} break;
+			case PlayerGroundBombTemplate.GRENADE: {
+				SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
 			} break;
 			case PlayerGroundBombTemplate.DYNAMITE: {
 				SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
@@ -133,20 +144,20 @@ export class PlayerGroundBomb extends GameObjectContainer {
 		this.isBlasting = true;
 
 		switch (this.playerGroundBombTemplate) {
+			case PlayerGroundBombTemplate.TRASH_BIN: {
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 1.5;
+				this.setTexture(Constants.getTextureFromUri(this.playerGroundBombBlastUris[this.uriIndex]));
+			} break;
 			case PlayerGroundBombTemplate.GRENADE: {
 				this.angle = 0;
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 2;
 				this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
 				this.setTexture(Constants.getTextureFromUri(this.playerGroundBombBlastUris[this.uriIndex]));
 			} break;
-			case PlayerGroundBombTemplate.TRASH_BIN: {
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 1.5;
-				this.setTexture(Constants.getTextureFromUri(this.playerGroundBombBlastUris[this.uriIndex]));
-			} break;
 			case PlayerGroundBombTemplate.DYNAMITE: {
-				this.angle = 0;
+				//this.angle = 0;
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 3;
-				this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
+				//this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
 			} break;
 			default: break;
 		}

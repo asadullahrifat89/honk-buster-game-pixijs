@@ -407,8 +407,8 @@ export class GamePlayScene extends Container implements IScene {
 		}
 		else {
 			switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
-				case PlayerGroundBombTemplate.GRENADE: { score += 1; } break;
-				case PlayerGroundBombTemplate.TRASH_BIN: { score += 2; } break;
+				case PlayerGroundBombTemplate.TRASH_BIN: { score += 1; } break;
+				case PlayerGroundBombTemplate.GRENADE: { score += 2; } break;
 				case PlayerGroundBombTemplate.DYNAMITE: { score += 3; } break;
 				default: { score += 1; } break;
 			}
@@ -1571,6 +1571,17 @@ export class GamePlayScene extends Container implements IScene {
 			sprite.width = this.playerGroundBombSize.width;
 			sprite.height = this.playerGroundBombSize.height;
 
+			switch (Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE) {
+				case PlayerGroundBombTemplate.DYNAMITE: {
+					sprite.width = this.playerGroundBombSize.width / 1.3;
+					sprite.height = this.playerGroundBombSize.height / 1.3;
+				} break;
+				default: {
+					sprite.width = this.playerGroundBombSize.width;
+					sprite.height = this.playerGroundBombSize.height;
+				} break;
+			}
+
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
@@ -1608,169 +1619,10 @@ export class GamePlayScene extends Container implements IScene {
 				playerGroundBomb.pop();
 
 				if (playerGroundBomb.isBlasting) {
-
-					playerGroundBomb.fade();
-
-					switch (playerGroundBomb.playerGroundBombTemplate) {
-						case PlayerGroundBombTemplate.GRENADE: {
-							if (playerGroundBomb.awaitMoveDownLeft) {
-								playerGroundBomb.moveDownLeft();
-								playerGroundBomb.rotate(RotationDirection.Backward, 0, 15);
-							}
-							else if (playerGroundBomb.awaitMoveDownRight) {
-								playerGroundBomb.moveDownRight();
-								playerGroundBomb.moveDownRight();
-								playerGroundBomb.moveDownRight();
-								playerGroundBomb.rotate(RotationDirection.Forward, 0, 15);
-							}
-							else if (playerGroundBomb.awaitMoveUpLeft) {
-								playerGroundBomb.moveUpLeft();
-								playerGroundBomb.rotate(RotationDirection.Backward, 0, 15);
-							}
-							else if (playerGroundBomb.awaitMoveUpRight) {
-								playerGroundBomb.moveUpRight();
-								playerGroundBomb.moveUpRight();
-								playerGroundBomb.rotate(RotationDirection.Forward, 0, 15);
-							}
-						} break;
-						case PlayerGroundBombTemplate.TRASH_BIN: {
-							if (playerGroundBomb.awaitMoveUpRight) {
-								playerGroundBomb.moveUpRight();
-								playerGroundBomb.rotate(RotationDirection.Forward, 0, 0.5);
-							}
-							else if (playerGroundBomb.awaitMoveUp) {
-								playerGroundBomb.moveUp();
-								playerGroundBomb.rotate(RotationDirection.Backward, 0, 0.5);
-							}
-
-						} break;
-						case PlayerGroundBombTemplate.DYNAMITE: {
-							if (playerGroundBomb.awaitMoveUpRight) {
-								playerGroundBomb.moveUpRight();
-								playerGroundBomb.moveUpRight();
-								playerGroundBomb.rotate(RotationDirection.Forward, 0, 10);
-							}
-							else if (playerGroundBomb.awaitMoveDownLeft) {
-								playerGroundBomb.moveDownLeft();
-								playerGroundBomb.rotate(RotationDirection.Backward, 0, 10);
-							}
-						} break;
-						default: break;
-					}
+					this.animatePlayerGroundBombBlast(playerGroundBomb);
 				}
 				else {
-					switch (playerGroundBomb.playerGroundBombTemplate) {
-
-						case PlayerGroundBombTemplate.GRENADE: {
-
-							playerGroundBomb.move();
-
-							if (playerGroundBomb.awaitBlast()) {
-
-								let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerGroundBomb));
-
-								if (vehicleEnemy) {
-									this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
-								}
-
-								let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerGroundBomb));
-
-								if (vehicleBoss) {
-									this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
-								}
-
-								let randomDir = Constants.getRandomNumber(0, 3);
-
-								switch (randomDir) {
-									case 0: { playerGroundBomb.awaitMoveDownLeft = true; } break;
-									case 1: { playerGroundBomb.awaitMoveDownRight = true; } break;
-									case 2: { playerGroundBomb.awaitMoveUpLeft = true; } break;
-									case 3: { playerGroundBomb.awaitMoveUpRight = true; } break;
-									default: break;
-								}
-
-								this.generateBlowSmokeExplosion(playerGroundBomb);
-								this.generateRingFireExplosion(playerGroundBomb);
-							}
-						} break;
-						case PlayerGroundBombTemplate.TRASH_BIN: {
-
-							playerGroundBomb.move();
-
-							if (playerGroundBomb.awaitBlast()) {
-
-								let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerGroundBomb));
-
-								if (vehicleEnemy) {
-									this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
-								}
-
-								let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerGroundBomb));
-
-								if (vehicleBoss) {
-									this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
-								}
-
-								let randomDir = Constants.getRandomNumber(0, 1);
-
-								switch (randomDir) {
-									case 0: { playerGroundBomb.awaitMoveUp = true; } break;
-									case 1: { playerGroundBomb.awaitMoveUpRight = true; } break;
-									default: break;
-								}
-
-								this.generateBlowSmokeExplosion(playerGroundBomb);
-							}
-						} break;
-						case PlayerGroundBombTemplate.DYNAMITE: {
-
-							if (playerGroundBomb.isDroppedOnGround) {
-
-								if (!this.isBossDeathExploding()) { // do not move the bomb is boss death explosion is happening
-
-									playerGroundBomb.moveDownRight();
-
-									let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerGroundBomb));
-
-									if (vehicleEnemy) {
-										this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
-									}
-
-									let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerGroundBomb));
-
-									if (vehicleBoss) {
-										this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
-									}
-
-									if (vehicleEnemy || vehicleBoss) {
-										let randomDir = Constants.getRandomNumber(0, 1);
-
-										switch (randomDir) {
-											case 0: { playerGroundBomb.awaitMoveDownLeft = true; } break;
-											case 1: { playerGroundBomb.awaitMoveUpRight = true; } break;
-											default: break;
-										}
-
-										playerGroundBomb.setBlast();
-										this.generateBlowSmokeExplosion(playerGroundBomb);
-										this.generateFlashExplosion(playerGroundBomb);
-										this.generateRingFireExplosion(playerGroundBomb);
-									}
-								}
-
-								if (playerGroundBomb.awaitBlast()) {
-									this.generateBlowSmokeExplosion(playerGroundBomb);
-									this.generateFlashExplosion(playerGroundBomb);
-									this.generateRingFireExplosion(playerGroundBomb);
-								}
-							}
-							else {
-								playerGroundBomb.move();
-								playerGroundBomb.awaitToDropOnGround();
-							}
-						} break;
-						default: break;
-					}
+					this.animatePlayerGroundBombFall(playerGroundBomb);
 				}
 
 				if (playerGroundBomb.hasFaded() || playerGroundBomb.hasShrinked() /*|| playerGroundBomb.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || playerGroundBomb.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
@@ -1780,12 +1632,181 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
+	private animatePlayerGroundBombFall(playerGroundBomb: PlayerGroundBomb) {
+
+		switch (playerGroundBomb.playerGroundBombTemplate) {
+			case PlayerGroundBombTemplate.GRENADE: {
+				playerGroundBomb.move();
+
+				if (playerGroundBomb.awaitBlast()) {
+
+					let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerGroundBomb));
+
+					if (vehicleEnemy) {
+						this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
+					}
+
+					let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerGroundBomb));
+
+					if (vehicleBoss) {
+						this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
+					}
+
+					let randomDir = Constants.getRandomNumber(0, 3);
+
+					switch (randomDir) {
+						case 0: { playerGroundBomb.awaitMoveDownLeft = true; } break;
+						case 1: { playerGroundBomb.awaitMoveDownRight = true; } break;
+						case 2: { playerGroundBomb.awaitMoveUpLeft = true; } break;
+						case 3: { playerGroundBomb.awaitMoveUpRight = true; } break;
+						default: break;
+					}
+
+					this.generateBlowSmokeExplosion(playerGroundBomb);
+					this.generateRingFireExplosion(playerGroundBomb);
+				}
+			} break;
+			case PlayerGroundBombTemplate.TRASH_BIN: {
+
+				playerGroundBomb.move();
+
+				if (playerGroundBomb.awaitBlast()) {
+
+					let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerGroundBomb));
+
+					if (vehicleEnemy) {
+						this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
+					}
+
+					let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerGroundBomb));
+
+					if (vehicleBoss) {
+						this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
+					}
+
+					let randomDir = Constants.getRandomNumber(0, 1);
+
+					switch (randomDir) {
+						case 0: { playerGroundBomb.awaitMoveUp = true; } break;
+						case 1: { playerGroundBomb.awaitMoveUpRight = true; } break;
+						default: break;
+					}
+
+					this.generateBlowSmokeExplosion(playerGroundBomb);
+				}
+			} break;
+			case PlayerGroundBombTemplate.DYNAMITE: {
+
+				if (playerGroundBomb.isDroppedOnGround) {
+
+					if (!this.isBossDeathExploding()) { // do not move the bomb is boss death explosion is happening
+
+						playerGroundBomb.hop();
+						playerGroundBomb.moveDownRight();
+
+						let vehicleEnemy = this.vehicleEnemyGameObjects.find(x => x.isAnimating == true && Constants.checkCloseCollision(x, playerGroundBomb));
+
+						if (vehicleEnemy) {
+							this.looseVehicleEnemyhealth(vehicleEnemy as VehicleEnemy);
+						}
+
+						let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true && x.isAttacking == true && Constants.checkCloseCollision(x, playerGroundBomb));
+
+						if (vehicleBoss) {
+							this.looseVehicleBosshealth(vehicleBoss as VehicleBoss);
+						}
+
+						if (vehicleEnemy || vehicleBoss) {
+							let randomDir = Constants.getRandomNumber(0, 1);
+
+							switch (randomDir) {
+								case 0: { playerGroundBomb.awaitMoveDownLeft = true; } break;
+								case 1: { playerGroundBomb.awaitMoveUpRight = true; } break;
+								default: break;
+							}
+
+							playerGroundBomb.setBlast();
+							this.generateBlowSmokeExplosion(playerGroundBomb);
+							this.generateFlashExplosion(playerGroundBomb);
+							this.generateRingFireExplosion(playerGroundBomb);
+						}
+					}
+
+					if (playerGroundBomb.awaitBlast()) {
+						this.generateBlowSmokeExplosion(playerGroundBomb);
+						this.generateFlashExplosion(playerGroundBomb);
+						this.generateRingFireExplosion(playerGroundBomb);
+					}
+				}
+				else {
+					playerGroundBomb.move();
+					if (playerGroundBomb.awaitToDropOnGround()) {
+						playerGroundBomb.setHopping();
+						playerGroundBomb.setPopping();
+					}						
+				}
+			} break;
+			default: break;
+		}
+	}
+
+	private animatePlayerGroundBombBlast(playerGroundBomb: PlayerGroundBomb) {
+		playerGroundBomb.fade();
+
+		switch (playerGroundBomb.playerGroundBombTemplate) {
+			case PlayerGroundBombTemplate.GRENADE: {
+				if (playerGroundBomb.awaitMoveDownLeft) {
+					playerGroundBomb.moveDownLeft();
+					playerGroundBomb.rotate(RotationDirection.Backward, 0, 15);
+				}
+				else if (playerGroundBomb.awaitMoveDownRight) {
+					playerGroundBomb.moveDownRight();
+					playerGroundBomb.moveDownRight();
+					playerGroundBomb.moveDownRight();
+					playerGroundBomb.rotate(RotationDirection.Forward, 0, 15);
+				}
+				else if (playerGroundBomb.awaitMoveUpLeft) {
+					playerGroundBomb.moveUpLeft();
+					playerGroundBomb.rotate(RotationDirection.Backward, 0, 15);
+				}
+				else if (playerGroundBomb.awaitMoveUpRight) {
+					playerGroundBomb.moveUpRight();
+					playerGroundBomb.moveUpRight();
+					playerGroundBomb.rotate(RotationDirection.Forward, 0, 15);
+				}
+			} break;
+			case PlayerGroundBombTemplate.TRASH_BIN: {
+				if (playerGroundBomb.awaitMoveUpRight) {
+					playerGroundBomb.moveUpRight();
+					playerGroundBomb.rotate(RotationDirection.Forward, 0, 0.5);
+				}
+				else if (playerGroundBomb.awaitMoveUp) {
+					playerGroundBomb.moveUp();
+					playerGroundBomb.rotate(RotationDirection.Backward, 0, 0.5);
+				}
+
+			} break;
+			case PlayerGroundBombTemplate.DYNAMITE: {
+				if (playerGroundBomb.awaitMoveUpRight) {
+					playerGroundBomb.moveUpRight();
+					playerGroundBomb.moveUpRight();
+					playerGroundBomb.rotate(RotationDirection.Forward, 0, 10);
+				}
+				else if (playerGroundBomb.awaitMoveDownLeft) {
+					playerGroundBomb.moveDownLeft();
+					playerGroundBomb.rotate(RotationDirection.Backward, 0, 10);
+				}
+			} break;
+			default: break;
+		}
+	}
+
 	//#endregion
 
 	//#region PlayerAirBombs
 
 	private playerAirBombSize = { width: 90, height: 90 };
-	private playerAirBombGameObjects: Array<PlayerAirBomb> = [];
+	private playerAirBombGameObjects: Array<PlayerAirBomb> = [];	
 
 	spawnPlayerAirBombs() {
 
@@ -2031,7 +2052,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerAirBombHurlingBalls
 
-	private playerAirBombBullsEyeSize = { width: 75, height: 75 };
+	private playerAirBombBullsEyeSize = { width: 70, height: 70 };
 	private playerAirBombBullsEyeGameObjects: Array<PlayerAirBombHurlingBall> = [];
 
 	spawnPlayerAirBombHurlingBalls() {
@@ -3840,7 +3861,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region MafiaBossAirBombHurlingBalls
 
-	private mafiaBossRocketBullsEyeSize = { width: 75, height: 75 };
+	private mafiaBossRocketBullsEyeSize = { width: 70, height: 70 };
 	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossAirBombHurlingBall> = [];
 
 	private readonly mafiaBossRocketBullsEyePopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
