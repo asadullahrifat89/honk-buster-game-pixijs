@@ -15,7 +15,7 @@ import { GameObjectSprite } from "../core/GameObjectSprite";
 import { RoadSideWalk } from "../objects/RoadSideWalk";
 import { VehicleEnemy } from "../objects/VehicleEnemy";
 import { VehicleBoss } from "../objects/VehicleBoss";
-import { VehicleBossRocket } from "../objects/VehicleBossRocket";
+import { VehicleBossAirBomb } from "../objects/VehicleBossAirBomb";
 import { UfoEnemy } from "../objects/UfoEnemy";
 import { UfoEnemyAirBomb } from "../objects/UfoEnemyAirBomb";
 import { UfoBoss } from "../objects/UfoBoss";
@@ -253,7 +253,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnVehicleBosss();
 
 		this.spawnHonks();
-		this.spawnVehicleBossRockets();
+		this.spawnVehicleBossAirBombs();
 
 		this.spawnSideWalksBottom();
 		this.spawnBlowSmokeExplosions();
@@ -299,7 +299,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.generateVehicleEnemys();
 		this.generateVehicleBoss();
-		this.generateVehicleBossRockets();
+		this.generateVehicleBossAirBombs();
 
 		this.generateUfoBoss();
 		this.generateUfoBossRockets();
@@ -340,7 +340,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.animateVehicleEnemys();
 		this.animateVehicleBoss();
-		this.animateVehicleBossRockets();
+		this.animateVehicleBossAirBombs();
 
 		this.animateHonks();
 
@@ -2768,19 +2768,19 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region VehicleBossRockets
+	//#region VehicleBossAirBombs
 
 	private vehicleBossRocketSize = { width: 90, height: 90 };
-	private vehicleBossRocketGameObjects: Array<VehicleBossRocket> = [];
+	private vehicleBossRocketGameObjects: Array<VehicleBossAirBomb> = [];
 
 	private readonly vehicleBossRocketPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private vehicleBossRocketPopDelay: number = 0;
 
-	spawnVehicleBossRockets() {
+	spawnVehicleBossAirBombs() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: VehicleBossRocket = new VehicleBossRocket(Constants.DEFAULT_CONSTRUCT_SPEED * 1.1);
+			const gameObject: VehicleBossAirBomb = new VehicleBossAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED * 1.1);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
@@ -2802,7 +2802,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generateVehicleBossRockets() {
+	generateVehicleBossAirBombs() {
 
 		let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
@@ -2827,13 +2827,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animateVehicleBossRockets() {
+	animateVehicleBossAirBombs() {
 
-		let animatingVehicleBossRockets = this.vehicleBossRocketGameObjects.filter(x => x.isAnimating == true);
+		let animatingVehicleBossAirBombs = this.vehicleBossRocketGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingVehicleBossRockets) {
+		if (animatingVehicleBossAirBombs) {
 
-			animatingVehicleBossRockets.forEach(gameObject => {
+			animatingVehicleBossAirBombs.forEach(gameObject => {
 				gameObject.moveUpRight();
 
 				gameObject.decelerate();
