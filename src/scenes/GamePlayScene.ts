@@ -38,6 +38,7 @@ import { MessageBubble } from "../controls/MessageBubble";
 import { RoadMark } from "../objects/RoadMark";
 import { GrandExplosionRing } from "../objects/GrandExplosionRing";
 import { Leaf } from "../objects/Leaf";
+import { VehicleSmoke } from "../objects/VehicleSmoke";
 
 
 export class GamePlayScene extends Container implements IScene {
@@ -145,7 +146,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.repositionPowerUpBar();
 
 		// set sound pollution bar
-		this.soundPollutionBar = new HealthBar(Constants.getRandomTexture(ConstructType.HONK), this, 0x7200ff).setMaximumValue(6).setValue(0);
+		this.soundPollutionBar = new HealthBar(Constants.getRandomTexture(ConstructType.HONK), this, 0x7200ff).setMaximumValue(8).setValue(0);
 		this.repositionSoundPollutionBar();
 
 		// set the game controller
@@ -250,6 +251,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnRoadMarks();
 		this.spawnSideWalksTop();
 
+		this.spawnVehicleSmokes();
 		this.spawnVehicleEnemys();
 		this.spawnVehicleBosss();
 
@@ -343,6 +345,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 
 		this.animateVehicleEnemys();
+		this.animateVehicleSmokes();
 		this.animateVehicleBoss();
 		this.animateVehicleBossAirBombs();
 
@@ -1743,7 +1746,7 @@ export class GamePlayScene extends Container implements IScene {
 					if (playerGroundBomb.awaitToDropOnGround()) {
 						playerGroundBomb.setHopping();
 						playerGroundBomb.setPopping();
-					}						
+					}
 				}
 			} break;
 			default: break;
@@ -1806,7 +1809,7 @@ export class GamePlayScene extends Container implements IScene {
 	//#region PlayerAirBombs
 
 	private playerAirBombSize = { width: 90, height: 90 };
-	private playerAirBombGameObjects: Array<PlayerAirBomb> = [];	
+	private playerAirBombGameObjects: Array<PlayerAirBomb> = [];
 
 	spawnPlayerAirBombs() {
 
@@ -2495,6 +2498,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region VehicleEnemys
 
+	//#region VehicleEnemys
+
 	private vehicleEnemySize = { width: 250, height: 250 };
 	private vehicleEnemyGameObjects: Array<VehicleEnemy> = [];
 
@@ -2641,12 +2646,11 @@ export class GamePlayScene extends Container implements IScene {
 				}
 
 				// generate honk
-				if (vehicleEnemy) {
-
-					if (vehicleEnemy.honk() && !this.ufoEnemyExists() && !this.anyInAirBossExists()) {
-						this.generateHonk(vehicleEnemy);
-					}
+				if (vehicleEnemy.honk() && !this.ufoEnemyExists() && !this.anyInAirBossExists()) {
+					this.generateHonk(vehicleEnemy);
 				}
+
+				this.generateVehicleSmoke(vehicleEnemy);
 
 				// recycle vehicle
 				if (this.anyInAirBossExists()) {
@@ -2704,6 +2708,76 @@ export class GamePlayScene extends Container implements IScene {
 			}
 		}
 	}
+
+	//#endregion
+
+	//#region VehicleSmokes
+
+	private vehicleSmokeSize = { width: 35, height: 35 };
+	private vehicleSmokeGameObjects: Array<VehicleSmoke> = [];
+
+	private readonly vehicleSmokePopDelayDefault: number = 20 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private vehicleSmokePopDelay: number = 20;
+
+	private spawnVehicleSmokes() {
+
+		for (let j = 0; j < 10; j++) {
+
+			const vehicleSmoke: VehicleSmoke = new VehicleSmoke(Constants.DEFAULT_CONSTRUCT_SPEED);
+			vehicleSmoke.disableRendering();
+
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_SMOKE));
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.vehicleSmokeSize.width;
+			sprite.height = this.vehicleSmokeSize.height;
+			sprite.anchor.set(0.5, 0.5);
+			vehicleSmoke.addChild(sprite);
+
+			this.vehicleSmokeGameObjects.push(vehicleSmoke);
+			this.sceneContainer.addChild(vehicleSmoke);
+		}
+	}
+
+	private generateVehicleSmoke(source: GameObjectContainer) {
+
+		this.vehicleSmokePopDelay -= 0.1;
+
+		if (this.vehicleSmokePopDelay < 0) {
+
+			var vehicleSmoke = this.vehicleSmokeGameObjects.find(x => x.isAnimating == false);
+
+			if (vehicleSmoke) {
+				vehicleSmoke.reset();
+				vehicleSmoke.reposition(source);
+				vehicleSmoke.setPopping();
+				vehicleSmoke.enableRendering();
+			}
+
+			this.vehicleSmokePopDelay = Constants.getRandomNumber(this.vehicleSmokePopDelayDefault, this.vehicleSmokePopDelayDefault + 3);
+		}
+	}
+
+	private animateVehicleSmokes() {
+
+		var animatingVehicleSmokes = this.vehicleSmokeGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingVehicleSmokes) {
+
+			animatingVehicleSmokes.forEach(vehicleSmoke => {
+				vehicleSmoke.dillyDally();
+				vehicleSmoke.pop();
+				vehicleSmoke.moveUpRight();
+				vehicleSmoke.fade();
+
+				if (vehicleSmoke.hasFaded()) {
+					vehicleSmoke.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
 
 	//#endregion
 
@@ -3983,17 +4057,15 @@ export class GamePlayScene extends Container implements IScene {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: HealthPickup = new HealthPickup(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED));
+			const gameObject: HealthPickup = new HealthPickup(Constants.getRandomNumber(2, Constants.DEFAULT_CONSTRUCT_SPEED));
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP));
-
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.healthPickupSize.width;
 			sprite.height = this.healthPickupSize.height;
 			sprite.anchor.set(0.5, 0.5);
-
 			gameObject.addChild(sprite);
 
 			this.healthPickupGameObjects.push(gameObject);
@@ -4089,17 +4161,15 @@ export class GamePlayScene extends Container implements IScene {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: PowerUpPickup = new PowerUpPickup(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED));
+			const gameObject: PowerUpPickup = new PowerUpPickup(Constants.getRandomNumber(2, Constants.DEFAULT_CONSTRUCT_SPEED));
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR));
-
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.powerUpPickupSize.width;
 			sprite.height = this.powerUpPickupSize.height;
 			sprite.anchor.set(0.5, 0.5);
-
 			gameObject.addChild(sprite);
 
 			this.powerUpPickupGameObjects.push(gameObject);
