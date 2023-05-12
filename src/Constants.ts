@@ -262,6 +262,7 @@ export abstract class Constants {
 	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
 
 		new ConstructTemplate(ConstructType.GRAND_EXPLOSION_RING, "grand_explosion_ring_1"),
+		new ConstructTemplate(ConstructType.HONK, "honk_1"),
 
 		new ConstructTemplate(ConstructType.ROAD_MARK, "road_marks"),
 
@@ -296,9 +297,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_2"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_3"),
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_4"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_5"),
-
-		new ConstructTemplate(ConstructType.HONK, "honk_1"),
+		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_5"),		
 
 		new ConstructTemplate(ConstructType.PLAYER_RIDE, "player_1_character"),
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, "player_balloon_1_idle"),
