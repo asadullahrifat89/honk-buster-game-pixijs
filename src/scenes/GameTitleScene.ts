@@ -44,7 +44,7 @@ export class GameTitleScene extends Container implements IScene {
 			fontFamily: Constants.GAME_TITLE_FONT,
 			align: "center",
 			fill: "#ffffff",
-			fontSize: 42
+			fontSize: 44
 		});
 		title.x = this.uiContainer.width / 2 - title.width / 2;
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
