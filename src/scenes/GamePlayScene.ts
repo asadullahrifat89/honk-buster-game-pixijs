@@ -2184,12 +2184,12 @@ export class GamePlayScene extends Container implements IScene {
 
 	private spawnPlayerArmorSpheres() {
 
-		for (let j = 0; j < 5; j++) {
+		for (let j = 0; j < 1; j++) {
 
 			const armorSphere: GameObjectContainer = new GameObjectContainer();
 			armorSphere.disableRendering();
 
-			const circle = new Graphics().beginFill(0xf9c573).lineStyle(5, 0x1d1d1b).drawCircle(0, 0, 120).endFill();
+			const circle = new Graphics().beginFill(0xf9c573).lineStyle(5, 0x1d1d1b).drawCircle(0, 0, 110).endFill();
 			armorSphere.addChild(circle);
 			armorSphere.alpha = 0.5;
 
