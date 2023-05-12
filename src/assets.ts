@@ -56,7 +56,7 @@ export const manifest: ResolverManifest = {
 				"mafia_boss_rocket_2": "./images/mafia_boss_rocket_2.png",
 				"mafia_boss_rocket_3": "./images/mafia_boss_rocket_3.png",
 
-				"mafia_boss_rocket_bulls_eye": "./images/mafia_boss_rocket_bulls_eye.png",
+				"mafia_boss_hurling_ball": "./images/mafia_boss_hurling_ball.png",
 
 				"player_1_character": "./images/player_1_character.png",
 				"player_2_character": "./images/player_2_character.png",
@@ -89,20 +89,20 @@ export const manifest: ResolverManifest = {
 				"player_rocket_2": "./images/player_rocket_2.png",
 				"player_rocket_3": "./images/player_rocket_3.png",
 
-				"player_rocket_bulls_eye_1": "./images/player_rocket_bulls_eye_1.png",
+				"player_hurling_ball": "./images/player_hurling_ball.png",
 
 				"powerup_pickup_armor": "./images/powerup_pickup_armor.png",
 				"powerup_pickup_bulls_eye": "./images/powerup_pickup_bulls_eye.png",
 
-				"player_honk_bomb_sticky_1": "./images/player_honk_bomb_sticky_1.png",
-				"player_honk_bomb_sticky_2": "./images/player_honk_bomb_sticky_2.png",
+				"player_honk_bomb_dynamite_1": "./images/player_honk_bomb_dynamite_1.png",
+				"player_honk_bomb_dynamite_2": "./images/player_honk_bomb_dynamite_2.png",
 
-				"player_honk_bomb_explosive_1": "./images/player_honk_bomb_explosive_1.png",
-				"player_honk_bomb_explosive_2": "./images/player_honk_bomb_explosive_2.png",
+				"player_honk_bomb_grenade_1": "./images/player_honk_bomb_grenade_1.png",
+				"player_honk_bomb_grenade_2": "./images/player_honk_bomb_grenade_2.png",
 
 
-				"player_honk_bomb_explosive_1_open": "./images/player_honk_bomb_explosive_1_open.png",
-				"player_honk_bomb_explosive_2_open": "./images/player_honk_bomb_explosive_2_open.png",
+				"player_honk_bomb_grenade_1_open": "./images/player_honk_bomb_grenade_1_open.png",
+				"player_honk_bomb_grenade_2_open": "./images/player_honk_bomb_grenade_2_open.png",
 
 				"player_honk_bomb_trash_1": "./images/player_honk_bomb_trash_1.png",
 				"player_honk_bomb_trash_2": "./images/player_honk_bomb_trash_2.png",
@@ -132,7 +132,7 @@ export const manifest: ResolverManifest = {
 				"ufo_boss_rocket_2": "./images/ufo_boss_rocket_2.png",
 				"ufo_boss_rocket_3": "./images/ufo_boss_rocket_3.png",
 
-				"ufo_boss_rocket_seeking": "./images/ufo_boss_rocket_seeking.png",
+				"ufo_boss_seeking_ball": "./images/ufo_boss_seeking_ball.png",
 
 				"vehicle_boss_rocket_1": "./images/vehicle_boss_rocket_1.png",
 				"vehicle_boss_rocket_2": "./images/vehicle_boss_rocket_2.png",

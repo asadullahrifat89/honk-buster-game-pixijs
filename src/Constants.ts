@@ -318,17 +318,17 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, "player_balloon_2_hit"),
 
 
-		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_explosive_1", PlayerGroundBombTemplate.GRENADE),
-		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_explosive_2", PlayerGroundBombTemplate.GRENADE),
+		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_1", PlayerGroundBombTemplate.GRENADE),
+		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_2", PlayerGroundBombTemplate.GRENADE),
 
 		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_trash_1", PlayerGroundBombTemplate.TRASH_BIN),
 		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_trash_2", PlayerGroundBombTemplate.TRASH_BIN),
 
-		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_sticky_1", PlayerGroundBombTemplate.DYNAMITE),
-		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_sticky_2", PlayerGroundBombTemplate.DYNAMITE),
+		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_dynamite_1", PlayerGroundBombTemplate.DYNAMITE),
+		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_dynamite_2", PlayerGroundBombTemplate.DYNAMITE),
 
-		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_explosive_1_open", PlayerGroundBombTemplate.GRENADE),
-		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_explosive_2_open", PlayerGroundBombTemplate.GRENADE),
+		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_grenade_1_open", PlayerGroundBombTemplate.GRENADE),
+		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_grenade_2_open", PlayerGroundBombTemplate.GRENADE),
 
 		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_1_open", PlayerGroundBombTemplate.TRASH_BIN),
 		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_2_open", PlayerGroundBombTemplate.TRASH_BIN),
@@ -343,7 +343,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_bullet_ball_1", PlayerAirBombTemplate.BULLET_BALL),
 		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_bullet_ball_2", PlayerAirBombTemplate.BULLET_BALL),
 
-		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB_HURLING_BALLS, "player_rocket_bulls_eye_1"),
+		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB_HURLING_BALLS, "player_hurling_ball"),
 
 		new ConstructTemplate(ConstructType.CHOPPER_BLADES, "player_chopper_blades"),
 
@@ -363,7 +363,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_1"),
 		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_2"),
 		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_3"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET_SEEKING, "ufo_boss_rocket_seeking"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET_SEEKING, "ufo_boss_seeking_ball"),
 
 		new ConstructTemplate(ConstructType.UFO_ENEMY, "ufo_enemy_1"),
 		new ConstructTemplate(ConstructType.UFO_ENEMY, "ufo_enemy_2"),
@@ -387,7 +387,7 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_1"),
 		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_2"),
 		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_3"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET_HURLING_BALLS, "mafia_boss_rocket_bulls_eye"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET_HURLING_BALLS, "mafia_boss_hurling_ball"),
 
 		new ConstructTemplate(ConstructType.HEALTH_PICKUP, "health_pickup"),
 		new ConstructTemplate(ConstructType.POWERUP_PICKUP_ARMOR, "powerup_pickup_armor"),

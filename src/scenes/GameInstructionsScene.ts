@@ -144,7 +144,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		const ground_bomb = new GameObjectContainer();
 		ground_bomb.renderable = false;
 
-		const ground_bomb_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_explosive_1"));
+		const ground_bomb_sprite: GameObjectSprite = new GameObjectSprite(Texture.from("player_honk_bomb_grenade_1"));
 		ground_bomb_sprite.width = 256 / 2;
 		ground_bomb_sprite.height = 256 / 2;
 		ground_bomb_sprite.x = 0;
