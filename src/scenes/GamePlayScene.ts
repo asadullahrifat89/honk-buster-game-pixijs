@@ -33,7 +33,7 @@ import { PlayerAirBomb } from "../objects/PlayerAirBomb";
 import { PlayerAirBombHurlingBall } from "../objects/PlayerAirBombHurlingBall";
 import { PowerUpPickup } from "../objects/PowerUpPickup";
 import { ZombieBoss } from "../objects/ZombieBoss";
-import { ZombieBossRocketBlock } from "../objects/ZombieBossRocketBlock";
+import { ZombieBossAirBombCube } from "../objects/ZombieBossAirBombCube";
 import { MessageBubble } from "../controls/MessageBubble";
 import { RoadMark } from "../objects/RoadMark";
 import { GrandExplosionRing } from "../objects/GrandExplosionRing";
@@ -269,7 +269,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnUfoBosss();
 
 		this.spawnZombieBosss();
-		this.spawnZombieBossRocketBlocks();
+		this.spawnZombieBossAirBombCubes();
 
 		this.spawnMafiaBosss();
 		this.spawnMafiaBossRockets();
@@ -306,7 +306,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.generateUfoBossAirBombSeekingBalls();
 
 		this.generateZombieBoss();
-		this.generateZombieBossRocketBlocks();
+		this.generateZombieBossAirBombCubes();
 
 		this.generateMafiaBoss();
 		this.generateMafiaBossRockets();
@@ -358,7 +358,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateUfoBossAirBombSeekingBalls();
 
 		this.animateZombieBoss();
-		this.animateZombieBossRocketBlocks();
+		this.animateZombieBossAirBombCubes();
 
 		this.animateMafiaBoss();
 		this.animateMafiaBossRockets();
@@ -3416,19 +3416,19 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region ZombieBossRocketBlocks
+	//#region ZombieBossAirBombCubes
 
 	private zombieBossRocketBlockSize = { width: 256 / 1.5, height: 256 / 1.5 };
-	private zombieBossRocketBlockGameObjects: Array<ZombieBossRocketBlock> = [];
+	private zombieBossRocketBlockGameObjects: Array<ZombieBossAirBombCube> = [];
 
 	private readonly zombieBossRocketBlockPopDelayDefault: number = 8 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private zombieBossRocketBlockPopDelay: number = 0;
 
-	spawnZombieBossRocketBlocks() {
+	spawnZombieBossAirBombCubes() {
 
 		for (let j = 0; j < 5; j++) {
 
-			const gameObject: ZombieBossRocketBlock = new ZombieBossRocketBlock(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: ZombieBossAirBombCube = new ZombieBossAirBombCube(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK));
@@ -3448,7 +3448,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generateZombieBossRocketBlocks() {
+	generateZombieBossAirBombCubes() {
 
 		let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
@@ -3472,13 +3472,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animateZombieBossRocketBlocks() {
+	animateZombieBossAirBombCubes() {
 
-		let animatingZombieBossRocketBlocks = this.zombieBossRocketBlockGameObjects.filter(x => x.isAnimating == true);
+		let animatingZombieBossAirBombCubes = this.zombieBossRocketBlockGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingZombieBossRocketBlocks) {
+		if (animatingZombieBossAirBombCubes) {
 
-			animatingZombieBossRocketBlocks.forEach(zombieBossRocketBlock => {
+			animatingZombieBossAirBombCubes.forEach(zombieBossRocketBlock => {
 				zombieBossRocketBlock.moveDownRight();
 
 				if (zombieBossRocketBlock.isBlasting) {

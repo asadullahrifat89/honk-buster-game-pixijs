@@ -4,7 +4,7 @@ import { SceneManager } from '../managers/SceneManager';
 import { SoundManager } from '../managers/SoundManager';
 
 
-export class ZombieBossRocketBlock extends GameObjectContainer {
+export class ZombieBossAirBombCube extends GameObjectContainer {
 
     private autoBlastDelay: number = 0;
     private readonly autoBlastDelayDefault: number = 15;
