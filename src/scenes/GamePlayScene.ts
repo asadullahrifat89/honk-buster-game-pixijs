@@ -263,6 +263,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnPlayerGroundBombs();
 		this.spawnPlayerAirBombs();
 		this.spawnPlayerAirBombHurlingBalls();
+		this.spawnPlayerArmorSpheres();
 		this.spawnPlayerBalloon();
 
 		this.spawnUfoBossAirBombs();
@@ -334,6 +335,7 @@ export class GamePlayScene extends Container implements IScene {
 	private animateGameObjects() {
 
 		this.animatePlayerBalloon();
+		this.animatePlayerArmorSpheres();
 
 		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
 			this.animateRoadMarks();
@@ -346,12 +348,13 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.animateHonks();
 
-		this.animatePlayerGroundBombs();
 		this.animateFlashExplosions();
 		this.animateBlowSmokeExplosions();
 		this.animateRingSmokeExplosions();
 		this.animateRingFireExplosions();
 		this.animateGrandExplosionRings();
+
+		this.animatePlayerGroundBombs();
 		this.animatePlayerAirBombs();
 		this.animatePlayerAirBombHurlingBalls();
 
@@ -1525,13 +1528,17 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	loosePlayerHealth() {
-		this.player.setPopping();
 
 		if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.ARMOR) {
 			this.depletePowerUp();
+
+			var animatingArmorSphere = this.armorSphereGameObjects.find(x => x.isAnimating == true);
+			if (animatingArmorSphere)
+				animatingArmorSphere.setPopping();
+
 		}
 		else {
-
+			this.player.setPopping();
 			this.player.looseHealth();
 			this.player.setHitStance();
 			this.playerHealthBar.setValue(this.player.health);
@@ -2170,6 +2177,70 @@ export class GamePlayScene extends Container implements IScene {
 					playerAirBombBullsEye.disableRendering();
 				}
 			});
+		}
+	}
+
+	//#endregion
+
+	//#region PlayerArmorSpheres
+
+	private armorSphereGameObjects: Array<GameObjectContainer> = [];
+
+	private spawnPlayerArmorSpheres() {
+
+		for (let j = 0; j < 1; j++) {
+
+			const armorSphere: GameObjectContainer = new GameObjectContainer();
+			armorSphere.disableRendering();
+
+			const circle = new Graphics().lineStyle(7, 0xffffff).beginFill(0xf9b233).drawCircle(0, 0, 110).endFill();
+			armorSphere.addChild(circle);
+			armorSphere.alpha = 0.4;
+
+			this.armorSphereGameObjects.push(armorSphere);
+			this.sceneContainer.addChild(armorSphere);
+		}
+	}
+
+	private generatePlayerArmorSpheres() {
+
+		if (this.powerUpBar.tag == PowerUpType.ARMOR && this.powerUpBar.hasHealth()) {
+
+			var armorSphere = this.armorSphereGameObjects.find(x => x.isAnimating == false);
+
+			if (armorSphere) {
+				armorSphere.setPosition(this.player.x, this.player.y);
+				armorSphere.enableRendering();
+			}
+		}
+	}
+
+	private animatePlayerArmorSpheres() {
+
+		if (this.powerUpBar.tag == PowerUpType.ARMOR) {
+
+			var animatingArmorSpheres = this.armorSphereGameObjects.filter(x => x.isAnimating == true);
+
+			if (animatingArmorSpheres) {
+
+				animatingArmorSpheres.forEach(armorSphere => {
+					armorSphere.pop();
+
+					if (this.powerUpBar.hasHealth()) {
+						armorSphere.setPosition(this.player.x, this.player.y);
+					}
+					else {
+						armorSphere.disableRendering();
+					}
+				});
+			}
+		}
+		else {
+			if (this.armorSphereGameObjects.some(x => x.isAnimating == true)) {
+				var animatingArmorSphere = this.armorSphereGameObjects.find(x => x.isAnimating == true);
+				if (animatingArmorSphere)
+					animatingArmorSphere.disableRendering();
+			}
 		}
 	}
 
@@ -4093,6 +4164,7 @@ export class GamePlayScene extends Container implements IScene {
 								{
 									this.powerUpBar.setMaximumValue(10).setValue(10);
 									this.generateOnScreenMessage("Armor +10", this.powerUpBar.getIcon());
+									this.generatePlayerArmorSpheres();
 								}
 								break;
 							default:
