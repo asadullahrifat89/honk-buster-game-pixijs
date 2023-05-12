@@ -23,10 +23,9 @@ export class GameTitleScene extends Container implements IScene {
 
 		this.on("pointertap", () => {
 			if (!SceneManager.interacted) {
-				SceneManager.interacted = true;
-				SceneManager.toggleFullscreen();
+				SceneManager.interacted = true;				
 			}
-
+			SceneManager.toggleFullscreen();
 		}, this);
 
 		this.spawnRings();
