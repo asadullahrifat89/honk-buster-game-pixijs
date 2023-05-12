@@ -386,7 +386,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Game
 
-	private gainScore(airEnemyBusted: boolean = true) {
+	private addScore(airEnemyBusted: boolean = true) {
 
 		// TODO: set this to 0 after testing
 		let score = 0;
@@ -1299,50 +1299,51 @@ export class GamePlayScene extends Container implements IScene {
 
 	private generateBossDeathExplosions() {
 
-		if (this.isBossDeathExploding() && this.anyBossExists()) {
+		if (this.anyBossExists()) {
 
-			this.bossDeathExplosionDuration -= 0.1; // deplete the explosion duration
-			this.bossDeathExplosionDelay -= 0.1; // deplete the explosion generation delay
+			if (this.isBossDeathExploding()) {
+				this.bossDeathExplosionDuration -= 0.1; // deplete the explosion duration
+				this.bossDeathExplosionDelay -= 0.1; // deplete the explosion generation delay
 
-			if (this.bossDeathExplosionDelay < 0) {
+				if (this.bossDeathExplosionDelay < 0) {
 
-				// get all the bosses and check
-				let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
-				let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true);
-				let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true);
-				let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
+					// get all the bosses and check
+					let vehicleBoss = this.vehicleBossGameObjects.find(x => x.isAnimating == true);
+					let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating == true);
+					let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating == true);
+					let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating == true);
 
-				let anyBoss;
+					let anyBoss;
 
-				if (vehicleBoss) {
-					anyBoss = vehicleBoss;
-				}
-				else if (ufoBoss) {
-					anyBoss = ufoBoss;
-				}
-				else if (zombieBoss) {
-					anyBoss = zombieBoss;
-				}
-				else if (mafiaBoss) {
-					anyBoss = mafiaBoss;
-				}
+					if (vehicleBoss) {
+						anyBoss = vehicleBoss;
+					}
+					else if (ufoBoss) {
+						anyBoss = ufoBoss;
+					}
+					else if (zombieBoss) {
+						anyBoss = zombieBoss;
+					}
+					else if (mafiaBoss) {
+						anyBoss = mafiaBoss;
+					}
 
-				if (anyBoss) {
-					this.generateRingFireExplosion(anyBoss);
-					//this.generateRingSmokeExplosion(anyBoss);
-					SoundManager.play(SoundType.AIR_BOMB_BLAST);
+					if (anyBoss) {
+						this.generateRingFireExplosion(anyBoss);
+						SoundManager.play(SoundType.AIR_BOMB_BLAST);
 
-					if (this.bossDeathExplosionDuration > 0 && this.bossDeathExplosionDuration <= 0.3) { // when duration depletes generate an explosion ring
-						this.generateGrandExplosionRing(anyBoss);
+						if (this.bossDeathExplosionDuration <= 1) { // when duration depletes generate an explosion ring
+							this.generateGrandExplosionRing(anyBoss);
 
-						if (vehicleBoss) {
-							vehicleBoss.setHopping(); // set it to hop just when explosion ring blasts
-							vehicleBoss.setDestroyed(); // once blast explosion finishes set it to grayscale
+							if (vehicleBoss) {
+								vehicleBoss.setHopping(); // set it to hop just when explosion ring blasts
+								vehicleBoss.setDestroyed(); // once blast explosion finishes set it to grayscale
+							}
 						}
 					}
-				}
 
-				this.bossDeathExplosionDelay = this.bossDeathExplosionDelayDefault;
+					this.bossDeathExplosionDelay = this.bossDeathExplosionDelayDefault;
+				}
 			}
 		}
 	}
@@ -2297,7 +2298,7 @@ export class GamePlayScene extends Container implements IScene {
 			if (ufoEnemy.isDead()) {
 
 				ufoEnemy.setDestruction();
-				this.gainScore();
+				this.addScore();
 				this.ufoEnemyDefeatCount++;
 
 				SoundManager.play(SoundType.SCORE_ACQUIRED, 1);
@@ -2612,7 +2613,7 @@ export class GamePlayScene extends Container implements IScene {
 			if (vehicleEnemy.isDead()) {
 				vehicleEnemy.setHopping();
 				vehicleEnemy.setBlast();
-				this.gainScore(false);
+				this.addScore(false);
 				SoundManager.play(SoundType.SCORE_ACQUIRED, 1);
 
 				this.generateMessageBubble(vehicleEnemy, this.honkBustReactions[Constants.getRandomNumber(0, this.honkBustReactions.length - 1)]);
@@ -2750,7 +2751,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (vehicleBoss.isDead()) {
 
 			this.player.setWinStance();
-			this.gainScore(false);
+			this.addScore(false);
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -2997,7 +2998,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (ufoBoss.isDead()) {
 
 			this.player.setWinStance();
-			this.gainScore();
+			this.addScore();
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -3395,7 +3396,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (zombieBoss.isDead()) {
 
 			this.player.setWinStance();
-			this.gainScore();
+			this.addScore();
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -3635,7 +3636,7 @@ export class GamePlayScene extends Container implements IScene {
 		if (mafiaBoss.isDead()) {
 
 			this.player.setWinStance();
-			this.gainScore();
+			this.addScore();
 			this.levelUp();
 
 			SoundManager.stop(SoundType.BOSS_BACKGROUND_MUSIC);

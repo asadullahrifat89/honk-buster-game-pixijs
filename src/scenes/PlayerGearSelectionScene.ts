@@ -1,4 +1,4 @@
-﻿import { BlurFilter, Container, Text, Texture } from "pixi.js";
+﻿import { BlurFilter, Container, Graphics, Text, Texture } from "pixi.js";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
@@ -24,6 +24,8 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 
 	constructor() {
 		super();
+
+		this.spawnLines();
 
 		this.uiContainer = new GameObjectContainer();
 		this.uiContainer.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
@@ -263,6 +265,8 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 	}
 
 	public update() {
+		this.generateLines();
+		this.animateLines();
 	}
 
 	public resize(scale: number): void {
@@ -277,4 +281,60 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
 		}
 	}
+
+	//#region Lines
+
+	private ringGameObjects: Array<GameObjectContainer> = [];
+	private readonly ringPopDelayDefault: number = 2 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private ringPopDelay: number = 0;
+
+	private spawnLines() {
+
+		for (let j = 0; j < 10; j++) {
+
+			const gameObject: GameObjectContainer = new GameObjectContainer(Constants.DEFAULT_CONSTRUCT_SPEED * 4);
+			gameObject.disableRendering();
+			gameObject.addChild(new Graphics().beginFill(0xffffff).lineStyle(1, 0xffffff).drawRoundedRect(0, 0, 300, 4, 4).endFill());
+			gameObject.filters = [new BlurFilter()];
+			this.ringGameObjects.push(gameObject);
+			this.addChild(gameObject);
+		}
+	}
+
+	private generateLines() {
+
+		this.ringPopDelay -= 0.1;
+
+		if (this.ringPopDelay < 0) {
+			var gameObject = this.ringGameObjects.find(x => x.isAnimating == false);
+
+			if (gameObject) {
+				//gameObject.alpha = 1;
+				//gameObject.scale.set(1);
+				gameObject.x = gameObject.width * -1;
+				gameObject.y = Constants.getRandomNumber(10, SceneManager.height);
+				gameObject.enableRendering();
+			}
+
+			this.ringPopDelay = this.ringPopDelayDefault;
+		}
+	}
+
+	private animateLines() {
+
+		var animatingRings = this.ringGameObjects.filter(x => x.isAnimating == true);
+
+		if (animatingRings) {
+
+			animatingRings.forEach(gameObject => {				
+				gameObject.moveRight();
+
+				if (gameObject.x > SceneManager.width) {
+					gameObject.disableRendering();
+				}
+			});
+		}
+	}
+
+	//#endregion
 }

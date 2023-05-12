@@ -5,8 +5,8 @@ export class SceneManager {
 
 	//#region Properties
 
-	private static app: Application;
-	private static currentScene: IScene;
+	public static app: Application;
+	public static currentScene: IScene;
 
 	public static scaling: number = 1;
 	public static interacted: boolean = false;
@@ -32,7 +32,7 @@ export class SceneManager {
 			backgroundColor: background,
 			width: width,
 			height: height,
-			//sharedTicker: true,
+			sharedTicker: true,
 		});
 
 		// Add the ticker

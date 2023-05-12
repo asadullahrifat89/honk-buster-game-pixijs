@@ -218,7 +218,7 @@ export abstract class Constants {
 	public static DEFAULT_GAME_VIEW_WIDTH: number = 1900;
 	public static DEFAULT_GAME_VIEW_HEIGHT: number = 940;
 
-	public static DEFAULT_CONSTRUCT_DELTA: number = 3;
+	public static DEFAULT_CONSTRUCT_DELTA: number = 4;
 	public static DEFAULT_CONSTRUCT_SPEED: number = 3 * Constants.DEFAULT_CONSTRUCT_DELTA;
 	public static DEFAULT_BLAST_SHRINK_SCALE: number = 0.8;
 	public static DEFAULT_DROP_SHADOW_DISTANCE: number = 40;
