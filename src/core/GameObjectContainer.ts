@@ -17,7 +17,7 @@ export class GameObjectContainer extends Container {
 	private hopDelay: number = 0;
 	private readonly hopDelayDefault: number = 10;
 	private hopSpeed: number = 7;
-	private readonly hopSpeedLimit: number = 7;
+	private hopIntensity: number = 7;
 
 	private dillyDallyDelay: number = 0;
 	private dillyDallyDelayDefault: number = 55;
@@ -226,10 +226,18 @@ export class GameObjectContainer extends Container {
 		}
 	}
 
+	setHoppingIntensity(intensity: number) {
+		this.hopIntensity = intensity;
+	}
+
 	setHopping() {
 		if (!this.isAwaitingHop) {
+
 			this.isAwaitingHop = true;
 			this.hopDelay = this.hopDelayDefault;
+
+			this.hopSpeed = this.hopIntensity;
+
 			let draw = Constants.getRandomNumber(0, 1);
 			this.hopAngle = draw == 0 ? -0.5 : 0.5;
 		}
@@ -251,7 +259,7 @@ export class GameObjectContainer extends Container {
 				this.y += this.hopSpeed;
 				this.angle += this.hopAngle;
 
-				if (this.hopSpeed <= this.hopSpeedLimit)
+				if (this.hopSpeed <= this.hopIntensity)
 					this.hopSpeed += 0.2;
 
 				if (this.hopDelay <= this.hopDelayDefault * -1) {

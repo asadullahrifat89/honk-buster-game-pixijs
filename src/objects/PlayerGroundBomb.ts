@@ -39,6 +39,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 			case PlayerGroundBombTemplate.DYNAMITE: {
 				this.playerGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_GROUND_BOMB && x.tag == PlayerGroundBombTemplate.DYNAMITE).map(x => x.uri);
 				this.blastDelayDefault = 45;
+				this.setHoppingIntensity(2);
 			} break;
 		}
 
@@ -133,7 +134,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 			} break;
 			case PlayerGroundBombTemplate.GRENADE: {
 				SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
-			} break;			
+			} break;
 			case PlayerGroundBombTemplate.DYNAMITE: {
 				SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
 			} break;
@@ -152,7 +153,7 @@ export class PlayerGroundBomb extends GameObjectContainer {
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 2;
 				this.scale.set(Constants.DEFAULT_BLAST_SHRINK_SCALE);
 				this.setTexture(Constants.getTextureFromUri(this.playerGroundBombBlastUris[this.uriIndex]));
-			} break;			
+			} break;
 			case PlayerGroundBombTemplate.DYNAMITE: {
 				//this.angle = 0;
 				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED / 3;
