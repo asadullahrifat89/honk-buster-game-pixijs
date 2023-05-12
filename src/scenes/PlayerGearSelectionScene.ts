@@ -140,7 +140,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 				ground_bombName = "Trash Bins";
 			} break;
 			case PlayerGroundBombTemplate.DYNAMITE: {
-				ground_bombTexture = "player_honk_bomb_sticky_2";
+				ground_bombTexture = "player_honk_bomb_dynamite_2";
 				ground_bombName = "Dynamites";
 			} break;
 			default: {
