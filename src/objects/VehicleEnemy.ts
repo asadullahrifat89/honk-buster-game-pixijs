@@ -3,7 +3,7 @@ import { VehicleBase } from './VehicleBase';
 import { Texture } from 'pixi.js';
 
 export class VehicleEnemy extends VehicleBase {
-	
+
 	public vehicleType: number = 0;
 
 	constructor(speed: number) {
@@ -14,8 +14,12 @@ export class VehicleEnemy extends VehicleBase {
 		this.isBlasting = false;
 		this.speed = Constants.getRandomNumber(2, 4);
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
+
+		if (!this.willHonk)
+			this.willHonk = !!Constants.getRandomNumber(0, 1);
+
 		this.isHonking = false;
-		this.filters = null;		
+		this.filters = null;
 
 		this.vehicleType = Constants.getRandomNumber(ConstructType.VEHICLE_ENEMY_SMALL, ConstructType.VEHICLE_ENEMY_LARGE);
 
@@ -23,14 +27,17 @@ export class VehicleEnemy extends VehicleBase {
 		switch (this.vehicleType) {
 			case ConstructType.VEHICLE_ENEMY_SMALL: {
 				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
-				break;
-			}
+			} break;
 			case ConstructType.VEHICLE_ENEMY_LARGE: {
 				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
-				break;
-			}
+
+			} break;
 			default: break;
 		}
+
+		var template = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == this.vehicleType && x.uri == uri);
+		if (template?.tag) // check if this vehicle has disabled honking by default
+			this.willHonk = false;
 
 		const texture = Texture.from(uri);
 		this.setTexture(texture);
@@ -56,6 +63,6 @@ export class VehicleEnemy extends VehicleBase {
 			this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 
 		this.setDestroyed();
-		this.setDillyDallySpeed(0);		
-	}	
+		this.setDillyDallySpeed(0);
+	}
 }
