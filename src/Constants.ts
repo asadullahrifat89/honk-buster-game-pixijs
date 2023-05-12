@@ -111,7 +111,7 @@ export enum ConstructType {
 
 	HONK,
 
-	CLOUD,
+	LEAF,
 
 	BLAST,
 	BANG,
@@ -269,9 +269,10 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_1"),
 		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM_PILLARS, "road_side_walk_bottom_pillars_1"),
 
-		new ConstructTemplate(ConstructType.CLOUD, "cloud_1"),
-		new ConstructTemplate(ConstructType.CLOUD, "cloud_2"),
-		new ConstructTemplate(ConstructType.CLOUD, "cloud_3"),
+		new ConstructTemplate(ConstructType.LEAF, "leaf_1"),
+		new ConstructTemplate(ConstructType.LEAF, "leaf_2"),
+		new ConstructTemplate(ConstructType.LEAF, "leaf_3"),
+		new ConstructTemplate(ConstructType.LEAF, "leaf_4"),
 
 		new ConstructTemplate(ConstructType.VEHICLE_BOSS, "vehicle_boss_1"),
 		new ConstructTemplate(ConstructType.VEHICLE_BOSS, "vehicle_boss_2"),
@@ -298,8 +299,6 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_5"),
 
 		new ConstructTemplate(ConstructType.HONK, "honk_1"),
-		//new ConstructTemplate(ConstructType.HONK, "honk_2"),
-		//new ConstructTemplate(ConstructType.HONK, "honk_3"),
 
 		new ConstructTemplate(ConstructType.PLAYER_RIDE, "player_1_character"),
 		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, "player_balloon_1_idle"),
