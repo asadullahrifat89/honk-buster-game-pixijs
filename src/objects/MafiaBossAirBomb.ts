@@ -3,7 +3,7 @@ import { SoundManager } from '../managers/SoundManager';
 import { MafiaBoss } from './MafiaBoss';
 import { AirBombBase } from './AirBombBase';
 
-export class MafiaBossRocket extends AirBombBase {
+export class MafiaBossAirBomb extends AirBombBase {
 
 	constructor(speed: number) {
 		super(speed);
