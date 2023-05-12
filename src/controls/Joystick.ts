@@ -219,9 +219,9 @@ export class Joystick extends Container {
 			.on('pointermove', onDragMove);
 	}
 
-	protected getVelocity(target: Point, power: number): { x: number, y: number } {
+	protected getVelocity(newPosition: Point, power: number): { x: number, y: number } {
 		let startPosition = new Point(0, 0);
-		const angle = Math.atan2(target.y - startPosition.y, target.x - startPosition.x);
+		const angle = Math.atan2(newPosition.y - startPosition.y, newPosition.x - startPosition.x);
 		return {
 			x: Math.cos(angle) * (Constants.DEFAULT_CONSTRUCT_SPEED / 2) * power,
 			y: Math.sin(angle) * (Constants.DEFAULT_CONSTRUCT_SPEED / 2) * power
