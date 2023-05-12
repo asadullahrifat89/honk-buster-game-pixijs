@@ -2,7 +2,7 @@
 import { AirBombBase } from './AirBombBase';
 
 
-export class SeekingAirBombBase extends AirBombBase {
+export class AirBombBaseSeekingBall extends AirBombBase {
 
 	public hurlingTarget: Rectangle = new Rectangle();
 	public shootingTarget: Point = new Point();
