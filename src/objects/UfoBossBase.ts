@@ -8,7 +8,7 @@ export class UfoBossBase extends GameObjectContainer {
 
 	public isAttacking: boolean = false;
 
-	private readonly grace: number = 7;
+	//private readonly grace: number = 7;
 	private readonly lag: number = 125;
 
 	private healthLossRecoveryDelay: number = 0;
@@ -69,7 +69,7 @@ export class UfoBossBase extends GameObjectContainer {
 		let targetY = target.y + target.height / 2;
 
 		// move up
-		if (targetY < bossY - this.grace) {
+		if (targetY < bossY /*- this.grace*/) {
 			var distance = Math.abs(targetY - bossY);
 			let speed = this.getFollowingSpeed(distance);
 
@@ -77,7 +77,7 @@ export class UfoBossBase extends GameObjectContainer {
 		}
 
 		// move down
-		if (targetY > bossY + this.grace) {
+		if (targetY > bossY /*+ this.grace*/) {
 			var distance = Math.abs(targetY - bossY);
 			let speed = this.getFollowingSpeed(distance);
 
@@ -85,7 +85,7 @@ export class UfoBossBase extends GameObjectContainer {
 		}
 
 		// move left
-		if (targetX < bossX - this.grace) {
+		if (targetX < bossX /*- this.grace*/) {
 			var distance = Math.abs(targetX - bossX);
 			let speed = this.getFollowingSpeed(distance);
 
@@ -93,7 +93,7 @@ export class UfoBossBase extends GameObjectContainer {
 		}
 
 		// move right
-		if (targetX > bossX + this.grace) {
+		if (targetX > bossX /*+ this.grace*/) {
 			var distance = Math.abs(targetX - bossX);
 			let speed = this.getFollowingSpeed(distance);
 

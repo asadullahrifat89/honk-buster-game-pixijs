@@ -8,7 +8,7 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 	public followingTarget: Rectangle = new Rectangle();
 	public shootingTarget: Point = new Point();
 
-	private readonly grace: number = 7;
+	private readonly grace: number = 10;
 	private readonly lag: number = 50;
 	private velocity: { x: number, y: number } = { x: 0, y: 0 };
 
@@ -116,7 +116,7 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 		let rocketY = top + this.height / 2;
 
 		// move up
-		if (targetY < rocketY - this.grace) {
+		if (targetY - this.grace < rocketY) {
 			var distance = Math.abs(targetY - rocketY);
 			let speed = this.getFollowingSpeed(distance);
 
@@ -124,7 +124,7 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 		}
 
 		// move down
-		if (targetY > rocketY + this.grace) {
+		if (targetY + this.grace > rocketY) {
 			var distance = Math.abs(targetY - rocketY);
 			let speed = this.getFollowingSpeed(distance);
 
@@ -132,7 +132,7 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 		}
 
 		// move left
-		if (targetX < rocketX - this.grace) {
+		if (targetX - this.grace < rocketX) {
 			var distance = Math.abs(targetX - rocketX);
 			let speed = this.getFollowingSpeed(distance);
 
@@ -140,7 +140,7 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 		}
 
 		// move right
-		if (targetX > rocketX + this.grace) {
+		if (targetX + this.grace > rocketX) {
 			var distance = Math.abs(targetX - rocketX);
 			let speed = this.getFollowingSpeed(distance);
 
