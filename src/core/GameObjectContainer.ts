@@ -299,10 +299,8 @@ export class GameObjectContainer extends Container {
 		this.angle = angle;
 	}
 
-	rotate(
-		rotationDirection: RotationDirection = RotationDirection.Forward,
-		threadhold: number = 0,
-		rotationSpeed: number = 0.1) {
+	rotate(rotationDirection: RotationDirection = RotationDirection.Forward, threadhold: number = 0, rotationSpeed: number = 0.1) {
+
 		switch (rotationDirection) {
 			case RotationDirection.Forward:
 				{
@@ -344,7 +342,7 @@ export class GameObjectContainer extends Container {
 	}
 
 	getCloseBounds(): Rectangle {
-		let bounds = this.getBounds(true);		
+		let bounds = this.getBounds(true);
 		return new Rectangle(bounds.left + this.width / 4, bounds.top + this.height / 4, bounds.right - this.width / 4, bounds.bottom - this.height / 4);
 	}
 

@@ -37,6 +37,7 @@ import { ZombieBossAirBombCube } from "../objects/ZombieBossAirBombCube";
 import { MessageBubble } from "../controls/MessageBubble";
 import { RoadMark } from "../objects/RoadMark";
 import { GrandExplosionRing } from "../objects/GrandExplosionRing";
+import { Leaf } from "../objects/Leaf";
 
 
 export class GamePlayScene extends Container implements IScene {
@@ -288,6 +289,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnMessageBubbles();
 
 		//this.spawnSideWalkPillarsBottom();
+		this.spawnLeafs();
 	}
 
 	private generateGameObjects() {
@@ -317,8 +319,6 @@ export class GamePlayScene extends Container implements IScene {
 		this.generateHealthPickups();
 		this.generatePowerUpPickups();
 
-		//this.generateClouds();
-
 		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
 			this.generateSideWalksBottom();
 			//this.generateSideWalkPillarsBottom();
@@ -327,6 +327,8 @@ export class GamePlayScene extends Container implements IScene {
 		this.generateBossDeathExplosions();
 		this.generateBossLowHealthExplosions();
 		this.generatePlayerLowHealthExplosions();
+
+		this.generateLeafs();
 	}
 
 	private animateGameObjects() {
@@ -377,9 +379,10 @@ export class GamePlayScene extends Container implements IScene {
 			//this.animateSideWalkPillarsBottom();
 		}
 
-		//this.animateClouds();
 		this.animateOnScreenMessage();
 		this.animateMessageBubbles();
+
+		this.animateLeafs();
 	}
 
 	//#endregion
@@ -977,81 +980,72 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region Clouds
+	//#region Leafs
 
-	//private cloudSizeWidth: number = 512 / 2;
-	//private cloudSizeHeight: number = 350 / 2;
+	private leafSize = { width: 256 / 2, height: 256 / 2 };
+	private leafGameObjects: Array<Leaf> = [];
 
-	//private cloudGameObjects: Array<GameObjectContainer> = [];
+	private leafPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private leafPopDelay: number = 0;
 
-	//private cloudPopDelayDefault: number = 70 / Constants.DEFAULT_CONSTRUCT_DELTA;
-	//private cloudPopDelay: number = 0;
+	private spawnLeafs() {
 
-	//private spawnClouds() {
+		for (let j = 0; j < 5; j++) {
 
-	//	for (let j = 0; j < 5; j++) {
+			const leaf: Leaf = new Leaf(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2));
+			leaf.disableRendering();
 
-	//		const gameObject: Cloud = new Cloud(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2));
-	//		gameObject.disableRendering();
-	//		//gameObject.width = this.cloudSizeWidth;
-	//		//gameObject.height = this.cloudSizeHeight;
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.LEAF));
+			sprite.x = 0;
+			sprite.y = 0;
+			sprite.width = this.leafSize.width;
+			sprite.height = this.leafSize.height;
+			leaf.addChild(sprite);
 
-	//		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.CLOUD));
+			leaf.setHoverSpeed(0.6);
+			leaf.setDillyDallySpeed(0.6);
 
-	//		sprite.x = 0;
-	//		sprite.y = 0;
-	//		sprite.width = this.cloudSizeWidth;
-	//		sprite.height = this.cloudSizeHeight;
-	//		//sprite.filters = [new BlurFilter(4, 10)];
-	//		//cloudContainer.filters = [new BlurFilter(2, 10)];
-	//		gameObject.addChild(sprite);
+			this.leafGameObjects.push(leaf);
+			this.sceneContainer.addChild(leaf);
+		}
+	}
 
-	//		this.cloudGameObjects.push(gameObject);
-	//		this._sceneContainer.addChild(gameObject);
-	//	}
-	//}
+	private generateLeafs() {
 
-	//private generateClouds() {
+		this.leafPopDelay -= 0.1;
 
-	//	this.cloudPopDelay -= 0.1;
+		if (this.leafPopDelay < 0) {
 
-	//	if (this.cloudPopDelay < 0) {
+			var leaf = this.leafGameObjects.find(x => x.isAnimating == false);
 
-	//		var gameObject = this.cloudGameObjects.find(x => x.isAnimating == false);
+			if (leaf) {
+				leaf.reset();
+				leaf.reposition();
+				leaf.enableRendering();
 
-	//		if (gameObject) {
+				this.leafPopDelay = Constants.getRandomNumber(this.leafPopDelayDefault, this.leafPopDelayDefault + 20);
+			}
+		}
+	}
 
-	//			gameObject.setTexture(Constants.getRandomTexture(ConstructType.CLOUD));
-	//			gameObject.speed = Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2);
+	private animateLeafs() {
 
-	//			var cloud = gameObject as Cloud;
-	//			cloud.reposition();
+		var animatingLeafs = this.leafGameObjects.filter(x => x.isAnimating == true);
 
-	//			gameObject.enableRendering();
+		if (animatingLeafs) {
 
-	//			this.cloudPopDelay = this.cloudPopDelayDefault;
-	//		}
-	//	}
-	//}
+			animatingLeafs.forEach(leaf => {
+				leaf.hover();
+				leaf.dillyDally();
+				leaf.rotate(RotationDirection.Forward, 0, 0.6);
+				leaf.moveDownRight();
 
-	//private animateClouds() {
-
-	//	var animatingClouds = this.cloudGameObjects.filter(x => x.isAnimating == true);
-
-	//	if (animatingClouds) {
-
-	//		animatingClouds.forEach(gameObject => {
-
-	//			gameObject.hover();
-	//			gameObject.moveDownRight();
-
-	//			if (gameObject.x - gameObject.width > Constants.DEFAULT_GAME_VIEW_WIDTH || gameObject.y - gameObject.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
-	//				gameObject.disableRendering();
-
-	//			}
-	//		});
-	//	}
-	//}
+				if (leaf.x - leaf.width > Constants.DEFAULT_GAME_VIEW_WIDTH || leaf.y - leaf.height > Constants.DEFAULT_GAME_VIEW_HEIGHT) {
+					leaf.disableRendering();
+				}
+			});
+		}
+	}
 
 	//#endregion
 
@@ -2205,13 +2199,11 @@ export class GamePlayScene extends Container implements IScene {
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY));
-
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.ufoEnemySize.width;
 			sprite.height = this.ufoEnemySize.height;
 			sprite.anchor.set(0.5, 0.5);
-
 			gameObject.addChild(sprite);
 
 			this.ufoEnemyGameObjects.push(gameObject);

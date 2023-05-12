@@ -20,6 +20,11 @@ export const manifest: ResolverManifest = {
 				"play_button": "./images/play_button.png",
 				"stop_button": "./images/stop_button.png",
 
+				"leaf_1": "./images/leaf_1.png",
+				"leaf_2": "./images/leaf_2.png",
+				"leaf_3": "./images/leaf_3.png",
+				"leaf_4": "./images/leaf_4.png",
+
 				"character_maleAdventurer_talk": "./images/character_maleAdventurer_talk.png",
 				"character_maleAdventurer_interact": "./images/character_maleAdventurer_interact.png",
 				"character_maleAdventurer_cheer0": "./images/character_maleAdventurer_cheer0.png",
@@ -38,9 +43,7 @@ export const manifest: ResolverManifest = {
 
 				"health_pickup": "./images/health_pickup.png",
 
-				"honk_1": "./images/honk_1.png",
-				//"honk_2": "./images/honk_2.png",
-				//"honk_3": "./images/honk_3.png",
+				"honk_1": "./images/honk_1.png",				
 
 				"joystick": "./images/joystick.png",
 				"joystick_handle": "./images/joystick_handle.png",
@@ -110,11 +113,8 @@ export const manifest: ResolverManifest = {
 				"road_marks": "./images/road_marks.png",
 
 				"road_side_walk_top_1": "./images/road_side_walk_top_1.png",
-				//"road_side_walk_top_2": "./images/road_side_walk_top_2.png",
 
 				"road_side_walk_bottom_1": "./images/road_side_walk_bottom_1.png",
-				//"road_side_walk_bottom_2": "./images/road_side_walk_bottom_2.png",
-
 				"road_side_walk_bottom_pillars_1": "./images/road_side_walk_bottom_pillars_1.png",
 
 				"ufo_enemy_1": "./images/ufo_enemy_1.png",
