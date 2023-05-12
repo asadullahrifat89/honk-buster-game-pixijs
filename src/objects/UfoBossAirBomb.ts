@@ -4,7 +4,7 @@ import { AirBombBase } from './AirBombBase';
 import { UfoBoss } from './UfoBoss';
 
 
-export class UfoBossRocket extends AirBombBase {
+export class UfoBossAirBomb extends AirBombBase {
 
 	constructor(speed: number) {
 		super(speed);
