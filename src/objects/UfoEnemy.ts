@@ -1,25 +1,26 @@
-﻿import { Constants, ConstructType, SoundType } from '../Constants';
+﻿import { Constants, ConstructType, RotationDirection, SoundType } from '../Constants';
 import { SoundManager } from '../managers/SoundManager';
 import { VehicleBase } from './VehicleBase';
 
 
 export class UfoEnemy extends VehicleBase {
 
-	public isDestructionComplete: boolean = false;
+	public isDeflectionComplete: boolean = false;
 
 	private attackDelay: number = 0;
 	private destructionDelay: number = 0;
-	private destructionDelayDefault: number = 40;	
+	private destructionDelayDefault: number = 50;
 
 	constructor(speed: number) {
 		super(speed);
 	}
 
 	reset() {
-		this.isDestructionComplete = false;
+		this.isDeflectionComplete = false;
 		this.health = this.hitPoint * Constants.getRandomNumber(0, 3);
 		this.scale.set(1);
 		this.alpha = 1;
+		this.angle = 0;
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
 		this.isHonking = false;
 		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_ENEMY));
@@ -55,12 +56,14 @@ export class UfoEnemy extends VehicleBase {
 	setDestruction() {
 		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED;
 		this.destructionDelay = this.destructionDelayDefault;
-		this.isDestructionComplete = false;
+		this.isDeflectionComplete = false;
 	}
 
-	awaitDestruction() {
-		if (!this.isDestructionComplete) {
+	deflect() {
+		if (!this.isDeflectionComplete) {
 			this.destructionDelay--;
+
+			this.rotate(RotationDirection.Backward, 0, 1);
 
 			if (this.speed > 0) {
 				this.speed -= 0.2;
@@ -69,7 +72,7 @@ export class UfoEnemy extends VehicleBase {
 			}
 
 			if (this.destructionDelay <= 0) {
-				this.isDestructionComplete = true;
+				this.isDeflectionComplete = true;
 			}
 		}
 	}

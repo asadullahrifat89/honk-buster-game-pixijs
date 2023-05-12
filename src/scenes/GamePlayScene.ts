@@ -2185,7 +2185,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region UfoEnemys
 
-	private ufoEnemySize = { width: 165, height: 165 };
+	private ufoEnemySize = { width: 160, height: 160 };
 	private ufoEnemyGameObjects: Array<UfoEnemy> = [];
 
 	private readonly ufoEnemyPopDelayDefault: number = 35 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -2254,8 +2254,8 @@ export class GamePlayScene extends Container implements IScene {
 				if (ufoEnemy.isDead()) {
 					ufoEnemy.fade();
 
-					if (!ufoEnemy.isDestructionComplete)
-						ufoEnemy.awaitDestruction();
+					if (!ufoEnemy.isDeflectionComplete)
+						ufoEnemy.deflect();
 				}
 				else {
 					ufoEnemy.hover();
