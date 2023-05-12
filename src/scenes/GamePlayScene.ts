@@ -985,7 +985,7 @@ export class GamePlayScene extends Container implements IScene {
 	private leafSize = { width: 256 / 2, height: 256 / 2 };
 	private leafGameObjects: Array<Leaf> = [];
 
-	private leafPopDelayDefault: number = 40 / Constants.DEFAULT_CONSTRUCT_DELTA;
+	private leafPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private leafPopDelay: number = 0;
 
 	private spawnLeafs() {
@@ -999,7 +999,7 @@ export class GamePlayScene extends Container implements IScene {
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.leafSize.width;
-			sprite.height = this.leafSize.height;
+			sprite.height = this.leafSize.height;			
 			leaf.addChild(sprite);
 
 			this.leafGameObjects.push(leaf);
