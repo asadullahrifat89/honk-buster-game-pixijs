@@ -55,7 +55,7 @@ export class GamePlayScene extends Container implements IScene {
 	private onScreenMessage: OnScreenMessage;
 
 	//TODO: reset these to the default values after testing
-	private readonly ufoEnemyRelease: { point: number, limit: number } = { point: 5, limit: 15 }; // 35
+	private readonly ufoEnemyRelease: { point: number, limit: number } = { point: 2, limit: 15 }; // 35
 	private readonly vehicleBossRelease: { point: number, limit: number } = { point: 25, limit: 15 }; // 25
 	private readonly ufoBossRelease: { point: number, limit: number } = { point: 50, limit: 15 }; // 50
 	private readonly zombieBossRelease: { point: number, limit: number } = { point: 100, limit: 15 }; // 100
@@ -2188,7 +2188,7 @@ export class GamePlayScene extends Container implements IScene {
 			const armorSphere: GameObjectContainer = new GameObjectContainer();
 			armorSphere.disableRendering();
 
-			const circle = new Graphics().lineStyle(7, 0xffffff).beginFill(0x00d8de).drawCircle(0, 0, 110).endFill();
+			const circle = new Graphics().lineStyle(7, 0xffffff).beginFill(0xf9b233).drawCircle(0, 0, 110).endFill();
 			armorSphere.addChild(circle);
 			armorSphere.alpha = 0.4;
 
