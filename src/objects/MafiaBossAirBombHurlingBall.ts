@@ -5,7 +5,7 @@ import { SeekingRocketBase } from './SeekingRocketBase';
 import { SoundManager } from '../managers/SoundManager';
 
 
-export class MafiaBossRocketBullsEye extends SeekingRocketBase {
+export class MafiaBossAirBombHurlingBall extends SeekingRocketBase {
 
 	constructor(speed: number) {
 		super(speed);

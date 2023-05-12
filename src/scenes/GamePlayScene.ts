@@ -25,7 +25,7 @@ import { HealthPickup } from "../objects/HealthPickup";
 import { Honk } from "../objects/Honk";
 import { MafiaBoss } from "../objects/MafiaBoss";
 import { MafiaBossRocket } from "../objects/MafiaBossRocket";
-import { MafiaBossRocketBullsEye } from "../objects/MafiaBossRocketBullsEye";
+import { MafiaBossAirBombHurlingBall } from "../objects/MafiaBossAirBombHurlingBall";
 import { PlayerRide } from "../objects/PlayerRide";
 import { PlayerGroundBomb } from "../objects/PlayerGroundBomb";
 import { Explosion } from "../objects/Explosion";
@@ -273,7 +273,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.spawnMafiaBosss();
 		this.spawnMafiaBossRockets();
-		this.spawnMafiaBossRocketBullsEyes();
+		this.spawnMafiaBossAirBombHurlingBalls();
 
 		this.spawnUfoEnemyRockets();
 		this.spawnUfoEnemys();
@@ -310,7 +310,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.generateMafiaBoss();
 		this.generateMafiaBossRockets();
-		this.generateMafiaBossRocketBullsEyes();
+		this.generateMafiaBossAirBombHurlingBalls();
 
 		this.generateUfoEnemys();
 
@@ -362,7 +362,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.animateMafiaBoss();
 		this.animateMafiaBossRockets();
-		this.animateMafiaBossRocketBullsEyes();
+		this.animateMafiaBossAirBombHurlingBalls();
 
 		this.animateUfoEnemys();
 		this.animateUfoEnemyRockets();
@@ -3775,19 +3775,19 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#endregion
 
-	//#region MafiaBossRocketBullsEyes
+	//#region MafiaBossAirBombHurlingBalls
 
 	private mafiaBossRocketBullsEyeSize = { width: 75, height: 75 };
-	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossRocketBullsEye> = [];
+	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossAirBombHurlingBall> = [];
 
 	private readonly mafiaBossRocketBullsEyePopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;
 	private mafiaBossRocketBullsEyePopDelay: number = 0;
 
-	spawnMafiaBossRocketBullsEyes() {
+	spawnMafiaBossAirBombHurlingBalls() {
 
 		for (let j = 0; j < 3; j++) {
 
-			const gameObject: MafiaBossRocketBullsEye = new MafiaBossRocketBullsEye(Constants.DEFAULT_CONSTRUCT_SPEED);
+			const gameObject: MafiaBossAirBombHurlingBall = new MafiaBossAirBombHurlingBall(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
 			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_HURLING_BALLS));
@@ -3807,7 +3807,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	generateMafiaBossRocketBullsEyes() {
+	generateMafiaBossAirBombHurlingBalls() {
 
 		let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 
@@ -3833,13 +3833,13 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	animateMafiaBossRocketBullsEyes() {
+	animateMafiaBossAirBombHurlingBalls() {
 
-		let animatingMafiaBossRocketBullsEyes = this.mafiaBossRocketBullsEyeGameObjects.filter(x => x.isAnimating == true);
+		let animatingMafiaBossAirBombHurlingBalls = this.mafiaBossRocketBullsEyeGameObjects.filter(x => x.isAnimating == true);
 
-		if (animatingMafiaBossRocketBullsEyes) {
+		if (animatingMafiaBossAirBombHurlingBalls) {
 
-			animatingMafiaBossRocketBullsEyes.forEach(mafiaBossRocketBullsEye => {
+			animatingMafiaBossAirBombHurlingBalls.forEach(mafiaBossRocketBullsEye => {
 
 				if (mafiaBossRocketBullsEye.isBlasting) {
 					mafiaBossRocketBullsEye.shrink();
