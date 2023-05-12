@@ -18,7 +18,7 @@ export class SoundObjectPlayer {
 
 	play(): number {
 		this.soundObjects.forEach(audioObject => {
-			if (audioObject.isPlaying() && audioObject.isLooping())
+			if (audioObject.isPlaying() || audioObject.isLooping())
 				audioObject.stop();
 		});
 
