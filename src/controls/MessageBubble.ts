@@ -51,21 +51,8 @@ export class MessageBubble extends GameObjectContainer {
 	}
 
 	reposition(source: GameObjectContainer, message: string, fontSize: number = 26) {
-		this.source = source;
-		this.messageText.text = message;
-		if (fontSize != 26) {
-			this.messageText.style = {
-				fontFamily: Constants.GAME_DEFAULT_FONT,
-				align: "center",
-				fill: Constants.MESSAGE_BOX_TEXT_COLOR,
-				fontSize: fontSize
-			};
-		}
-		this.messageContainer.removeChild(this.messageGraphics);
-		this.messageGraphics.destroy();
-		this.messageGraphics = this.drawMessageGraphics();
-		this.messageContainer.addChildAt(this.messageGraphics, 0);
-
+		this.source = source;		
+		this.setMessage(message, fontSize);
 		this.move();
 	}
 
