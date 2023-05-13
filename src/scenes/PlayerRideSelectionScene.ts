@@ -119,7 +119,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		rideHealth.setPosition(this.uiContainer.width / 2 - rideHealth.width * 2, this.uiContainer.height - rideHealth.height * 2.5);
 		this.uiContainer.addChild(rideHealth);
 
-		const rideSpeed = new LabeledIcon("joystick", 50, 50, "?")
+		const rideSpeed = new LabeledIcon("speed", 50, 50, "?")
 		rideSpeed.setPosition(this.uiContainer.width / 2 + rideSpeed.width * 1, this.uiContainer.height - rideSpeed.height * 2.5);
 		this.uiContainer.addChild(rideSpeed);
 
