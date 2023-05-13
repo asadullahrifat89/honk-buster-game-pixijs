@@ -1586,7 +1586,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerGroundBombs
 
-	private playerGroundBombSize = { width: 65, height: 65 };
+	private playerGroundBombSize = { width: 60, height: 60 };
 	private playerGroundBombGameObjects: Array<PlayerGroundBomb> = [];
 
 	private readonly playerAmmoBeltSize: number = 3 + Constants.ATTACK_LEVEL_MAX;
