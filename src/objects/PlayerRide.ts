@@ -202,14 +202,14 @@ export class PlayerRide extends GameObjectContainer {
 
 			switch (this.playerRideTemplate) {
 				case PlayerRideTemplate.AIR_BALLOON: {
-					this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * controller.power;
+					this.speed = controller.velocity.x;
 				} break;
 				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
-					this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 1) * controller.power;
+					this.speed = controller.velocity.x + 1;
 					this.animateChopperBlades();
 				} break;
 				case PlayerRideTemplate.SPHERE: { // sphere grants extra speed
-					this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 1) * controller.power;
+					this.speed = controller.velocity.x + 1;
 				} break;
 				default: break;
 			}

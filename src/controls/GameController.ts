@@ -1,5 +1,5 @@
 ﻿import { Container, Texture } from 'pixi.js';
-import { SoundType } from '../Constants';
+import { Constants, SoundType } from '../Constants';
 import { GameObjectSprite } from '../core/GameObjectSprite';
 import { SceneManager } from '../managers/SceneManager';
 import { SoundManager } from '../managers/SoundManager';
@@ -328,6 +328,11 @@ export class GameController extends Container {
 	private increasePowerOnKeyboardPress() {
 		if (this.power < 1)
 			this.power += 0.1;
+
+		this.velocity = {
+			x: Constants.DEFAULT_CONSTRUCT_SPEED * this.power,
+			y: Constants.DEFAULT_CONSTRUCT_SPEED * this.power
+		}
 
 		//console.log(this.power);
 	}
