@@ -62,9 +62,9 @@ export enum PlayerRideStance {
 }
 
 export enum PlayerRideTemplate {
-	AIR_BALLOON,
-	CHOPPER,
-	SPHERE,
+	AIR_BALLOON = 1,
+	CHOPPER = 2,
+	SPHERE = 3,
 }
 
 export enum PlayerGroundBombTemplate {

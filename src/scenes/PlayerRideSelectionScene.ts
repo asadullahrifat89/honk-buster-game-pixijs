@@ -2,7 +2,7 @@
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
-import { Constants} from "../Constants";
+import { Constants } from "../Constants";
 import { TextureType, PlayerRideTemplate, SoundType } from "../Enums";
 import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
@@ -10,6 +10,7 @@ import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
 import { PlayerGearSelectionScene } from "./PlayerGearSelectionScene";
 import { SelectionButton } from "../controls/SelectionButton";
+import { LabeledIcon } from "../controls/LabeledIcon";
 
 export class PlayerRideSelectionScene extends Container implements IScene {
 
@@ -58,6 +59,8 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			sphere_button.unselect();
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.AIR_BALLOON;
 			SoundManager.play(SoundType.ITEM_SELECT);
+
+			rideHealth.setLabel((Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
 		});
 
 		air_balloon_button.setPosition((this.uiContainer.width / 2 - air_balloon_button.width * 2), (this.uiContainer.height / 2 - air_balloon_button.height / 2) + 10);
@@ -78,6 +81,8 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.CHOPPER;
 			SoundManager.play(SoundType.ITEM_SELECT);
 
+			rideHealth.setLabel((Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
+
 		}, Constants.CHOPPER_UNLOCKED);
 		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_button.width / 2.5), (this.uiContainer.height / 2 - chopper_button.height / 2) + 10);
 		this.uiContainer.addChild(chopper_button);
@@ -97,11 +102,17 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.SPHERE;
 			SoundManager.play(SoundType.ITEM_SELECT);
 
+			rideHealth.setLabel((Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
+
 		}, Constants.SPHERE_UNLOCKED);
 		sphere_button.setPosition((this.uiContainer.width / 2 + sphere_button.width), (this.uiContainer.height / 2 - sphere_button.height / 2) + 10);
 		this.uiContainer.addChild(sphere_button);
 
 		//#endregion
+
+		const rideHealth = new LabeledIcon("health_pickup", 50, 50, "?")
+		rideHealth.setPosition(this.uiContainer.width / 2 - rideHealth.width / 2, this.uiContainer.height - rideHealth.height * 2.5);
+		this.uiContainer.addChild(rideHealth);
 
 		const button = new Button(() => {
 			if (button.getIsEnabled()) {
