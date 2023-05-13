@@ -1,6 +1,6 @@
 ﻿import { GrayscaleFilter } from "@pixi/filter-grayscale";
 import { Container, Text, BlurFilter, Texture } from "pixi.js";
-import { Constants, ConstructType, SoundType } from "../Constants";
+import { Constants, TextureType, SoundType } from "../Constants";
 import { Button } from "../controls/Button";
 import { MessageBubble } from "../controls/MessageBubble";
 import { OnScreenMessage } from "../controls/OnScreenMessage";
@@ -41,7 +41,7 @@ export class GameOverScene extends Container implements IScene {
 		this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
 		this.addChild(this.uiContainer);
 
-		const bg_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
+		const bg_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.GAME_COVER_IMAGE));
 		bg_sprite.x = 0;
 		bg_sprite.y = 0;
 		bg_sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;
@@ -101,7 +101,7 @@ export class GameOverScene extends Container implements IScene {
 		const health = this.health;
 		health.filters = [new GrayscaleFilter(), new BlurFilter()];
 
-		const health_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP));
+		const health_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.HEALTH_PICKUP));
 		health_sprite.width = 256 / 3;
 		health_sprite.height = 256 / 3;
 		health_sprite.x = 0;
@@ -136,7 +136,7 @@ export class GameOverScene extends Container implements IScene {
 		const attack = this.attack;
 		attack.filters = [new GrayscaleFilter(), new BlurFilter()];
 
-		const attack_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_GROUND_BOMB));
+		const attack_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.PLAYER_GROUND_BOMB));
 		attack_sprite.width = 256 / 3;
 		attack_sprite.height = 256 / 3;
 		attack_sprite.x = 0;
@@ -204,7 +204,7 @@ export class GameOverScene extends Container implements IScene {
 					this.health.pop();
 
 					if (!this.health.isAwaitingPop) {
-						this.showUnlockMessage("+" + (5 * Constants.HEALTH_LEVEL_MAX).toString() + " Health Activated!", Constants.getRandomTexture(ConstructType.HEALTH_PICKUP));
+						this.showUnlockMessage("+" + (5 * Constants.HEALTH_LEVEL_MAX).toString() + " Health Activated!", Constants.getRandomTexture(TextureType.HEALTH_PICKUP));
 					}
 				}
 				else if (Constants.ATTACK_LEVEL_MAX > 0 && this.attack.isAwaitingPop) {
@@ -217,7 +217,7 @@ export class GameOverScene extends Container implements IScene {
 					this.attack.pop();
 
 					if (!this.attack.isAwaitingPop) {
-						this.showUnlockMessage("+" + Constants.ATTACK_LEVEL_MAX.toString() + " Bombs Activated!", Constants.getRandomTexture(ConstructType.PLAYER_AIR_BOMB));
+						this.showUnlockMessage("+" + Constants.ATTACK_LEVEL_MAX.toString() + " Bombs Activated!", Constants.getRandomTexture(TextureType.PLAYER_AIR_BOMB));
 					}
 				}
 				else if (Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL && !Constants.CHOPPER_UNLOCKED) {

@@ -1,4 +1,4 @@
-﻿import { Constants, ConstructType } from '../Constants';
+﻿import { Constants, TextureType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { SceneManager } from '../managers/SceneManager';
 
@@ -11,7 +11,7 @@ export class Leaf extends GameObjectContainer {
 
 	reset() {
 		this.angle = 0;
-		this.setTexture(Constants.getRandomTexture(ConstructType.LEAF));
+		this.setTexture(Constants.getRandomTexture(TextureType.LEAF));
 		this.speed = Constants.getRandomNumber(Constants.DEFAULT_CONSTRUCT_SPEED + 3, Constants.DEFAULT_CONSTRUCT_SPEED + 5);
 	}
 

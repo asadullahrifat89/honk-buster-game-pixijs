@@ -1,5 +1,5 @@
 ﻿import { SpriteSheetJson, Texture } from "pixi.js";
-import { ConstructTemplate } from "./core/ConstructTemplate";
+import { TextureTemplate } from "./core/TextureTemplate";
 import { GameObjectContainer } from "./core/GameObjectContainer";
 import { SoundTemplate } from "./core/SoundTemplate";
 
@@ -73,7 +73,7 @@ export enum PlayerRideTemplate {
 
 export enum PlayerGroundBombTemplate {
 	TRASH_BIN,
-	GRENADE,	
+	GRENADE,
 	DYNAMITE,
 }
 
@@ -86,81 +86,80 @@ export enum PlayerAirBombTemplate {
 
 
 
-export enum ConstructType {
-    NONE,
-    GAME_COVER_IMAGE,
+export enum TextureType {
+	NONE,
+	GAME_COVER_IMAGE,
 
-    PLAYER_RIDE,
-    PLAYER_RIDE_IDLE,
-    PLAYER_RIDE_ATTACK,
-    PLAYER_RIDE_WIN,
-    PLAYER_RIDE_HIT,
+	PLAYER_RIDE,
+	PLAYER_RIDE_IDLE,
+	PLAYER_RIDE_ATTACK,
+	PLAYER_RIDE_WIN,
+	PLAYER_RIDE_HIT,
 
-    PLAYER_AIR_BOMB,
-    PLAYER_AIR_BOMB_HURLING_BALLS,
-    PLAYER_GROUND_BOMB,
+	PLAYER_AIR_BOMB,
+	PLAYER_AIR_BOMB_HURLING_BALLS,
+	PLAYER_GROUND_BOMB,
 
-    VEHICLE_ENEMY_SMALL,
-    VEHICLE_ENEMY_LARGE,
-    VEHICLE_BOSS,
+	VEHICLE_ENEMY_SMALL,
+	VEHICLE_ENEMY_LARGE,
+	VEHICLE_BOSS,
 
-    VEHICLE_BOSS_AIR_BOMB,
+	VEHICLE_BOSS_AIR_BOMB,
 
-    ROAD_MARK,
-    ROAD_SIDE_WALK_TOP,
-    ROAD_SIDE_WALK_BOTTOM,
-    ROAD_SIDE_WALK_BOTTOM_PILLARS,
+	ROAD_MARK,
+	ROAD_SIDE_WALK_TOP,
+	ROAD_SIDE_WALK_BOTTOM,
+	ROAD_SIDE_WALK_BOTTOM_PILLARS,
 
-    HONK,
+	HONK,
 
-    LEAF,
+	LEAF,
 
-    BLAST,
-    BANG,
+	BLAST,
 
-    DROP_SHADOW,
+	CAST_SHADOW,
 
-    UFO_BOSS,
-    UFO_BOSS_IDLE,
-    UFO_BOSS_HIT,
-    UFO_BOSS_WIN,
+	UFO_BOSS,
+	UFO_BOSS_IDLE,
+	UFO_BOSS_HIT,
+	UFO_BOSS_WIN,
 
-    MAFIA_BOSS,
-    MAFIA_BOSS_IDLE,
-    MAFIA_BOSS_HIT,
-    MAFIA_BOSS_WIN,
+	MAFIA_BOSS,
+	MAFIA_BOSS_IDLE,
+	MAFIA_BOSS_HIT,
+	MAFIA_BOSS_WIN,
 
-    ZOMBIE_BOSS,
-    ZOMBIE_BOSS_IDLE,
-    ZOMBIE_BOSS_HIT,
-    ZOMBIE_BOSS_WIN,
+	ZOMBIE_BOSS,
+	ZOMBIE_BOSS_IDLE,
+	ZOMBIE_BOSS_HIT,
+	ZOMBIE_BOSS_WIN,
 
-    UFO_BOSS_AIR_BOMB,
-    UFO_BOSS_AIR_BOMB_SEEKING,
+	UFO_BOSS_AIR_BOMB,
+	UFO_BOSS_AIR_BOMB_SEEKING,
 
-    MAFIA_BOSS_AIR_BOMB,
-    MAFIA_BOSS_AIR_BOMB_HURLING_BALLS,
+	MAFIA_BOSS_AIR_BOMB,
+	MAFIA_BOSS_AIR_BOMB_HURLING_BALLS,
 
-    ZOMBIE_BOSS_ROCKET_BLOCK,
+	ZOMBIE_BOSS_ROCKET_BLOCK,
 
-    UFO_ENEMY,
-    UFO_ENEMY_AIR_BOMB,
+	UFO_ENEMY,
+	UFO_ENEMY_AIR_BOMB,
 
-    HEALTH_PICKUP,
+	HEALTH_PICKUP,
 
-    POWERUP_PICKUP,    
-    POWERUP_PICKUP_ARMOR,
-    POWERUP_PICKUP_HURLING_BALLS,
+	POWERUP_PICKUP,
+	POWERUP_PICKUP_ARMOR,
+	POWERUP_PICKUP_HURLING_BALLS,
 
-    COLLECTABLE_PICKUP,
-    FLOATING_NUMBER,
+	COLLECTABLE_PICKUP,
+	FLOATING_NUMBER,
 
-    TITLE_SCREEN,
-    CHOPPER_BLADES,
-    TRASH_BIN_BLAST,
-    GRAND_EXPLOSION_RING,
-    GRENADE_BLAST,
-    VEHICLE_SMOKE
+	TITLE_SCREEN,
+	CHOPPER_BLADES,
+	TRASH_BIN_BLAST,
+	GRAND_EXPLOSION_RING,
+	GRENADE_BLAST,
+	VEHICLE_SMOKE
 }
 
 export enum SoundType {
@@ -261,144 +260,141 @@ export abstract class Constants {
 	public static GAME_TITLE_FONT = "stitchnschool";
 	public static GAME_DEFAULT_FONT = "emilio";
 
-	public static CONSTRUCT_TEMPLATES: (ConstructTemplate)[] = [
+	public static CONSTRUCT_TEMPLATES: (TextureTemplate)[] = [
 
-		new ConstructTemplate(ConstructType.GRAND_EXPLOSION_RING, "grand_explosion_ring_1"),
-		new ConstructTemplate(ConstructType.HONK, "honk_1"),
+		new TextureTemplate(TextureType.GRAND_EXPLOSION_RING, "grand_explosion_ring_1"),
+		new TextureTemplate(TextureType.HONK, "honk_1"),
 
-		new ConstructTemplate(ConstructType.ROAD_MARK, "road_marks"),
+		new TextureTemplate(TextureType.ROAD_MARK, "road_marks"),
 
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_1"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_1"),
-		new ConstructTemplate(ConstructType.ROAD_SIDE_WALK_BOTTOM_PILLARS, "road_side_walk_bottom_pillars_1"),
+		new TextureTemplate(TextureType.ROAD_SIDE_WALK_TOP, "road_side_walk_top_1"),
+		new TextureTemplate(TextureType.ROAD_SIDE_WALK_BOTTOM, "road_side_walk_bottom_1"),
+		new TextureTemplate(TextureType.ROAD_SIDE_WALK_BOTTOM_PILLARS, "road_side_walk_bottom_pillars_1"),
 
-		new ConstructTemplate(ConstructType.LEAF, "leaf_1"),
-		new ConstructTemplate(ConstructType.LEAF, "leaf_2"),
-		new ConstructTemplate(ConstructType.LEAF, "leaf_3"),
-		new ConstructTemplate(ConstructType.LEAF, "leaf_4"),
+		new TextureTemplate(TextureType.LEAF, "leaf_1"),
+		new TextureTemplate(TextureType.LEAF, "leaf_2"),
+		new TextureTemplate(TextureType.LEAF, "leaf_3"),
+		new TextureTemplate(TextureType.LEAF, "leaf_4"),
 
-		new ConstructTemplate(ConstructType.VEHICLE_SMOKE, "vehicle_smoke_1"),
-		new ConstructTemplate(ConstructType.VEHICLE_SMOKE, "vehicle_smoke_2"),
+		new TextureTemplate(TextureType.VEHICLE_SMOKE, "vehicle_smoke_1"),
+		new TextureTemplate(TextureType.VEHICLE_SMOKE, "vehicle_smoke_2"),
 
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS, "vehicle_boss_1"),
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS, "vehicle_boss_2"),
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS, "vehicle_boss_3"),
+		new TextureTemplate(TextureType.VEHICLE_BOSS, "vehicle_boss_1"),
+		new TextureTemplate(TextureType.VEHICLE_BOSS, "vehicle_boss_2"),
+		new TextureTemplate(TextureType.VEHICLE_BOSS, "vehicle_boss_3"),
 
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_1"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_2", true),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_3"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_4"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_5"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_6"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_7"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_8"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_9", true),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_10"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_11"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_12"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_SMALL, "vehicle_small_13"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_SMALL, "vehicle_small_1"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_SMALL, "vehicle_small_2", true),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_SMALL, "vehicle_small_3"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_SMALL, "vehicle_small_4"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_SMALL, "vehicle_small_5"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_SMALL, "vehicle_small_6"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_SMALL, "vehicle_small_7"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_SMALL, "vehicle_small_8"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_SMALL, "vehicle_small_9", true),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_SMALL, "vehicle_small_10"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_SMALL, "vehicle_small_11"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_SMALL, "vehicle_small_12"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_SMALL, "vehicle_small_13"),
 
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_1", true),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_2"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_3"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_4"),
-		new ConstructTemplate(ConstructType.VEHICLE_ENEMY_LARGE, "vehicle_large_5"),		
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_LARGE, "vehicle_large_1", true),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_LARGE, "vehicle_large_2"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_LARGE, "vehicle_large_3"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_LARGE, "vehicle_large_4"),
+		new TextureTemplate(TextureType.VEHICLE_ENEMY_LARGE, "vehicle_large_5"),
 
-		new ConstructTemplate(ConstructType.PLAYER_RIDE, "player_1_character"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, "player_balloon_1_idle"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, "player_balloon_1_attack"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, "player_balloon_1_win"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, "player_balloon_1_hit"),
+		new TextureTemplate(TextureType.PLAYER_RIDE, "player_1_character"),
+		new TextureTemplate(TextureType.PLAYER_RIDE_IDLE, "player_balloon_1_idle"),
+		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_balloon_1_attack"),
+		new TextureTemplate(TextureType.PLAYER_RIDE_WIN, "player_balloon_1_win"),
+		new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_balloon_1_hit"),
 
-		new ConstructTemplate(ConstructType.PLAYER_RIDE, "player_1_character"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, "player_chopper_1_idle"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, "player_chopper_1_attack"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, "player_chopper_1_win"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, "player_chopper_1_hit"),
+		new TextureTemplate(TextureType.PLAYER_RIDE, "player_1_character"),
+		new TextureTemplate(TextureType.PLAYER_RIDE_IDLE, "player_chopper_1_idle"),
+		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_chopper_1_attack"),
+		new TextureTemplate(TextureType.PLAYER_RIDE_WIN, "player_chopper_1_win"),
+		new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_chopper_1_hit"),
 
-		new ConstructTemplate(ConstructType.PLAYER_RIDE, "player_2_character"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_IDLE, "player_balloon_2_idle"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_ATTACK, "player_balloon_2_attack"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_WIN, "player_balloon_2_win"),
-		new ConstructTemplate(ConstructType.PLAYER_RIDE_HIT, "player_balloon_2_hit"),
+		new TextureTemplate(TextureType.PLAYER_RIDE, "player_2_character"),
+		new TextureTemplate(TextureType.PLAYER_RIDE_IDLE, "player_balloon_2_idle"),
+		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_balloon_2_attack"),
+		new TextureTemplate(TextureType.PLAYER_RIDE_WIN, "player_balloon_2_win"),
+		new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_balloon_2_hit"),
 
 
-		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_1", PlayerGroundBombTemplate.GRENADE),
-		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_2", PlayerGroundBombTemplate.GRENADE),
+		new TextureTemplate(TextureType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_1", PlayerGroundBombTemplate.GRENADE),
+		new TextureTemplate(TextureType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_2", PlayerGroundBombTemplate.GRENADE),
 
-		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_trash_1", PlayerGroundBombTemplate.TRASH_BIN),
-		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_trash_2", PlayerGroundBombTemplate.TRASH_BIN),
+		new TextureTemplate(TextureType.PLAYER_GROUND_BOMB, "player_honk_bomb_trash_1", PlayerGroundBombTemplate.TRASH_BIN),
+		new TextureTemplate(TextureType.PLAYER_GROUND_BOMB, "player_honk_bomb_trash_2", PlayerGroundBombTemplate.TRASH_BIN),
 
-		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_dynamite_1", PlayerGroundBombTemplate.DYNAMITE),
-		new ConstructTemplate(ConstructType.PLAYER_GROUND_BOMB, "player_honk_bomb_dynamite_2", PlayerGroundBombTemplate.DYNAMITE),
+		new TextureTemplate(TextureType.PLAYER_GROUND_BOMB, "player_honk_bomb_dynamite_1", PlayerGroundBombTemplate.DYNAMITE),
+		new TextureTemplate(TextureType.PLAYER_GROUND_BOMB, "player_honk_bomb_dynamite_2", PlayerGroundBombTemplate.DYNAMITE),
 
-		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_grenade_1_open", PlayerGroundBombTemplate.GRENADE),
-		new ConstructTemplate(ConstructType.GRENADE_BLAST, "player_honk_bomb_grenade_2_open", PlayerGroundBombTemplate.GRENADE),
+		new TextureTemplate(TextureType.GRENADE_BLAST, "player_honk_bomb_grenade_1_open", PlayerGroundBombTemplate.GRENADE),
+		new TextureTemplate(TextureType.GRENADE_BLAST, "player_honk_bomb_grenade_2_open", PlayerGroundBombTemplate.GRENADE),
 
-		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_1_open", PlayerGroundBombTemplate.TRASH_BIN),
-		new ConstructTemplate(ConstructType.TRASH_BIN_BLAST, "player_honk_bomb_trash_2_open", PlayerGroundBombTemplate.TRASH_BIN),
+		new TextureTemplate(TextureType.TRASH_BIN_BLAST, "player_honk_bomb_trash_1_open", PlayerGroundBombTemplate.TRASH_BIN),
+		new TextureTemplate(TextureType.TRASH_BIN_BLAST, "player_honk_bomb_trash_2_open", PlayerGroundBombTemplate.TRASH_BIN),
 
-		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_gravity_ball_1", PlayerAirBombTemplate.GRAVITY_BALL),
-		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_gravity_ball_2", PlayerAirBombTemplate.GRAVITY_BALL),
+		new TextureTemplate(TextureType.PLAYER_AIR_BOMB, "player_gravity_ball_1", PlayerAirBombTemplate.GRAVITY_BALL),
+		new TextureTemplate(TextureType.PLAYER_AIR_BOMB, "player_gravity_ball_2", PlayerAirBombTemplate.GRAVITY_BALL),
 
-		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_rocket_1", PlayerAirBombTemplate.MISSILE),
-		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_rocket_2", PlayerAirBombTemplate.MISSILE),
-		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_rocket_3", PlayerAirBombTemplate.MISSILE),
+		new TextureTemplate(TextureType.PLAYER_AIR_BOMB, "player_rocket_1", PlayerAirBombTemplate.MISSILE),
+		new TextureTemplate(TextureType.PLAYER_AIR_BOMB, "player_rocket_2", PlayerAirBombTemplate.MISSILE),
+		new TextureTemplate(TextureType.PLAYER_AIR_BOMB, "player_rocket_3", PlayerAirBombTemplate.MISSILE),
 
-		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_bullet_ball_1", PlayerAirBombTemplate.BULLET_BALL),
-		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB, "player_bullet_ball_2", PlayerAirBombTemplate.BULLET_BALL),
+		new TextureTemplate(TextureType.PLAYER_AIR_BOMB, "player_bullet_ball_1", PlayerAirBombTemplate.BULLET_BALL),
+		new TextureTemplate(TextureType.PLAYER_AIR_BOMB, "player_bullet_ball_2", PlayerAirBombTemplate.BULLET_BALL),
 
-		new ConstructTemplate(ConstructType.PLAYER_AIR_BOMB_HURLING_BALLS, "player_hurling_ball"),
+		new TextureTemplate(TextureType.PLAYER_AIR_BOMB_HURLING_BALLS, "player_hurling_ball"),
 
-		new ConstructTemplate(ConstructType.CHOPPER_BLADES, "player_chopper_blades"),
+		new TextureTemplate(TextureType.CHOPPER_BLADES, "player_chopper_blades"),
 
-		new ConstructTemplate(ConstructType.BANG, "bang_1"),
-		new ConstructTemplate(ConstructType.BANG, "bang_2"),
+		new TextureTemplate(TextureType.BLAST, "blast_1"),
+		new TextureTemplate(TextureType.BLAST, "blast_2"),
 
-		new ConstructTemplate(ConstructType.BLAST, "blast_1"),
-		new ConstructTemplate(ConstructType.BLAST, "blast_2"),
+		new TextureTemplate(TextureType.VEHICLE_BOSS_AIR_BOMB, "vehicle_boss_rocket_1"),
+		new TextureTemplate(TextureType.VEHICLE_BOSS_AIR_BOMB, "vehicle_boss_rocket_2"),
 
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS_AIR_BOMB, "vehicle_boss_rocket_1"),
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS_AIR_BOMB, "vehicle_boss_rocket_2"),
+		new TextureTemplate(TextureType.UFO_BOSS_HIT, "ufo_boss_1_hit"),
+		new TextureTemplate(TextureType.UFO_BOSS_IDLE, "ufo_boss_1_idle"),
+		new TextureTemplate(TextureType.UFO_BOSS_WIN, "ufo_boss_1_win"),
 
-		new ConstructTemplate(ConstructType.UFO_BOSS_HIT, "ufo_boss_1_hit"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_IDLE, "ufo_boss_1_idle"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_WIN, "ufo_boss_1_win"),
+		new TextureTemplate(TextureType.UFO_BOSS_AIR_BOMB, "ufo_boss_rocket_1"),
+		new TextureTemplate(TextureType.UFO_BOSS_AIR_BOMB, "ufo_boss_rocket_2"),
+		new TextureTemplate(TextureType.UFO_BOSS_AIR_BOMB, "ufo_boss_rocket_3"),
+		new TextureTemplate(TextureType.UFO_BOSS_AIR_BOMB_SEEKING, "ufo_boss_seeking_ball"),
 
-		new ConstructTemplate(ConstructType.UFO_BOSS_AIR_BOMB, "ufo_boss_rocket_1"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_AIR_BOMB, "ufo_boss_rocket_2"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_AIR_BOMB, "ufo_boss_rocket_3"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_AIR_BOMB_SEEKING, "ufo_boss_seeking_ball"),
+		new TextureTemplate(TextureType.UFO_ENEMY, "ufo_enemy_1"),
+		new TextureTemplate(TextureType.UFO_ENEMY, "ufo_enemy_2"),
+		new TextureTemplate(TextureType.UFO_ENEMY, "ufo_enemy_3"),
+		new TextureTemplate(TextureType.UFO_ENEMY, "ufo_enemy_4"),
 
-		new ConstructTemplate(ConstructType.UFO_ENEMY, "ufo_enemy_1"),
-		new ConstructTemplate(ConstructType.UFO_ENEMY, "ufo_enemy_2"),
-		new ConstructTemplate(ConstructType.UFO_ENEMY, "ufo_enemy_3"),
-		new ConstructTemplate(ConstructType.UFO_ENEMY, "ufo_enemy_4"),
+		new TextureTemplate(TextureType.UFO_ENEMY_AIR_BOMB, "ufo_enemy_bomb"),
 
-		new ConstructTemplate(ConstructType.UFO_ENEMY_AIR_BOMB, "ufo_enemy_bomb"),
+		new TextureTemplate(TextureType.ZOMBIE_BOSS_HIT, "zombie_boss_1_hit"),
+		new TextureTemplate(TextureType.ZOMBIE_BOSS_IDLE, "zombie_boss_1_idle"),
+		new TextureTemplate(TextureType.ZOMBIE_BOSS_WIN, "zombie_boss_1_win"),
 
-		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_HIT, "zombie_boss_1_hit"),
-		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_IDLE, "zombie_boss_1_idle"),
-		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_WIN, "zombie_boss_1_win"),
+		new TextureTemplate(TextureType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_1"),
+		new TextureTemplate(TextureType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_2"),
+		new TextureTemplate(TextureType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_3"),
 
-		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_1"),
-		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_2"),
-		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK, "zombie_boss_cube_3"),
+		new TextureTemplate(TextureType.MAFIA_BOSS_HIT, "mafia_boss_1_hit"),
+		new TextureTemplate(TextureType.MAFIA_BOSS_IDLE, "mafia_boss_1_idle"),
+		new TextureTemplate(TextureType.MAFIA_BOSS_WIN, "mafia_boss_1_win"),
 
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_HIT, "mafia_boss_1_hit"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_IDLE, "mafia_boss_1_idle"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_WIN, "mafia_boss_1_win"),
+		new TextureTemplate(TextureType.MAFIA_BOSS_AIR_BOMB, "mafia_boss_rocket_1"),
+		new TextureTemplate(TextureType.MAFIA_BOSS_AIR_BOMB, "mafia_boss_rocket_2"),
+		new TextureTemplate(TextureType.MAFIA_BOSS_AIR_BOMB, "mafia_boss_rocket_3"),
+		new TextureTemplate(TextureType.MAFIA_BOSS_AIR_BOMB_HURLING_BALLS, "mafia_boss_hurling_ball"),
 
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_AIR_BOMB, "mafia_boss_rocket_1"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_AIR_BOMB, "mafia_boss_rocket_2"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_AIR_BOMB, "mafia_boss_rocket_3"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_AIR_BOMB_HURLING_BALLS, "mafia_boss_hurling_ball"),
+		new TextureTemplate(TextureType.HEALTH_PICKUP, "health_pickup"),
+		new TextureTemplate(TextureType.POWERUP_PICKUP_ARMOR, "powerup_pickup_armor"),
+		new TextureTemplate(TextureType.POWERUP_PICKUP_HURLING_BALLS, "powerup_pickup_bulls_eye"),
 
-		new ConstructTemplate(ConstructType.HEALTH_PICKUP, "health_pickup"),
-		new ConstructTemplate(ConstructType.POWERUP_PICKUP_ARMOR, "powerup_pickup_armor"),
-		new ConstructTemplate(ConstructType.POWERUP_PICKUP_HURLING_BALLS, "powerup_pickup_bulls_eye"),
-
-		new ConstructTemplate(ConstructType.GAME_COVER_IMAGE, "cover_image"),
+		new TextureTemplate(TextureType.GAME_COVER_IMAGE, "cover_image"),
 	];
 
 	private static soundsDirectory = "sounds/";
@@ -710,7 +706,7 @@ export abstract class Constants {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 
-	static getRandomUri(constructType: ConstructType): string {
+	static getRandomUri(constructType: TextureType): string {
 
 		const templates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == constructType);
 		let uri: string = "";
@@ -725,7 +721,7 @@ export abstract class Constants {
 		return uri;
 	}
 
-	static getRandomTexture(constructType: ConstructType): Texture {
+	static getRandomTexture(constructType: TextureType): Texture {
 
 		const uri = Constants.getRandomUri(constructType);
 		const texture = Texture.from(uri);

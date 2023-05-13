@@ -1,4 +1,4 @@
-﻿import { Constants, ConstructType, PowerUpType, SoundType } from '../Constants';
+﻿import { Constants, TextureType, PowerUpType, SoundType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { SoundManager } from '../managers/SoundManager';
 
@@ -20,12 +20,12 @@ export class PowerUpPickup extends GameObjectContainer {
         switch (this.powerUpType) {
             case PowerUpType.ARMOR:
                 {
-                    this.setTexture(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR));
+                    this.setTexture(Constants.getRandomTexture(TextureType.POWERUP_PICKUP_ARMOR));
                 }
                 break;
             case PowerUpType.HURLING_BALLS:
                 {
-                    this.setTexture(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_HURLING_BALLS));
+                    this.setTexture(Constants.getRandomTexture(TextureType.POWERUP_PICKUP_HURLING_BALLS));
                 }
                 break;
             default:

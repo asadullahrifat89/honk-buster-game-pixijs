@@ -1,5 +1,5 @@
 ﻿import { Rectangle } from 'pixi.js';
-import { Constants, ConstructType, SoundType } from '../Constants';
+import { Constants, TextureType, SoundType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { AirBombBaseSeekingBall } from './AirBombBaseSeekingBall';
 import { SoundManager } from '../managers/SoundManager';
@@ -14,7 +14,7 @@ export class MafiaBossAirBombHurlingBall extends AirBombBaseSeekingBall {
 
 	reset() {
 		this.alpha = 1;
-		this.setTexture(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_AIR_BOMB_HURLING_BALLS));
+		this.setTexture(Constants.getRandomTexture(TextureType.MAFIA_BOSS_AIR_BOMB_HURLING_BALLS));
 		this.scale.set(1);
 		this.angle = 0;
 		this.isBlasting = false;

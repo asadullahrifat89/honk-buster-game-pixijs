@@ -1,4 +1,4 @@
-﻿import { Constants, ConstructType, SoundType } from '../Constants';
+﻿import { Constants, TextureType, SoundType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { SceneManager } from '../managers/SceneManager';
 import { SoundManager } from '../managers/SoundManager';
@@ -19,7 +19,7 @@ export class ZombieBossAirBombCube extends GameObjectContainer {
         this.scale.set(1);
 
         this.isBlasting = false;
-        this.setTexture(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK));
+        this.setTexture(Constants.getRandomTexture(TextureType.ZOMBIE_BOSS_ROCKET_BLOCK));
 
         this.health = this.hitPoint * Constants.getRandomNumber(0, 2);
         this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 1.5;

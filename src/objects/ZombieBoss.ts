@@ -1,13 +1,13 @@
 ﻿import { Texture } from 'pixi.js';
-import { BossStance, Constants, ConstructType, MovementDirection } from '../Constants';
+import { BossStance, Constants, TextureType, MovementDirection } from '../Constants';
 import { UfoBossBase } from './UfoBossBase';
 
 
 export class ZombieBoss extends UfoBossBase {
 
-	private zombieBossIdleTexture: Texture = Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_IDLE);
-	private zombieBossWinTexture: Texture = Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_WIN);
-	private zombieBossHitTexture: Texture = Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_HIT);
+	private zombieBossIdleTexture: Texture = Constants.getRandomTexture(TextureType.ZOMBIE_BOSS_IDLE);
+	private zombieBossWinTexture: Texture = Constants.getRandomTexture(TextureType.ZOMBIE_BOSS_WIN);
+	private zombieBossHitTexture: Texture = Constants.getRandomTexture(TextureType.ZOMBIE_BOSS_HIT);
 
 	private changeMovementPatternDelay: number = 0;
 

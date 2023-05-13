@@ -1,4 +1,4 @@
-﻿import { Constants, ConstructType, SoundType } from '../Constants';
+﻿import { Constants, TextureType, SoundType } from '../Constants';
 import { SoundManager } from '../managers/SoundManager';
 import { AirBombBase } from './AirBombBase';
 import { UfoBoss } from './UfoBoss';
@@ -15,7 +15,7 @@ export class UfoBossAirBomb extends AirBombBase {
 		this.speed = 0;
 		this.scale.set(1);
 		this.isBlasting = false;
-		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_BOSS_AIR_BOMB));
+		this.setTexture(Constants.getRandomTexture(TextureType.UFO_BOSS_AIR_BOMB));
 
 		this.awaitMoveDownLeft = false;
 		this.awaitMoveUpRight = false;
