@@ -170,27 +170,33 @@ export class PlayerRide extends GameObjectContainer {
 
 	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
 
+		let halfHeight = this.height / 2;
+		let halfWidth = this.width / 2;
+
 		if (controller.joystickActivated) {
 
 			switch (this.playerRideTemplate) {
 				case PlayerRideTemplate.AIR_BALLOON: {
-					this.x += controller.velocity.x;
-					this.y += controller.velocity.y;
+					if (this.getLeft() > 0 && this.getRight() < sceneWidth)
+						this.x += controller.velocity.x;
+					if (this.getTop() > 0 && this.getBottom() < sceneHeight)
+						this.y += controller.velocity.y;
 				} break;
 				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
-					this.x += controller.velocity.x + 1;
-					this.y += controller.velocity.y + 1;
+					if (this.getLeft() > 0 && this.getRight() < sceneWidth)
+						this.x += controller.velocity.x + 1;
+					if (this.getTop() > 0 && this.getBottom() < sceneHeight)
+						this.y += controller.velocity.y + 1;
 					this.animateChopperBlades();
 				} break;
 				case PlayerRideTemplate.SPHERE: { // sphere grants extra speed
-					this.x += controller.velocity.x + 1;
-					this.y += controller.velocity.y + 1;
+					if (this.getLeft() > 0 && this.getRight() < sceneWidth)
+						this.x += controller.velocity.x + 1;
+					if (this.getTop() > 0 && this.getBottom() < sceneHeight)
+						this.y += controller.velocity.y + 1;
 				} break;
 				default: break;
 			}
-
-			this.x += controller.velocity.x;
-			this.y += controller.velocity.y;
 		}
 		else {
 
@@ -202,14 +208,11 @@ export class PlayerRide extends GameObjectContainer {
 					this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 1) * controller.power;
 					this.animateChopperBlades();
 				} break;
-				case PlayerRideTemplate.SPHERE: {
+				case PlayerRideTemplate.SPHERE: { // sphere grants extra speed
 					this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 1) * controller.power;
 				} break;
 				default: break;
 			}
-
-			let halfHeight = this.height / 2;
-			let halfWidth = this.width / 2;
 
 			if (controller.isMoveUp && controller.isMoveLeft) {
 				if (this.y + halfHeight > 0 && this.x + halfWidth > 0)
