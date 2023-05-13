@@ -257,7 +257,7 @@ export abstract class Constants {
 	public static CHOPPER_UNLOCK_LEVEL: number = 3; // 3
 	public static CHOPPER_UNLOCKED: boolean = false;
 
-	public static SPHERE_UNLOCK_LEVEL: number = 0; // 7
+	public static SPHERE_UNLOCK_LEVEL: number = 7; // 7
 	public static SPHERE_UNLOCKED: boolean = false;
 
 	public static GAME_TITLE_FONT = "stitchnschool";
