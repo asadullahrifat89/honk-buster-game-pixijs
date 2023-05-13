@@ -8,7 +8,6 @@ Welcome to Honky Roads, a game where you are out to put a stop honking.
 
 ### Game Features
 - Sound effects
-- Isometric view
 - Difficulty scaling
 - Score based boss encounters
 - Angular velocity based projectiles
@@ -18,6 +17,7 @@ Welcome to Honky Roads, a game where you are out to put a stop honking.
 - Game controller supporting pause, resume, and quit
 - Spritesheet animation
 - Responsive UI scaling
+- Isometric movement
 - Keyboard controls
 - Joystick controls
 - Scene manager
