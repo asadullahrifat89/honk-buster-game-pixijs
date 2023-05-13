@@ -61,6 +61,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.ITEM_SELECT);
 
 			rideHealth.setLabel((Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
+			rideSpeed.setLabel("1");
 		});
 
 		air_balloon_button.setPosition((this.uiContainer.width / 2 - air_balloon_button.width * 2), (this.uiContainer.height / 2 - air_balloon_button.height / 2) + 10);
@@ -82,6 +83,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.ITEM_SELECT);
 
 			rideHealth.setLabel((Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
+			rideSpeed.setLabel("2");
 
 		}, Constants.CHOPPER_UNLOCKED);
 		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_button.width / 2.5), (this.uiContainer.height / 2 - chopper_button.height / 2) + 10);
@@ -103,6 +105,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.ITEM_SELECT);
 
 			rideHealth.setLabel((Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
+			rideSpeed.setLabel("2");
 
 		}, Constants.SPHERE_UNLOCKED);
 		sphere_button.setPosition((this.uiContainer.width / 2 + sphere_button.width), (this.uiContainer.height / 2 - sphere_button.height / 2) + 10);
@@ -110,9 +113,17 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 
 		//#endregion
 
+		//#region ride health
+
 		const rideHealth = new LabeledIcon("health_pickup", 50, 50, "?")
-		rideHealth.setPosition(this.uiContainer.width / 2 - rideHealth.width / 2, this.uiContainer.height - rideHealth.height * 2.5);
+		rideHealth.setPosition(this.uiContainer.width / 2 - rideHealth.width * 2, this.uiContainer.height - rideHealth.height * 2.5);
 		this.uiContainer.addChild(rideHealth);
+
+		const rideSpeed = new LabeledIcon("joystick", 50, 50, "?")
+		rideSpeed.setPosition(this.uiContainer.width / 2 + rideSpeed.width * 1, this.uiContainer.height - rideSpeed.height * 2.5);
+		this.uiContainer.addChild(rideSpeed);
+
+		//#endregion
 
 		const button = new Button(() => {
 			if (button.getIsEnabled()) {

@@ -57,11 +57,11 @@ export class GamePlayScene extends Container implements IScene {
 	private onScreenMessage: OnScreenMessage;
 
 	//TODO: reset these to the default values after testing
-	private readonly ufoEnemyRelease: { point: number, limit: number } = { point: 35, limit: 15 }; // 35
-	private readonly vehicleBossRelease: { point: number, limit: number } = { point: 25, limit: 15 }; // 25
-	private readonly ufoBossRelease: { point: number, limit: number } = { point: 50, limit: 15 }; // 50
-	private readonly zombieBossRelease: { point: number, limit: number } = { point: 100, limit: 15 }; // 100
-	private readonly mafiaBossRelease: { point: number, limit: number } = { point: 150, limit: 15 }; // 150
+	private readonly ufoEnemyRelease: { point: number, limit: number } = { limit: 15, point: 35 }; // 35
+	private readonly vehicleBossRelease: { point: number, limit: number } = { limit: 15, point: 25 }; // 25
+	private readonly ufoBossRelease: { point: number, limit: number } = { limit: 15, point: 50 }; // 50
+	private readonly zombieBossRelease: { point: number, limit: number } = { limit: 15, point: 100 }; // 100
+	private readonly mafiaBossRelease: { point: number, limit: number } = { limit: 15, point: 150 }; // 150
 
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 	private readonly vehicleBossCheckpoint: GameCheckpoint;
