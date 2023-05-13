@@ -168,10 +168,7 @@ export class PlayerRide extends GameObjectContainer {
 		}
 	}
 
-	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
-
-		let halfHeight = this.height / 2;
-		let halfWidth = this.width / 2;
+	move(sceneWidth: number, sceneHeight: number, controller: GameController) {		
 
 		if (controller.joystickActivated) {
 
@@ -215,35 +212,35 @@ export class PlayerRide extends GameObjectContainer {
 			}
 
 			if (controller.isMoveUp && controller.isMoveLeft) {
-				if (this.y + halfHeight > 0 && this.x + halfWidth > 0)
+				if (this.getTop() > 0 && this.getLeft() > 0)
 					this.moveUpLeft();
 			}
 			else if (controller.isMoveUp && controller.isMoveRight) {
-				if (this.x - halfWidth < sceneWidth && this.y + halfHeight > 0)
+				if (this.getRight() < sceneWidth && this.getTop() > 0)
 					this.moveUpRight();
 			}
 			else if (controller.isMoveUp) {
-				if (this.y + halfHeight > 0)
+				if (this.getTop() > 0)
 					this.moveUp();
 			}
 			else if (controller.isMoveDown && controller.isMoveRight) {
-				if (this.getBottom() - halfHeight < sceneHeight && this.x - halfWidth < sceneWidth)
+				if (this.getBottom() < sceneHeight && this.getRight() < sceneWidth)
 					this.moveDownRight();
 			}
 			else if (controller.isMoveDown && controller.isMoveLeft) {
-				if (this.x + halfWidth > 0 && this.getBottom() - halfHeight < sceneHeight)
+				if (this.getLeft() > 0 && this.getBottom() < sceneHeight)
 					this.moveDownLeft();
 			}
 			else if (controller.isMoveDown) {
-				if (this.getBottom() - halfHeight < sceneHeight)
+				if (this.getBottom() < sceneHeight)
 					this.moveDown();
 			}
 			else if (controller.isMoveRight) {
-				if (this.x - halfWidth < sceneWidth)
+				if (this.getRight() < sceneWidth)
 					this.moveRight();
 			}
 			else if (controller.isMoveLeft) {
-				if (this.x + halfWidth > 0)
+				if (this.getLeft() > 0)
 					this.moveLeft();
 			}
 			else {

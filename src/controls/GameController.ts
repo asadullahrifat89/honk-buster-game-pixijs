@@ -321,7 +321,9 @@ export class GameController extends Container {
 		}
 
 		if (!this.isMoveLeft && !this.isMoveRight && !this.isMoveUp && !this.isMoveDown) {
-			this.power = 1;
+
+			if (this.power != 1)
+				this.power = 1;
 		}
 	}
 
