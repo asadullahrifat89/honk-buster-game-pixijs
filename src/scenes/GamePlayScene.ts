@@ -124,7 +124,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		// spawn the game objects
 		this.spawnGameObjects();
-		this.generatePlayerBalloon(); // player health is calculated here
+		this.generatePlayerRide(); // player health is calculated here
 
 		// set the game score bar		
 		this.gameScoreBar = new GameScoreBar(this, "Score ");
@@ -267,7 +267,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnPlayerAirBombs();
 		this.spawnPlayerAirBombHurlingBalls();
 		this.spawnPlayerArmorSpheres();
-		this.spawnPlayerBalloon();
+		this.spawnPlayerRide();
 
 		this.spawnUfoBossAirBombs();
 		this.spawnUfoBossAirBombSeekingBalls();
@@ -337,7 +337,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private animateGameObjects() {
 
-		this.animatePlayerBalloon();
+		this.animatePlayerRide();
 		this.animatePlayerArmorSpheres();
 
 		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
@@ -1460,7 +1460,7 @@ export class GamePlayScene extends Container implements IScene {
 	private playerRideSize = { width: 512, height: 512 };
 	private player: PlayerRide = new PlayerRide();
 
-	spawnPlayerBalloon() {
+	spawnPlayerRide() {
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.PLAYER_RIDE_IDLE));
 		sprite.x = 0;
 		sprite.y = 0;
@@ -1491,13 +1491,13 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnCastShadow(this.player);
 	}
 
-	generatePlayerBalloon() {
+	generatePlayerRide() {
 		this.player.reset();
 		this.player.reposition();
 		this.player.enableRendering();
 	}
 
-	animatePlayerBalloon() {
+	animatePlayerRide() {
 		this.player.pop();
 		this.player.hover();
 
