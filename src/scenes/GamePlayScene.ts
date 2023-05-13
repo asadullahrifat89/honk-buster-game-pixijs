@@ -1,6 +1,6 @@
 import { BlurFilter, Container, Graphics, Texture } from "pixi.js";
 import { GameObjectContainer } from '../core/GameObjectContainer';
-import { Constants} from '../Constants';
+import { Constants } from '../Constants';
 import { GameOverScene } from "./GameOverScene";
 import { IScene } from "../managers/IScene";
 import { GameController } from "../controls/GameController";
@@ -235,8 +235,30 @@ export class GamePlayScene extends Container implements IScene {
 			this.stageColor.clear().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 			this.stageMask.clear().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
 
-			this.sceneBoundaryWidth = Constants.DEFAULT_GAME_VIEW_WIDTH * (SceneManager.scaling * 1.20);
-			this.sceneBoundaryHeight = Constants.DEFAULT_GAME_VIEW_HEIGHT * (SceneManager.scaling * 1.35);
+			let xMultiplier = 1;
+			let yMultiplier = 1;
+
+			if (SceneManager.scaling != 1) {
+				if (SceneManager.width > 900) {
+					xMultiplier = 1.45;
+					yMultiplier = 1.35;
+				}
+				else if (SceneManager.width > 800) {
+					xMultiplier = 1.60;
+					yMultiplier = 1.60;
+				}
+				else if (SceneManager.width > 600) {
+					xMultiplier = 1.50;
+					yMultiplier = 1.60;
+				}
+				else {
+					xMultiplier = 1.45;
+					yMultiplier = 1.60;
+				}
+			}
+
+			this.sceneBoundaryWidth = Constants.DEFAULT_GAME_VIEW_WIDTH * (SceneManager.scaling * xMultiplier);
+			this.sceneBoundaryHeight = Constants.DEFAULT_GAME_VIEW_HEIGHT * (SceneManager.scaling * yMultiplier);
 		}
 	}
 
