@@ -99,7 +99,10 @@ export class PlayerRide extends GameObjectContainer {
 	}
 
 	reset() {
-		this.health = (this.hitPoint * 10) + (Constants.HEALTH_LEVEL_MAX * this.hitPoint); // add health upgrades
+		this.health = this.hitPoint * 10; // base health
+		this.health += Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5; // add extra health by 5 multiples for ride template
+		this.health += (Constants.HEALTH_LEVEL_MAX * this.hitPoint); // add extra health for health unlocks
+
 		this.movementDirection = MovementDirection.None;
 		this.movementStopDelay = this.movementStopDelayDefault;
 		this.lastSpeed = 0;
@@ -181,7 +184,7 @@ export class PlayerRide extends GameObjectContainer {
 				} break;
 				case PlayerRideTemplate.SPHERE: { // sphere grants extra speed
 					this.x += controller.velocity.x + 1;
-					this.y += controller.velocity.y + 1;					
+					this.y += controller.velocity.y + 1;
 				} break;
 				default: break;
 			}
@@ -308,7 +311,7 @@ export class PlayerRide extends GameObjectContainer {
 		this.movementStopDelay = this.movementStopDelayDefault;
 		this.lastSpeed = this.speed;
 		this.rotate(RotationDirection.Backward, this.rotationThreadhold, this.rotationSpeed);
-	}	
+	}
 
 	private animateChopperBlades() {
 
