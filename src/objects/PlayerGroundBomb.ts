@@ -90,6 +90,9 @@ export class PlayerGroundBomb extends GameObjectContainer {
 			case PlayerRideTemplate.CHOPPER: {
 				this.setPosition(source.getLeft(), source.getTop() + 70);
 			} break;
+			case PlayerRideTemplate.SPHERE: {
+				this.setPosition(source.getLeft(), source.getTop() + 80);
+			} break;
 			default:
 		}
 	}

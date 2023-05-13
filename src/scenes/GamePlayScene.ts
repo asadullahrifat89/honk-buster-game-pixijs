@@ -1466,7 +1466,10 @@ export class GamePlayScene extends Container implements IScene {
 		sprite.y = 0;
 
 		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
-			case PlayerRideTemplate.AIR_BALLOON:
+			case PlayerRideTemplate.AIR_BALLOON: {
+				sprite.width = this.playerRideSize.width / 3;
+				sprite.height = this.playerRideSize.height / 3;
+			} break;
 			case PlayerRideTemplate.SPHERE: {
 				sprite.width = this.playerRideSize.width / 3;
 				sprite.height = this.playerRideSize.height / 3;

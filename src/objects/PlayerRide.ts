@@ -84,79 +84,11 @@ export class PlayerRide extends GameObjectContainer {
 			this.playerAttackTexture = Texture.from(attack.uri);
 		}
 
-		//switch (playerRideTemplate) {
-		//	case PlayerRideTemplate.AIR_BALLOON: {
-		//		let idle = playerIdleTemplates.find(x => x.tag == PlayerRideTemplate.AIR_BALLOON);
-		//		if (idle) {
-		//			this.playerIdleTexture = Texture.from(idle.uri);
-		//		}
-
-		//		let win = playerWinTemplates.find(x => x.tag == PlayerRideTemplate.AIR_BALLOON);
-		//		if (win) {
-		//			this.playerWinTexture = Texture.from(win.uri);
-		//		}
-
-		//		let hit = playerHitTemplates.find(x => x.tag == PlayerRideTemplate.AIR_BALLOON);
-		//		if (hit) {
-		//			this.playerHitTexture = Texture.from(hit.uri);
-		//		}
-
-		//		let attack = playerAttackTemplates.find(x => x.tag == PlayerRideTemplate.AIR_BALLOON);
-		//		if (attack) {
-		//			this.playerAttackTexture = Texture.from(attack.uri);
-		//		}
-				
-		//	} break;
-		//	case PlayerRideTemplate.CHOPPER: {
-		//		let idle = playerIdleTemplates.find(x => x.tag == PlayerRideTemplate.CHOPPER);
-		//		if (idle) {
-		//			this.playerIdleTexture = Texture.from(idle.uri);
-		//		}
-
-		//		let win = playerWinTemplates.find(x => x.tag == PlayerRideTemplate.CHOPPER);
-		//		if (win) {
-		//			this.playerWinTexture = Texture.from(win.uri);
-		//		}
-
-		//		let hit = playerHitTemplates.find(x => x.tag == PlayerRideTemplate.CHOPPER);
-		//		if (hit) {
-		//			this.playerHitTexture = Texture.from(hit.uri);
-		//		}
-
-		//		let attack = playerAttackTemplates.find(x => x.tag == PlayerRideTemplate.CHOPPER);
-		//		if (attack) {
-		//			this.playerAttackTexture = Texture.from(attack.uri);
-		//		}
-		//	} break;			
-		//	case PlayerRideTemplate.SPHERE: {
-		//		let idle = playerIdleTemplates.find(x => x.tag == PlayerRideTemplate.SPHERE);
-		//		if (idle) {
-		//			this.playerIdleTexture = Texture.from(idle.uri);
-		//		}
-
-		//		let win = playerWinTemplates.find(x => x.tag == PlayerRideTemplate.SPHERE);
-		//		if (win) {
-		//			this.playerWinTexture = Texture.from(win.uri);
-		//		}
-
-		//		let hit = playerHitTemplates.find(x => x.tag == PlayerRideTemplate.SPHERE);
-		//		if (hit) {
-		//			this.playerHitTexture = Texture.from(hit.uri);
-		//		}
-
-		//		let attack = playerAttackTemplates.find(x => x.tag == PlayerRideTemplate.SPHERE);
-		//		if (attack) {
-		//			this.playerAttackTexture = Texture.from(attack.uri);
-		//		}
-		//	} break;
-		//	default: break;
-		//}
-
 		this.setTexture(this.playerIdleTexture);
 
 		// add chopper animation sprite
 
-		switch (playerRideTemplate) {			
+		switch (playerRideTemplate) {
 			case PlayerRideTemplate.CHOPPER: {
 				this.addTexture(this.chopperBladesTexture);
 				this.chopperBladesSprite = this.getSpriteAt(1);
@@ -233,6 +165,87 @@ export class PlayerRide extends GameObjectContainer {
 		}
 	}
 
+	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
+
+		if (controller.joystickActivated) {
+
+			switch (this.playerRideTemplate) {
+				case PlayerRideTemplate.AIR_BALLOON: {
+					this.x += controller.velocity.x;
+					this.y += controller.velocity.y;
+				} break;
+				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
+					this.x += controller.velocity.x + 1;
+					this.y += controller.velocity.y + 1;
+					this.animateChopperBlades();
+				} break;
+				case PlayerRideTemplate.SPHERE: { // sphere grants extra speed
+					this.x += controller.velocity.x + 1;
+					this.y += controller.velocity.y + 1;					
+				} break;
+				default: break;
+			}
+
+			this.x += controller.velocity.x;
+			this.y += controller.velocity.y;
+		}
+		else {
+
+			switch (this.playerRideTemplate) {
+				case PlayerRideTemplate.AIR_BALLOON: {
+					this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * controller.power;
+				} break;
+				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
+					this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 1) * controller.power;
+					this.animateChopperBlades();
+				} break;
+				case PlayerRideTemplate.SPHERE: {
+					this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 1) * controller.power;
+				} break;
+				default: break;
+			}
+
+			let halfHeight = this.height / 2;
+			let halfWidth = this.width / 2;
+
+			if (controller.isMoveUp && controller.isMoveLeft) {
+				if (this.y + halfHeight > 0 && this.x + halfWidth > 0)
+					this.moveUpLeft();
+			}
+			else if (controller.isMoveUp && controller.isMoveRight) {
+				if (this.x - halfWidth < sceneWidth && this.y + halfHeight > 0)
+					this.moveUpRight();
+			}
+			else if (controller.isMoveUp) {
+				if (this.y + halfHeight > 0)
+					this.moveUp();
+			}
+			else if (controller.isMoveDown && controller.isMoveRight) {
+				if (this.getBottom() - halfHeight < sceneHeight && this.x - halfWidth < sceneWidth)
+					this.moveDownRight();
+			}
+			else if (controller.isMoveDown && controller.isMoveLeft) {
+				if (this.x + halfWidth > 0 && this.getBottom() - halfHeight < sceneHeight)
+					this.moveDownLeft();
+			}
+			else if (controller.isMoveDown) {
+				if (this.getBottom() - halfHeight < sceneHeight)
+					this.moveDown();
+			}
+			else if (controller.isMoveRight) {
+				if (this.x - halfWidth < sceneWidth)
+					this.moveRight();
+			}
+			else if (controller.isMoveLeft) {
+				if (this.x + halfWidth > 0)
+					this.moveLeft();
+			}
+			else {
+				this.stopMovement();
+			}
+		}
+	}
+
 	override moveUp() {
 		super.moveUp();
 		this.movementDirection = MovementDirection.Up;
@@ -295,81 +308,7 @@ export class PlayerRide extends GameObjectContainer {
 		this.movementStopDelay = this.movementStopDelayDefault;
 		this.lastSpeed = this.speed;
 		this.rotate(RotationDirection.Backward, this.rotationThreadhold, this.rotationSpeed);
-	}
-
-	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
-
-		if (controller.joystickActivated) {
-
-			switch (this.playerRideTemplate) {
-				case PlayerRideTemplate.AIR_BALLOON: {
-					this.x += controller.velocity.x;
-					this.y += controller.velocity.y;
-				} break;
-				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
-					this.x += controller.velocity.x + 1;
-					this.y += controller.velocity.y + 1;
-					this.animateChopperBlades();
-				} break;
-				default: break;
-			}
-
-			this.x += controller.velocity.x;
-			this.y += controller.velocity.y;
-		}
-		else {
-
-			switch (this.playerRideTemplate) {
-				case PlayerRideTemplate.AIR_BALLOON: {
-					this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * controller.power;
-				} break;
-				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
-					this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 1) * controller.power;
-					this.animateChopperBlades();
-				} break;
-				default: break;
-			}
-
-			let halfHeight = this.height / 2;
-			let halfWidth = this.width / 2;
-
-			if (controller.isMoveUp && controller.isMoveLeft) {
-				if (this.y + halfHeight > 0 && this.x + halfWidth > 0)
-					this.moveUpLeft();
-			}
-			else if (controller.isMoveUp && controller.isMoveRight) {
-				if (this.x - halfWidth < sceneWidth && this.y + halfHeight > 0)
-					this.moveUpRight();
-			}
-			else if (controller.isMoveUp) {
-				if (this.y + halfHeight > 0)
-					this.moveUp();
-			}
-			else if (controller.isMoveDown && controller.isMoveRight) {
-				if (this.getBottom() - halfHeight < sceneHeight && this.x - halfWidth < sceneWidth)
-					this.moveDownRight();
-			}
-			else if (controller.isMoveDown && controller.isMoveLeft) {
-				if (this.x + halfWidth > 0 && this.getBottom() - halfHeight < sceneHeight)
-					this.moveDownLeft();
-			}
-			else if (controller.isMoveDown) {
-				if (this.getBottom() - halfHeight < sceneHeight)
-					this.moveDown();
-			}
-			else if (controller.isMoveRight) {
-				if (this.x - halfWidth < sceneWidth)
-					this.moveRight();
-			}
-			else if (controller.isMoveLeft) {
-				if (this.x + halfWidth > 0)
-					this.moveLeft();
-			}
-			else {
-				this.stopMovement();
-			}
-		}
-	}
+	}	
 
 	private animateChopperBlades() {
 

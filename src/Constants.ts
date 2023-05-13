@@ -257,7 +257,7 @@ export abstract class Constants {
 	public static CHOPPER_UNLOCK_LEVEL: number = 3; // 3
 	public static CHOPPER_UNLOCKED: boolean = false;
 
-	public static SPHERE_UNLOCK_LEVEL: number = 7; // 7
+	public static SPHERE_UNLOCK_LEVEL: number = 0; // 7
 	public static SPHERE_UNLOCKED: boolean = false;
 
 	public static GAME_TITLE_FONT = "stitchnschool";
@@ -321,11 +321,10 @@ export abstract class Constants {
 		new TextureTemplate(TextureType.PLAYER_RIDE_WIN, "player_sphere_1_win", PlayerRideTemplate.SPHERE),
 		new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_sphere_1_hit", PlayerRideTemplate.SPHERE),
 
-		new TextureTemplate(TextureType.PLAYER_RIDE_IDLE, "player_balloon_2_idle"),
-		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_balloon_2_attack"),
-		new TextureTemplate(TextureType.PLAYER_RIDE_WIN, "player_balloon_2_win"),
-		new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_balloon_2_hit"),
-
+		//new TextureTemplate(TextureType.PLAYER_RIDE_IDLE, "player_balloon_2_idle"),
+		//new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_balloon_2_attack"),
+		//new TextureTemplate(TextureType.PLAYER_RIDE_WIN, "player_balloon_2_win"),
+		//new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_balloon_2_hit"),
 
 		new TextureTemplate(TextureType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_1", PlayerGroundBombTemplate.GRENADE),
 		new TextureTemplate(TextureType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_2", PlayerGroundBombTemplate.GRENADE),
