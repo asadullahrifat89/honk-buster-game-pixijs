@@ -1857,21 +1857,18 @@ export class GamePlayScene extends Container implements IScene {
 
 			switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
 				case PlayerAirBombTemplate.GRAVITY_BALL: {
-					sprite.width = this.playerAirBombSize.width / 1.5;
-					sprite.height = this.playerAirBombSize.height / 1.5;
-
+					sprite.width = this.playerAirBombSize.width / 2;
+					sprite.height = this.playerAirBombSize.height / 2;
 					gameObject.setTemplate(PlayerAirBombTemplate.GRAVITY_BALL);
 				} break;
 				case PlayerAirBombTemplate.MISSILE: {
 					sprite.width = this.playerAirBombSize.width;
 					sprite.height = this.playerAirBombSize.height;
-
 					gameObject.setTemplate(PlayerAirBombTemplate.MISSILE);
 				} break;
 				case PlayerAirBombTemplate.BULLET_BALL: {
-					sprite.width = this.playerAirBombSize.width / 1.5;
-					sprite.height = this.playerAirBombSize.height / 1.5;
-
+					sprite.width = this.playerAirBombSize.width / 2;
+					sprite.height = this.playerAirBombSize.height / 2;
 					gameObject.setTemplate(PlayerAirBombTemplate.BULLET_BALL);
 				} break;
 				default: break;
@@ -2085,7 +2082,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerAirBombHurlingBalls
 
-	private playerAirBombBullsEyeSize = { width: 70, height: 70 };
+	private playerAirBombBullsEyeSize = { width: 60, height: 60 };
 	private playerAirBombBullsEyeGameObjects: Array<PlayerAirBombHurlingBall> = [];
 
 	spawnPlayerAirBombHurlingBalls() {
@@ -2441,7 +2438,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region UfoEnemyAirBombs
 
-	private ufoEnemyRocketSize = { width: 85, height: 85 };
+	private ufoEnemyRocketSize = { width: 65, height: 65 };
 	private ufoEnemyRocketGameObjects: Array<UfoEnemyAirBomb> = [];
 
 	spawnUfoEnemyAirBombs() {
@@ -3356,7 +3353,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region UfoBossAirBombSeekingBalls
 
-	private ufoBossRocketSeekingSize = { width: 75, height: 75 };
+	private ufoBossRocketSeekingSize = { width: 60, height: 60 };
 	private ufoBossRocketSeekingGameObjects: Array<UfoBossAirBombSeekingBall> = [];
 
 	private readonly ufoBossRocketSeekingPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -3973,7 +3970,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region MafiaBossAirBombHurlingBalls
 
-	private mafiaBossRocketBullsEyeSize = { width: 70, height: 70 };
+	private mafiaBossRocketBullsEyeSize = { width: 60, height: 60 };
 	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossAirBombHurlingBall> = [];
 
 	private readonly mafiaBossRocketBullsEyePopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;

@@ -33,7 +33,7 @@ export class SceneManager {
 			width: width,
 			height: height,
 			sharedTicker: true,
-			useContextAlpha: false,
+			// useContextAlpha: false,
 		});
 
 		// Add the ticker
