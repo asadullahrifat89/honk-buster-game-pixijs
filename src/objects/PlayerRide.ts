@@ -207,42 +207,42 @@ export class PlayerRide extends GameObjectContainer {
 
 	private moveWithKeyboard(controller: GameController, sceneWidth: number, sceneHeight: number) {
 
-        if (controller.isMoveUp && controller.isMoveLeft) {
-            if (this.getTop() > 0 && this.getLeft() > 0)
-                this.moveUpLeft();
-        }
-        else if (controller.isMoveUp && controller.isMoveRight) {
-            if (this.getRight() < sceneWidth && this.getTop() > 0)
-                this.moveUpRight();
-        }
-        else if (controller.isMoveUp) {
-            if (this.getTop() > 0)
-                this.moveUp();
-        }
-        else if (controller.isMoveDown && controller.isMoveRight) {
-            if (this.getBottom() < sceneHeight && this.getRight() < sceneWidth)
-                this.moveDownRight();
-        }
-        else if (controller.isMoveDown && controller.isMoveLeft) {
-            if (this.getLeft() > 0 && this.getBottom() < sceneHeight)
-                this.moveDownLeft();
-        }
-        else if (controller.isMoveDown) {
-            if (this.getBottom() < sceneHeight)
-                this.moveDown();
-        }
-        else if (controller.isMoveRight) {
-            if (this.getRight() < sceneWidth)
-                this.moveRight();
-        }
-        else if (controller.isMoveLeft) {
-            if (this.getLeft() > 0)
-                this.moveLeft();
-        }
-        else {
-            this.stopMovement();
-        }
-    }
+		if (controller.isMoveUp && controller.isMoveLeft) {
+			if (this.getTop() > 0 && this.getLeft() > 0)
+				this.moveUpLeft();
+		}
+		else if (controller.isMoveUp && controller.isMoveRight) {
+			if (this.getRight() < sceneWidth && this.getTop() > 0)
+				this.moveUpRight();
+		}
+		else if (controller.isMoveUp) {
+			if (this.getTop() > 0)
+				this.moveUp();
+		}
+		else if (controller.isMoveDown && controller.isMoveRight) {
+			if (this.getBottom() < sceneHeight && this.getRight() < sceneWidth)
+				this.moveDownRight();
+		}
+		else if (controller.isMoveDown && controller.isMoveLeft) {
+			if (this.getLeft() > 0 && this.getBottom() < sceneHeight)
+				this.moveDownLeft();
+		}
+		else if (controller.isMoveDown) {
+			if (this.getBottom() < sceneHeight)
+				this.moveDown();
+		}
+		else if (controller.isMoveRight) {
+			if (this.getRight() < sceneWidth)
+				this.moveRight();
+		}
+		else if (controller.isMoveLeft) {
+			if (this.getLeft() > 0)
+				this.moveLeft();
+		}
+		else {
+			this.stopMovement(sceneWidth, sceneHeight);
+		}
+	}
 
 	private moveWithJoystick(sceneWidth: number, sceneHeight: number, controller: GameController, xyModifier: number = 0) {
 		if (controller.velocity.x < 0 && this.getLeft() > 0) {
@@ -352,50 +352,58 @@ export class PlayerRide extends GameObjectContainer {
 		}
 	}
 
-	stopMovement() {
-		if (this.movementStopDelay > 0) {
-			this.movementStopDelay--;
+	stopMovement(sceneWidth: number, sceneHeight: number) {
+		if (this.getLeft() > 0 && this.getRight() < sceneWidth && this.getTop() > 0 && this.getBottom() < sceneHeight) {
+			if (this.movementStopDelay > 0) {
+				this.movementStopDelay--;
 
-			let movementSpeedLoss = this.movementStopSpeedLoss;
-			this.speed = this.lastSpeed - movementSpeedLoss;
+				let movementSpeedLoss = this.movementStopSpeedLoss;
+				this.speed = this.lastSpeed - movementSpeedLoss;
 
-			if (this.lastSpeed > 0) {
-				switch (this.movementDirection) {
-					case MovementDirection.None:
-						break;
-					case MovementDirection.Up:
-						this.moveUp();
-						break;
-					case MovementDirection.UpLeft:
-						this.moveUpLeft();
-						break;
-					case MovementDirection.UpRight:
-						this.moveUpRight();
-						break;
-					case MovementDirection.Down:
-						this.moveDown();
-						break;
-					case MovementDirection.DownLeft:
-						this.moveDownLeft();
-						break;
-					case MovementDirection.DownRight:
-						this.moveDownRight();
-						break;
-					case MovementDirection.Right:
-						this.moveRight();
-						break;
-					case MovementDirection.Left:
-						this.moveLeft();
-						break;
-					default:
-						break;
+				if (this.lastSpeed > 0) {
+					switch (this.movementDirection) {
+						case MovementDirection.None:
+							break;
+						case MovementDirection.Up:
+							this.moveUp();
+							break;
+						case MovementDirection.UpLeft:
+							this.moveUpLeft();
+							break;
+						case MovementDirection.UpRight:
+							this.moveUpRight();
+							break;
+						case MovementDirection.Down:
+							this.moveDown();
+							break;
+						case MovementDirection.DownLeft:
+							this.moveDownLeft();
+							break;
+						case MovementDirection.DownRight:
+							this.moveDownRight();
+							break;
+						case MovementDirection.Right:
+							this.moveRight();
+							break;
+						case MovementDirection.Left:
+							this.moveLeft();
+							break;
+						default:
+							break;
+					}
 				}
-			}
 
-			this.unRotate(this.unrotationSpeed);
+				this.unRotate(this.unrotationSpeed);
+			}
+			else {
+				this.movementDirection = MovementDirection.None;
+			}
 		}
 		else {
-			this.movementDirection = MovementDirection.None;
+			if (this.movementStopDelay > 0) {
+				this.movementStopDelay--;
+				this.unRotate(this.unrotationSpeed);
+			}
 		}
 	}
 
