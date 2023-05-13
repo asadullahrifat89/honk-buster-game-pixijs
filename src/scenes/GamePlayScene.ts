@@ -459,6 +459,35 @@ export class GamePlayScene extends Container implements IScene {
 		this.gameScoreBar.gainScore(score);
 	}
 
+	private pauseGame() {
+		if (this.anyBossExists()) {
+			SoundManager.pause(SoundType.BOSS_BACKGROUND_MUSIC);
+
+			if (this.anyInAirBossExists()) {
+				SoundManager.pause(SoundType.UFO_HOVERING);
+			}
+		}
+		else {
+			SoundManager.pause(SoundType.GAME_BACKGROUND_MUSIC);
+		}
+
+		if (this.ufoEnemyExists()) {
+			SoundManager.pause(SoundType.UFO_HOVERING);
+		}
+
+		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
+			case PlayerRideTemplate.CHOPPER: { SoundManager.pause(SoundType.CHOPPER_HOVERING); } break;
+			case PlayerRideTemplate.SPHERE: { SoundManager.pause(SoundType.SPHERE_FLOATING); } break;
+			default:
+		}
+
+		SoundManager.pause(SoundType.AMBIENCE);
+
+		this.generateOnScreenMessage("Game paused", this.behindBackIcon);
+
+		this.sceneContainer.filters = [new BlurFilter()];
+	}
+
 	private resumeGame() {
 		if (this.anyBossExists()) {
 			SoundManager.resume(SoundType.BOSS_BACKGROUND_MUSIC);
@@ -488,35 +517,6 @@ export class GamePlayScene extends Container implements IScene {
 		}
 
 		this.sceneContainer.filters = null;
-	}
-
-	private pauseGame() {
-		if (this.anyBossExists()) {
-			SoundManager.pause(SoundType.BOSS_BACKGROUND_MUSIC);
-
-			if (this.anyInAirBossExists()) {
-				SoundManager.pause(SoundType.UFO_HOVERING);
-			}
-		}
-		else {
-			SoundManager.pause(SoundType.GAME_BACKGROUND_MUSIC);
-		}
-
-		if (this.ufoEnemyExists()) {
-			SoundManager.pause(SoundType.UFO_HOVERING);
-		}
-
-		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
-			case PlayerRideTemplate.CHOPPER: { SoundManager.pause(SoundType.CHOPPER_HOVERING); } break;
-			case PlayerRideTemplate.SPHERE: { SoundManager.pause(SoundType.SPHERE_FLOATING); } break;
-			default:
-		}
-
-		SoundManager.pause(SoundType.AMBIENCE);
-
-		this.generateOnScreenMessage("Game paused", this.behindBackIcon);
-
-		this.sceneContainer.filters = [new BlurFilter()];
 	}
 
 	private gameOver() {
