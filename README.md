@@ -7,22 +7,29 @@ An arcade game built using PixiJS to raise awareness against sound pollution in 
 Welcome to Honky Roads, a game where you are out to put a stop honking.
 
 ### Game Features
-- Sound effects
-- Difficulty scaling
-- Score based boss encounters
-- Angular velocity based projectiles
-- Level based unlockable characters, rides, and bombs
+These are some features currently in effect.
 
-### Game Implementations
+- Visual effects
+- Sound effects
+- Difficulty scaling with gameplay
+- Isometric & angular velocity based projectiles
+- Level based boss encounters
+- Level based unlockable characters, rides, and bombs
+- Level based perks, health, & ammunition scaling
+
+### Game Components
+Here are some components that you can reuse in your game.
+
 - Game controller supporting pause, resume, and quit
-- Spritesheet animation
-- Responsive UI scaling
+- Game object sprite supporting texture swap, positioning, with static & spritesheet textures
+- Game object container supporting various animations, & physics effects i.e pop, hop, hover, fade, expand, shrink along with positioning and on demand rendering
+- Keyboard controls with arrow keys
+- Joystick controls with power, angle, direction detection, & velocity
+- Scene manager for handling scenes with update frame, resize, scaling functions with transition effects
+- Sound manager for handling sound effects with play, pause, resume, & stop functions
+- Healthbars with labels & icons
+- Viewport scaling
 - Isometric movement
-- Keyboard controls
-- Joystick controls
-- Scene manager
-- Sound manager
-- Healthbar
 
 Play here: https://asadullahrifat89.github.io/honk-buster-game-pixijs/
 
