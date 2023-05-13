@@ -99,19 +99,19 @@ export abstract class Constants {
 		new TextureTemplate(TextureType.VEHICLE_ENEMY_LARGE, "vehicle_large_5"),
 
 		new TextureTemplate(TextureType.PLAYER_RIDE_IDLE, "player_balloon_1_idle", PlayerRideTemplate.AIR_BALLOON),
-		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_balloon_1_attack", PlayerRideTemplate.AIR_BALLOON),
 		new TextureTemplate(TextureType.PLAYER_RIDE_WIN, "player_balloon_1_win", PlayerRideTemplate.AIR_BALLOON),
 		new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_balloon_1_hit", PlayerRideTemplate.AIR_BALLOON),
+		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_balloon_1_attack", PlayerRideTemplate.AIR_BALLOON),
 
 		new TextureTemplate(TextureType.PLAYER_RIDE_IDLE, "player_chopper_1_idle", PlayerRideTemplate.CHOPPER),
-		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_chopper_1_attack", PlayerRideTemplate.CHOPPER),
 		new TextureTemplate(TextureType.PLAYER_RIDE_WIN, "player_chopper_1_win", PlayerRideTemplate.CHOPPER),
 		new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_chopper_1_hit", PlayerRideTemplate.CHOPPER),
+		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_chopper_1_attack", PlayerRideTemplate.CHOPPER),
 
 		new TextureTemplate(TextureType.PLAYER_RIDE_IDLE, "player_sphere_1_idle", PlayerRideTemplate.SPHERE),
-		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_sphere_1_attack", PlayerRideTemplate.SPHERE),
 		new TextureTemplate(TextureType.PLAYER_RIDE_WIN, "player_sphere_1_win", PlayerRideTemplate.SPHERE),
-		new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_sphere_1_hit", PlayerRideTemplate.SPHERE),		
+		new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_sphere_1_hit", PlayerRideTemplate.SPHERE),
+		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_sphere_1_attack", PlayerRideTemplate.SPHERE),
 
 		new TextureTemplate(TextureType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_1", PlayerGroundBombTemplate.GRENADE),
 		new TextureTemplate(TextureType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_2", PlayerGroundBombTemplate.GRENADE),

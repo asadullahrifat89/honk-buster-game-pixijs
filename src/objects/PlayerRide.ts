@@ -60,34 +60,28 @@ export class PlayerRide extends GameObjectContainer {
 
 		this.playerRideTemplate = playerRideTemplate;
 
-		let playerIdleTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_IDLE);
-		let playerWinTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_WIN);
-		let playerHitTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_HIT);
-		let playerAttackTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_ATTACK);
+		let playerIdleTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == TextureType.PLAYER_RIDE_IDLE && x.tag == playerRideTemplate);
+		let playerWinTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == TextureType.PLAYER_RIDE_WIN && x.tag == playerRideTemplate);
+		let playerHitTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == TextureType.PLAYER_RIDE_HIT && x.tag == playerRideTemplate);
+		let playerAttackTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == TextureType.PLAYER_RIDE_ATTACK && x.tag == playerRideTemplate);
 
-		let idle = playerIdleTemplates.find(x => x.tag == playerRideTemplate);
-		if (idle) {
-			this.playerIdleTexture = Texture.from(idle.uri);
+		if (playerIdleTemplate) {
+			this.playerIdleTexture = Texture.from(playerIdleTemplate.uri);
+		}		
+
+		if (playerHitTemplate) {
+			this.playerHitTexture = Texture.from(playerHitTemplate.uri);
 		}
 
-		let win = playerWinTemplates.find(x => x.tag == playerRideTemplate);
-		if (win) {
-			this.playerWinTexture = Texture.from(win.uri);
+		if (playerWinTemplate) {
+			this.playerWinTexture = Texture.from(playerWinTemplate.uri);
 		}
-
-		let hit = playerHitTemplates.find(x => x.tag == playerRideTemplate);
-		if (hit) {
-			this.playerHitTexture = Texture.from(hit.uri);
-		}
-
-		let attack = playerAttackTemplates.find(x => x.tag == playerRideTemplate);
-		if (attack) {
-			this.playerAttackTexture = Texture.from(attack.uri);
+		
+		if (playerAttackTemplate) {
+			this.playerAttackTexture = Texture.from(playerAttackTemplate.uri);
 		}
 
 		this.setTexture(this.playerIdleTexture);
-
-		// add chopper animation sprite
 
 		switch (playerRideTemplate) {
 			case PlayerRideTemplate.CHOPPER: {
