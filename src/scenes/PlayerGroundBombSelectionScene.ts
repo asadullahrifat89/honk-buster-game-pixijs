@@ -10,6 +10,7 @@ import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
 import { PlayerGearSelectionScene } from "./PlayerGearSelectionScene";
 import { SelectionButton } from "../controls/SelectionButton";
+import { LabeledIcon } from "../controls/LabeledIcon";
 
 
 export class PlayerGroundBombSelectionScene extends Container implements IScene {
@@ -59,6 +60,9 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			grenade_button.unselect();
 			dynamite_button.unselect();
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.TRASH_BIN;
+
+			scoreMod.setLabel("1");
+			hitPattern.setLabel("Hit");
 		});
 
 		trash_bin_button.setPosition((this.uiContainer.width / 2 - trash_bin_button.width * 2), (this.uiContainer.height / 2 - trash_bin_button.height / 2) + 10);
@@ -78,6 +82,9 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			trash_bin_button.unselect();
 			dynamite_button.unselect();
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.GRENADE;
+
+			scoreMod.setLabel("2");
+			hitPattern.setLabel("Blast");
 
 		}, Constants.GRENADE_UNLOCKED);
 
@@ -99,10 +106,25 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			grenade_button.unselect();
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.DYNAMITE;
 
+			scoreMod.setLabel("3");
+			hitPattern.setLabel("Blast + Timer");
+
 		}, Constants.DYNAMITE_UNLOCKED);
 
 		dynamite_button.setPosition((this.uiContainer.width / 2 + dynamite_button.width), (this.uiContainer.height / 2 - dynamite_button.height / 2) + 10);
 		this.uiContainer.addChild(dynamite_button);
+
+		//#endregion
+
+		//#region info
+
+		const scoreMod = new LabeledIcon("attack_button", 50, 50, "?")
+		scoreMod.setPosition(this.uiContainer.width / 2 - scoreMod.width * 2, this.uiContainer.height - scoreMod.height * 2.5);
+		this.uiContainer.addChild(scoreMod);
+
+		const hitPattern = new LabeledIcon("powerup_pickup_bulls_eye", 50, 50, "?")
+		hitPattern.setPosition(this.uiContainer.width / 2 + hitPattern.width * 1, this.uiContainer.height - hitPattern.height * 2.5);
+		this.uiContainer.addChild(hitPattern);
 
 		//#endregion
 

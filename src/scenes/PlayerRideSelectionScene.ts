@@ -113,7 +113,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 
 		//#endregion
 
-		//#region ride health
+		//#region info
 
 		const rideHealth = new LabeledIcon("health_pickup", 50, 50, "?")
 		rideHealth.setPosition(this.uiContainer.width / 2 - rideHealth.width * 2, this.uiContainer.height - rideHealth.height * 2.5);

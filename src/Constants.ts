@@ -33,7 +33,7 @@ export abstract class Constants {
 	public static HEALTH_LEVEL_MAX: number = 0;
 	public static ATTACK_LEVEL_MAX: number = 0;
 
-	//TODO: reset these to the default values after testing
+	//TODO: reset these to the commented values after testing
 	public static MISSILE_UNLOCK_LEVEL: number = 3; // 3
 	public static MISSILE_UNLOCKED: boolean = false;
 
