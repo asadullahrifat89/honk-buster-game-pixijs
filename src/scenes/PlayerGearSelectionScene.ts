@@ -107,6 +107,10 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 				rideTexture = "player_ride_2";
 				rideName = "Chopper";
 			} break;
+			case PlayerRideTemplate.SPHERE: {
+				rideTexture = "player_ride_3";
+				rideName = "Sphere";
+			} break;
 			default: {
 				rideTexture = "player_ride_1";
 				rideName = "Ride?";

@@ -66,6 +66,7 @@ export const manifest: ResolverManifest = {
 
 				"player_ride_1": "./images/player_ride_1.png",
 				"player_ride_2": "./images/player_ride_2.png",
+				"player_ride_3": "./images/player_ride_3.png",
 
 				"player_balloon_1_attack": "./images/player_balloon_1_attack.png",
 				"player_balloon_1_hit": "./images/player_balloon_1_hit.png",
