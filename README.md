@@ -37,9 +37,9 @@ Here are some components that you can reuse in your game.
 Play here: https://asadullahrifat89.github.io/honk-buster-game-pixijs/
 
 ## Screenshots
+![iPad-frame-1](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/b70cb581-be8b-40d1-b210-f59d02859b2a)
+![iPad-frame-2](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/d0ac9b69-e3ca-4e1e-aabd-ee9f6e020b4e)
+![iPad-frame-3](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/5b827338-9685-4272-be4a-c5bf96501e00)
+![iPad-frame-4](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/58f545e4-e9c4-4a8d-bfb9-408ee022aa34)
+![iPad-frame-5](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/d946e039-fc4d-44fa-b523-c10212e02ba4)
 
-![1](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/ed6c30ec-63fd-4abf-9676-6a684f55b6b5)
-![2](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/004c4030-2a59-4fe1-9fac-81184d6f892f)
-![3](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/dbff82fb-9b5d-4fd3-b836-20511ecc4dbc)
-![4](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/cfe5a816-f8e3-4ef9-99ed-b3274f73ae1c)
-![5](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/d28ee954-9004-4b4d-9095-f9d427e1fdd4)
