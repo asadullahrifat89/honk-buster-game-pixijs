@@ -1,6 +1,6 @@
 import { BlurFilter, Container, Graphics, Texture } from "pixi.js";
 import { GameObjectContainer } from '../core/GameObjectContainer';
-import { Constants, TextureType, ExplosionType, PlayerGroundBombTemplate, PlayerRideTemplate, PlayerAirBombTemplate, PowerUpType, RotationDirection, SoundType } from '../Constants';
+import { Constants} from '../Constants';
 import { GameOverScene } from "./GameOverScene";
 import { IScene } from "../managers/IScene";
 import { GameController } from "../controls/GameController";
@@ -39,6 +39,7 @@ import { RoadMark } from "../objects/RoadMark";
 import { GrandExplosionRing } from "../objects/GrandExplosionRing";
 import { Leaf } from "../objects/Leaf";
 import { VehicleSmoke } from "../objects/VehicleSmoke";
+import { TextureType, PlayerGroundBombTemplate, PlayerRideTemplate, SoundType, PlayerAirBombTemplate, RotationDirection, ExplosionType, PowerUpType } from "../Enums";
 
 
 export class GamePlayScene extends Container implements IScene {

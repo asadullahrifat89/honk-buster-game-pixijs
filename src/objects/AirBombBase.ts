@@ -1,5 +1,6 @@
-﻿import { Constants, SoundType } from '../Constants';
+﻿import { Constants } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
+import { SoundType } from '../Enums';
 import { SoundManager } from '../managers/SoundManager';
 
 

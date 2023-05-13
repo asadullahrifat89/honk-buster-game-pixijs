@@ -1,5 +1,6 @@
-﻿import { Constants, TextureType, PlayerGroundBombTemplate, PlayerRideTemplate, SoundType } from '../Constants';
+﻿import { Constants } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
+import { PlayerGroundBombTemplate, TextureType, SoundType, PlayerRideTemplate } from '../Enums';
 import { SoundManager } from '../managers/SoundManager';
 import { PlayerRide } from './PlayerRide';
 

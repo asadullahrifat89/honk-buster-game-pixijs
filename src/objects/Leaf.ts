@@ -1,5 +1,6 @@
-﻿import { Constants, TextureType } from '../Constants';
+﻿import { Constants } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
+import { TextureType } from '../Enums';
 import { SceneManager } from '../managers/SceneManager';
 
 

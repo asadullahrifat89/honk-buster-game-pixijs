@@ -1,8 +1,9 @@
 ﻿import { Texture } from 'pixi.js';
-import { Constants, TextureType, MovementDirection, PlayerRideStance, PlayerRideTemplate, RotationDirection, SoundType } from '../Constants';
+import { Constants } from '../Constants';
 import { GameController } from '../controls/GameController';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { GameObjectSprite } from '../core/GameObjectSprite';
+import { PlayerRideStance, PlayerRideTemplate, MovementDirection, TextureType, RotationDirection, SoundType } from '../Enums';
 import { SceneManager } from '../managers/SceneManager';
 import { SoundManager } from '../managers/SoundManager';
 

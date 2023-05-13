@@ -2,13 +2,14 @@
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
-import { Constants, TextureType, PlayerAirBombTemplate, SoundType } from "../Constants";
+import { Constants } from "../Constants";
 import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
 import { PlayerGearSelectionScene } from "./PlayerGearSelectionScene";
 import { SelectionButton } from "../controls/SelectionButton";
+import { TextureType, SoundType, PlayerAirBombTemplate } from "../Enums";
 
 
 export class PlayerAirBombSelectionScene extends Container implements IScene {

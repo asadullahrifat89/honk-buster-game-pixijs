@@ -1,6 +1,7 @@
 ﻿import { Container, Texture } from 'pixi.js';
-import { Constants, SoundType } from '../Constants';
+import { Constants } from '../Constants';
 import { GameObjectSprite } from '../core/GameObjectSprite';
+import { SoundType } from '../Enums';
 import { SceneManager } from '../managers/SceneManager';
 import { SoundManager } from '../managers/SoundManager';
 import { Button } from './Button';

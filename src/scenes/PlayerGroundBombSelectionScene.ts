@@ -2,7 +2,8 @@
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
-import { Constants, TextureType, PlayerGroundBombTemplate, SoundType } from "../Constants";
+import { Constants } from "../Constants";
+import { TextureType, PlayerGroundBombTemplate, SoundType } from "../Enums";
 import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
@@ -95,7 +96,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
 			dynamite_button.select();
 			trash_bin_button.unselect();
-			grenade_button.unselect();			
+			grenade_button.unselect();
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.DYNAMITE;
 
 		}, Constants.DYNAMITE_UNLOCKED);

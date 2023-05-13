@@ -1,7 +1,8 @@
 ﻿import { GrayscaleFilter } from "@pixi/filter-grayscale";
 import { OutlineFilter } from "@pixi/filter-outline";
 import { Container, DisplayObject, FederatedPointerEvent, Graphics, Text, TextStyle, TextStyleAlign } from "pixi.js";
-import { Constants, SoundType } from "../Constants";
+import { Constants } from "../Constants";
+import { SoundType } from "../Enums";
 import { SceneManager } from "../managers/SceneManager";
 import { SoundManager } from "../managers/SoundManager";
 

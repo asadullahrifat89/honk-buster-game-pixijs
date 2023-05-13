@@ -1,4 +1,4 @@
-﻿import { TextureType } from "../Constants";
+﻿import { TextureType } from "../Enums";
 
 export class TextureTemplate {
 

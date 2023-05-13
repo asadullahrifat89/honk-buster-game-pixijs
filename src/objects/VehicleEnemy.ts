@@ -1,6 +1,7 @@
-﻿import { Constants, TextureType } from '../Constants';
+﻿import { Constants } from '../Constants';
 import { VehicleBase } from './VehicleBase';
 import { Texture } from 'pixi.js';
+import { TextureType } from '../Enums';
 
 export class VehicleEnemy extends VehicleBase {
 

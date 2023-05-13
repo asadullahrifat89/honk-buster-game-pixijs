@@ -1,4 +1,4 @@
-﻿import { SoundType } from "../Constants";
+﻿import { SoundType } from "../Enums";
 import { SoundObjectPlayer } from "../core/SoundObjectPlayer";
 
 

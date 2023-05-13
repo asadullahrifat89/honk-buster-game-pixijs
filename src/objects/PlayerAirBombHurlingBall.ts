@@ -1,8 +1,9 @@
 ﻿import { Rectangle } from 'pixi.js';
-import { Constants, TextureType, SoundType } from '../Constants';
+import { Constants } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { AirBombBaseSeekingBall } from './AirBombBaseSeekingBall';
 import { SoundManager } from '../managers/SoundManager';
+import { TextureType, SoundType } from '../Enums';
 
 
 export class PlayerAirBombHurlingBall extends AirBombBaseSeekingBall {
