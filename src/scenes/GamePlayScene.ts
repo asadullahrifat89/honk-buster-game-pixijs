@@ -185,6 +185,7 @@ export class GamePlayScene extends Container implements IScene {
 		// start hovering sound for player ride
 		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
 			case PlayerRideTemplate.CHOPPER: { SoundManager.play(SoundType.CHOPPER_HOVERING, 0.1, true); } break;
+			case PlayerRideTemplate.SPHERE: { SoundManager.play(SoundType.SPHERE_FLOATING, 0.6, true); } break;
 			default:
 		}
 
@@ -452,6 +453,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
 			case PlayerRideTemplate.CHOPPER: { SoundManager.resume(SoundType.CHOPPER_HOVERING); } break;
+			case PlayerRideTemplate.SPHERE: { SoundManager.resume(SoundType.SPHERE_FLOATING); } break;
 			default:
 		}
 
@@ -480,6 +482,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
 			case PlayerRideTemplate.CHOPPER: { SoundManager.pause(SoundType.CHOPPER_HOVERING); } break;
+			case PlayerRideTemplate.SPHERE: { SoundManager.pause(SoundType.SPHERE_FLOATING); } break;
 			default:
 		}
 
@@ -498,6 +501,7 @@ export class GamePlayScene extends Container implements IScene {
 		SoundManager.stop(SoundType.UFO_ENEMY_ENTRY);
 		SoundManager.stop(SoundType.AMBIENCE);
 		SoundManager.stop(SoundType.CHOPPER_HOVERING);
+		SoundManager.stop(SoundType.SPHERE_FLOATING);
 
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
 		Constants.GAME_LEVEL = this.gameLevelBar.getScore();
@@ -2329,7 +2333,7 @@ export class GamePlayScene extends Container implements IScene {
 						this.generateOnScreenMessage("Alien ufos approaching!");
 
 						SoundManager.play(SoundType.UFO_ENEMY_ENTRY);
-						SoundManager.play(SoundType.UFO_HOVERING, 0.6, true);
+						SoundManager.play(SoundType.UFO_HOVERING, 0.8, true);
 					}
 				}
 			}

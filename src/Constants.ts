@@ -162,52 +162,54 @@ export enum TextureType {
 	VEHICLE_SMOKE
 }
 
+
 export enum SoundType {
-	NONE,
+    NONE,
 
-	AMBIENCE,
-	HONK,
+    AMBIENCE,
+    HONK,
 
-	GAME_START,
-	GAME_PAUSE,
-	GAME_OVER,
+    GAME_START,
+    GAME_PAUSE,
+    GAME_OVER,
 
-	GROUND_BOMB_DROP,
+    GROUND_BOMB_DROP,
 
-	GRAND_EXPLOSION_RING,
-	GROUND_BOMB_BLAST,
-	AIR_BOMB_BLAST,
-	TRASH_BIN_BLAST,
+    GRAND_EXPLOSION_RING,
+    GROUND_BOMB_BLAST,
+    AIR_BOMB_BLAST,
+    TRASH_BIN_BLAST,
 
-	BALL_LAUNCH,
-	BULLET_LAUNCH,
-	ORB_LAUNCH,
-	ROCKET_LAUNCH,
-	SEEKER_ROCKET_LAUNCH,
+    BALL_LAUNCH,
+    BULLET_LAUNCH,
+    ORB_LAUNCH,
+    ROCKET_LAUNCH,
+    SEEKER_ROCKET_LAUNCH,
 
-	UFO_HOVERING,
-	CHOPPER_HOVERING,
-	UFO_BOSS_DEAD,
+    UFO_HOVERING,
+    CHOPPER_HOVERING,
+    UFO_BOSS_DEAD,
 
-	POWERUP_PICKUP,
-	HEALTH_PICKUP,
+    POWERUP_PICKUP,
+    HEALTH_PICKUP,
 
-	DAMAGE_TAKEN,
+    DAMAGE_TAKEN,
 
-	UFO_ENEMY_ENTRY,
-	UFO_BOSS_ENTRY,
+    UFO_ENEMY_ENTRY,
+    UFO_BOSS_ENTRY,
 
-	GAME_INTRO_MUSIC,
-	GAME_BACKGROUND_MUSIC,
-	BOSS_BACKGROUND_MUSIC,
+    GAME_INTRO_MUSIC,
+    GAME_BACKGROUND_MUSIC,
+    BOSS_BACKGROUND_MUSIC,
 
-	LEVEL_UP,
+    LEVEL_UP,
 
-	SCORE_ACQUIRED,
-	BOOST_ACQUIRED,
+    SCORE_ACQUIRED,
+    BOOST_ACQUIRED,
 
-	OPTION_SELECT,
-	ITEM_SELECT,
+    OPTION_SELECT,
+    ITEM_SELECT,
+    SPHERE_FLOATING
 }
 
 //#endregion
@@ -410,6 +412,7 @@ export abstract class Constants {
 		new SoundTemplate(SoundType.GRAND_EXPLOSION_RING, this.soundsDirectory + "grand_explosion_3.mp3"),
 
 		new SoundTemplate(SoundType.CHOPPER_HOVERING, this.soundsDirectory + "chopper_hovering.mp3"),
+		new SoundTemplate(SoundType.SPHERE_FLOATING, this.soundsDirectory + "sphere_floating.mp3"),
 
 		new SoundTemplate(SoundType.GROUND_BOMB_DROP, this.soundsDirectory + "ground_bomb_drop_1.mp3"),
 		new SoundTemplate(SoundType.GROUND_BOMB_DROP, this.soundsDirectory + "ground_bomb_drop_2.mp3"),

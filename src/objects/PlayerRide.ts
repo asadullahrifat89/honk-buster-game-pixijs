@@ -94,6 +94,10 @@ export class PlayerRide extends GameObjectContainer {
 				this.chopperBladesSprite = this.getSpriteAt(1);
 				this.chopperBladesSprite.alpha = 1;
 			} break;
+			case PlayerRideTemplate.SPHERE: {
+				this.setHoverSpeed(0.9);
+				this.setHoverIntensity(20);
+			} break;
 			default: break;
 		}
 	}
