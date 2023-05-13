@@ -9,10 +9,12 @@ import { Direction, Joystick, JoystickChangeEvent } from './Joystick';
 
 export interface GameControllerSettings {
 	onPause?: (isPaused: boolean) => void;
-	onQuit?: (/*isQuiting: boolean*/) => void;
+	onQuit?: () => void;
 }
 
 export class GameController extends Container {
+
+	//#region Properties
 
 	private keyboard: any = require('pixi.js-keyboard');
 
@@ -36,6 +38,10 @@ export class GameController extends Container {
 	private joystick: Joystick;
 
 	private pauseButtonSprite: GameObjectSprite;
+
+	//#endregion
+
+	//#region Methods
 
 	constructor(settings: GameControllerSettings) {
 		super();
@@ -246,7 +252,7 @@ export class GameController extends Container {
 		}
 	}
 
-	public pauseGame() {
+	pauseGame() {
 		this.isPaused = true;
 
 		this.pauseButtonSprite.setTexture(Texture.from("play_button"));
@@ -255,20 +261,9 @@ export class GameController extends Container {
 		this.settings.onPause?.(this.isPaused);
 
 		this.quitButton.renderable = true;
-	}
+	}	
 
-	private resumeGame() {
-		this.isPaused = false;
-
-		this.pauseButtonSprite.setTexture(Texture.from("pause_button"));
-		SoundManager.play(SoundType.GAME_START);
-
-		this.settings.onPause?.(this.isPaused);
-
-		this.quitButton.renderable = false;
-	}
-
-	public quitGame() {
+	quitGame() {
 
 		SoundManager.play(SoundType.GAME_OVER);
 
@@ -328,6 +323,24 @@ export class GameController extends Container {
 		}
 	}
 
+	resize() {
+		this.setJoystickPosition();
+		this.setAttackButtonPosition();
+		this.setPauseButtonPosition();
+		this.setQuitButtonPosition();
+	}
+
+	private resumeGame() {
+		this.isPaused = false;
+
+		this.pauseButtonSprite.setTexture(Texture.from("pause_button"));
+		SoundManager.play(SoundType.GAME_START);
+
+		this.settings.onPause?.(this.isPaused);
+
+		this.quitButton.renderable = false;
+	}
+
 	private increasePowerOnKeyboardPress() {
 		if (this.power < 1)
 			this.power += 0.1;
@@ -338,23 +351,16 @@ export class GameController extends Container {
 		}
 
 		//console.log(this.power);
-	}
-
-	resize() {
-		this.setJoystickPosition();
-		this.setAttackButtonPosition();
-		this.setPauseButtonPosition();
-		this.setQuitButtonPosition();
-	}
+	}	
 
 	private setPauseButtonPosition() {
 		this.pauseButton.x = SceneManager.width - this.pauseButton.width * 1.1;
-		this.pauseButton.y = this.pauseButton.height / 2.1;
+		this.pauseButton.y = this.pauseButton.height / 1.5;
 	}
 
 	private setQuitButtonPosition() {
 		this.quitButton.x = SceneManager.width - this.quitButton.width * 1.1;
-		this.quitButton.y = this.quitButton.height / 2.1 + 60;
+		this.quitButton.y = this.pauseButton.y + 60;
 	}
 
 	private setAttackButtonPosition() {
@@ -366,4 +372,6 @@ export class GameController extends Container {
 		this.joystick.x = SceneManager.width - this.joystick.width / 1.4;
 		this.joystick.y = SceneManager.height - this.joystick.height / 1.4;
 	}
+
+	//#endregion
 }
