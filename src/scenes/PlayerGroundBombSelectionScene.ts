@@ -46,7 +46,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			fill: "#ffffff",
 		});
 		title.x = this.uiContainer.width / 2 - title.width / 2;
-		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
+		title.y = (this.uiContainer.height / 2 - title.height / 2) - 220;
 		this.uiContainer.addChild(title);
 
 		//#region trash
@@ -119,7 +119,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			}
 
 		}).setText("Select").setIsEnabled(false);
-		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
+		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 1);
 		this.uiContainer.addChild(button);
 	}
 

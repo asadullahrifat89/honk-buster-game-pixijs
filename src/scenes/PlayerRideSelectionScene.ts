@@ -45,7 +45,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			fill: "#ffffff",
 		});
 		title.x = this.uiContainer.width / 2 - title.width / 2;
-		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
+		title.y = (this.uiContainer.height / 2 - title.height / 2) - 220;
 		this.uiContainer.addChild(title);
 
 		//#region air balloon
@@ -79,7 +79,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			SoundManager.play(SoundType.ITEM_SELECT);
 
 		}, Constants.CHOPPER_UNLOCKED);
-		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_button.width / 2), (this.uiContainer.height / 2 - chopper_button.height / 2) + 10);
+		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_button.width / 2.5), (this.uiContainer.height / 2 - chopper_button.height / 2) + 10);
 		this.uiContainer.addChild(chopper_button);
 
 		//#endregion
@@ -115,7 +115,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			}
 
 		}).setText("Select").setIsEnabled(false);
-		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
+		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 1);
 		this.uiContainer.addChild(button);
 	}
 
