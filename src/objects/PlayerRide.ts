@@ -168,84 +168,94 @@ export class PlayerRide extends GameObjectContainer {
 		}
 	}
 
-	move(sceneWidth: number, sceneHeight: number, controller: GameController) {		
+	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
 
 		if (controller.joystickActivated) {
 
 			switch (this.playerRideTemplate) {
 				case PlayerRideTemplate.AIR_BALLOON: {
-					if (this.getLeft() > 0 && this.getRight() < sceneWidth)
-						this.x += controller.velocity.x;
-					if (this.getTop() > 0 && this.getBottom() < sceneHeight)
-						this.y += controller.velocity.y;
+					this.moveWithJoystick(sceneWidth, sceneHeight, controller);
 				} break;
-				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
-					if (this.getLeft() > 0 && this.getRight() < sceneWidth)
-						this.x += controller.velocity.x + 1;
-					if (this.getTop() > 0 && this.getBottom() < sceneHeight)
-						this.y += controller.velocity.y + 1;
+				case PlayerRideTemplate.CHOPPER: {
+					this.moveWithJoystick(sceneWidth, sceneHeight, controller, 1);
 					this.animateChopperBlades();
 				} break;
-				case PlayerRideTemplate.SPHERE: { // sphere grants extra speed
-					if (this.getLeft() > 0 && this.getRight() < sceneWidth)
-						this.x += controller.velocity.x + 1;
-					if (this.getTop() > 0 && this.getBottom() < sceneHeight)
-						this.y += controller.velocity.y + 1;
+				case PlayerRideTemplate.SPHERE: {
+					this.moveWithJoystick(sceneWidth, sceneHeight, controller, 1);
 				} break;
 				default: break;
 			}
 		}
 		else {
-
 			switch (this.playerRideTemplate) {
 				case PlayerRideTemplate.AIR_BALLOON: {
 					this.speed = controller.velocity.x;
 				} break;
-				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
+				case PlayerRideTemplate.CHOPPER: {
 					this.speed = controller.velocity.x + 1;
 					this.animateChopperBlades();
 				} break;
-				case PlayerRideTemplate.SPHERE: { // sphere grants extra speed
+				case PlayerRideTemplate.SPHERE: {
 					this.speed = controller.velocity.x + 1;
 				} break;
 				default: break;
 			}
 
-			if (controller.isMoveUp && controller.isMoveLeft) {
-				if (this.getTop() > 0 && this.getLeft() > 0)
-					this.moveUpLeft();
-			}
-			else if (controller.isMoveUp && controller.isMoveRight) {
-				if (this.getRight() < sceneWidth && this.getTop() > 0)
-					this.moveUpRight();
-			}
-			else if (controller.isMoveUp) {
-				if (this.getTop() > 0)
-					this.moveUp();
-			}
-			else if (controller.isMoveDown && controller.isMoveRight) {
-				if (this.getBottom() < sceneHeight && this.getRight() < sceneWidth)
-					this.moveDownRight();
-			}
-			else if (controller.isMoveDown && controller.isMoveLeft) {
-				if (this.getLeft() > 0 && this.getBottom() < sceneHeight)
-					this.moveDownLeft();
-			}
-			else if (controller.isMoveDown) {
-				if (this.getBottom() < sceneHeight)
-					this.moveDown();
-			}
-			else if (controller.isMoveRight) {
-				if (this.getRight() < sceneWidth)
-					this.moveRight();
-			}
-			else if (controller.isMoveLeft) {
-				if (this.getLeft() > 0)
-					this.moveLeft();
-			}
-			else {
-				this.stopMovement();
-			}
+			this.moveWithKeyboard(controller, sceneWidth, sceneHeight);
+		}
+	}
+
+	private moveWithKeyboard(controller: GameController, sceneWidth: number, sceneHeight: number) {
+
+        if (controller.isMoveUp && controller.isMoveLeft) {
+            if (this.getTop() > 0 && this.getLeft() > 0)
+                this.moveUpLeft();
+        }
+        else if (controller.isMoveUp && controller.isMoveRight) {
+            if (this.getRight() < sceneWidth && this.getTop() > 0)
+                this.moveUpRight();
+        }
+        else if (controller.isMoveUp) {
+            if (this.getTop() > 0)
+                this.moveUp();
+        }
+        else if (controller.isMoveDown && controller.isMoveRight) {
+            if (this.getBottom() < sceneHeight && this.getRight() < sceneWidth)
+                this.moveDownRight();
+        }
+        else if (controller.isMoveDown && controller.isMoveLeft) {
+            if (this.getLeft() > 0 && this.getBottom() < sceneHeight)
+                this.moveDownLeft();
+        }
+        else if (controller.isMoveDown) {
+            if (this.getBottom() < sceneHeight)
+                this.moveDown();
+        }
+        else if (controller.isMoveRight) {
+            if (this.getRight() < sceneWidth)
+                this.moveRight();
+        }
+        else if (controller.isMoveLeft) {
+            if (this.getLeft() > 0)
+                this.moveLeft();
+        }
+        else {
+            this.stopMovement();
+        }
+    }
+
+	private moveWithJoystick(sceneWidth: number, sceneHeight: number, controller: GameController, xyModifier: number = 0) {
+		if (controller.velocity.x < 0 && this.getLeft() > 0) {
+			this.x += controller.velocity.x + xyModifier;
+		}
+		if (controller.velocity.x > 0 && this.getRight() < sceneWidth) {
+			this.x += controller.velocity.x + xyModifier;
+		}
+		if (controller.velocity.y < 0 && this.getTop() > 0) {
+			this.y += controller.velocity.y + xyModifier;
+		}
+		if (controller.velocity.y > 0 && this.getBottom() < sceneHeight) {
+			this.y += controller.velocity.y + xyModifier;
 		}
 	}
 
