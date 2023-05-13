@@ -2434,7 +2434,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: UfoEnemyAirBomb = new UfoEnemyAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY_ROCKET));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY_AIR_BOMB));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -2959,7 +2959,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: VehicleBossAirBomb = new VehicleBossAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED * 1.1);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_ROCKET));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_AIR_BOMB));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -3210,7 +3210,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: UfoBossAirBomb = new UfoBossAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_AIR_BOMB));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -3352,7 +3352,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: UfoBossAirBombSeekingBall = new UfoBossAirBombSeekingBall(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET_SEEKING));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_AIR_BOMB_SEEKING));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -3855,7 +3855,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: MafiaBossAirBomb = new MafiaBossAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_AIR_BOMB));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -3969,7 +3969,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: MafiaBossAirBombHurlingBall = new MafiaBossAirBombHurlingBall(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_ROCKET_HURLING_BALLS));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_AIR_BOMB_HURLING_BALLS));
 
 			sprite.x = 0;
 			sprite.y = 0;

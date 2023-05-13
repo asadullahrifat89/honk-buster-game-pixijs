@@ -104,7 +104,7 @@ export enum ConstructType {
     VEHICLE_ENEMY_LARGE,
     VEHICLE_BOSS,
 
-    VEHICLE_BOSS_ROCKET,
+    VEHICLE_BOSS_AIR_BOMB,
 
     ROAD_MARK,
     ROAD_SIDE_WALK_TOP,
@@ -135,21 +135,20 @@ export enum ConstructType {
     ZOMBIE_BOSS_HIT,
     ZOMBIE_BOSS_WIN,
 
-    UFO_BOSS_ROCKET,
-    UFO_BOSS_ROCKET_SEEKING,
+    UFO_BOSS_AIR_BOMB,
+    UFO_BOSS_AIR_BOMB_SEEKING,
 
-    MAFIA_BOSS_ROCKET,
-    MAFIA_BOSS_ROCKET_HURLING_BALLS,
+    MAFIA_BOSS_AIR_BOMB,
+    MAFIA_BOSS_AIR_BOMB_HURLING_BALLS,
 
     ZOMBIE_BOSS_ROCKET_BLOCK,
 
     UFO_ENEMY,
-    UFO_ENEMY_ROCKET,
+    UFO_ENEMY_AIR_BOMB,
 
     HEALTH_PICKUP,
 
-    POWERUP_PICKUP,
-    POWERUP_PICKUP_SEEKING_SNITCH,
+    POWERUP_PICKUP,    
     POWERUP_PICKUP_ARMOR,
     POWERUP_PICKUP_HURLING_BALLS,
 
@@ -359,24 +358,24 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.BLAST, "blast_1"),
 		new ConstructTemplate(ConstructType.BLAST, "blast_2"),
 
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, "vehicle_boss_rocket_1"),
-		new ConstructTemplate(ConstructType.VEHICLE_BOSS_ROCKET, "vehicle_boss_rocket_2"),
+		new ConstructTemplate(ConstructType.VEHICLE_BOSS_AIR_BOMB, "vehicle_boss_rocket_1"),
+		new ConstructTemplate(ConstructType.VEHICLE_BOSS_AIR_BOMB, "vehicle_boss_rocket_2"),
 
 		new ConstructTemplate(ConstructType.UFO_BOSS_HIT, "ufo_boss_1_hit"),
 		new ConstructTemplate(ConstructType.UFO_BOSS_IDLE, "ufo_boss_1_idle"),
 		new ConstructTemplate(ConstructType.UFO_BOSS_WIN, "ufo_boss_1_win"),
 
-		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_1"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_2"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET, "ufo_boss_rocket_3"),
-		new ConstructTemplate(ConstructType.UFO_BOSS_ROCKET_SEEKING, "ufo_boss_seeking_ball"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_AIR_BOMB, "ufo_boss_rocket_1"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_AIR_BOMB, "ufo_boss_rocket_2"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_AIR_BOMB, "ufo_boss_rocket_3"),
+		new ConstructTemplate(ConstructType.UFO_BOSS_AIR_BOMB_SEEKING, "ufo_boss_seeking_ball"),
 
 		new ConstructTemplate(ConstructType.UFO_ENEMY, "ufo_enemy_1"),
 		new ConstructTemplate(ConstructType.UFO_ENEMY, "ufo_enemy_2"),
 		new ConstructTemplate(ConstructType.UFO_ENEMY, "ufo_enemy_3"),
 		new ConstructTemplate(ConstructType.UFO_ENEMY, "ufo_enemy_4"),
 
-		new ConstructTemplate(ConstructType.UFO_ENEMY_ROCKET, "ufo_enemy_bomb"),
+		new ConstructTemplate(ConstructType.UFO_ENEMY_AIR_BOMB, "ufo_enemy_bomb"),
 
 		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_HIT, "zombie_boss_1_hit"),
 		new ConstructTemplate(ConstructType.ZOMBIE_BOSS_IDLE, "zombie_boss_1_idle"),
@@ -390,10 +389,10 @@ export abstract class Constants {
 		new ConstructTemplate(ConstructType.MAFIA_BOSS_IDLE, "mafia_boss_1_idle"),
 		new ConstructTemplate(ConstructType.MAFIA_BOSS_WIN, "mafia_boss_1_win"),
 
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_1"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_2"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET, "mafia_boss_rocket_3"),
-		new ConstructTemplate(ConstructType.MAFIA_BOSS_ROCKET_HURLING_BALLS, "mafia_boss_hurling_ball"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_AIR_BOMB, "mafia_boss_rocket_1"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_AIR_BOMB, "mafia_boss_rocket_2"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_AIR_BOMB, "mafia_boss_rocket_3"),
+		new ConstructTemplate(ConstructType.MAFIA_BOSS_AIR_BOMB_HURLING_BALLS, "mafia_boss_hurling_ball"),
 
 		new ConstructTemplate(ConstructType.HEALTH_PICKUP, "health_pickup"),
 		new ConstructTemplate(ConstructType.POWERUP_PICKUP_ARMOR, "powerup_pickup_armor"),

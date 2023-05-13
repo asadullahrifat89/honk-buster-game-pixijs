@@ -14,7 +14,7 @@ export class MafiaBossAirBomb extends AirBombBase {
 		this.speed = 0;
 		this.scale.set(1);
 		this.isBlasting = false;
-		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET));
+		this.setTexture(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_AIR_BOMB));
 
 		this.awaitMoveDownLeft = false;
 		this.awaitMoveUpRight = false;

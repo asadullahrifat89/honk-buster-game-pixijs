@@ -13,7 +13,7 @@ export class UfoBossAirBombSeekingBall extends AirBombBaseSeekingBall {
 
 	reset() {
 		this.alpha = 1;
-		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_BOSS_ROCKET_SEEKING));
+		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_BOSS_AIR_BOMB_SEEKING));
 		this.scale.set(1);
 		this.angle = 0;
 		this.isBlasting = false;
