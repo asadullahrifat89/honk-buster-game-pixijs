@@ -131,7 +131,7 @@ export class GameObjectContainer extends Container {
 		this.y += this.speed / 2;
 	}
 
-	getSprite(): GameObjectSprite {
+	getFirstSprite(): GameObjectSprite {
 		return this.children[0] as GameObjectSprite;
 	}
 
@@ -140,7 +140,7 @@ export class GameObjectContainer extends Container {
 	}
 
 	setTexture(texture: Texture) {
-		let child = this.getSprite();
+		let child = this.getFirstSprite();
 
 		if (child) {
 			child.setTexture(texture);

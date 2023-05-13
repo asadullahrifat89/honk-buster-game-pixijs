@@ -59,25 +59,29 @@ export class PlayerRide extends GameObjectContainer {
 
 		this.playerRideTemplate = playerRideTemplate;
 
-		let playerIdleUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_IDLE).map(x => x.uri);
-		let playerWinUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_WIN).map(x => x.uri);
-		let playerHitUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_HIT).map(x => x.uri);
-		let playerAttackUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_ATTACK).map(x => x.uri);
+		let playerIdleTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_IDLE);
+		let playerWinTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_WIN);
+		let playerHitTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_HIT);
+		let playerAttackTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_ATTACK);
 
-		switch (playerRideTemplate) {
-			case PlayerRideTemplate.AIR_BALLOON: {
-				this.playerIdleTexture = Texture.from(playerIdleUris[0]);
-				this.playerWinTexture = Texture.from(playerWinUris[0]);
-				this.playerHitTexture = Texture.from(playerHitUris[0]);
-				this.playerAttackTexture = Texture.from(playerAttackUris[0]);
-			} break;
-			case PlayerRideTemplate.CHOPPER: {
-				this.playerIdleTexture = Texture.from(playerIdleUris[1]);
-				this.playerWinTexture = Texture.from(playerWinUris[1]);
-				this.playerHitTexture = Texture.from(playerHitUris[1]);
-				this.playerAttackTexture = Texture.from(playerAttackUris[1]);
-			} break;
-			default: break;
+		let idle = playerIdleTemplates.find(x => x.tag == playerRideTemplate);
+		if (idle) {
+			this.playerIdleTexture = Texture.from(idle.uri);
+		}
+
+		let win = playerWinTemplates.find(x => x.tag == playerRideTemplate);
+		if (win) {
+			this.playerWinTexture = Texture.from(win.uri);
+		}
+
+		let hit = playerHitTemplates.find(x => x.tag == playerRideTemplate);
+		if (hit) {
+			this.playerHitTexture = Texture.from(hit.uri);
+		}
+
+		let attack = playerAttackTemplates.find(x => x.tag == playerRideTemplate);
+		if (attack) {
+			this.playerAttackTexture = Texture.from(attack.uri);
 		}
 
 		this.setTexture(this.playerIdleTexture);
@@ -85,9 +89,6 @@ export class PlayerRide extends GameObjectContainer {
 		// add chopper animation sprite
 
 		switch (playerRideTemplate) {
-			case PlayerRideTemplate.AIR_BALLOON: {
-
-			} break;
 			case PlayerRideTemplate.CHOPPER: {
 				this.addTexture(this.chopperBladesTexture);
 				this.chopperBladesSprite = this.getSpriteAt(1);
@@ -98,7 +99,10 @@ export class PlayerRide extends GameObjectContainer {
 	}
 
 	reset() {
-		this.health = (this.hitPoint * 10) + (Constants.HEALTH_LEVEL_MAX * this.hitPoint); // add health upgrades
+		this.health = this.hitPoint * 10; // base health
+		this.health += Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5; // add extra health by 5 multiples for ride template
+		this.health += (Constants.HEALTH_LEVEL_MAX * this.hitPoint); // add extra health for health unlocks
+
 		this.movementDirection = MovementDirection.None;
 		this.movementStopDelay = this.movementStopDelayDefault;
 		this.lastSpeed = 0;
@@ -161,6 +165,97 @@ export class PlayerRide extends GameObjectContainer {
 			if (this.winStanceDelay <= 0) {
 				this.setIdleStance();
 			}
+		}
+	}
+
+	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
+
+		if (controller.joystickActivated) {
+
+			switch (this.playerRideTemplate) {
+				case PlayerRideTemplate.AIR_BALLOON: {
+					this.moveWithJoystick(sceneWidth, sceneHeight, controller);
+				} break;
+				case PlayerRideTemplate.CHOPPER: {
+					this.moveWithJoystick(sceneWidth, sceneHeight, controller, 1);
+					this.animateChopperBlades();
+				} break;
+				case PlayerRideTemplate.SPHERE: {
+					this.moveWithJoystick(sceneWidth, sceneHeight, controller, 1);
+				} break;
+				default: break;
+			}
+		}
+		else {
+			switch (this.playerRideTemplate) {
+				case PlayerRideTemplate.AIR_BALLOON: {
+					this.speed = controller.velocity.x;
+				} break;
+				case PlayerRideTemplate.CHOPPER: {
+					this.speed = controller.velocity.x + 1;
+					this.animateChopperBlades();
+				} break;
+				case PlayerRideTemplate.SPHERE: {
+					this.speed = controller.velocity.x + 1;
+				} break;
+				default: break;
+			}
+
+			this.moveWithKeyboard(controller, sceneWidth, sceneHeight);
+		}
+	}
+
+	private moveWithKeyboard(controller: GameController, sceneWidth: number, sceneHeight: number) {
+
+		if (controller.isMoveUp && controller.isMoveLeft) {
+			if (this.getTop() > 0 && this.getLeft() > 0)
+				this.moveUpLeft();
+		}
+		else if (controller.isMoveUp && controller.isMoveRight) {
+			if (this.getRight() < sceneWidth && this.getTop() > 0)
+				this.moveUpRight();
+		}
+		else if (controller.isMoveUp) {
+			if (this.getTop() > 0)
+				this.moveUp();
+		}
+		else if (controller.isMoveDown && controller.isMoveRight) {
+			if (this.getBottom() < sceneHeight && this.getRight() < sceneWidth)
+				this.moveDownRight();
+		}
+		else if (controller.isMoveDown && controller.isMoveLeft) {
+			if (this.getLeft() > 0 && this.getBottom() < sceneHeight)
+				this.moveDownLeft();
+		}
+		else if (controller.isMoveDown) {
+			if (this.getBottom() < sceneHeight)
+				this.moveDown();
+		}
+		else if (controller.isMoveRight) {
+			if (this.getRight() < sceneWidth)
+				this.moveRight();
+		}
+		else if (controller.isMoveLeft) {
+			if (this.getLeft() > 0)
+				this.moveLeft();
+		}
+		else {
+			this.stopMovement(sceneWidth, sceneHeight);
+		}
+	}
+
+	private moveWithJoystick(sceneWidth: number, sceneHeight: number, controller: GameController, xyModifier: number = 0) {
+		if (controller.velocity.x < 0 && this.getLeft() > 0) {
+			this.x += controller.velocity.x + xyModifier;
+		}
+		if (controller.velocity.x > 0 && this.getRight() < sceneWidth) {
+			this.x += controller.velocity.x + xyModifier;
+		}
+		if (controller.velocity.y < 0 && this.getTop() > 0) {
+			this.y += controller.velocity.y + xyModifier;
+		}
+		if (controller.velocity.y > 0 && this.getBottom() < sceneHeight) {
+			this.y += controller.velocity.y + xyModifier;
 		}
 	}
 
@@ -228,80 +323,6 @@ export class PlayerRide extends GameObjectContainer {
 		this.rotate(RotationDirection.Backward, this.rotationThreadhold, this.rotationSpeed);
 	}
 
-	move(sceneWidth: number, sceneHeight: number, controller: GameController) {
-
-		if (controller.joystickActivated) {
-
-			switch (this.playerRideTemplate) {
-				case PlayerRideTemplate.AIR_BALLOON: {
-					this.x += controller.velocity.x;
-					this.y += controller.velocity.y;
-				} break;
-				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
-					this.x += controller.velocity.x + 1;
-					this.y += controller.velocity.y + 1;
-					this.animateChopperBlades();
-				} break;
-				default: break;
-			}
-
-			this.x += controller.velocity.x;
-			this.y += controller.velocity.y;
-		}
-		else {
-
-			switch (this.playerRideTemplate) {
-				case PlayerRideTemplate.AIR_BALLOON: {
-					this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * controller.power;
-				} break;
-				case PlayerRideTemplate.CHOPPER: { // chopper grants extra speed
-					this.speed = (Constants.DEFAULT_CONSTRUCT_SPEED + 1) * controller.power;
-					this.animateChopperBlades();
-				} break;
-				default: break;
-			}
-
-			let halfHeight = this.height / 2;
-			let halfWidth = this.width / 2;
-
-			if (controller.isMoveUp && controller.isMoveLeft) {
-				if (this.y + halfHeight > 0 && this.x + halfWidth > 0)
-					this.moveUpLeft();
-			}
-			else if (controller.isMoveUp && controller.isMoveRight) {
-				if (this.x - halfWidth < sceneWidth && this.y + halfHeight > 0)
-					this.moveUpRight();
-			}
-			else if (controller.isMoveUp) {
-				if (this.y + halfHeight > 0)
-					this.moveUp();
-			}
-			else if (controller.isMoveDown && controller.isMoveRight) {
-				if (this.getBottom() - halfHeight < sceneHeight && this.x - halfWidth < sceneWidth)
-					this.moveDownRight();
-			}
-			else if (controller.isMoveDown && controller.isMoveLeft) {
-				if (this.x + halfWidth > 0 && this.getBottom() - halfHeight < sceneHeight)
-					this.moveDownLeft();
-			}
-			else if (controller.isMoveDown) {
-				if (this.getBottom() - halfHeight < sceneHeight)
-					this.moveDown();
-			}
-			else if (controller.isMoveRight) {
-				if (this.x - halfWidth < sceneWidth)
-					this.moveRight();
-			}
-			else if (controller.isMoveLeft) {
-				if (this.x + halfWidth > 0)
-					this.moveLeft();
-			}
-			else {
-				this.stopMovement();
-			}
-		}
-	}
-
 	private animateChopperBlades() {
 
 		this.chopperBladesHoverDelay--; // chopper blades hover effect
@@ -331,50 +352,58 @@ export class PlayerRide extends GameObjectContainer {
 		}
 	}
 
-	stopMovement() {
-		if (this.movementStopDelay > 0) {
-			this.movementStopDelay--;
+	stopMovement(sceneWidth: number, sceneHeight: number) {
+		if (this.getLeft() > 0 && this.getRight() < sceneWidth && this.getTop() > 0 && this.getBottom() < sceneHeight) {
+			if (this.movementStopDelay > 0) {
+				this.movementStopDelay--;
 
-			let movementSpeedLoss = this.movementStopSpeedLoss;
-			this.speed = this.lastSpeed - movementSpeedLoss;
+				let movementSpeedLoss = this.movementStopSpeedLoss;
+				this.speed = this.lastSpeed - movementSpeedLoss;
 
-			if (this.lastSpeed > 0) {
-				switch (this.movementDirection) {
-					case MovementDirection.None:
-						break;
-					case MovementDirection.Up:
-						this.moveUp();
-						break;
-					case MovementDirection.UpLeft:
-						this.moveUpLeft();
-						break;
-					case MovementDirection.UpRight:
-						this.moveUpRight();
-						break;
-					case MovementDirection.Down:
-						this.moveDown();
-						break;
-					case MovementDirection.DownLeft:
-						this.moveDownLeft();
-						break;
-					case MovementDirection.DownRight:
-						this.moveDownRight();
-						break;
-					case MovementDirection.Right:
-						this.moveRight();
-						break;
-					case MovementDirection.Left:
-						this.moveLeft();
-						break;
-					default:
-						break;
+				if (this.lastSpeed > 0) {
+					switch (this.movementDirection) {
+						case MovementDirection.None:
+							break;
+						case MovementDirection.Up:
+							this.moveUp();
+							break;
+						case MovementDirection.UpLeft:
+							this.moveUpLeft();
+							break;
+						case MovementDirection.UpRight:
+							this.moveUpRight();
+							break;
+						case MovementDirection.Down:
+							this.moveDown();
+							break;
+						case MovementDirection.DownLeft:
+							this.moveDownLeft();
+							break;
+						case MovementDirection.DownRight:
+							this.moveDownRight();
+							break;
+						case MovementDirection.Right:
+							this.moveRight();
+							break;
+						case MovementDirection.Left:
+							this.moveLeft();
+							break;
+						default:
+							break;
+					}
 				}
-			}
 
-			this.unRotate(this.unrotationSpeed);
+				this.unRotate(this.unrotationSpeed);
+			}
+			else {
+				this.movementDirection = MovementDirection.None;
+			}
 		}
 		else {
-			this.movementDirection = MovementDirection.None;
+			if (this.movementStopDelay > 0) {
+				this.movementStopDelay--;
+				this.unRotate(this.unrotationSpeed);
+			}
 		}
 	}
 

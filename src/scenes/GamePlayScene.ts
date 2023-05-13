@@ -124,7 +124,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		// spawn the game objects
 		this.spawnGameObjects();
-		this.generatePlayerBalloon(); // player health is calculated here
+		this.generatePlayerRide(); // player health is calculated here
 
 		// set the game score bar		
 		this.gameScoreBar = new GameScoreBar(this, "Score ");
@@ -184,7 +184,6 @@ export class GamePlayScene extends Container implements IScene {
 
 		// start hovering sound for player ride
 		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
-			case PlayerRideTemplate.AIR_BALLOON: { } break;
 			case PlayerRideTemplate.CHOPPER: { SoundManager.play(SoundType.CHOPPER_HOVERING, 0.1, true); } break;
 			default:
 		}
@@ -268,7 +267,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnPlayerAirBombs();
 		this.spawnPlayerAirBombHurlingBalls();
 		this.spawnPlayerArmorSpheres();
-		this.spawnPlayerBalloon();
+		this.spawnPlayerRide();
 
 		this.spawnUfoBossAirBombs();
 		this.spawnUfoBossAirBombSeekingBalls();
@@ -338,7 +337,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private animateGameObjects() {
 
-		this.animatePlayerBalloon();
+		this.animatePlayerRide();
 		this.animatePlayerArmorSpheres();
 
 		if (!this.anyInAirBossExists() && !this.isBossDeathExploding()) {
@@ -452,8 +451,7 @@ export class GamePlayScene extends Container implements IScene {
 		SoundManager.resume(SoundType.AMBIENCE);
 
 		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
-			case 0: { } break;
-			case 1: { SoundManager.resume(SoundType.CHOPPER_HOVERING); } break;
+			case PlayerRideTemplate.CHOPPER: { SoundManager.resume(SoundType.CHOPPER_HOVERING); } break;
 			default:
 		}
 
@@ -481,8 +479,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 
 		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
-			case 0: { } break;
-			case 1: { SoundManager.pause(SoundType.CHOPPER_HOVERING); } break;
+			case PlayerRideTemplate.CHOPPER: { SoundManager.pause(SoundType.CHOPPER_HOVERING); } break;
 			default:
 		}
 
@@ -1463,23 +1460,12 @@ export class GamePlayScene extends Container implements IScene {
 	private playerRideSize = { width: 512, height: 512 };
 	private player: PlayerRide = new PlayerRide();
 
-	spawnPlayerBalloon() {
+	spawnPlayerRide() {
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.PLAYER_RIDE_IDLE));
 		sprite.x = 0;
 		sprite.y = 0;
-
-		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
-			case PlayerRideTemplate.AIR_BALLOON: {
-				sprite.width = this.playerRideSize.width / 3;
-				sprite.height = this.playerRideSize.height / 3;
-			} break;
-			case PlayerRideTemplate.CHOPPER: {
-				sprite.width = this.playerRideSize.width / 3.5;
-				sprite.height = this.playerRideSize.height / 3.5;
-			} break;
-			default: break;
-		}
-
+		sprite.width = this.playerRideSize.width / 3.5;
+		sprite.height = this.playerRideSize.height / 3.5;
 		sprite.anchor.set(0.5, 0.5);
 		this.player.addChild(sprite);
 
@@ -1490,13 +1476,13 @@ export class GamePlayScene extends Container implements IScene {
 		this.spawnCastShadow(this.player);
 	}
 
-	generatePlayerBalloon() {
+	generatePlayerRide() {
 		this.player.reset();
 		this.player.reposition();
 		this.player.enableRendering();
 	}
 
-	animatePlayerBalloon() {
+	animatePlayerRide() {
 		this.player.pop();
 		this.player.hover();
 
@@ -2583,7 +2569,7 @@ export class GamePlayScene extends Container implements IScene {
 
 					gameObject.reset();
 
-					let sprite = gameObject.getSprite();
+					let sprite = gameObject.getFirstSprite();
 
 					switch (gameObject.vehicleType) {
 						case TextureType.VEHICLE_ENEMY_SMALL: {
@@ -2844,7 +2830,7 @@ export class GamePlayScene extends Container implements IScene {
 			if (gameObject) {
 				gameObject.reset();
 
-				let sprite = gameObject.getSprite();
+				let sprite = gameObject.getFirstSprite();
 
 				sprite.width = this.vehicleEnemySize.width / 1.2;
 				sprite.height = this.vehicleEnemySize.height / 1.2;
@@ -2857,7 +2843,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				this.bossHealthBar.setMaximumValue(gameObject.health);
 				this.bossHealthBar.setValue(gameObject.health);
-				this.bossHealthBar.setIcon(gameObject.getSprite().getTexture());
+				this.bossHealthBar.setIcon(gameObject.getFirstSprite().getTexture());
 
 				this.generateOnScreenMessage("A hotrod has arrived!", this.interactIcon);
 
@@ -3098,7 +3084,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				this.bossHealthBar.setMaximumValue(ufoBoss.health);
 				this.bossHealthBar.setValue(ufoBoss.health);
-				this.bossHealthBar.setIcon(ufoBoss.getSprite().getTexture());
+				this.bossHealthBar.setIcon(ufoBoss.getFirstSprite().getTexture());
 
 				this.generateOnScreenMessage("Cyborg inbound!", this.interactIcon);
 
@@ -3497,7 +3483,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				this.bossHealthBar.setMaximumValue(zombieBoss.health);
 				this.bossHealthBar.setValue(zombieBoss.health);
-				this.bossHealthBar.setIcon(zombieBoss.getSprite().getTexture());
+				this.bossHealthBar.setIcon(zombieBoss.getFirstSprite().getTexture());
 
 				this.generateOnScreenMessage("Zombie inbound!", this.interactIcon);
 
@@ -3738,7 +3724,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				this.bossHealthBar.setMaximumValue(mafiaBoss.health);
 				this.bossHealthBar.setValue(mafiaBoss.health);
-				this.bossHealthBar.setIcon(mafiaBoss.getSprite().getTexture());
+				this.bossHealthBar.setIcon(mafiaBoss.getFirstSprite().getTexture());
 
 				this.generateOnScreenMessage("Godfather inbound.", this.interactIcon);
 
@@ -4157,7 +4143,7 @@ export class GamePlayScene extends Container implements IScene {
 						this.player.gainhealth();
 						this.playerHealthBar.setValue(this.player.health);
 
-						this.generateOnScreenMessage("Health +10", gameObject.getSprite().getTexture());
+						this.generateOnScreenMessage("Health +10", gameObject.getFirstSprite().getTexture());
 					}
 				}
 
@@ -4263,7 +4249,7 @@ export class GamePlayScene extends Container implements IScene {
 						gameObject.pickedUp();
 
 						this.powerUpBar.tag = gameObject.powerUpType;
-						this.powerUpBar.setIcon(gameObject.getSprite().getTexture());
+						this.powerUpBar.setIcon(gameObject.getFirstSprite().getTexture());
 
 						switch (gameObject.powerUpType) {
 							case PowerUpType.HURLING_BALLS: // if bulls eye powerup, allow using a single shot of 20 bombs

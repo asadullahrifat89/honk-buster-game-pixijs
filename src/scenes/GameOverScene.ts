@@ -185,6 +185,7 @@ export class GameOverScene extends Container implements IScene {
 	public update() {
 		if ((Constants.HEALTH_LEVEL_MAX > 1 && this.health.isAwaitingPop) || (Constants.ATTACK_LEVEL_MAX > 0 && this.attack.isAwaitingPop) ||
 			(Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL && !Constants.CHOPPER_UNLOCKED) ||
+			(Constants.GAME_LEVEL_MAX >= Constants.SPHERE_UNLOCK_LEVEL && !Constants.SPHERE_UNLOCKED) ||
 			(Constants.GAME_LEVEL_MAX >= Constants.GRENADE_UNLOCK_LEVEL && !Constants.GRENADE_UNLOCKED) ||
 			(Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL && !Constants.DYNAMITE_UNLOCKED) ||
 			(Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL && !Constants.MISSILE_UNLOCKED) ||
@@ -219,11 +220,7 @@ export class GameOverScene extends Container implements IScene {
 					if (!this.attack.isAwaitingPop) {
 						this.showUnlockMessage("+" + Constants.ATTACK_LEVEL_MAX.toString() + " Bombs Activated!", Constants.getRandomTexture(TextureType.PLAYER_AIR_BOMB));
 					}
-				}
-				else if (Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL && !Constants.CHOPPER_UNLOCKED) {
-					this.showUnlockMessage("Chopper Unlocked!", Texture.from("player_ride_2"));
-					Constants.CHOPPER_UNLOCKED = true;
-				}
+				}			
 				else if (Constants.GAME_LEVEL_MAX >= Constants.GRENADE_UNLOCK_LEVEL && !Constants.GRENADE_UNLOCKED) {
 					this.showUnlockMessage("Grenades Unlocked!", Texture.from("player_honk_bomb_grenade_1"));
 					Constants.GRENADE_UNLOCKED = true;
@@ -239,6 +236,14 @@ export class GameOverScene extends Container implements IScene {
 				else if (Constants.GAME_LEVEL_MAX >= Constants.BULLET_BALL_UNLOCK_LEVEL && !Constants.BULLET_BALL_UNLOCKED) {
 					this.showUnlockMessage("Bullet Balls Unlocked!", Texture.from("player_bullet_ball_1"));
 					Constants.BULLET_BALL_UNLOCKED = true;
+				}
+				else if (Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL && !Constants.CHOPPER_UNLOCKED) {
+					this.showUnlockMessage("Chopper Unlocked!", Texture.from("player_ride_2"));
+					Constants.CHOPPER_UNLOCKED = true;
+				}
+				else if (Constants.GAME_LEVEL_MAX >= Constants.SPHERE_UNLOCK_LEVEL && !Constants.SPHERE_UNLOCKED) {
+					this.showUnlockMessage("Sphere Unlocked!", Texture.from("player_ride_3"));
+					Constants.SPHERE_UNLOCKED = true;
 				}
 			}
 		}

@@ -54,11 +54,12 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			button.setText("Air Balloon").setIsEnabled(true);
 			air_balloon_button.select();
 			chopper_button.unselect();
+			sphere_button.unselect();
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.AIR_BALLOON;
 			SoundManager.play(SoundType.ITEM_SELECT);
 		});
 
-		air_balloon_button.setPosition((this.uiContainer.width / 2 - air_balloon_button.width * 2) + 45, this.uiContainer.height / 2 - air_balloon_button.height / 2 + 10);
+		air_balloon_button.setPosition((this.uiContainer.width / 2 - air_balloon_button.width * 2), (this.uiContainer.height / 2 - air_balloon_button.height / 2) + 10);
 		this.uiContainer.addChild(air_balloon_button);
 
 		//#endregion
@@ -72,12 +73,32 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			button.setText("Chopper").setIsEnabled(true);
 			chopper_button.select();
 			air_balloon_button.unselect();
+			sphere_button.unselect();
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.CHOPPER;
 			SoundManager.play(SoundType.ITEM_SELECT);
 
 		}, Constants.CHOPPER_UNLOCKED);
-		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_button.width / 2) + 100, this.uiContainer.height / 2 - chopper_button.height / 2 + 10);
+		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_button.width / 2), (this.uiContainer.height / 2 - chopper_button.height / 2) + 10);
 		this.uiContainer.addChild(chopper_button);
+
+		//#endregion
+
+		//#region sphere
+
+		Constants.SPHERE_UNLOCKED = Constants.GAME_LEVEL_MAX >= Constants.SPHERE_UNLOCK_LEVEL;
+
+		const sphere_button = new SelectionButton("player_ride_3", 256 / 2, 256 / 2, "Lvl " + Constants.SPHERE_UNLOCK_LEVEL, () => {
+
+			button.setText("Sphere").setIsEnabled(true);
+			sphere_button.select();
+			air_balloon_button.unselect();
+			chopper_button.unselect();
+			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.SPHERE;
+			SoundManager.play(SoundType.ITEM_SELECT);
+
+		}, Constants.SPHERE_UNLOCKED);
+		sphere_button.setPosition((this.uiContainer.width / 2 + sphere_button.width), (this.uiContainer.height / 2 - sphere_button.height / 2) + 10);
+		this.uiContainer.addChild(sphere_button);
 
 		//#endregion
 

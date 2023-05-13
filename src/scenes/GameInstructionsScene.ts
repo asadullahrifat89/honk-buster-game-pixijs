@@ -75,10 +75,13 @@ export class GameInstructionsScene extends Container implements IScene {
 		player_ride_msg.setPosition(player_ride_container.x + player_ride_container.width + 10, player_ride_container.y + 25);
 		player_ride.addChild(player_ride_msg);
 
-		const player_ride_msg_2 = new MessageBubble(0, "Higher level rides move at higher speeds.", 20);
+		const player_ride_msg_2 = new MessageBubble(0, "You move around in 'em.", 20);
 		player_ride_msg_2.setPosition(player_ride_msg.x, player_ride_msg.y + msg_line_2_gap);
 		player_ride.addChild(player_ride_msg_2);
-		
+
+		const player_ride_msg_3 = new MessageBubble(0, "Rides vary in speed and health.", 20);
+		player_ride_msg_3.setPosition(player_ride_msg_2.x, player_ride_msg_2.y + msg_line_2_gap);
+		player_ride.addChild(player_ride_msg_3);		
 
 		player_ride.setPosition(this.uiContainer.width / 2 - player_ride.width / 2, (this.uiContainer.height / 2 - player_ride.height / 2) + 10);
 		this.uiContainer.addChild(player_ride);
