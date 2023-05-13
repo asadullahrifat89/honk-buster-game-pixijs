@@ -1,7 +1,7 @@
 ﻿import { ProgressBar } from "@pixi/ui";
 import { Container, Graphics, Texture } from "pixi.js";
 import { GameObjectContainer } from "../core/GameObjectContainer";
-import { GameObjectSprite } from "../core/GameObjectSprite";
+import { LabeledIcon } from "./LabeledIcon";
 
 
 export class HealthBar extends Container {
@@ -10,8 +10,9 @@ export class HealthBar extends Container {
 	private value: number = 0;
 
 	private progressBar: ProgressBar;
-	private iconContainer: GameObjectContainer;	
+	private iconContainer: GameObjectContainer;
 	private iconTexture: Texture;
+	private iconLabel: LabeledIcon;
 
 	public tag: any;
 
@@ -31,12 +32,10 @@ export class HealthBar extends Container {
 		this.addChild(this.progressBar);
 
 		this.iconContainer = new GameObjectContainer();
-		this.addChild(this.iconContainer);
+		this.addChild(this.iconContainer);		
 
-		let iconSprite: GameObjectSprite = new GameObjectSprite(this.iconTexture);
-		iconSprite.width = 45;
-		iconSprite.height = 45;
-		this.iconContainer.addChild(iconSprite);
+		this.iconLabel = new LabeledIcon(uri, 45, 45, this.progressBar.progress.toString());
+		this.iconContainer.addChild(this.iconLabel);
 
 		scene.addChild(this);
 	}
@@ -52,6 +51,7 @@ export class HealthBar extends Container {
 
 	setIcon(icon: Texture): HealthBar {
 		this.iconTexture = icon;
+		this.iconLabel.setIcon(icon);
 		this.iconContainer.setTexture(icon);
 		return this;
 	}
@@ -63,6 +63,8 @@ export class HealthBar extends Container {
 		this.value = value;
 
 		this.progressBar.progress = this.value / this.maximum * 100;
+
+		this.iconLabel.setLabel(this.progressBar.progress.toString());
 
 		if (this.value > 0)
 			this.alpha = 1;

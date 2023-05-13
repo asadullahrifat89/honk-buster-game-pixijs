@@ -8,7 +8,7 @@ export class LabeledIcon extends Container {
     private sprite: GameObjectSprite;
     private msg: MessageBubble;
 
-    constructor(uri: string, width: number, height: number, label: string) {
+    constructor(uri: string, width: number, height: number, label: string, fontSize: number = 20) {
         super();
         this.sprite = new GameObjectSprite(Texture.from(uri));
         this.sprite.width = width;
@@ -17,9 +17,13 @@ export class LabeledIcon extends Container {
         this.sprite.y = 0;
         this.addChild(this.sprite);
 
-        this.msg = new MessageBubble(0, label, 20);
+        this.msg = new MessageBubble(0, label, fontSize);
         this.msg.setPosition(this.sprite.x + this.sprite.width / 2, this.sprite.y + this.sprite.height / 2);
         this.addChild(this.msg);
+    }
+
+    setIcon(uri: Texture) {
+        this.sprite.setTexture(uri);
     }
 
     setPosition(x: number, y: number): LabeledIcon {
@@ -28,7 +32,7 @@ export class LabeledIcon extends Container {
         return this;
     }
 
-    setLabel(label: string) {
-        this.msg.setMessage(label, 20);
+    setLabel(label: string, fontSize: number = 20) {
+        this.msg.setMessage(label, fontSize);
     }
 }
