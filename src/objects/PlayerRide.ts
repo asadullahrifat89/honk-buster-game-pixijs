@@ -59,35 +59,104 @@ export class PlayerRide extends GameObjectContainer {
 
 		this.playerRideTemplate = playerRideTemplate;
 
-		let playerIdleUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_IDLE).map(x => x.uri);
-		let playerWinUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_WIN).map(x => x.uri);
-		let playerHitUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_HIT).map(x => x.uri);
-		let playerAttackUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_ATTACK).map(x => x.uri);
+		let playerIdleTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_IDLE);
+		let playerWinTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_WIN);
+		let playerHitTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_HIT);
+		let playerAttackTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_ATTACK);
 
-		switch (playerRideTemplate) {
-			case PlayerRideTemplate.AIR_BALLOON: {
-				this.playerIdleTexture = Texture.from(playerIdleUris[0]);
-				this.playerWinTexture = Texture.from(playerWinUris[0]);
-				this.playerHitTexture = Texture.from(playerHitUris[0]);
-				this.playerAttackTexture = Texture.from(playerAttackUris[0]);
-			} break;
-			case PlayerRideTemplate.CHOPPER: {
-				this.playerIdleTexture = Texture.from(playerIdleUris[1]);
-				this.playerWinTexture = Texture.from(playerWinUris[1]);
-				this.playerHitTexture = Texture.from(playerHitUris[1]);
-				this.playerAttackTexture = Texture.from(playerAttackUris[1]);
-			} break;
-			default: break;
+		let idle = playerIdleTemplates.find(x => x.tag == playerRideTemplate);
+		if (idle) {
+			this.playerIdleTexture = Texture.from(idle.uri);
 		}
+
+		let win = playerWinTemplates.find(x => x.tag == playerRideTemplate);
+		if (win) {
+			this.playerWinTexture = Texture.from(win.uri);
+		}
+
+		let hit = playerHitTemplates.find(x => x.tag == playerRideTemplate);
+		if (hit) {
+			this.playerHitTexture = Texture.from(hit.uri);
+		}
+
+		let attack = playerAttackTemplates.find(x => x.tag == playerRideTemplate);
+		if (attack) {
+			this.playerAttackTexture = Texture.from(attack.uri);
+		}
+
+		//switch (playerRideTemplate) {
+		//	case PlayerRideTemplate.AIR_BALLOON: {
+		//		let idle = playerIdleTemplates.find(x => x.tag == PlayerRideTemplate.AIR_BALLOON);
+		//		if (idle) {
+		//			this.playerIdleTexture = Texture.from(idle.uri);
+		//		}
+
+		//		let win = playerWinTemplates.find(x => x.tag == PlayerRideTemplate.AIR_BALLOON);
+		//		if (win) {
+		//			this.playerWinTexture = Texture.from(win.uri);
+		//		}
+
+		//		let hit = playerHitTemplates.find(x => x.tag == PlayerRideTemplate.AIR_BALLOON);
+		//		if (hit) {
+		//			this.playerHitTexture = Texture.from(hit.uri);
+		//		}
+
+		//		let attack = playerAttackTemplates.find(x => x.tag == PlayerRideTemplate.AIR_BALLOON);
+		//		if (attack) {
+		//			this.playerAttackTexture = Texture.from(attack.uri);
+		//		}
+				
+		//	} break;
+		//	case PlayerRideTemplate.CHOPPER: {
+		//		let idle = playerIdleTemplates.find(x => x.tag == PlayerRideTemplate.CHOPPER);
+		//		if (idle) {
+		//			this.playerIdleTexture = Texture.from(idle.uri);
+		//		}
+
+		//		let win = playerWinTemplates.find(x => x.tag == PlayerRideTemplate.CHOPPER);
+		//		if (win) {
+		//			this.playerWinTexture = Texture.from(win.uri);
+		//		}
+
+		//		let hit = playerHitTemplates.find(x => x.tag == PlayerRideTemplate.CHOPPER);
+		//		if (hit) {
+		//			this.playerHitTexture = Texture.from(hit.uri);
+		//		}
+
+		//		let attack = playerAttackTemplates.find(x => x.tag == PlayerRideTemplate.CHOPPER);
+		//		if (attack) {
+		//			this.playerAttackTexture = Texture.from(attack.uri);
+		//		}
+		//	} break;			
+		//	case PlayerRideTemplate.SPHERE: {
+		//		let idle = playerIdleTemplates.find(x => x.tag == PlayerRideTemplate.SPHERE);
+		//		if (idle) {
+		//			this.playerIdleTexture = Texture.from(idle.uri);
+		//		}
+
+		//		let win = playerWinTemplates.find(x => x.tag == PlayerRideTemplate.SPHERE);
+		//		if (win) {
+		//			this.playerWinTexture = Texture.from(win.uri);
+		//		}
+
+		//		let hit = playerHitTemplates.find(x => x.tag == PlayerRideTemplate.SPHERE);
+		//		if (hit) {
+		//			this.playerHitTexture = Texture.from(hit.uri);
+		//		}
+
+		//		let attack = playerAttackTemplates.find(x => x.tag == PlayerRideTemplate.SPHERE);
+		//		if (attack) {
+		//			this.playerAttackTexture = Texture.from(attack.uri);
+		//		}
+		//	} break;
+		//	default: break;
+		//}
 
 		this.setTexture(this.playerIdleTexture);
 
 		// add chopper animation sprite
 
-		switch (playerRideTemplate) {
-			case PlayerRideTemplate.AIR_BALLOON: {
-
-			} break;
+		switch (playerRideTemplate) {			
 			case PlayerRideTemplate.CHOPPER: {
 				this.addTexture(this.chopperBladesTexture);
 				this.chopperBladesSprite = this.getSpriteAt(1);

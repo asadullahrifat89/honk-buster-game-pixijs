@@ -77,10 +77,15 @@ export const manifest: ResolverManifest = {
 				"player_chopper_1_idle": "./images/player_chopper_1_idle.png",
 				"player_chopper_1_win": "./images/player_chopper_1_win.png",
 
-				"player_balloon_2_attack": "./images/player_balloon_2_attack.png",
-				"player_balloon_2_hit": "./images/player_balloon_2_hit.png",
-				"player_balloon_2_idle": "./images/player_balloon_2_idle.png",
-				"player_balloon_2_win": "./images/player_balloon_2_win.png",
+				"player_sphere_1_attack": "./images/player_sphere_1_attack.png",
+				"player_sphere_1_hit": "./images/player_sphere_1_hit.png",
+				"player_sphere_1_idle": "./images/player_sphere_1_idle.png",
+				"player_sphere_1_win": "./images/player_sphere_1_win.png",
+
+				//"player_balloon_2_attack": "./images/player_balloon_2_attack.png",
+				//"player_balloon_2_hit": "./images/player_balloon_2_hit.png",
+				//"player_balloon_2_idle": "./images/player_balloon_2_idle.png",
+				//"player_balloon_2_win": "./images/player_balloon_2_win.png",
 
 				"player_gravity_ball_1": "./images/player_gravity_ball_1.png",
 				"player_gravity_ball_2": "./images/player_gravity_ball_2.png",

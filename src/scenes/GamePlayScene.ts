@@ -2583,7 +2583,7 @@ export class GamePlayScene extends Container implements IScene {
 
 					gameObject.reset();
 
-					let sprite = gameObject.getSprite();
+					let sprite = gameObject.getFirstSprite();
 
 					switch (gameObject.vehicleType) {
 						case TextureType.VEHICLE_ENEMY_SMALL: {
@@ -2844,7 +2844,7 @@ export class GamePlayScene extends Container implements IScene {
 			if (gameObject) {
 				gameObject.reset();
 
-				let sprite = gameObject.getSprite();
+				let sprite = gameObject.getFirstSprite();
 
 				sprite.width = this.vehicleEnemySize.width / 1.2;
 				sprite.height = this.vehicleEnemySize.height / 1.2;
@@ -2857,7 +2857,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				this.bossHealthBar.setMaximumValue(gameObject.health);
 				this.bossHealthBar.setValue(gameObject.health);
-				this.bossHealthBar.setIcon(gameObject.getSprite().getTexture());
+				this.bossHealthBar.setIcon(gameObject.getFirstSprite().getTexture());
 
 				this.generateOnScreenMessage("A hotrod has arrived!", this.interactIcon);
 
@@ -3098,7 +3098,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				this.bossHealthBar.setMaximumValue(ufoBoss.health);
 				this.bossHealthBar.setValue(ufoBoss.health);
-				this.bossHealthBar.setIcon(ufoBoss.getSprite().getTexture());
+				this.bossHealthBar.setIcon(ufoBoss.getFirstSprite().getTexture());
 
 				this.generateOnScreenMessage("Cyborg inbound!", this.interactIcon);
 
@@ -3497,7 +3497,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				this.bossHealthBar.setMaximumValue(zombieBoss.health);
 				this.bossHealthBar.setValue(zombieBoss.health);
-				this.bossHealthBar.setIcon(zombieBoss.getSprite().getTexture());
+				this.bossHealthBar.setIcon(zombieBoss.getFirstSprite().getTexture());
 
 				this.generateOnScreenMessage("Zombie inbound!", this.interactIcon);
 
@@ -3738,7 +3738,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				this.bossHealthBar.setMaximumValue(mafiaBoss.health);
 				this.bossHealthBar.setValue(mafiaBoss.health);
-				this.bossHealthBar.setIcon(mafiaBoss.getSprite().getTexture());
+				this.bossHealthBar.setIcon(mafiaBoss.getFirstSprite().getTexture());
 
 				this.generateOnScreenMessage("Godfather inbound.", this.interactIcon);
 
@@ -4157,7 +4157,7 @@ export class GamePlayScene extends Container implements IScene {
 						this.player.gainhealth();
 						this.playerHealthBar.setValue(this.player.health);
 
-						this.generateOnScreenMessage("Health +10", gameObject.getSprite().getTexture());
+						this.generateOnScreenMessage("Health +10", gameObject.getFirstSprite().getTexture());
 					}
 				}
 
@@ -4263,7 +4263,7 @@ export class GamePlayScene extends Container implements IScene {
 						gameObject.pickedUp();
 
 						this.powerUpBar.tag = gameObject.powerUpType;
-						this.powerUpBar.setIcon(gameObject.getSprite().getTexture());
+						this.powerUpBar.setIcon(gameObject.getFirstSprite().getTexture());
 
 						switch (gameObject.powerUpType) {
 							case PowerUpType.HURLING_BALLS: // if bulls eye powerup, allow using a single shot of 20 bombs
