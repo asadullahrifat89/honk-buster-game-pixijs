@@ -1464,23 +1464,8 @@ export class GamePlayScene extends Container implements IScene {
 		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.PLAYER_RIDE_IDLE));
 		sprite.x = 0;
 		sprite.y = 0;
-
-		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
-			case PlayerRideTemplate.AIR_BALLOON: {
-				sprite.width = this.playerRideSize.width / 3;
-				sprite.height = this.playerRideSize.height / 3;
-			} break;
-			case PlayerRideTemplate.SPHERE: {
-				sprite.width = this.playerRideSize.width / 3;
-				sprite.height = this.playerRideSize.height / 3;
-			} break;
-			case PlayerRideTemplate.CHOPPER: {
-				sprite.width = this.playerRideSize.width / 3.5;
-				sprite.height = this.playerRideSize.height / 3.5;
-			} break;
-			default: break;
-		}
-
+		sprite.width = this.playerRideSize.width / 3.5;
+		sprite.height = this.playerRideSize.height / 3.5;
 		sprite.anchor.set(0.5, 0.5);
 		this.player.addChild(sprite);
 
