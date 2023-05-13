@@ -12,7 +12,7 @@ export class PlayerRide extends GameObjectContainer {
 
 	//#region Properties
 
-	public playerBalloonStance: PlayerRideStance = PlayerRideStance.Idle;
+	public playerRideStance: PlayerRideStance = PlayerRideStance.Idle;
 	public playerRideTemplate: PlayerRideTemplate = 0;
 
 	private movementStopDelay: number = 0;
@@ -67,7 +67,7 @@ export class PlayerRide extends GameObjectContainer {
 
 		if (playerIdleTemplate) {
 			this.playerIdleTexture = Texture.from(playerIdleTemplate.uri);
-		}		
+		}
 
 		if (playerHitTemplate) {
 			this.playerHitTexture = Texture.from(playerHitTemplate.uri);
@@ -76,7 +76,7 @@ export class PlayerRide extends GameObjectContainer {
 		if (playerWinTemplate) {
 			this.playerWinTexture = Texture.from(playerWinTemplate.uri);
 		}
-		
+
 		if (playerAttackTemplate) {
 			this.playerAttackTexture = Texture.from(playerAttackTemplate.uri);
 		}
@@ -113,32 +113,34 @@ export class PlayerRide extends GameObjectContainer {
 	}
 
 	setIdleStance() {
-		this.playerBalloonStance = PlayerRideStance.Idle;
+		this.playerRideStance = PlayerRideStance.Idle;
 		this.setTexture(this.playerIdleTexture);
 	}
 
 	setAttackStance() {
-		this.playerBalloonStance = PlayerRideStance.Attack;
-		this.setTexture(this.playerAttackTexture);
-		this.attackStanceDelay = this.attackStanceDelayDefault;
+		if (this.playerRideStance != PlayerRideStance.Win) {
+			this.playerRideStance = PlayerRideStance.Attack;
+			this.setTexture(this.playerAttackTexture);
+			this.attackStanceDelay = this.attackStanceDelayDefault;
+		}
 	}
 
 	setWinStance() {
-		this.playerBalloonStance = PlayerRideStance.Win;
+		this.playerRideStance = PlayerRideStance.Win;
 		this.setTexture(this.playerWinTexture);
 		this.winStanceDelay = this.winStanceDelayDefault;
 	}
 
 	setHitStance() {
-		if (this.playerBalloonStance != PlayerRideStance.Win) {
-			this.playerBalloonStance = PlayerRideStance.Hit;
+		if (this.playerRideStance != PlayerRideStance.Win) {
+			this.playerRideStance = PlayerRideStance.Hit;
 			this.setTexture(this.playerHitTexture);
 			this.hitStanceDelay = this.hitStanceDelayDefault;
 		}
 	}
 
 	depleteHitStance() {
-		if (this.hitStanceDelay > 0) {
+		if (this.hitStanceDelay > 0 && this.playerRideStance != PlayerRideStance.Win) {
 			this.hitStanceDelay -= 0.1;
 
 			if (this.hitStanceDelay <= 0) {
@@ -148,7 +150,7 @@ export class PlayerRide extends GameObjectContainer {
 	}
 
 	depleteAttackStance() {
-		if (this.attackStanceDelay > 0) {
+		if (this.attackStanceDelay > 0 && this.playerRideStance != PlayerRideStance.Win) {
 			this.attackStanceDelay -= 0.1;
 
 			if (this.attackStanceDelay <= 0) {
