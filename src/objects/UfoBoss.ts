@@ -44,9 +44,7 @@ export class UfoBoss extends UfoBossBase {
 	setHitStance() {
 		if (this.ufoBossStance != BossStance.Win) {
 			this.ufoBossStance = BossStance.Hit;
-
 			this.setTexture(this.ufoBossHitTexture);
-
 			this.hitStanceDelay = this.hitStanceDelayDefault;
 		}
 	}
