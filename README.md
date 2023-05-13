@@ -12,5 +12,7 @@ Play here: https://asadullahrifat89.github.io/honk-buster-game-pixijs/
 
 ## Screenshots
 
-![asadullahrifat89 github io_honk-buster-game-pixijs_(iPad Air)](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/9eeb2bd5-78e7-415d-b4c5-6c015ad3163c)
-![asadullahrifat89 github io_honk-buster-game-pixijs_(iPad Air)2](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/61f7d4b0-c99a-442e-997c-13a23cecd82e)
+![1](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/ed6c30ec-63fd-4abf-9676-6a684f55b6b5)
+![2](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/004c4030-2a59-4fe1-9fac-81184d6f892f)
+![3](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/dbff82fb-9b5d-4fd3-b836-20511ecc4dbc)
+![4](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/cfe5a816-f8e3-4ef9-99ed-b3274f73ae1c)
