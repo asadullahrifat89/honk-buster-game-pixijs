@@ -89,7 +89,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			SceneManager.changeScene(new PlayerCharacterSelectionScene());
 		});
 
-		character_button.setPosition((this.uiContainer.width / 2 - optionsGap * 1), (this.uiContainer.height / 2 - character_button.height / 2));
+		character_button.setPosition((this.uiContainer.width / 2 - optionsGap * 1), (this.uiContainer.height / 2 - character_button.height / 3));
 		this.uiContainer.addChild(character_button);
 
 		//#endregion
