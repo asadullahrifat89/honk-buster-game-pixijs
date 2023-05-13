@@ -1,4 +1,5 @@
-﻿import { Constants, SoundType } from '../Constants';
+﻿import { Constants } from '../Constants';
+import { SoundType } from '../Enums';
 import { SoundObject } from './SoundObject';
 
 

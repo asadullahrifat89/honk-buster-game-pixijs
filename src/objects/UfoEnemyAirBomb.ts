@@ -1,5 +1,6 @@
-﻿import { Constants, TextureType, SoundType } from '../Constants';
+﻿import { Constants } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
+import { TextureType, SoundType } from '../Enums';
 import { SoundManager } from '../managers/SoundManager';
 
 

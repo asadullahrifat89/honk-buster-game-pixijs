@@ -1,6 +1,6 @@
 ﻿import { Rectangle } from 'pixi.js';
-import { SoundType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
+import { SoundType } from '../Enums';
 import { SoundManager } from '../managers/SoundManager';
 
 

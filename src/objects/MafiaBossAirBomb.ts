@@ -1,7 +1,8 @@
-﻿import { Constants, TextureType, SoundType } from '../Constants';
+﻿import { Constants } from '../Constants';
 import { SoundManager } from '../managers/SoundManager';
 import { MafiaBoss } from './MafiaBoss';
 import { AirBombBase } from './AirBombBase';
+import { TextureType, SoundType } from '../Enums';
 
 export class MafiaBossAirBomb extends AirBombBase {
 

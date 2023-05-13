@@ -1,5 +1,6 @@
 ﻿import { Rectangle, Texture } from 'pixi.js';
-import { BossStance, Constants, TextureType, MovementDirection, UfoBossMovementPattern } from '../Constants';
+import { Constants } from '../Constants';
+import { TextureType, MovementDirection, BossStance, UfoBossMovementPattern } from '../Enums';
 import { UfoBossBase } from './UfoBossBase';
 
 

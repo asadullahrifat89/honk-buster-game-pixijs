@@ -1,11 +1,12 @@
 ﻿import { GrayscaleFilter } from "@pixi/filter-grayscale";
 import { Container, Text, BlurFilter, Texture } from "pixi.js";
-import { Constants, TextureType, SoundType } from "../Constants";
+import { Constants } from "../Constants";
 import { Button } from "../controls/Button";
 import { MessageBubble } from "../controls/MessageBubble";
 import { OnScreenMessage } from "../controls/OnScreenMessage";
 import { GameObjectContainer } from "../core/GameObjectContainer";
 import { GameObjectSprite } from "../core/GameObjectSprite";
+import { TextureType, SoundType } from "../Enums";
 import { IScene } from "../managers/IScene";
 import { SceneManager } from "../managers/SceneManager";
 import { SoundManager } from "../managers/SoundManager";

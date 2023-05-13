@@ -1,4 +1,5 @@
-﻿import { Constants, TextureType, SoundType } from '../Constants';
+﻿import { Constants } from '../Constants';
+import { TextureType, SoundType } from '../Enums';
 import { SoundManager } from '../managers/SoundManager';
 import { AirBombBase } from './AirBombBase';
 import { UfoBoss } from './UfoBoss';

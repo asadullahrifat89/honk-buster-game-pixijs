@@ -1,7 +1,8 @@
-﻿import { Constants, TextureType, PlayerAirBombTemplate, SoundType } from '../Constants';
+﻿import { Constants } from '../Constants';
 import { PlayerRide } from './PlayerRide';
 import { SoundManager } from '../managers/SoundManager';
 import { AirBombBaseSeekingBall } from './AirBombBaseSeekingBall';
+import { PlayerAirBombTemplate, SoundType, TextureType } from '../Enums';
 
 
 export class PlayerAirBomb extends AirBombBaseSeekingBall {

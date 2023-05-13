@@ -1,4 +1,5 @@
-﻿import { Constants, TextureType, MovementDirection } from '../Constants';
+﻿import { Constants } from '../Constants';
+import { MovementDirection, TextureType } from '../Enums';
 import { VehicleBossBase } from './VehicleBossBase';
 
 

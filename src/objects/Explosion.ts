@@ -1,6 +1,7 @@
 ﻿import { AnimatedSprite, BaseTexture, Spritesheet, SpriteSheetJson, Texture } from 'pixi.js';
-import { Constants, ExplosionType } from '../Constants';
+import { Constants } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
+import { ExplosionType } from '../Enums';
 
 export class Explosion extends GameObjectContainer {
 

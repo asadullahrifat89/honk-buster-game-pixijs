@@ -2,7 +2,8 @@
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
-import { Constants, TextureType, PlayerRideTemplate, SoundType } from "../Constants";
+import { Constants} from "../Constants";
+import { TextureType, PlayerRideTemplate, SoundType } from "../Enums";
 import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";

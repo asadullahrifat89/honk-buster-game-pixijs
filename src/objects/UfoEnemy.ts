@@ -1,4 +1,5 @@
-﻿import { Constants, TextureType, RotationDirection, SoundType } from '../Constants';
+﻿import { Constants } from '../Constants';
+import { TextureType, SoundType, RotationDirection } from '../Enums';
 import { SoundManager } from '../managers/SoundManager';
 import { VehicleBase } from './VehicleBase';
 

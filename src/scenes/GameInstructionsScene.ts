@@ -2,7 +2,7 @@
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
-import { Constants, TextureType, SoundType } from "../Constants";
+import { Constants } from "../Constants";
 import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
@@ -10,6 +10,7 @@ import { SoundManager } from "../managers/SoundManager";
 import { MessageBubble } from "../controls/MessageBubble";
 import { GameTitleScene } from "./GameTitleScene";
 import { HealthBar } from "../controls/HealthBar";
+import { TextureType, SoundType } from "../Enums";
 
 
 export class GameInstructionsScene extends Container implements IScene {
