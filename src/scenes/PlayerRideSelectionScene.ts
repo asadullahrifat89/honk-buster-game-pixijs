@@ -126,7 +126,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 		//#endregion
 
 		const button = new Button(() => {
-			if (button.getIsEnabled()) {
+			if (button.isEnabled()) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
 				this.uiContainer.destroy();

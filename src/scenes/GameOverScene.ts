@@ -23,6 +23,8 @@ export class GameOverScene extends Container implements IScene {
 
 	private onScreenMessage: OnScreenMessage;
 
+	private playAgainButton: Button;
+
 	constructor() {
 		super();
 
@@ -162,15 +164,15 @@ export class GameOverScene extends Container implements IScene {
 
 		//#region play again button
 
-		const button = new Button(() => {
+		this.playAgainButton = new Button(() => {
 			SoundManager.play(SoundType.OPTION_SELECT);
 			this.removeChild(this.uiContainer);
 			this.uiContainer.destroy();
 			SceneManager.changeScene(new GameTitleScene());
 
 		}).setText("Play Again");
-		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
-		this.uiContainer.addChild(button);
+		this.playAgainButton.setPosition(this.uiContainer.width / 2 - this.playAgainButton.width / 2, this.uiContainer.height - this.playAgainButton.height * 2);
+		this.uiContainer.addChild(this.playAgainButton);
 
 		//#endregion
 
@@ -184,6 +186,12 @@ export class GameOverScene extends Container implements IScene {
 	}
 
 	public update() {
+		this.animateUnlockableNotifications();
+		this.animateOnScreenMessage();
+	}
+
+	private animateUnlockableNotifications() {
+
 		if ((Constants.HEALTH_LEVEL_MAX > 1 && this.health.isAwaitingPop) || (Constants.ATTACK_LEVEL_MAX > 0 && this.attack.isAwaitingPop) ||
 			(Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL && !Constants.CHOPPER_UNLOCKED) ||
 			(Constants.GAME_LEVEL_MAX >= Constants.SPHERE_UNLOCK_LEVEL && !Constants.SPHERE_UNLOCKED) ||
@@ -191,6 +199,10 @@ export class GameOverScene extends Container implements IScene {
 			(Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL && !Constants.DYNAMITE_UNLOCKED) ||
 			(Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL && !Constants.MISSILE_UNLOCKED) ||
 			(Constants.GAME_LEVEL_MAX >= Constants.BULLET_BALL_UNLOCK_LEVEL && !Constants.BULLET_BALL_UNLOCKED)) { // only animate if any of the upgrades are applicable
+
+			if (this.playAgainButton.isEnabled()) {
+				this.playAgainButton.setIsEnabled(false);
+			}
 
 			this.unlockablePopDelay -= 0.1;
 
@@ -221,35 +233,49 @@ export class GameOverScene extends Container implements IScene {
 					if (!this.attack.isAwaitingPop) {
 						this.showUnlockMessage("+" + Constants.ATTACK_LEVEL_MAX.toString() + " Bombs Activated!", Constants.getRandomTexture(TextureType.PLAYER_AIR_BOMB));
 					}
-				}			
-				else if (Constants.GAME_LEVEL_MAX >= Constants.GRENADE_UNLOCK_LEVEL && !Constants.GRENADE_UNLOCKED) {
+				}
+				else if (Constants.GAME_LEVEL_MAX >= Constants.GRENADE_UNLOCK_LEVEL && !Constants.GRENADE_UNLOCKED) {					
+
 					this.showUnlockMessage("Grenades Unlocked!", Texture.from("player_honk_bomb_grenade_1"));
 					Constants.GRENADE_UNLOCKED = true;
 				}
-				else if (Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL && !Constants.DYNAMITE_UNLOCKED) {
+				else if (Constants.GAME_LEVEL_MAX >= Constants.DYNAMITE_UNLOCK_LEVEL && !Constants.DYNAMITE_UNLOCKED) {				
+
 					this.showUnlockMessage("Dynamites Unlocked!", Texture.from("player_honk_bomb_dynamite_2"));
 					Constants.DYNAMITE_UNLOCKED = true;
 				}
-				else if (Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL && !Constants.MISSILE_UNLOCKED) {
+				else if (Constants.GAME_LEVEL_MAX >= Constants.MISSILE_UNLOCK_LEVEL && !Constants.MISSILE_UNLOCKED) {				
+
 					this.showUnlockMessage("Missiles Unlocked!", Texture.from("player_rocket_1"));
 					Constants.MISSILE_UNLOCKED = true;
 				}
-				else if (Constants.GAME_LEVEL_MAX >= Constants.BULLET_BALL_UNLOCK_LEVEL && !Constants.BULLET_BALL_UNLOCKED) {
+				else if (Constants.GAME_LEVEL_MAX >= Constants.BULLET_BALL_UNLOCK_LEVEL && !Constants.BULLET_BALL_UNLOCKED) {				
+
 					this.showUnlockMessage("Bullet Balls Unlocked!", Texture.from("player_bullet_ball_1"));
 					Constants.BULLET_BALL_UNLOCKED = true;
 				}
-				else if (Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL && !Constants.CHOPPER_UNLOCKED) {
+				else if (Constants.GAME_LEVEL_MAX >= Constants.CHOPPER_UNLOCK_LEVEL && !Constants.CHOPPER_UNLOCKED) {				
+
 					this.showUnlockMessage("Chopper Unlocked!", Texture.from("player_ride_2"));
 					Constants.CHOPPER_UNLOCKED = true;
 				}
-				else if (Constants.GAME_LEVEL_MAX >= Constants.SPHERE_UNLOCK_LEVEL && !Constants.SPHERE_UNLOCKED) {
+				else if (Constants.GAME_LEVEL_MAX >= Constants.SPHERE_UNLOCK_LEVEL && !Constants.SPHERE_UNLOCKED) {					
+
 					this.showUnlockMessage("Sphere Unlocked!", Texture.from("player_ride_3"));
 					Constants.SPHERE_UNLOCKED = true;
 				}
+
+				//if (!this.uiContainer.filters) {
+				//	this.uiContainer.filters = [new BlurFilter()];
+				//}
 			}
 		}
+		else {
 
-		this.animateOnScreenMessage();
+			if (!this.playAgainButton.isEnabled()) {
+				this.playAgainButton.setIsEnabled(true);
+			}			
+		}
 	}
 
 	public resize(scale: number): void {

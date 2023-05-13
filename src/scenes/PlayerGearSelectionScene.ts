@@ -209,7 +209,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 
 		const button = new Button(() => {
 
-			if (button.getIsEnabled()) {
+			if (button.isEnabled()) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
 				this.uiContainer.destroy();

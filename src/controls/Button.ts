@@ -106,7 +106,7 @@ export class Button extends Container {
 		return this;
 	}
 
-	getIsEnabled(): boolean {
+	isEnabled(): boolean {
 		return this.buttonIsEnabled;
 	}
 
