@@ -17,9 +17,9 @@ export abstract class Constants {
 	public static DEFAULT_DROP_SHADOW_DISTANCE: number = 40;
 
 	public static SELECTED_PLAYER_CHARACTER_TEMPLATE: number = 0;
-	public static SELECTED_PLAYER_RIDE_TEMPLATE: number = 0;
-	public static SELECTED_PLAYER_GROUND_BOMB_TEMPLATE: number = 0;
-	public static SELECTED_PLAYER_AIR_BOMB_TEMPLATE: number = 0;
+	public static SELECTED_PLAYER_RIDE_TEMPLATE: number = PlayerRideTemplate.AIR_BALLOON;
+	public static SELECTED_PLAYER_GROUND_BOMB_TEMPLATE: number = PlayerGroundBombTemplate.TRASH_BIN;
+	public static SELECTED_PLAYER_AIR_BOMB_TEMPLATE: number = PlayerAirBombTemplate.GRAVITY_BALL;
 
 	public static MESSAGE_BOX_BORDER_COLOR: number = 0x000000;
 	public static MESSAGE_BOX_TEXT_COLOR: string = "#000000";

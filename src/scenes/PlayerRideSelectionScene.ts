@@ -60,8 +60,8 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.AIR_BALLOON;
 			SoundManager.play(SoundType.ITEM_SELECT);
 
-			rideHealth.setLabel((Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
-			rideSpeed.setLabel("1");
+			rideHealth.setLabel("+" + (Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
+			rideSpeed.setLabel("+1");
 		});
 
 		air_balloon_button.setPosition((this.uiContainer.width / 2 - air_balloon_button.width * 2), (this.uiContainer.height / 2 - air_balloon_button.height / 2) + 10);
@@ -82,8 +82,8 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.CHOPPER;
 			SoundManager.play(SoundType.ITEM_SELECT);
 
-			rideHealth.setLabel((Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
-			rideSpeed.setLabel("2");
+			rideHealth.setLabel("+" + (Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
+			rideSpeed.setLabel("+2");
 
 		}, Constants.CHOPPER_UNLOCKED);
 		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_button.width / 2.5), (this.uiContainer.height / 2 - chopper_button.height / 2) + 10);
@@ -104,8 +104,8 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.SPHERE;
 			SoundManager.play(SoundType.ITEM_SELECT);
 
-			rideHealth.setLabel((Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
-			rideSpeed.setLabel("2");
+			rideHealth.setLabel("+" + (Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
+			rideSpeed.setLabel("+2");
 
 		}, Constants.SPHERE_UNLOCKED);
 		sphere_button.setPosition((this.uiContainer.width / 2 + sphere_button.width), (this.uiContainer.height / 2 - sphere_button.height / 2) + 10);

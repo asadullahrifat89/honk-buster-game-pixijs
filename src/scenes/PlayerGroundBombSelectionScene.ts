@@ -61,7 +61,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			dynamite_button.unselect();
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.TRASH_BIN;
 
-			scoreMod.setLabel("1");
+			scoreMod.setLabel("+1");
 			hitPattern.setLabel("Hit");
 		});
 
@@ -83,7 +83,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			dynamite_button.unselect();
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.GRENADE;
 
-			scoreMod.setLabel("2");
+			scoreMod.setLabel("+2");
 			hitPattern.setLabel("Blast");
 
 		}, Constants.GRENADE_UNLOCKED);
@@ -106,7 +106,7 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 			grenade_button.unselect();
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.DYNAMITE;
 
-			scoreMod.setLabel("3");
+			scoreMod.setLabel("+3");
 			hitPattern.setLabel("Blast + Timer");
 
 		}, Constants.DYNAMITE_UNLOCKED);

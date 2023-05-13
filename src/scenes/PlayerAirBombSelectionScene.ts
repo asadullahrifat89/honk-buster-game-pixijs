@@ -65,7 +65,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			bullet_balls_button.unselect();
 			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.GRAVITY_BALL;
 
-			scoreMod.setLabel("1");
+			scoreMod.setLabel("+1");
 			hitPattern.setLabel("Decelerate + Blast");
 		});
 
@@ -87,7 +87,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			gravity_balls_button.unselect();
 			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.MISSILE;
 
-			scoreMod.setLabel("2");
+			scoreMod.setLabel("+2");
 			hitPattern.setLabel("Accelerate + Blast");
 
 		}, Constants.MISSILE_UNLOCKED);
@@ -110,7 +110,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			missiles_button.unselect();
 			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.BULLET_BALL;
 
-			scoreMod.setLabel("3");
+			scoreMod.setLabel("+3");
 			hitPattern.setLabel("Steady + Blast + Aim Assist");
 
 		}, Constants.BULLET_BALL_UNLOCKED);
