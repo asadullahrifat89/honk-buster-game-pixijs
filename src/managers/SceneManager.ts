@@ -87,10 +87,10 @@ export class SceneManager {
 	}
 
 	public static toggleFullscreen() {
-        if (SceneManager.interacted && document.fullscreenEnabled && !document.fullscreenElement) {
-            document.documentElement.requestFullscreen();
-        }
-    }
+		if (SceneManager.interacted && document.fullscreenEnabled && !document.fullscreenElement) {
+			document.documentElement.requestFullscreen();
+		}
+	}
 
 	private static getScaling() {
 		const screenWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);

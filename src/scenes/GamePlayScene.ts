@@ -256,6 +256,10 @@ export class GamePlayScene extends Container implements IScene {
 					yMultiplier = 1.60;
 				}
 			}
+			else {
+				xMultiplier = 1.08;
+				yMultiplier = 1.30;
+			}
 
 			this.sceneBoundaryWidth = Constants.DEFAULT_GAME_VIEW_WIDTH * (SceneManager.scaling * xMultiplier);
 			this.sceneBoundaryHeight = Constants.DEFAULT_GAME_VIEW_HEIGHT * (SceneManager.scaling * yMultiplier);
