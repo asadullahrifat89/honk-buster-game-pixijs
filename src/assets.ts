@@ -207,6 +207,7 @@ export const manifest: ResolverManifest = {
 				"car_honk_3": "./sounds/car_honk_3.mp3",
 
 				"chopper_hovering": "./sounds/chopper_hovering.mp3",
+				"sphere_floating": "./sounds/sphere_floating.mp3",
 
 				"cracker_blast_1": "./sounds/cracker_blast_1.mp3",
 				"cracker_blast_2": "./sounds/cracker_blast_2.mp3",

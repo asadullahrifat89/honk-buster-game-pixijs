@@ -10,7 +10,7 @@ export class GameObjectContainer extends Container {
 	private readonly popUpScalingLimit: number = 1.5;
 
 	private hoverDelay: number = 0;
-	private readonly hoverDelayDefault: number = 28;
+	private hoverDelayDefault: number = 28;
 	private hoverSpeed: number = 0.3;
 	private hopAngle: number = 0;
 
@@ -208,6 +208,11 @@ export class GameObjectContainer extends Container {
 
 	setHoverSpeed(speed: number) {
 		this.hoverSpeed = speed;
+	}
+
+	setHoverIntensity(intensity: number) {
+		this.hoverDelayDefault = intensity;
+		this.hoverDelay = this.hoverDelayDefault;
 	}
 
 	hover() {
