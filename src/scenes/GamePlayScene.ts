@@ -46,7 +46,10 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Properties
 
-	private circleOverlay: GameObjectContainer;
+	private stageOpeningCircle: GameObjectContainer;
+	private stageBackgroundColors: number[] = [0x1e2a36, 0x4187ab];
+	private stageBackgroundColor: Graphics;
+	private stageBorder: Graphics;
 
 	private sceneContainer: GameObjectContainer;
 
@@ -74,10 +77,6 @@ export class GamePlayScene extends Container implements IScene {
 
 	private powerUpBar: HealthBar;
 	private soundPollutionBar: HealthBar;
-
-	private stageColors: number[] = [0x1e2a36, 0x4187ab];
-	private stageColor: Graphics;
-	private stageMask: Graphics;
 
 	private behindBackIcon: Texture;
 	private talkIcon: Texture;
@@ -107,10 +106,10 @@ export class GamePlayScene extends Container implements IScene {
 		this.interactIcon = Texture.from("character_maleAdventurer_interact");
 
 		// set the background color of the scene		
-		let color = this.stageColors[Constants.getRandomNumber(0, this.stageColors.length - 1)];
+		let color = this.stageBackgroundColors[Constants.getRandomNumber(0, this.stageBackgroundColors.length - 1)];
 
-		this.stageColor = new Graphics().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
-		this.addChildAt(this.stageColor, 0);
+		this.stageBackgroundColor = new Graphics().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+		this.addChildAt(this.stageBackgroundColor, 0);
 
 		// create the scene container
 		this.sceneContainer = new GameObjectContainer();
@@ -125,7 +124,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		// spawn the game objects
 		this.spawnGameObjects();
-		this.generatePlayerRide(); // player health is calculated here
+		this.generatePlayerRide(); // player health is calculated here		
 
 		// set the game score bar		
 		this.gameScoreBar = new GameScoreBar(this, "Score ");
@@ -165,8 +164,8 @@ export class GamePlayScene extends Container implements IScene {
 			}
 		});
 		this.addChild(this.gameController);
-		this.stageMask = new Graphics().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
-		this.mask = this.stageMask;
+		this.stageBorder = new Graphics().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
+		this.mask = this.stageBorder;
 
 		// set the on screen message layer
 		this.onScreenMessage = new OnScreenMessage(this);
@@ -196,11 +195,11 @@ export class GamePlayScene extends Container implements IScene {
 		SoundManager.play(SoundType.GAME_BACKGROUND_MUSIC, 0.3, true);
 		SoundManager.play(SoundType.GAME_START);
 
-		this.circleOverlay = new GameObjectContainer();
-		this.circleOverlay.expandSpeed = 0.4;
-		this.circleOverlay.addChild(new Graphics().lineStyle(250, 0x1f2a36).drawCircle(0, 0, 165));
-		this.circleOverlay.setPosition(SceneManager.width / 2, SceneManager.height / 2);
-		this.addChild(this.circleOverlay);
+		this.stageOpeningCircle = new GameObjectContainer();
+		this.stageOpeningCircle.expandSpeed = 0.4;
+		this.stageOpeningCircle.addChild(new Graphics().lineStyle(250, 0x1f2a36).drawCircle(0, 0, 165));
+		this.stageOpeningCircle.setPosition(SceneManager.width / 2, SceneManager.height / 2);
+		this.addChild(this.stageOpeningCircle);
 	}
 
 	//#endregion
@@ -210,8 +209,8 @@ export class GamePlayScene extends Container implements IScene {
 	public update() {
 		this.processFrame();
 
-		if (this.circleOverlay.scale.x <= 200) {
-			this.circleOverlay.expand();
+		if (this.stageOpeningCircle.scale.x <= 200) {
+			this.stageOpeningCircle.expand();
 		}
 
 		//this.logCount();
@@ -231,9 +230,9 @@ export class GamePlayScene extends Container implements IScene {
 			this.repositionBossHealthBar();
 			this.repositionPowerUpBar();
 
-			let color = this.stageColors[Constants.getRandomNumber(0, this.stageColors.length - 1)];
-			this.stageColor.clear().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
-			this.stageMask.clear().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
+			let color = this.stageBackgroundColors[Constants.getRandomNumber(0, this.stageBackgroundColors.length - 1)];
+			this.stageBackgroundColor.clear().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
+			this.stageBorder.clear().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
 
 			let xMultiplier = 1;
 			let yMultiplier = 1;
@@ -533,8 +532,8 @@ export class GamePlayScene extends Container implements IScene {
 		Constants.GAME_SCORE = this.gameScoreBar.getScore();
 		Constants.GAME_LEVEL = this.gameLevelBar.getScore();
 
-		this.stageMask.destroy();
-		this.stageColor.destroy();
+		this.stageBorder.destroy();
+		this.stageBackgroundColor.destroy();
 
 		this.removeChild(this.sceneContainer);
 		this.sceneContainer.destroy();
