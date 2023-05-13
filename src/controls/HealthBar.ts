@@ -15,10 +15,10 @@ export class HealthBar extends Container {
 
 	public tag: any;
 
-	constructor(icon: Texture, scene: Container, foreground: number = 0xf73e3e, background: number = 0xd9e2e9) {
+	constructor(uri: string, scene: Container, foreground: number = 0xf73e3e, background: number = 0xd9e2e9) {
 		super();
 
-		this.iconTexture = icon;
+		this.iconTexture = Texture.from(uri);
 
 		this.progressBar = new ProgressBar();
 		this.progressBar.width = 58;
@@ -33,9 +33,9 @@ export class HealthBar extends Container {
 		this.iconContainer = new GameObjectContainer();
 		this.addChild(this.iconContainer);
 
-		let iconSprite: GameObjectSprite = new GameObjectSprite(icon);
-		iconSprite.width = 40;
-		iconSprite.height = 40;
+		let iconSprite: GameObjectSprite = new GameObjectSprite(this.iconTexture);
+		iconSprite.width = 45;
+		iconSprite.height = 45;
 		this.iconContainer.addChild(iconSprite);
 
 		scene.addChild(this);

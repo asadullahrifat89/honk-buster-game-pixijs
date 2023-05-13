@@ -136,18 +136,18 @@ export class GamePlayScene extends Container implements IScene {
 		this.repositionGameLevelBar();
 
 		// set health bars		
-		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(TextureType.HEALTH_PICKUP), this).setMaximumValue(this.player.health).setValue(this.player.health);
+		this.playerHealthBar = new HealthBar(Constants.getRandomUri(TextureType.HEALTH_PICKUP), this).setMaximumValue(this.player.health).setValue(this.player.health);
 		this.repositionPlayerHealthBar();
 
-		this.bossHealthBar = new HealthBar(Constants.getRandomTexture(TextureType.VEHICLE_BOSS), this, 0x7200ff).setMaximumValue(100).setValue(0);
+		this.bossHealthBar = new HealthBar(Constants.getRandomUri(TextureType.VEHICLE_BOSS), this, 0x7200ff).setMaximumValue(100).setValue(0);
 		this.repositionBossHealthBar();
 
 		// set power up bar
-		this.powerUpBar = new HealthBar(Constants.getRandomTexture(TextureType.POWERUP_PICKUP_ARMOR), this, 0xffaa00).setMaximumValue(100).setValue(0);
+		this.powerUpBar = new HealthBar(Constants.getRandomUri(TextureType.POWERUP_PICKUP_ARMOR), this, 0xffaa00).setMaximumValue(100).setValue(0);
 		this.repositionPowerUpBar();
 
 		// set sound pollution bar
-		this.soundPollutionBar = new HealthBar(Constants.getRandomTexture(TextureType.HONK), this, 0x7200ff).setMaximumValue(8).setValue(0);
+		this.soundPollutionBar = new HealthBar(Constants.getRandomUri(TextureType.HONK), this, 0x7200ff).setMaximumValue(8).setValue(0);
 		this.repositionSoundPollutionBar();
 
 		// set the game controller
