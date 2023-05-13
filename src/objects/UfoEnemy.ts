@@ -1,4 +1,4 @@
-﻿import { Constants, ConstructType, RotationDirection, SoundType } from '../Constants';
+﻿import { Constants, TextureType, RotationDirection, SoundType } from '../Constants';
 import { SoundManager } from '../managers/SoundManager';
 import { VehicleBase } from './VehicleBase';
 
@@ -23,7 +23,7 @@ export class UfoEnemy extends VehicleBase {
 		this.angle = 0;
 		this.willHonk = !!Constants.getRandomNumber(0, 1);
 		this.isHonking = false;
-		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_ENEMY));
+		this.setTexture(Constants.getRandomTexture(TextureType.UFO_ENEMY));
 		this.speed = Constants.getRandomNumber(2, 4);
 
 		if (this.willHonk) {

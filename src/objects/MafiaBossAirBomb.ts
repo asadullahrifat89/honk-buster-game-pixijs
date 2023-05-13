@@ -1,4 +1,4 @@
-﻿import { Constants, ConstructType, SoundType } from '../Constants';
+﻿import { Constants, TextureType, SoundType } from '../Constants';
 import { SoundManager } from '../managers/SoundManager';
 import { MafiaBoss } from './MafiaBoss';
 import { AirBombBase } from './AirBombBase';
@@ -14,7 +14,7 @@ export class MafiaBossAirBomb extends AirBombBase {
 		this.speed = 0;
 		this.scale.set(1);
 		this.isBlasting = false;
-		this.setTexture(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_AIR_BOMB));
+		this.setTexture(Constants.getRandomTexture(TextureType.MAFIA_BOSS_AIR_BOMB));
 
 		this.awaitMoveDownLeft = false;
 		this.awaitMoveUpRight = false;

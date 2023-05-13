@@ -1,4 +1,4 @@
-﻿import { Constants, ConstructType, SoundType } from '../Constants';
+﻿import { Constants, TextureType, SoundType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { AirBombBaseSeekingBall } from './AirBombBaseSeekingBall';
 import { SoundManager } from '../managers/SoundManager';
@@ -13,7 +13,7 @@ export class UfoBossAirBombSeekingBall extends AirBombBaseSeekingBall {
 
 	reset() {
 		this.alpha = 1;
-		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_BOSS_AIR_BOMB_SEEKING));
+		this.setTexture(Constants.getRandomTexture(TextureType.UFO_BOSS_AIR_BOMB_SEEKING));
 		this.scale.set(1);
 		this.angle = 0;
 		this.isBlasting = false;

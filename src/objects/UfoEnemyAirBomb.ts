@@ -1,4 +1,4 @@
-﻿import { Constants, ConstructType, SoundType } from '../Constants';
+﻿import { Constants, TextureType, SoundType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { SoundManager } from '../managers/SoundManager';
 
@@ -17,7 +17,7 @@ export class UfoEnemyAirBomb extends GameObjectContainer {
 		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 3;
 		this.scale.set(1);
 		this.isBlasting = false;
-		this.setTexture(Constants.getRandomTexture(ConstructType.UFO_ENEMY_AIR_BOMB));
+		this.setTexture(Constants.getRandomTexture(TextureType.UFO_ENEMY_AIR_BOMB));
 		this.autoBlastDelay = this.autoBlastDelayDefault;
 		SoundManager.play(SoundType.ORB_LAUNCH, 0.4);
 	}

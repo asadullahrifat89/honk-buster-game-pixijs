@@ -1,5 +1,5 @@
 ﻿import { Texture } from 'pixi.js';
-import { Constants, ConstructType, MovementDirection, PlayerRideStance, PlayerRideTemplate, RotationDirection, SoundType } from '../Constants';
+import { Constants, TextureType, MovementDirection, PlayerRideStance, PlayerRideTemplate, RotationDirection, SoundType } from '../Constants';
 import { GameController } from '../controls/GameController';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { GameObjectSprite } from '../core/GameObjectSprite';
@@ -37,14 +37,14 @@ export class PlayerRide extends GameObjectContainer {
 	private healthLossRecoveryDelay: number = 0;
 	private healthLossOpacityEffect: number = 0;
 
-	private playerIdleTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_IDLE);
-	private playerWinTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_WIN);
-	private playerHitTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_HIT);
-	private playerAttackTexture: Texture = Constants.getRandomTexture(ConstructType.PLAYER_RIDE_ATTACK);
+	private playerIdleTexture: Texture = Constants.getRandomTexture(TextureType.PLAYER_RIDE_IDLE);
+	private playerWinTexture: Texture = Constants.getRandomTexture(TextureType.PLAYER_RIDE_WIN);
+	private playerHitTexture: Texture = Constants.getRandomTexture(TextureType.PLAYER_RIDE_HIT);
+	private playerAttackTexture: Texture = Constants.getRandomTexture(TextureType.PLAYER_RIDE_ATTACK);
 
 	private chopperBladesHoverDelay: number = 10;
 	private chopperBladesOpacityEffect: number = 0;
-	private chopperBladesTexture: Texture = Constants.getRandomTexture(ConstructType.CHOPPER_BLADES);
+	private chopperBladesTexture: Texture = Constants.getRandomTexture(TextureType.CHOPPER_BLADES);
 	private chopperBladesSprite: GameObjectSprite = new GameObjectSprite(this.chopperBladesTexture);
 
 	//#endregion
@@ -59,10 +59,10 @@ export class PlayerRide extends GameObjectContainer {
 
 		this.playerRideTemplate = playerRideTemplate;
 
-		let playerIdleUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_RIDE_IDLE).map(x => x.uri);
-		let playerWinUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_RIDE_WIN).map(x => x.uri);
-		let playerHitUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_RIDE_HIT).map(x => x.uri);
-		let playerAttackUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == ConstructType.PLAYER_RIDE_ATTACK).map(x => x.uri);
+		let playerIdleUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_IDLE).map(x => x.uri);
+		let playerWinUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_WIN).map(x => x.uri);
+		let playerHitUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_HIT).map(x => x.uri);
+		let playerAttackUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_ATTACK).map(x => x.uri);
 
 		switch (playerRideTemplate) {
 			case PlayerRideTemplate.AIR_BALLOON: {

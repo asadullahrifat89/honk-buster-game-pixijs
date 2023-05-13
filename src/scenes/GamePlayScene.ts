@@ -1,6 +1,6 @@
 import { BlurFilter, Container, Graphics, Texture } from "pixi.js";
 import { GameObjectContainer } from '../core/GameObjectContainer';
-import { Constants, ConstructType, ExplosionType, PlayerGroundBombTemplate, PlayerRideTemplate, PlayerAirBombTemplate, PowerUpType, RotationDirection, SoundType } from '../Constants';
+import { Constants, TextureType, ExplosionType, PlayerGroundBombTemplate, PlayerRideTemplate, PlayerAirBombTemplate, PowerUpType, RotationDirection, SoundType } from '../Constants';
 import { GameOverScene } from "./GameOverScene";
 import { IScene } from "../managers/IScene";
 import { GameController } from "../controls/GameController";
@@ -135,18 +135,18 @@ export class GamePlayScene extends Container implements IScene {
 		this.repositionGameLevelBar();
 
 		// set health bars		
-		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP), this).setMaximumValue(this.player.health).setValue(this.player.health);
+		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(TextureType.HEALTH_PICKUP), this).setMaximumValue(this.player.health).setValue(this.player.health);
 		this.repositionPlayerHealthBar();
 
-		this.bossHealthBar = new HealthBar(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS), this, 0x7200ff).setMaximumValue(100).setValue(0);
+		this.bossHealthBar = new HealthBar(Constants.getRandomTexture(TextureType.VEHICLE_BOSS), this, 0x7200ff).setMaximumValue(100).setValue(0);
 		this.repositionBossHealthBar();
 
 		// set power up bar
-		this.powerUpBar = new HealthBar(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR), this, 0xffaa00).setMaximumValue(100).setValue(0);
+		this.powerUpBar = new HealthBar(Constants.getRandomTexture(TextureType.POWERUP_PICKUP_ARMOR), this, 0xffaa00).setMaximumValue(100).setValue(0);
 		this.repositionPowerUpBar();
 
 		// set sound pollution bar
-		this.soundPollutionBar = new HealthBar(Constants.getRandomTexture(ConstructType.HONK), this, 0x7200ff).setMaximumValue(8).setValue(0);
+		this.soundPollutionBar = new HealthBar(Constants.getRandomTexture(TextureType.HONK), this, 0x7200ff).setMaximumValue(8).setValue(0);
 		this.repositionSoundPollutionBar();
 
 		// set the game controller
@@ -574,7 +574,7 @@ export class GamePlayScene extends Container implements IScene {
 			const honk: Honk = new Honk(Constants.DEFAULT_CONSTRUCT_SPEED);
 			honk.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HONK));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.HONK));
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.honkSize.width;
@@ -750,7 +750,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_MARK));
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.ROAD_MARK));
 				sprite.x = (this.roadMarkSize.width * i) - (this.roadMarkXyAdjustment * i);
 				sprite.y = ((this.roadMarkSize.height / 2) * i) - (((this.roadMarkXyAdjustment) / 2) * i);
 				sprite.width = this.roadMarkSize.width;
@@ -819,7 +819,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK_TOP));
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.ROAD_SIDE_WALK_TOP));
 
 				sprite.x = this.sideWalkSize.width * i - (this.sideWalkXyAdjustment * i);
 				sprite.y = (this.sideWalkSize.height / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
@@ -844,7 +844,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			for (let i = 0; i < 5; i++) {
 
-				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ROAD_SIDE_WALK_BOTTOM));
+				const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.ROAD_SIDE_WALK_BOTTOM));
 
 				sprite.x = this.sideWalkSize.width * i - (this.sideWalkXyAdjustment * i);
 				sprite.y = (this.sideWalkSize.height / 2) * i - ((this.sideWalkXyAdjustment / 2) * i);
@@ -1014,7 +1014,7 @@ export class GamePlayScene extends Container implements IScene {
 			const leaf: Leaf = new Leaf(Constants.getRandomNumber(1, Constants.DEFAULT_CONSTRUCT_SPEED + 2));
 			leaf.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.LEAF));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.LEAF));
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.leafSize.width;
@@ -1084,7 +1084,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: GrandExplosionRing = new GrandExplosionRing(0);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GRAND_EXPLOSION_RING));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.GRAND_EXPLOSION_RING));
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.grandExplosionRingSize.width;
@@ -1464,7 +1464,7 @@ export class GamePlayScene extends Container implements IScene {
 	private player: PlayerRide = new PlayerRide();
 
 	spawnPlayerBalloon() {
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_RIDE_IDLE));
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.PLAYER_RIDE_IDLE));
 		sprite.x = 0;
 		sprite.y = 0;
 
@@ -1580,7 +1580,7 @@ export class GamePlayScene extends Container implements IScene {
 
 			const gameObject: PlayerGroundBomb = new PlayerGroundBomb(4);
 			gameObject.disableRendering();
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_GROUND_BOMB));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.PLAYER_GROUND_BOMB));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -1831,7 +1831,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: PlayerAirBomb = new PlayerAirBomb(4);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_AIR_BOMB));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.PLAYER_AIR_BOMB));
 			sprite.x = 0;
 			sprite.y = 0;
 
@@ -2078,7 +2078,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: PlayerAirBombHurlingBall = new PlayerAirBombHurlingBall(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.PLAYER_AIR_BOMB_HURLING_BALLS));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.PLAYER_AIR_BOMB_HURLING_BALLS));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -2306,7 +2306,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: UfoEnemy = new UfoEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.UFO_ENEMY));
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.ufoEnemySize.width;
@@ -2434,7 +2434,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: UfoEnemyAirBomb = new UfoEnemyAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_ENEMY_AIR_BOMB));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.UFO_ENEMY_AIR_BOMB));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -2528,17 +2528,17 @@ export class GamePlayScene extends Container implements IScene {
 		for (let j = 0; j < 10; j++) {
 
 			const gameObject: VehicleEnemy = new VehicleEnemy(Constants.DEFAULT_CONSTRUCT_SPEED);
-			gameObject.vehicleType = Constants.getRandomNumber(ConstructType.VEHICLE_ENEMY_SMALL, ConstructType.VEHICLE_ENEMY_LARGE);
+			gameObject.vehicleType = Constants.getRandomNumber(TextureType.VEHICLE_ENEMY_SMALL, TextureType.VEHICLE_ENEMY_LARGE);
 
 			gameObject.disableRendering();
 
 			var uri: string = "";
 			switch (gameObject.vehicleType) {
-				case ConstructType.VEHICLE_ENEMY_SMALL: {
-					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
+				case TextureType.VEHICLE_ENEMY_SMALL: {
+					uri = Constants.getRandomUri(TextureType.VEHICLE_ENEMY_SMALL);
 				} break;
-				case ConstructType.VEHICLE_ENEMY_LARGE: {
-					uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
+				case TextureType.VEHICLE_ENEMY_LARGE: {
+					uri = Constants.getRandomUri(TextureType.VEHICLE_ENEMY_LARGE);
 				} break;
 				default: break;
 			}
@@ -2550,11 +2550,11 @@ export class GamePlayScene extends Container implements IScene {
 			sprite.y = 0;
 
 			switch (gameObject.vehicleType) {
-				case ConstructType.VEHICLE_ENEMY_SMALL: {
+				case TextureType.VEHICLE_ENEMY_SMALL: {
 					sprite.width = this.vehicleEnemySize.width / 1.2;
 					sprite.height = this.vehicleEnemySize.height / 1.2;
 				} break;
-				case ConstructType.VEHICLE_ENEMY_LARGE: {
+				case TextureType.VEHICLE_ENEMY_LARGE: {
 					sprite.width = this.vehicleEnemySize.width;
 					sprite.height = this.vehicleEnemySize.height;
 				} break;
@@ -2586,11 +2586,11 @@ export class GamePlayScene extends Container implements IScene {
 					let sprite = gameObject.getSprite();
 
 					switch (gameObject.vehicleType) {
-						case ConstructType.VEHICLE_ENEMY_SMALL: {
+						case TextureType.VEHICLE_ENEMY_SMALL: {
 							sprite.width = this.vehicleEnemySize.width / 1.2;
 							sprite.height = this.vehicleEnemySize.height / 1.2;
 						} break;
-						case ConstructType.VEHICLE_ENEMY_LARGE: {
+						case TextureType.VEHICLE_ENEMY_LARGE: {
 							sprite.width = this.vehicleEnemySize.width;
 							sprite.height = this.vehicleEnemySize.height;
 						} break;
@@ -2741,7 +2741,7 @@ export class GamePlayScene extends Container implements IScene {
 			const vehicleSmoke: VehicleSmoke = new VehicleSmoke(Constants.DEFAULT_CONSTRUCT_SPEED);
 			vehicleSmoke.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_SMOKE));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.VEHICLE_SMOKE));
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.vehicleSmokeSize.width;
@@ -2822,7 +2822,7 @@ export class GamePlayScene extends Container implements IScene {
 		const gameObject: VehicleBoss = new VehicleBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
 		gameObject.disableRendering();
 
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS));
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.VEHICLE_BOSS));
 		sprite.x = 0;
 		sprite.y = 0;
 		sprite.width = this.vehicleEnemySize.width / 1.2;
@@ -2959,7 +2959,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: VehicleBossAirBomb = new VehicleBossAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED * 1.1);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_AIR_BOMB));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.VEHICLE_BOSS_AIR_BOMB));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -3062,7 +3062,7 @@ export class GamePlayScene extends Container implements IScene {
 		const gameObject: UfoBoss = new UfoBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
 		gameObject.disableRendering();
 
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_IDLE));
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.UFO_BOSS_IDLE));
 
 		sprite.x = 0;
 		sprite.y = 0;
@@ -3210,7 +3210,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: UfoBossAirBomb = new UfoBossAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_AIR_BOMB));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.UFO_BOSS_AIR_BOMB));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -3352,7 +3352,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: UfoBossAirBombSeekingBall = new UfoBossAirBombSeekingBall(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.UFO_BOSS_AIR_BOMB_SEEKING));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.UFO_BOSS_AIR_BOMB_SEEKING));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -3461,7 +3461,7 @@ export class GamePlayScene extends Container implements IScene {
 		const gameObject: ZombieBoss = new ZombieBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
 		gameObject.disableRendering();
 
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_IDLE));
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.ZOMBIE_BOSS_IDLE));
 
 		sprite.x = 0;
 		sprite.y = 0;
@@ -3609,7 +3609,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: ZombieBossAirBombCube = new ZombieBossAirBombCube(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.ZOMBIE_BOSS_ROCKET_BLOCK));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.ZOMBIE_BOSS_ROCKET_BLOCK));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -3702,7 +3702,7 @@ export class GamePlayScene extends Container implements IScene {
 		const gameObject: MafiaBoss = new MafiaBoss(Constants.DEFAULT_CONSTRUCT_SPEED);
 		gameObject.disableRendering();
 
-		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_IDLE));
+		const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.MAFIA_BOSS_IDLE));
 
 		sprite.x = 0;
 		sprite.y = 0;
@@ -3855,7 +3855,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: MafiaBossAirBomb = new MafiaBossAirBomb(Constants.DEFAULT_CONSTRUCT_SPEED / 2);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_AIR_BOMB));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.MAFIA_BOSS_AIR_BOMB));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -3969,7 +3969,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: MafiaBossAirBombHurlingBall = new MafiaBossAirBombHurlingBall(Constants.DEFAULT_CONSTRUCT_SPEED);
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.MAFIA_BOSS_AIR_BOMB_HURLING_BALLS));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.MAFIA_BOSS_AIR_BOMB_HURLING_BALLS));
 
 			sprite.x = 0;
 			sprite.y = 0;
@@ -4081,7 +4081,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: HealthPickup = new HealthPickup(Constants.getRandomNumber(2, Constants.DEFAULT_CONSTRUCT_SPEED));
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.HEALTH_PICKUP));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.HEALTH_PICKUP));
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.healthPickupSize.width;
@@ -4185,7 +4185,7 @@ export class GamePlayScene extends Container implements IScene {
 			const gameObject: PowerUpPickup = new PowerUpPickup(Constants.getRandomNumber(2, Constants.DEFAULT_CONSTRUCT_SPEED));
 			gameObject.disableRendering();
 
-			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.POWERUP_PICKUP_ARMOR));
+			const sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.POWERUP_PICKUP_ARMOR));
 			sprite.x = 0;
 			sprite.y = 0;
 			sprite.width = this.powerUpPickupSize.width;

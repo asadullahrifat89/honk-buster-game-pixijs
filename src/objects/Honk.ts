@@ -1,4 +1,4 @@
-﻿import { Constants, ConstructType, SoundType } from '../Constants';
+﻿import { Constants, TextureType, SoundType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { SoundManager } from '../managers/SoundManager';
 
@@ -10,7 +10,7 @@ export class Honk extends GameObjectContainer {
 
 	reset() {
 		this.alpha = 1.0;
-		this.setTexture(Constants.getRandomTexture(ConstructType.HONK));
+		this.setTexture(Constants.getRandomTexture(TextureType.HONK));
 		SoundManager.play(SoundType.HONK, 0.5);
 		this.setDillyDallySpeed(0.3);
 	}

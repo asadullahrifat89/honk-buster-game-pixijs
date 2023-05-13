@@ -1,4 +1,4 @@
-﻿import { Constants, ConstructType, SoundType } from '../Constants';
+﻿import { Constants, TextureType, SoundType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 import { SoundManager } from '../managers/SoundManager';
 import { VehicleBoss } from './VehicleBoss';
@@ -19,7 +19,7 @@ export class VehicleBossAirBomb extends GameObjectContainer {
 		this.alpha = 1;
 		this.scale.set(1);
 		this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * 1.2;		
-		this.setTexture(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS_AIR_BOMB));
+		this.setTexture(Constants.getRandomTexture(TextureType.VEHICLE_BOSS_AIR_BOMB));
 		this.autoBlastDelay = this.autoBlastDelayDefault;
 
 		SoundManager.play(SoundType.ROCKET_LAUNCH, 0.3);

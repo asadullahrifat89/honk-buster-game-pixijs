@@ -1,4 +1,4 @@
-﻿import { Constants, ConstructType } from '../Constants';
+﻿import { Constants, TextureType } from '../Constants';
 import { VehicleBase } from './VehicleBase';
 import { Texture } from 'pixi.js';
 
@@ -21,15 +21,15 @@ export class VehicleEnemy extends VehicleBase {
 		this.isHonking = false;
 		this.filters = null;
 
-		this.vehicleType = Constants.getRandomNumber(ConstructType.VEHICLE_ENEMY_SMALL, ConstructType.VEHICLE_ENEMY_LARGE);
+		this.vehicleType = Constants.getRandomNumber(TextureType.VEHICLE_ENEMY_SMALL, TextureType.VEHICLE_ENEMY_LARGE);
 
 		let uri: string = "";
 		switch (this.vehicleType) {
-			case ConstructType.VEHICLE_ENEMY_SMALL: {
-				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_SMALL);
+			case TextureType.VEHICLE_ENEMY_SMALL: {
+				uri = Constants.getRandomUri(TextureType.VEHICLE_ENEMY_SMALL);
 			} break;
-			case ConstructType.VEHICLE_ENEMY_LARGE: {
-				uri = Constants.getRandomUri(ConstructType.VEHICLE_ENEMY_LARGE);
+			case TextureType.VEHICLE_ENEMY_LARGE: {
+				uri = Constants.getRandomUri(TextureType.VEHICLE_ENEMY_LARGE);
 
 			} break;
 			default: break;

@@ -1,13 +1,13 @@
 ﻿import { Rectangle, Texture } from 'pixi.js';
-import { BossStance, Constants, ConstructType, MafiaBossMovementPattern, MovementDirection } from '../Constants';
+import { BossStance, Constants, TextureType, MafiaBossMovementPattern, MovementDirection } from '../Constants';
 import { UfoBossBase } from './UfoBossBase';
 
 
 export class MafiaBoss extends UfoBossBase {
 
-	private mafiaBossIdleTexture: Texture = Constants.getRandomTexture(ConstructType.MAFIA_BOSS_IDLE);
-	private mafiaBossWinTexture: Texture = Constants.getRandomTexture(ConstructType.MAFIA_BOSS_WIN);
-	private mafiaBossHitTexture: Texture = Constants.getRandomTexture(ConstructType.MAFIA_BOSS_HIT);
+	private mafiaBossIdleTexture: Texture = Constants.getRandomTexture(TextureType.MAFIA_BOSS_IDLE);
+	private mafiaBossWinTexture: Texture = Constants.getRandomTexture(TextureType.MAFIA_BOSS_WIN);
+	private mafiaBossHitTexture: Texture = Constants.getRandomTexture(TextureType.MAFIA_BOSS_HIT);
 
 	private changeMovementPatternDelay: number = 0;
 

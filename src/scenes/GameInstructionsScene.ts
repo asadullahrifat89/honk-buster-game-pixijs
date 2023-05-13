@@ -2,7 +2,7 @@
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
-import { Constants, ConstructType, SoundType } from "../Constants";
+import { Constants, TextureType, SoundType } from "../Constants";
 import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
 import { Button } from "../controls/Button";
@@ -28,7 +28,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		this.uiContainer.setPosition(SceneManager.width / 2 - this.uiContainer.width / 2, SceneManager.height / 2 - this.uiContainer.height / 2);
 		this.addChild(this.uiContainer);
 
-		const bg_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(ConstructType.GAME_COVER_IMAGE));
+		const bg_sprite: GameObjectSprite = new GameObjectSprite(Constants.getRandomTexture(TextureType.GAME_COVER_IMAGE));
 		bg_sprite.x = 0;
 		bg_sprite.y = 0;
 		bg_sprite.width = Constants.DEFAULT_GAME_VIEW_WIDTH / 2;

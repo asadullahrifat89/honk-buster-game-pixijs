@@ -1,4 +1,4 @@
-﻿import { Constants, ConstructType } from '../Constants';
+﻿import { Constants, TextureType } from '../Constants';
 import { GameObjectContainer } from '../core/GameObjectContainer';
 
 
@@ -10,7 +10,7 @@ export class VehicleSmoke extends GameObjectContainer {
 
 	reset() {
 		this.alpha = 1.0;
-		this.setTexture(Constants.getRandomTexture(ConstructType.VEHICLE_SMOKE));
+		this.setTexture(Constants.getRandomTexture(TextureType.VEHICLE_SMOKE));
 		this.setDillyDallySpeed(0.4);
 		/*this.speed = Constants.getRandomNumber(2, 4);*/
 	}

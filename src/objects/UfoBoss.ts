@@ -1,13 +1,13 @@
 ﻿import { Rectangle, Texture } from 'pixi.js';
-import { BossStance, Constants, ConstructType, MovementDirection, UfoBossMovementPattern } from '../Constants';
+import { BossStance, Constants, TextureType, MovementDirection, UfoBossMovementPattern } from '../Constants';
 import { UfoBossBase } from './UfoBossBase';
 
 
 export class UfoBoss extends UfoBossBase {
 
-	private ufoBossIdleTexture: Texture = Constants.getRandomTexture(ConstructType.UFO_BOSS_IDLE);
-	private ufoBossWinTexture: Texture = Constants.getRandomTexture(ConstructType.UFO_BOSS_WIN);
-	private ufoBossHitTexture: Texture = Constants.getRandomTexture(ConstructType.UFO_BOSS_HIT);
+	private ufoBossIdleTexture: Texture = Constants.getRandomTexture(TextureType.UFO_BOSS_IDLE);
+	private ufoBossWinTexture: Texture = Constants.getRandomTexture(TextureType.UFO_BOSS_WIN);
+	private ufoBossHitTexture: Texture = Constants.getRandomTexture(TextureType.UFO_BOSS_HIT);
 
 	private changeMovementPatternDelay: number = 0;
 

@@ -1,4 +1,4 @@
-﻿import { Constants, ConstructType, MovementDirection } from '../Constants';
+﻿import { Constants, TextureType, MovementDirection } from '../Constants';
 import { VehicleBossBase } from './VehicleBossBase';
 
 
@@ -14,7 +14,7 @@ export class VehicleBoss extends VehicleBossBase {
 	override reset() {
 		super.reset();
 		this.setDillyDallySpeed(0.1);
-		this.setTexture(Constants.getRandomTexture(ConstructType.VEHICLE_BOSS));
+		this.setTexture(Constants.getRandomTexture(TextureType.VEHICLE_BOSS));
 		this.setHonkDelay();
 		this.scale.set(1);
 		this.randomizeMovementPattern();
