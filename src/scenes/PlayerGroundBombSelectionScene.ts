@@ -55,10 +55,12 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		const trash_bin_button = new SelectionButton("player_honk_bomb_trash_1", 256 / 2, 256 / 2, "Lvl " + 1, () => {
 
 			button.setText("Trash Bins").setIsEnabled(true);
-			SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
+			SoundManager.play(SoundType.TRASH_BIN_BLAST);
+			
 			trash_bin_button.select();
 			grenade_button.unselect();
 			dynamite_button.unselect();
+
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.TRASH_BIN;
 
 			scoreMod.setLabel("+1");
@@ -77,10 +79,12 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 		const grenade_button = new SelectionButton("player_honk_bomb_grenade_2", 256 / 2, 256 / 2, "Lvl " + Constants.GRENADE_UNLOCK_LEVEL, () => {
 
 			button.setText("Grenades").setIsEnabled(true);
-			SoundManager.play(SoundType.TRASH_BIN_BLAST);
+			SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
+
 			grenade_button.select();
 			trash_bin_button.unselect();
 			dynamite_button.unselect();
+
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.GRENADE;
 
 			scoreMod.setLabel("+2");
@@ -101,9 +105,11 @@ export class PlayerGroundBombSelectionScene extends Container implements IScene 
 
 			button.setText("Dynamites").setIsEnabled(true);
 			SoundManager.play(SoundType.GROUND_BOMB_BLAST, 0.8);
+
 			dynamite_button.select();
 			trash_bin_button.unselect();
 			grenade_button.unselect();
+
 			Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE = PlayerGroundBombTemplate.DYNAMITE;
 
 			scoreMod.setLabel("+3");
