@@ -17,9 +17,9 @@ export abstract class Constants {
 	public static DEFAULT_DROP_SHADOW_DISTANCE: number = 40;
 
 	public static SELECTED_PLAYER_CHARACTER_TEMPLATE: number = 0;
-	public static SELECTED_PLAYER_RIDE_TEMPLATE: number = 0;
-	public static SELECTED_PLAYER_GROUND_BOMB_TEMPLATE: number = 0;
-	public static SELECTED_PLAYER_AIR_BOMB_TEMPLATE: number = 0;
+	public static SELECTED_PLAYER_RIDE_TEMPLATE: number = PlayerRideTemplate.AIR_BALLOON;
+	public static SELECTED_PLAYER_GROUND_BOMB_TEMPLATE: number = PlayerGroundBombTemplate.TRASH_BIN;
+	public static SELECTED_PLAYER_AIR_BOMB_TEMPLATE: number = PlayerAirBombTemplate.GRAVITY_BALL;
 
 	public static MESSAGE_BOX_BORDER_COLOR: number = 0x000000;
 	public static MESSAGE_BOX_TEXT_COLOR: string = "#000000";
@@ -33,7 +33,7 @@ export abstract class Constants {
 	public static HEALTH_LEVEL_MAX: number = 0;
 	public static ATTACK_LEVEL_MAX: number = 0;
 
-	//TODO: reset these to the default values after testing
+	//TODO: reset these to the commented values after testing
 	public static MISSILE_UNLOCK_LEVEL: number = 3; // 3
 	public static MISSILE_UNLOCKED: boolean = false;
 
@@ -99,19 +99,19 @@ export abstract class Constants {
 		new TextureTemplate(TextureType.VEHICLE_ENEMY_LARGE, "vehicle_large_5"),
 
 		new TextureTemplate(TextureType.PLAYER_RIDE_IDLE, "player_balloon_1_idle", PlayerRideTemplate.AIR_BALLOON),
-		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_balloon_1_attack", PlayerRideTemplate.AIR_BALLOON),
 		new TextureTemplate(TextureType.PLAYER_RIDE_WIN, "player_balloon_1_win", PlayerRideTemplate.AIR_BALLOON),
 		new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_balloon_1_hit", PlayerRideTemplate.AIR_BALLOON),
+		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_balloon_1_attack", PlayerRideTemplate.AIR_BALLOON),
 
 		new TextureTemplate(TextureType.PLAYER_RIDE_IDLE, "player_chopper_1_idle", PlayerRideTemplate.CHOPPER),
-		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_chopper_1_attack", PlayerRideTemplate.CHOPPER),
 		new TextureTemplate(TextureType.PLAYER_RIDE_WIN, "player_chopper_1_win", PlayerRideTemplate.CHOPPER),
 		new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_chopper_1_hit", PlayerRideTemplate.CHOPPER),
+		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_chopper_1_attack", PlayerRideTemplate.CHOPPER),
 
 		new TextureTemplate(TextureType.PLAYER_RIDE_IDLE, "player_sphere_1_idle", PlayerRideTemplate.SPHERE),
-		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_sphere_1_attack", PlayerRideTemplate.SPHERE),
 		new TextureTemplate(TextureType.PLAYER_RIDE_WIN, "player_sphere_1_win", PlayerRideTemplate.SPHERE),
-		new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_sphere_1_hit", PlayerRideTemplate.SPHERE),		
+		new TextureTemplate(TextureType.PLAYER_RIDE_HIT, "player_sphere_1_hit", PlayerRideTemplate.SPHERE),
+		new TextureTemplate(TextureType.PLAYER_RIDE_ATTACK, "player_sphere_1_attack", PlayerRideTemplate.SPHERE),
 
 		new TextureTemplate(TextureType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_1", PlayerGroundBombTemplate.GRENADE),
 		new TextureTemplate(TextureType.PLAYER_GROUND_BOMB, "player_honk_bomb_grenade_2", PlayerGroundBombTemplate.GRENADE),

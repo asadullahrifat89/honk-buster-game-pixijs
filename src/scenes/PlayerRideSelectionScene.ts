@@ -2,7 +2,7 @@
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 import { IScene } from "../managers/IScene";
 import { GameObjectContainer } from "../core/GameObjectContainer";
-import { Constants} from "../Constants";
+import { Constants } from "../Constants";
 import { TextureType, PlayerRideTemplate, SoundType } from "../Enums";
 import { SceneManager } from "../managers/SceneManager";
 import { GameObjectSprite } from "../core/GameObjectSprite";
@@ -10,6 +10,7 @@ import { Button } from "../controls/Button";
 import { SoundManager } from "../managers/SoundManager";
 import { PlayerGearSelectionScene } from "./PlayerGearSelectionScene";
 import { SelectionButton } from "../controls/SelectionButton";
+import { LabeledIcon } from "../controls/LabeledIcon";
 
 export class PlayerRideSelectionScene extends Container implements IScene {
 
@@ -45,7 +46,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			fill: "#ffffff",
 		});
 		title.x = this.uiContainer.width / 2 - title.width / 2;
-		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
+		title.y = (this.uiContainer.height / 2 - title.height / 2) - 220;
 		this.uiContainer.addChild(title);
 
 		//#region air balloon
@@ -58,6 +59,9 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			sphere_button.unselect();
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.AIR_BALLOON;
 			SoundManager.play(SoundType.ITEM_SELECT);
+
+			rideHealth.setLabel("+" + (Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
+			rideSpeed.setLabel("+1");
 		});
 
 		air_balloon_button.setPosition((this.uiContainer.width / 2 - air_balloon_button.width * 2), (this.uiContainer.height / 2 - air_balloon_button.height / 2) + 10);
@@ -78,8 +82,11 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.CHOPPER;
 			SoundManager.play(SoundType.ITEM_SELECT);
 
+			rideHealth.setLabel("+" + (Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
+			rideSpeed.setLabel("+2");
+
 		}, Constants.CHOPPER_UNLOCKED);
-		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_button.width / 2), (this.uiContainer.height / 2 - chopper_button.height / 2) + 10);
+		chopper_button.setPosition((this.uiContainer.width / 2 - chopper_button.width / 2.5), (this.uiContainer.height / 2 - chopper_button.height / 2) + 10);
 		this.uiContainer.addChild(chopper_button);
 
 		//#endregion
@@ -97,14 +104,29 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			Constants.SELECTED_PLAYER_RIDE_TEMPLATE = PlayerRideTemplate.SPHERE;
 			SoundManager.play(SoundType.ITEM_SELECT);
 
+			rideHealth.setLabel("+" + (Constants.SELECTED_PLAYER_RIDE_TEMPLATE * 5).toString());
+			rideSpeed.setLabel("+2");
+
 		}, Constants.SPHERE_UNLOCKED);
 		sphere_button.setPosition((this.uiContainer.width / 2 + sphere_button.width), (this.uiContainer.height / 2 - sphere_button.height / 2) + 10);
 		this.uiContainer.addChild(sphere_button);
 
 		//#endregion
 
+		//#region info
+
+		const rideHealth = new LabeledIcon("health_pickup", 50, 50, "?")
+		rideHealth.setPosition(this.uiContainer.width / 2 - rideHealth.width * 2, this.uiContainer.height - rideHealth.height * 2.5);
+		this.uiContainer.addChild(rideHealth);
+
+		const rideSpeed = new LabeledIcon("speed", 50, 50, "?")
+		rideSpeed.setPosition(this.uiContainer.width / 2 + rideSpeed.width * 1, this.uiContainer.height - rideSpeed.height * 2.5);
+		this.uiContainer.addChild(rideSpeed);
+
+		//#endregion
+
 		const button = new Button(() => {
-			if (button.getIsEnabled()) {
+			if (button.isEnabled()) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
 				this.uiContainer.destroy();
@@ -115,7 +137,7 @@ export class PlayerRideSelectionScene extends Container implements IScene {
 			}
 
 		}).setText("Select").setIsEnabled(false);
-		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
+		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 1);
 		this.uiContainer.addChild(button);
 	}
 

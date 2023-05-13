@@ -51,7 +51,12 @@ export class MessageBubble extends GameObjectContainer {
 	}
 
 	reposition(source: GameObjectContainer, message: string, fontSize: number = 26) {
-		this.source = source;
+		this.source = source;		
+		this.setMessage(message, fontSize);
+		this.move();
+	}
+
+	setMessage(message: string, fontSize: number = 26) {
 		this.messageText.text = message;
 		if (fontSize != 26) {
 			this.messageText.style = {
@@ -65,8 +70,6 @@ export class MessageBubble extends GameObjectContainer {
 		this.messageGraphics.destroy();
 		this.messageGraphics = this.drawMessageGraphics();
 		this.messageContainer.addChildAt(this.messageGraphics, 0);
-
-		this.move();
 	}
 
 	move() {

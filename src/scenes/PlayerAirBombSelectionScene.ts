@@ -10,6 +10,7 @@ import { SoundManager } from "../managers/SoundManager";
 import { PlayerGearSelectionScene } from "./PlayerGearSelectionScene";
 import { SelectionButton } from "../controls/SelectionButton";
 import { TextureType, SoundType, PlayerAirBombTemplate } from "../Enums";
+import { LabeledIcon } from "../controls/LabeledIcon";
 
 
 export class PlayerAirBombSelectionScene extends Container implements IScene {
@@ -48,7 +49,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			fill: "#ffffff",
 		});
 		title.x = this.uiContainer.width / 2 - title.width / 2;
-		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
+		title.y = (this.uiContainer.height / 2 - title.height / 2) - 220;
 		this.uiContainer.addChild(title);
 
 		//#endregion
@@ -63,6 +64,9 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			missiles_button.unselect();
 			bullet_balls_button.unselect();
 			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.GRAVITY_BALL;
+
+			scoreMod.setLabel("+1");
+			hitPattern.setLabel("Decelerate + Blast");
 		});
 
 		gravity_balls_button.setPosition((this.uiContainer.width / 2 - gravity_balls_button.width * 2.5) + 45, (this.uiContainer.height / 2 - gravity_balls_button.height / 2) + 10);
@@ -82,6 +86,9 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			bullet_balls_button.unselect();
 			gravity_balls_button.unselect();
 			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.MISSILE;
+
+			scoreMod.setLabel("+2");
+			hitPattern.setLabel("Accelerate + Blast");
 
 		}, Constants.MISSILE_UNLOCKED);
 
@@ -103,6 +110,9 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			missiles_button.unselect();
 			Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE = PlayerAirBombTemplate.BULLET_BALL;
 
+			scoreMod.setLabel("+3");
+			hitPattern.setLabel("Steady + Blast + Aim Assist");
+
 		}, Constants.BULLET_BALL_UNLOCKED);
 
 		bullet_balls_button.setPosition((this.uiContainer.width / 2 + bullet_balls_button.width * 1.1), (this.uiContainer.height / 2 - bullet_balls_button.height / 2) + 10);
@@ -110,8 +120,20 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 
 		//#endregion
 
+		//#region info
+
+		const scoreMod = new LabeledIcon("attack_button", 50, 50, "?")
+		scoreMod.setPosition(this.uiContainer.width / 2 - scoreMod.width * 2, this.uiContainer.height - scoreMod.height * 2.5);
+		this.uiContainer.addChild(scoreMod);
+
+		const hitPattern = new LabeledIcon("powerup_pickup_bulls_eye", 50, 50, "?")
+		hitPattern.setPosition(this.uiContainer.width / 2 + hitPattern.width * 1, this.uiContainer.height - hitPattern.height * 2.5);
+		this.uiContainer.addChild(hitPattern);
+
+		//#endregion
+
 		const button = new Button(() => {
-			if (button.getIsEnabled()) {
+			if (button.isEnabled()) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
 				this.uiContainer.destroy();
@@ -122,7 +144,7 @@ export class PlayerAirBombSelectionScene extends Container implements IScene {
 			}
 
 		}).setText("Select").setIsEnabled(false);
-		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
+		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 1);
 		this.uiContainer.addChild(button);
 	}
 

@@ -56,12 +56,12 @@ export class GamePlayScene extends Container implements IScene {
 
 	private onScreenMessage: OnScreenMessage;
 
-	//TODO: reset these to the default values after testing
-	private readonly ufoEnemyRelease: { point: number, limit: number } = { point: 35, limit: 15 }; // 35
-	private readonly vehicleBossRelease: { point: number, limit: number } = { point: 25, limit: 15 }; // 25
-	private readonly ufoBossRelease: { point: number, limit: number } = { point: 50, limit: 15 }; // 50
-	private readonly zombieBossRelease: { point: number, limit: number } = { point: 100, limit: 15 }; // 100
-	private readonly mafiaBossRelease: { point: number, limit: number } = { point: 150, limit: 15 }; // 150
+	//TODO: reset these to the commented values after testing
+	private readonly ufoEnemyRelease: { point: number, limit: number } = { limit: 15, point: 35 }; // 35
+	private readonly vehicleBossRelease: { point: number, limit: number } = { limit: 15, point: 25 }; // 25
+	private readonly ufoBossRelease: { point: number, limit: number } = { limit: 15, point: 50 }; // 50
+	private readonly zombieBossRelease: { point: number, limit: number } = { limit: 15, point: 100 }; // 100
+	private readonly mafiaBossRelease: { point: number, limit: number } = { limit: 15, point: 150 }; // 150
 
 	private readonly ufoEnemyCheckpoint: GameCheckpoint;
 	private readonly vehicleBossCheckpoint: GameCheckpoint;
@@ -136,18 +136,18 @@ export class GamePlayScene extends Container implements IScene {
 		this.repositionGameLevelBar();
 
 		// set health bars		
-		this.playerHealthBar = new HealthBar(Constants.getRandomTexture(TextureType.HEALTH_PICKUP), this).setMaximumValue(this.player.health).setValue(this.player.health);
+		this.playerHealthBar = new HealthBar(Constants.getRandomUri(TextureType.HEALTH_PICKUP), this).setMaximumValue(this.player.health).setValue(this.player.health);
 		this.repositionPlayerHealthBar();
 
-		this.bossHealthBar = new HealthBar(Constants.getRandomTexture(TextureType.VEHICLE_BOSS), this, 0x7200ff).setMaximumValue(100).setValue(0);
+		this.bossHealthBar = new HealthBar(Constants.getRandomUri(TextureType.VEHICLE_BOSS), this, 0x7200ff).setMaximumValue(100).setValue(0);
 		this.repositionBossHealthBar();
 
 		// set power up bar
-		this.powerUpBar = new HealthBar(Constants.getRandomTexture(TextureType.POWERUP_PICKUP_ARMOR), this, 0xffaa00).setMaximumValue(100).setValue(0);
+		this.powerUpBar = new HealthBar(Constants.getRandomUri(TextureType.POWERUP_PICKUP_ARMOR), this, 0xffaa00).setMaximumValue(100).setValue(0);
 		this.repositionPowerUpBar();
 
 		// set sound pollution bar
-		this.soundPollutionBar = new HealthBar(Constants.getRandomTexture(TextureType.HONK), this, 0x7200ff).setMaximumValue(8).setValue(0);
+		this.soundPollutionBar = new HealthBar(Constants.getRandomUri(TextureType.HONK), this, 0x7200ff).setMaximumValue(8).setValue(0);
 		this.repositionSoundPollutionBar();
 
 		// set the game controller
@@ -1586,7 +1586,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerGroundBombs
 
-	private playerGroundBombSize = { width: 65, height: 65 };
+	private playerGroundBombSize = { width: 60, height: 60 };
 	private playerGroundBombGameObjects: Array<PlayerGroundBomb> = [];
 
 	private readonly playerAmmoBeltSize: number = 3 + Constants.ATTACK_LEVEL_MAX;
@@ -1857,21 +1857,18 @@ export class GamePlayScene extends Container implements IScene {
 
 			switch (Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE) {
 				case PlayerAirBombTemplate.GRAVITY_BALL: {
-					sprite.width = this.playerAirBombSize.width / 1.5;
-					sprite.height = this.playerAirBombSize.height / 1.5;
-
+					sprite.width = this.playerAirBombSize.width / 2;
+					sprite.height = this.playerAirBombSize.height / 2;
 					gameObject.setTemplate(PlayerAirBombTemplate.GRAVITY_BALL);
 				} break;
 				case PlayerAirBombTemplate.MISSILE: {
 					sprite.width = this.playerAirBombSize.width;
 					sprite.height = this.playerAirBombSize.height;
-
 					gameObject.setTemplate(PlayerAirBombTemplate.MISSILE);
 				} break;
 				case PlayerAirBombTemplate.BULLET_BALL: {
-					sprite.width = this.playerAirBombSize.width / 1.5;
-					sprite.height = this.playerAirBombSize.height / 1.5;
-
+					sprite.width = this.playerAirBombSize.width / 2;
+					sprite.height = this.playerAirBombSize.height / 2;
 					gameObject.setTemplate(PlayerAirBombTemplate.BULLET_BALL);
 				} break;
 				default: break;
@@ -2085,7 +2082,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region PlayerAirBombHurlingBalls
 
-	private playerAirBombBullsEyeSize = { width: 70, height: 70 };
+	private playerAirBombBullsEyeSize = { width: 60, height: 60 };
 	private playerAirBombBullsEyeGameObjects: Array<PlayerAirBombHurlingBall> = [];
 
 	spawnPlayerAirBombHurlingBalls() {
@@ -2441,7 +2438,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region UfoEnemyAirBombs
 
-	private ufoEnemyRocketSize = { width: 85, height: 85 };
+	private ufoEnemyRocketSize = { width: 65, height: 65 };
 	private ufoEnemyRocketGameObjects: Array<UfoEnemyAirBomb> = [];
 
 	spawnUfoEnemyAirBombs() {
@@ -3356,7 +3353,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region UfoBossAirBombSeekingBalls
 
-	private ufoBossRocketSeekingSize = { width: 75, height: 75 };
+	private ufoBossRocketSeekingSize = { width: 60, height: 60 };
 	private ufoBossRocketSeekingGameObjects: Array<UfoBossAirBombSeekingBall> = [];
 
 	private readonly ufoBossRocketSeekingPopDelayDefault: number = 12 / Constants.DEFAULT_CONSTRUCT_DELTA;
@@ -3973,7 +3970,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region MafiaBossAirBombHurlingBalls
 
-	private mafiaBossRocketBullsEyeSize = { width: 70, height: 70 };
+	private mafiaBossRocketBullsEyeSize = { width: 60, height: 60 };
 	private mafiaBossRocketBullsEyeGameObjects: Array<MafiaBossAirBombHurlingBall> = [];
 
 	private readonly mafiaBossRocketBullsEyePopDelayDefault: number = 10 / Constants.DEFAULT_CONSTRUCT_DELTA;

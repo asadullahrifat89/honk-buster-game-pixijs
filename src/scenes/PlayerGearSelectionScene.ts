@@ -56,7 +56,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			fill: "#ffffff",
 		});
 		title.x = this.uiContainer.width / 2 - title.width / 2.6;
-		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
+		title.y = (this.uiContainer.height / 2 - title.height / 2) - 220;
 		this.uiContainer.addChild(title);
 
 		//#endregion
@@ -89,7 +89,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			SceneManager.changeScene(new PlayerCharacterSelectionScene());
 		});
 
-		character_button.setPosition((this.uiContainer.width / 2 - optionsGap * 2), (this.uiContainer.height / 2 - character_button.height / 2));
+		character_button.setPosition((this.uiContainer.width / 2 - optionsGap * 1), (this.uiContainer.height / 2 - character_button.height / 3));
 		this.uiContainer.addChild(character_button);
 
 		//#endregion
@@ -118,7 +118,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			} break;
 		}
 
-		const ride_button = new SelectionButton(rideTexture, 256 / 2, 256 / 2, rideName, () => {
+		const ride_button = new SelectionButton(rideTexture, 256, 256, rideName, () => {
 
 			SoundManager.play(SoundType.ITEM_SELECT);
 			this.removeChild(this.uiContainer);
@@ -126,7 +126,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			SceneManager.changeScene(new PlayerRideSelectionScene());
 		});
 
-		ride_button.setPosition(this.uiContainer.width / 2 - optionsGap * 1, (this.uiContainer.height / 2 - ride_button.height / 2));
+		ride_button.setPosition(this.uiContainer.width / 2 - (optionsGap / 2.4) * 1, (this.uiContainer.height / 2 - ride_button.height / 2));
 		this.uiContainer.addChild(ride_button);
 
 		//#endregion
@@ -163,7 +163,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			SceneManager.changeScene(new PlayerGroundBombSelectionScene());
 		});
 
-		ground_bomb_button.setPosition((this.uiContainer.width / 2 - optionsGap * 0), (this.uiContainer.height / 2 - ground_bomb_button.height / 2));
+		ground_bomb_button.setPosition((this.uiContainer.width / 2 + (optionsGap / 2) * 1), (this.uiContainer.height / 2 + ground_bomb_button.height / 2));
 		this.uiContainer.addChild(ground_bomb_button);
 
 		//#endregion
@@ -209,7 +209,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 
 		const button = new Button(() => {
 
-			if (button.getIsEnabled()) {
+			if (button.isEnabled()) {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
 				this.uiContainer.destroy();
@@ -220,7 +220,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			}
 
 		}).setText("Confirm").setIsEnabled(this.allSelectionsComplete());
-		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 2);
+		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 1);
 		this.uiContainer.addChild(button);
 
 		//#endregion

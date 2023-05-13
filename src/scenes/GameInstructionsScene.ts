@@ -285,7 +285,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		const player_health_bar = new GameObjectContainer();
 		player_health_bar.renderable = false;
 
-		const player_health_bar_sprite = new HealthBar(Texture.from("health_pickup"), player_health_bar);
+		const player_health_bar_sprite = new HealthBar("health_pickup", player_health_bar);
 		player_health_bar_sprite.setMaximumValue(100);
 		player_health_bar_sprite.setValue(50);
 		player_health_bar_sprite.x = 0;
@@ -310,7 +310,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		const sound_pollution_bar = new GameObjectContainer();
 		sound_pollution_bar.renderable = false;
 
-		const sound_pollution_bar_sprite = new HealthBar(Texture.from("honk_1"), sound_pollution_bar, 0x7200ff);
+		const sound_pollution_bar_sprite = new HealthBar("honk_1", sound_pollution_bar, 0x7200ff);
 		sound_pollution_bar_sprite.setMaximumValue(100);
 		sound_pollution_bar_sprite.setValue(50);
 		sound_pollution_bar_sprite.x = 0;
@@ -364,7 +364,7 @@ export class GameInstructionsScene extends Container implements IScene {
 		const player_power_up_bar = new GameObjectContainer();
 		player_power_up_bar.renderable = false;
 
-		const player_power_up_bar_sprite = new HealthBar(Texture.from("powerup_pickup_armor"), player_power_up_bar, 0xffaa00);
+		const player_power_up_bar_sprite = new HealthBar("powerup_pickup_armor", player_power_up_bar, 0xffaa00);
 		player_power_up_bar_sprite.setMaximumValue(100);
 		player_power_up_bar_sprite.setValue(50);
 		player_power_up_bar_sprite.x = 0;
@@ -439,13 +439,13 @@ export class GameInstructionsScene extends Container implements IScene {
 		const boss_health_bar = new GameObjectContainer();
 		boss_health_bar.renderable = false;
 
-		const boss_health_bar_sprite = new HealthBar(Texture.from("vehicle_boss_1"), boss_health_bar, 0x7200ff);
+		const boss_health_bar_sprite = new HealthBar("vehicle_boss_1", boss_health_bar, 0x7200ff);
 		boss_health_bar_sprite.setMaximumValue(100);
 		boss_health_bar_sprite.setValue(70);
 		boss_health_bar_sprite.x = 0;
 		boss_health_bar_sprite.y = 0;
 
-		const boss_health_bar_sprite_2 = new HealthBar(Texture.from("ufo_boss_1_idle"), boss_health_bar, 0x7200ff);
+		const boss_health_bar_sprite_2 = new HealthBar("ufo_boss_1_idle", boss_health_bar, 0x7200ff);
 		boss_health_bar_sprite_2.setMaximumValue(100);
 		boss_health_bar_sprite_2.setValue(50);
 		boss_health_bar_sprite_2.x = 0;

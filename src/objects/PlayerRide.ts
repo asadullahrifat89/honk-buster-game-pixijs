@@ -12,7 +12,7 @@ export class PlayerRide extends GameObjectContainer {
 
 	//#region Properties
 
-	public playerBalloonStance: PlayerRideStance = PlayerRideStance.Idle;
+	public playerRideStance: PlayerRideStance = PlayerRideStance.Idle;
 	public playerRideTemplate: PlayerRideTemplate = 0;
 
 	private movementStopDelay: number = 0;
@@ -60,34 +60,28 @@ export class PlayerRide extends GameObjectContainer {
 
 		this.playerRideTemplate = playerRideTemplate;
 
-		let playerIdleTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_IDLE);
-		let playerWinTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_WIN);
-		let playerHitTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_HIT);
-		let playerAttackTemplates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_RIDE_ATTACK);
+		let playerIdleTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == TextureType.PLAYER_RIDE_IDLE && x.tag == playerRideTemplate);
+		let playerWinTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == TextureType.PLAYER_RIDE_WIN && x.tag == playerRideTemplate);
+		let playerHitTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == TextureType.PLAYER_RIDE_HIT && x.tag == playerRideTemplate);
+		let playerAttackTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == TextureType.PLAYER_RIDE_ATTACK && x.tag == playerRideTemplate);
 
-		let idle = playerIdleTemplates.find(x => x.tag == playerRideTemplate);
-		if (idle) {
-			this.playerIdleTexture = Texture.from(idle.uri);
+		if (playerIdleTemplate) {
+			this.playerIdleTexture = Texture.from(playerIdleTemplate.uri);
 		}
 
-		let win = playerWinTemplates.find(x => x.tag == playerRideTemplate);
-		if (win) {
-			this.playerWinTexture = Texture.from(win.uri);
+		if (playerHitTemplate) {
+			this.playerHitTexture = Texture.from(playerHitTemplate.uri);
 		}
 
-		let hit = playerHitTemplates.find(x => x.tag == playerRideTemplate);
-		if (hit) {
-			this.playerHitTexture = Texture.from(hit.uri);
+		if (playerWinTemplate) {
+			this.playerWinTexture = Texture.from(playerWinTemplate.uri);
 		}
 
-		let attack = playerAttackTemplates.find(x => x.tag == playerRideTemplate);
-		if (attack) {
-			this.playerAttackTexture = Texture.from(attack.uri);
+		if (playerAttackTemplate) {
+			this.playerAttackTexture = Texture.from(playerAttackTemplate.uri);
 		}
 
 		this.setTexture(this.playerIdleTexture);
-
-		// add chopper animation sprite
 
 		switch (playerRideTemplate) {
 			case PlayerRideTemplate.CHOPPER: {
@@ -119,32 +113,34 @@ export class PlayerRide extends GameObjectContainer {
 	}
 
 	setIdleStance() {
-		this.playerBalloonStance = PlayerRideStance.Idle;
+		this.playerRideStance = PlayerRideStance.Idle;
 		this.setTexture(this.playerIdleTexture);
 	}
 
 	setAttackStance() {
-		this.playerBalloonStance = PlayerRideStance.Attack;
-		this.setTexture(this.playerAttackTexture);
-		this.attackStanceDelay = this.attackStanceDelayDefault;
+		if (this.playerRideStance != PlayerRideStance.Win) {
+			this.playerRideStance = PlayerRideStance.Attack;
+			this.setTexture(this.playerAttackTexture);
+			this.attackStanceDelay = this.attackStanceDelayDefault;
+		}
 	}
 
 	setWinStance() {
-		this.playerBalloonStance = PlayerRideStance.Win;
+		this.playerRideStance = PlayerRideStance.Win;
 		this.setTexture(this.playerWinTexture);
 		this.winStanceDelay = this.winStanceDelayDefault;
 	}
 
 	setHitStance() {
-		if (this.playerBalloonStance != PlayerRideStance.Win) {
-			this.playerBalloonStance = PlayerRideStance.Hit;
+		if (this.playerRideStance != PlayerRideStance.Win) {
+			this.playerRideStance = PlayerRideStance.Hit;
 			this.setTexture(this.playerHitTexture);
 			this.hitStanceDelay = this.hitStanceDelayDefault;
 		}
 	}
 
 	depleteHitStance() {
-		if (this.hitStanceDelay > 0) {
+		if (this.hitStanceDelay > 0 && this.playerRideStance != PlayerRideStance.Win) {
 			this.hitStanceDelay -= 0.1;
 
 			if (this.hitStanceDelay <= 0) {
@@ -154,7 +150,7 @@ export class PlayerRide extends GameObjectContainer {
 	}
 
 	depleteAttackStance() {
-		if (this.attackStanceDelay > 0) {
+		if (this.attackStanceDelay > 0 && this.playerRideStance != PlayerRideStance.Win) {
 			this.attackStanceDelay -= 0.1;
 
 			if (this.attackStanceDelay <= 0) {

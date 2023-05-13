@@ -1,7 +1,6 @@
 ﻿import { ProgressBar } from "@pixi/ui";
 import { Container, Graphics, Texture } from "pixi.js";
-import { GameObjectContainer } from "../core/GameObjectContainer";
-import { GameObjectSprite } from "../core/GameObjectSprite";
+import { LabeledIcon } from "./LabeledIcon";
 
 
 export class HealthBar extends Container {
@@ -10,15 +9,18 @@ export class HealthBar extends Container {
 	private value: number = 0;
 
 	private progressBar: ProgressBar;
-	private iconContainer: GameObjectContainer;	
+	//private iconContainer: GameObjectContainer;
 	private iconTexture: Texture;
+	private iconLabel: LabeledIcon;
+	private iconLabelFontSize: number = 17;
+
 
 	public tag: any;
 
-	constructor(icon: Texture, scene: Container, foreground: number = 0xf73e3e, background: number = 0xd9e2e9) {
+	constructor(uri: string, scene: Container, foreground: number = 0xf73e3e, background: number = 0xd9e2e9) {
 		super();
 
-		this.iconTexture = icon;
+		this.iconTexture = Texture.from(uri);
 
 		this.progressBar = new ProgressBar();
 		this.progressBar.width = 58;
@@ -30,13 +32,8 @@ export class HealthBar extends Container {
 		this.progressBar.progress = 0;
 		this.addChild(this.progressBar);
 
-		this.iconContainer = new GameObjectContainer();
-		this.addChild(this.iconContainer);
-
-		let iconSprite: GameObjectSprite = new GameObjectSprite(icon);
-		iconSprite.width = 40;
-		iconSprite.height = 40;
-		this.iconContainer.addChild(iconSprite);
+		this.iconLabel = new LabeledIcon(uri, 45, 45, this.progressBar.progress.toString(), this.iconLabelFontSize);		
+		this.addChild(this.iconLabel);
 
 		scene.addChild(this);
 	}
@@ -52,7 +49,8 @@ export class HealthBar extends Container {
 
 	setIcon(icon: Texture): HealthBar {
 		this.iconTexture = icon;
-		this.iconContainer.setTexture(icon);
+		this.iconLabel.setIcon(icon);
+		//this.iconContainer.setTexture(icon);
 		return this;
 	}
 
@@ -63,6 +61,8 @@ export class HealthBar extends Container {
 		this.value = value;
 
 		this.progressBar.progress = this.value / this.maximum * 100;
+
+		this.iconLabel.setLabel(this.progressBar.progress.toString(), this.iconLabelFontSize);
 
 		if (this.value > 0)
 			this.alpha = 1;

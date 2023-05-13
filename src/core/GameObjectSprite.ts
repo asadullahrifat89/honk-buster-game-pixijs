@@ -15,7 +15,7 @@ export class GameObjectSprite extends Sprite {
 
 	getTexture(): Texture {
 		return this.texture;
-	}
+	}	
 
 	setPosition(x: number, y: number) {
 		this.x = x;

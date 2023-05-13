@@ -6,8 +6,7 @@ export const manifest: ResolverManifest = {
 			name: "fontsBundle",
 			assets: {
 				"stitchnschool": "./stitchnschool.ttf",
-				"diloworld": "./diloworld.ttf",
-				"jackpot": "./jackpot.ttf",
+				"diloworld": "./diloworld.ttf",				
 				"emilio": "./emilio.ttf"
 			},
 		},
@@ -19,6 +18,8 @@ export const manifest: ResolverManifest = {
 				"pause_button": "./images/pause_button.png",
 				"play_button": "./images/play_button.png",
 				"stop_button": "./images/stop_button.png",
+
+				"speed": "./images/speed.png",
 
 				"vehicle_smoke_1": "./images/vehicle_smoke_1.png",
 				"vehicle_smoke_2": "./images/vehicle_smoke_2.png",
