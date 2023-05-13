@@ -1001,7 +1001,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	//#region Leafs
 
-	private leafSize = { width: 256 / 2, height: 256 / 2 };
+	private leafSize = { width: 256 / 3, height: 256 / 3 };
 	private leafGameObjects: Array<Leaf> = [];
 
 	private leafPopDelayDefault: number = 30 / Constants.DEFAULT_CONSTRUCT_DELTA;
