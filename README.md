@@ -1,12 +1,28 @@
-# HONKY ROADS
-A simple 2D bomber shooter game built using PixiJS to raise awareness against sound pollution in cities due to unwanted honking.
+# Honky Roads
+An arcade game built using PixiJS to raise awareness against sound pollution in cities due to unwanted honking.
+
+![master](https://github.com/asadullahrifat89/honk-buster-game-pixijs/actions/workflows/main.yml/badge.svg)
 
 ## Description
-Welcome to Honky Roads, a game where you must strive to put a stop to honking in cities by busting honking vehicles. Your mission is to drop bombs on the honking vehicles.
-As you play you will meet alien ufos who are invading earth. They are attracted here by the sound pollution on earth.
-They are also corrupting humans into some crazy honkers who will try to stop you. Along with that, you will meet bosses whom you must put an end to.
-The game has infinite levels so it gets harder as you play.
-Strive to get a high score.
+Welcome to Honky Roads, a game where you are out to put a stop honking.
+
+### Game Features
+- Sound effects
+- Difficulty scaling
+- Score based boss encounters
+- Angular velocity based projectiles
+- Level based unlockable characters, rides, and bombs
+
+### Game Implementations
+- Game controller supporting pause, resume, and quit
+- Spritesheet animation
+- Responsive UI scaling
+- Isometric movement
+- Keyboard controls
+- Joystick controls
+- Scene manager
+- Sound manager
+- Healthbar
 
 Play here: https://asadullahrifat89.github.io/honk-buster-game-pixijs/
 
