@@ -42,4 +42,3 @@ Play here: https://asadullahrifat89.github.io/honk-buster-game-pixijs/
 ![iPad-frame-3](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/5b827338-9685-4272-be4a-c5bf96501e00)
 ![iPad-frame-4](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/58f545e4-e9c4-4a8d-bfb9-408ee022aa34)
 ![iPad-frame-5](https://github.com/asadullahrifat89/honk-buster-game-pixijs/assets/25480176/d946e039-fc4d-44fa-b523-c10212e02ba4)
-
