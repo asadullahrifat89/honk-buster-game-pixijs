@@ -79,13 +79,14 @@ export class GamePlayScene extends Container implements IScene {
 	private soundPollutionBar: HealthBar;
 	private ammunitionBar: HealthBar;
 
-	private selectedGroundBombUris: string[] = [];
-	private selectedAirBombUris: string[] = [];
+	//private selectedGroundBombUris: string[] = [];
+	//private selectedAirBombUris: string[] = [];
 
 	private behindBackIcon: Texture;
 	private talkIcon: Texture;
 	private cheerIcon: Texture;
 	private interactIcon: Texture;
+	//private playerHurlingBallIcon: Texture;
 
 	private honkBustReactions: string[] = [];
 
@@ -101,6 +102,7 @@ export class GamePlayScene extends Container implements IScene {
 	constructor() {
 		super();
 
+		//this.playerHurlingBallIcon = Texture.from("player_hurling_ball");
 		this.honkBustReactions = ["Hey!", "No!", "What?", "Oh no!", "What the hell?", "Why?", "What are you doing?", "OMG!", "Holy shit!", "Holy moly!"];
 
 		// get textures for on screen message icons
@@ -154,10 +156,10 @@ export class GamePlayScene extends Container implements IScene {
 		this.repositionSoundPollutionBar();
 
 		// set ammunition bar
-		this.selectedGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_GROUND_BOMB && x.tag == Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE).map(x => x.uri);
-		this.selectedAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_AIR_BOMB && x.tag == Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE).map(x => x.uri);
+		const selectedGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_GROUND_BOMB && x.tag == Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE).map(x => x.uri);
+		//this.selectedAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_AIR_BOMB && x.tag == Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE).map(x => x.uri);
 
-		this.ammunitionBar = new HealthBar(Constants.getRandomUriFromUris(this.selectedGroundBombUris), this, 0xf8cf26)
+		this.ammunitionBar = new HealthBar(Constants.getRandomUriFromUris(selectedGroundBombUris), this, 0xf8cf26)
 			.setToDisplayValue(true)
 			.setDoNotHideOnZeroValue(true)
 			.setMaximumValue(this.playerAmmoBeltSize)
@@ -1658,7 +1660,6 @@ export class GamePlayScene extends Container implements IScene {
 		}
 
 		this.setAmmunitionBarValue(this.playerGroundBombGameObjects);
-		this.ammunitionBar.setIcon(Constants.getRandomTextureFromUris(this.selectedGroundBombUris));
 	}
 
 	animatePlayerGroundBombs() {
@@ -1946,7 +1947,6 @@ export class GamePlayScene extends Container implements IScene {
 		}
 
 		this.setAmmunitionBarValue(this.playerAirBombGameObjects);
-		this.ammunitionBar.setIcon(Constants.getRandomTextureFromUris(this.selectedAirBombUris));
 	}
 
 	animatePlayerAirBombs() {
@@ -2108,7 +2108,7 @@ export class GamePlayScene extends Container implements IScene {
 	//#region PlayerAirBombHurlingBalls
 
 	private playerAirBombBullsEyeSize = { width: 60, height: 60 };
-	private playerAirBombBullsEyeGameObjects: Array<PlayerAirBombHurlingBall> = [];
+	private playerAirBombHurlingBallGameObjects: Array<PlayerAirBombHurlingBall> = [];
 
 	spawnPlayerAirBombHurlingBalls() {
 
@@ -2127,7 +2127,7 @@ export class GamePlayScene extends Container implements IScene {
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
-			this.playerAirBombBullsEyeGameObjects.push(gameObject);
+			this.playerAirBombHurlingBallGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
@@ -2136,7 +2136,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	generatePlayerAirBombHurlingBall() {
 
-		let playerAirBombBullsEye = this.playerAirBombBullsEyeGameObjects.find(x => x.isAnimating == false);
+		let playerAirBombBullsEye = this.playerAirBombHurlingBallGameObjects.find(x => x.isAnimating == false);
 
 		if (playerAirBombBullsEye) {
 			playerAirBombBullsEye.reset();
@@ -2180,13 +2180,12 @@ export class GamePlayScene extends Container implements IScene {
 			}
 		}
 
-		this.setAmmunitionBarValue(this.playerAirBombBullsEyeGameObjects);
-		this.ammunitionBar.setIcon(Texture.from("player_hurling_ball"));
+		this.setAmmunitionBarValue(this.playerAirBombHurlingBallGameObjects);
 	}
 
 	animatePlayerAirBombHurlingBalls() {
 
-		let animatingPlayerAirBombHurlingBalls = this.playerAirBombBullsEyeGameObjects.filter(x => x.isAnimating == true);
+		let animatingPlayerAirBombHurlingBalls = this.playerAirBombHurlingBallGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingPlayerAirBombHurlingBalls) {
 
@@ -2254,7 +2253,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (playerAirBombBullsEye.hasFaded() /*|| playerAirBombBullsEye.x > Constants.DEFAULT_GAME_VIEW_WIDTH || playerAirBombBullsEye.getRight() < 0 || playerAirBombBullsEye.getBottom() < 0 || playerAirBombBullsEye.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
 					playerAirBombBullsEye.disableRendering();
-					this.setAmmunitionBarValue(this.playerAirBombBullsEyeGameObjects);
+					this.setAmmunitionBarValue(this.playerAirBombHurlingBallGameObjects);
 				}
 			});
 		}
@@ -4387,7 +4386,10 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	private setAmmunitionBarValue(source: GameObjectContainer[]) {
-		this.ammunitionBar.setValue(source.filter(x => x.isAnimating == false).length);
+
+		let notAnimating = source.filter(x => x.isAnimating == false);
+		this.ammunitionBar.setValue(notAnimating.length);
+		this.ammunitionBar.setIcon(source[0].getFirstSprite().getTexture());
 	}
 
 	//#endregion
