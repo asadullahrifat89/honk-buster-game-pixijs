@@ -14,7 +14,7 @@ export class GameSplashScene extends Container implements IScene {
 	private uiContainer: GameObjectContainer;
 	private bg_container: GameObjectContainer;
 
-	private splashDelay: number = 12;
+	private splashDelay: number = 13;
 
 	constructor() {
 		super();
