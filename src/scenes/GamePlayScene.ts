@@ -82,12 +82,11 @@ export class GamePlayScene extends Container implements IScene {
 	private behindBackIcon: Texture;
 	private talkIcon: Texture;
 	private cheerIcon: Texture;
-	private interactIcon: Texture;
+	private interactIcon: Texture;	
 
-	private honkBustReactions: string[] = [];
+	private honkBustReactions: string[] = [];	
 
-	private sceneBoundaryWidth: number = Constants.DEFAULT_GAME_VIEW_WIDTH;
-	private sceneBoundaryHeight: number = Constants.DEFAULT_GAME_VIEW_HEIGHT;
+	private sceneBoundary: { width: number, height: number } = { width: Constants.DEFAULT_GAME_VIEW_WIDTH, height: Constants.DEFAULT_GAME_VIEW_HEIGHT }
 
 	//#endregion
 
@@ -98,6 +97,7 @@ export class GamePlayScene extends Container implements IScene {
 	constructor() {
 		super();
 
+		//this.playerHurlingBallIcon = Texture.from("player_hurling_ball");
 		this.honkBustReactions = ["Hey!", "No!", "What?", "Oh no!", "What the hell?", "Why?", "What are you doing?", "OMG!", "Holy shit!", "Holy moly!"];
 
 		// get textures for on screen message icons
@@ -151,7 +151,9 @@ export class GamePlayScene extends Container implements IScene {
 		this.repositionSoundPollutionBar();
 
 		// set ammunition bar
-		let selectedGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_GROUND_BOMB && x.tag == Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE).map(x => x.uri);
+		const selectedGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_GROUND_BOMB && x.tag == Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE).map(x => x.uri);
+		//this.selectedAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_AIR_BOMB && x.tag == Constants.SELECTED_PLAYER_AIR_BOMB_TEMPLATE).map(x => x.uri);
+
 		this.ammunitionBar = new HealthBar(Constants.getRandomUriFromUris(selectedGroundBombUris), this, 0xf8cf26)
 			.setToDisplayValue(true)
 			.setDoNotHideOnZeroValue(true)
@@ -227,6 +229,17 @@ export class GamePlayScene extends Container implements IScene {
 		//this.logCount();
 	}
 
+	//private countPrintDelay: number = 6;
+
+	//private logCount() {
+	//	this.countPrintDelay -= 0.1;
+
+	//	if (this.countPrintDelay <= 0) {
+	//		console.log("Total Count: " + this.sceneContainer.children.length + " Animating: " + this.sceneContainer.children.filter(x => x.renderable == true).length);
+	//		this.countPrintDelay = 6;
+	//	}
+	//}
+
 	public resize(scale: number): void {
 
 		if (SceneManager.width < SceneManager.height) {
@@ -247,34 +260,7 @@ export class GamePlayScene extends Container implements IScene {
 			this.stageBackgroundColor.clear().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 			this.stageBorder.clear().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
 
-			let xMultiplier = 1;
-			let yMultiplier = 1;
-
-			if (SceneManager.scaling != 1) {
-				if (SceneManager.width > 900) {
-					xMultiplier = 1.45;
-					yMultiplier = 1.35;
-				}
-				else if (SceneManager.width > 800) {
-					xMultiplier = 1.60;
-					yMultiplier = 1.60;
-				}
-				else if (SceneManager.width > 600) {
-					xMultiplier = 1.50;
-					yMultiplier = 1.60;
-				}
-				else {
-					xMultiplier = 1.45;
-					yMultiplier = 1.60;
-				}
-			}
-			else {
-				xMultiplier = 1.08;
-				yMultiplier = 1.30;
-			}
-
-			this.sceneBoundaryWidth = Constants.DEFAULT_GAME_VIEW_WIDTH * (SceneManager.scaling * xMultiplier);
-			this.sceneBoundaryHeight = Constants.DEFAULT_GAME_VIEW_HEIGHT * (SceneManager.scaling * yMultiplier);
+			this.sceneBoundary = SceneManager.sceneBoundary;
 		}
 	}
 
@@ -430,18 +416,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateMessageBubbles();
 
 		this.animateLeafs();
-	}
-
-	//private countPrintDelay: number = 6;
-
-	//private logCount() {
-	//	this.countPrintDelay -= 0.1;
-
-	//	if (this.countPrintDelay <= 0) {
-	//		console.log("Total Count: " + this.sceneContainer.children.length + " Animating: " + this.sceneContainer.children.filter(x => x.renderable == true).length);
-	//		this.countPrintDelay = 6;
-	//	}
-	//}
+	}	
 
 	//#endregion
 
@@ -1537,7 +1512,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.player.depleteWinStance();
 		this.player.depleteHitStance();
 		this.player.recoverFromHealthLoss();
-		this.player.move(this.sceneBoundaryWidth, this.sceneBoundaryHeight, this.gameController);
+		this.player.move(this.sceneBoundary.width, this.sceneBoundary.height, this.gameController);
 
 		if (this.gameController.isAttacking) {
 
@@ -2101,7 +2076,7 @@ export class GamePlayScene extends Container implements IScene {
 	//#region PlayerAirBombHurlingBalls
 
 	private playerAirBombBullsEyeSize = { width: 60, height: 60 };
-	private playerAirBombBullsEyeGameObjects: Array<PlayerAirBombHurlingBall> = [];
+	private playerAirBombHurlingBallGameObjects: Array<PlayerAirBombHurlingBall> = [];
 
 	spawnPlayerAirBombHurlingBalls() {
 
@@ -2120,7 +2095,7 @@ export class GamePlayScene extends Container implements IScene {
 			sprite.anchor.set(0.5, 0.5);
 			gameObject.addChild(sprite);
 
-			this.playerAirBombBullsEyeGameObjects.push(gameObject);
+			this.playerAirBombHurlingBallGameObjects.push(gameObject);
 			this.sceneContainer.addChild(gameObject);
 
 			this.spawnCastShadow(gameObject);
@@ -2129,7 +2104,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	generatePlayerAirBombHurlingBall() {
 
-		let playerAirBombBullsEye = this.playerAirBombBullsEyeGameObjects.find(x => x.isAnimating == false);
+		let playerAirBombBullsEye = this.playerAirBombHurlingBallGameObjects.find(x => x.isAnimating == false);
 
 		if (playerAirBombBullsEye) {
 			playerAirBombBullsEye.reset();
@@ -2173,12 +2148,12 @@ export class GamePlayScene extends Container implements IScene {
 			}
 		}
 
-		this.setAmmunitionBarValue(this.playerAirBombBullsEyeGameObjects);
+		this.setAmmunitionBarValue(this.playerAirBombHurlingBallGameObjects);
 	}
 
 	animatePlayerAirBombHurlingBalls() {
 
-		let animatingPlayerAirBombHurlingBalls = this.playerAirBombBullsEyeGameObjects.filter(x => x.isAnimating == true);
+		let animatingPlayerAirBombHurlingBalls = this.playerAirBombHurlingBallGameObjects.filter(x => x.isAnimating == true);
 
 		if (animatingPlayerAirBombHurlingBalls) {
 
@@ -2245,8 +2220,8 @@ export class GamePlayScene extends Container implements IScene {
 				}
 
 				if (playerAirBombBullsEye.hasFaded() /*|| playerAirBombBullsEye.x > Constants.DEFAULT_GAME_VIEW_WIDTH || playerAirBombBullsEye.getRight() < 0 || playerAirBombBullsEye.getBottom() < 0 || playerAirBombBullsEye.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
-					playerAirBombBullsEye.disableRendering();					
-					this.setAmmunitionBarValue(this.playerAirBombBullsEyeGameObjects);
+					playerAirBombBullsEye.disableRendering();
+					this.setAmmunitionBarValue(this.playerAirBombHurlingBallGameObjects);
 				}
 			});
 		}
@@ -3173,7 +3148,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (ufoBoss.isAttacking) {
 
-					ufoBoss.move(this.sceneBoundaryWidth, this.sceneBoundaryHeight, this.player.getCloseBounds());
+					ufoBoss.move(this.sceneBoundary.width, this.sceneBoundary.height, this.player.getCloseBounds());
 
 					if (Constants.checkCloseCollision(this.player, ufoBoss)) {
 						this.loosePlayerHealth();
@@ -3777,13 +3752,10 @@ export class GamePlayScene extends Container implements IScene {
 
 				this.generateOnScreenMessage("Godfather inbound.", this.interactIcon);
 
-
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.3, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_HOVERING, 0.8, true);
-
-				//this.switchToNightMode();
 			}
 		}
 	}
@@ -3813,7 +3785,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (mafiaBoss.isAttacking) {
 
-					mafiaBoss.move(this.sceneBoundaryWidth, this.sceneBoundaryHeight, this.player.getCloseBounds());
+					mafiaBoss.move(this.sceneBoundary.width, this.sceneBoundary.height, this.player.getCloseBounds());
 
 					if (Constants.checkCloseCollision(this.player, mafiaBoss)) {
 						this.loosePlayerHealth();
@@ -4380,6 +4352,10 @@ export class GamePlayScene extends Container implements IScene {
 
 	private setAmmunitionBarValue(source: GameObjectContainer[]) {
 		this.ammunitionBar.setValue(source.filter(x => x.isAnimating == false).length);
+
+		if (source.every(x => x.isBlasting == false)) { // only set to default textures and not blasting ones
+			this.ammunitionBar.setIcon(source[0].getFirstSprite().getTexture());
+		} 
 	}
 
 	//#endregion

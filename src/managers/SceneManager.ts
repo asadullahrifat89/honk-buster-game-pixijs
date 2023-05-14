@@ -1,4 +1,5 @@
 import { Application } from "pixi.js";
+import { Constants } from "../Constants";
 import { IScene } from "./IScene";
 
 export class SceneManager {
@@ -10,6 +11,7 @@ export class SceneManager {
 
 	public static scaling: number = 1;
 	public static interacted: boolean = false;
+	public static sceneBoundary: { width: number, height: number } = { width: 0, height: 0 }
 
 	//#endregion
 
@@ -59,6 +61,38 @@ export class SceneManager {
 
 		// set the scaling on resize
 		this.scaling = SceneManager.getScaling();
+
+		let xMultiplier = 1;
+		let yMultiplier = 1;
+
+		// do some math for phone displays
+		if (SceneManager.scaling != 1) {
+			if (SceneManager.width > 900) {
+				xMultiplier = 1.45;
+				yMultiplier = 1.35;
+			}
+			else if (SceneManager.width > 800) {
+				xMultiplier = 1.60;
+				yMultiplier = 1.60;
+			}
+			else if (SceneManager.width > 600) {
+				xMultiplier = 1.50;
+				yMultiplier = 1.60;
+			}
+			else {
+				xMultiplier = 1.45;
+				yMultiplier = 1.60;
+			}
+		}
+		else {
+			xMultiplier = 1.08;
+			yMultiplier = 1.30;
+		}
+
+		this.sceneBoundary = {
+			width: Constants.DEFAULT_GAME_VIEW_WIDTH * (SceneManager.scaling * xMultiplier),
+			height: Constants.DEFAULT_GAME_VIEW_HEIGHT * (SceneManager.scaling * yMultiplier)
+		};
 
 		// if we have a scene, we let it know that a resize happened!
 		if (SceneManager.currentScene) {
