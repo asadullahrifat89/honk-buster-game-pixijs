@@ -629,7 +629,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private generateHonk(source: GameObjectContainer) {
 
-		if (source.getLeft() - 25 > 0 && source.getTop() - 25 > 0) {
+		if (source.getLeft() - 50 > 0 && source.getTop() - 50 > 0) {
 
 			var honk = this.honkGameObjects.find(x => x.isAnimating == false);
 
