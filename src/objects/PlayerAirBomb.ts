@@ -19,14 +19,14 @@ export class PlayerAirBomb extends AirBombBaseSeekingBall {
 
 		switch (this.playerAirBombTemplate) {
 			case PlayerAirBombTemplate.GRAVITY_BALL: {
-				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_AIR_BOMB && x.tag == PlayerAirBombTemplate.GRAVITY_BALL).map(x => x.uri);
+				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_AIR_BOMB && x.tag == PlayerAirBombTemplate.GRAVITY_BALL).map(x => x.uri);
 				this.autoBlastDelayDefault = 6;
 			} break;
 			case PlayerAirBombTemplate.MISSILE: {
-				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_AIR_BOMB && x.tag == PlayerAirBombTemplate.MISSILE).map(x => x.uri);
+				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_AIR_BOMB && x.tag == PlayerAirBombTemplate.MISSILE).map(x => x.uri);
 			} break;
 			case PlayerAirBombTemplate.BULLET_BALL: {
-				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == TextureType.PLAYER_AIR_BOMB && x.tag == PlayerAirBombTemplate.BULLET_BALL).map(x => x.uri);
+				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_AIR_BOMB && x.tag == PlayerAirBombTemplate.BULLET_BALL).map(x => x.uri);
 				this.autoBlastDelayDefault = 8;
 			} break;
 			default: break;

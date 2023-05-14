@@ -9,7 +9,6 @@ export class HealthBar extends Container {
 	private value: number = 0;
 
 	private progressBar: ProgressBar;
-	//private iconContainer: GameObjectContainer;
 	private iconTexture: Texture;
 	private iconLabel: LabeledIcon;
 	private iconLabelFontSize: number = 17;
@@ -32,7 +31,7 @@ export class HealthBar extends Container {
 		this.progressBar.progress = 0;
 		this.addChild(this.progressBar);
 
-		this.iconLabel = new LabeledIcon(uri, 45, 45, this.progressBar.progress.toString(), this.iconLabelFontSize);		
+		this.iconLabel = new LabeledIcon(uri, 45, 45, this.progressBar.progress.toString(), this.iconLabelFontSize);
 		this.addChild(this.iconLabel);
 
 		scene.addChild(this);

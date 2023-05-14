@@ -60,10 +60,10 @@ export class PlayerRide extends GameObjectContainer {
 
 		this.playerRideTemplate = playerRideTemplate;
 
-		let playerIdleTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == TextureType.PLAYER_RIDE_IDLE && x.tag == playerRideTemplate);
-		let playerWinTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == TextureType.PLAYER_RIDE_WIN && x.tag == playerRideTemplate);
-		let playerHitTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == TextureType.PLAYER_RIDE_HIT && x.tag == playerRideTemplate);
-		let playerAttackTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == TextureType.PLAYER_RIDE_ATTACK && x.tag == playerRideTemplate);
+		let playerIdleTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.textureType == TextureType.PLAYER_RIDE_IDLE && x.tag == playerRideTemplate);
+		let playerWinTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.textureType == TextureType.PLAYER_RIDE_WIN && x.tag == playerRideTemplate);
+		let playerHitTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.textureType == TextureType.PLAYER_RIDE_HIT && x.tag == playerRideTemplate);
+		let playerAttackTemplate = Constants.CONSTRUCT_TEMPLATES.find(x => x.textureType == TextureType.PLAYER_RIDE_ATTACK && x.tag == playerRideTemplate);
 
 		if (playerIdleTemplate) {
 			this.playerIdleTexture = Texture.from(playerIdleTemplate.uri);

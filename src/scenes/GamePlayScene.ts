@@ -77,6 +77,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	private powerUpBar: HealthBar;
 	private soundPollutionBar: HealthBar;
+	private ammunitionBar: HealthBar;
 
 	private behindBackIcon: Texture;
 	private talkIcon: Texture;
@@ -148,6 +149,11 @@ export class GamePlayScene extends Container implements IScene {
 		// set sound pollution bar
 		this.soundPollutionBar = new HealthBar(Constants.getRandomUri(TextureType.HONK), this, 0x7200ff).setMaximumValue(8).setValue(0);
 		this.repositionSoundPollutionBar();
+
+		// set ammunition bar
+		let selectedGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_GROUND_BOMB && x.tag == Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE).map(x => x.uri);
+		this.ammunitionBar = new HealthBar(Constants.getRandomUriFromUris(selectedGroundBombUris), this, 0x7200ff).setMaximumValue(this.playerAmmoBeltSize).setValue(this.playerAmmoBeltSize);
+		this.repositionAmmunitionBar();
 
 		// set the game controller
 		this.gameController = new GameController({
@@ -229,6 +235,8 @@ export class GamePlayScene extends Container implements IScene {
 			this.repositionPlayerHealthBar();
 			this.repositionBossHealthBar();
 			this.repositionPowerUpBar();
+			this.repositionSoundPollutionBar();
+			this.repositionAmmunitionBar();
 
 			let color = this.stageBackgroundColors[Constants.getRandomNumber(0, this.stageBackgroundColors.length - 1)];
 			this.stageBackgroundColor.clear().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
@@ -4352,6 +4360,10 @@ export class GamePlayScene extends Container implements IScene {
 
 	private repositionSoundPollutionBar() {
 		this.soundPollutionBar.reposition((SceneManager.width) - 405, 10);
+	}
+
+	private repositionAmmunitionBar() {
+		this.ammunitionBar.reposition(this.ammunitionBar.width * 1.5, SceneManager.height - this.ammunitionBar.height * 1.5);
 	}
 
 	//#endregion
