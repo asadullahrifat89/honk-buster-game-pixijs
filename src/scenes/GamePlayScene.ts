@@ -79,9 +79,6 @@ export class GamePlayScene extends Container implements IScene {
 	private soundPollutionBar: HealthBar;
 	private ammunitionBar: HealthBar;
 
-	//private selectedGroundBombUris: string[] = [];
-	//private selectedAirBombUris: string[] = [];
-
 	private behindBackIcon: Texture;
 	private talkIcon: Texture;
 	private cheerIcon: Texture;
