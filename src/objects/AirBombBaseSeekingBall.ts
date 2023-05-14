@@ -13,7 +13,7 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 	private velocity: { x: number, y: number } = { x: 0, y: 0 };
 
 	setShootingTarget(target: Rectangle) {
-		const angle = Math.atan2(target.y - this.y, target.x - this.x);
+		const angle = Math.atan2((target.y + target.height / 2) - (this.y + this.height / 2), (target.x + target.width / 2) - (this.x + this.width / 2)); // calculate source and target from the center
 		this.velocity = {
 			x: Math.cos(angle) * this.speed,
 			y: Math.sin(angle) * this.speed
@@ -145,7 +145,7 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 			let speed = this.getFollowingSpeed(distance);
 
 			this.x = (left + speed);
-		}		
+		}
 	}
 
 	private getFollowingSpeed(distance: number): number {
