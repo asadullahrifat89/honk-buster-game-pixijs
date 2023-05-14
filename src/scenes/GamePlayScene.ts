@@ -2042,7 +2042,7 @@ export class GamePlayScene extends Container implements IScene {
 	setPlayerAirBombDirection(source: GameObjectContainer, playerAirBomb: PlayerAirBomb, target: GameObjectContainer) {
 
 		if (playerAirBomb.playerAirBombTemplate == PlayerAirBombTemplate.BULLET_BALL) { // if bullet ball set the target
-			playerAirBomb.setShootingTarget(target.getCloseBounds());
+			playerAirBomb.setShootingTarget(target.getBounds(true)); // the actual bound coordinates are calculated inside
 		}
 
 		// rocket target is on the bottom right side of the UfoBoss
