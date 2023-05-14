@@ -85,13 +85,11 @@ export class GamePlayScene extends Container implements IScene {
 	private behindBackIcon: Texture;
 	private talkIcon: Texture;
 	private cheerIcon: Texture;
-	private interactIcon: Texture;
-	//private playerHurlingBallIcon: Texture;
+	private interactIcon: Texture;	
 
-	private honkBustReactions: string[] = [];
+	private honkBustReactions: string[] = [];	
 
-	private sceneBoundaryWidth: number = Constants.DEFAULT_GAME_VIEW_WIDTH;
-	private sceneBoundaryHeight: number = Constants.DEFAULT_GAME_VIEW_HEIGHT;
+	private sceneBoundary: { width: number, height: number } = { width: Constants.DEFAULT_GAME_VIEW_WIDTH, height: Constants.DEFAULT_GAME_VIEW_HEIGHT }
 
 	//#endregion
 
@@ -234,6 +232,17 @@ export class GamePlayScene extends Container implements IScene {
 		//this.logCount();
 	}
 
+	//private countPrintDelay: number = 6;
+
+	//private logCount() {
+	//	this.countPrintDelay -= 0.1;
+
+	//	if (this.countPrintDelay <= 0) {
+	//		console.log("Total Count: " + this.sceneContainer.children.length + " Animating: " + this.sceneContainer.children.filter(x => x.renderable == true).length);
+	//		this.countPrintDelay = 6;
+	//	}
+	//}
+
 	public resize(scale: number): void {
 
 		if (SceneManager.width < SceneManager.height) {
@@ -254,34 +263,7 @@ export class GamePlayScene extends Container implements IScene {
 			this.stageBackgroundColor.clear().beginFill(color, 1).drawRect(0, 0, SceneManager.width, SceneManager.height).endFill();
 			this.stageBorder.clear().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
 
-			let xMultiplier = 1;
-			let yMultiplier = 1;
-
-			if (SceneManager.scaling != 1) {
-				if (SceneManager.width > 900) {
-					xMultiplier = 1.45;
-					yMultiplier = 1.35;
-				}
-				else if (SceneManager.width > 800) {
-					xMultiplier = 1.60;
-					yMultiplier = 1.60;
-				}
-				else if (SceneManager.width > 600) {
-					xMultiplier = 1.50;
-					yMultiplier = 1.60;
-				}
-				else {
-					xMultiplier = 1.45;
-					yMultiplier = 1.60;
-				}
-			}
-			else {
-				xMultiplier = 1.08;
-				yMultiplier = 1.30;
-			}
-
-			this.sceneBoundaryWidth = Constants.DEFAULT_GAME_VIEW_WIDTH * (SceneManager.scaling * xMultiplier);
-			this.sceneBoundaryHeight = Constants.DEFAULT_GAME_VIEW_HEIGHT * (SceneManager.scaling * yMultiplier);
+			this.sceneBoundary = SceneManager.sceneBoundary;
 		}
 	}
 
@@ -437,18 +419,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateMessageBubbles();
 
 		this.animateLeafs();
-	}
-
-	//private countPrintDelay: number = 6;
-
-	//private logCount() {
-	//	this.countPrintDelay -= 0.1;
-
-	//	if (this.countPrintDelay <= 0) {
-	//		console.log("Total Count: " + this.sceneContainer.children.length + " Animating: " + this.sceneContainer.children.filter(x => x.renderable == true).length);
-	//		this.countPrintDelay = 6;
-	//	}
-	//}
+	}	
 
 	//#endregion
 
@@ -1544,7 +1515,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.player.depleteWinStance();
 		this.player.depleteHitStance();
 		this.player.recoverFromHealthLoss();
-		this.player.move(this.sceneBoundaryWidth, this.sceneBoundaryHeight, this.gameController);
+		this.player.move(this.sceneBoundary.width, this.sceneBoundary.height, this.gameController);
 
 		if (this.gameController.isAttacking) {
 
@@ -3180,7 +3151,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (ufoBoss.isAttacking) {
 
-					ufoBoss.move(this.sceneBoundaryWidth, this.sceneBoundaryHeight, this.player.getCloseBounds());
+					ufoBoss.move(this.sceneBoundary.width, this.sceneBoundary.height, this.player.getCloseBounds());
 
 					if (Constants.checkCloseCollision(this.player, ufoBoss)) {
 						this.loosePlayerHealth();
@@ -3784,13 +3755,10 @@ export class GamePlayScene extends Container implements IScene {
 
 				this.generateOnScreenMessage("Godfather inbound.", this.interactIcon);
 
-
 				SoundManager.stop(SoundType.GAME_BACKGROUND_MUSIC);
 				SoundManager.play(SoundType.BOSS_BACKGROUND_MUSIC, 0.3, true);
 				SoundManager.play(SoundType.UFO_BOSS_ENTRY);
 				SoundManager.play(SoundType.UFO_HOVERING, 0.8, true);
-
-				//this.switchToNightMode();
 			}
 		}
 	}
@@ -3820,7 +3788,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (mafiaBoss.isAttacking) {
 
-					mafiaBoss.move(this.sceneBoundaryWidth, this.sceneBoundaryHeight, this.player.getCloseBounds());
+					mafiaBoss.move(this.sceneBoundary.width, this.sceneBoundary.height, this.player.getCloseBounds());
 
 					if (Constants.checkCloseCollision(this.player, mafiaBoss)) {
 						this.loosePlayerHealth();
