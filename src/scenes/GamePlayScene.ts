@@ -4386,10 +4386,11 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	private setAmmunitionBarValue(source: GameObjectContainer[]) {
+		this.ammunitionBar.setValue(source.filter(x => x.isAnimating == false).length);
 
-		let notAnimating = source.filter(x => x.isAnimating == false);
-		this.ammunitionBar.setValue(notAnimating.length);
-		this.ammunitionBar.setIcon(source[0].getFirstSprite().getTexture());
+		if (source.every(x => x.isBlasting == false)) { // only set to default textures and not blasting ones
+			this.ammunitionBar.setIcon(source[0].getFirstSprite().getTexture());
+		} 
 	}
 
 	//#endregion
