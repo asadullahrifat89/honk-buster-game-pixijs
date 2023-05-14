@@ -51,28 +51,48 @@ export class GameTitleScene extends Container implements IScene {
 
 		//#region title
 
-		const title = new Text("HONKY ROADS", {
+		//const title = new Text("HONKY ROADS", {
+		//	fontFamily: Constants.GAME_TITLE_FONT,
+		//	align: "center",
+		//	fill: "#ffffff",
+		//	fontSize: 44
+		//});
+		//title.x = this.uiContainer.width / 2 - title.width / 2;
+		//title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
+		//this.uiContainer.addChild(title);
+
+		const title = new Text("HONKY", {
+			fontFamily: Constants.GAME_TITLE_FONT,
+			align: "center",
+			fill: "#fe3c3e",
+			fontSize: 45
+		});
+		title.x = this.uiContainer.width / 2 - title.width / 2 - 100;
+		title.y = (this.uiContainer.height / 2 - title.height / 2) - 140;		
+		this.uiContainer.addChild(title);
+
+		const title2 = new Text("ROADS", {
 			fontFamily: Constants.GAME_TITLE_FONT,
 			align: "center",
 			fill: "#ffffff",
-			fontSize: 44
+			fontSize: 45
 		});
-		title.x = this.uiContainer.width / 2 - title.width / 2;
-		title.y = (this.uiContainer.height / 2 - title.height / 2) - 120;
-		this.uiContainer.addChild(title);
+		title2.x = title.x + title.width + 5;
+		title2.y = title.y;
+		this.uiContainer.addChild(title2);
 
 		//#endregion
 
 		//#region tag line
 
-		const subTitle = new Text("The battle against honks", {
+		const subTitle = new Text("THE BATTLE AGAINST HONKS", {
 			fontFamily: Constants.GAME_DEFAULT_FONT,
 			align: "center",
 			fill: "#ffffff",
 			fontSize: 19,
 		});
 		subTitle.x = this.uiContainer.width / 2 - subTitle.width / 2;
-		subTitle.y = (this.uiContainer.height / 2 - subTitle.height / 2) - 65;
+		subTitle.y = (this.uiContainer.height / 2 - subTitle.height / 2) - 70;
 		this.uiContainer.addChild(subTitle);
 
 		//#endregion

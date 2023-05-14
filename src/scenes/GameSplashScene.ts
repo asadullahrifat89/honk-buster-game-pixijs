@@ -14,7 +14,7 @@ export class GameSplashScene extends Container implements IScene {
 	private uiContainer: GameObjectContainer;
 	private bg_container: GameObjectContainer;
 
-	private splashDelay: number = 15;
+	private splashDelay: number = 12;
 
 	constructor() {
 		super();
@@ -56,7 +56,7 @@ export class GameSplashScene extends Container implements IScene {
 			fontFamily: /*Constants.GAME_TITLE_FONT*/"diloworld",
 			align: "center",
 			fill: "#ffffff",
-			fontSize: 44
+			fontSize: 50
 		});
 		title.x = this.uiContainer.width / 2 - title.width / 2;
 		title.y = (this.uiContainer.height / 2 - title.height / 2);
