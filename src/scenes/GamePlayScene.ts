@@ -152,7 +152,12 @@ export class GamePlayScene extends Container implements IScene {
 
 		// set ammunition bar
 		let selectedGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_GROUND_BOMB && x.tag == Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE).map(x => x.uri);
-		this.ammunitionBar = new HealthBar(Constants.getRandomUriFromUris(selectedGroundBombUris), this, 0x7200ff).setToDisplayValueInstead(true).setMaximumValue(this.playerAmmoBeltSize).setValue(this.playerAmmoBeltSize);
+		this.ammunitionBar = new HealthBar(Constants.getRandomUriFromUris(selectedGroundBombUris), this, 0xf8cf26)
+			.setToDisplayValue(true)
+			.setDoNotHideOnZeroValue(true)
+			.setMaximumValue(this.playerAmmoBeltSize)
+			.setValue(this.playerAmmoBeltSize);
+
 		this.repositionAmmunitionBar();
 
 		// set the game controller
