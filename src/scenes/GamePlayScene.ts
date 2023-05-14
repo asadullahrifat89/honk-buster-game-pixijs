@@ -152,7 +152,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		// set ammunition bar
 		let selectedGroundBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_GROUND_BOMB && x.tag == Constants.SELECTED_PLAYER_GROUND_BOMB_TEMPLATE).map(x => x.uri);
-		this.ammunitionBar = new HealthBar(Constants.getRandomUriFromUris(selectedGroundBombUris), this, 0x7200ff).setMaximumValue(this.playerAmmoBeltSize).setValue(this.playerAmmoBeltSize);
+		this.ammunitionBar = new HealthBar(Constants.getRandomUriFromUris(selectedGroundBombUris), this, 0x7200ff).setToDisplayValueInstead(true).setMaximumValue(this.playerAmmoBeltSize).setValue(this.playerAmmoBeltSize);
 		this.repositionAmmunitionBar();
 
 		// set the game controller
@@ -1646,6 +1646,8 @@ export class GamePlayScene extends Container implements IScene {
 			this.player.setAttackStance();
 			this.generateFlashExplosion(playerGroundBomb);
 		}
+
+		this.ammunitionBar.setValue(this.playerGroundBombGameObjects.filter(x => x.isAnimating == false).length);
 	}
 
 	animatePlayerGroundBombs() {
@@ -1667,6 +1669,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (playerGroundBomb.hasFaded() || playerGroundBomb.hasShrinked() /*|| playerGroundBomb.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || playerGroundBomb.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
 					playerGroundBomb.disableRendering();
+					this.ammunitionBar.setValue(this.playerGroundBombGameObjects.filter(x => x.isAnimating == false).length);
 				}
 			});
 		}
@@ -1930,6 +1933,8 @@ export class GamePlayScene extends Container implements IScene {
 				this.generateFlashExplosion(playerAirBomb);
 			}
 		}
+
+		this.ammunitionBar.setValue(this.playerAirBombGameObjects.filter(x => x.isAnimating == false).length);
 	}
 
 	animatePlayerAirBombs() {
@@ -2048,6 +2053,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (playerAirBomb.hasFaded() /*|| playerAirBomb.x > Constants.DEFAULT_GAME_VIEW_WIDTH || playerAirBomb.getRight() < 0 || playerAirBomb.getBottom() < 0 || playerAirBomb.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
 					playerAirBomb.disableRendering();
+					this.ammunitionBar.setValue(this.playerAirBombGameObjects.filter(x => x.isAnimating == false).length);
 				}
 			});
 		}
@@ -2161,6 +2167,8 @@ export class GamePlayScene extends Container implements IScene {
 					this.depletePowerUp();
 			}
 		}
+
+		this.ammunitionBar.setValue(this.playerAirBombBullsEyeGameObjects.filter(x => x.isAnimating == false).length);
 	}
 
 	animatePlayerAirBombHurlingBalls() {
@@ -2233,6 +2241,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (playerAirBombBullsEye.hasFaded() /*|| playerAirBombBullsEye.x > Constants.DEFAULT_GAME_VIEW_WIDTH || playerAirBombBullsEye.getRight() < 0 || playerAirBombBullsEye.getBottom() < 0 || playerAirBombBullsEye.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
 					playerAirBombBullsEye.disableRendering();
+					this.ammunitionBar.setValue(this.playerAirBombBullsEyeGameObjects.filter(x => x.isAnimating == false).length);
 				}
 			});
 		}

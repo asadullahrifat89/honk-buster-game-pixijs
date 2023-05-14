@@ -7,12 +7,13 @@ export class HealthBar extends Container {
 
 	private maximum: number = 0;
 	private value: number = 0;
-
+	
 	private progressBar: ProgressBar;
 	private iconTexture: Texture;
 	private iconLabel: LabeledIcon;
 	private iconLabelFontSize: number = 17;
 
+	private displayValueInstead: boolean = false;
 
 	public tag: any;
 
@@ -37,6 +38,11 @@ export class HealthBar extends Container {
 		scene.addChild(this);
 	}
 
+	setToDisplayValueInstead(displayValueInstead: boolean): HealthBar {
+		this.displayValueInstead = displayValueInstead;
+		return this;
+	}
+
 	hasHealth(): boolean {
 		return this.progressBar.progress > 0;
 	}
@@ -48,8 +54,7 @@ export class HealthBar extends Container {
 
 	setIcon(icon: Texture): HealthBar {
 		this.iconTexture = icon;
-		this.iconLabel.setIcon(icon);
-		//this.iconContainer.setTexture(icon);
+		this.iconLabel.setIcon(icon);		
 		return this;
 	}
 
@@ -61,7 +66,12 @@ export class HealthBar extends Container {
 
 		this.progressBar.progress = this.value / this.maximum * 100;
 
-		this.iconLabel.setLabel(this.progressBar.progress.toString(), this.iconLabelFontSize);
+		if (this.displayValueInstead) {
+			this.iconLabel.setLabel(this.value.toString(), this.iconLabelFontSize);
+		}
+		else {
+			this.iconLabel.setLabel(this.progressBar.progress.toString(), this.iconLabelFontSize);
+		}		
 
 		if (this.value > 0)
 			this.alpha = 1;
