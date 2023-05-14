@@ -1652,7 +1652,7 @@ export class GamePlayScene extends Container implements IScene {
 			this.generateFlashExplosion(playerGroundBomb);
 		}
 
-		this.ammunitionBar.setValue(this.playerGroundBombGameObjects.filter(x => x.isAnimating == false).length);
+		this.setAmmunitionBarValue(this.playerGroundBombGameObjects);
 	}
 
 	animatePlayerGroundBombs() {
@@ -1674,7 +1674,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (playerGroundBomb.hasFaded() || playerGroundBomb.hasShrinked() /*|| playerGroundBomb.getLeft() > Constants.DEFAULT_GAME_VIEW_WIDTH || playerGroundBomb.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
 					playerGroundBomb.disableRendering();
-					this.ammunitionBar.setValue(this.playerGroundBombGameObjects.filter(x => x.isAnimating == false).length);
+					this.setAmmunitionBarValue(this.playerGroundBombGameObjects);
 				}
 			});
 		}
@@ -1939,7 +1939,7 @@ export class GamePlayScene extends Container implements IScene {
 			}
 		}
 
-		this.ammunitionBar.setValue(this.playerAirBombGameObjects.filter(x => x.isAnimating == false).length);
+		this.setAmmunitionBarValue(this.playerAirBombGameObjects);
 	}
 
 	animatePlayerAirBombs() {
@@ -2058,7 +2058,7 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (playerAirBomb.hasFaded() /*|| playerAirBomb.x > Constants.DEFAULT_GAME_VIEW_WIDTH || playerAirBomb.getRight() < 0 || playerAirBomb.getBottom() < 0 || playerAirBomb.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
 					playerAirBomb.disableRendering();
-					this.ammunitionBar.setValue(this.playerAirBombGameObjects.filter(x => x.isAnimating == false).length);
+					this.setAmmunitionBarValue(this.playerAirBombGameObjects);
 				}
 			});
 		}
@@ -2173,7 +2173,7 @@ export class GamePlayScene extends Container implements IScene {
 			}
 		}
 
-		this.ammunitionBar.setValue(this.playerAirBombBullsEyeGameObjects.filter(x => x.isAnimating == false).length);
+		this.setAmmunitionBarValue(this.playerAirBombBullsEyeGameObjects);
 	}
 
 	animatePlayerAirBombHurlingBalls() {
@@ -2245,8 +2245,8 @@ export class GamePlayScene extends Container implements IScene {
 				}
 
 				if (playerAirBombBullsEye.hasFaded() /*|| playerAirBombBullsEye.x > Constants.DEFAULT_GAME_VIEW_WIDTH || playerAirBombBullsEye.getRight() < 0 || playerAirBombBullsEye.getBottom() < 0 || playerAirBombBullsEye.getTop() > Constants.DEFAULT_GAME_VIEW_HEIGHT*/) {
-					playerAirBombBullsEye.disableRendering();
-					this.ammunitionBar.setValue(this.playerAirBombBullsEyeGameObjects.filter(x => x.isAnimating == false).length);
+					playerAirBombBullsEye.disableRendering();					
+					this.setAmmunitionBarValue(this.playerAirBombBullsEyeGameObjects);
 				}
 			});
 		}
@@ -4342,9 +4342,7 @@ export class GamePlayScene extends Container implements IScene {
 
 	}
 
-	//#endregion
-
-	//#region HUD
+	//#endregion	
 
 	//#region ScoreBars
 
@@ -4380,6 +4378,10 @@ export class GamePlayScene extends Container implements IScene {
 		this.ammunitionBar.reposition(this.ammunitionBar.width * 1.5, SceneManager.height - this.ammunitionBar.height * 1.5);
 	}
 
+	private setAmmunitionBarValue(source: GameObjectContainer[]) {
+		this.ammunitionBar.setValue(source.filter(x => x.isAnimating == false).length);
+	}
+
 	//#endregion
 
 	//#region OnScreenMessage
@@ -4409,9 +4411,7 @@ export class GamePlayScene extends Container implements IScene {
 		}
 	}
 
-	//#endregion
-
-	//#endregion
+	//#endregion	
 
 	//#endregion
 }
