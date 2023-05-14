@@ -2,7 +2,7 @@ import { manifest } from "../assets";
 import { Container, Graphics, Assets } from "pixi.js";
 import { IScene } from "../managers/IScene";
 import { SceneManager } from "../managers/SceneManager";
-import { GameTitleScene } from "./GameTitleScene";
+import { GameSplashScene } from "./GameSplashScene";
 import { ScreenOrientationScene } from "./ScreenOrientationScene";
 
 
@@ -73,7 +73,7 @@ export class GameLoaderScene extends Container implements IScene {
 		}
 		else {
 			this.removeChild(this.loaderBar);
-			SceneManager.changeScene(new GameTitleScene());
+			SceneManager.changeScene(new GameSplashScene());
 		}
 	}
 }
