@@ -36,10 +36,24 @@ export class GameSplashScene extends Container implements IScene {
 		this.bg_container.addChild(bg_sprite);
 		this.uiContainer.addChild(this.bg_container);
 
+		//#region tag line
+
+		//const subTitle = new Text("A game from", {
+		//	fontFamily: Constants.GAME_DEFAULT_FONT,
+		//	align: "center",
+		//	fill: "#ffffff",
+		//	fontSize: 19,
+		//});
+		//subTitle.x = this.uiContainer.width / 2 - subTitle.width / 2;
+		//subTitle.y = (this.uiContainer.height / 2 - subTitle.height / 2) - 65;
+		//this.uiContainer.addChild(subTitle);
+
+		//#endregion
+
 		//#region title
 
-		const title = new Text("KNIGHT GAMES", {
-			fontFamily: Constants.GAME_TITLE_FONT,
+		const title = new Text("MR. KNIGHT GAMES", {
+			fontFamily: /*Constants.GAME_TITLE_FONT*/"diloworld",
 			align: "center",
 			fill: "#ffffff",
 			fontSize: 44
