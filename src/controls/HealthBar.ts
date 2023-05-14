@@ -9,12 +9,12 @@ export class HealthBar extends Container {
 	private value: number = 0;
 
 	private progressBar: ProgressBar;
-	//private iconContainer: GameObjectContainer;
 	private iconTexture: Texture;
 	private iconLabel: LabeledIcon;
 	private iconLabelFontSize: number = 17;
 
-
+	private displayValueInstead: boolean = false;
+	private doNotHideOnZeroValue: boolean = false;
 	public tag: any;
 
 	constructor(uri: string, scene: Container, foreground: number = 0xf73e3e, background: number = 0xd9e2e9) {
@@ -32,10 +32,20 @@ export class HealthBar extends Container {
 		this.progressBar.progress = 0;
 		this.addChild(this.progressBar);
 
-		this.iconLabel = new LabeledIcon(uri, 45, 45, this.progressBar.progress.toString(), this.iconLabelFontSize);		
+		this.iconLabel = new LabeledIcon(uri, 45, 45, this.progressBar.progress.toString(), this.iconLabelFontSize);
 		this.addChild(this.iconLabel);
 
 		scene.addChild(this);
+	}
+
+	setToDisplayValue(flag: boolean): HealthBar {
+		this.displayValueInstead = flag;
+		return this;
+	}
+
+	setDoNotHideOnZeroValue(flag: boolean): HealthBar {
+		this.doNotHideOnZeroValue = flag;
+		return this;
 	}
 
 	hasHealth(): boolean {
@@ -50,7 +60,6 @@ export class HealthBar extends Container {
 	setIcon(icon: Texture): HealthBar {
 		this.iconTexture = icon;
 		this.iconLabel.setIcon(icon);
-		//this.iconContainer.setTexture(icon);
 		return this;
 	}
 
@@ -62,12 +71,19 @@ export class HealthBar extends Container {
 
 		this.progressBar.progress = this.value / this.maximum * 100;
 
-		this.iconLabel.setLabel(this.progressBar.progress.toString(), this.iconLabelFontSize);
+		if (this.displayValueInstead) {
+			this.iconLabel.setLabel(this.value.toString(), this.iconLabelFontSize);
+		}
+		else {
+			this.iconLabel.setLabel(this.progressBar.progress.toString(), this.iconLabelFontSize);
+		}
 
-		if (this.value > 0)
-			this.alpha = 1;
-		else
-			this.alpha = 0;
+		if (!this.doNotHideOnZeroValue) {
+			if (this.value > 0)
+				this.alpha = 1;
+			else
+				this.alpha = 0;
+		}
 
 		return this;
 	}

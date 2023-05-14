@@ -36,7 +36,7 @@ export class VehicleEnemy extends VehicleBase {
 			default: break;
 		}
 
-		var template = Constants.CONSTRUCT_TEMPLATES.find(x => x.constructType == this.vehicleType && x.uri == uri);
+		var template = Constants.CONSTRUCT_TEMPLATES.find(x => x.textureType == this.vehicleType && x.uri == uri);
 		if (template?.tag) // check if this vehicle has disabled honking by default
 			this.willHonk = false;
 

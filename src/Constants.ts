@@ -500,7 +500,7 @@ export abstract class Constants {
 
 	static getRandomUri(constructType: TextureType): string {
 
-		const templates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.constructType == constructType);
+		const templates = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == constructType);
 		let uri: string = "";
 
 		if (templates.length > 1) {
