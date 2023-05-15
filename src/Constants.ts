@@ -57,6 +57,8 @@ export abstract class Constants {
 
 	public static CONSTRUCT_TEMPLATES: (TextureTemplate)[] = [
 
+		new TextureTemplate(TextureType.STAGE, "stage_1"),
+
 		new TextureTemplate(TextureType.GRAND_EXPLOSION_RING, "grand_explosion_ring_1"),
 		new TextureTemplate(TextureType.HONK, "honk_1"),
 
