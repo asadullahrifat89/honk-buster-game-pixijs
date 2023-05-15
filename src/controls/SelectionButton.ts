@@ -24,7 +24,7 @@ export class SelectionButton extends Container {
 		this.addChild(button);
 
 		const msg = new MessageBubble(0, label, 20);
-		msg.setPosition(button.x + button.width / 2, button.y + button.height / 2);
+		msg.setPosition(button.x + button.width / 2, button.y + button.height - msg.height - 10);
 		this.addChild(msg);
 	}
 
