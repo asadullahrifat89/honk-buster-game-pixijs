@@ -36,9 +36,8 @@ export class GameStageScene extends Container implements IScene {
 		bg_sprite.filters = [new BlurFilter()];
 
 		this.bg_container = new GameObjectContainer();
-		/*this.bg_container.alpha = 0;*/
 		this.bg_container.addChild(bg_sprite);
-		this.uiContainer.addChild(this.bg_container);		
+		this.uiContainer.addChild(this.bg_container);
 
 		const optionsGap = 256;
 
@@ -56,15 +55,14 @@ export class GameStageScene extends Container implements IScene {
 
 		//#endregion
 
-		//#region title
+		//#region stage_1
 
 		const stage_1_button = new SelectionButton("stage_1", 256, 256, "Country Roads", () => {
 
 			SoundManager.play(SoundType.ITEM_SELECT);
 			button.setIsEnabled(true);
-			
-		});
 
+		}, true, true);
 		stage_1_button.setPosition(this.uiContainer.width / 2 - (optionsGap / 2) * 1, (this.uiContainer.height / 2 - stage_1_button.height / 2));
 		this.uiContainer.addChild(stage_1_button);
 
@@ -84,16 +82,14 @@ export class GameStageScene extends Container implements IScene {
 				SoundManager.play(SoundType.DAMAGE_TAKEN);
 			}
 
-		}).setText("Confirm").setIsEnabled(false);
+		}).setText("Confirm").setIsEnabled(true);
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 1);
 		this.uiContainer.addChild(button);
 
 		//#endregion
-		
 	}
 
 	public update() {
-		//this.bg_container.hover();
 		this.generateLines();
 		this.animateLines();
 	}
