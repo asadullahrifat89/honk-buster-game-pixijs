@@ -49,6 +49,9 @@ export class GameObjectContainer extends Container {
 	public gravitatesUp: boolean = false;
 	public gravitatesDown: boolean = false;
 
+	private readonly distantBoundsXplier = 1.5;
+	private readonly closeBoundsDivider = 4;
+
 	//#endregion
 
 	//#region Methods
@@ -357,12 +360,20 @@ export class GameObjectContainer extends Container {
 
 	getCloseBounds(): Rectangle {
 		let bounds = this.getBounds(true);
-		return new Rectangle(bounds.left + this.width / 4, bounds.top + this.height / 4, bounds.right - this.width / 4, bounds.bottom - this.height / 4);
-	}
+		return new Rectangle(
+			bounds.left + this.width / this.closeBoundsDivider,
+			bounds.top + this.height / this.closeBoundsDivider,
+			bounds.right - this.width / this.closeBoundsDivider,
+			bounds.bottom - this.height / this.closeBoundsDivider);
+	}	
 
 	getDistantBounds(): Rectangle {
-		let bounds = this.getBounds(true);
-		return new Rectangle(bounds.left - this.width * 3, bounds.top - this.height * 3, bounds.right + this.width * 3, bounds.bottom + this.height * 3);
+		let bounds = this.getBounds(true);		
+		return new Rectangle(
+			bounds.left - this.width * this.distantBoundsXplier,
+			bounds.top - this.height * this.distantBoundsXplier,
+			bounds.right + this.width * this.distantBoundsXplier,
+			bounds.bottom + this.height * this.distantBoundsXplier);
 	}
 
 	//#endregion

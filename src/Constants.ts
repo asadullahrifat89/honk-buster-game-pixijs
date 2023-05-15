@@ -37,7 +37,7 @@ export abstract class Constants {
 	public static MISSILE_UNLOCK_LEVEL: number = 3; // 3
 	public static MISSILE_UNLOCKED: boolean = false;
 
-	public static BULLET_BALL_UNLOCK_LEVEL: number = 7; // 7
+	public static BULLET_BALL_UNLOCK_LEVEL: number = 0; // 7
 	public static BULLET_BALL_UNLOCKED: boolean = false;
 
 	public static GRENADE_UNLOCK_LEVEL: number = 3; // 3

@@ -1920,6 +1920,8 @@ export class GamePlayScene extends Container implements IScene {
 				playerAirBomb.setPopping();
 				playerAirBomb.enableRendering();
 				this.generateFlashExplosion(playerAirBomb);
+
+				console.log("Close target hit.");
 			}
 			else {
 
@@ -1952,6 +1954,8 @@ export class GamePlayScene extends Container implements IScene {
 					playerAirBomb.setPopping();
 					playerAirBomb.enableRendering();
 					this.generateFlashExplosion(playerAirBomb);
+
+					console.log("Default target hit.");
 				}
 			}
 		}
@@ -2195,6 +2199,8 @@ export class GamePlayScene extends Container implements IScene {
 
 				if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.HURLING_BALLS)
 					this.depletePowerUp();
+
+				console.log("Close target hit.");
 			}
 			else {
 
@@ -2224,10 +2230,12 @@ export class GamePlayScene extends Container implements IScene {
 				if (anyTarget) {
 					playerAirBombHurlingBall.setHurlingTarget(anyTarget.getCloseBounds());
 					playerAirBombHurlingBall.enableRendering();
-					this.generateFlashExplosion(playerAirBombHurlingBall);
+					this.generateFlashExplosion(playerAirBombHurlingBall);					
 
 					if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.HURLING_BALLS)
 						this.depletePowerUp();
+
+					console.log("Default target hit.");
 				}
 			}
 		}
