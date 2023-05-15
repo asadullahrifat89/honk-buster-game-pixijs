@@ -175,14 +175,14 @@ export class PlayerRide extends GameObjectContainer {
 
 			switch (this.playerRideTemplate) {
 				case PlayerRideTemplate.AIR_BALLOON: {
-					this.moveWithJoystick(sceneWidth, sceneHeight, controller);
+					this.moveWithJoystick(sceneWidth, sceneHeight, controller, 1);
 				} break;
 				case PlayerRideTemplate.CHOPPER: {
-					this.moveWithJoystick(sceneWidth, sceneHeight, controller, 1);
+					this.moveWithJoystick(sceneWidth, sceneHeight, controller, 2);
 					this.animateChopperBlades();
 				} break;
 				case PlayerRideTemplate.SPHERE: {
-					this.moveWithJoystick(sceneWidth, sceneHeight, controller, 1);
+					this.moveWithJoystick(sceneWidth, sceneHeight, controller, 3);
 				} break;
 				default: break;
 			}
@@ -197,12 +197,28 @@ export class PlayerRide extends GameObjectContainer {
 					this.animateChopperBlades();
 				} break;
 				case PlayerRideTemplate.SPHERE: {
-					this.speed = controller.velocity.x + 1;
+					this.speed = controller.velocity.x + 2;
 				} break;
 				default: break;
 			}
 
 			this.moveWithKeyboard(controller, sceneWidth, sceneHeight);
+		}
+	}	
+
+	private moveWithJoystick(sceneWidth: number, sceneHeight: number, controller: GameController, xyModifier: number = 0) {
+
+		if (controller.velocity.x < 0 && this.getLeft() > 0) { // left
+			this.x += controller.velocity.x - xyModifier; 
+		}
+		if (controller.velocity.x > 0 && this.getRight() < sceneWidth) { // right
+			this.x += controller.velocity.x + xyModifier;
+		}
+		if (controller.velocity.y < 0 && this.getTop() > 0) { // up
+			this.y += controller.velocity.y - xyModifier;
+		}
+		if (controller.velocity.y > 0 && this.getBottom() < sceneHeight) {
+			this.y += controller.velocity.y + xyModifier;
 		}
 	}
 
@@ -242,21 +258,6 @@ export class PlayerRide extends GameObjectContainer {
 		}
 		else {
 			this.stopMovement(sceneWidth, sceneHeight);
-		}
-	}
-
-	private moveWithJoystick(sceneWidth: number, sceneHeight: number, controller: GameController, xyModifier: number = 0) {
-		if (controller.velocity.x < 0 && this.getLeft() > 0) {
-			this.x += controller.velocity.x + xyModifier;
-		}
-		if (controller.velocity.x > 0 && this.getRight() < sceneWidth) {
-			this.x += controller.velocity.x + xyModifier;
-		}
-		if (controller.velocity.y < 0 && this.getTop() > 0) {
-			this.y += controller.velocity.y + xyModifier;
-		}
-		if (controller.velocity.y > 0 && this.getBottom() < sceneHeight) {
-			this.y += controller.velocity.y + xyModifier;
 		}
 	}
 

@@ -27,7 +27,7 @@ export class PlayerAirBomb extends AirBombBaseSeekingBall {
 			} break;
 			case PlayerAirBombTemplate.BULLET_BALL: {
 				this.PlayerAirBombUris = Constants.CONSTRUCT_TEMPLATES.filter(x => x.textureType == TextureType.PLAYER_AIR_BOMB && x.tag == PlayerAirBombTemplate.BULLET_BALL).map(x => x.uri);
-				this.autoBlastDelayDefault = 8;
+				this.autoBlastDelayDefault = 5;
 			} break;
 			default: break;
 		}
@@ -43,7 +43,7 @@ export class PlayerAirBomb extends AirBombBaseSeekingBall {
 		switch (this.playerAirBombTemplate) {
 			case PlayerAirBombTemplate.GRAVITY_BALL: {
 				SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED + 20; // starts with high speed and slows down				
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * 2.5; // 30 // starts with high speed and slows down				
 			} break;
 			case PlayerAirBombTemplate.MISSILE: {
 				SoundManager.play(SoundType.ROCKET_LAUNCH, 0.3);
@@ -51,7 +51,7 @@ export class PlayerAirBomb extends AirBombBaseSeekingBall {
 			} break;
 			case PlayerAirBombTemplate.BULLET_BALL: {
 				SoundManager.play(SoundType.BULLET_LAUNCH);
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * 3.3;
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * 2.5; // 30 //constant speed
 			} break;
 			default: break;
 		}

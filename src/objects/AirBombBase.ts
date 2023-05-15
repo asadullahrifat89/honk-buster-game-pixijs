@@ -14,7 +14,7 @@ export class AirBombBase extends GameObjectContainer {
     }
 
     accelerate() {
-        if (this.speed < Constants.DEFAULT_CONSTRUCT_SPEED + 7)
+        if (this.speed < Constants.DEFAULT_CONSTRUCT_SPEED + 6)
             this.speed += 0.5;
     }
 
