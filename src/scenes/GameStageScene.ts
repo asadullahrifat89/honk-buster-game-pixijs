@@ -47,7 +47,7 @@ export class GameStageScene extends Container implements IScene {
 			align: "center",
 			fill: "#ffffff",
 		});
-		title.x = this.uiContainer.width / 2 - title.width / 2.6;
+		title.x = this.uiContainer.width / 2 - title.width / 2;
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 220;
 		this.uiContainer.addChild(title);
 
@@ -62,7 +62,7 @@ export class GameStageScene extends Container implements IScene {
 			
 		});
 
-		stage_1_button.setPosition(this.uiContainer.width / 2 - (optionsGap / 2.4) * 1, (this.uiContainer.height / 2 - stage_1_button.height / 2));
+		stage_1_button.setPosition(this.uiContainer.width / 2 - (optionsGap / 2) * 1, (this.uiContainer.height / 2 - stage_1_button.height / 2));
 		this.uiContainer.addChild(stage_1_button);
 
 		//#endregion
@@ -81,7 +81,7 @@ export class GameStageScene extends Container implements IScene {
 				SoundManager.play(SoundType.DAMAGE_TAKEN);
 			}
 
-		}).setText("Confirm");
+		}).setText("Confirm").setIsEnabled(false);
 		button.setPosition(this.uiContainer.width / 2 - button.width / 2, this.uiContainer.height - button.height * 1);
 		this.uiContainer.addChild(button);
 

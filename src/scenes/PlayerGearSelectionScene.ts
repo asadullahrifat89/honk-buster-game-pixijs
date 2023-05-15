@@ -55,7 +55,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			align: "center",
 			fill: "#ffffff",
 		});
-		title.x = this.uiContainer.width / 2 - title.width / 2.6;
+		title.x = this.uiContainer.width / 2 - title.width / 2;
 		title.y = (this.uiContainer.height / 2 - title.height / 2) - 220;
 		this.uiContainer.addChild(title);
 
@@ -126,7 +126,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			SceneManager.changeScene(new PlayerRideSelectionScene());
 		});
 
-		ride_button.setPosition(this.uiContainer.width / 2 - (optionsGap / 2.4) * 1, (this.uiContainer.height / 2 - ride_button.height / 2));
+		ride_button.setPosition(this.uiContainer.width / 2 - (optionsGap / 2) * 1, (this.uiContainer.height / 2 - ride_button.height / 2));
 		this.uiContainer.addChild(ride_button);
 
 		//#endregion
