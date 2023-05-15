@@ -67,12 +67,10 @@ export class Joystick extends Container {
 	}
 
 	protected bindEvents() {
-		let that = this;
-		/*this.interactive = true;*/
+		let that = this;		
 		this.eventMode = 'dynamic';
 
-		let dragging: boolean = false;
-		//let eventData: InteractionData;
+		let dragging: boolean = false;		
 		let power: number;
 		let startPosition: Point;
 		let velocity: { x: number, y: number } = { x: 0, y: 0 };
@@ -222,8 +220,8 @@ export class Joystick extends Container {
 	protected getVelocity(startPosition: Point, newPosition: Point, power: number): { x: number, y: number } {
 		const angle = Math.atan2(newPosition.y - startPosition.y, newPosition.x - startPosition.x);
 		return {
-			x: Math.cos(angle) * (Constants.DEFAULT_CONSTRUCT_SPEED / 1.5) * power,
-			y: Math.sin(angle) * (Constants.DEFAULT_CONSTRUCT_SPEED / 1.5) * power
+			x: Math.cos(angle) * (Constants.DEFAULT_CONSTRUCT_SPEED / 1.2) * power,
+			y: Math.sin(angle) * (Constants.DEFAULT_CONSTRUCT_SPEED / 1.2) * power
 		};
 	}
 
