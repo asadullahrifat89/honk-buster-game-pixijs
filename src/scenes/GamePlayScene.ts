@@ -82,9 +82,9 @@ export class GamePlayScene extends Container implements IScene {
 	private behindBackIcon: Texture;
 	private talkIcon: Texture;
 	private cheerIcon: Texture;
-	private interactIcon: Texture;	
+	private interactIcon: Texture;
 
-	private honkBustReactions: string[] = [];	
+	private honkBustReactions: string[] = [];
 
 	private sceneBoundary: { width: number, height: number } = { width: Constants.DEFAULT_GAME_VIEW_WIDTH, height: Constants.DEFAULT_GAME_VIEW_HEIGHT }
 
@@ -416,7 +416,7 @@ export class GamePlayScene extends Container implements IScene {
 		this.animateMessageBubbles();
 
 		this.animateLeafs();
-	}	
+	}
 
 	//#endregion
 
@@ -1881,22 +1881,23 @@ export class GamePlayScene extends Container implements IScene {
 
 			this.player.setAttackStance();
 
-			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-			let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-			let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+			let ufoBoss: any = undefined;
+			let zombieBoss: any = undefined;
+			let mafiaBoss: any = undefined;
+			let ufoBossRocketSeeking: any = undefined;
+			let ufoEnemy: any = undefined;
 
-			let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
-			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
+			/*let anyCloseTarget: any = undefined;*/			
+
+			ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+			zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+			mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+			ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
+			ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
 
 			let anyTarget: any = undefined;
 
-			if (ufoBossRocketSeeking) {
-				anyTarget = ufoBossRocketSeeking;
-			}
-			else if (ufoEnemy) {
-				anyTarget = ufoEnemy;
-			}
-			else if (ufoBoss) {
+			if (ufoBoss) {
 				anyTarget = ufoBoss;
 			}
 			else if (zombieBoss) {
@@ -1904,6 +1905,12 @@ export class GamePlayScene extends Container implements IScene {
 			}
 			else if (mafiaBoss) {
 				anyTarget = mafiaBoss;
+			}
+			else if (ufoBossRocketSeeking) {
+				anyTarget = ufoBossRocketSeeking;
+			}
+			else if (ufoEnemy) {
+				anyTarget = ufoEnemy;
 			}
 
 			if (anyTarget) {
@@ -2116,19 +2123,12 @@ export class GamePlayScene extends Container implements IScene {
 			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 			let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
 			let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-
 			let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
 			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
 
 			let anyTarget: any = undefined;
 
-			if (ufoBossRocketSeeking) {
-				anyTarget = ufoBossRocketSeeking;
-			}
-			else if (ufoEnemy) {
-				anyTarget = ufoEnemy;
-			}
-			else if (ufoBoss) {
+			if (ufoBoss) {
 				anyTarget = ufoBoss;
 			}
 			else if (zombieBoss) {
@@ -2136,6 +2136,12 @@ export class GamePlayScene extends Container implements IScene {
 			}
 			else if (mafiaBoss) {
 				anyTarget = mafiaBoss;
+			}
+			else if (ufoBossRocketSeeking) {
+				anyTarget = ufoBossRocketSeeking;
+			}
+			else if (ufoEnemy) {
+				anyTarget = ufoEnemy;
 			}
 
 			if (anyTarget) {
@@ -4355,7 +4361,7 @@ export class GamePlayScene extends Container implements IScene {
 
 		if (source.every(x => x.isBlasting == false)) { // only set to default textures and not blasting ones
 			this.ammunitionBar.setIcon(source[0].getFirstSprite().getTexture());
-		} 
+		}
 	}
 
 	//#endregion
