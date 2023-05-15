@@ -11,9 +11,9 @@ import { PlayerAirBombSelectionScene } from "./PlayerAirBombSelectionScene";
 import { PlayerRideSelectionScene } from "./PlayerRideSelectionScene";
 import { PlayerCharacterSelectionScene } from "./PlayerCharacterSelectionScene";
 import { PlayerGroundBombSelectionScene } from "./PlayerGroundBombSelectionScene";
-import { GamePlayScene } from "./GamePlayScene";
 import { SelectionButton } from "../controls/SelectionButton";
 import { PlayerAirBombTemplate, PlayerGroundBombTemplate, PlayerRideTemplate, SoundType, TextureType } from "../Enums";
+import { GameStageScene } from "./GameStageScene";
 
 
 
@@ -205,7 +205,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 
 		//#endregion
 
-		//#region next button
+		//#region confirm button
 
 		const button = new Button(() => {
 
@@ -213,7 +213,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 				SoundManager.play(SoundType.OPTION_SELECT);
 				this.removeChild(this.uiContainer);
 				this.uiContainer.destroy();
-				SceneManager.changeScene(new GamePlayScene());
+				SceneManager.changeScene(new GameStageScene());
 			}
 			else {
 				SoundManager.play(SoundType.DAMAGE_TAKEN);

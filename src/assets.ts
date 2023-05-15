@@ -20,6 +20,7 @@ export const manifest: ResolverManifest = {
 				"stop_button": "./images/stop_button.png",
 
 				"speed": "./images/speed.png",
+				"stage_1": "./images/stage_1.png",
 
 				"vehicle_smoke_1": "./images/vehicle_smoke_1.png",
 				"vehicle_smoke_2": "./images/vehicle_smoke_2.png",
