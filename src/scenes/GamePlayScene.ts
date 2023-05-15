@@ -60,7 +60,7 @@ export class GamePlayScene extends Container implements IScene {
 	private onScreenMessage: OnScreenMessage;
 
 	//TODO: reset these to the commented values after testing
-	private readonly ufoEnemyRelease: { point: number, limit: number } = { limit: 15, point: 35 }; // 35
+	private readonly ufoEnemyRelease: { point: number, limit: number } = { limit: 15, point: 2 }; // 35
 	private readonly vehicleBossRelease: { point: number, limit: number } = { limit: 15, point: 25 }; // 25
 	private readonly ufoBossRelease: { point: number, limit: number } = { limit: 15, point: 50 }; // 50
 	private readonly zombieBossRelease: { point: number, limit: number } = { limit: 15, point: 100 }; // 100
@@ -1881,21 +1881,22 @@ export class GamePlayScene extends Container implements IScene {
 
 			this.player.setAttackStance();
 
+			let anyTarget: any = undefined;
+
 			let ufoBoss: any = undefined;
 			let zombieBoss: any = undefined;
 			let mafiaBoss: any = undefined;
 			let ufoBossRocketSeeking: any = undefined;
 			let ufoEnemy: any = undefined;
 
-			/*let anyCloseTarget: any = undefined;*/			
+			// first we try to find the closest nearby targets at a distance from the player
+			let playerDistantBounds = this.player.getDistantBounds();
 
-			ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-			zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-			mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-			ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
-			ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
-
-			let anyTarget: any = undefined;
+			ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getBounds().intersects(playerDistantBounds));
+			zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getBounds().intersects(playerDistantBounds));
+			mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getBounds().intersects(playerDistantBounds));
+			ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating && x.getBounds().intersects(playerDistantBounds));
+			ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating && x.getBounds().intersects(playerDistantBounds));
 
 			if (ufoBoss) {
 				anyTarget = ufoBoss;
@@ -1913,11 +1914,45 @@ export class GamePlayScene extends Container implements IScene {
 				anyTarget = ufoEnemy;
 			}
 
+			// if any such target is found we aim at it
 			if (anyTarget) {
 				this.setPlayerAirBombDirection(this.player, playerAirBomb, anyTarget);
 				playerAirBomb.setPopping();
 				playerAirBomb.enableRendering();
 				this.generateFlashExplosion(playerAirBomb);
+			}
+			else {
+
+				// other wise we pick the first target of type
+				ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+				zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+				mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+				ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
+				ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
+
+				if (ufoBoss) {
+					anyTarget = ufoBoss;
+				}
+				else if (zombieBoss) {
+					anyTarget = zombieBoss;
+				}
+				else if (mafiaBoss) {
+					anyTarget = mafiaBoss;
+				}
+				else if (ufoBossRocketSeeking) {
+					anyTarget = ufoBossRocketSeeking;
+				}
+				else if (ufoEnemy) {
+					anyTarget = ufoEnemy;
+				}
+
+				// and if we find it we aim at it
+				if (anyTarget) {
+					this.setPlayerAirBombDirection(this.player, playerAirBomb, anyTarget);
+					playerAirBomb.setPopping();
+					playerAirBomb.enableRendering();
+					this.generateFlashExplosion(playerAirBomb);
+				}
 			}
 		}
 
@@ -2111,22 +2146,31 @@ export class GamePlayScene extends Container implements IScene {
 
 	generatePlayerAirBombHurlingBall() {
 
-		let playerAirBombBullsEye = this.playerAirBombHurlingBallGameObjects.find(x => x.isAnimating == false);
+		let playerAirBombHurlingBall = this.playerAirBombHurlingBallGameObjects.find(x => x.isAnimating == false);
 
-		if (playerAirBombBullsEye) {
-			playerAirBombBullsEye.reset();
-			playerAirBombBullsEye.reposition(this.player);
-			playerAirBombBullsEye.setPopping();
+		if (playerAirBombHurlingBall) {
+			playerAirBombHurlingBall.reset();
+			playerAirBombHurlingBall.reposition(this.player);
+			playerAirBombHurlingBall.setPopping();
 
 			this.player.setAttackStance();
 
-			let ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-			let zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-			let mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
-			let ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
-			let ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
-
 			let anyTarget: any = undefined;
+
+			let ufoBoss: any = undefined;
+			let zombieBoss: any = undefined;
+			let mafiaBoss: any = undefined;
+			let ufoBossRocketSeeking: any = undefined;
+			let ufoEnemy: any = undefined;
+
+			// first we try to find the closest nearby targets at a distance from the player
+			let playerDistantBounds = this.player.getDistantBounds();
+
+			ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getBounds().intersects(playerDistantBounds));
+			zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getBounds().intersects(playerDistantBounds));
+			mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getBounds().intersects(playerDistantBounds));
+			ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating && x.getBounds().intersects(playerDistantBounds));
+			ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating && x.getBounds().intersects(playerDistantBounds));
 
 			if (ufoBoss) {
 				anyTarget = ufoBoss;
@@ -2145,12 +2189,46 @@ export class GamePlayScene extends Container implements IScene {
 			}
 
 			if (anyTarget) {
-				playerAirBombBullsEye.setHurlingTarget(anyTarget.getCloseBounds());
-				playerAirBombBullsEye.enableRendering();
-				this.generateFlashExplosion(playerAirBombBullsEye);
+				playerAirBombHurlingBall.setHurlingTarget(anyTarget.getCloseBounds());
+				playerAirBombHurlingBall.enableRendering();
+				this.generateFlashExplosion(playerAirBombHurlingBall);
 
 				if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.HURLING_BALLS)
 					this.depletePowerUp();
+			}
+			else {
+
+				// other wise we pick the first target of type
+				ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+				zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+				mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking);
+				ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating);
+				ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating);
+
+				if (ufoBoss) {
+					anyTarget = ufoBoss;
+				}
+				else if (zombieBoss) {
+					anyTarget = zombieBoss;
+				}
+				else if (mafiaBoss) {
+					anyTarget = mafiaBoss;
+				}
+				else if (ufoBossRocketSeeking) {
+					anyTarget = ufoBossRocketSeeking;
+				}
+				else if (ufoEnemy) {
+					anyTarget = ufoEnemy;
+				}
+
+				if (anyTarget) {
+					playerAirBombHurlingBall.setHurlingTarget(anyTarget.getCloseBounds());
+					playerAirBombHurlingBall.enableRendering();
+					this.generateFlashExplosion(playerAirBombHurlingBall);
+
+					if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.HURLING_BALLS)
+						this.depletePowerUp();
+				}
 			}
 		}
 
