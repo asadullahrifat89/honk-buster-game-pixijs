@@ -60,7 +60,7 @@ export class GamePlayScene extends Container implements IScene {
 	private onScreenMessage: OnScreenMessage;
 
 	//TODO: reset these to the commented values after testing
-	private readonly ufoEnemyRelease: { point: number, limit: number } = { limit: 15, point: 2 }; // 35
+	private readonly ufoEnemyRelease: { point: number, limit: number } = { limit: 15, point: 35 }; // 35
 	private readonly vehicleBossRelease: { point: number, limit: number } = { limit: 15, point: 25 }; // 25
 	private readonly ufoBossRelease: { point: number, limit: number } = { limit: 15, point: 50 }; // 50
 	private readonly zombieBossRelease: { point: number, limit: number } = { limit: 15, point: 100 }; // 100

@@ -49,7 +49,7 @@ export class GameObjectContainer extends Container {
 	public gravitatesUp: boolean = false;
 	public gravitatesDown: boolean = false;
 
-	private readonly distantBoundsXplier = 1.5;
+	private readonly distantBoundsXplier = 1.2;
 	private readonly closeBoundsDivider = 4;
 
 	//#endregion
@@ -361,19 +361,19 @@ export class GameObjectContainer extends Container {
 	getCloseBounds(): Rectangle {
 		let bounds = this.getBounds(true);
 		return new Rectangle(
-			bounds.left + this.width / this.closeBoundsDivider,
-			bounds.top + this.height / this.closeBoundsDivider,
-			bounds.right - this.width / this.closeBoundsDivider,
-			bounds.bottom - this.height / this.closeBoundsDivider);
-	}	
+			bounds.left + (this.width / this.closeBoundsDivider),
+			bounds.top + (this.height / this.closeBoundsDivider),
+			bounds.right - (this.width / this.closeBoundsDivider),
+			bounds.bottom - (this.height / this.closeBoundsDivider));
+	}
 
 	getDistantBounds(): Rectangle {
-		let bounds = this.getBounds(true);		
+		let bounds = this.getBounds(true);
 		return new Rectangle(
-			bounds.left - this.width * this.distantBoundsXplier,
-			bounds.top - this.height * this.distantBoundsXplier,
-			bounds.right + this.width * this.distantBoundsXplier,
-			bounds.bottom + this.height * this.distantBoundsXplier);
+			bounds.left - (this.width * this.distantBoundsXplier),
+			bounds.top - (this.height * this.distantBoundsXplier),
+			bounds.right + (this.width * this.distantBoundsXplier),
+			bounds.bottom + (this.height * this.distantBoundsXplier));
 	}
 
 	//#endregion

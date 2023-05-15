@@ -43,7 +43,7 @@ export class PlayerAirBomb extends AirBombBaseSeekingBall {
 		switch (this.playerAirBombTemplate) {
 			case PlayerAirBombTemplate.GRAVITY_BALL: {
 				SoundManager.play(SoundType.BALL_LAUNCH, 0.6);
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * 2.5; // 30 // starts with high speed and slows down				
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * 2.5; // starts with high speed and slows down 30
 			} break;
 			case PlayerAirBombTemplate.MISSILE: {
 				SoundManager.play(SoundType.ROCKET_LAUNCH, 0.3);
@@ -51,7 +51,7 @@ export class PlayerAirBomb extends AirBombBaseSeekingBall {
 			} break;
 			case PlayerAirBombTemplate.BULLET_BALL: {
 				SoundManager.play(SoundType.BULLET_LAUNCH);
-				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * 2.5; // 30 //constant speed
+				this.speed = Constants.DEFAULT_CONSTRUCT_SPEED * 2.2; // constant speed 26.4
 			} break;
 			default: break;
 		}
