@@ -543,8 +543,8 @@ export abstract class Constants {
 	}
 
 	static checkCollision(objA: GameObjectContainer, objB: GameObjectContainer): boolean {
-		const a = objA.getBounds();
-		const b = objB.getBounds();
+		const a = objA.getBounds(true);
+		const b = objB.getBounds(true);
 
 		const rightmostLeft = a.left < b.left ? b.left : a.left;
 		const leftmostRight = a.right > b.right ? b.right : a.right;

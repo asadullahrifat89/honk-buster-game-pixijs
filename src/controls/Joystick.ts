@@ -1,6 +1,4 @@
 ﻿import { Container, FederatedPointerEvent, Graphics, Point, Sprite } from 'pixi.js';
-import { Constants } from '../Constants';
-
 
 export class Joystick extends Container {
 
@@ -67,10 +65,10 @@ export class Joystick extends Container {
 	}
 
 	protected bindEvents() {
-		let that = this;		
+		let that = this;
 		this.eventMode = 'dynamic';
 
-		let dragging: boolean = false;		
+		let dragging: boolean = false;
 		let power: number;
 		let startPosition: Point;
 		let velocity: { x: number, y: number } = { x: 0, y: 0 };
@@ -220,8 +218,8 @@ export class Joystick extends Container {
 	protected getVelocity(startPosition: Point, newPosition: Point, power: number): { x: number, y: number } {
 		const angle = Math.atan2(newPosition.y - startPosition.y, newPosition.x - startPosition.x);
 		return {
-			x: Math.cos(angle) * (Constants.DEFAULT_CONSTRUCT_SPEED / 1.2) * power,
-			y: Math.sin(angle) * (Constants.DEFAULT_CONSTRUCT_SPEED / 1.2) * power
+			x: Math.cos(angle) * this.settings.speed * power,
+			y: Math.sin(angle) * this.settings.speed * power
 		};
 	}
 
@@ -282,4 +280,5 @@ export interface JoystickSettings {
 	onEnd?: () => void;
 	width: number;
 	height: number;
+	speed: number;
 }

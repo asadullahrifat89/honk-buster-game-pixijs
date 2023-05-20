@@ -164,8 +164,17 @@ export class GamePlayScene extends Container implements IScene {
 
 		this.repositionAmmunitionBar();
 
+		let riderSpeed = 0;
+
+		switch (Constants.SELECTED_PLAYER_RIDE_TEMPLATE) {
+			case PlayerRideTemplate.CHOPPER: { riderSpeed = 1; } break;
+			case PlayerRideTemplate.SPHERE: { riderSpeed = 2; } break;
+			default: break;
+		}
+
 		// set the game controller
 		this.gameController = new GameController({
+			speed: Constants.DEFAULT_CONSTRUCT_SPEED / 1.2 + riderSpeed,
 			onPause: (isPaused) => {
 				if (isPaused) {
 					this.pauseGame();
@@ -176,7 +185,7 @@ export class GamePlayScene extends Container implements IScene {
 			},
 			onQuit: () => {
 				this.gameOver();
-			}
+			},
 		});
 		this.addChild(this.gameController);
 		this.stageBorder = new Graphics().beginFill().drawRoundedRect(5, 5, SceneManager.width - 10, SceneManager.height - 10, 5).endFill();
@@ -576,7 +585,7 @@ export class GamePlayScene extends Container implements IScene {
 					dropShadow.disableRendering();
 			});
 		}
-	}	
+	}
 
 	//#endregion
 
@@ -1918,11 +1927,11 @@ export class GamePlayScene extends Container implements IScene {
 			// first we try to find the closest nearby targets at a distance from the player
 			let playerDistantBounds = this.player.getDistantBounds();
 
-			ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getBounds().intersects(playerDistantBounds));
-			zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getBounds().intersects(playerDistantBounds));
-			mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getBounds().intersects(playerDistantBounds));
-			ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating && x.getBounds().intersects(playerDistantBounds));
-			ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating && x.getBounds().intersects(playerDistantBounds));
+			ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getCloseBounds().intersects(playerDistantBounds));
+			zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getCloseBounds().intersects(playerDistantBounds));
+			mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getCloseBounds().intersects(playerDistantBounds));
+			ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating && x.getCloseBounds().intersects(playerDistantBounds));
+			ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating && x.getCloseBounds().intersects(playerDistantBounds));
 
 			if (ufoBoss) {
 				anyTarget = ufoBoss;
@@ -2114,7 +2123,7 @@ export class GamePlayScene extends Container implements IScene {
 	setPlayerAirBombDirection(source: GameObjectContainer, playerAirBomb: PlayerAirBomb, target: GameObjectContainer) {
 
 		if (playerAirBomb.playerAirBombTemplate == PlayerAirBombTemplate.BULLET_BALL) { // if bullet ball set the target
-			playerAirBomb.setShootingTarget(target.getBounds(true)); // the actual bound coordinates are calculated inside
+			playerAirBomb.setShootingTarget(target.getCloseBounds()); // the actual bound coordinates are calculated inside
 		}
 
 		// rocket target is on the bottom right side of the UfoBoss
@@ -2196,11 +2205,11 @@ export class GamePlayScene extends Container implements IScene {
 			// first we try to find the closest nearby targets at a distance from the player
 			let playerDistantBounds = this.player.getDistantBounds();
 
-			ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getBounds().intersects(playerDistantBounds));
-			zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getBounds().intersects(playerDistantBounds));
-			mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getBounds().intersects(playerDistantBounds));
-			ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating && x.getBounds().intersects(playerDistantBounds));
-			ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating && x.getBounds().intersects(playerDistantBounds));
+			ufoBoss = this.ufoBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getCloseBounds().intersects(playerDistantBounds));
+			zombieBoss = this.zombieBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getCloseBounds().intersects(playerDistantBounds));
+			mafiaBoss = this.mafiaBossGameObjects.find(x => x.isAnimating && x.isAttacking && x.getCloseBounds().intersects(playerDistantBounds));
+			ufoBossRocketSeeking = this.ufoBossRocketSeekingGameObjects.find(x => x.isAnimating && x.getCloseBounds().intersects(playerDistantBounds));
+			ufoEnemy = this.ufoEnemyGameObjects.find(x => x.isAnimating && x.getCloseBounds().intersects(playerDistantBounds));
 
 			if (ufoBoss) {
 				anyTarget = ufoBoss;

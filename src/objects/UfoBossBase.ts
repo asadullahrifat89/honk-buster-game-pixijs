@@ -62,11 +62,11 @@ export class UfoBossBase extends GameObjectContainer {
 		let left = this.getLeft();
 		let top = this.getTop();
 
-		let bossX = left + this.width / 2;
-		let bossY = top + this.height / 2;
+		let bossX = left /*+ this.width / 2*/;
+		let bossY = top /*+ this.height / 2*/;
 
-		let targetX = target.x + target.width / 2;
-		let targetY = target.y + target.height / 2;
+		let targetX = target.x /*+ target.width / 2*/;
+		let targetY = target.y /*+ target.height / 2*/;
 
 		// move up
 		if (targetY < bossY /*- this.grace*/) {
