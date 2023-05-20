@@ -39,7 +39,7 @@ export class SceneManager {
 		});
 
 		// Add the ticker
-		SceneManager.app.ticker.minFPS = 55;
+		SceneManager.app.ticker.minFPS = 50;
 		SceneManager.app.ticker.maxFPS = 60;
 
 		SceneManager.app.ticker.add(SceneManager.update)
