@@ -10,7 +10,7 @@ export class SelectionButton extends Container {
 	private filter = new GrayscaleFilter();
 	private sprite: GameObjectSprite;
 
-	constructor(uri: string, width: number, height: number, label: string, action: any, isEnabled: boolean = true, centerLabelHorizontally: boolean = false, centerLabelVertically: boolean = false) {
+	constructor(uri: string, width: number, height: number, label: string, action: any, isEnabled: boolean = true, centerLabelHorizontally: boolean = false, centerLabelVertically: boolean = false, fontSize: number = 20) {
 		super();
 		this.sprite = new GameObjectSprite(Texture.from(uri));
 		this.sprite.width = width;
@@ -23,7 +23,7 @@ export class SelectionButton extends Container {
 		}).setBackground(this.sprite).setIsEnabled(isEnabled);
 		this.addChild(button);
 
-		const msg = new MessageBubble(0, label, 20);
+		const msg = new MessageBubble(0, label, fontSize);
 		msg.setPosition(
 			centerLabelHorizontally ? button.width / 2 - msg.width / 2 : button.x + button.width / 2,
 			centerLabelVertically ? button.height / 2 - msg.height / 2 : button.y + button.height - msg.height - 10);
