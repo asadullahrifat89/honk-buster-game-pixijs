@@ -40,6 +40,8 @@ import { GrandExplosionRing } from "../objects/GrandExplosionRing";
 import { Leaf } from "../objects/Leaf";
 import { VehicleSmoke } from "../objects/VehicleSmoke";
 import { TextureType, PlayerGroundBombTemplate, PlayerRideTemplate, SoundType, PlayerAirBombTemplate, RotationDirection, ExplosionType, PowerUpType } from "../Enums";
+import { OutlineFilter } from "@pixi/filter-outline";
+import { VehicleBase } from "../objects/VehicleBase";
 
 
 export class GamePlayScene extends Container implements IScene {
@@ -550,7 +552,8 @@ export class GamePlayScene extends Container implements IScene {
 	}
 
 	animateCastShadows() {
-		var animatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == true);
+
+		var animatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == true); // get all shadows where the source is animating
 
 		if (animatingCastShadows) {
 
@@ -564,7 +567,7 @@ export class GamePlayScene extends Container implements IScene {
 			});
 		}
 
-		var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false || x.source.isBlasting || x.source.isDroppedOnGround || x.source.isDead());
+		var nonAnimatingCastShadows = this.castShadowGameObjects.filter(x => x.source.isAnimating == false || x.source.isBlasting || x.source.isDroppedOnGround || x.source.isDead()); // get all shadows where the source is not animating
 
 		if (nonAnimatingCastShadows) {
 
@@ -573,6 +576,29 @@ export class GamePlayScene extends Container implements IScene {
 					dropShadow.disableRendering();
 			});
 		}
+	}
+
+	private outlineHighlight = new OutlineFilter(5, 0x840000);
+
+	private highlightGroundBombTarget(target: VehicleBase) {
+
+		if (target.isHonking) {
+			let playerDropShadow = this.castShadowGameObjects.find(x => x.source.isAnimating && x.source == this.player);
+
+			if (playerDropShadow) {
+
+				if (playerDropShadow.getCloseBounds().intersects(target.getCloseBounds())) {
+
+					if (!target.filters)
+						target.filters = [this.outlineHighlight];
+
+				}
+				else {
+					if (target.filters && target.filters.includes(this.outlineHighlight))
+						target.filters = null;
+				}
+			}
+		}	
 	}
 
 	//#endregion
@@ -2230,7 +2256,7 @@ export class GamePlayScene extends Container implements IScene {
 				if (anyTarget) {
 					playerAirBombHurlingBall.setHurlingTarget(anyTarget.getCloseBounds());
 					playerAirBombHurlingBall.enableRendering();
-					this.generateFlashExplosion(playerAirBombHurlingBall);					
+					this.generateFlashExplosion(playerAirBombHurlingBall);
 
 					if (this.powerUpBar.hasHealth() && this.powerUpBar.tag == PowerUpType.HURLING_BALLS)
 						this.depletePowerUp();
@@ -2766,7 +2792,11 @@ export class GamePlayScene extends Container implements IScene {
 					this.generateHonk(vehicleEnemy);
 				}
 
+				// generate smoke
 				this.generateVehicleSmoke(vehicleEnemy);
+
+				// highlight target				
+				this.highlightGroundBombTarget(vehicleEnemy);
 
 				// recycle vehicle
 				if (this.anyInAirBossExists()) {
@@ -2990,6 +3020,8 @@ export class GamePlayScene extends Container implements IScene {
 			}
 			else {
 				vehicleBoss.dillyDally();
+
+				// generate smoke
 				this.generateVehicleSmoke(vehicleBoss);
 
 				if (vehicleBoss.isAttacking) {
@@ -3000,6 +3032,9 @@ export class GamePlayScene extends Container implements IScene {
 					}
 
 					this.generateTaunts(vehicleBoss);
+
+					// highlight target
+					this.highlightGroundBombTarget(vehicleBoss);
 				}
 				else {
 					// when all vehicles are out of view or have passed to the bottom right corner
