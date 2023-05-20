@@ -25,7 +25,6 @@ export class CastShadow extends GameObjectContainer {
 		this.y = source.getBottom() + (source.castShadowDistance);
 
 		this.addChild(graphics);
-
 	}
 
 	reset() {
