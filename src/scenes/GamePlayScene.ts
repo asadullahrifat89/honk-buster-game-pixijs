@@ -576,30 +576,7 @@ export class GamePlayScene extends Container implements IScene {
 					dropShadow.disableRendering();
 			});
 		}
-	}
-
-	private outlineHighlight = new OutlineFilter(5, 0x840000);
-
-	private highlightGroundBombTarget(target: VehicleBase) {
-
-		if (target.isHonking) {
-			let playerDropShadow = this.castShadowGameObjects.find(x => x.source.isAnimating && x.source == this.player);
-
-			if (playerDropShadow) {
-
-				if (playerDropShadow.getCloseBounds().intersects(target.getCloseBounds())) {
-
-					if (!target.filters)
-						target.filters = [this.outlineHighlight];
-
-				}
-				else {
-					if (target.filters && target.filters.includes(this.outlineHighlight))
-						target.filters = null;
-				}
-			}
-		}	
-	}
+	}	
 
 	//#endregion
 
@@ -1604,6 +1581,8 @@ export class GamePlayScene extends Container implements IScene {
 
 	private readonly playerAmmoBeltSize: number = 3 + Constants.ATTACK_LEVEL_MAX;
 
+	private groundBombHighlightOutline = new OutlineFilter(5, 0xffffff);
+
 	spawnPlayerGroundBombs() {
 
 		for (let j = 0; j < this.playerAmmoBeltSize; j++) {
@@ -1847,6 +1826,27 @@ export class GamePlayScene extends Container implements IScene {
 				}
 			} break;
 			default: break;
+		}
+	}
+
+	private highlightGroundBombTarget(target: VehicleBase) {
+
+		if (target.isHonking) {
+			let playerDropShadow = this.castShadowGameObjects.find(x => x.source.isAnimating && x.source == this.player);
+
+			if (playerDropShadow) {
+
+				if (playerDropShadow.getCloseBounds().intersects(target.getCloseBounds())) {
+
+					if (!target.filters)
+						target.filters = [this.groundBombHighlightOutline];
+
+				}
+				else {
+					if (target.filters && target.filters.includes(this.groundBombHighlightOutline))
+						target.filters = null;
+				}
+			}
 		}
 	}
 
