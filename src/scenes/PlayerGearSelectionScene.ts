@@ -163,7 +163,7 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			SceneManager.changeScene(new PlayerGroundBombSelectionScene());
 		});
 
-		ground_bomb_button.setPosition((this.uiContainer.width / 2 + (optionsGap / 2) * 1), (this.uiContainer.height / 2 + ground_bomb_button.height / 2));
+		ground_bomb_button.setPosition((this.uiContainer.width / 2 + (optionsGap / 2) * 1.5), (this.uiContainer.height / 2 + ground_bomb_button.height / 2));
 		this.uiContainer.addChild(ground_bomb_button);
 
 		//#endregion
@@ -200,10 +200,10 @@ export class PlayerGearSelectionScene extends Container implements IScene {
 			SceneManager.changeScene(new PlayerAirBombSelectionScene());
 		});
 
-		air_bomb_button.setPosition((this.uiContainer.width / 2 + optionsGap), (this.uiContainer.height / 2 - air_bomb_button.height / 2));
+		air_bomb_button.setPosition((this.uiContainer.width / 2 + (optionsGap / 2) * 1.5), (this.uiContainer.height / 2 - air_bomb_button.height));
 		this.uiContainer.addChild(air_bomb_button);
 
-		//#endregion
+		//#endregion		
 
 		//#region confirm button
 
