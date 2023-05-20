@@ -13,7 +13,7 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 	private velocity: { x: number, y: number } = { x: 0, y: 0 };
 
 	setShootingTarget(target: Rectangle) {
-		const angle = Math.atan2((target.y + target.height / 2) - (this.y + this.height / 2), (target.x + target.width / 2) - (this.x + this.width / 2)); // calculate source and target from the center
+		const angle = Math.atan2((target.y /*+ target.height / 2*/) - (this.y/* + this.height / 2*/), (target.x /*+ target.width / 2*/) - (this.x /*+ this.width / 2*/)); // calculate source and target from the center
 		this.velocity = {
 			x: Math.cos(angle) * this.speed,
 			y: Math.sin(angle) * this.speed
@@ -22,11 +22,11 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 
 	setHurlingTarget(target: Rectangle) {
 
-		let rocketX = this.getLeft() + this.width / 2;
-		let rocketY = this.getTop() + this.height / 2;
+		let rocketX = this.getLeft() /*+ this.width / 2*/;
+		let rocketY = this.getTop() /*+ this.height / 2*/;
 
-		let targetX = target.x + target.width / 2;
-		let targetY = target.y + target.height / 2;
+		let targetX = target.x /*+ target.width / 2*/;
+		let targetY = target.y /*+ target.height / 2*/;
 
 		// move up
 		if (targetY < rocketY) {
@@ -63,11 +63,11 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 		let left = this.getLeft();
 		let top = this.getTop();
 
-		let targetX = this.hurlingTarget.x + this.hurlingTarget.width / 2;
-		let targetY = this.hurlingTarget.y + this.hurlingTarget.height / 2;
+		let targetX = this.hurlingTarget.x /*+ this.hurlingTarget.width / 2*/;
+		let targetY = this.hurlingTarget.y /*+ this.hurlingTarget.height / 2*/;
 
-		let rocketX = left + this.width / 2;
-		let rocketY = top + this.height / 2;
+		let rocketX = left /*+ this.width / 2*/;
+		let rocketY = top /*+ this.height / 2*/;
 
 		// move up
 		if (targetY < rocketY - this.grace) {
@@ -109,11 +109,11 @@ export class AirBombBaseSeekingBall extends AirBombBase {
 		let left = this.getLeft();
 		let top = this.getTop();
 
-		let targetX = this.followingTarget.x + this.followingTarget.width / 2;
-		let targetY = this.followingTarget.y + this.followingTarget.height / 2;
+		let targetX = this.followingTarget.x /*+ this.followingTarget.width / 2*/;
+		let targetY = this.followingTarget.y /*+ this.followingTarget.height / 2*/;
 
-		let rocketX = left + this.width / 2;
-		let rocketY = top + this.height / 2;
+		let rocketX = left /*+ this.width / 2*/;
+		let rocketY = top /*+ this.height / 2*/;
 
 		// move up
 		if (targetY - this.grace < rocketY) {

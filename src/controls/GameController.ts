@@ -8,8 +8,9 @@ import { Button } from './Button';
 import { Direction, Joystick, JoystickChangeEvent } from './Joystick';
 
 export interface GameControllerSettings {
+	speed: number;
 	onPause?: (isPaused: boolean) => void;
-	onQuit?: () => void;
+	onQuit?: () => void;	
 }
 
 export class GameController extends Container {
@@ -189,6 +190,8 @@ export class GameController extends Container {
 				this.joystickActivated = false;
 				this.power = 1;
 			},
+
+			speed: settings.speed,
 		});
 
 		this.setJoystickPosition();
