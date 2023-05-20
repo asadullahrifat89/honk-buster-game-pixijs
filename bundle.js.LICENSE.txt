@@ -1,0 +1,9 @@
+/*!
+ * @pixi/filter-outline - v5.2.0
+ * Compiled Tue, 28 Feb 2023 14:24:35 UTC
+ *
+ * @pixi/filter-outline is licensed under the MIT License.
+ * http://www.opensource.org/licenses/mit-license
+ */
+
+/*! https://mths.be/punycode v1.3.2 by @mathias */
